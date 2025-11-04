@@ -1,1 +1,1 @@
-export type Sizes = 'sm' | 'md' | 'lg'
+export type Size = 'sm' | 'md' | 'lg'

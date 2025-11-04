@@ -19,6 +19,7 @@ common:
     overallRiskLevel: 'Overall risk level'
     summary: 'Summary'
     validUntil: 'Valid Until'
+    wait: 'Please wait...'
 
   messages:
     error: 'Something went wrong. Please try again later.'

@@ -1,4 +1,4 @@
-import type { Sizes } from '@/UI/types'
+import type { Size } from '@/UI/types'
 
 export type IconName =
   | 'check'
@@ -20,7 +20,7 @@ export type IconName =
   | 'users'
   | 'xMark'
 
-type IconSize = Sizes
+type IconSize = Size
 
 export type IconProps = {
   className?: string

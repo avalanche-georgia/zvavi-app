@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 
 import { useGetCurrentForecast } from '@/data/hooks/forecasts'
 
-import { Loader } from '@/UI/components'
+import { Spinner } from '@/UI/components'
 import CurrentForecast from './CurrentForecast'
 
 import type { Forecast } from '@/business/types'
@@ -19,7 +19,13 @@ const CurrentForecastContainer = () => {
     setCurrentForecast(forecast)
   }, [forecast])
 
-  if (isPending) return <Loader />
+  if (isPending) {
+    return (
+      <div className="relative h-36">
+        <Spinner />
+      </div>
+    )
+  }
 
   if (!currentForecast) return null
 
