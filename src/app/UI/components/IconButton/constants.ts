@@ -1,6 +1,6 @@
-import type { Sizes } from '@/UI/types'
+import type { Size } from '@/UI/types'
 
-export type IconButtonSize = Sizes
+export type IconButtonSize = Size
 
 export const containerClassesBySize: Record<IconButtonSize, string> = {
   lg: 'size-8',

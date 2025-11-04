@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 
 import { useGetForecast } from '@/data/hooks/forecasts'
 
-import { Loader } from '@/UI/components'
+import { Spinner } from '@/UI/components'
 import Forecast from './Forecast'
 
 import type { FullForecast } from '@/business/types'
@@ -19,7 +19,7 @@ const ForecastContainer = ({ forecastId }: { forecastId: FullForecast['id'] }) =
     setForecast(forecastData)
   }, [forecastData])
 
-  if (isPending) return <Loader />
+  if (isPending) return <Spinner size="lg" />
 
   if (!forecast) return null
 
