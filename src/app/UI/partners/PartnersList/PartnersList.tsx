@@ -3,10 +3,9 @@ import { useTranslations } from 'next-intl'
 
 import { type Partner, type PartnerLevel, partners } from '@/data/constants/partners'
 
+import PartnerBadge from './PartnerBadge'
 import PeakPartner from './PeakPartner'
 import RidgePartner from './RidgePartner'
-
-import PartnerBadge from '@/UI/home/Partners/PartnerBadge'
 
 const CardRendererByLevel: Record<PartnerLevel, React.ComponentType<{ partner: Partner }>> = {
   peak: PeakPartner,

@@ -4,7 +4,8 @@ import { partners } from '@/data/constants/partners'
 import { routes } from '@/UI/header/NavMenu/constants'
 
 import { ButtonLink, PageSection } from '@/UI/components'
-import PartnerBadge from './PartnerBadge'
+
+import { PartnerBadge } from '@/UI/partners/PartnersList'
 
 const Partners = () => {
   const t = useTranslations()

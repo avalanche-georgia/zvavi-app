@@ -3,8 +3,7 @@ import Image from 'next/image'
 import type { Partner } from '@/data/constants/partners'
 
 import { Drawer } from '@/UI/components'
-
-import PartnerInfo from '@/UI/home/Partners/PartnerInfo'
+import PartnerInfo from './PartnerInfo'
 
 const RidgePartner = ({ partner }: { partner: Partner }) => {
   const { logo, name } = partner
