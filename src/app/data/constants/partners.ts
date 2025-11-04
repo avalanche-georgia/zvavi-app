@@ -15,38 +15,48 @@ export type Partner = {
   id: string
 }
 
-export const partners: Partner[] = [
-  {
-    id: 'vagabond',
-    infoKey: 'partners.info.vagabond',
-    logo: vagabondLogo,
-    name: 'Vagabond Adventures',
-    url: 'https://vagabondadventures.ge/',
-  },
-  {
-    id: 'snowlab',
-    isHidden: true,
-    logo: snowLabLogo,
-    name: 'Snowlab',
-    url: 'https://snow-lab.com',
-  },
-  {
-    id: 'adrenaline',
-    logo: adrenalineLogo,
-    name: 'Adrenaline',
-    url: 'https://www.adrenaline.ge/',
-  },
-  {
-    id: 'drunk-cherry',
-    isHidden: true,
-    logo: drunkCherryLogo,
-    name: 'Drunk Cherry',
-    url: 'https://www.instagram.com/gudauri_drunkcherry/',
-  },
-  {
-    id: 'buru-sports',
-    logo: buruSportsLogo,
-    name: 'Buru Sports',
-    url: 'https://burusports.ge/',
-  },
-]
+export type PartnerLevel = 'peak' | 'ridge' | 'trail'
+
+export const partners: Record<PartnerLevel, Partner[]> = {
+  peak: [
+    {
+      id: 'vagabond',
+      infoKey: 'partners.info.vagabond',
+      logo: vagabondLogo,
+      name: 'Vagabond Adventures',
+      url: 'https://vagabondadventures.ge/',
+    },
+  ],
+  ridge: [
+    {
+      id: 'snowlab',
+      isHidden: true,
+      logo: snowLabLogo,
+      name: 'Snowlab',
+      url: 'https://snow-lab.com',
+    },
+  ],
+  trail: [
+    {
+      id: 'adrenaline',
+      infoKey: 'partners.info.adrenaline',
+      logo: adrenalineLogo,
+      name: 'Adrenaline',
+      url: 'https://www.adrenaline.ge/',
+    },
+    {
+      id: 'drunk-cherry',
+      isHidden: true,
+      logo: drunkCherryLogo,
+      name: 'Drunk Cherry',
+      url: 'https://www.instagram.com/gudauri_drunkcherry/',
+    },
+    {
+      id: 'buru-sports',
+      infoKey: 'partners.info.buruSports',
+      logo: buruSportsLogo,
+      name: 'Buru Sports',
+      url: 'https://burusports.ge/',
+    },
+  ],
+}

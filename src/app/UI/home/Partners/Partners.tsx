@@ -8,15 +8,16 @@ import PartnerBadge from './PartnerBadge'
 
 const Partners = () => {
   const t = useTranslations()
+  const partnerList = Object.values(partners)
+    .flat()
+    .filter((partner) => !partner.isHidden)
 
   return (
     <PageSection title={t('partners.main.title')}>
       <div className="mb-4 flex gap-2 overflow-x-auto scrollbar-hide">
-        {partners.map((partner) => {
-          if (partner.isHidden) return null
-
-          return <PartnerBadge key={partner.id} partner={partner} />
-        })}
+        {partnerList.map((partner) => (
+          <PartnerBadge key={partner.id} partner={partner} />
+        ))}
       </div>
 
       <ButtonLink href={routes.partners}>{t('partners.main.seeAllButton')}</ButtonLink>

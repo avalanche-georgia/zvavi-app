@@ -3,16 +3,18 @@ import { useTranslations } from 'next-intl'
 import { routes } from '@/UI/header/NavMenu/constants'
 
 import { ButtonLink } from '@/UI/components'
-
-import PartnersList from '@/UI/partners/PartnersList'
+import { PartnersList } from './PartnersList'
 
 const PageContent = () => {
   const t = useTranslations()
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-8">
       <p>{t('partners.description')}</p>
-      <PartnersList />
+
+      <PartnersList level="peak" />
+      <PartnersList level="ridge" />
+      <PartnersList level="trail" />
 
       <hr />
 
