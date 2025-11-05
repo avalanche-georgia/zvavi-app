@@ -5,7 +5,8 @@ import type { Partner } from '@/data/constants/partners'
 import { Drawer } from '@/UI/components'
 import PartnerInfo from './PartnerInfo'
 
-const badgeClassName = 'flex size-24 items-center justify-center rounded-2xl bg-gray-100 p-2'
+const badgeClassName =
+  'flex size-24 items-center justify-center rounded-2xl bg-gray-100 p-2 flex-none'
 
 const PartnerBadge = ({ partner }: { partner: Partner }) => {
   const { infoKey, logo, name, url } = partner
