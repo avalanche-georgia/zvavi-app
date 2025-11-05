@@ -11,7 +11,7 @@ const intlMiddleware = createMiddleware({
 })
 
 // Files that must stay at the root and should not be locale-prefixed
-const PUBLIC_ROOT_FILES = new Set(['/favicon.ico', '/icon.png', '/apple-icon.png'])
+const publicRootFiles = new Set(['/favicon.ico', '/icon.png', '/apple-icon.png', '/manifest.json'])
 
 export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
@@ -19,7 +19,7 @@ export default async function middleware(request: NextRequest) {
   // If someone requests a locale-prefixed metadata file, redirect to the root one
   const localePattern = locales.join('|')
   const localeFileRegex = new RegExp(
-    `^\\/(${localePattern})\\/(favicon\\.ico|icon\\.png|apple-icon\\.png)$`,
+    `^\\/(${localePattern})\\/(favicon\\.ico|icon\\.png|apple-icon\\.png|manifest\\.json)$`,
   )
   const localeFileMatch = pathname.match(localeFileRegex)
 
@@ -31,7 +31,7 @@ export default async function middleware(request: NextRequest) {
   if (
     pathname.startsWith('/_next') ||
     pathname.startsWith('/api') ||
-    PUBLIC_ROOT_FILES.has(pathname)
+    publicRootFiles.has(pathname)
   ) {
     return NextResponse.next()
   }

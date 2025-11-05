@@ -16,6 +16,8 @@ export const metadata: Metadata = {
   description:
     'Avalanche forecast and weather information for the backcountry skier and snowboarder.',
   other: {
+    'apple-mobile-web-app-capable': 'yes',
+    'apple-mobile-web-app-status-bar-style': 'black-translucent',
     'apple-mobile-web-app-title': 'Avalanche.ge',
   },
   title: 'Avalanche Georgia',
