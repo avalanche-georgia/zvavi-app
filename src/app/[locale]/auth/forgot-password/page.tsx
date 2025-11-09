@@ -4,6 +4,7 @@ import { useCallback, useState } from 'react'
 import { Field, Fieldset, Label, Legend } from '@headlessui/react'
 import { useLocale, useTranslations } from 'next-intl'
 
+import { handleSupabaseError } from '@/data/helpers'
 import { routes } from '@/UI/header/NavMenu/constants'
 import { useToast } from '@/UI/hooks'
 
@@ -13,35 +14,38 @@ import { supabase } from '@/data'
 
 const ForgotPasswordPage = () => {
   const t = useTranslations()
+  const { toastError, toastSuccess } = useToast()
   const locale = useLocale()
-  const { toastSuccess } = useToast()
 
   const [email, setEmail] = useState('')
-  const [errorMessage, setErrorMessage] = useState('')
+  const [isPending, setIsPending] = useState(false)
 
   const handleEmailChange = useCallback(
     ({ target }: React.ChangeEvent<HTMLInputElement>) => setEmail(target.value),
-    [setEmail],
+    [],
   )
 
   const handleSendResetLinkClick = useCallback(
     async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault()
+      setIsPending(true)
 
-      const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        // TODO: Check if window.location.origin works on production
-        redirectTo: `${window.location.origin}/${locale}${routes.setNewPassword}`,
-      })
+      try {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: `${window.location.origin}/${locale}${routes.setNewPassword}`,
+        })
 
-      toastSuccess(t('auth.forgotPassword.messages.sentSuccessfully'))
-
-      if (error) {
-        setErrorMessage(t('auth.forgotPassword.messages.sendFailed'))
-      } else {
-        setErrorMessage('')
+        handleSupabaseError(error)
+        toastSuccess(t('auth.forgotPassword.messages.sentSuccessfully'))
+      } catch (error) {
+        toastError('ForgotPasswordPage | handleSendResetLinkClick', {
+          error,
+        })
+      } finally {
+        setIsPending(false)
       }
     },
-    [email, locale, t, toastSuccess],
+    [email, locale, t, toastError, toastSuccess],
   )
 
   return (
@@ -57,12 +61,10 @@ const ForgotPasswordPage = () => {
             <TextInput className="w-full" onChange={handleEmailChange} required type="email" />
           </Field>
 
-          <Button className="w-full text-center" type="submit">
+          <Button className="w-full text-center" disabled={isPending} type="submit">
             <span className="w-full">{t('auth.forgotPassword.sendResetLink')}</span>
           </Button>
         </Fieldset>
-
-        {errorMessage && <p className="mt-4 text-center text-sm text-red-500">{errorMessage}</p>}
       </form>
     </div>
   )

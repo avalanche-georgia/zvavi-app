@@ -6,7 +6,9 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 
+import { handleSupabaseError } from '@/data/helpers'
 import { routes } from '@/UI/header/NavMenu/constants'
+import { useToast } from '@/UI/hooks'
 
 import { Button, TextInput } from '@/UI/components/inputs'
 
@@ -17,29 +19,33 @@ import { supabase } from '@/data'
 const LoginPage = () => {
   const t = useTranslations()
   const router = useRouter()
+  const { toastError } = useToast()
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [errorMessage, setErrorMessage] = useState('')
+  const [isPending, setIsPending] = useState(false)
 
   const handleSignIn = useCallback(
     async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault()
-      setErrorMessage('')
 
       if (!email || !password) return
 
-      const { error } = await supabase.auth.signInWithPassword({ email, password })
+      setIsPending(true)
 
-      setPassword('')
+      try {
+        const { error } = await supabase.auth.signInWithPassword({ email, password })
 
-      if (error) {
-        setErrorMessage(error.message)
-      } else {
+        setPassword('')
+        handleSupabaseError(error)
         router.push(routes.admin)
+      } catch (error) {
+        toastError('LoginPage | handleSignIn', { error })
+      } finally {
+        setIsPending(false)
       }
     },
-    [email, password, router],
+    [email, password, router, toastError],
   )
 
   const handleEmailChange = useCallback(
@@ -83,12 +89,10 @@ const LoginPage = () => {
           </Field>
 
           {/* TODO: Add loader */}
-          <Button className="w-full text-center" type="submit">
+          <Button className="w-full text-center" disabled={isPending} type="submit">
             <span className="w-full">{t('auth.login.signIn')}</span>
           </Button>
         </Fieldset>
-
-        {errorMessage && <p className="mt-4 text-center text-sm text-red-500">{errorMessage}</p>}
       </form>
     </div>
   )

@@ -108,7 +108,7 @@ auth:
   logout:
     button: 'Sign out'
   forgotPassword:
-    title: 'Forgot Your Password?'
+    title: 'Forgot Password?'
     sendResetLink: 'Send Reset Link'
     messages:
       sendFailed: 'Failed to send reset link. Please try again later.'
