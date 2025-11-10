@@ -16,7 +16,7 @@ import { PartnersScrollBox } from '@/UI/partners/PartnersList'
 
 // Tier 1 and 2 partners only should be displayed on the forecast page
 const partnerList = Object.entries(partners)
-  .filter(([tier]) => tier !== '3')
+  .filter(([tier]) => Number(tier) !== 3)
   .flatMap(([, list]) => list)
   .filter((partner) => !partner.isHidden)
 
