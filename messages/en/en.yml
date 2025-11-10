@@ -74,6 +74,8 @@ forecast:
       noAvalanches: 'Nothing reported yet'
       labels:
         size: 'Size'
+    partners:
+      title: 'Forecast made possible by'
     snowpack:
       title: 'Snowpack'
     weather:

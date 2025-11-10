@@ -1,10 +1,7 @@
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 
-import { links } from '@/UI/constants'
 import { routes } from '@/UI/header/NavMenu/constants'
-
-import { HTMLContainer } from '@/UI/components'
 
 const VolunteerSection = () => {
   const t = useTranslations()
@@ -27,14 +24,6 @@ const VolunteerSection = () => {
           {t('common.actions.seeContactPage')}
         </Link>
       </div>
-
-      <HTMLContainer
-        component="p"
-        content={t.rich('joinUs.page.volunteer.becomeAMember', {
-          a: (chunks) =>
-            `<a class="text-primary underline" href="${links.memberForm}" rel="noreferrer" target="_blank">${chunks}</a>`,
-        })}
-      />
     </section>
   )
 }

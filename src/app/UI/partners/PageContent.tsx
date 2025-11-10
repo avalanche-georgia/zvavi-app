@@ -12,11 +12,9 @@ const PageContent = () => {
     <div className="flex flex-col gap-8">
       <p>{t('partners.description')}</p>
 
-      <PartnersList level="peak" />
-      <PartnersList level="ridge" />
-      <PartnersList level="trail" />
-
-      <hr />
+      <PartnersList tier={1} />
+      <PartnersList tier={2} />
+      <PartnersList tier={3} />
 
       <section className="space-y-3">
         <h3 className="text-xl font-semibold">{t('partners.becomePartner.title')}</h3>

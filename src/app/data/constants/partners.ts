@@ -3,6 +3,7 @@ import { type StaticImageData } from 'next/image'
 import adrenalineLogo from '@/assets/images/partnerLogos/adrenaline.png'
 import buruSportsLogo from '@/assets/images/partnerLogos/burusports.svg'
 import drunkCherryLogo from '@/assets/images/partnerLogos/drunkcherry.png'
+import ozonLogo from '@/assets/images/partnerLogos/ozon.png'
 import snowLabLogo from '@/assets/images/partnerLogos/snowlab.png'
 import vagabondLogo from '@/assets/images/partnerLogos/vagabond.png'
 
@@ -15,10 +16,11 @@ export type Partner = {
   id: string
 }
 
-export type PartnerLevel = 'peak' | 'ridge' | 'trail'
+export type PartnerTier = 1 | 2 | 3
 
-export const partners: Record<PartnerLevel, Partner[]> = {
-  peak: [
+export const partners: Record<PartnerTier, Partner[]> = {
+  1: [],
+  2: [
     {
       id: 'vagabond',
       infoKey: 'partners.info.vagabond',
@@ -26,8 +28,6 @@ export const partners: Record<PartnerLevel, Partner[]> = {
       name: 'Vagabond Adventures',
       url: 'https://vagabondadventures.ge/',
     },
-  ],
-  ridge: [
     {
       id: 'snowlab',
       isHidden: true,
@@ -36,7 +36,14 @@ export const partners: Record<PartnerLevel, Partner[]> = {
       url: 'https://snow-lab.com',
     },
   ],
-  trail: [
+  3: [
+    {
+      id: 'ozon',
+      infoKey: 'partners.info.ozon',
+      logo: ozonLogo,
+      name: 'Ozon Gudauri',
+      url: 'https://www.ozongudauri.com/',
+    },
     {
       id: 'adrenaline',
       infoKey: 'partners.info.adrenaline',

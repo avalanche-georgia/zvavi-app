@@ -38,7 +38,7 @@ const NavMenu = () => (
       <MenuItems
         anchor={{ gap: 4, to: 'bottom end' }}
         className={classnames(
-          'absolute top-full z-20 min-w-56 overflow-hidden rounded-2xl text-sm',
+          'absolute top-full z-50 min-w-56 overflow-hidden rounded-2xl text-sm',
           'bg-gray-800 text-white shadow-lg focus:outline-none',
           'origin-top transition duration-200 ease-in-out data-[closed]:scale-95 data-[closed]:opacity-0',
         )}

@@ -5,9 +5,9 @@ partners:
 
   description: 'We proudly collaborate with organizations that support mountain safety, education, and adventure.'
   levels:
-    peak: 'Peak'
-    ridge: 'Ridge'
-    trail: 'Trail'
+    1: 'Summit'
+    2: 'Fresh Tracks'
+    3: 'Snow Base'
   becomePartner:
     title: 'Want to become a Partner?'
     description: 'We’re always open to collaboration with organizations and individuals who share our mission of mountain safety and education. Let’s make the mountains safer — together.'
@@ -16,3 +16,4 @@ partners:
     adrenaline: 'Local store which offers a wide range of outdoor gear and apparel for all your mountain adventures.'
     buruSports: 'Buru Sports is a store dedicated to providing high-quality outdoor gear and apparel for adventurers of all levels.'
     vagabond: 'Vagabond Adventures are the premier English-speaking (& German, Czech, French et al!) provider of ski/snowboard lessons, ski holiday packages & off-piste guiding at Gudauri, Georgia. With their intimate local knowledge, they also organise fantastic ski safari tours throughout the country, combining resort, off-piste & snowcat skiing with the incredible Georgian culture.'
+    ozon: 'Ozon Gudauri is the riders-for-riders hotel, focused on hosting ski camps and guided groups. It is a home for passionate skiers and snowboarders built around our love to the mountains.'

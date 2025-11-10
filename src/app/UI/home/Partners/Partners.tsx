@@ -5,23 +5,22 @@ import { routes } from '@/UI/header/NavMenu/constants'
 
 import { ButtonLink, PageSection } from '@/UI/components'
 
-import { PartnerBadge } from '@/UI/partners/PartnersList'
+import { PartnersScrollBox } from '@/UI/partners/PartnersList'
+
+const partnerList = Object.entries(partners)
+  .flatMap(([, list]) => list)
+  .filter((partner) => !partner.isHidden)
 
 const Partners = () => {
   const t = useTranslations()
-  const partnerList = Object.values(partners)
-    .flat()
-    .filter((partner) => !partner.isHidden)
 
   return (
     <PageSection title={t('partners.main.title')}>
-      <div className="mb-4 flex gap-2 overflow-x-auto scrollbar-hide">
-        {partnerList.map((partner) => (
-          <PartnerBadge key={partner.id} partner={partner} />
-        ))}
-      </div>
+      <PartnersScrollBox partners={partnerList} />
 
-      <ButtonLink href={routes.partners}>{t('partners.main.seeAllButton')}</ButtonLink>
+      <ButtonLink className="mt-4" href={routes.partners}>
+        {t('partners.main.seeAllButton')}
+      </ButtonLink>
     </PageSection>
   )
 }
