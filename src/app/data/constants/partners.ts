@@ -3,7 +3,7 @@ import { type StaticImageData } from 'next/image'
 import adrenalineLogo from '@/assets/images/partnerLogos/adrenaline.png'
 import buruSportsLogo from '@/assets/images/partnerLogos/burusports.svg'
 import drunkCherryLogo from '@/assets/images/partnerLogos/drunkcherry.png'
-import ozonLogo from '@/assets/images/partnerLogos/ozon.webp'
+import ozonLogo from '@/assets/images/partnerLogos/ozon.png'
 import snowLabLogo from '@/assets/images/partnerLogos/snowlab.png'
 import vagabondLogo from '@/assets/images/partnerLogos/vagabond.png'
 
@@ -16,10 +16,27 @@ export type Partner = {
   id: string
 }
 
-export type PartnerLevel = 'summit' | 'snowBase' | 'freshTracks'
+export type PartnerTier = 1 | 2 | 3
 
-export const partners: Record<PartnerLevel, Partner[]> = {
-  freshTracks: [
+export const partners: Record<PartnerTier, Partner[]> = {
+  1: [],
+  2: [
+    {
+      id: 'vagabond',
+      infoKey: 'partners.info.vagabond',
+      logo: vagabondLogo,
+      name: 'Vagabond Adventures',
+      url: 'https://vagabondadventures.ge/',
+    },
+    {
+      id: 'snowlab',
+      isHidden: true,
+      logo: snowLabLogo,
+      name: 'Snowlab',
+      url: 'https://snow-lab.com',
+    },
+  ],
+  3: [
     {
       id: 'ozon',
       infoKey: 'partners.info.ozon',
@@ -49,21 +66,4 @@ export const partners: Record<PartnerLevel, Partner[]> = {
       url: 'https://burusports.ge/',
     },
   ],
-  snowBase: [
-    {
-      id: 'vagabond',
-      infoKey: 'partners.info.vagabond',
-      logo: vagabondLogo,
-      name: 'Vagabond Adventures',
-      url: 'https://vagabondadventures.ge/',
-    },
-    {
-      id: 'snowlab',
-      isHidden: true,
-      logo: snowLabLogo,
-      name: 'Snowlab',
-      url: 'https://snow-lab.com',
-    },
-  ],
-  summit: [],
 }

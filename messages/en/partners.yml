@@ -5,9 +5,9 @@ partners:
 
   description: 'We proudly collaborate with organizations that support mountain safety, education, and adventure.'
   levels:
-    summit: 'Summit'
-    snowBase: 'Snow Base'
-    freshTracks: 'Fresh Tracks'
+    1: 'Summit'
+    2: 'Fresh Tracks'
+    3: 'Snow Base'
   becomePartner:
     title: 'Want to become a Partner?'
     description: 'We’re always open to collaboration with organizations and individuals who share our mission of mountain safety and education. Let’s make the mountains safer — together.'

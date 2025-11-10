@@ -14,10 +14,10 @@ const SummitPartner = ({ partner }: { partner: Partner }) => {
         className="flex w-full max-w-md flex-col items-center gap-4 rounded-2xl bg-primary/10 p-4"
         type="button"
       >
-        <div className="flex h-[100px] items-center justify-center">
-          <Image alt={`${name} logo`} className="h-full object-contain" src={logo} />
+        <div className="flex items-center justify-center overflow-hidden rounded-xl">
+          <Image alt={`${name} logo`} className="object-contain" height={100} src={logo} />
         </div>
-        <h3 className="text-center text-2xl font-semibold text-gray-900">{name}</h3>
+        <h3 className="text-center text-xl font-semibold text-gray-900">{name}</h3>
       </button>
     </Drawer>
   )
