@@ -1,2 +1,2 @@
-export { default as PartnerBadge } from './PartnerBadge'
 export { default as PartnersList } from './PartnersList'
+export { default as PartnersScrollBox } from './PartnersScrollBox'
