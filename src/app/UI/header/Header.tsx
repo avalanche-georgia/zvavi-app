@@ -31,7 +31,7 @@ const Header = () => {
   }, [router, toastError])
 
   return (
-    <header className="sticky inset-0 z-50 flex items-center justify-between gap-2 bg-white p-4 shadow-md">
+    <header className="sticky inset-0 z-40 flex items-center justify-between gap-2 bg-white p-4 shadow-md">
       <Link className="flex items-center gap-2" href="/">
         <Image alt="Logo" height={32} src={Logo} width={32} />
         <h1 className="text-2xl font-semibold text-primary">Avalanche.ge</h1>

@@ -16,7 +16,7 @@ export const routes = {
 
 export const navMenuItems: NavMenuItem[] = [
   {
-    icon: 'house',
+    icon: 'mountainSnow',
     id: 'home',
     path: '/',
     titleId: 'navigation.home',
