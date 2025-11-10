@@ -5,7 +5,7 @@ import type { Partner } from '@/data/constants/partners'
 import { Drawer } from '@/UI/components'
 import PartnerInfo from './PartnerInfo'
 
-const PeakPartner = ({ partner }: { partner: Partner }) => {
+const SummitPartner = ({ partner }: { partner: Partner }) => {
   const { logo, name } = partner
 
   return (
@@ -23,4 +23,4 @@ const PeakPartner = ({ partner }: { partner: Partner }) => {
   )
 }
 
-export default PeakPartner
+export default SummitPartner

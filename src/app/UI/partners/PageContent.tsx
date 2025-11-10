@@ -12,9 +12,9 @@ const PageContent = () => {
     <div className="flex flex-col gap-8">
       <p>{t('partners.description')}</p>
 
-      <PartnersList level="peak" />
-      <PartnersList level="ridge" />
-      <PartnersList level="trail" />
+      <PartnersList level="summit" />
+      <PartnersList level="snowBase" />
+      <PartnersList level="freshTracks" />
 
       <hr />
 

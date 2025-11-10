@@ -5,13 +5,13 @@ import type { Partner } from '@/data/constants/partners'
 import { Drawer } from '@/UI/components'
 import PartnerInfo from './PartnerInfo'
 
-const RidgePartner = ({ partner }: { partner: Partner }) => {
+const SnowBasePartner = ({ partner }: { partner: Partner }) => {
   const { logo, name } = partner
 
   return (
     <Drawer content={<PartnerInfo partner={partner} />} title={name}>
       <button className="flex items-center gap-2 rounded-xl bg-gray-100 p-3" type="button">
-        <div className="size-20 flex-none">
+        <div className="flex size-20 flex-none items-center justify-center p-1">
           <Image alt={`${name} logo`} className="w-full" src={logo} />
         </div>
 
@@ -21,4 +21,4 @@ const RidgePartner = ({ partner }: { partner: Partner }) => {
   )
 }
 
-export default RidgePartner
+export default SnowBasePartner

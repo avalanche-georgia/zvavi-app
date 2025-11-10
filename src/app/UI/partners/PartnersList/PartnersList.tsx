@@ -4,13 +4,13 @@ import { useTranslations } from 'next-intl'
 import { type Partner, type PartnerLevel, partners } from '@/data/constants/partners'
 
 import PartnerBadge from './PartnerBadge'
-import PeakPartner from './PeakPartner'
-import RidgePartner from './RidgePartner'
+import SnowBasePartner from './SnowBasePartner'
+import SummitPartner from './SummitPartner'
 
 const CardRendererByLevel: Record<PartnerLevel, React.ComponentType<{ partner: Partner }>> = {
-  peak: PeakPartner,
-  ridge: RidgePartner,
-  trail: PartnerBadge,
+  freshTracks: PartnerBadge,
+  snowBase: SnowBasePartner,
+  summit: SummitPartner,
 }
 
 const PartnersList = ({ level }: { level: PartnerLevel }) => {
@@ -29,7 +29,7 @@ const PartnersList = ({ level }: { level: PartnerLevel }) => {
             key={partner.id}
             className={classnames(
               'flex-none',
-              level === 'peak' &&
+              level === 'summit' &&
                 (filteredPartners.length === 1 ? 'w-full' : 'w-[calc(100%-32px)]'),
             )}
           >
