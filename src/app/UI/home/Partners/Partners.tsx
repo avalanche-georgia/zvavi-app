@@ -7,10 +7,13 @@ import { ButtonLink, PageSection } from '@/UI/components'
 
 import { PartnerBadge } from '@/UI/partners/PartnersList'
 
+const order = ['summit', 'snowBase', 'freshTracks']
+
 const Partners = () => {
   const t = useTranslations()
-  const partnerList = Object.values(partners)
-    .flat()
+  const partnerList = Object.entries(partners)
+    .sort(([a], [b]) => order.indexOf(a) - order.indexOf(b))
+    .flatMap(([, list]) => list)
     .filter((partner) => !partner.isHidden)
 
   return (

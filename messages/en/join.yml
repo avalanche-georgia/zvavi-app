@@ -7,12 +7,12 @@ joinUs:
       learnHowToHelp: 'Learn How to Help'
 
   page:
-    description: 'Avalanche Georgia is a volunteer-driven, community-supported project. If you believe in safer mountain travel and want to help, there are many ways you can contribute.'
+    description: 'Avalanche Georgia is a registered non-profit, volunteer-driven, and community-supported organization — owned and managed by its members. If you believe in safer mountain travel and want to help, there are many ways to contribute.'
     volunteer:
       title: 'Volunteer Your Time and Skills'
       descriptionPre: 'We welcome volunteers with diverse skills, especially in these areas:'
       descriptionPost: 'Whether you’re a seasoned expert or just passionate about mountain safety, we’d love to hear from you. -> '
-      becomeAMember: 'Also consider <a>becoming a member</a> of our committee'
+      becomeAMember: 'Anyone can join — <a>Sign up as a member here</a>'
       options:
         - 'Avalanche forecasting & observation (with appropriate training)'
         - 'Software development (React, TypeScript, mapping tools, etc.)'
