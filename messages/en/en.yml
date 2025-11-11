@@ -40,15 +40,15 @@ forecast:
                 - 'Could bury and destroy a car, damage a truck; destroy a small building or break a few trees'
                 - 'Snow avalanche could traverse flat terrain (considerably below 30°) over distances of less than 50 m'
             4:
-                description: 'Very large avalanche'
-                details:
-                    - 'Could bury and destroy a railway car, large truck, several buildings or a piece of forest'
-                    - 'Snow avalanche traverses flat terrain (considerably below 30°) over distances more than 50 m and can reach valley ground'
+              description: 'Very large avalanche'
+              details:
+                - 'Could bury and destroy a railway car, large truck, several buildings or a piece of forest'
+                - 'Snow avalanche traverses flat terrain (considerably below 30°) over distances more than 50 m and can reach valley ground'
             5:
-                description: 'Extremely large avalanche'
-                details:
-                    - 'Could gouge the landscape; disastrous damage potential'
-                    - 'Snow avalanche reaches valley ground; largest runout distance known'
+              description: 'Extremely large avalanche'
+              details:
+                - 'Could gouge the landscape; disastrous damage potential'
+                - 'Snow avalanche reaches valley ground; largest runout distance known'
           sensitivity:
             touchy: 'Avalanches are very sensitive to triggers. Touchy avalanche conditions mean that human triggering is almost certain, and natural avalanches are numerous. Small explosives or triggers will produce numerous avalanche results.'
             reactive: 'Avalanches are sensitive to triggers. Reactive avalanche conditions mean that humans can easily trigger avalanches with slope cuts. Several natural avalanches are expected. Single hand shots or medium-sized cornice drops will result in many avalanches.'
@@ -94,8 +94,11 @@ auth:
   logout:
     button: 'Sign out'
   forgotPassword:
-    title: 'Forgot Your Password?'
+    title: 'Forgot Password?'
     sendResetLink: 'Send Reset Link'
+    messages:
+      sendFailed: 'Failed to send reset link. Please try again later.'
+      sentSuccessfully: 'Reset link sent successfully. Please check your email.'
   setNewPassword:
     title: 'Set New Password'
     setPassword: 'Set Password'
