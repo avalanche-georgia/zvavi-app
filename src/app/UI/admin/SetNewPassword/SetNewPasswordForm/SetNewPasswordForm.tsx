@@ -1,11 +1,10 @@
 'use client'
 
-import { Button, Field, Fieldset, Label, Legend } from '@headlessui/react'
+import { Field, Fieldset, Label, Legend } from '@headlessui/react'
 import { useTranslations } from 'next-intl'
 
-import { useSetNewPassword } from './hooks'
-
-import { TextInput } from '@/UI/components/inputs'
+import { Button, TextInput } from '@/UI/components/inputs'
+import useSetNewPassword from './useSetNewPassword'
 
 const SetNewPasswordPageForm = () => {
   const t = useTranslations()
