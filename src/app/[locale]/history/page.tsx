@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl'
 
-import { useForecastsQuery } from '@/data/hooks'
+import { useHistoryListQuery } from '@/data/hooks/forecasts'
 
 import { Spinner } from '@/UI/components'
 
@@ -11,7 +11,7 @@ import { HistoryList } from '@/UI/history'
 
 const Page = () => {
   const t = useTranslations()
-  const { data: forecasts, isPending } = useForecastsQuery({ status: 'published' })
+  const { data: forecasts, isPending } = useHistoryListQuery()
 
   if (isPending) return <Spinner label={t('common.labels.wait')} size="lg" />
 

@@ -1,7 +1,6 @@
 import type {
   CurrentForecastQueryVariables,
   ForecastQueryVariables,
-  ForecastsQueryVariables,
 } from '../hooks/forecasts/types'
 
 const forecastsKeys = {
@@ -10,7 +9,7 @@ const forecastsKeys = {
   current: (variables: CurrentForecastQueryVariables) =>
     [...forecastsKeys.all, 'current', variables] as const,
   item: (variables: ForecastQueryVariables) => [...forecastsKeys.all, 'item', variables] as const,
-  list: (variables?: ForecastsQueryVariables) => [...forecastsKeys.all, 'list', variables] as const,
+  list: () => [...forecastsKeys.all, 'list'] as const,
 }
 
 export default forecastsKeys

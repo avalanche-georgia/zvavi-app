@@ -25,5 +25,3 @@ export type ForecastStatusToggleVariables = {
 export type CurrentForecastQueryVariables = {
   isShort: boolean
 }
-
-export type ForecastsQueryVariables = { status: Forecast['status'] }

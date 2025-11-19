@@ -7,9 +7,13 @@ import { dateFormat } from '@/business/constants'
 import { hazardIcons } from '@/UI/constants'
 import { routes } from '@/UI/header/NavMenu/constants'
 
-import type { FullForecast } from '@/business/types'
+import type { Forecast } from '@/business/types'
 
-const HistoryList = ({ forecasts }: { forecasts: FullForecast[] }) => (
+type HistoryListProps = {
+  forecasts: Pick<Forecast, 'publishedAt' | 'id' | 'hazardLevels'>[]
+}
+
+const HistoryList = ({ forecasts }: HistoryListProps) => (
   <ul className="flex flex-col items-center">
     {forecasts.map((forecast) => (
       <li key={forecast.id}>
