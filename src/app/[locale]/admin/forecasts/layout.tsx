@@ -1,4 +1,6 @@
-import { getTranslations } from 'next-intl/server'
+'use client'
+
+import { useTranslations } from 'next-intl'
 
 import { PageWrapper } from '@/UI/containers'
 
@@ -6,10 +8,14 @@ type LayoutProps = {
   children: React.ReactNode
 }
 
-const Layout = async ({ children }: Readonly<LayoutProps>) => {
-  const t = await getTranslations()
+const Layout = ({ children }: Readonly<LayoutProps>) => {
+  const t = useTranslations()
 
-  return <PageWrapper title={t('admin.forecasts.title')}>{children}</PageWrapper>
+  return (
+    <PageWrapper isAdmin title={t('admin.forecasts.title')}>
+      {children}
+    </PageWrapper>
+  )
 }
 
 export default Layout
