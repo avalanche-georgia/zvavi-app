@@ -1,4 +1,4 @@
-import classnames from 'classnames'
+import clsx from 'clsx'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 
@@ -19,14 +19,14 @@ const HazardLevelBanner = ({ forecast }: { forecast: Forecast }) => {
 
   return (
     <div
-      className={classnames(
+      className={clsx(
         'flex flex-col gap-4 rounded-2xl p-4',
         backgroundColorByHazardLevel[hazardLevels.overall],
       )}
     >
       <div className="flex items-center justify-between">
         <div
-          className={classnames(
+          className={clsx(
             'flex h-20 flex-col justify-between',
             isExtremeRisk ? 'text-white' : 'text-black',
           )}

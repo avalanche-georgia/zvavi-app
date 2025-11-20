@@ -1,4 +1,4 @@
-import classnames from 'classnames'
+import clsx from 'clsx'
 
 import type { Trend } from '@/business/types'
 
@@ -22,7 +22,7 @@ const TrendIcon = ({ value }: { value: Trend }) => {
 
   return (
     <svg
-      className={classnames('fill-violet-600', rotationClass)}
+      className={clsx('fill-violet-600', rotationClass)}
       height="64"
       viewBox="0 0 52 52"
       width="64"

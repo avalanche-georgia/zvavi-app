@@ -1,4 +1,4 @@
-import classnames from 'classnames'
+import clsx from 'clsx'
 import { format } from 'date-fns'
 import { useTranslations } from 'next-intl'
 
@@ -17,7 +17,7 @@ const ForecastMeta = ({ forecast, isExtremeRisk }: ForecastMetaProps) => {
 
   return (
     <div
-      className={classnames(
+      className={clsx(
         'flex items-start gap-2 text-xs',
         isExtremeRisk ? 'text-white/80' : 'text-black/70',
       )}

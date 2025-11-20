@@ -1,4 +1,4 @@
-import classnames from 'classnames'
+import clsx from 'clsx'
 
 import { containerClassesBySize, iconSizesBySize } from './constants'
 
@@ -9,7 +9,7 @@ const Icon = ({ className, icon, size = 'md' }: IconProps) => {
   const IconRenderer = iconRenderers[icon]
 
   return (
-    <div className={classnames('flex items-center justify-center', containerClassesBySize[size])}>
+    <div className={clsx('flex items-center justify-center', containerClassesBySize[size])}>
       <IconRenderer className={className} size={iconSizesBySize[size]} />
     </div>
   )

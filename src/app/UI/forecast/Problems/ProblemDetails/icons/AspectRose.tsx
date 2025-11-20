@@ -1,4 +1,4 @@
-import classnames from 'classnames'
+import clsx from 'clsx'
 
 import { sortedAspects } from '@/business/constants'
 import { getLabelTransform, getRosePoints, nonRotatingLabels } from './helpers'
@@ -22,7 +22,7 @@ const AspectRose = ({ selectedAspects }: { selectedAspects: Problem['aspects'] }
           return (
             <polygon
               key={`${zone}-${direction}`}
-              className={classnames(
+              className={clsx(
                 'stroke-gray-100',
                 active.has(direction) ? 'fill-violet-600' : 'fill-violet-200',
               )}
@@ -47,7 +47,7 @@ const AspectRose = ({ selectedAspects }: { selectedAspects: Problem['aspects'] }
 
         const textElement = (
           <text
-            className={classnames(
+            className={clsx(
               // eslint-disable-next-line no-nested-ternary
               isDirectionActive
                 ? 'fill-violet-700'

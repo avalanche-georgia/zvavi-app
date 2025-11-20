@@ -1,4 +1,4 @@
-import classnames from 'classnames'
+import clsx from 'clsx'
 import Link, { type LinkProps } from 'next/link'
 
 import { Icon } from '@/UI/components'
@@ -19,7 +19,7 @@ const ButtonLink = ({ children, className, isExternal = false, ...linkProps }: B
   if (isExternal) {
     return (
       <a
-        className={classnames(linkClassName, className)}
+        className={clsx(linkClassName, className)}
         {...(linkProps as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
       >
         <span>{children}</span>
@@ -30,7 +30,7 @@ const ButtonLink = ({ children, className, isExternal = false, ...linkProps }: B
 
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
-    <Link className={classnames(linkClassName, className)} {...(linkProps as LinkProps)}>
+    <Link className={clsx(linkClassName, className)} {...(linkProps as LinkProps)}>
       {children}
     </Link>
   )

@@ -1,5 +1,5 @@
 import { Checkbox as HeadlessUICheckbox, Field, Label } from '@headlessui/react'
-import classnames from 'classnames'
+import clsx from 'clsx'
 
 import { Icon } from '@/UI/components'
 
@@ -16,7 +16,7 @@ const Checkbox = ({ className, isChecked, label, onChange }: CheckboxProps) => (
 
     <HeadlessUICheckbox
       checked={isChecked}
-      className={classnames(
+      className={clsx(
         'group flex size-5 cursor-pointer items-center justify-center rounded-md p-0.5 ring-1',
         'ring-inset ring-white/15 data-[hover]:ring-primary',
         'transition-[background-color,box-shadow] data-[checked]:bg-primary',

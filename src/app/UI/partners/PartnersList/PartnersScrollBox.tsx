@@ -1,4 +1,4 @@
-import classnames from 'classnames'
+import clsx from 'clsx'
 
 import type { Partner } from '@/data/constants/partners'
 
@@ -10,7 +10,7 @@ type PartnersScrollBoxProps = {
 }
 
 const PartnersScrollBox = ({ className, partners }: PartnersScrollBoxProps) => (
-  <ul className={classnames('flex gap-2 overflow-x-auto scrollbar-hide', className)}>
+  <ul className={clsx('flex gap-2 overflow-x-auto scrollbar-hide', className)}>
     {partners.map((partner) => (
       <li key={partner.id}>
         <PartnerBadge partner={partner} />

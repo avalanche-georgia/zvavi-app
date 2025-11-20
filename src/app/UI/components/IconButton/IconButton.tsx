@@ -1,4 +1,4 @@
-import classnames from 'classnames'
+import clsx from 'clsx'
 import type { ButtonHTMLAttributes, DetailedHTMLProps } from 'react'
 
 import { containerClassesBySize, type IconButtonSize, iconSizesBySize } from './constants'
@@ -17,7 +17,7 @@ const IconButton = ({ className, disabled, iconProps, size = 'md', ...props }: I
 
   return (
     <button
-      className={classnames(
+      className={clsx(
         'flex items-center justify-center rounded transition-colors',
         disabled
           ? 'cursor-not-allowed stroke-gray-400'
@@ -30,7 +30,7 @@ const IconButton = ({ className, disabled, iconProps, size = 'md', ...props }: I
       {...props}
     >
       <IconRenderer
-        className={classnames('stroke-inherit', iconClassName)}
+        className={clsx('stroke-inherit', iconClassName)}
         size={iconSizesBySize[size]}
       />
     </button>
