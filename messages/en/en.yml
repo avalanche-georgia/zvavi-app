@@ -6,6 +6,7 @@ navigation:
   home: 'Home'
   joinUs: 'Join Us'
   partners: 'Partners'
+  weatherStations: 'Weather Stations'
 
 modal:
   confirm:
@@ -191,3 +192,10 @@ admin:
           addAvalanche: 'Add Avalanche'
           deleteAvalanche: 'Delete Avalanche?'
           date: 'Date'
+
+weatherStations:
+  description: 'Real-time data from our network of weather stations'
+  stations:
+    ozon: 'Qumlistsikhe, Lower Gudauri, Hotel Ozon (1950m)'
+    kudebi: 'Top of Kudebi Lift (3000m)'
+    altihut: 'Altihut Kazbegi (3014m)'

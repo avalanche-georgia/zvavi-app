@@ -13,8 +13,10 @@ export const routes = {
   login: '/auth/login',
   partners: '/partners',
   setNewPassword: '/auth/set-new-password',
+  weatherStations: '/weather-stations',
 }
 
+// Order is important
 export const navMenuItems: NavMenuItem[] = [
   {
     icon: 'mountainSnow',
@@ -57,5 +59,11 @@ export const navMenuItems: NavMenuItem[] = [
     id: 'contact',
     path: routes.contact,
     titleId: 'navigation.contact',
+  },
+  {
+    icon: 'thermometerSnowflake',
+    id: 'weatherStations',
+    path: routes.weatherStations,
+    titleId: 'navigation.weatherStations',
   },
 ]

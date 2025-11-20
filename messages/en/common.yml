@@ -6,6 +6,7 @@ common:
     delete: 'Delete'
     getInTouch: 'Get in Touch'
     learnMore: 'Learn More'
+    open: 'Open'
     readFullForecast: 'Read Full Forecast'
     save: 'Save'
     seeContactPage: 'See Contact Page'
