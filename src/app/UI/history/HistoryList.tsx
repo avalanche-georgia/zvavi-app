@@ -24,7 +24,12 @@ const HistoryList = ({ forecasts }: HistoryListProps) => (
           )}
           href={`${routes.forecasts}/${forecast.id}`}
         >
-          <Image alt="Risk level" height={48} src={hazardIcons[forecast.hazardLevels.overall]} />
+          <Image
+            alt="Risk level"
+            height={48}
+            src={hazardIcons[forecast.hazardLevels.overall]}
+            width={48}
+          />
           <span className="text-lg">{format(forecast.publishedAt!, dateFormat)}</span>
         </Link>
       </li>

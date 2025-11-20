@@ -17,8 +17,6 @@ const fetchHistoryList: QueryFunction<HistoryListResponse, QueryKey> = async () 
     .eq('status', 'published')
     .order('published_at', { ascending: false })
 
-  console.log('data: ', data)
-
   if (error) {
     throw new Error(error.message)
   }
