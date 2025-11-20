@@ -1,7 +1,7 @@
 'use client'
 
 import { MenuItem as Item } from '@headlessui/react'
-import classnames from 'classnames'
+import clsx from 'clsx'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useTranslations } from 'next-intl'
@@ -19,7 +19,7 @@ const MenuItem = ({ item }: { item: NavMenuItem }) => {
     <Item>
       {({ close }) => (
         <Link
-          className={classnames('flex h-12 items-center px-4', {
+          className={clsx('flex h-12 items-center px-4', {
             'bg-white/10 text-primary': isActive,
           })}
           href={path}

@@ -1,4 +1,4 @@
-import classnames from 'classnames'
+import clsx from 'clsx'
 
 type InputBlockProps = {
   children: React.ReactNode
@@ -8,8 +8,8 @@ type InputBlockProps = {
 }
 
 const InputBlock = ({ children, className, label, labelClassName = 'w-28' }: InputBlockProps) => (
-  <div className={classnames('flex items-center gap-3', className)}>
-    <h4 className={classnames('flex-none font-semibold', labelClassName)}>{label}</h4>
+  <div className={clsx('flex items-center gap-3', className)}>
+    <h4 className={clsx('flex-none font-semibold', labelClassName)}>{label}</h4>
     {children}
   </div>
 )

@@ -29,9 +29,9 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.61.3
         version: 5.61.3(react@19.0.0-rc-66855b96-20241106)
-      classnames:
-        specifier: ^2.5.1
-        version: 2.5.1
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
@@ -1787,9 +1787,6 @@ packages:
   chownr@3.0.0:
     resolution: {integrity: sha512-+IxzY9BZOQd/XuYPRmrvEVjF/nqj5kgT4kEq7VofrDoM1MxoRjEWkrCC3EtLi59TVawxTAn+orJwFQcrqEN1+g==}
     engines: {node: '>=18'}
-
-  classnames@2.5.1:
-    resolution: {integrity: sha512-saHYOzhIQs6wy2sVxTM6bUDsQO4F50V9RQ22qBpEdCW+I+/Wmke2HOl6lS6dTpdxVhb88/I6+Hs+438c3lfUow==}
 
   cli-cursor@5.0.0:
     resolution: {integrity: sha512-aCj4O5wKyszjMmDT4tZj93kxyydN/K5zPWSCe6/0AV/AA1pqe5ZBIw0a2ZfPQV7lL5/yb5HsUreJ6UFAF1tEQw==}
@@ -5507,8 +5504,6 @@ snapshots:
       fsevents: 2.3.3
 
   chownr@3.0.0: {}
-
-  classnames@2.5.1: {}
 
   cli-cursor@5.0.0:
     dependencies:

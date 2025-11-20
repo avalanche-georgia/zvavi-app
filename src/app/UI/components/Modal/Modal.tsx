@@ -1,5 +1,5 @@
 import { CloseButton, Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
-import classnames from 'classnames'
+import clsx from 'clsx'
 
 import { IconButton } from '@/UI/components'
 
@@ -19,7 +19,7 @@ const Modal = ({ children, className, isOpen, onClose, title }: ModalProps) => {
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div className="flex min-h-full items-center justify-center p-8">
           <DialogPanel
-            className={classnames(
+            className={clsx(
               'data-[closed]:transform-[scale(95%)] duration-300 ease-out data-[closed]:opacity-0',
               'max-w-screen-lg rounded-md bg-white',
               className,

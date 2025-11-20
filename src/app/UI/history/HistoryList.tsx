@@ -1,4 +1,4 @@
-import classnames from 'classnames'
+import clsx from 'clsx'
 import { format } from 'date-fns'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -18,7 +18,7 @@ const HistoryList = ({ forecasts }: HistoryListProps) => (
     {forecasts.map((forecast) => (
       <li key={forecast.id}>
         <Link
-          className={classnames(
+          className={clsx(
             'inline-flex items-center gap-3 rounded-lg px-4 py-1',
             'text-gray-700 transition-colors hover:text-black active:bg-primary/10 lg:hover:bg-primary/10',
           )}

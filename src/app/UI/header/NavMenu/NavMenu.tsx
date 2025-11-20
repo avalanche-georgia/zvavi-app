@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import classnames from 'classnames'
+import clsx from 'clsx'
 
 import { navMenuItems } from './constants'
 
@@ -16,7 +16,7 @@ const NavMenu = () => (
         {({ open: isOpen }) => (
           <div className="relative size-6 cursor-pointer">
             <Icon
-              className={classnames(
+              className={clsx(
                 'absolute inset-0 size-6 transition-[opacity,transform] duration-200 ease-in-out',
                 isOpen ? 'scale-90 opacity-0 delay-0' : 'scale-100 opacity-100 delay-100',
               )}
@@ -24,7 +24,7 @@ const NavMenu = () => (
               size="lg"
             />
             <Icon
-              className={classnames(
+              className={clsx(
                 'absolute inset-0 transition-[opacity,transform] duration-200 ease-in-out',
                 isOpen ? 'scale-100 opacity-100 delay-100' : 'scale-90 opacity-0 delay-0',
               )}
@@ -37,7 +37,7 @@ const NavMenu = () => (
 
       <MenuItems
         anchor={{ gap: 4, to: 'bottom end' }}
-        className={classnames(
+        className={clsx(
           'absolute top-full z-50 min-w-56 overflow-hidden rounded-2xl text-sm',
           'bg-gray-800 text-white shadow-lg focus:outline-none',
           'origin-top transition duration-200 ease-in-out data-[closed]:scale-95 data-[closed]:opacity-0',

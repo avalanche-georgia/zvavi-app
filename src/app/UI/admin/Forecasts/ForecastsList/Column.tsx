@@ -1,4 +1,4 @@
-import classnames from 'classnames'
+import clsx from 'clsx'
 
 type ColumnProps = {
   children: React.ReactNode
@@ -6,7 +6,7 @@ type ColumnProps = {
 }
 
 const Column = ({ children, className }: ColumnProps) => (
-  <div className={classnames('w-64', className)}>{children}</div>
+  <div className={clsx('w-64', className)}>{children}</div>
 )
 
 export default Column

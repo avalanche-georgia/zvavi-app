@@ -1,4 +1,4 @@
-import classnames from 'classnames'
+import clsx from 'clsx'
 
 import { type Partner, partners, type PartnerTier } from '@/data/constants/partners'
 
@@ -25,7 +25,7 @@ const PartnersList = ({ tier }: { tier: PartnerTier }) => {
           {filteredPartners.map((partner) => (
             <li
               key={partner.id}
-              className={classnames(
+              className={clsx(
                 'flex-none',
                 tier === 1 && (filteredPartners.length === 1 ? 'w-full' : 'w-[calc(100%-64px)]'),
               )}

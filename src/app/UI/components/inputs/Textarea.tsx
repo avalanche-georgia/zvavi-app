@@ -1,12 +1,12 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { Textarea as HeadlessUITextarea } from '@headlessui/react'
-import classnames from 'classnames'
+import clsx from 'clsx'
 import type { TextareaHTMLAttributes } from 'react'
 
 const Textarea = ({ rows = 3, ...props }: TextareaHTMLAttributes<HTMLTextAreaElement>) => (
   <HeadlessUITextarea
     {...props}
-    className={classnames(
+    className={clsx(
       'resize-none rounded border-none bg-gray-100 px-3 py-1.5 text-sm dark:bg-white/5',
       'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2',
       'transition-colors  data-[focus]:outline-primary/40',

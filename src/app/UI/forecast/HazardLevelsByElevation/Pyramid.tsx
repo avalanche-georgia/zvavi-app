@@ -1,4 +1,4 @@
-import classnames from 'classnames'
+import clsx from 'clsx'
 
 import { hazardLevelsByScale } from '@/business/constants'
 import { backgroundColorByHazardLevel } from '@/UI/constants'
@@ -38,13 +38,13 @@ const Pyramid = ({ hazardLevels }: { hazardLevels: HazardLevelsType }) => {
   return (
     <div className="absolute bottom-0 right-0 flex flex-col items-end gap-[5px] pb-[18px]">
       {elevationZones.map(({ height, id, leftClip, leftWidth, rightClip, zone }) => (
-        <div key={id} className={classnames('flex', height)}>
+        <div key={id} className={clsx('flex', height)}>
           <div
-            className={classnames(leftWidth, backgroundColorByHazardLevel[zone])}
+            className={clsx(leftWidth, backgroundColorByHazardLevel[zone])}
             style={{ clipPath: leftClip }}
           />
           <div
-            className={classnames(
+            className={clsx(
               '-mx-px flex w-[97px] items-end justify-center pb-4',
               backgroundColorByHazardLevel[zone],
             )}
@@ -52,7 +52,7 @@ const Pyramid = ({ hazardLevels }: { hazardLevels: HazardLevelsType }) => {
             <p className="rounded bg-white px-2 py-1 text-xs">{hazardLevelsByScale[zone]}</p>
           </div>
           <div
-            className={classnames('w-4', backgroundColorByHazardLevel[zone])}
+            className={clsx('w-4', backgroundColorByHazardLevel[zone])}
             style={{ clipPath: rightClip }}
           />
         </div>
