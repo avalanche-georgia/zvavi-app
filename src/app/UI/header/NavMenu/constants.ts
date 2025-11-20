@@ -8,6 +8,7 @@ export const routes = {
   currentForecast: '/forecasts/current',
   forecasts: '/forecasts',
   forgotPassword: '/auth/forgot-password',
+  history: '/history',
   joinUs: '/join-us',
   login: '/auth/login',
   partners: '/partners',
@@ -26,6 +27,12 @@ export const navMenuItems: NavMenuItem[] = [
     id: 'currentForecast',
     path: routes.currentForecast,
     titleId: 'navigation.currentForecast',
+  },
+  {
+    icon: 'cloudSnow',
+    id: 'history',
+    path: routes.history,
+    titleId: 'navigation.history',
   },
   {
     icon: 'handshake',

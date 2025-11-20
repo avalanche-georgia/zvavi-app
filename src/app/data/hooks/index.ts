@@ -1,1 +1,1 @@
-export { default as useGetForecasts } from './forecasts/useForecastsQuery'
+export { default as useForecastsQuery } from './forecasts/useForecastsQuery'
