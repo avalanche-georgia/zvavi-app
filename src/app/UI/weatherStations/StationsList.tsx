@@ -1,33 +1,15 @@
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 
+import { weatherStations } from './constants'
+
 import { Icon } from '@/UI/components'
-
-type WeatherStation = {
-  id: string
-  url: string
-}
-
-const weatherStations: WeatherStation[] = [
-  {
-    id: 'ozon',
-    url: 'https://www.wunderground.com/dashboard/pws/I90583577',
-  },
-  {
-    id: 'kudebi',
-    url: 'https://www.wunderground.com/dashboard/pws/IMTSKH9',
-  },
-  {
-    id: 'altihut',
-    url: 'https://www.wunderground.com/dashboard/pws/IMTSKH8',
-  },
-]
 
 const StationsList = () => {
   const t = useTranslations()
 
   return (
-    <ul className="flex flex-col gap-3">
+    <ul className="space-y-3">
       {weatherStations.map((station) => (
         <li
           key={station.id}
