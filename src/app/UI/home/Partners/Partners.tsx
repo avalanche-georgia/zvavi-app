@@ -1,10 +1,10 @@
 import { useTranslations } from 'next-intl'
 
 import { partners } from '@/data/constants/partners'
-import { routes } from '@/UI/header/NavMenu/constants'
 
 import { ButtonLink, PageSection } from '@/UI/components'
 
+import { routes } from '@/routes'
 import { PartnersScrollBox } from '@/UI/partners/PartnersList'
 
 const partnerList = Object.entries(partners)

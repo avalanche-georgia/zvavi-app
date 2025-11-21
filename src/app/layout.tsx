@@ -3,6 +3,7 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 import { Toaster } from 'sonner'
 
+import { Footer, Header } from '@/UI/components'
 import WIPBanner from '@/UI/components/WIPBanner'
 import './globals.css'
 import type { Locale } from '../config'
@@ -10,7 +11,6 @@ import type { Locale } from '../config'
 import { SupabaseContextProvider } from '@/business/context'
 import { QueryClientProvider } from '@/data'
 import { inter } from '@/fonts'
-import { Header } from '@/UI/header'
 
 export const metadata: Metadata = {
   description:
@@ -46,6 +46,7 @@ const Layout = async (props: Readonly<LayoutProps>) => {
               <WIPBanner />
               <Toaster position="top-center" />
               {children}
+              <Footer />
             </SupabaseContextProvider>
           </QueryClientProvider>
         </NextIntlClientProvider>

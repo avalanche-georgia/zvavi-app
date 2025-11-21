@@ -5,9 +5,9 @@ import Link from 'next/link'
 
 import { dateFormat } from '@/business/constants'
 import { hazardIcons } from '@/UI/constants'
-import { routes } from '@/UI/header/NavMenu/constants'
 
 import type { Forecast } from '@/business/types'
+import { routes } from '@/routes'
 
 type HistoryListProps = {
   forecasts: Pick<Forecast, 'publishedAt' | 'id' | 'hazardLevels'>[]

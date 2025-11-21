@@ -1,8 +1,8 @@
 import { useTranslations } from 'next-intl'
 
-import { routes } from '@/UI/header/NavMenu/constants'
-
 import { ButtonLink, PageSection } from '@/UI/components'
+
+import { routes } from '@/routes'
 
 const About = () => {
   const t = useTranslations()

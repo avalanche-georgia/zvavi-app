@@ -1,8 +1,9 @@
-import { NextResponse, type NextRequest } from 'next/server'
 import { createServerClient } from '@supabase/ssr'
+import { type NextRequest, NextResponse } from 'next/server'
 
 import { defaultLocale } from '../../src/config'
-import { routes } from '@/UI/header/NavMenu/constants'
+
+import { routes } from '@/routes'
 
 export async function updateSession(request: NextRequest, response: NextResponse) {
   const supabase = createServerClient(
@@ -18,7 +19,7 @@ export async function updateSession(request: NextRequest, response: NextResponse
           response = NextResponse.next({
             request,
           })
-          cookiesToSet.forEach(({ name, value, options }) =>
+          cookiesToSet.forEach(({ name, options, value }) =>
             response.cookies.set(name, value, options),
           )
         },

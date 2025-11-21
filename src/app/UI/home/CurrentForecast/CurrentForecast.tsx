@@ -1,11 +1,10 @@
 import { useTranslations } from 'next-intl'
 
-import { routes } from '@/UI/header/NavMenu/constants'
-
 import { ButtonLink, Spoiler } from '@/UI/components'
 import { HazardLevelBanner } from '@/UI/components/HazardLevelBanner'
 
 import type { Forecast } from '@/business/types'
+import { routes } from '@/routes'
 
 const CurrentForecast = ({ forecast }: { forecast: Forecast }) => {
   const { summary } = forecast
