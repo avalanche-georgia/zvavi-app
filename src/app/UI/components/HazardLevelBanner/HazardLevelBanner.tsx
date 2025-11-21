@@ -20,7 +20,7 @@ const HazardLevelBanner = ({ forecast }: { forecast: Forecast }) => {
   return (
     <div
       className={clsx(
-        'flex flex-col gap-4 rounded-2xl p-4',
+        'flex flex-col gap-4 rounded-2xl p-4 shadow-md',
         backgroundColorByHazardLevel[hazardLevels.overall],
       )}
     >

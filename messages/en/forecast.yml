@@ -1,0 +1,67 @@
+forecast:
+  previewNote: 'Tap the banner to view full forecast'
+  sections:
+    additionalHazards:
+      title: 'Additional Hazards'
+    avalancheProblems:
+      modal:
+        info:
+          aspects: 'Direction in which a slope faces as indicated by compass direction of the fall line; i.e. a north slope faces in a northerly direction.'
+          size:
+            1:
+              description: 'Small avalanche (sluff).'
+              details:
+                - 'Unlikely to bury a person'
+                - 'Minimal danger of burying (danger of people being carried/falling)'
+                - 'Snow relocation typically stops before the end of a slope'
+            2:
+              description: 'Medium avalanche'
+              details:
+                - 'Could bury, injure or kill a person'
+                - 'Snow avalanche stops typically at the end of a slope'
+            3:
+              description: 'Large avalanche'
+              details:
+                - 'Could bury and destroy a car, damage a truck; destroy a small building or break a few trees'
+                - 'Snow avalanche could traverse flat terrain (considerably below 30°) over distances of less than 50 m'
+            4:
+              description: 'Very large avalanche'
+              details:
+                - 'Could bury and destroy a railway car, large truck, several buildings or a piece of forest'
+                - 'Snow avalanche traverses flat terrain (considerably below 30°) over distances more than 50 m and can reach valley ground'
+            5:
+              description: 'Extremely large avalanche'
+              details:
+                - 'Could gouge the landscape; disastrous damage potential'
+                - 'Snow avalanche reaches valley ground; largest runout distance known'
+          sensitivity:
+            touchy: 'Avalanches are very sensitive to triggers. Touchy avalanche conditions mean that human triggering is almost certain, and natural avalanches are numerous. Small explosives or triggers will produce numerous avalanche results.'
+            reactive: 'Avalanches are sensitive to triggers. Reactive avalanche conditions mean that humans can easily trigger avalanches with slope cuts. Several natural avalanches are expected. Single hand shots or medium-sized cornice drops will result in many avalanches.'
+            stubborn: 'Avalanches are tougher to trigger. Stubborn avalanche conditions mean that it is difficult for humans to trigger avalanches, and only a few natural avalanches are expected. Large explosives, airblasts, and large cornice falls, often in several locations, will result in some avalanches.'
+            unreactive: 'Avalanches can’t be triggered.  Unreactive avalanche conditions mean that human and natural avalanches are not expected. Very large explosives or very large cornice falls in several locations result in no slab avalanches.'
+          distribution:
+            isolated: 'Isolated distribution means that the avalanche problem is spotty and found in only a few terrain features. Evidence of the problem is rare and hard to find.'
+            specific: 'Specific distribution means that the avalanche problem exists in terrain features with common characteristics. Evidence of the problem exists but is not always obvious. Instabilities in this graphic are specific to a certain aspect.'
+            widespread: 'Widespread distribution means that the avalanche problem is found in many locations and terrain features. Evidence of the problem is everywhere and easy to find.'
+          trend:
+            improving: 'Conditions are getting better. The avalanche problem is becoming less of a concern.'
+            deteriorating: 'Conditions are getting worse. The avalanche problem is becoming more of a concern.'
+            noChange: 'Conditions are not changing significantly. The avalanche problem remains similar to previous days.'
+        labels:
+          aspects: 'Aspects'
+          distribution: 'Distribution'
+          sensitivity: 'Sensitivity'
+          size: 'Size'
+          timeOfDay: 'Time of Day'
+          trend: 'Trend'
+    recentAvalanches:
+      title: 'Recent Avalanches'
+      noAvalanches: 'Nothing reported yet'
+      labels:
+        size: 'Size'
+    partners:
+      title: 'Forecast made possible by'
+    snowpack:
+      title: 'Snowpack'
+    weather:
+      title: 'Weather'
