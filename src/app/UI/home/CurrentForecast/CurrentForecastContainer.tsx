@@ -21,13 +21,13 @@ const CurrentForecastContainer = () => {
 
   if (isPending) {
     return (
-      <div className="relative h-36">
+      <div className="relative h-[209px]">
         <Spinner />
       </div>
     )
   }
 
-  if (!currentForecast) return null
+  if (!currentForecast) return <div aria-hidden className="h-[209px]" />
 
   return <CurrentForecast forecast={currentForecast} />
 }
