@@ -35,7 +35,7 @@ const HazardLevelBanner = ({ forecast }: { forecast: Forecast }) => {
           <h4 className="text-3xl font-semibold">{title}</h4>
         </div>
 
-        <Image alt="Risk level" height={80} src={icon} />
+        <Image alt="Risk level" height={80} src={icon} width={80} />
       </div>
 
       <hr className={isExtremeRisk ? 'border-white/20' : 'border-black/20'} />

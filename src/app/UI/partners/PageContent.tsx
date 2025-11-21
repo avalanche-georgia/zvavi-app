@@ -1,9 +1,9 @@
 import { useTranslations } from 'next-intl'
 
-import { routes } from '@/UI/header/NavMenu/constants'
-
 import { ButtonLink } from '@/UI/components'
 import { PartnersList } from './PartnersList'
+
+import { routes } from '@/routes'
 
 const PageContent = () => {
   const t = useTranslations()

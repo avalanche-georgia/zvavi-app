@@ -2,9 +2,10 @@ import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 
 import { links } from '@/UI/constants'
-import { routes } from '@/UI/header/NavMenu/constants'
 
 import { HTMLContainer } from '@/UI/components'
+
+import { routes } from '@/routes'
 
 const FinancialSection = () => {
   const t = useTranslations()

@@ -3,10 +3,10 @@ import { useRouter } from 'next/navigation'
 import { useLocale, useTranslations } from 'next-intl'
 
 import { handleSupabaseError } from '@/data/helpers'
-import { routes } from '@/UI/header/NavMenu/constants'
 import { useToast } from '@/UI/hooks'
 
 import { supabase } from '@/data'
+import { routes } from '@/routes'
 
 const validatePasswords = (password: string, passwordConfirm: string) => {
   return passwordConfirm === password

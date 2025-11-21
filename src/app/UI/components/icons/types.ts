@@ -1,10 +1,13 @@
 import type { Size } from '@/UI/types'
 
 export type IconName =
+  | 'atSign'
   | 'check'
   | 'chevronDown'
   | 'chevronRight'
   | 'cloudSnow'
+  | 'copy'
+  | 'copyCheck'
   | 'externalLink'
   | 'eye'
   | 'eyeOff'
@@ -23,10 +26,12 @@ export type IconName =
   | 'users'
   | 'xMark'
 
+export type BrandIconName = 'facebook' | 'instagram'
+
 type IconSize = Size
 
 export type IconProps = {
   className?: string
-  icon: IconName
+  icon: IconName | BrandIconName
   size?: IconSize
 }

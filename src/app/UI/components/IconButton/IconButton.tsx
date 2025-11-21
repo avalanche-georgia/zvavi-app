@@ -1,13 +1,14 @@
 import clsx from 'clsx'
 import type { ButtonHTMLAttributes, DetailedHTMLProps } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 import { containerClassesBySize, type IconButtonSize, iconSizesBySize } from './constants'
 
-import { iconRenderers } from '@/UI/components/icons'
+import { type IconName, iconRenderers } from '@/UI/components/icons'
 import type { IconProps } from '@/UI/components/icons/types'
 
 type IconButtonProps = {
-  iconProps: IconProps
+  iconProps: Omit<IconProps, 'icon'> & { icon: IconName }
   size?: IconButtonSize
 } & DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
 
@@ -17,13 +18,15 @@ const IconButton = ({ className, disabled, iconProps, size = 'md', ...props }: I
 
   return (
     <button
-      className={clsx(
-        'flex items-center justify-center rounded transition-colors',
-        disabled
-          ? 'cursor-not-allowed stroke-gray-400'
-          : 'stroke-gray-500 hover:bg-black/[0.05] hover:stroke-gray-900',
-        containerClassesBySize[size],
-        className,
+      className={twMerge(
+        clsx(
+          'flex items-center justify-center rounded transition-colors',
+          disabled
+            ? 'cursor-not-allowed stroke-gray-400'
+            : 'stroke-gray-500 hover:stroke-gray-900 lg:hover:bg-black/[0.05]',
+          containerClassesBySize[size],
+          className,
+        ),
       )}
       disabled={disabled}
       type="button"

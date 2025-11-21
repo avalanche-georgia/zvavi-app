@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 
-import { routes } from '@/UI/header/NavMenu/constants'
+import { routes } from '@/routes'
 
 const VolunteerSection = () => {
   const t = useTranslations()

@@ -8,7 +8,7 @@ import PartnerInfo from './PartnerInfo'
 
 const Logo = ({ logo, name }: { logo: StaticImageData; name: string }) => (
   <div className="flex size-full items-center justify-center overflow-hidden rounded-xl">
-    <Image alt={`${name} logo`} className="object-contain" height={80} src={logo} />
+    <Image alt={`${name} logo`} className="object-contain" height={80} src={logo} width={80} />
   </div>
 )
 

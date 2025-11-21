@@ -5,12 +5,12 @@ import { Field, Fieldset, Label, Legend } from '@headlessui/react'
 import { useLocale, useTranslations } from 'next-intl'
 
 import { handleSupabaseError } from '@/data/helpers'
-import { routes } from '@/UI/header/NavMenu/constants'
 import { useToast } from '@/UI/hooks'
 
 import { Button, TextInput } from '@/UI/components/inputs'
 
 import { supabase } from '@/data'
+import { routes } from '@/routes'
 
 const ForgotPasswordPage = () => {
   const t = useTranslations()

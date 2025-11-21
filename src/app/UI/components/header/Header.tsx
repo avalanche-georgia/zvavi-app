@@ -6,7 +6,6 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 
-import { routes } from '@/UI/header/NavMenu/constants'
 import { useAuth, useToast } from '@/UI/hooks'
 
 import Logo from '@/assets/images/logo.png'
@@ -14,6 +13,7 @@ import { Button } from '@/UI/components/inputs'
 import { NavMenu } from './NavMenu'
 
 import { supabase } from '@/data'
+import { routes } from '@/routes'
 
 const Header = () => {
   const router = useRouter()

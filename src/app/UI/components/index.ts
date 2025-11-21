@@ -1,5 +1,7 @@
 export { default as ButtonLink } from './ButtonLink'
 export { Drawer } from './Drawer'
+export { default as Footer } from './Footer'
+export { Header } from './header'
 export { default as HTMLContainer } from './HTMLContainer'
 export { IconButton } from './IconButton'
 export { Icon } from './icons'
