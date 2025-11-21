@@ -1,3 +1,5 @@
+import { useTranslations } from 'next-intl'
+
 import { links } from '@/UI/constants'
 
 import { Icon } from '@/UI/components'
@@ -33,16 +35,30 @@ const contactLinkOptions: Record<string, ContactOption> = {
 }
 /* eslint-enable sort-keys, sort-keys-fix/sort-keys-fix */
 
-const ContactLinkList = () => (
-  <ul className="flex items-center gap-4">
-    {Object.values(contactLinkOptions).map(({ className, href, icon }) => (
-      <li key={icon} className="mb-1">
-        <a className="underline" href={href} rel="noreferrer" target="_blank">
-          <Icon className={className} icon={icon} size="lg" />
-        </a>
-      </li>
-    ))}
-  </ul>
-)
+const ContactLinkList = () => {
+  const t = useTranslations()
+
+  return (
+    <ul className="flex items-center gap-4">
+      {Object.values(contactLinkOptions).map((option) => {
+        const { className, href, icon, labelKey } = option
+
+        return (
+          <li key={icon} className="mb-1">
+            <a
+              aria-label={t(labelKey)}
+              className="underline"
+              href={href}
+              rel="noreferrer"
+              target="_blank"
+            >
+              <Icon className={className} icon={icon} size="lg" />
+            </a>
+          </li>
+        )
+      })}
+    </ul>
+  )
+}
 
 export default ContactLinkList

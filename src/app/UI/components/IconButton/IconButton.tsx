@@ -7,13 +7,13 @@ import { type IconName, iconRenderers } from '@/UI/components/icons'
 import type { IconProps } from '@/UI/components/icons/types'
 
 type IconButtonProps = {
-  iconProps: IconProps
+  iconProps: Omit<IconProps, 'icon'> & { icon: IconName }
   size?: IconButtonSize
 } & DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
 
 const IconButton = ({ className, disabled, iconProps, size = 'md', ...props }: IconButtonProps) => {
   const { className: iconClassName, icon } = iconProps
-  const IconRenderer = iconRenderers[icon as IconName]
+  const IconRenderer = iconRenderers[icon]
 
   return (
     <button

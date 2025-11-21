@@ -21,7 +21,11 @@ const Icon = ({ className, icon, size = 'md' }: IconProps) => {
 
   return (
     <div className={clsx('flex items-center justify-center', containerClassesBySize[size])}>
-      <IconRenderer className={className} size={iconSizesBySize[size]} />
+      {isBrand ? (
+        <IconRenderer className={className} />
+      ) : (
+        <IconRenderer className={className} size={iconSizesBySize[size]} />
+      )}
     </div>
   )
 }
