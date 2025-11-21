@@ -1,3 +1,5 @@
+'use client'
+
 import { useTranslations } from 'next-intl'
 
 import { links } from '@/UI/constants'
@@ -44,14 +46,8 @@ const ContactLinkList = () => {
         const { className, href, icon, labelKey } = option
 
         return (
-          <li key={icon} className="mb-1">
-            <a
-              aria-label={t(labelKey)}
-              className="underline"
-              href={href}
-              rel="noreferrer"
-              target="_blank"
-            >
+          <li key={icon}>
+            <a aria-label={t(labelKey)} href={href} rel="noreferrer" target="_blank">
               <Icon className={className} icon={icon} size="lg" />
             </a>
           </li>

@@ -7,14 +7,14 @@ import InstagramIcon from '@/assets/icons/brand/instagram.svg?component'
 import { iconRenderers } from './icons'
 import type { BrandIconName, IconName, IconProps } from './types'
 
-const brandIcons: BrandIconName[] = ['facebook', 'instagram']
 const brandIconSources: Record<BrandIconName, React.ElementType> = {
   facebook: FacebookIcon,
   instagram: InstagramIcon,
 }
+const brandIcons = Object.keys(brandIconSources)
 
 const Icon = ({ className, icon, size = 'md' }: IconProps) => {
-  const isBrand = brandIcons.includes(icon as BrandIconName)
+  const isBrand = brandIcons.includes(icon)
   const IconRenderer = isBrand
     ? brandIconSources[icon as BrandIconName]
     : iconRenderers[icon as IconName]
