@@ -1,5 +1,6 @@
 import type { LucideIcon } from 'lucide-react'
 import {
+  AtSignIcon,
   CheckIcon,
   ChevronDownIcon,
   ChevronRightIcon,
@@ -26,6 +27,7 @@ import {
 import type { IconName } from '@/UI/components/icons/types'
 
 export const iconRenderers: Record<IconName, LucideIcon> = {
+  atSign: AtSignIcon,
   check: CheckIcon,
   chevronDown: ChevronDownIcon,
   chevronRight: ChevronRightIcon,

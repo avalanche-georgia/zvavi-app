@@ -3,7 +3,7 @@ import type { ButtonHTMLAttributes, DetailedHTMLProps } from 'react'
 
 import { containerClassesBySize, type IconButtonSize, iconSizesBySize } from './constants'
 
-import { iconRenderers } from '@/UI/components/icons'
+import { type IconName, iconRenderers } from '@/UI/components/icons'
 import type { IconProps } from '@/UI/components/icons/types'
 
 type IconButtonProps = {
@@ -13,7 +13,7 @@ type IconButtonProps = {
 
 const IconButton = ({ className, disabled, iconProps, size = 'md', ...props }: IconButtonProps) => {
   const { className: iconClassName, icon } = iconProps
-  const IconRenderer = iconRenderers[icon]
+  const IconRenderer = iconRenderers[icon as IconName]
 
   return (
     <button

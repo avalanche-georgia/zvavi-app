@@ -24,7 +24,13 @@ const Problem = ({ problem }: { problem: ProblemType }) => {
         <div className="flex items-center gap-3">
           <div className="size-12">
             {icon && (
-              <Image alt="Avalanche problem" className="rounded-xl" height={48} src={icon} />
+              <Image
+                alt="Avalanche problem"
+                className="rounded-xl"
+                height={48}
+                src={icon}
+                width={48}
+              />
             )}
           </div>
           <h3 className="font-semibold">
