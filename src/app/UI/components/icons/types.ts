@@ -6,6 +6,8 @@ export type IconName =
   | 'chevronDown'
   | 'chevronRight'
   | 'cloudSnow'
+  | 'copy'
+  | 'copyCheck'
   | 'externalLink'
   | 'eye'
   | 'eyeOff'

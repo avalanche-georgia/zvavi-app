@@ -1,4 +1,4 @@
-import BankRequisitesSection from './BankRequisitesSection'
+import { BankRequisitesSection } from './BankRequisitesSection'
 import EmergencyDisclaimerSection from './EmergencyDisclaimerSection'
 import LinksSection from './LinksSection'
 
