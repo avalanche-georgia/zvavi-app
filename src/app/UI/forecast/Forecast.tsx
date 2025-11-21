@@ -33,7 +33,7 @@ const Forecast = ({ forecast }: { forecast: FullForecast }) => {
   } = forecast
 
   return (
-    <main className="space-y-4">
+    <div className="space-y-4">
       <HazardLevelBanner forecast={forecast} />
       <Spoiler title={t('common.labels.summary')}>
         <p className="text-justify">{summary}</p>
@@ -53,7 +53,7 @@ const Forecast = ({ forecast }: { forecast: FullForecast }) => {
           <PartnersScrollBox partners={partnerList} />
         </PageSection>
       )}
-    </main>
+    </div>
   )
 }
 

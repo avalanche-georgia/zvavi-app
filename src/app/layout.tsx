@@ -38,14 +38,14 @@ const Layout = async (props: Readonly<LayoutProps>) => {
 
   return (
     <html lang={locale}>
-      <body className={`${inter.className} antialiased`}>
+      <body className={`${inter.className} flex min-h-dvh flex-col antialiased`}>
         <NextIntlClientProvider messages={messages}>
           <QueryClientProvider>
             <SupabaseContextProvider>
               <Header />
               <WIPBanner />
               <Toaster position="top-center" />
-              {children}
+              <main className="flex-1">{children}</main>
               <Footer />
             </SupabaseContextProvider>
           </QueryClientProvider>
