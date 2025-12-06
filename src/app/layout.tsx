@@ -1,12 +1,11 @@
 import type { Metadata } from 'next'
 import { NextIntlClientProvider } from 'next-intl'
-import { getMessages } from 'next-intl/server'
+import { getLocale, getMessages } from 'next-intl/server'
 import { Toaster } from 'sonner'
 
 import { Footer, Header } from '@/UI/components'
 import WIPBanner from '@/UI/components/WIPBanner'
 import './globals.css'
-import type { Locale } from '../config'
 
 import { SupabaseContextProvider } from '@/business/context'
 import { QueryClientProvider } from '@/data'
@@ -25,16 +24,11 @@ export const metadata: Metadata = {
 
 type LayoutProps = {
   children: React.ReactNode
-  params: { locale: Locale }
 }
 
-const Layout = async (props: Readonly<LayoutProps>) => {
-  const params = await props.params
-
-  const { children } = props
-
+const Layout = async ({ children }: LayoutProps) => {
+  const locale = await getLocale()
   const messages = await getMessages()
-  const { locale } = params
 
   return (
     <html lang={locale}>
