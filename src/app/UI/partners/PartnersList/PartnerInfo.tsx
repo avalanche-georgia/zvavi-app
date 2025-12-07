@@ -11,7 +11,7 @@ const PartnerInfo = ({ partner }: { partner: Partner }) => {
 
   return (
     <div className="flex flex-col gap-4">
-      {infoKey && <p className="text-justify">{t(infoKey)}</p>}
+      {infoKey && <p className="whitespace-pre-line text-justify">{t(infoKey)}</p>}
       <ButtonLink className="ml-auto" href={url} isExternal rel="noreferrer" target="_blank">
         {t('common.actions.visitWebsite')}
       </ButtonLink>

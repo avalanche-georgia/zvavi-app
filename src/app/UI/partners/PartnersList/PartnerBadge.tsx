@@ -1,28 +1,37 @@
-import type { StaticImageData } from 'next/image'
-import Image from 'next/image'
+import clsx from 'clsx'
 
 import type { Partner } from '@/data/constants/partners'
+import { partners } from '@/data/constants/partners'
 
 import { Drawer } from '@/UI/components'
 import PartnerInfo from './PartnerInfo'
-
-const Logo = ({ logo, name }: { logo: StaticImageData; name: string }) => (
-  <div className="flex size-full items-center justify-center overflow-hidden rounded-xl">
-    <Image alt={`${name} logo`} className="object-contain" height={80} src={logo} width={80} />
-  </div>
-)
-
-const badgeClassName =
-  'flex size-24 items-center justify-center rounded-2xl bg-gray-100 p-2 flex-none'
+import PartnerLogo from './PartnerLogo'
 
 const PartnerBadge = ({ partner }: { partner: Partner }) => {
-  const { infoKey, logo, name, url } = partner
+  const { infoKey, isRounded, logo, name, url } = partner
   const hasInfo = Boolean(infoKey)
+
+  const isTopTier = partners[1].some((topPartner) => topPartner.id === partner.id)
+
+  const badgeClassName = clsx(
+    'flex size-24 flex-none items-center justify-center rounded-2xl p-2',
+    isTopTier ? 'bg-primary/10' : 'bg-gray-100',
+  )
+
+  const logoNode = (
+    <PartnerLogo
+      className="size-full"
+      imageSize={{ height: 80, width: 80 }}
+      isRounded={isRounded}
+      logo={logo}
+      name={name}
+    />
+  )
 
   if (!hasInfo) {
     return (
       <a className={badgeClassName} href={url} rel="noopener noreferrer" target="_blank">
-        <Logo logo={logo} name={name} />
+        {logoNode}
       </a>
     )
   }
@@ -30,7 +39,7 @@ const PartnerBadge = ({ partner }: { partner: Partner }) => {
   return (
     <Drawer content={<PartnerInfo partner={partner} />} title={name}>
       <button className={badgeClassName} type="button">
-        <Logo logo={logo} name={name} />
+        {logoNode}
       </button>
     </Drawer>
   )

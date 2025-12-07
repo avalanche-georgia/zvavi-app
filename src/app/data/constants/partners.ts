@@ -1,25 +1,37 @@
 import { type StaticImageData } from 'next/image'
 
 import adrenalineLogo from '@/assets/images/partnerLogos/adrenaline.png'
-import buruSportsLogo from '@/assets/images/partnerLogos/burusports.svg'
+import buruSportsLogo from '@/assets/images/partnerLogos/burusports.png'
 import drunkCherryLogo from '@/assets/images/partnerLogos/drunkcherry.png'
+import MtaLogo from '@/assets/images/partnerLogos/mta.svg?component'
 import ozonLogo from '@/assets/images/partnerLogos/ozon.png'
 import snowLabLogo from '@/assets/images/partnerLogos/snowlab.png'
 import vagabondLogo from '@/assets/images/partnerLogos/vagabond.png'
 
+export type PartnerLogo = StaticImageData | React.ComponentType<React.SVGProps<SVGSVGElement>>
+
 export type Partner = {
-  isHidden?: boolean
+  id: string
   infoKey?: string
-  logo: StaticImageData
+  isHidden?: boolean
+  isRounded?: boolean
+  logo: PartnerLogo
   name: string
   url: string
-  id: string
 }
 
 export type PartnerTier = 1 | 2 | 3
 
 export const partners: Record<PartnerTier, Partner[]> = {
-  1: [],
+  1: [
+    {
+      id: 'MTA',
+      infoKey: 'partners.info.mta',
+      logo: MtaLogo,
+      name: 'Mountain Trails Agency',
+      url: 'https://mta.ski/',
+    },
+  ],
   2: [
     {
       id: 'vagabond',
@@ -40,6 +52,7 @@ export const partners: Record<PartnerTier, Partner[]> = {
     {
       id: 'ozon',
       infoKey: 'partners.info.ozon',
+      isRounded: true,
       logo: ozonLogo,
       name: 'Ozon Gudauri',
       url: 'https://www.ozongudauri.com/',

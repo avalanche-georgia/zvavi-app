@@ -26,7 +26,7 @@ const PartnersList = ({ tier }: { tier: PartnerTier }) => {
             <li
               key={partner.id}
               className={clsx(
-                'flex-none',
+                'max-w-md flex-none',
                 tier === 1 && (filteredPartners.length === 1 ? 'w-full' : 'w-[calc(100%-64px)]'),
               )}
             >
