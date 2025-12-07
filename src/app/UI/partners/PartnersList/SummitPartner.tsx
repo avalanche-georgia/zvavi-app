@@ -1,21 +1,32 @@
-import Image from 'next/image'
+import clsx from 'clsx'
 
 import type { Partner } from '@/data/constants/partners'
 
 import { Drawer } from '@/UI/components'
 import PartnerInfo from './PartnerInfo'
+import PartnerLogo from './PartnerLogo'
 
 const SummitPartner = ({ partner }: { partner: Partner }) => {
-  const { logo, name } = partner
+  const { isRounded, logo, name } = partner
 
   return (
     <Drawer content={<PartnerInfo partner={partner} />} title={name}>
       <button
-        className="flex w-full max-w-md flex-col items-center gap-4 rounded-2xl bg-primary/10 p-4"
+        className="flex w-full flex-col items-center gap-4 rounded-2xl bg-primary/10 p-4"
         type="button"
       >
-        <div className="flex items-center justify-center overflow-hidden rounded-xl">
-          <Image alt={`${name} logo`} className="object-contain" height={100} src={logo} />
+        <div
+          className={clsx(
+            'inline-flex h-[100px] max-w-[200px] items-center justify-center',
+            isRounded && 'overflow-hidden rounded-xl',
+          )}
+        >
+          <PartnerLogo
+            className="size-full max-w-[200px]"
+            imageSize={{ height: 100 }}
+            logo={logo}
+            name={name}
+          />
         </div>
         <h3 className="text-center text-xl font-semibold text-gray-900">{name}</h3>
       </button>
