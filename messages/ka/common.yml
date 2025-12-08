@@ -1,0 +1,37 @@
+common:
+  actions:
+    add: 'დამატება'
+    cancel: 'გაუქმება'
+    confirm: 'დადასტურება'
+    delete: 'წაშლა'
+    getInTouch: 'დაგვიკავშირდით'
+    learnMore: 'გაიგეთ მეტი'
+    open: 'გახსნა'
+    readFullForecast: 'მთელი პროგნოზი'
+    save: 'შენახვა'
+    seeContactPage: 'საკონტაქტო გვერდი'
+    submit: 'გაგზავნა'
+    visitWebsite: 'ვიზიტი ვებგვერდზე'
+
+  labels:
+    email: 'ელფოსტა'
+    forecaster: 'პროგნოზის ავტორი'
+    issuedAt: 'გამოცემის დრო'
+    overallRiskLevel: 'ზოგადი საფრთხის დონე'
+    summary: 'შეჯამება'
+    validUntil: 'ძალაშია'
+    wait: 'გთხოვთ დაიცადოთ...'
+
+  messages:
+    error: 'დაფიქსირდა შეცდომა. გთხოვთ სცადოთ მოგვიანებით.'
+    success: 'წარმატება.'
+
+  elevationZones:
+    highAlpine: 'ზედა ალპური'
+    alpine: 'ალპური'
+    subAlpine: 'ქვედა ალპური'
+
+  words:
+    from: 'დან'
+    overall: 'საერთო'
+    to: 'მდე'

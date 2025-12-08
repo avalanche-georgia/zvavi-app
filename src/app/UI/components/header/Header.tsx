@@ -9,6 +9,7 @@ import { useTranslations } from 'next-intl'
 import { useAuth, useToast } from '@/UI/hooks'
 
 import Logo from '@/assets/images/logo.png'
+import { LanguageToggle } from '@/UI/components'
 import { Button } from '@/UI/components/inputs'
 import { NavMenu } from './NavMenu'
 
@@ -39,6 +40,8 @@ const Header = () => {
         </Link>
 
         <div className="flex items-center gap-4">
+          <LanguageToggle />
+
           <NavMenu />
 
           {isAuthenticated && (
