@@ -1,5 +1,13 @@
 forecast:
   previewNote: 'Tap the banner to view full forecast'
+
+  hazardLevels:
+    considerable: 'Considerable'
+    extreme: 'Extreme'
+    high: 'High'
+    low: 'Low'
+    moderate: 'Moderate'
+
   sections:
     additionalHazards:
       title: 'Additional Hazards'

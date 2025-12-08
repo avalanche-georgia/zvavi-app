@@ -1,5 +1,13 @@
 forecast:
   previewNote: 'დააწკაპუნეთ ბანერზე სრული პროგნოზისთვის'
+
+  hazardLevels:
+    considerable: 'მნიშვნელოვანი'
+    extreme: 'ექსტრემალური'
+    high: 'მაღალი'
+    low: 'დაბალი'
+    moderate: 'საშუალო'
+
   sections:
     additionalHazards:
       title: 'დამატებითი საფრთხეები'
