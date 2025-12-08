@@ -2,7 +2,7 @@ import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import createMiddleware from 'next-intl/middleware'
 
-import { defaultLocale, locales } from './config'
+import { defaultLocale, locales } from './i18n/config'
 import { updateSession } from '../utils/supabase/middleware'
 
 const intlMiddleware = createMiddleware({

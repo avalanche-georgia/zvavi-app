@@ -19,7 +19,7 @@ const FreshTracksPartner = ({ partner }: { partner: Partner }) => {
           />
         </div>
 
-        <h4 className=" text-lg font-semibold text-gray-900">{name}</h4>
+        <h4 className="text-lg font-semibold text-gray-900">{name}</h4>
       </button>
     </Drawer>
   )
