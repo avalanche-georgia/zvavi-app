@@ -2,9 +2,9 @@
 
 import { MenuItem as Item } from '@headlessui/react'
 import clsx from 'clsx'
-import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useTranslations } from 'next-intl'
+import { Link } from 'src/i18n/navigation'
 
 import { Icon } from '@/UI/components'
 import type { NavMenuItem } from './types'

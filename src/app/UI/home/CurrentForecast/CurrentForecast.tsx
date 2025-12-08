@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'motion/react'
-import Link from 'next/link'
 import { useTranslations } from 'next-intl'
+import { Link } from 'src/i18n/navigation'
 
 import { HazardLevelBanner } from '@/UI/components/HazardLevelBanner'
 

@@ -1,7 +1,7 @@
 'use client'
 
-import Link from 'next/link'
 import { useTranslations } from 'next-intl'
+import { Link } from 'src/i18n/navigation'
 
 import { routes } from '@/routes'
 import { PageWrapper } from '@/UI/containers'
