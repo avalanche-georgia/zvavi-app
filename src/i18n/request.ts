@@ -21,7 +21,8 @@ export default getRequestConfig(async ({ requestLocale }) => {
   if (!locales.includes(locale as Locale)) return notFound()
 
   try {
-    const messages = (await messageFiles[locale as Locale]()).default as AbstractIntlMessages
+    const messages = (await messageFiles[locale as Locale]())
+      .default as unknown as AbstractIntlMessages
 
     return {
       locale,
