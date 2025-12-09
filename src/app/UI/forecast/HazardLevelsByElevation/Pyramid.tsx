@@ -1,12 +1,14 @@
 import clsx from 'clsx'
+import { useTranslations } from 'next-intl'
 
-import { hazardLevelsByScale } from '@/business/constants'
+import { hazardLevelNamesByScale } from '@/business/constants'
 import { backgroundColorByHazardLevel } from '@/UI/constants'
 
 import type { HazardLevels as HazardLevelsType } from '@/business/types'
 
 const Pyramid = ({ hazardLevels }: { hazardLevels: HazardLevelsType }) => {
   const { alpine, highAlpine, subAlpine } = hazardLevels
+  const t = useTranslations()
 
   const elevationZones = [
     {
@@ -49,7 +51,7 @@ const Pyramid = ({ hazardLevels }: { hazardLevels: HazardLevelsType }) => {
               backgroundColorByHazardLevel[zone],
             )}
           >
-            <p className="rounded bg-white px-2 py-1 text-xs">{hazardLevelsByScale[zone]}</p>
+            <p className="rounded bg-white px-2 py-1 text-xs">{t(hazardLevelNamesByScale[zone])}</p>
           </div>
           <div
             className={clsx('w-4', backgroundColorByHazardLevel[zone])}

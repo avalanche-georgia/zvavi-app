@@ -1,20 +1,134 @@
-common:
-  labels:
-    description: "აღწერა"
-    email: "ელ. ფოსტა"
-    password: "პაროლი"
-    confirmPassword: "პაროლის დადასტურება"
-home:
-  title: "მოგესალმებით!"
-  currentForecast:
-    title: "მიმდინარე პროგნოზი"
 navigation:
-  contact: "კონტაქტები"
-  home: "მთავარი"
-  sponsors: "სპონსორები"
-login:
-  title: "შესვლა"
-  signIn: "შესვლა"
-  forgotPassword: "პაროლის დავიწყება?"
-  resetPassword: "პაროლის გადაყვანა"
-  sendResetLink: "გაგზავნეთ გადატვირთვის ბმული"
+  about: 'ჩვენ შესახებ'
+  contact: 'კონტაქტი'
+  currentForecast: 'მიმდინარე პროგნოზი'
+  history: 'წინა პროგნოზები'
+  home: 'მთავარი'
+  joinUs: 'შემოგვიერთდი'
+  partners: 'პარტნიორები'
+  weatherStations: 'ამინდის სადგურები'
+
+modal:
+  confirm:
+    title: 'საჭიროა დადასტურება'
+    description: 'გსურთ გაგრძელება და მოქმედების შესრულება?'
+  delete:
+    title: 'წაშლის დადასტურება?'
+    description: 'წაშლა შეუქცევადია. მაინც გსურთ გაგრძელება?'
+
+auth:
+  errors:
+    invalidSession: 'სესია არასწორია ან ვადაგასულია. გთხოვთ მოითხოვოთ პაროლის აღდგენის ახალი ბმული.'
+  labels:
+    password: 'პაროლი'
+    confirmPassword: 'დაადასტურე პაროლი'
+  login:
+    title: 'შესვლა'
+    signIn: 'შესვლა'
+    forgotPassword: 'დაგავიწყდათ პაროლი?'
+  logout:
+    button: 'გასვლა'
+  forgotPassword:
+    title: 'დაგავიწყდათ პაროლი?'
+    sendResetLink: 'გამოაგზავნე აღდგენის ბმული'
+    messages:
+      sendFailed: 'აღდგენის ბმულის გაგზავნა ვერ მოხერხდა. სცადეთ მოგვიანებით.'
+      sentSuccessfully: 'აღდგენის ბმული წარმატებით გაიგზავნა. შეამოწმეთ ელფოსტა.'
+  setNewPassword:
+    title: 'ახალი პაროლი'
+    setPassword: 'პაროლის დაყენება'
+
+admin:
+  forecasts:
+    title: 'პროგნოზები'
+    list:
+      columns:
+        actions: 'მოქმედებები'
+        createdAt: 'შექმნის თარიღი'
+        forecaster: 'პროგნოზის ავტორი'
+        status: 'სტატუსი'
+        validUntil: 'ძალაშია'
+    deleteForecastModal:
+      title: 'წავშალოთ პროგნოზი?'
+      description: 'გსურთ სამუდამოდ წაშალოთ პროგნოზი პერიოდისთვის'
+    messages:
+      created: 'პროგნოზი წარმატებით შეიქმნა.'
+      deleted: 'პროგნოზი წარმატებით წაიშალა.'
+      published: 'პროგნოზი გამოქვეყნებულია.'
+      unpublished: 'პროგნოზი მოხსნილია გამოქვეყნებიდან.'
+      updated: 'პროგნოზი წარმატებით განახლდა.'
+  forecast:
+    title:
+      create: 'პროგნოზის შექმნა'
+      edit: 'პროგნოზის რედაქტირება'
+    form:
+      general:
+        title: 'ზოგადი ინფორმაცია'
+        labels:
+          additionalHazards: 'დამატებითი საფრთხეები'
+          forecaster: 'პროგნოზის ავტორი'
+          hazardLevels: 'საშიშროების დონეები'
+          snowpack: 'თოვლის საფარი'
+          summary: 'შეჯამება'
+          validUntil: 'ძალაშია'
+          weather: 'ამინდი'
+      common:
+        labels:
+          aspects: 'ექსპოზიციები'
+          avalancheSize: 'ზვავის ზომა'
+          description: 'აღწერა'
+      problems:
+        title: 'ზვავის პრობლემები'
+        noProblems: 'ჯერ არ დამატებულა პრობლემები.'
+        labels:
+          addProblem: 'პრობლემის დამატება'
+          allDay: 'მთელი დღე'
+          confidence: 'სანდოობა'
+          description: 'აღწერა'
+          distribution: 'გავრცელება'
+          problemType: 'პრობლემის ტიპი'
+          sensitivity: 'მგრძნობელობა'
+          timeOfDay: 'დღის დრო'
+          trend: 'ტენდენცია'
+        options:
+          distribution:
+            isolated: 'იზოლირებული'
+            specific: 'კონკრეტული'
+            widespread: 'გაფართოებული'
+          sensitivityLevel:
+            reactive: 'რეაქციული'
+            stubborn: 'რთულად ტრიგერირებადი'
+            touchy: 'ძალიან მგრძნობიარე'
+            unreactive: 'არ რეაგირებს'
+          problemType:
+            cornice: 'ყინულის ქორნისი'
+            deepSlab: 'ღრმა ფენა'
+            glide: 'სრიალა'
+            looseDry: 'ფხვიერი მშრალი'
+            looseWet: 'ფხვიერი სველი'
+            persistentSlab: 'მუდმივი ფენა'
+            stormSlab: 'ქარიშხლის ფენა'
+            wetSlab: 'სველი ფენა'
+            windSlab: 'ქარის ფენა'
+          trend:
+            improving: 'მდგომარეობა უმჯობესდება'
+            deteriorating: 'მდგომარეობა უარესდება'
+            noChange: 'ცვლილება არ არის'
+          confidence:
+            high: 'მაღალი'
+            moderate: 'საშუალო'
+            low: 'დაბალი'
+      recentAvalanches:
+        title: 'ბოლო ზვავები'
+        noAvalanches: 'ჯერ არ დამატებულა ზვავები.'
+        labels:
+          addAvalanche: 'ზვავის დამატება'
+          deleteAvalanche: 'წავშალოთ ზვავი?'
+          date: 'თარიღი'
+
+weatherStations:
+  description: 'რეალურ დროში მონაცემები ჩვენი ამინდის სადგურების ქსელიდან'
+  stations:
+    ozon: 'ქუმლისციხე, ქვედა გუდაური, სასტუმრო ოზონი (1950მ)'
+    kudebi: 'კუდების საბაგიროს წვერი (3000მ)'
+    altihut: 'ალტიჰუტი, ყაზბეგი (3014მ)'

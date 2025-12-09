@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import Link, { type LinkProps } from 'next/link'
+import { Link, type LinkProps } from 'src/i18n/navigation'
 
 import { Icon } from '@/UI/components'
 

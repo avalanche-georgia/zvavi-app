@@ -2,13 +2,13 @@
 
 import { useCallback } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
+import { Link, useRouter } from 'src/i18n/navigation'
 
 import { useAuth, useToast } from '@/UI/hooks'
 
 import Logo from '@/assets/images/logo.png'
+import { LanguageToggle } from '@/UI/components'
 import { Button } from '@/UI/components/inputs'
 import { NavMenu } from './NavMenu'
 
@@ -39,6 +39,8 @@ const Header = () => {
         </Link>
 
         <div className="flex items-center gap-4">
+          <LanguageToggle />
+
           <NavMenu />
 
           {isAuthenticated && (

@@ -2,10 +2,10 @@ import { notFound } from 'next/navigation'
 import type { AbstractIntlMessages } from 'next-intl'
 import { getRequestConfig } from 'next-intl/server'
 
+import { type Locale, locales } from './config'
 import { routing } from './routing'
-import { type Locale, locales } from '../config'
 
-// Whitelist of message file imports to prevent path traversal
+// Whitelist of the message file imports to prevent path traversal
 const messageFiles = {
   en: () => import('../../messages/en.json'),
   ka: () => import('../../messages/ka.json'),
@@ -21,7 +21,8 @@ export default getRequestConfig(async ({ requestLocale }) => {
   if (!locales.includes(locale as Locale)) return notFound()
 
   try {
-    const messages = (await messageFiles[locale as Locale]()).default as AbstractIntlMessages
+    const messages = (await messageFiles[locale as Locale]())
+      .default as unknown as AbstractIntlMessages
 
     return {
       locale,

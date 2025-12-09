@@ -1,7 +1,7 @@
 import { createServerClient } from '@supabase/ssr'
 import { type NextRequest, NextResponse } from 'next/server'
 
-import { defaultLocale } from '../../src/config'
+import { defaultLocale } from '../../src/i18n/config'
 
 import { routes } from '@/routes'
 
