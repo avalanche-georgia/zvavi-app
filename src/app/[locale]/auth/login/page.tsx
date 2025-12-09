@@ -2,9 +2,8 @@
 
 import { useCallback, useState } from 'react'
 import { Field, Fieldset, Label, Legend } from '@headlessui/react'
-import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
-import { Link } from 'src/i18n/navigation'
+import { Link, useRouter } from 'src/i18n/navigation'
 
 import { handleSupabaseError } from '@/data/helpers'
 import { useToast } from '@/UI/hooks'

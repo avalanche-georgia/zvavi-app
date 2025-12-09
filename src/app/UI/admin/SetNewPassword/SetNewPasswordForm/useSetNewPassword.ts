@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { useLocale, useTranslations } from 'next-intl'
+import { useRouter } from 'src/i18n/navigation'
 
 import { handleSupabaseError } from '@/data/helpers'
 import { useToast } from '@/UI/hooks'

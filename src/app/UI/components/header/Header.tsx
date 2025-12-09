@@ -2,9 +2,8 @@
 
 import { useCallback } from 'react'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
-import { Link } from 'src/i18n/navigation'
+import { Link, useRouter } from 'src/i18n/navigation'
 
 import { useAuth, useToast } from '@/UI/hooks'
 

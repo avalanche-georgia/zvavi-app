@@ -1,7 +1,7 @@
 'use client'
 
-import { redirect } from 'next/navigation'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
+import { redirect } from 'src/i18n/navigation'
 
 import { useGetCurrentForecast } from '@/data/hooks/forecasts'
 
@@ -12,11 +12,12 @@ import Forecast from '@/UI/forecast/Forecast'
 
 const CurrentForecastPage = () => {
   const t = useTranslations()
+  const currentLocale = useLocale()
   const { data: forecast, isPending } = useGetCurrentForecast()
 
   if (isPending) return <Spinner label={t('common.labels.wait')} size="lg" />
 
-  if (!forecast) redirect('/')
+  if (!forecast) return redirect({ href: '/', locale: currentLocale })
 
   return (
     <PageWrapper>

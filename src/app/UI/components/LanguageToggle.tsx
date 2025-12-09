@@ -7,15 +7,20 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { defaultLocale, type Locale, locales } from 'src/i18n/config'
 import { useEventCallback } from 'usehooks-ts'
 
+const languageLabels: Record<Locale, string> = {
+  en: '🇬🇧',
+  ka: '🇬🇪',
+}
+
 type LanguageOption = {
   label: string
   value: Locale
 }
 
-const languageOptions: LanguageOption[] = [
-  { label: '🇬🇧', value: 'en' },
-  { label: '🇬🇪', value: 'ka' },
-]
+const languageOptions: LanguageOption[] = locales.map((locale) => ({
+  label: languageLabels[locale] ?? locale,
+  value: locale,
+}))
 
 const LanguageToggle = () => {
   const router = useRouter()
@@ -58,6 +63,7 @@ const LanguageToggle = () => {
       {languageOptions.map(({ label, value }) => (
         <ToggleGroup.Item
           key={value}
+          aria-label={value === 'en' ? 'English' : 'Georgian'}
           className={clsx(
             'relative flex min-w-[44px] items-center justify-center px-1 py-0.5',
             'transition-colors data-[state=on]:bg-slate-600 data-[state=off]:hover:bg-primary/10',

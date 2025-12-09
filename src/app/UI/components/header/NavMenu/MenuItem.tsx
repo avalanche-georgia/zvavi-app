@@ -2,9 +2,8 @@
 
 import { MenuItem as Item } from '@headlessui/react'
 import clsx from 'clsx'
-import { usePathname } from 'next/navigation'
 import { useTranslations } from 'next-intl'
-import { Link } from 'src/i18n/navigation'
+import { Link, usePathname } from 'src/i18n/navigation'
 
 import { Icon } from '@/UI/components'
 import type { NavMenuItem } from './types'
@@ -13,7 +12,7 @@ const MenuItem = ({ item }: { item: NavMenuItem }) => {
   const { icon, path, titleId } = item
   const t = useTranslations()
   const pathname = usePathname()
-  const isActive = pathname.replace(/^\/[a-z]{2}/, '') === (path === '/' ? '' : path)
+  const isActive = pathname === path
 
   return (
     <Item>
