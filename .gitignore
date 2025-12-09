@@ -45,3 +45,4 @@ next-env.d.ts
 AGENTS.md
 # Auto-generated translation files (generated from YAML)
 /messages/*.json
+/messages/translations.csv
