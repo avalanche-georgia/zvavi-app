@@ -3,16 +3,25 @@ import clsx from 'clsx'
 
 import { Icon } from '@/UI/components'
 
+type LabelPosition = 'left' | 'right'
+
 type CheckboxProps = {
   className?: string
   isChecked: boolean
   label?: string
+  labelPosition?: LabelPosition
   onChange: (checked: boolean) => void
 }
 
-const Checkbox = ({ className, isChecked, label, onChange }: CheckboxProps) => (
+const Checkbox = ({
+  className,
+  isChecked,
+  label,
+  labelPosition = 'right',
+  onChange,
+}: CheckboxProps) => (
   <Field className="flex flex-none items-center gap-2">
-    {label && <Label className="cursor-pointer">{label}</Label>}
+    {label && labelPosition === 'left' && <Label className="cursor-pointer">{label}</Label>}
 
     <HeadlessUICheckbox
       checked={isChecked}
@@ -27,6 +36,8 @@ const Checkbox = ({ className, isChecked, label, onChange }: CheckboxProps) => (
     >
       <Icon className="hidden stroke-white group-data-[checked]:block" icon="check" size="sm" />
     </HeadlessUICheckbox>
+
+    {label && labelPosition === 'right' && <Label className="cursor-pointer">{label}</Label>}
   </Field>
 )
 

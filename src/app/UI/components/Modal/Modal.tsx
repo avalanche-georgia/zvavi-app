@@ -6,12 +6,22 @@ import { IconButton } from '@/UI/components'
 export type ModalProps = {
   children: React.ReactNode
   className?: string
+  hideCloseButton?: boolean
   isOpen: boolean
   onClose: () => void
   title?: string
+  titleClassName?: string
 }
 
-const Modal = ({ children, className, isOpen, onClose, title }: ModalProps) => {
+const Modal = ({
+  children,
+  className,
+  hideCloseButton,
+  isOpen,
+  onClose,
+  title,
+  titleClassName,
+}: ModalProps) => {
   return (
     <Dialog as="div" className="relative z-10 focus:outline-none" onClose={onClose} open={isOpen}>
       <DialogBackdrop className="fixed inset-0 bg-black/30" transition />
@@ -28,14 +38,19 @@ const Modal = ({ children, className, isOpen, onClose, title }: ModalProps) => {
           >
             <header className="flex h-14 items-center border-b px-4 lg:h-16 lg:px-6">
               {title && (
-                <DialogTitle as="h4" className="flex-1 text-xl font-semibold">
+                <DialogTitle
+                  as="h4"
+                  className={clsx('flex-1 text-xl font-semibold', titleClassName)}
+                >
                   {title}
                 </DialogTitle>
               )}
 
-              <CloseButton as="div">
-                <IconButton className="ml-auto" iconProps={{ icon: 'xMark' }} size="lg" />
-              </CloseButton>
+              {!hideCloseButton && (
+                <CloseButton as="div">
+                  <IconButton className="ml-auto" iconProps={{ icon: 'xMark' }} size="lg" />
+                </CloseButton>
+              )}
             </header>
 
             {children}

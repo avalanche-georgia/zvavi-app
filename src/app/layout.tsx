@@ -4,6 +4,7 @@ import { getLocale, getMessages } from 'next-intl/server'
 import { Toaster } from 'sonner'
 
 import { Footer, Header } from '@/UI/components'
+import { DisclaimerGate } from '@/UI/components/Disclaimer'
 import WIPBanner from '@/UI/components/WIPBanner'
 import './globals.css'
 
@@ -34,15 +35,17 @@ const Layout = async ({ children }: LayoutProps) => {
     <html lang={locale}>
       <body className={`${inter.className} flex min-h-dvh flex-col antialiased`}>
         <NextIntlClientProvider messages={messages}>
-          <QueryClientProvider>
-            <SupabaseContextProvider>
-              <Header />
-              <WIPBanner />
-              <Toaster position="top-center" />
-              <main className="flex-1">{children}</main>
-              <Footer />
-            </SupabaseContextProvider>
-          </QueryClientProvider>
+          <DisclaimerGate>
+            <QueryClientProvider>
+              <SupabaseContextProvider>
+                <Header />
+                <WIPBanner />
+                <Toaster position="top-center" />
+                <main className="flex-1">{children}</main>
+                <Footer />
+              </SupabaseContextProvider>
+            </QueryClientProvider>
+          </DisclaimerGate>
         </NextIntlClientProvider>
       </body>
     </html>
