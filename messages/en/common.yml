@@ -3,6 +3,7 @@ common:
     add: 'Add'
     cancel: 'Cancel'
     confirm: 'Confirm'
+    continue: 'Continue'
     delete: 'Delete'
     getInTouch: 'Get in Touch'
     learnMore: 'Learn More'
@@ -35,3 +36,8 @@ common:
     from: 'From'
     overall: 'Overall'
     to: 'To'
+
+  disclaimer:
+    title: '⚠️ Disclaimer ⚠️'
+    content: 'Our avalanche forecasters are internationally qualified and experienced professionals, and data is provided by skilled observers. We encourage you to make your own observations and decisions, without relying solely on our forecast, since any forecast is a generalised "best guess", and in certain cases it might be inaccurate. We can not be held liable for any actions you take in the backcountry that may result in injury, loss or death.'
+    checkbox: 'I understand and accept'

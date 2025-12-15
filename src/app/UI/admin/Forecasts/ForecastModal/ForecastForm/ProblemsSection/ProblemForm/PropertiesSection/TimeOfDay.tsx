@@ -57,6 +57,7 @@ const TimeOfDay = ({ onTimeChange, problemData }: TimeOfDayProps) => {
           className="bg-gray-100"
           isChecked={problemData.isAllDay}
           label={tProblems('labels.allDay')}
+          labelPosition="left"
           onChange={handleCheckboxChange}
         />
 
