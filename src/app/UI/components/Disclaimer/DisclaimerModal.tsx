@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 
+import { LanguageToggle } from '@/UI/components'
 import { Button, Checkbox } from '@/UI/components/inputs'
 import { Modal, ModalBody, ModalFooter } from '@/UI/components/Modal'
 
@@ -35,6 +36,10 @@ const DisclaimerModal = ({ onAccept }: { onAccept: VoidFunction }) => {
       </ModalBody>
 
       <ModalFooter>
+        <div>
+          <LanguageToggle />
+        </div>
+
         <Button className="ml-auto" disabled={!isAccepted} onClick={handleClose}>
           {t('common.actions.continue')}
         </Button>
