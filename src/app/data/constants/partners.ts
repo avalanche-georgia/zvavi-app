@@ -1,6 +1,7 @@
 import { type StaticImageData } from 'next/image'
 
 import adrenalineLogo from '@/assets/images/partnerLogos/adrenaline.png'
+import bsaLogo from '@/assets/images/partnerLogos/bsa.png'
 import buruSportsLogo from '@/assets/images/partnerLogos/burusports.png'
 import drunkCherryLogo from '@/assets/images/partnerLogos/drunkcherry.png'
 import MtaLogo from '@/assets/images/partnerLogos/mta.svg?component'
@@ -46,6 +47,13 @@ export const partners: Record<PartnerTier, Partner[]> = {
       logo: snowLabLogo,
       name: 'Snowlab',
       url: 'https://snow-lab.com',
+    },
+    {
+      id: 'bsa',
+      infoKey: 'partners.info.bsa',
+      logo: bsaLogo,
+      name: 'Bakuriani Ski Academy',
+      url: 'https://datosskola.com/',
     },
   ],
   3: [
