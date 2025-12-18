@@ -4,7 +4,7 @@ import { Drawer } from '@/UI/components'
 import PartnerInfo from './PartnerInfo'
 import PartnerLogo from './PartnerLogo'
 
-const FreshTracksPartner = ({ partner }: { partner: Partner }) => {
+const SecondTierPartner = ({ partner }: { partner: Partner }) => {
   const { logo, name } = partner
 
   return (
@@ -25,4 +25,4 @@ const FreshTracksPartner = ({ partner }: { partner: Partner }) => {
   )
 }
 
-export default FreshTracksPartner
+export default SecondTierPartner

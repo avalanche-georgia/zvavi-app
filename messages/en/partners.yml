@@ -1,7 +1,10 @@
 partners:
   main:
-    title: 'Our Partners'
+    title: 'Main Partners'
     seeAllButton: 'See All Partners'
+    placeholder:
+      title: 'Your logo could be here'
+      description: 'Tap to see more info'
 
   description: 'We proudly collaborate with organizations that support mountain safety, education, and adventure.'
   levels:

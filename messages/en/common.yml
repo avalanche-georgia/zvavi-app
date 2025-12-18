@@ -20,6 +20,7 @@ common:
     issuedAt: 'Issued at'
     overallRiskLevel: 'Overall risk level'
     summary: 'Summary'
+    tapForDetails: 'Tap for details'
     validUntil: 'Valid Until'
     wait: 'Please wait...'
     leaveFeedback: 'Leave Feedback'

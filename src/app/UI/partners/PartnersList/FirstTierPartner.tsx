@@ -6,7 +6,7 @@ import { Drawer } from '@/UI/components'
 import PartnerInfo from './PartnerInfo'
 import PartnerLogo from './PartnerLogo'
 
-const SummitPartner = ({ partner }: { partner: Partner }) => {
+const FirstTierPartner = ({ partner }: { partner: Partner }) => {
   const { isRounded, logo, name } = partner
 
   return (
@@ -34,4 +34,4 @@ const SummitPartner = ({ partner }: { partner: Partner }) => {
   )
 }
 
-export default SummitPartner
+export default FirstTierPartner

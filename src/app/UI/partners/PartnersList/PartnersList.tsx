@@ -1,19 +1,20 @@
+'use client'
+
 import clsx from 'clsx'
+import { FirstTierPartner, SecondTierPartner } from 'src/app/UI/partners/PartnersList'
 
 import { type Partner, partners, type PartnerTier } from '@/data/constants/partners'
 
-import FreshTracksPartner from './FreshTracksPartner'
 import PartnerBadge from './PartnerBadge'
-import SummitPartner from './SummitPartner'
 
-const CardRendererByLevel: Record<PartnerTier, React.ComponentType<{ partner: Partner }>> = {
-  1: SummitPartner,
-  2: FreshTracksPartner,
+const CardRendererByTier: Record<PartnerTier, React.ComponentType<{ partner: Partner }>> = {
+  1: FirstTierPartner,
+  2: SecondTierPartner,
   3: PartnerBadge,
 }
 
 const PartnersList = ({ tier }: { tier: PartnerTier }) => {
-  const PartnerComponent = CardRendererByLevel[tier]
+  const PartnerComponent = CardRendererByTier[tier]
   const filteredPartners = partners[tier].filter((partner) => !partner.isHidden)
 
   if (filteredPartners.length === 0) return null

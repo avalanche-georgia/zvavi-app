@@ -2,7 +2,7 @@ import clsx from 'clsx'
 
 import type { Partner } from '@/data/constants/partners'
 
-import PartnerBadge from './PartnerBadge'
+import { MainPartnerCard } from './MainPartnerCard'
 
 type PartnersScrollBoxProps = {
   className?: string
@@ -10,10 +10,16 @@ type PartnersScrollBoxProps = {
 }
 
 const PartnersScrollBox = ({ className, partners }: PartnersScrollBoxProps) => (
-  <ul className={clsx('flex gap-2 overflow-x-auto scrollbar-hide', className)}>
+  <ul
+    className={clsx(
+      'flex gap-2 overflow-x-auto scrollbar-hide',
+      { 'justify-center': partners.length === 1 },
+      className,
+    )}
+  >
     {partners.map((partner) => (
       <li key={partner.id}>
-        <PartnerBadge partner={partner} />
+        <MainPartnerCard partner={partner} />
       </li>
     ))}
   </ul>
