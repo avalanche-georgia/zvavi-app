@@ -67,3 +67,5 @@ export const bankDetailsUSDEUR = {
   address: '5 Luarsab Sharashidze Street, Tbilisi 0108, Georgia',
   code: 'TBCBGE 22',
 }
+
+export const feedbackFormURL = 'https://forms.gle/xAAdyPGbcaTwPR7K6'
