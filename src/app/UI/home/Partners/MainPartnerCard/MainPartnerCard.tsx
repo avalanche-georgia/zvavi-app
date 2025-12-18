@@ -3,8 +3,8 @@ import clsx from 'clsx'
 import type { Partner } from '@/data/constants/partners'
 
 import { Drawer } from '@/UI/components'
-import PartnerInfo from '../PartnerInfo'
-import PartnerLogo from '../PartnerLogo'
+
+import { PartnerInfo, PartnerLogo } from '@/UI/partners/PartnersList'
 
 const MainPartnerCard = ({ partner }: { partner: Partner }) => {
   const { isRounded, logo, name } = partner

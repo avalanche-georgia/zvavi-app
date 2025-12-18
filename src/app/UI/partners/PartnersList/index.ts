@@ -1,5 +1,6 @@
 export { default as FirstTierPartner } from './FirstTierPartner'
-export { MainPartnerCard, MainPartnerPlaceholder } from './MainPartnerCard'
+export { default as PartnerBadge } from './PartnerBadge'
+export { default as PartnerInfo } from './PartnerInfo'
+export { default as PartnerLogo } from './PartnerLogo'
 export { default as PartnersList } from './PartnersList'
-export { default as PartnersScrollBox } from './PartnersScrollBox'
 export { default as SecondTierPartner } from './SecondTierPartner'

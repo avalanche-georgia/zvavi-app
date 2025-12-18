@@ -3,9 +3,10 @@ import { useTranslations } from 'next-intl'
 import { partners } from '@/data/constants/partners'
 
 import { ButtonLink, PageSection } from '@/UI/components'
+import { MainPartnerPlaceholder } from './MainPartnerCard'
+import PartnersScrollBox from './PartnersScrollBox'
 
 import { routes } from '@/routes'
-import { MainPartnerPlaceholder, PartnersScrollBox } from '@/UI/partners/PartnersList'
 
 const partnerList = partners[1].filter((partner) => !partner.isHidden)
 
