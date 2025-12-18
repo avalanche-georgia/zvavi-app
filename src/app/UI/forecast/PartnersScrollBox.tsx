@@ -2,7 +2,7 @@ import clsx from 'clsx'
 
 import type { Partner } from '@/data/constants/partners'
 
-import PartnerBadge from './PartnerBadge'
+import { PartnerBadge } from '@/UI/partners/PartnersList'
 
 type PartnersScrollBoxProps = {
   className?: string

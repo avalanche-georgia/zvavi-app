@@ -3,20 +3,25 @@ import { useTranslations } from 'next-intl'
 import { partners } from '@/data/constants/partners'
 
 import { ButtonLink, PageSection } from '@/UI/components'
+import { MainPartnerPlaceholder } from './MainPartnerCard'
+import PartnersScrollBox from './PartnersScrollBox'
 
 import { routes } from '@/routes'
-import { PartnersScrollBox } from '@/UI/partners/PartnersList'
 
-const partnerList = Object.entries(partners)
-  .flatMap(([, list]) => list)
-  .filter((partner) => !partner.isHidden)
+const partnerList = partners[1].filter((partner) => !partner.isHidden)
 
 const Partners = () => {
   const t = useTranslations()
 
   return (
     <PageSection title={t('partners.main.title')}>
-      <PartnersScrollBox partners={partnerList} />
+      {partnerList.length === 0 ? (
+        <div className="flex justify-center">
+          <MainPartnerPlaceholder />
+        </div>
+      ) : (
+        <PartnersScrollBox partners={partnerList} />
+      )}
 
       <ButtonLink className="mt-4" href={routes.partners}>
         {t('partners.main.seeAllButton')}

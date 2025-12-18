@@ -6,13 +6,13 @@ import { PageSection, Spoiler } from '@/UI/components'
 import { HazardLevelBanner } from '@/UI/components/HazardLevelBanner'
 import AdditionalHazards from './AdditionalHazards'
 import { HazardLevelsByElevation } from './HazardLevelsByElevation'
+import PartnersScrollBox from './PartnersScrollBox'
 import { Problems } from './Problems'
 import { RecentAvalanches } from './RecentAvalanches'
 import Snowpack from './Snowpack'
 import Weather from './Weather'
 
 import type { FullForecast } from '@/business/types'
-import { PartnersScrollBox } from '@/UI/partners/PartnersList'
 
 // Tier 1 and 2 partners only should be displayed on the forecast page
 const partnerList = Object.entries(partners)

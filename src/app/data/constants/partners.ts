@@ -28,6 +28,7 @@ export const partners: Record<PartnerTier, Partner[]> = {
     {
       id: 'MTA',
       infoKey: 'partners.info.mta',
+      isHidden: true,
       logo: MtaLogo,
       name: 'Mountain Trails Agency',
       url: 'https://mta.ski/',
@@ -37,6 +38,7 @@ export const partners: Record<PartnerTier, Partner[]> = {
     {
       id: 'vagabond',
       infoKey: 'partners.info.vagabond',
+      isHidden: true,
       logo: vagabondLogo,
       name: 'Vagabond Adventures',
       url: 'https://vagabondadventures.ge/',
@@ -68,6 +70,7 @@ export const partners: Record<PartnerTier, Partner[]> = {
     {
       id: 'adrenaline',
       infoKey: 'partners.info.adrenaline',
+      isHidden: true,
       logo: adrenalineLogo,
       name: 'Adrenaline',
       url: 'https://www.adrenaline.ge/',
@@ -82,6 +85,7 @@ export const partners: Record<PartnerTier, Partner[]> = {
     {
       id: 'buru-sports',
       infoKey: 'partners.info.buruSports',
+      isHidden: true,
       logo: buruSportsLogo,
       name: 'Buru Sports',
       url: 'https://burusports.ge/',
