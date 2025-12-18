@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/next'
 import type { Metadata } from 'next'
 import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessages } from 'next-intl/server'
@@ -46,6 +47,7 @@ const Layout = async ({ children }: LayoutProps) => {
               </SupabaseContextProvider>
             </QueryClientProvider>
           </DisclaimerGate>
+          <Analytics />
         </NextIntlClientProvider>
       </body>
     </html>
