@@ -20,6 +20,7 @@ common:
     issuedAt: 'გამოცემის დრო'
     overallRiskLevel: 'ზოგადი საფრთხის დონე'
     summary: 'შეჯამება'
+    tapForDetails: 'დეტალების სანახავად შეეხეთ'
     validUntil: 'ძალაშია'
     wait: 'გთხოვთ დაიცადოთ...'
     leaveFeedback: 'მოაწოდეთ გამოხმაურება'
