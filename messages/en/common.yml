@@ -22,6 +22,7 @@ common:
     summary: 'Summary'
     validUntil: 'Valid Until'
     wait: 'Please wait...'
+    leaveFeedback: 'Leave Feedback'
 
   messages:
     error: 'Something went wrong. Please try again later.'

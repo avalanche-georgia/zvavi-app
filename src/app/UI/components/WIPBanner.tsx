@@ -1,8 +1,12 @@
 'use client'
 
+import Link from 'next/link'
+
+import { feedbackFormURL } from '@/UI/constants'
 import { useBoolean } from '@/UI/hooks'
 
 import { Modal } from '@/UI/components/Modal'
+import { Icon } from './icons'
 import { Button } from './inputs'
 
 const WIPBanner = () => {
@@ -37,6 +41,17 @@ const WIPBanner = () => {
           <p className="mb-4 text-justify text-sm">
             Pardon any issues — we’re still ironing things out, so please be gentle! ☺️
           </p>
+
+          <Link
+            className="flex items-center gap-2 text-sm text-primary underline"
+            href={feedbackFormURL}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Leave Feedback
+            <Icon icon="externalLink" size="sm" />
+          </Link>
+
           <Button className="ml-auto" onClick={closeModal}>
             Got it!
           </Button>
