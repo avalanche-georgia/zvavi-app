@@ -17,7 +17,13 @@ const LinksSection = () => {
       <p className="mb-3 whitespace-pre-line text-justify">{t('contact.description')}</p>
       <ContactLinkList />
 
-      <ButtonLink className="mt-4" href={feedbackFormURL} isExternal>
+      <ButtonLink
+        className="mt-4"
+        href={feedbackFormURL}
+        isExternal
+        rel="noopener noreferrer"
+        target="_blank"
+      >
         {t('common.labels.leaveFeedback')}
       </ButtonLink>
     </section>
