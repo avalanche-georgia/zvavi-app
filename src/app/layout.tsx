@@ -1,4 +1,5 @@
 import { Analytics } from '@vercel/analytics/next'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import type { Metadata } from 'next'
 import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessages } from 'next-intl/server'
@@ -44,6 +45,8 @@ const Layout = async ({ children }: LayoutProps) => {
                 <Toaster position="top-center" />
                 <main className="flex-1">{children}</main>
                 <Footer />
+
+                <SpeedInsights />
               </SupabaseContextProvider>
             </QueryClientProvider>
           </DisclaimerGate>
