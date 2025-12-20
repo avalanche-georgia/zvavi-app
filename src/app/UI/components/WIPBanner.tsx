@@ -38,8 +38,16 @@ const WIPBanner = () => {
             so you can hit the slopes with extra peace of mind. Thanks for your patience and for
             riding along with us!
           </p>
-          <p className="mb-4 text-justify text-sm">
+
+          <p className="mb-2 text-justify text-sm">
             Pardon any issues — we’re still ironing things out, so please be gentle! ☺️
+          </p>
+
+          <p className="mb-4 text-justify text-sm">
+            <u>Please note:</u> while you may occasionally encounter minor issues on the{' '}
+            <strong>app side</strong>, our{' '}
+            <strong>avalanche forecasts are produced under strict professional oversight</strong>{' '}
+            and follow established forecasting standards.
           </p>
 
           <Link

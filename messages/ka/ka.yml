@@ -37,6 +37,8 @@ auth:
   setNewPassword:
     title: 'ახალი პაროლი'
     setPassword: 'პაროლის დაყენება'
+    messages:
+      resetSuccessfully: 'პაროლი წარმატებით აღდგენილია. ახლა შეგიძლიათ შეხვიდეთ ახალ პაროლზე.'
 
 admin:
   forecasts:

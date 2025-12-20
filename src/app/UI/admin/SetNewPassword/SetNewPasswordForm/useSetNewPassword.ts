@@ -57,7 +57,7 @@ const useSetNewPassword = () => {
 
         handleSupabaseError(error)
 
-        toastSuccess(t('auth.forgotPassword.messages.sentSuccessfully'))
+        toastSuccess(t('auth.setNewPassword.messages.resetSuccessfully'))
         setTimeout(() => {
           router.push(routes.admin)
           setIsPending(false)
