@@ -1,3 +1,8 @@
+import { Footer, Header } from '@components/layout'
+import { DisclaimerGate } from '@components/shared/Disclaimer'
+import WIPBanner from '@components/shared/WIPBanner'
+import { QueryClientProvider } from '@data'
+import { SupabaseContextProvider } from '@domain/context'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import type { Metadata } from 'next'
@@ -5,13 +10,8 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessages } from 'next-intl/server'
 import { Toaster } from 'sonner'
 
-import { Footer, Header } from '@/UI/components'
-import { DisclaimerGate } from '@/UI/components/Disclaimer'
-import WIPBanner from '@/UI/components/WIPBanner'
 import './globals.css'
 
-import { SupabaseContextProvider } from '@/business/context'
-import { QueryClientProvider } from '@/data'
 import { inter } from '@/fonts'
 
 export const metadata: Metadata = {

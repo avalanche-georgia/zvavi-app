@@ -1,8 +1,6 @@
+import { PageWrapper } from '@components/layout'
+import { HTMLContainer } from '@components/shared'
 import { useTranslations } from 'next-intl'
-
-import { HTMLContainer } from '@/UI/components'
-
-import { PageWrapper } from '@/UI/containers'
 
 const Page = () => {
   const t = useTranslations()

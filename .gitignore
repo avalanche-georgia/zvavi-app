@@ -43,6 +43,8 @@ next-env.d.ts
 # other
 .idea/
 AGENTS.md
+CLAUDE.md
+
 # Auto-generated translation files (generated from YAML)
 /messages/*.json
 /messages/translations.csv

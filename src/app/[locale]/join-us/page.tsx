@@ -1,7 +1,6 @@
+import { PageContent } from '@components/features/join'
+import { PageWrapper } from '@components/layout'
 import { useTranslations } from 'next-intl'
-
-import { PageWrapper } from '@/UI/containers'
-import { PageContent } from '@/UI/join'
 
 const JoinUsPage = () => {
   const t = useTranslations()

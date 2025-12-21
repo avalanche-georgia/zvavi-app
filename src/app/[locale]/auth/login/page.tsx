@@ -1,16 +1,14 @@
 'use client'
 
 import { useCallback, useState } from 'react'
+import { useToast } from '@components/hooks'
+import { Button, TextInput } from '@components/ui'
+import { supabase } from '@data'
+import { handleSupabaseError } from '@data/helpers'
 import { Field, Fieldset, Label, Legend } from '@headlessui/react'
 import { useTranslations } from 'next-intl'
 import { Link, useRouter } from 'src/i18n/navigation'
 
-import { handleSupabaseError } from '@/data/helpers'
-import { useToast } from '@/UI/hooks'
-
-import { Button, TextInput } from '@/UI/components/inputs'
-
-import { supabase } from '@/data'
 import { routes } from '@/routes'
 
 // TODO: Add placeholders

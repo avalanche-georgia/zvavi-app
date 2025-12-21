@@ -1,7 +1,6 @@
+import { PageContent } from '@components/features/contact'
+import { PageWrapper } from '@components/layout'
 import { useTranslations } from 'next-intl'
-
-import { PageContent } from '@/UI/contact'
-import { PageWrapper } from '@/UI/containers'
 
 const ContactPage = () => {
   const t = useTranslations()

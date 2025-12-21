@@ -1,10 +1,10 @@
 'use client'
 
+import { PageWrapper } from '@components/layout'
 import { useTranslations } from 'next-intl'
 import { Link } from 'src/i18n/navigation'
 
 import { routes } from '@/routes'
-import { PageWrapper } from '@/UI/containers'
 
 const AdminPage = () => {
   const t = useTranslations()
