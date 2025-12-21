@@ -1,26 +1,17 @@
-'use client'
+import type { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
 
-import { Forecast } from '@components/features/forecast'
-import { PageWrapper } from '@components/layout'
-import { Spinner } from '@components/ui'
-import { useGetCurrentForecast } from '@data/hooks/forecasts'
-import { useLocale, useTranslations } from 'next-intl'
-import { redirect } from 'src/i18n/navigation'
+import CurrentForecastContent from './CurrentForecastContent'
 
-const CurrentForecastPage = () => {
-  const t = useTranslations()
-  const currentLocale = useLocale()
-  const { data: forecast, isPending } = useGetCurrentForecast()
+export const generateMetadata = async (): Promise<Metadata> => {
+  const t = await getTranslations()
 
-  if (isPending) return <Spinner label={t('common.labels.wait')} size="lg" />
-
-  if (!forecast) return redirect({ href: '/', locale: currentLocale })
-
-  return (
-    <PageWrapper>
-      <Forecast forecast={forecast} />
-    </PageWrapper>
-  )
+  return {
+    description: t('seo.currentForecast.description'),
+    title: t('seo.currentForecast.title'),
+  }
 }
+
+const CurrentForecastPage = () => <CurrentForecastContent />
 
 export default CurrentForecastPage

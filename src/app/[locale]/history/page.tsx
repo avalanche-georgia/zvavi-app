@@ -1,24 +1,17 @@
-'use client'
+import type { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
 
-import { HistoryList } from '@components/features/history'
-import { PageWrapper } from '@components/layout'
-import { Spinner } from '@components/ui'
-import { useHistoryListQuery } from '@data/hooks/forecasts'
-import { useTranslations } from 'next-intl'
+import HistoryContent from './HistoryContent'
 
-const Page = () => {
-  const t = useTranslations()
-  const { data: forecasts, isPending } = useHistoryListQuery()
+export const generateMetadata = async (): Promise<Metadata> => {
+  const t = await getTranslations()
 
-  if (isPending) return <Spinner label={t('common.labels.wait')} size="lg" />
-
-  if (!forecasts) return null
-
-  return (
-    <PageWrapper title={t('navigation.history')}>
-      <HistoryList forecasts={forecasts} />
-    </PageWrapper>
-  )
+  return {
+    description: t('seo.history.description'),
+    title: t('seo.history.title'),
+  }
 }
 
-export default Page
+const HistoryPage = () => <HistoryContent />
+
+export default HistoryPage
