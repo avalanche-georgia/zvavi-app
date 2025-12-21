@@ -1,13 +1,15 @@
 import type { MetadataRoute } from 'next'
 
+import { baseUrl } from '@/routes'
+
 const robots = (): MetadataRoute.Robots => ({
-  host: 'https://avalanche.ge',
+  host: baseUrl,
   rules: {
     allow: '/',
     disallow: ['/*/admin/', '/*/auth/'],
     userAgent: '*',
   },
-  sitemap: 'https://avalanche.ge/sitemap.xml',
+  sitemap: `${baseUrl}/sitemap.xml`,
 })
 
 export default robots

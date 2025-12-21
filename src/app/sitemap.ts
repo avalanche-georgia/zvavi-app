@@ -1,9 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { locales } from 'src/i18n/config'
 
-import { routes } from '@/routes'
-
-const baseUrl = 'https://avalanche.ge'
+import { baseUrl, routes } from '@/routes'
 
 type SitemapEntry = {
   changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency']
