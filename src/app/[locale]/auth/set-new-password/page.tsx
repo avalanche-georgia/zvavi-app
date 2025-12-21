@@ -1,6 +1,6 @@
 'use client'
 
-import { SetNewPasswordForm } from '@/UI/admin/SetNewPassword/SetNewPasswordForm'
+import { SetNewPasswordForm } from '@components/features/admin/SetNewPassword/SetNewPasswordForm'
 
 const SetNewPasswordPage = () => {
   return <SetNewPasswordForm />

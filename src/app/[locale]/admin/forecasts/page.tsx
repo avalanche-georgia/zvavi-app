@@ -1,12 +1,9 @@
 'use client'
 
+import { ForecastsList } from '@components/features/admin/Forecasts/ForecastsList'
+import { Spinner } from '@components/shared'
+import { useForecastsQuery } from '@data/hooks'
 import { useTranslations } from 'next-intl'
-
-import { useForecastsQuery } from '@/data/hooks'
-
-import { Spinner } from '@/UI/components'
-
-import { ForecastsList } from '@/UI/admin/Forecasts/ForecastsList'
 
 const ForecastPage = () => {
   const t = useTranslations()

@@ -1,13 +1,10 @@
 'use client'
 
+import { HistoryList } from '@components/features/history'
+import { PageWrapper } from '@components/layout'
+import { Spinner } from '@components/shared'
+import { useHistoryListQuery } from '@data/hooks/forecasts'
 import { useTranslations } from 'next-intl'
-
-import { useHistoryListQuery } from '@/data/hooks/forecasts'
-
-import { Spinner } from '@/UI/components'
-
-import { PageWrapper } from '@/UI/containers'
-import { HistoryList } from '@/UI/history'
 
 const Page = () => {
   const t = useTranslations()

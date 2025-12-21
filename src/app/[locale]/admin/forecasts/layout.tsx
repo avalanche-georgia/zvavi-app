@@ -1,8 +1,7 @@
 'use client'
 
+import { PageWrapper } from '@components/layout'
 import { useTranslations } from 'next-intl'
-
-import { PageWrapper } from '@/UI/containers'
 
 type LayoutProps = {
   children: React.ReactNode

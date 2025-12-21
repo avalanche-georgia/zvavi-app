@@ -1,7 +1,0 @@
-export { default as Button } from './Button'
-export { default as Checkbox } from './Checkbox'
-export { default as DatePicker } from './DatePicker'
-export { default as RadioGroup } from './RadioGroup'
-export { default as Textarea } from './Textarea'
-export { default as TextInput } from './TextInput'
-export * from './types'
