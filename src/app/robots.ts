@@ -4,7 +4,7 @@ const robots = (): MetadataRoute.Robots => ({
   host: 'https://avalanche.ge',
   rules: {
     allow: '/',
-    disallow: ['/admin/', '/auth/'],
+    disallow: ['/*/admin/', '/*/auth/'],
     userAgent: '*',
   },
   sitemap: 'https://avalanche.ge/sitemap.xml',
