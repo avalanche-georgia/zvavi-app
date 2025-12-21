@@ -39,6 +39,18 @@ const sitemap = (): MetadataRoute.Sitemap => [
     priority: 0.5,
     url: `https://avalanche.ge${routes.joinUs}`,
   },
+  {
+    changeFrequency: 'weekly',
+    lastModified: new Date(),
+    priority: 0.8,
+    url: `https://avalanche.ge${routes.history}`,
+  },
+  {
+    changeFrequency: 'monthly',
+    lastModified: new Date(),
+    priority: 0.8,
+    url: `https://avalanche.ge${routes.weatherStations}`,
+  },
 ]
 
 export default sitemap

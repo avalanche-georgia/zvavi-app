@@ -14,9 +14,11 @@ import './globals.css'
 
 import { inter } from '@/fonts'
 
+const siteDescription =
+  'Avalanche forecast for Gudauri and Georgian backcountry. Weather and snow conditions for skiers and snowboarders.'
+
 export const metadata: Metadata = {
-  description:
-    'Avalanche forecast for Gudauri and Georgian backcountry. Weather and snow conditions for skiers and snowboarders.',
+  description: siteDescription,
   keywords: [
     'avalanche',
     'avalanche forecast',
@@ -32,8 +34,7 @@ export const metadata: Metadata = {
   ],
   metadataBase: new URL('https://avalanche.ge'),
   openGraph: {
-    description:
-      'Avalanche forecast for Gudauri and Georgian backcountry. Weather and snow conditions for skiers and snowboarders.',
+    description: siteDescription,
     locale: 'en',
     siteName: 'Avalanche Georgia',
     title: 'Avalanche Georgia',
@@ -48,8 +49,7 @@ export const metadata: Metadata = {
   title: 'Avalanche Georgia',
   twitter: {
     card: 'summary_large_image',
-    description:
-      'Avalanche forecast for Gudauri and Georgian backcountry. Weather and snow conditions for skiers and snowboarders.',
+    description: siteDescription,
     title: 'Avalanche Georgia',
   },
 }
