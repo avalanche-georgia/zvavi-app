@@ -12,7 +12,16 @@ const intlMiddleware = createMiddleware({
 })
 
 // Files that must stay at the root and should not be locale-prefixed
-const publicRootFiles = new Set(['/favicon.ico', '/icon.png', '/apple-icon.png', '/manifest.json'])
+const publicRootFiles = new Set([
+  '/apple-icon.png',
+  '/favicon.ico',
+  '/icon.png',
+  '/manifest.json',
+  '/opengraph-image',
+  '/robots.txt',
+  '/sitemap.xml',
+  '/twitter-image',
+])
 
 export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl

@@ -16,13 +16,42 @@ import { inter } from '@/fonts'
 
 export const metadata: Metadata = {
   description:
-    'Avalanche forecast and weather information for the backcountry skier and snowboarder.',
+    'Avalanche forecast for Gudauri and Georgian backcountry. Weather and snow conditions for skiers and snowboarders.',
+  keywords: [
+    'avalanche',
+    'avalanche forecast',
+    'Georgia',
+    'Gudauri',
+    'backcountry skiing',
+    'freeride',
+    'snow conditions',
+    'avalanche danger',
+    'ზვავი',
+    'ზვავის პროგნოზი',
+    'გუდაური',
+  ],
+  metadataBase: new URL('https://avalanche.ge'),
+  openGraph: {
+    description:
+      'Avalanche forecast for Gudauri and Georgian backcountry. Weather and snow conditions for skiers and snowboarders.',
+    locale: 'en',
+    siteName: 'Avalanche Georgia',
+    title: 'Avalanche Georgia',
+    type: 'website',
+    url: 'https://avalanche.ge',
+  },
   other: {
     'apple-mobile-web-app-capable': 'yes',
     'apple-mobile-web-app-status-bar-style': 'black-translucent',
     'apple-mobile-web-app-title': 'Avalanche.ge',
   },
   title: 'Avalanche Georgia',
+  twitter: {
+    card: 'summary_large_image',
+    description:
+      'Avalanche forecast for Gudauri and Georgian backcountry. Weather and snow conditions for skiers and snowboarders.',
+    title: 'Avalanche Georgia',
+  },
 }
 
 type LayoutProps = {
