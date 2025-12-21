@@ -1,6 +1,17 @@
 import { PageWrapper } from '@components/layout'
 import { HTMLContainer } from '@components/shared'
+import type { Metadata } from 'next'
 import { useTranslations } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
+
+export const generateMetadata = async (): Promise<Metadata> => {
+  const t = await getTranslations()
+
+  return {
+    description: t('seo.about.description'),
+    title: t('seo.about.title'),
+  }
+}
 
 const Page = () => {
   const t = useTranslations()

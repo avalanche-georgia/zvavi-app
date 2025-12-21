@@ -13,16 +13,50 @@ import { Toaster } from 'sonner'
 import './globals.css'
 
 import { inter } from '@/fonts'
+import { baseUrl } from '@/routes'
 
-export const metadata: Metadata = {
-  description:
-    'Avalanche forecast and weather information for the backcountry skier and snowboarder.',
-  other: {
-    'apple-mobile-web-app-capable': 'yes',
-    'apple-mobile-web-app-status-bar-style': 'black-translucent',
-    'apple-mobile-web-app-title': 'Avalanche.ge',
-  },
-  title: 'Avalanche Georgia',
+const siteDescription =
+  'Avalanche forecast for Gudauri and Georgian backcountry. Weather and snow conditions for skiers and snowboarders.'
+
+export const generateMetadata = async (): Promise<Metadata> => {
+  const locale = await getLocale()
+
+  return {
+    description: siteDescription,
+    keywords: [
+      'avalanche',
+      'avalanche forecast',
+      'Georgia',
+      'Gudauri',
+      'backcountry skiing',
+      'freeride',
+      'snow conditions',
+      'avalanche danger',
+      'ზვავი',
+      'ზვავის პროგნოზი',
+      'გუდაური',
+    ],
+    metadataBase: new URL(baseUrl),
+    openGraph: {
+      description: siteDescription,
+      locale,
+      siteName: 'Avalanche Georgia',
+      title: 'Avalanche Georgia',
+      type: 'website',
+      url: baseUrl,
+    },
+    other: {
+      'apple-mobile-web-app-capable': 'yes',
+      'apple-mobile-web-app-status-bar-style': 'black-translucent',
+      'apple-mobile-web-app-title': 'Avalanche.ge',
+    },
+    title: 'Avalanche Georgia',
+    twitter: {
+      card: 'summary_large_image',
+      description: siteDescription,
+      title: 'Avalanche Georgia',
+    },
+  }
 }
 
 type LayoutProps = {

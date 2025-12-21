@@ -1,3 +1,5 @@
+export const baseUrl = 'https://avalanche.ge'
+
 export const routes = {
   about: '/about',
   admin: '/admin',
