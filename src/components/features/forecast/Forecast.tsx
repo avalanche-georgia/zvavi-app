@@ -1,5 +1,5 @@
-import { PageSection, Spoiler } from '@components/shared'
-import { HazardLevelBanner } from '@components/shared/HazardLevelBanner'
+import { PageSection } from '@components/layout'
+import { HazardLevelBanner, Spoiler } from '@components/shared'
 import { partners } from '@data/constants/partners'
 import type { FullForecast } from '@domain/types'
 import { useTranslations } from 'next-intl'

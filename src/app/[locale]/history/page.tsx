@@ -2,7 +2,7 @@
 
 import { HistoryList } from '@components/features/history'
 import { PageWrapper } from '@components/layout'
-import { Spinner } from '@components/shared'
+import { Spinner } from '@components/ui'
 import { useHistoryListQuery } from '@data/hooks/forecasts'
 import { useTranslations } from 'next-intl'
 

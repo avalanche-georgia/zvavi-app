@@ -1,5 +1,5 @@
 import { useBoolean, useToast } from '@components/hooks'
-import { ConfirmationDialog } from '@components/shared/ConfirmationDialog'
+import { ConfirmationDialog } from '@components/shared'
 import { useForecastDelete, useForecastStatusToggle } from '@data/hooks/forecasts'
 import { dateFormat } from '@domain/constants'
 import type { FullForecast } from '@domain/types'

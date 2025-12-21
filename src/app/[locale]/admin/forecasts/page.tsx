@@ -1,7 +1,7 @@
 'use client'
 
 import { ForecastsList } from '@components/features/admin/Forecasts/ForecastsList'
-import { Spinner } from '@components/shared'
+import { Spinner } from '@components/ui'
 import { useForecastsQuery } from '@data/hooks'
 import { useTranslations } from 'next-intl'
 

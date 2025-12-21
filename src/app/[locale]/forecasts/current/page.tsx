@@ -1,8 +1,8 @@
 'use client'
 
-import Forecast from '@components/features/forecast/Forecast'
+import { Forecast } from '@components/features/forecast'
 import { PageWrapper } from '@components/layout'
-import { Spinner } from '@components/shared'
+import { Spinner } from '@components/ui'
 import { useGetCurrentForecast } from '@data/hooks/forecasts'
 import { useLocale, useTranslations } from 'next-intl'
 import { redirect } from 'src/i18n/navigation'

@@ -1,6 +1,5 @@
-import { Drawer } from '@components/shared'
-import type { Partner } from '@data/constants/partners'
-import { partners } from '@data/constants/partners'
+import { Drawer } from '@components/ui'
+import { type Partner, partners } from '@data/constants/partners'
 import clsx from 'clsx'
 
 import PartnerInfo from './PartnerInfo'

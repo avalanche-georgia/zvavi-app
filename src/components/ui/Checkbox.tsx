@@ -1,4 +1,4 @@
-import { Icon } from '@components/shared'
+import { Icon } from '@components/icons'
 import { Checkbox as HeadlessUICheckbox, Field, Label } from '@headlessui/react'
 import clsx from 'clsx'
 

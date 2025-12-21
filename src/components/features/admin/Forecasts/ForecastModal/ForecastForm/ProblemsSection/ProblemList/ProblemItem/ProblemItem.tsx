@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { useBoolean } from '@components/hooks'
-import { ConfirmationDialog } from '@components/shared/ConfirmationDialog'
+import { ConfirmationDialog } from '@components/shared'
 import type { Problem } from '@domain/types'
 import { useTranslations } from 'next-intl'
 

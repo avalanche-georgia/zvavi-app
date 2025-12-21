@@ -1,4 +1,4 @@
-import { Icon } from '@components/shared'
+import { Icon } from '@components/icons'
 import clsx from 'clsx'
 import { Link, type LinkProps } from 'src/i18n/navigation'
 

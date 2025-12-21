@@ -1,5 +1,4 @@
-import { type IconName, iconRenderers } from '@components/icons'
-import type { IconProps } from '@components/icons/types'
+import { type IconName, type IconProps, iconRenderers } from '@components/icons'
 import clsx from 'clsx'
 import type { ButtonHTMLAttributes, DetailedHTMLProps } from 'react'
 import { twMerge } from 'tailwind-merge'

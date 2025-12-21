@@ -1,8 +1,9 @@
 import { problemIcons } from '@components/constants'
-import { Drawer, Icon } from '@components/shared'
+import { Drawer } from '@components/ui'
 import type { Problem as ProblemType } from '@domain/types'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
+import { Icon } from 'src/components/icons'
 
 import { ProblemDetails } from './ProblemDetails'
 

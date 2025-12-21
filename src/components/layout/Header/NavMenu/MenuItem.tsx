@@ -1,6 +1,6 @@
 'use client'
 
-import { Icon } from '@components/shared'
+import { Icon } from '@components/icons'
 import { MenuItem as Item } from '@headlessui/react'
 import clsx from 'clsx'
 import { useTranslations } from 'next-intl'

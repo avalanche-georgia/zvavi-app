@@ -1,4 +1,4 @@
-import { Drawer, IconButton } from '@components/shared'
+import { Drawer, IconButton } from '@components/ui'
 import { useTranslations } from 'next-intl'
 
 type PropertyTileProps = {

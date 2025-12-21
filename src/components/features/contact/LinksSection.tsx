@@ -1,7 +1,7 @@
 'use client'
 
 import { feedbackFormURL } from '@components/constants'
-import ContactLinkList from '@components/features/contact/ContactLinkList'
+import { ContactLinkList } from '@components/features/contact'
 import { ButtonLink } from '@components/shared'
 import { useTranslations } from 'next-intl'
 

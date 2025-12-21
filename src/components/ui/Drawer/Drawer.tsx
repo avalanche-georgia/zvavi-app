@@ -1,6 +1,6 @@
 'use client'
 
-import { IconButton } from '@components/shared'
+import { IconButton } from '@components/ui'
 import { Drawer } from 'vaul'
 
 type VaulDrawerProps = {

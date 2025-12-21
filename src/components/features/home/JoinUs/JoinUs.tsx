@@ -1,4 +1,5 @@
-import { ButtonLink, PageSection } from '@components/shared'
+import { PageSection } from '@components/layout'
+import { ButtonLink } from '@components/shared'
 import { useTranslations } from 'next-intl'
 
 import { routes } from '@/routes'

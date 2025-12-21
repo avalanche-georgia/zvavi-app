@@ -1,5 +1,5 @@
 import { PartnerInfo, PartnerLogo } from '@components/features/partners/PartnersList'
-import { Drawer } from '@components/shared'
+import { Drawer } from '@components/ui'
 import type { Partner } from '@data/constants/partners'
 import clsx from 'clsx'
 

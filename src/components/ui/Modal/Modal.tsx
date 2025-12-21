@@ -1,4 +1,4 @@
-import { IconButton } from '@components/shared'
+import { IconButton } from '@components/ui'
 import { CloseButton, Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import clsx from 'clsx'
 

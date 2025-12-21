@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { Icon } from '@components/shared'
+import { Icon } from '@components/icons'
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import clsx from 'clsx'
 

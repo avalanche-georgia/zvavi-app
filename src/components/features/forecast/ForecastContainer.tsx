@@ -1,6 +1,6 @@
 'use client'
 
-import { Spinner } from '@components/shared'
+import { Spinner } from '@components/ui'
 import { useGetForecast } from '@data/hooks/forecasts'
 import type { FullForecast } from '@domain/types'
 import { useTranslations } from 'next-intl'

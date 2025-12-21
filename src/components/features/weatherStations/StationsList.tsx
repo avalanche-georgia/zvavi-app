@@ -1,4 +1,4 @@
-import { Icon } from '@components/shared'
+import { Icon } from '@components/icons'
 import { useTranslations } from 'next-intl'
 import { Link } from 'src/i18n/navigation'
 

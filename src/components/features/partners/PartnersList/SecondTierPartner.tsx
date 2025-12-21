@@ -1,4 +1,4 @@
-import { Drawer } from '@components/shared'
+import { Drawer } from '@components/ui'
 import type { Partner } from '@data/constants/partners'
 
 import PartnerInfo from './PartnerInfo'

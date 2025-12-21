@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useBoolean } from '@components/hooks'
-import { Icon } from '@components/shared'
+import { Icon } from '@components/icons'
 import { Button } from '@components/ui'
 import type { FullForecast } from '@domain/types'
 import { useTranslations } from 'next-intl'

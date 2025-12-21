@@ -1,4 +1,4 @@
-import { HazardLevelBanner } from '@components/shared/HazardLevelBanner'
+import { HazardLevelBanner } from '@components/shared'
 import type { Forecast } from '@domain/types'
 import { AnimatePresence, motion } from 'motion/react'
 import { useTranslations } from 'next-intl'

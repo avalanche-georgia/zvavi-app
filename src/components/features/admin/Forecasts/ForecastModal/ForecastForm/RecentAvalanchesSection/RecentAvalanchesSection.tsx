@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react'
-import { Icon } from '@components/shared'
+import { Icon } from '@components/icons'
 import { Button } from '@components/ui'
 import type { Avalanche } from '@domain/types'
 import _uniqueId from 'lodash/uniqueId'

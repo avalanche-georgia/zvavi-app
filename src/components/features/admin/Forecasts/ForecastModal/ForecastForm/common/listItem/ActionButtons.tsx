@@ -1,4 +1,4 @@
-import { IconButton } from '@components/shared'
+import { IconButton } from '@components/ui'
 
 type ActionButtonsProps = {
   canEdit?: boolean

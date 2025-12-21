@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Spinner } from '@components/shared'
+import { Spinner } from '@components/ui'
 import { useGetCurrentForecast } from '@data/hooks/forecasts'
 import type { Forecast } from '@domain/types'
 

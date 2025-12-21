@@ -1,4 +1,4 @@
-import { Drawer } from '@components/shared'
+import { Drawer } from '@components/ui'
 import { useTranslations } from 'next-intl'
 
 import DrawerContent from './DrawerContent'

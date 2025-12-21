@@ -1,4 +1,4 @@
-import { Icon } from '@components/shared'
+import { Icon } from '@components/icons'
 import { Disclosure, DisclosureButton, DisclosurePanel, Transition } from '@headlessui/react'
 
 type SpoilerProps = {

@@ -1,4 +1,4 @@
-import { Footer, Header } from '@components/shared'
+import { Footer, Header } from '@components/layout'
 import { DisclaimerGate } from '@components/shared/Disclaimer'
 import WIPBanner from '@components/shared/WIPBanner'
 import { QueryClientProvider } from '@data'

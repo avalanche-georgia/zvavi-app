@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { useBoolean } from '@components/hooks'
-import { ConfirmationDialog } from '@components/shared/ConfirmationDialog'
+import { ConfirmationDialog } from '@components/shared'
 import { dateFormat } from '@domain/constants'
 import type { Avalanche } from '@domain/types'
 import { format } from 'date-fns'

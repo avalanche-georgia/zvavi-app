@@ -2,7 +2,7 @@
 
 import { links } from '@components/constants'
 import type { IconProps } from '@components/icons'
-import { Icon } from '@components/shared'
+import { Icon } from '@components/icons'
 import { useTranslations } from 'next-intl'
 
 type ContactOption = {

@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { IconButton } from '@components/shared'
+import { IconButton } from '@components/ui'
 import { AnimatePresence, motion } from 'motion/react'
 import { useCopyToClipboard, useEventCallback } from 'usehooks-ts'
 

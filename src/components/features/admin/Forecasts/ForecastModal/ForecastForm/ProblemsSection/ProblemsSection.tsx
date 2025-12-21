@@ -1,5 +1,5 @@
 import { type Dispatch, type SetStateAction, useCallback, useMemo, useState } from 'react'
-import { Icon } from '@components/shared'
+import { Icon } from '@components/icons'
 import { Button } from '@components/ui'
 import { avalancheProblemTypes } from '@domain/constants'
 import type { Problem } from '@domain/types'

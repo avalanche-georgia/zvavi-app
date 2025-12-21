@@ -1,6 +1,5 @@
 import { Button } from '@components/ui'
-import type { ModalProps } from '@components/ui/Modal'
-import { Modal, ModalBody, ModalFooter } from '@components/ui/Modal'
+import { Modal, ModalBody, ModalFooter, type ModalProps } from '@components/ui/Modal'
 import { useTranslations } from 'next-intl'
 
 export type ConfirmationDialogProps = Omit<ModalProps, 'children'> & {
