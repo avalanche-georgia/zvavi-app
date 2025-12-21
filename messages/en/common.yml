@@ -29,6 +29,13 @@ common:
     error: 'Something went wrong. Please try again later.'
     success: 'Success.'
 
+  notFound:
+    title: 'Oops...'
+    message: |
+      This page seems to be buried somewhere in the avalanche.
+      Let’s head back and check the current conditions.
+    linkText: 'View Current Forecast'
+
   elevationZones:
     highAlpine: 'High Alpine'
     alpine: 'Alpine'
