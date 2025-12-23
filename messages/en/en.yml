@@ -69,7 +69,7 @@ admin:
         labels:
           additionalHazards: 'Additional Hazards'
           forecaster: 'Forecaster'
-          hazardLevels: 'Hazard Levels'
+          hazardLevels: 'Danger Levels'
           snowpack: 'Snowpack'
           summary: 'Summary'
           validUntil: 'Valid Until'

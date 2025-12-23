@@ -69,7 +69,7 @@ admin:
         labels:
           additionalHazards: 'დამატებითი საფრთხეები'
           forecaster: 'პროგნოზის ავტორი'
-          hazardLevels: 'საშიშროების დონეები'
+          hazardLevels: 'საფრთხის დონეები'
           snowpack: 'თოვლის საფარი'
           summary: 'შეჯამება'
           validUntil: 'ძალაშია'

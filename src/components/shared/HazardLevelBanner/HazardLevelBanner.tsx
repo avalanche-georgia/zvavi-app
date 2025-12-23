@@ -29,11 +29,11 @@ const HazardLevelBanner = ({ forecast }: { forecast: Forecast }) => {
             isExtremeRisk ? 'text-white' : 'text-black',
           )}
         >
-          <p className="text-sm font-semibold">{`${t('common.labels.overallRiskLevel')} - ${hazardLevels.overall}`}</p>
+          <p className="text-sm font-semibold">{`${t('common.labels.overallDangerLevel')} - ${hazardLevels.overall}`}</p>
           <h4 className="text-3xl font-semibold">{t(titleKey)}</h4>
         </div>
 
-        <Image alt="Risk level" height={80} src={icon} width={80} />
+        <Image alt="Danger level" height={80} src={icon} width={80} />
       </div>
 
       <hr className={isExtremeRisk ? 'border-white/20' : 'border-black/20'} />

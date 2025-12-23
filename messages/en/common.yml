@@ -18,7 +18,7 @@ common:
     email: 'Email'
     forecaster: 'Forecaster'
     issuedAt: 'Issued at'
-    overallRiskLevel: 'Overall risk level'
+    overallDangerLevel: 'Overall danger level'
     summary: 'Summary'
     tapForDetails: 'Tap for details'
     validUntil: 'Valid Until'
