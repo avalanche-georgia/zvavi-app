@@ -15,11 +15,11 @@ const zoneStyle: PathOptions = {
   weight: 2,
 }
 
-type ForecastMapProps = {
+type ForecastAreaMapProps = {
   className?: string
 }
 
-const ForecastAreaMap = ({ className }: ForecastMapProps) => (
+const ForecastAreaMap = ({ className }: ForecastAreaMapProps) => (
   <div className="px-2">
     <MapContainer
       center={mapCenter}
