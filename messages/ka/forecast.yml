@@ -1,5 +1,6 @@
 forecast:
   previewNote: 'დააწკაპუნეთ ბანერზე სრული პროგნოზისთვის'
+  viewForecastArea: 'პროგნოზის ტერიტორიის ნახვა'
 
   notFound:
     title: 'პროგნოზი ვერ მოიძებნა'

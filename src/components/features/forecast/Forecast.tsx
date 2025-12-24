@@ -1,5 +1,5 @@
 import { PageSection } from '@components/layout'
-import { HazardLevelBanner, Spoiler } from '@components/shared'
+import { ButtonLink, HazardLevelBanner, Spoiler } from '@components/shared'
 import { partners } from '@data/constants/partners'
 import type { FullForecast } from '@domain/types'
 import { useTranslations } from 'next-intl'
@@ -11,6 +11,8 @@ import { Problems } from './Problems'
 import { RecentAvalanches } from './RecentAvalanches'
 import Snowpack from './Snowpack'
 import Weather from './Weather'
+
+import { routes } from '@/routes'
 
 // Tier 1 and 2 partners only should be displayed on the forecast page
 const partnerList = Object.entries(partners)
@@ -45,6 +47,8 @@ const Forecast = ({ forecast }: { forecast: FullForecast }) => {
         {additionalHazards && <AdditionalHazards additionalHazards={additionalHazards} />}
         <Weather weather={weather} />
       </section>
+
+      <ButtonLink href={routes.forecastArea}>{t('forecast.viewForecastArea')}</ButtonLink>
 
       {partnerList.length > 0 && (
         <PageSection title={t('forecast.sections.partners.title')}>

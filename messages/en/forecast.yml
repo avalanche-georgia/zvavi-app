@@ -1,5 +1,6 @@
 forecast:
   previewNote: 'Tap the banner to view full forecast'
+  viewForecastArea: 'View Forecast Area'
 
   notFound:
     title: 'Forecast Not Found'
