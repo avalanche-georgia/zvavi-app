@@ -2,6 +2,7 @@ navigation:
   about: 'ჩვენ შესახებ'
   contact: 'კონტაქტი'
   currentForecast: 'მიმდინარე პროგნოზი'
+  forecasts: 'პროგნოზები'
   history: 'წინა პროგნოზები'
   home: 'მთავარი'
   joinUs: 'შემოგვიერთდი'

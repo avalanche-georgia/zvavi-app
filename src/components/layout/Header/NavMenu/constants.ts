@@ -11,16 +11,29 @@ export const navMenuItems: NavMenuItem[] = [
     titleId: 'navigation.home',
   },
   {
+    children: [
+      {
+        icon: 'snowflake',
+        id: 'currentForecast',
+        path: routes.currentForecast,
+        titleId: 'navigation.currentForecast',
+      },
+      {
+        icon: 'cloudSnow',
+        id: 'history',
+        path: routes.history,
+        titleId: 'navigation.history',
+      },
+    ],
     icon: 'snowflake',
-    id: 'currentForecast',
-    path: routes.currentForecast,
-    titleId: 'navigation.currentForecast',
+    id: 'forecasts',
+    titleId: 'navigation.forecasts',
   },
   {
-    icon: 'cloudSnow',
-    id: 'history',
-    path: routes.history,
-    titleId: 'navigation.history',
+    icon: 'thermometerSnowflake',
+    id: 'weatherStations',
+    path: routes.weatherStations,
+    titleId: 'navigation.weatherStations',
   },
   {
     icon: 'handshake',
@@ -45,11 +58,5 @@ export const navMenuItems: NavMenuItem[] = [
     id: 'contact',
     path: routes.contact,
     titleId: 'navigation.contact',
-  },
-  {
-    icon: 'thermometerSnowflake',
-    id: 'weatherStations',
-    path: routes.weatherStations,
-    titleId: 'navigation.weatherStations',
   },
 ]

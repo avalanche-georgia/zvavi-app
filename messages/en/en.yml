@@ -2,6 +2,7 @@ navigation:
   about: 'About Us'
   contact: 'Contact'
   currentForecast: 'Current Forecast'
+  forecasts: 'Forecasts'
   history: 'Previous Forecasts'
   home: 'Home'
   joinUs: 'Join Us'
