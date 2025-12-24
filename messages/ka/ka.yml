@@ -4,6 +4,7 @@ navigation:
   closeMenu: 'მენიუს დახურვა'
   contact: 'კონტაქტი'
   currentForecast: 'მიმდინარე პროგნოზი'
+  forecastArea: 'პროგნოზის ტერიტორია'
   forecasts: 'პროგნოზები'
   history: 'წინა პროგნოზები'
   home: 'მთავარი'

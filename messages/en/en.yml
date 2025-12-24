@@ -4,6 +4,7 @@ navigation:
   closeMenu: 'Close menu'
   contact: 'Contact'
   currentForecast: 'Current Forecast'
+  forecastArea: 'Forecast Area'
   forecasts: 'Forecasts'
   history: 'Previous Forecasts'
   home: 'Home'
