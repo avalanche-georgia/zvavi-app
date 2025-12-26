@@ -48,7 +48,7 @@ const Forecast = ({ forecast }: { forecast: FullForecast }) => {
         <Weather weather={weather} />
       </section>
 
-      <ButtonLink href={routes.forecastArea}>{t('forecast.viewForecastArea')}</ButtonLink>
+      <ButtonLink href={routes.forecasts.forecastArea}>{t('forecast.viewForecastArea')}</ButtonLink>
 
       {partnerList.length > 0 && (
         <PageSection title={t('forecast.sections.partners.title')}>
