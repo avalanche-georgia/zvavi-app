@@ -32,7 +32,7 @@ export async function updateSession(request: NextRequest, response: NextResponse
   } = await supabase.auth.getUser()
 
   if (!user && pathname.includes('/admin')) {
-    const loginUrl = new URL(`/${defaultLocale}${routes.login}`, request.url)
+    const loginUrl = new URL(`/${defaultLocale}${routes.auth.login}`, request.url)
 
     return NextResponse.redirect(loginUrl)
   }

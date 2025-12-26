@@ -30,7 +30,7 @@ const ForgotPasswordPage = () => {
 
       try {
         const { error } = await supabase.auth.resetPasswordForEmail(email, {
-          redirectTo: `${window.location.origin}/${locale}${routes.setNewPassword}`,
+          redirectTo: `${window.location.origin}/${locale}${routes.auth.setNewPassword}`,
         })
 
         handleSupabaseError(error)

@@ -1,1 +1,2 @@
-export { default as NavMenu } from './NavMenu'
+export { default as DesktopNav } from './DesktopNav'
+export { default as MobileMenuButton } from './MobileMenuButton'

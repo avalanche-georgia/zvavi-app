@@ -11,13 +11,13 @@ type SitemapEntry = {
 
 const sitemapEntries: SitemapEntry[] = [
   { changeFrequency: 'daily', path: '', priority: 1 },
-  { changeFrequency: 'daily', path: routes.currentForecast, priority: 0.9 },
-  { changeFrequency: 'weekly', path: routes.history, priority: 0.8 },
+  { changeFrequency: 'daily', path: routes.forecasts.current, priority: 0.9 },
+  { changeFrequency: 'weekly', path: routes.forecasts.history, priority: 0.8 },
   { changeFrequency: 'monthly', path: routes.weatherStations, priority: 0.8 },
-  { changeFrequency: 'monthly', path: routes.about, priority: 0.7 },
+  { changeFrequency: 'monthly', path: routes.about.aboutUs, priority: 0.7 },
   { changeFrequency: 'monthly', path: routes.partners, priority: 0.7 },
-  { changeFrequency: 'monthly', path: routes.contact, priority: 0.6 },
-  { changeFrequency: 'monthly', path: routes.joinUs, priority: 0.5 },
+  { changeFrequency: 'monthly', path: routes.about.contact, priority: 0.6 },
+  { changeFrequency: 'monthly', path: routes.about.joinUs, priority: 0.5 },
 ]
 
 const sitemap = (): MetadataRoute.Sitemap =>

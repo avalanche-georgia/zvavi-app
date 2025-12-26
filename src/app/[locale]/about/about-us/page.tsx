@@ -13,11 +13,11 @@ export const generateMetadata = async (): Promise<Metadata> => {
   }
 }
 
-const Page = () => {
+const AboutUsPage = () => {
   const t = useTranslations()
 
   return (
-    <PageWrapper title={t('navigation.about')}>
+    <PageWrapper title={t('navigation.aboutUs')}>
       <div className="space-y-3 text-justify">
         <HTMLContainer
           component="p"
@@ -46,4 +46,4 @@ const Page = () => {
   )
 }
 
-export default Page
+export default AboutUsPage

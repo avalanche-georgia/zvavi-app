@@ -9,7 +9,7 @@ const DrawerContent = () => {
   return (
     <div className="flex flex-col gap-6">
       <p className="text-justify">{t('partners.becomePartner.description')}</p>
-      <ButtonLink className="ml-auto" href={routes.contact}>
+      <ButtonLink className="ml-auto" href={routes.about.contact}>
         {t('common.actions.getInTouch')}
       </ButtonLink>
     </div>

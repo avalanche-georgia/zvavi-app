@@ -1,10 +1,15 @@
 navigation:
-  about: 'About Us'
+  about: 'About'
+  aboutUs: 'About Us'
+  closeMenu: 'Close menu'
   contact: 'Contact'
   currentForecast: 'Current Forecast'
+  forecasts: 'Forecasts'
   history: 'Previous Forecasts'
   home: 'Home'
   joinUs: 'Join Us'
+  menu: 'Menu'
+  menuDescription: 'Site navigation menu'
   partners: 'Partners'
   weatherStations: 'Weather Stations'
 

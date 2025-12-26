@@ -7,20 +7,33 @@ export const navMenuItems: NavMenuItem[] = [
   {
     icon: 'mountainSnow',
     id: 'home',
-    path: '/',
+    path: routes.home,
     titleId: 'navigation.home',
   },
   {
+    children: [
+      {
+        icon: 'snowflake',
+        id: 'currentForecast',
+        path: routes.forecasts.current,
+        titleId: 'navigation.currentForecast',
+      },
+      {
+        icon: 'cloudSnow',
+        id: 'history',
+        path: routes.forecasts.history,
+        titleId: 'navigation.history',
+      },
+    ],
     icon: 'snowflake',
-    id: 'currentForecast',
-    path: routes.currentForecast,
-    titleId: 'navigation.currentForecast',
+    id: 'forecasts',
+    titleId: 'navigation.forecasts',
   },
   {
-    icon: 'cloudSnow',
-    id: 'history',
-    path: routes.history,
-    titleId: 'navigation.history',
+    icon: 'thermometerSnowflake',
+    id: 'weatherStations',
+    path: routes.weatherStations,
+    titleId: 'navigation.weatherStations',
   },
   {
     icon: 'handshake',
@@ -29,27 +42,28 @@ export const navMenuItems: NavMenuItem[] = [
     titleId: 'navigation.partners',
   },
   {
-    icon: 'userPlus',
-    id: 'joinUs',
-    path: routes.joinUs,
-    titleId: 'navigation.joinUs',
-  },
-  {
-    icon: 'users',
+    children: [
+      {
+        icon: 'users',
+        id: 'aboutUs',
+        path: routes.about.aboutUs,
+        titleId: 'navigation.aboutUs',
+      },
+      {
+        icon: 'userPlus',
+        id: 'joinUs',
+        path: routes.about.joinUs,
+        titleId: 'navigation.joinUs',
+      },
+      {
+        icon: 'mail',
+        id: 'contact',
+        path: routes.about.contact,
+        titleId: 'navigation.contact',
+      },
+    ],
+    icon: 'info',
     id: 'about',
-    path: routes.about,
     titleId: 'navigation.about',
-  },
-  {
-    icon: 'mail',
-    id: 'contact',
-    path: routes.contact,
-    titleId: 'navigation.contact',
-  },
-  {
-    icon: 'thermometerSnowflake',
-    id: 'weatherStations',
-    path: routes.weatherStations,
-    titleId: 'navigation.weatherStations',
   },
 ]

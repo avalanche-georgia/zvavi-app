@@ -20,7 +20,7 @@ const PageContent = () => {
         <h3 className="text-xl font-semibold">{t('partners.becomePartner.title')}</h3>
         <p className="text-justify">{t('partners.becomePartner.description')}</p>
 
-        <ButtonLink href={routes.contact}>{t('common.actions.getInTouch')}</ButtonLink>
+        <ButtonLink href={routes.about.contact}>{t('common.actions.getInTouch')}</ButtonLink>
       </section>
     </div>
   )

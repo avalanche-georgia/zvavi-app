@@ -12,7 +12,7 @@ const About = () => {
       <div className="flex flex-col gap-4">
         <p className="text-justify">{t('about.section.main.description')}</p>
 
-        <ButtonLink href={routes.about}>{t('common.actions.learnMore')}</ButtonLink>
+        <ButtonLink href={routes.about.aboutUs}>{t('common.actions.learnMore')}</ButtonLink>
       </div>
     </PageSection>
   )

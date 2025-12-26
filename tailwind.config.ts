@@ -1,5 +1,5 @@
-import type { Config } from 'tailwindcss'
 import scrollbarHidePlugin from 'tailwind-scrollbar-hide'
+import type { Config } from 'tailwindcss'
 
 export default {
   content: [
@@ -22,6 +22,24 @@ export default {
           5: '#1B1A1E',
         },
         primary: '#FF6F00',
+      },
+      keyframes: {
+        fadeIn: {
+          from: { opacity: '0' },
+          to: { opacity: '1' },
+        },
+        fadeOut: {
+          from: { opacity: '1' },
+          to: { opacity: '0' },
+        },
+        scaleIn: {
+          from: { transform: 'scale(0.95)' },
+          to: { transform: 'scale(1)' },
+        },
+        scaleOut: {
+          from: { transform: 'scale(1)' },
+          to: { transform: 'scale(0.95)' },
+        },
       },
     },
   },

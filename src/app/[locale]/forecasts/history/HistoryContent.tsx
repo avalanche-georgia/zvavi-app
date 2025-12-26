@@ -1,7 +1,6 @@
 'use client'
 
 import { HistoryList } from '@components/features/history'
-import { PageWrapper } from '@components/layout'
 import { Spinner } from '@components/ui'
 import { useHistoryListQuery } from '@data/hooks/forecasts'
 import { useTranslations } from 'next-intl'
@@ -14,11 +13,7 @@ const HistoryContent = () => {
 
   if (!forecasts) return null
 
-  return (
-    <PageWrapper title={t('navigation.history')}>
-      <HistoryList forecasts={forecasts} />
-    </PageWrapper>
-  )
+  return <HistoryList forecasts={forecasts} />
 }
 
 export default HistoryContent
