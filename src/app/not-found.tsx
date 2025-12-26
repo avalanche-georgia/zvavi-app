@@ -27,7 +27,7 @@ const NotFound = async () => {
         <h1 className="text-2xl font-semibold text-gray-900">{t('common.notFound.title')}</h1>
         <p className="max-w-lg whitespace-pre-line text-gray-600">{t('common.notFound.message')}</p>
 
-        <ButtonLink href={routes.currentForecast}>{t('common.notFound.linkText')}</ButtonLink>
+        <ButtonLink href={routes.forecasts.current}>{t('common.notFound.linkText')}</ButtonLink>
       </div>
     </PageWrapper>
   )

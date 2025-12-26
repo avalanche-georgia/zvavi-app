@@ -35,7 +35,7 @@ const LoginPage = () => {
 
         setPassword('')
         handleSupabaseError(error)
-        router.push(routes.admin)
+        router.push(routes.admin.root)
       } catch (error) {
         toastError('LoginPage | handleSignIn', { error })
       } finally {
@@ -69,7 +69,10 @@ const LoginPage = () => {
           <Field>
             <Label className="flex items-center justify-between text-sm/6">
               {t('auth.labels.password')}
-              <Link className="text-xs text-primary hover:underline" href={routes.forgotPassword}>
+              <Link
+                className="text-xs text-primary hover:underline"
+                href={routes.auth.forgotPassword}
+              >
                 {t('auth.login.forgotPassword')}
               </Link>
             </Label>

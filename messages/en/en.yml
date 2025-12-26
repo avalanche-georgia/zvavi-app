@@ -1,5 +1,6 @@
 navigation:
-  about: 'About Us'
+  about: 'About'
+  aboutUs: 'About Us'
   contact: 'Contact'
   currentForecast: 'Current Forecast'
   forecasts: 'Forecasts'

@@ -20,7 +20,7 @@ const VolunteerSection = () => {
 
       <div>
         <span className="text-justify">{t('joinUs.page.volunteer.descriptionPost')}</span>
-        <Link className="text-primary underline" href={routes.contact}>
+        <Link className="text-primary underline" href={routes.about.contact}>
           {t('common.actions.seeContactPage')}
         </Link>
       </div>

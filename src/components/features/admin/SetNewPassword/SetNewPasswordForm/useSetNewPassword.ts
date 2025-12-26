@@ -51,14 +51,14 @@ const useSetNewPassword = () => {
       try {
         const { error } = await supabase.auth.updateUser(
           { password },
-          { emailRedirectTo: `${window.location.origin}/${locale}${routes.login}` },
+          { emailRedirectTo: `${window.location.origin}/${locale}${routes.auth.login}` },
         )
 
         handleSupabaseError(error)
 
         toastSuccess(t('auth.setNewPassword.messages.resetSuccessfully'))
         setTimeout(() => {
-          router.push(routes.admin)
+          router.push(routes.admin.root)
           setIsPending(false)
         }, 3000)
       } catch (error) {

@@ -11,7 +11,7 @@ const AdminPage = () => {
 
   return (
     <PageWrapper title="Admin Page">
-      <Link className="flex h-12 items-center px-3.5" href={routes.adminForecasts}>
+      <Link className="flex h-12 items-center px-3.5" href={routes.admin.forecasts}>
         {t('admin.forecasts.title')}
       </Link>
     </PageWrapper>

@@ -1,17 +1,26 @@
 export const baseUrl = 'https://avalanche.ge'
 
 export const routes = {
-  about: '/about',
-  admin: '/admin',
-  adminForecasts: '/admin/forecasts',
-  contact: '/contact',
-  currentForecast: '/forecasts/current',
-  forecasts: '/forecasts',
-  forgotPassword: '/auth/forgot-password',
-  history: '/history',
-  joinUs: '/join-us',
-  login: '/auth/login',
+  about: {
+    aboutUs: '/about/about-us',
+    contact: '/about/contact',
+    joinUs: '/about/join-us',
+  },
+  admin: {
+    forecasts: '/admin/forecasts',
+    root: '/admin',
+  },
+  auth: {
+    forgotPassword: '/auth/forgot-password',
+    login: '/auth/login',
+    setNewPassword: '/auth/set-new-password',
+  },
+  forecasts: {
+    current: '/forecasts/current',
+    history: '/forecasts/history',
+    root: '/forecasts',
+  },
+  home: '/',
   partners: '/partners',
-  setNewPassword: '/auth/set-new-password',
   weatherStations: '/weather-stations',
 } as const

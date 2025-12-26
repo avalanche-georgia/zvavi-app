@@ -30,7 +30,7 @@ const FinancialSection = () => {
           />
           <li>
             <span>{t('joinUs.page.financialSupport.options.bank')}</span>
-            <Link className="text-primary underline" href={routes.contact}>
+            <Link className="text-primary underline" href={routes.about.contact}>
               {t('common.actions.seeContactPage')}
             </Link>
           </li>

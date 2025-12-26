@@ -23,7 +23,7 @@ const Header = () => {
   const handleLogOutClick = useCallback(async () => {
     try {
       await supabase.auth.signOut()
-      router.push(routes.login)
+      router.push(routes.auth.login)
     } catch (error) {
       toastError('Header | handleLogOutClick', { error, message: 'Error logging out' })
     }

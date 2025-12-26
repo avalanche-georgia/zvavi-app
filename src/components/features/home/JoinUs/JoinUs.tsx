@@ -13,7 +13,9 @@ const JoinUs = () => {
         <p className="text-justify">{t('joinUs.main.section.description')}</p>
         <p className="text-justify">{t('joinUs.main.section.description2')}</p>
 
-        <ButtonLink href={routes.joinUs}>{t('joinUs.main.section.learnHowToHelp')}</ButtonLink>
+        <ButtonLink href={routes.about.joinUs}>
+          {t('joinUs.main.section.learnHowToHelp')}
+        </ButtonLink>
       </div>
     </PageSection>
   )

@@ -13,7 +13,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
   }
 }
 
-const Page = () => {
+const AboutUsPage = () => {
   const t = useTranslations()
 
   return (
@@ -46,4 +46,4 @@ const Page = () => {
   )
 }
 
-export default Page
+export default AboutUsPage

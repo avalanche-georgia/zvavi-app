@@ -1,5 +1,6 @@
 navigation:
-  about: 'ჩვენ შესახებ'
+  about: 'შესახებ'
+  aboutUs: 'ჩვენ შესახებ'
   contact: 'კონტაქტი'
   currentForecast: 'მიმდინარე პროგნოზი'
   forecasts: 'პროგნოზები'
