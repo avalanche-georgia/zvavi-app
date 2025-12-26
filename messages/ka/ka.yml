@@ -1,12 +1,15 @@
 navigation:
   about: 'შესახებ'
   aboutUs: 'ჩვენ შესახებ'
+  closeMenu: 'მენიუს დახურვა'
   contact: 'კონტაქტი'
   currentForecast: 'მიმდინარე პროგნოზი'
   forecasts: 'პროგნოზები'
   history: 'წინა პროგნოზები'
   home: 'მთავარი'
   joinUs: 'შემოგვიერთდი'
+  menu: 'მენიუ'
+  menuDescription: 'საიტის სანავიგაციო მენიუ'
   partners: 'პარტნიორები'
   weatherStations: 'ამინდის სადგურები'
 
