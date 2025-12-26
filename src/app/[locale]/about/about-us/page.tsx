@@ -17,7 +17,7 @@ const AboutUsPage = () => {
   const t = useTranslations()
 
   return (
-    <PageWrapper title={t('navigation.about')}>
+    <PageWrapper title={t('navigation.aboutUs')}>
       <div className="space-y-3 text-justify">
         <HTMLContainer
           component="p"

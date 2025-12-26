@@ -12,7 +12,7 @@ const MobileMenuButton = () => {
     <>
       <button
         aria-label="Open menu"
-        className="size-6 cursor-pointer xl:hidden"
+        className="size-6 cursor-pointer lg:hidden"
         onClick={() => setIsOpen(true)}
         type="button"
       >

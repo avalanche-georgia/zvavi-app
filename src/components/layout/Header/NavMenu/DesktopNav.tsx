@@ -89,7 +89,7 @@ const NavDropdown = ({ item }: { item: NavMenuGroup }) => {
 }
 
 const DesktopNav = () => (
-  <nav className="hidden items-center gap-1 xl:flex">
+  <nav className="hidden items-center gap-1 lg:flex">
     {navMenuItems.map((item) => {
       if (item.isHidden) return null
 

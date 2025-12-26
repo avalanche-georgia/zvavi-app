@@ -14,10 +14,10 @@ type MobileNavAccordionProps = {
 }
 
 const MobileNavAccordion = ({ item, onClose }: MobileNavAccordionProps) => {
-  const [isExpanded, setIsExpanded] = useState(false)
   const t = useTranslations()
   const pathname = usePathname()
   const isActive = item.children.some((child) => pathname === child.path)
+  const [isExpanded, setIsExpanded] = useState(isActive)
 
   return (
     <div>

@@ -39,7 +39,7 @@ const Header = () => {
 
         <DesktopNav />
 
-        <div className="flex shrink-0 items-center gap-3">
+        <div className="flex shrink-0 items-center gap-4">
           <LanguageToggle />
 
           <MobileMenuButton />
