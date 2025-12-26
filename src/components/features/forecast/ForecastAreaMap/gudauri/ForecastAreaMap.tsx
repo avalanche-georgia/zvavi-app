@@ -29,7 +29,7 @@ const ForecastAreaMap = ({ className }: ForecastAreaMapProps) => (
     >
       <TileLayer
         attribution='&copy; <a href="https://www.stadiamaps.com/">Stadia</a>, <a href="https://www.openstreetmap.org/copyright">OSM</a>'
-        url="https://tiles.stadiamaps.com/tiles/alidade_satellite/{z}/{x}/{y}{r}.png"
+        url={`https://tiles.stadiamaps.com/tiles/alidade_satellite/{z}/{x}/{y}{r}.png?api_key=${process.env.NEXT_PUBLIC_STADIA_API_KEY}`}
       />
       <TileLayer
         attribution='<a href="https://www.opensnowmap.org/">OpenSnowMap</a>'

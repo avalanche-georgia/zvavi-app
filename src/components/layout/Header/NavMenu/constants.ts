@@ -21,11 +21,11 @@ export const navMenuItems: NavMenuItem[] = [
       {
         icon: 'mapPinned',
         id: 'forecastArea',
-        path: routes.forecastArea,
+        path: routes.forecasts.forecastArea,
         titleId: 'navigation.forecastArea',
       },
-    {
-    icon: 'cloudSnow',
+      {
+        icon: 'cloudSnow',
         id: 'history',
         path: routes.forecasts.history,
         titleId: 'navigation.history',
