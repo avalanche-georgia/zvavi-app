@@ -15,6 +15,7 @@ export type IconName =
   | 'info'
   | 'mail'
   | 'mapPin'
+  | 'mapPinned'
   | 'menu'
   | 'mountainSnow'
   | 'pencil'

@@ -17,6 +17,7 @@ export const routes = {
   },
   forecasts: {
     current: '/forecasts/current',
+    forecastArea: '/forecasts/forecast-area',
     history: '/forecasts/history',
     root: '/forecasts',
   },

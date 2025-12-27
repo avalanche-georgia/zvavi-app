@@ -1,5 +1,3 @@
-/* eslint-disable max-lines */
-
 import { FlatCompat } from '@eslint/eslintrc'
 import js from '@eslint/js'
 import prettier from 'eslint-plugin-prettier'
@@ -49,14 +47,6 @@ export default [
       'import/no-cycle': 'off',
       'import/order': 'off',
       'import/prefer-default-export': 'off',
-      'max-lines': [
-        'error',
-        {
-          max: 100,
-          skipBlankLines: true,
-          skipComments: true,
-        },
-      ],
       'no-param-reassign': 'off',
       'no-underscore-dangle': 'off',
       'padding-line-between-statements': [
@@ -130,6 +120,19 @@ export default [
       'sort-keys-fix/sort-keys-fix': 'error',
       'tailwindcss/classnames-order': 'error',
       'tailwindcss/no-custom-classname': 'off',
+    },
+  },
+  {
+    files: ['**/*.tsx'],
+    rules: {
+      'max-lines': [
+        'error',
+        {
+          max: 100,
+          skipBlankLines: true,
+          skipComments: true,
+        },
+      ],
     },
   },
 ]

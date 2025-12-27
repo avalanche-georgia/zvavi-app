@@ -19,6 +19,12 @@ export const navMenuItems: NavMenuItem[] = [
         titleId: 'navigation.currentForecast',
       },
       {
+        icon: 'mapPinned',
+        id: 'forecastArea',
+        path: routes.forecasts.forecastArea,
+        titleId: 'navigation.forecastArea',
+      },
+      {
         icon: 'cloudSnow',
         id: 'history',
         path: routes.forecasts.history,
