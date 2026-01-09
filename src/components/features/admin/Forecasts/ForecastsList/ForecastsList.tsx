@@ -1,37 +1,24 @@
-import { useState } from 'react'
-import { useBoolean } from '@components/hooks'
 import { Icon } from '@components/icons'
-import { Button } from '@components/ui'
+import { ButtonLink } from '@components/shared'
 import type { FullForecast } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import Column from './Column'
 import ForecastItem from './ForecastItem'
-import { ForecastModal } from '../ForecastModal'
+
+import { routes } from '@/routes'
 
 const ForecastsList = ({ forecasts }: { forecasts: FullForecast[] }) => {
   const tAdmin = useTranslations('admin')
-  const [isModalOpen, { setFalse: closeModal, setTrue: openModal }] = useBoolean(false)
-  const [editableForecast, setEditableForecast] = useState<FullForecast | null>(null)
-
-  const handleForecastEdit = (forecast: FullForecast) => {
-    setEditableForecast(forecast)
-    openModal()
-  }
-
-  const handleModalClose = () => {
-    closeModal()
-    setEditableForecast(null)
-  }
 
   return (
     <>
-      <Button className="my-4 ml-auto" onClick={openModal}>
+      <ButtonLink className="mb-4 ml-auto" href={routes.admin.forecasts.new}>
         <Icon icon="plus" size="sm" />
         {tAdmin('forecast.title.create')}
-      </Button>
+      </ButtonLink>
 
-      <div className="w-full">
+      <div className="w-full rounded border bg-white p-4 shadow">
         <div className="flex w-full items-center gap-4 rounded-t bg-gray-100 px-4 py-1.5">
           <Column className="font-semibold">{tAdmin('forecasts.list.columns.forecaster')}</Column>
           <Column className="font-semibold">{tAdmin('forecasts.list.columns.createdAt')}</Column>
@@ -45,13 +32,11 @@ const ForecastsList = ({ forecasts }: { forecasts: FullForecast[] }) => {
         <ul className="flex flex-col">
           {forecasts.map((forecast) => (
             <li key={forecast.id} className="border-b last:border-0">
-              <ForecastItem forecast={forecast} onEdit={handleForecastEdit} />
+              <ForecastItem forecast={forecast} />
             </li>
           ))}
         </ul>
       </div>
-
-      <ForecastModal forecast={editableForecast} isOpen={isModalOpen} onClose={handleModalClose} />
     </>
   )
 }

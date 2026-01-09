@@ -1,20 +1,11 @@
 'use client'
 
-import { PageWrapper } from '@components/layout'
-import { useTranslations } from 'next-intl'
-
 type LayoutProps = {
   children: React.ReactNode
 }
 
 const Layout = ({ children }: Readonly<LayoutProps>) => {
-  const t = useTranslations()
-
-  return (
-    <PageWrapper isAdmin title={t('admin.forecasts.title')}>
-      {children}
-    </PageWrapper>
-  )
+  return <div className="mx-auto max-w-screen-xl">{children}</div>
 }
 
 export default Layout

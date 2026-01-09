@@ -9,12 +9,13 @@ import { useTranslations } from 'next-intl'
 import ActionButtons from './ActionButtons'
 import Column from './Column'
 
+import { routes } from '@/routes'
+
 type ForecastItemProps = {
   forecast: FullForecast
-  onEdit: (forecast: FullForecast) => void
 }
 
-const ForecastItem = ({ forecast, onEdit }: ForecastItemProps) => {
+const ForecastItem = ({ forecast }: ForecastItemProps) => {
   const t = useTranslations()
 
   const { mutateAsync: deleteForecast } = useForecastDelete()
@@ -56,10 +57,6 @@ const ForecastItem = ({ forecast, onEdit }: ForecastItemProps) => {
     }
   }
 
-  const handleEdit = () => {
-    onEdit(forecast)
-  }
-
   return (
     <>
       <div className="flex h-12 items-center gap-4 px-4">
@@ -69,9 +66,9 @@ const ForecastItem = ({ forecast, onEdit }: ForecastItemProps) => {
         <Column>{forecast.status}</Column>
         <Column className="pr-4 text-right">
           <ActionButtons
+            editHref={routes.admin.forecasts.edit(forecast.id)}
             isPublished={isPublished}
             onDelete={openDeletionDialog}
-            onEdit={handleEdit}
             onStatusToggle={handleStatusToggle}
           />
         </Column>

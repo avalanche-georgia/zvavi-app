@@ -5,10 +5,10 @@ import type { Avalanche, BaseFormData, ForecastFormData, Problem } from '@domain
 import { useTranslations } from 'next-intl'
 
 export type UseForecastFormSubmitArgs = {
+  avalancheProblems: Problem[]
   formData: BaseFormData
   initialForecastId: ForecastFormData['baseFormData']['id']
-  onClose: VoidFunction
-  avalancheProblems: Problem[]
+  onSuccess: VoidFunction
   recentAvalanches: Avalanche[]
 }
 
@@ -16,7 +16,7 @@ const useForecastFormSubmit = ({
   avalancheProblems,
   formData,
   initialForecastId,
-  onClose,
+  onSuccess,
   recentAvalanches,
 }: UseForecastFormSubmitArgs) => {
   const t = useTranslations()
@@ -55,21 +55,21 @@ const useForecastFormSubmit = ({
         toastSuccess(t('admin.forecasts.messages.created'))
       }
 
-      onClose()
+      onSuccess()
     } catch (error) {
       toastError('useForecastFormSubmit | handleSubmit', { error })
     }
   }, [
-    formData,
     avalancheProblems,
-    initialForecastId,
-    recentAvalanches,
-    onClose,
-    updateForecast,
-    toastSuccess,
-    t,
     createForecast,
+    formData,
+    initialForecastId,
+    onSuccess,
+    recentAvalanches,
+    t,
     toastError,
+    toastSuccess,
+    updateForecast,
   ])
 
   return { handleSubmit }

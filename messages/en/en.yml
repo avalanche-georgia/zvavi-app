@@ -47,6 +47,15 @@ auth:
       resetSuccessfully: 'Password reset successfully. You can now log in with your new password.'
 
 admin:
+  title: 'Admin'
+  selectSection: 'Select a section from the sidebar to get started.'
+  sidebar:
+    forecasts: 'Forecasts'
+    home: 'Home'
+    menu: 'Admin menu'
+    menuDescription: 'Admin navigation menu'
+    openMenu: 'Open menu'
+    closeMenu: 'Close menu'
   forecasts:
     title: 'Forecasts'
     list:
@@ -66,6 +75,7 @@ admin:
       unpublished: 'Forecast is now unpublished.'
       updated: 'Forecast updated successfully.'
   forecast:
+    notFound: 'Forecast not found.'
     title:
       create: 'Create Forecast'
       edit: 'Edit Forecast'
