@@ -9,8 +9,8 @@ import { defaultZoom, forecastZone, mapCenter } from './forecastZone'
 import 'leaflet/dist/leaflet.css'
 
 const zoneStyle: PathOptions = {
-  color: '#ff7800',
-  fillColor: '#ff7800',
+  color: '#dc2626',
+  fillColor: '#dc2626',
   fillOpacity: 0.15,
   weight: 2,
 }
@@ -28,8 +28,8 @@ const ForecastAreaMap = ({ className }: ForecastAreaMapProps) => (
       zoom={defaultZoom}
     >
       <TileLayer
-        attribution='&copy; <a href="https://www.stadiamaps.com/">Stadia</a>, <a href="https://www.openstreetmap.org/copyright">OSM</a>'
-        url={`https://tiles.stadiamaps.com/tiles/alidade_satellite/{z}/{x}/{y}{r}.png?api_key=${process.env.NEXT_PUBLIC_STADIA_API_KEY}`}
+        attribution='&copy; <a href="https://opentopomap.org">OpenTopoMap</a>, <a href="https://www.openstreetmap.org/copyright">OSM</a>'
+        url="https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"
       />
       <TileLayer
         attribution='<a href="https://www.opensnowmap.org/">OpenSnowMap</a>'

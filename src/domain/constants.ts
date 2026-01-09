@@ -51,8 +51,8 @@ export const sensitivityLevels = {
 export const sensitivityLevelsSorted = [
   sensitivityLevels.unreactive,
   sensitivityLevels.stubborn,
-  sensitivityLevels.touchy,
   sensitivityLevels.reactive,
+  sensitivityLevels.touchy,
 ]
 
 export const distributionTypes = {

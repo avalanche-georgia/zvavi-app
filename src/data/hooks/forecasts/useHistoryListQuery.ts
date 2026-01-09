@@ -14,6 +14,7 @@ const fetchHistoryList: QueryFunction<HistoryListResponse, QueryKey> = async () 
     .from('forecasts')
     .select('id, published_at, hazard_levels')
     .eq('status', 'published')
+    .lt('valid_until', new Date().toISOString())
     .order('published_at', { ascending: false })
 
   if (error) {
