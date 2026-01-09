@@ -7,7 +7,11 @@ export const routes = {
     joinUs: '/about/join-us',
   },
   admin: {
-    forecasts: '/admin/forecasts',
+    forecasts: {
+      edit: (id: number) => `/admin/forecasts/${id}/edit`,
+      new: '/admin/forecasts/new',
+      root: '/admin/forecasts',
+    },
     root: '/admin',
   },
   auth: {

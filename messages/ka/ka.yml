@@ -47,6 +47,13 @@ auth:
       resetSuccessfully: 'პაროლი წარმატებით აღდგენილია. ახლა შეგიძლიათ შეხვიდეთ ახალი პაროლით.'
 
 admin:
+  title: 'ადმინისტრირება'
+  sidebar:
+    forecasts: 'პროგნოზები'
+    menu: 'ადმინ მენიუ'
+    menuDescription: 'ადმინისტრაციული სანავიგაციო მენიუ'
+    openMenu: 'მენიუს გახსნა'
+    closeMenu: 'მენიუს დახურვა'
   forecasts:
     title: 'პროგნოზები'
     list:

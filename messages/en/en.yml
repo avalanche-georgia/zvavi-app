@@ -47,6 +47,13 @@ auth:
       resetSuccessfully: 'Password reset successfully. You can now log in with your new password.'
 
 admin:
+  title: 'Admin'
+  sidebar:
+    forecasts: 'Forecasts'
+    menu: 'Admin menu'
+    menuDescription: 'Admin navigation menu'
+    openMenu: 'Open menu'
+    closeMenu: 'Close menu'
   forecasts:
     title: 'Forecasts'
     list:

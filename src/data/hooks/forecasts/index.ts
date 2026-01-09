@@ -1,3 +1,4 @@
+export { default as useAdminGetForecast } from './useAdminGetForecast'
 export { default as useForecastCreate } from './useForecastCreate'
 export { default as useForecastDelete } from './useForecastDelete'
 export { default as useForecastStatusToggle } from './useForecastStatusToggle'

@@ -16,11 +16,12 @@ import ValidUntil from './ValidUntil'
 
 type ForecastFormProps = {
   initialFormData: ForecastFormData
-  onClose: VoidFunction
+  onCancel: VoidFunction
+  onSuccess: VoidFunction
 }
 
 // TODO: Implement Validations https://app.asana.com/0/1208747689500826/1209084695587061/f
-const ForecastForm = ({ initialFormData, onClose }: ForecastFormProps) => {
+const ForecastForm = ({ initialFormData, onCancel, onSuccess }: ForecastFormProps) => {
   const t = useTranslations()
   const tForecast = useTranslations('admin.forecast')
 
@@ -38,17 +39,17 @@ const ForecastForm = ({ initialFormData, onClose }: ForecastFormProps) => {
     avalancheProblems,
     formData,
     initialForecastId: initialFormData.baseFormData.id,
-    onClose,
+    onSuccess,
     recentAvalanches,
   })
 
   return (
     <>
-      <section className="flex w-[976px] flex-col items-center gap-3 p-6">
+      <section className="flex w-full max-w-4xl flex-col gap-3 p-4 md:p-6">
         <form className="flex w-full flex-col gap-6">
           <div className="flex flex-col gap-4">
             <h3 className="text-xl font-semibold">{tForecast('form.general.title')}</h3>
-            <div className="grid grid-cols-2 gap-x-6">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-x-6">
               <InputBlock label={tForecast('form.general.labels.forecaster')}>
                 <TextInput
                   className="flex-1"
@@ -80,8 +81,8 @@ const ForecastForm = ({ initialFormData, onClose }: ForecastFormProps) => {
         </form>
       </section>
 
-      <footer className="flex h-16 items-center justify-end gap-4 border-t px-6">
-        <Button onClick={onClose}>{t('common.actions.cancel')}</Button>
+      <footer className="sticky bottom-0 flex h-16 items-center justify-end gap-4 border-t bg-white px-4 md:px-6">
+        <Button onClick={onCancel}>{t('common.actions.cancel')}</Button>
         <Button onClick={handleSubmit}>{t('common.actions.submit')}</Button>
       </footer>
     </>

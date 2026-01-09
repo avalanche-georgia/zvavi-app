@@ -1,4 +1,4 @@
-import { Aspects } from '@components/features/admin/Forecasts/ForecastModal/ForecastForm/common/listItem'
+import { Aspects } from '@components/features/admin/Forecasts/ForecastForm/common/listItem'
 import { dateFormat } from '@domain/constants'
 import type { Avalanche } from '@domain/types'
 import { format } from 'date-fns'
