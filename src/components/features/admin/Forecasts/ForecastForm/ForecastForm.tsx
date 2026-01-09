@@ -44,8 +44,8 @@ const ForecastForm = ({ initialFormData, onCancel, onSuccess }: ForecastFormProp
   })
 
   return (
-    <>
-      <section className="flex w-full flex-col gap-3 p-4 md:p-6">
+    <div className="rounded-lg bg-white shadow">
+      <section className="flex w-full flex-col gap-3 p-4 md:p-6 ">
         <form className="flex w-full flex-col gap-6">
           <div className="flex flex-col gap-4">
             <h3 className="text-xl font-semibold">{tForecast('form.general.title')}</h3>
@@ -81,11 +81,13 @@ const ForecastForm = ({ initialFormData, onCancel, onSuccess }: ForecastFormProp
         </form>
       </section>
 
-      <footer className="sticky bottom-0 flex h-16 items-center justify-end gap-4 border-t bg-white px-4 md:px-6">
-        <Button onClick={onCancel}>{t('common.actions.cancel')}</Button>
+      <footer className="flex h-16 items-center justify-end gap-4 border-t px-4 md:px-6">
+        <Button onClick={onCancel} variant="secondary">
+          {t('common.actions.cancel')}
+        </Button>
         <Button onClick={handleSubmit}>{t('common.actions.submit')}</Button>
       </footer>
-    </>
+    </div>
   )
 }
 

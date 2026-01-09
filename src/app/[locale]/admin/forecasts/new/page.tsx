@@ -17,13 +17,11 @@ const NewForecastPage = () => {
   }
 
   return (
-    <div className="rounded-lg bg-white shadow">
-      <ForecastForm
-        initialFormData={getInitialFormData(null)}
-        onCancel={handleCancel}
-        onSuccess={handleSuccess}
-      />
-    </div>
+    <ForecastForm
+      initialFormData={getInitialFormData(null)}
+      onCancel={handleCancel}
+      onSuccess={handleSuccess}
+    />
   )
 }
 
