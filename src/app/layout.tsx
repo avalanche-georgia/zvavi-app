@@ -1,9 +1,5 @@
-import { Footer, Header } from '@components/layout'
-import { DisclaimerGate } from '@components/shared/Disclaimer'
-import WIPBanner from '@components/shared/WIPBanner'
 import { QueryClientProvider } from '@data'
 import { SupabaseContextProvider } from '@domain/context'
-import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import type { Metadata } from 'next'
 import { NextIntlClientProvider } from 'next-intl'
@@ -71,20 +67,13 @@ const Layout = async ({ children }: LayoutProps) => {
     <html lang={locale}>
       <body className={`${inter.className} flex min-h-dvh flex-col antialiased`}>
         <NextIntlClientProvider messages={messages}>
-          <DisclaimerGate>
-            <QueryClientProvider>
-              <SupabaseContextProvider>
-                <Header />
-                <WIPBanner />
-                <Toaster position="top-center" />
-                <main className="flex-1">{children}</main>
-                <Footer />
-
-                <SpeedInsights />
-              </SupabaseContextProvider>
-            </QueryClientProvider>
-          </DisclaimerGate>
-          <Analytics />
+          <QueryClientProvider>
+            <SupabaseContextProvider>
+              <Toaster position="top-center" />
+              {children}
+              <SpeedInsights />
+            </SupabaseContextProvider>
+          </QueryClientProvider>
         </NextIntlClientProvider>
       </body>
     </html>

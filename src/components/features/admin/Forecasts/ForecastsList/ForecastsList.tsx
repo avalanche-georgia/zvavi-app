@@ -13,12 +13,12 @@ const ForecastsList = ({ forecasts }: { forecasts: FullForecast[] }) => {
 
   return (
     <>
-      <ButtonLink className="my-4 ml-auto" href={routes.admin.forecasts.new}>
+      <ButtonLink className="mb-4 ml-auto" href={routes.admin.forecasts.new}>
         <Icon icon="plus" size="sm" />
         {tAdmin('forecast.title.create')}
       </ButtonLink>
 
-      <div className="w-full">
+      <div className="w-full rounded bg-white p-4 shadow">
         <div className="flex w-full items-center gap-4 rounded-t bg-gray-100 px-4 py-1.5">
           <Column className="font-semibold">{tAdmin('forecasts.list.columns.forecaster')}</Column>
           <Column className="font-semibold">{tAdmin('forecasts.list.columns.createdAt')}</Column>

@@ -50,6 +50,7 @@ admin:
   title: 'ადმინისტრირება'
   sidebar:
     forecasts: 'პროგნოზები'
+    home: 'მთავარი'
     menu: 'ადმინ მენიუ'
     menuDescription: 'ადმინისტრაციული სანავიგაციო მენიუ'
     openMenu: 'მენიუს გახსნა'

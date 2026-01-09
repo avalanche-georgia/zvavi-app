@@ -1,45 +1,15 @@
 'use client'
 
-import { Icon } from '@components/icons'
+import { Icon } from '@components'
 import clsx from 'clsx'
 import { useTranslations } from 'next-intl'
 import { Link, usePathname } from 'src/i18n/navigation'
 
+import { navItems } from './constants'
+
+import NavLink from './NavLink'
+
 import { routes } from '@/routes'
-
-type NavItem = {
-  href: string
-  icon: 'cloudSnow' | 'users'
-  label: string
-}
-
-const navItems: NavItem[] = [
-  { href: routes.admin.forecasts.root, icon: 'cloudSnow', label: 'forecasts' },
-]
-
-type NavLinkProps = {
-  isActive: boolean
-  item: NavItem
-  onClick?: () => void
-}
-
-const NavLink = ({ isActive, item, onClick }: NavLinkProps) => {
-  const t = useTranslations('admin.sidebar')
-
-  return (
-    <Link
-      className={clsx(
-        'flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
-        isActive ? 'bg-primary/10 text-primary' : 'text-gray-700 hover:bg-gray-100',
-      )}
-      href={item.href}
-      onClick={onClick}
-    >
-      <Icon className="size-5" icon={item.icon} />
-      {t(item.label)}
-    </Link>
-  )
-}
 
 type SidebarContentProps = {
   onItemClick?: () => void
@@ -47,12 +17,14 @@ type SidebarContentProps = {
 
 const SidebarContent = ({ onItemClick }: SidebarContentProps) => {
   const pathname = usePathname()
-  const t = useTranslations('admin')
+  const t = useTranslations()
 
   return (
     <div className="flex h-full flex-col">
-      <div className="border-b p-4">
-        <h2 className="text-lg font-semibold text-primary">{t('title')}</h2>
+      <div className="flex h-14 items-center border-b px-4">
+        <Link className="text-lg font-semibold text-primary" href={routes.admin.root}>
+          {t('admin.title')}
+        </Link>
       </div>
       <nav className="flex-1 space-y-1 p-3">
         {navItems.map((item) => (
@@ -64,6 +36,19 @@ const SidebarContent = ({ onItemClick }: SidebarContentProps) => {
           />
         ))}
       </nav>
+
+      <div className="border-t p-3">
+        <Link
+          className={clsx(
+            'flex items-center gap-3 rounded px-3 py-2 text-sm font-medium transition-colors',
+            'text-gray-700 hover:bg-gray-100',
+          )}
+          href={routes.home}
+        >
+          <Icon className="size-5" icon="home" />
+          {t('admin.sidebar.home')}
+        </Link>
+      </div>
     </div>
   )
 }

@@ -4,13 +4,11 @@ import { ForecastForm, getInitialFormData } from '@components/features/admin/For
 import { Spinner } from '@components/ui'
 import { useAdminGetForecast } from '@data/hooks/forecasts'
 import { useParams } from 'next/navigation'
-import { useTranslations } from 'next-intl'
 import { useRouter } from 'src/i18n/navigation'
 
 import { routes } from '@/routes'
 
 const EditForecastPage = () => {
-  const t = useTranslations()
   const router = useRouter()
   const params = useParams()
 
@@ -44,9 +42,6 @@ const EditForecastPage = () => {
 
   return (
     <div className="rounded-lg bg-white shadow">
-      <div className="border-b p-4 md:px-6">
-        <h2 className="text-xl font-semibold">{t('admin.forecast.title.edit')}</h2>
-      </div>
       <ForecastForm
         initialFormData={getInitialFormData(forecast)}
         onCancel={handleCancel}

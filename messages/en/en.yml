@@ -50,6 +50,7 @@ admin:
   title: 'Admin'
   sidebar:
     forecasts: 'Forecasts'
+    home: 'Home'
     menu: 'Admin menu'
     menuDescription: 'Admin navigation menu'
     openMenu: 'Open menu'

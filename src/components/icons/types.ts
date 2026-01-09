@@ -12,6 +12,7 @@ export type IconName =
   | 'eye'
   | 'eyeOff'
   | 'handshake'
+  | 'home'
   | 'info'
   | 'mail'
   | 'mapPin'
