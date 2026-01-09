@@ -6,6 +6,7 @@ import MtaLogo from '@assets/images/partnerLogos/mta.svg?component'
 import ozonLogo from '@assets/images/partnerLogos/ozon.png'
 import snowLabLogo from '@assets/images/partnerLogos/snowlab.png'
 import vagabondLogo from '@assets/images/partnerLogos/vagabond.png'
+import vitaminKudebiLogo from '@assets/images/partnerLogos/vitaminKudebi.png'
 import { type StaticImageData } from 'next/image'
 
 export type PartnerLogo = StaticImageData | React.ComponentType<React.SVGProps<SVGSVGElement>>
@@ -44,20 +45,11 @@ export const partners: Record<PartnerTier, Partner[]> = {
     },
     {
       id: 'snowlab',
-      isHidden: true,
+      infoKey: 'partners.info.snowlab',
       logo: snowLabLogo,
-      name: 'Snowlab',
+      name: 'Snowlab Gudauri',
       url: 'https://snow-lab.com',
     },
-    {
-      id: 'bsa',
-      infoKey: 'partners.info.bsa',
-      logo: bsaLogo,
-      name: 'Bakuriani Ski Academy',
-      url: 'https://datosskola.com/',
-    },
-  ],
-  3: [
     {
       id: 'ozon',
       infoKey: 'partners.info.ozon',
@@ -67,19 +59,34 @@ export const partners: Record<PartnerTier, Partner[]> = {
       url: 'https://www.ozongudauri.com/',
     },
     {
+      id: 'bsa',
+      infoKey: 'partners.info.bsa',
+      logo: bsaLogo,
+      name: 'Bakuriani Ski Academy',
+      url: 'https://datosskola.com/',
+    },
+    {
+      id: 'drunk-cherry',
+      logo: drunkCherryLogo,
+      name: 'Drunk Cherry',
+      url: 'https://www.instagram.com/gudauri_drunkcherry/',
+    },
+  ],
+  3: [
+    {
       id: 'adrenaline',
       infoKey: 'partners.info.adrenaline',
-      isHidden: true,
       logo: adrenalineLogo,
       name: 'Adrenaline',
       url: 'https://www.adrenaline.ge/',
     },
     {
-      id: 'drunk-cherry',
-      isHidden: true,
-      logo: drunkCherryLogo,
-      name: 'Drunk Cherry',
-      url: 'https://www.instagram.com/gudauri_drunkcherry/',
+      id: 'vitamin-kudebi',
+      infoKey: 'partners.info.vitaminKudebi',
+      isRounded: true,
+      logo: vitaminKudebiLogo,
+      name: 'Vitamin Kudebi',
+      url: 'https://www.facebook.com/vitaminkudebi',
     },
     {
       id: 'buru-sports',
