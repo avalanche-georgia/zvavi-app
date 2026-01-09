@@ -18,7 +18,7 @@ const ForecastsList = ({ forecasts }: { forecasts: FullForecast[] }) => {
         {tAdmin('forecast.title.create')}
       </ButtonLink>
 
-      <div className="w-full rounded bg-white p-4 shadow">
+      <div className="w-full rounded border bg-white p-4 shadow">
         <div className="flex w-full items-center gap-4 rounded-t bg-gray-100 px-4 py-1.5">
           <Column className="font-semibold">{tAdmin('forecasts.list.columns.forecaster')}</Column>
           <Column className="font-semibold">{tAdmin('forecasts.list.columns.createdAt')}</Column>
