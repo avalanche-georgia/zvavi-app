@@ -48,6 +48,7 @@ auth:
 
 admin:
   title: 'Admin'
+  selectSection: 'Select a section from the sidebar to get started.'
   sidebar:
     forecasts: 'Forecasts'
     home: 'Home'
@@ -74,6 +75,7 @@ admin:
       unpublished: 'Forecast is now unpublished.'
       updated: 'Forecast updated successfully.'
   forecast:
+    notFound: 'Forecast not found.'
     title:
       create: 'Create Forecast'
       edit: 'Edit Forecast'

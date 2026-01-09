@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback } from 'react'
-import { useAuth } from '@components/hooks'
+import { useAuth, useToast } from '@components/hooks'
 import { Button } from '@components/ui'
 import { supabase } from '@data'
 import { useTranslations } from 'next-intl'
@@ -13,11 +13,16 @@ const UserMenu = () => {
   const router = useRouter()
   const t = useTranslations()
   const { user } = useAuth()
+  const { toastError } = useToast()
 
   const handleSignOut = useCallback(async () => {
-    await supabase.auth.signOut()
-    router.push(routes.auth.login)
-  }, [router])
+    try {
+      await supabase.auth.signOut()
+      router.push(routes.auth.login)
+    } catch (error) {
+      toastError('UserMenu | handleSignOut', { error })
+    }
+  }, [router, toastError])
 
   return (
     <div className="flex items-center gap-4">
