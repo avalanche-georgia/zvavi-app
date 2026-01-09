@@ -45,7 +45,7 @@ const ForecastForm = ({ initialFormData, onCancel, onSuccess }: ForecastFormProp
 
   return (
     <>
-      <section className="flex w-full max-w-4xl flex-col gap-3 p-4 md:p-6">
+      <section className="flex w-full flex-col gap-3 p-4 md:p-6">
         <form className="flex w-full flex-col gap-6">
           <div className="flex flex-col gap-4">
             <h3 className="text-xl font-semibold">{tForecast('form.general.title')}</h3>
