@@ -11,6 +11,10 @@ export default {
   plugins: [scrollbarHidePlugin],
   theme: {
     extend: {
+      animation: {
+        'tooltip-in': 'tooltipIn 0.15s ease-out',
+        'tooltip-out': 'tooltipOut 0.1s ease-in',
+      },
       colors: {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
@@ -39,6 +43,14 @@ export default {
         scaleOut: {
           from: { transform: 'scale(1)' },
           to: { transform: 'scale(0.95)' },
+        },
+        tooltipIn: {
+          from: { opacity: '0', transform: 'scale(0.96)' },
+          to: { opacity: '1', transform: 'scale(1)' },
+        },
+        tooltipOut: {
+          from: { opacity: '1', transform: 'scale(1)' },
+          to: { opacity: '0', transform: 'scale(0.96)' },
         },
       },
     },

@@ -65,6 +65,12 @@ admin:
         forecaster: 'პროგნოზის ავტორი'
         status: 'სტატუსი'
         validUntil: 'ძალაშია'
+    actions:
+      delete: 'წაშლა'
+      duplicate: 'დუბლირება'
+      edit: 'რედაქტირება'
+      publish: 'გამოქვეყნება'
+      unpublish: 'გამოქვეყნების გაუქმება'
     deleteForecastModal:
       title: 'წავშალოთ პროგნოზი?'
       description: 'გსურთ სამუდამოდ წაშალოთ პროგნოზი პერიოდისთვის'
