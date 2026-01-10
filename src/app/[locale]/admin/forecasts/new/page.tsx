@@ -13,9 +13,14 @@ const NewForecastPage = () => {
   const searchParams = useSearchParams()
   const duplicateId = searchParams.get('duplicateId')
   const parsedDuplicateId = duplicateId ? parseInt(duplicateId, 10) : null
-  const isValidDuplicateId = parsedDuplicateId !== null && !Number.isNaN(parsedDuplicateId)
+  const isValidDuplicateId =
+    parsedDuplicateId !== null && !Number.isNaN(parsedDuplicateId) && parsedDuplicateId > 0
 
-  const { data: sourceForecast, isLoading } = useAdminGetForecast({
+  const {
+    data: sourceForecast,
+    isError,
+    isLoading,
+  } = useAdminGetForecast({
     enabled: isValidDuplicateId,
     forecastId: parsedDuplicateId ?? 0,
   })
@@ -32,10 +37,10 @@ const NewForecastPage = () => {
     return <Spinner />
   }
 
-  if (isValidDuplicateId && !sourceForecast) {
+  if (isValidDuplicateId && (isError || !sourceForecast)) {
     router.replace(routes.admin.forecasts.new)
 
-    return null
+    return <Spinner />
   }
 
   const initialBaseFormData = getInitialFormData(sourceForecast ?? null)

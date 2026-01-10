@@ -82,7 +82,6 @@ admin:
     messages:
       created: 'Forecast created successfully.'
       deleted: 'Forecast deleted successfully.'
-      duplicated: 'Forecast duplicated successfully.'
       published: 'Forecast is now published.'
       unpublished: 'Forecast is now unpublished.'
       updated: 'Forecast updated successfully.'
