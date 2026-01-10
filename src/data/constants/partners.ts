@@ -75,7 +75,6 @@ export const partners: Record<PartnerTier, Partner[]> = {
   3: [
     {
       id: 'adrenaline',
-      infoKey: 'partners.info.adrenaline',
       logo: adrenalineLogo,
       name: 'Adrenaline',
       url: 'https://www.adrenaline.ge/',
