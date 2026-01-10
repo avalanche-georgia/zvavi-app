@@ -12,10 +12,12 @@ const NewForecastPage = () => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const duplicateId = searchParams.get('duplicateId')
+  const parsedDuplicateId = duplicateId ? parseInt(duplicateId, 10) : null
+  const isValidDuplicateId = parsedDuplicateId !== null && !Number.isNaN(parsedDuplicateId)
 
   const { data: sourceForecast, isLoading } = useAdminGetForecast({
-    enabled: !!duplicateId,
-    forecastId: Number(duplicateId),
+    enabled: isValidDuplicateId,
+    forecastId: parsedDuplicateId ?? 0,
   })
 
   const handleCancel = () => {
@@ -26,15 +28,23 @@ const NewForecastPage = () => {
     router.push(routes.admin.forecasts.root)
   }
 
-  if (duplicateId && isLoading) {
+  if (isValidDuplicateId && isLoading) {
     return <Spinner />
   }
 
-  const initialFormData = getInitialFormData(sourceForecast ?? null)
+  if (isValidDuplicateId && !sourceForecast) {
+    router.replace(routes.admin.forecasts.new)
 
-  if (sourceForecast) {
-    delete initialFormData.baseFormData.id
+    return null
   }
+
+  const initialBaseFormData = getInitialFormData(sourceForecast ?? null)
+  const initialFormData = sourceForecast
+    ? {
+        ...initialBaseFormData,
+        baseFormData: { ...initialBaseFormData.baseFormData, id: undefined },
+      }
+    : initialBaseFormData
 
   return (
     <ForecastForm
