@@ -5,6 +5,7 @@ import { dateFormat } from '@domain/constants'
 import type { FullForecast } from '@domain/types'
 import { format } from 'date-fns'
 import { useTranslations } from 'next-intl'
+import { useRouter } from 'src/i18n/navigation'
 
 import ActionButtons from './ActionButtons'
 import Column from './Column'
@@ -17,6 +18,7 @@ type ForecastItemProps = {
 
 const ForecastItem = ({ forecast }: ForecastItemProps) => {
   const t = useTranslations()
+  const router = useRouter()
 
   const { mutateAsync: deleteForecast } = useForecastDelete()
   const { mutateAsync: toggleStatus } = useForecastStatusToggle()
@@ -25,15 +27,10 @@ const ForecastItem = ({ forecast }: ForecastItemProps) => {
   const [isStatusDialogOpen, { setFalse: closeStatusDialog, setTrue: openStatusDialog }] =
     useBoolean(false)
 
+  const { toastError, toastSuccess } = useToast()
   const formattedCreationDate = format(forecast.createdAt, dateFormat)
   const formattedValidUntilDate = format(forecast.validUntil, dateFormat)
-  const deleteForecastModalDescription = `
-    ${t('admin.forecasts.deleteForecastModal.description')}
-    ${t('common.words.from').toLowerCase()} ${formattedCreationDate}
-    ${t('common.words.to').toLowerCase()} ${formattedValidUntilDate}?
-    `
-
-  const { toastError, toastSuccess } = useToast()
+  const deleteDescription = `${t('admin.forecasts.deleteForecastModal.description')} ${t('common.words.from').toLowerCase()} ${formattedCreationDate} ${t('common.words.to').toLowerCase()} ${formattedValidUntilDate}?`
 
   const handleDelete = async () => {
     try {
@@ -44,14 +41,16 @@ const ForecastItem = ({ forecast }: ForecastItemProps) => {
     }
   }
 
+  const handleDuplicate = () => {
+    router.push(`${routes.admin.forecasts.new}?duplicateId=${forecast.id}`)
+  }
+
   const isPublished = forecast.status === 'published'
+  const statusKey = isPublished ? 'unpublish' : 'publish'
 
   const handleStatusToggle = async () => {
     try {
-      await toggleStatus({
-        forecastId: forecast.id,
-        status: isPublished ? 'draft' : 'published',
-      })
+      await toggleStatus({ forecastId: forecast.id, status: isPublished ? 'draft' : 'published' })
 
       toastSuccess(t(`admin.forecasts.messages.${isPublished ? 'unpublished' : 'published'}`))
     } catch (error) {
@@ -73,13 +72,14 @@ const ForecastItem = ({ forecast }: ForecastItemProps) => {
             editHref={routes.admin.forecasts.edit(forecast.id)}
             isPublished={isPublished}
             onDelete={openDeletionDialog}
+            onDuplicate={handleDuplicate}
             onStatusToggle={openStatusDialog}
           />
         </Column>
       </div>
 
       <ConfirmationDialog
-        description={deleteForecastModalDescription}
+        description={deleteDescription}
         isOpen={isDeletionDialogOpen}
         onClose={closeDeletionDialog}
         onConfirm={handleDelete}
@@ -88,13 +88,11 @@ const ForecastItem = ({ forecast }: ForecastItemProps) => {
       />
 
       <ConfirmationDialog
-        description={t(
-          `admin.forecasts.statusModal.${isPublished ? 'unpublish' : 'publish'}Description`,
-        )}
+        description={t(`admin.forecasts.statusModal.${statusKey}Description`)}
         isOpen={isStatusDialogOpen}
         onClose={closeStatusDialog}
         onConfirm={handleStatusToggle}
-        title={t(`admin.forecasts.statusModal.${isPublished ? 'unpublish' : 'publish'}Title`)}
+        title={t(`admin.forecasts.statusModal.${statusKey}Title`)}
       />
     </>
   )
