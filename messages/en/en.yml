@@ -68,6 +68,11 @@ admin:
     deleteForecastModal:
       title: 'Delete Forecast?'
       description: 'Do you want to permanently delete the forecast for the period'
+    statusModal:
+      publishTitle: 'Publish Forecast?'
+      publishDescription: 'This forecast will become visible to all users.'
+      unpublishTitle: 'Unpublish Forecast?'
+      unpublishDescription: 'This forecast will be hidden from users.'
     messages:
       created: 'Forecast created successfully.'
       deleted: 'Forecast deleted successfully.'

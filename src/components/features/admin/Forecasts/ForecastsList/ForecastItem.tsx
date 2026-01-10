@@ -22,6 +22,8 @@ const ForecastItem = ({ forecast }: ForecastItemProps) => {
   const { mutateAsync: toggleStatus } = useForecastStatusToggle()
   const [isDeletionDialogOpen, { setFalse: closeDeletionDialog, setTrue: openDeletionDialog }] =
     useBoolean(false)
+  const [isStatusDialogOpen, { setFalse: closeStatusDialog, setTrue: openStatusDialog }] =
+    useBoolean(false)
 
   const formattedCreationDate = format(forecast.createdAt, dateFormat)
   const formattedValidUntilDate = format(forecast.validUntil, dateFormat)
@@ -54,6 +56,8 @@ const ForecastItem = ({ forecast }: ForecastItemProps) => {
       toastSuccess(t(`admin.forecasts.messages.${isPublished ? 'unpublished' : 'published'}`))
     } catch (error) {
       toastError('ForecastItem | handleStatusToggle', { error })
+    } finally {
+      closeStatusDialog()
     }
   }
 
@@ -69,7 +73,7 @@ const ForecastItem = ({ forecast }: ForecastItemProps) => {
             editHref={routes.admin.forecasts.edit(forecast.id)}
             isPublished={isPublished}
             onDelete={openDeletionDialog}
-            onStatusToggle={handleStatusToggle}
+            onStatusToggle={openStatusDialog}
           />
         </Column>
       </div>
@@ -81,6 +85,16 @@ const ForecastItem = ({ forecast }: ForecastItemProps) => {
         onConfirm={handleDelete}
         title={t('admin.forecasts.deleteForecastModal.title')}
         variant="delete"
+      />
+
+      <ConfirmationDialog
+        description={t(
+          `admin.forecasts.statusModal.${isPublished ? 'unpublish' : 'publish'}Description`,
+        )}
+        isOpen={isStatusDialogOpen}
+        onClose={closeStatusDialog}
+        onConfirm={handleStatusToggle}
+        title={t(`admin.forecasts.statusModal.${isPublished ? 'unpublish' : 'publish'}Title`)}
       />
     </>
   )

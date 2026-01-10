@@ -68,6 +68,11 @@ admin:
     deleteForecastModal:
       title: 'წავშალოთ პროგნოზი?'
       description: 'გსურთ სამუდამოდ წაშალოთ პროგნოზი პერიოდისთვის'
+    statusModal:
+      publishTitle: 'პროგნოზის გამოქვეყნება?'
+      publishDescription: 'ეს პროგნოზი გახდება ხილული ყველა მომხმარებლისთვის.'
+      unpublishTitle: 'პროგნოზის გამოქვეყნების გაუქმება?'
+      unpublishDescription: 'ეს პროგნოზი დაიმალება მომხმარებლებისგან.'
     messages:
       created: 'პროგნოზი წარმატებით შეიქმნა.'
       deleted: 'პროგნოზი წარმატებით წაიშალა.'
