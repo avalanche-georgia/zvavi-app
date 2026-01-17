@@ -9,16 +9,18 @@ type PartnersScrollBoxProps = {
   partners: Partner[]
 }
 
-const PartnersScrollBox = ({ className, partners }: PartnersScrollBoxProps) => (
-  <AutoScrollList
-    className={clsx('overflow-hidden', { 'justify-center': partners.length === 1 }, className)}
-  >
-    {partners.map((partner) => (
-      <li key={partner.id}>
-        <MainPartnerCard partner={partner} />
-      </li>
-    ))}
-  </AutoScrollList>
-)
+const PartnersScrollBox = ({ className, partners }: PartnersScrollBoxProps) => {
+  const items = partners.map((partner) => (
+    <li key={partner.id}>
+      <MainPartnerCard partner={partner} />
+    </li>
+  ))
+
+  if (partners.length === 1) {
+    return <ul className={clsx('flex justify-center', className)}>{items}</ul>
+  }
+
+  return <AutoScrollList className={clsx('overflow-hidden', className)}>{items}</AutoScrollList>
+}
 
 export default PartnersScrollBox
