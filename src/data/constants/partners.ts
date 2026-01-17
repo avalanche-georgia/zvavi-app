@@ -4,6 +4,7 @@ import buruSportsLogo from '@assets/images/partnerLogos/burusports.png'
 import drunkCherryLogo from '@assets/images/partnerLogos/drunkcherry.png'
 import MtaLogo from '@assets/images/partnerLogos/mta.svg?component'
 import ozonLogo from '@assets/images/partnerLogos/ozon.png'
+import popoloLogo from '@assets/images/partnerLogos/popolo.jpeg'
 import snowLabLogo from '@assets/images/partnerLogos/snowlab.png'
 import vagabondLogo from '@assets/images/partnerLogos/vagabond.png'
 import vitaminKudebiLogo from '@assets/images/partnerLogos/vitaminKudebi.png'
@@ -35,6 +36,13 @@ export const partners: Record<PartnerTier, Partner[]> = {
     },
   ],
   2: [
+    {
+      id: 'popolo',
+      isRounded: true,
+      logo: popoloLogo,
+      name: 'Popolo Pizza',
+      url: 'https://instagram.com/popolo.tbilisi',
+    },
     {
       id: 'vagabond',
       infoKey: 'partners.info.vagabond',
@@ -89,8 +97,6 @@ export const partners: Record<PartnerTier, Partner[]> = {
     },
     {
       id: 'buru-sports',
-      infoKey: 'partners.info.buruSports',
-      isHidden: true,
       logo: buruSportsLogo,
       name: 'Buru Sports',
       url: 'https://burusports.ge/',

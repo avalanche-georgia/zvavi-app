@@ -1,3 +1,4 @@
+import { AutoScrollList } from '@components/ui'
 import type { Partner } from '@data/constants/partners'
 import clsx from 'clsx'
 
@@ -8,20 +9,18 @@ type PartnersScrollBoxProps = {
   partners: Partner[]
 }
 
-const PartnersScrollBox = ({ className, partners }: PartnersScrollBoxProps) => (
-  <ul
-    className={clsx(
-      'flex gap-2 overflow-x-auto scrollbar-hide',
-      { 'justify-center': partners.length === 1 },
-      className,
-    )}
-  >
-    {partners.map((partner) => (
-      <li key={partner.id}>
-        <MainPartnerCard partner={partner} />
-      </li>
-    ))}
-  </ul>
-)
+const PartnersScrollBox = ({ className, partners }: PartnersScrollBoxProps) => {
+  const items = partners.map((partner) => (
+    <li key={partner.id}>
+      <MainPartnerCard partner={partner} />
+    </li>
+  ))
+
+  if (partners.length === 1) {
+    return <ul className={clsx('flex justify-center', className)}>{items}</ul>
+  }
+
+  return <AutoScrollList className={clsx('overflow-hidden', className)}>{items}</AutoScrollList>
+}
 
 export default PartnersScrollBox
