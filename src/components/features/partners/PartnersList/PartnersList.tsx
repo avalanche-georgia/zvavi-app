@@ -1,5 +1,6 @@
 'use client'
 
+import { AutoScrollList } from '@components/ui'
 import { type Partner, partners, type PartnerTier } from '@data/constants/partners'
 import clsx from 'clsx'
 
@@ -22,7 +23,7 @@ const PartnersList = ({ tier }: { tier: PartnerTier }) => {
   return (
     <>
       <div className="space-y-3">
-        <ul className="flex items-center gap-2 overflow-x-auto scrollbar-hide">
+        <AutoScrollList className="overflow-hidden">
           {filteredPartners.map((partner) => (
             <li
               key={partner.id}
@@ -34,7 +35,7 @@ const PartnersList = ({ tier }: { tier: PartnerTier }) => {
               <PartnerComponent partner={partner} />
             </li>
           ))}
-        </ul>
+        </AutoScrollList>
       </div>
 
       <hr />

@@ -1,4 +1,5 @@
 import { PartnerBadge } from '@components/features/partners/PartnersList'
+import { AutoScrollList } from '@components/ui'
 import type { Partner } from '@data/constants/partners'
 import clsx from 'clsx'
 
@@ -8,13 +9,13 @@ type PartnersScrollBoxProps = {
 }
 
 const PartnersScrollBox = ({ className, partners }: PartnersScrollBoxProps) => (
-  <ul className={clsx('flex gap-2 overflow-x-auto scrollbar-hide', className)}>
+  <AutoScrollList className={clsx('overflow-hidden', className)}>
     {partners.map((partner) => (
       <li key={partner.id}>
         <PartnerBadge partner={partner} />
       </li>
     ))}
-  </ul>
+  </AutoScrollList>
 )
 
 export default PartnersScrollBox
