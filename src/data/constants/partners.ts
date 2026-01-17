@@ -97,8 +97,6 @@ export const partners: Record<PartnerTier, Partner[]> = {
     },
     {
       id: 'buru-sports',
-      infoKey: 'partners.info.buruSports',
-      isHidden: true,
       logo: buruSportsLogo,
       name: 'Buru Sports',
       url: 'https://burusports.ge/',
