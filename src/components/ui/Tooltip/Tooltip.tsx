@@ -35,14 +35,17 @@ const TooltipContent = ({
 )
 
 type TooltipProps = {
+  asChild?: boolean
   children: ReactNode
   content: ReactNode
   side?: 'top' | 'right' | 'bottom' | 'left'
 }
 
-const Tooltip = ({ children, content, side = 'top' }: TooltipProps) => (
+const Tooltip = ({ asChild = false, children, content, side = 'top' }: TooltipProps) => (
   <TooltipPrimitive.Root>
-    <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
+    <TooltipPrimitive.Trigger asChild={asChild}>
+      {asChild ? children : <span>{children}</span>}
+    </TooltipPrimitive.Trigger>
     <TooltipContent side={side}>{content}</TooltipContent>
   </TooltipPrimitive.Root>
 )

@@ -31,24 +31,16 @@ const ActionButtons = ({ editHref, memberId, onDelete, verificationCode }: Actio
   return (
     <div className="flex items-center justify-end gap-2">
       <Tooltip content={t('admin.members.qrCode.copyUrl')}>
-        <span>
-          <IconButton iconProps={{ icon: 'copy' }} onClick={handleCopyUrl} />
-        </span>
+        <IconButton iconProps={{ icon: 'copy' }} onClick={handleCopyUrl} />
       </Tooltip>
       <Tooltip content={t('admin.members.qrCode.download')}>
-        <span>
-          <IconButton iconProps={{ icon: 'download' }} onClick={handleDownloadQR} />
-        </span>
+        <IconButton iconProps={{ icon: 'download' }} onClick={handleDownloadQR} />
       </Tooltip>
       <Tooltip content={t('admin.members.actions.edit')}>
-        <span>
-          <IconButton href={editHref} iconProps={{ icon: 'pencil' }} />
-        </span>
+        <IconButton href={editHref} iconProps={{ icon: 'pencil' }} />
       </Tooltip>
       <Tooltip content={t('admin.members.actions.delete')}>
-        <span>
-          <IconButton iconProps={{ icon: 'trash' }} onClick={onDelete} />
-        </span>
+        <IconButton iconProps={{ icon: 'trash' }} onClick={onDelete} />
       </Tooltip>
     </div>
   )
