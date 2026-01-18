@@ -81,8 +81,8 @@ const MemberCard = ({
       </div>
 
       <div className="bg-gray-50 px-6 py-4 text-center">
-        <p className="text-xs text-gray-500">{t('verify.card.verifiedBy')}</p>
-        <p className="font-medium text-gray-700">Georgian Avalanche Association</p>
+        <p className="text-xs text-gray-500">{t('verify.card.verifiedBy.label')}</p>
+        <p className="font-medium text-gray-700">{t('verify.card.verifiedBy.value')}</p>
       </div>
     </div>
   )

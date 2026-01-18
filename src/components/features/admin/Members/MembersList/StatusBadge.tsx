@@ -1,6 +1,5 @@
+import type { MemberStatus } from '@domain/types'
 import clsx from 'clsx'
-
-import type { MemberStatus } from '@/domain/types'
 
 type StatusBadgeProps = {
   status: MemberStatus
