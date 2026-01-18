@@ -13,7 +13,7 @@ type MemberFormProps = {
   initialFormData: MemberFormData
   member?: Member
   onCancel: VoidFunction
-  onSuccess: VoidFunction
+  onSuccess: (createdMember?: Member) => void
 }
 
 const MemberForm = ({ initialFormData, member, onCancel, onSuccess }: MemberFormProps) => {

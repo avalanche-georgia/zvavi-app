@@ -102,6 +102,10 @@ admin:
       title: 'Member QR Code'
       description: 'This QR code can be printed on a member card. When scanned, it shows the verification page.'
       download: 'Download QR Code'
+      copyUrl: 'Copy URL'
+      successTitle: 'Member Created'
+      successDescription: 'QR code is ready for {name}'
+      done: 'Done'
     messages:
       created: 'Member created successfully.'
       deleted: 'Member deleted successfully.'

@@ -3,7 +3,7 @@ import { membersKeys } from '@data/query-keys'
 import type { Member, MemberFormData } from '@domain/types'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { convertCamelToSnake, handleSupabaseError } from '../../helpers'
+import { convertCamelToSnake, convertSnakeToCamel, handleSupabaseError } from '../../helpers'
 
 const createMember = async (formData: MemberFormData): Promise<Member> => {
   const payload = {
@@ -23,7 +23,7 @@ const createMember = async (formData: MemberFormData): Promise<Member> => {
 
   if (!data) throw new Error('Failed to create member')
 
-  return data as Member
+  return convertSnakeToCamel(data) as Member
 }
 
 const useMemberCreate = () => {

@@ -49,7 +49,9 @@ const MemberItem = ({ member }: MemberItemProps) => {
         <Column className="flex-1 pr-4 text-right">
           <ActionButtons
             editHref={routes.admin.members.edit(member.id)}
+            memberId={member.memberId}
             onDelete={openDeletionDialog}
+            verificationCode={member.verificationCode}
           />
         </Column>
       </div>

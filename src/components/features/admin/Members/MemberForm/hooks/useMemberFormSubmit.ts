@@ -1,13 +1,13 @@
 import { useCallback } from 'react'
 import { useToast } from '@components/hooks'
 import { useMemberCreate, useMemberUpdate } from '@data/hooks/members'
-import type { MemberFormData } from '@domain/types'
+import type { Member, MemberFormData } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 type UseMemberFormSubmitParams = {
   formData: MemberFormData
   memberId?: string
-  onSuccess: VoidFunction
+  onSuccess: (createdMember?: Member) => void
 }
 
 const useMemberFormSubmit = ({ formData, memberId, onSuccess }: UseMemberFormSubmitParams) => {
@@ -21,12 +21,12 @@ const useMemberFormSubmit = ({ formData, memberId, onSuccess }: UseMemberFormSub
       if (memberId) {
         await updateMember({ ...formData, id: memberId })
         toastSuccess(t('admin.members.messages.updated'))
+        onSuccess()
       } else {
-        await createMember(formData)
-        toastSuccess(t('admin.members.messages.created'))
-      }
+        const created = await createMember(formData)
 
-      onSuccess()
+        onSuccess(created)
+      }
     } catch (error) {
       toastError('MemberForm | handleSubmit', { error })
     }
