@@ -89,3 +89,55 @@ export type ForecastFormData = {
 }
 
 export type FullForecast = Forecast & ForecastDetails
+
+export type MemberStatus = 'active' | 'inactive' | 'suspended' | 'expired'
+
+export type Member = {
+  id: string
+  firstName: string
+  lastName: string
+  email: string | null
+  phone: string | null
+  memberId: string
+  status: MemberStatus
+  joinedAt: string
+  expiresAt: string | null
+  verificationCode: string
+  authUserId: string | null
+  notes: string | null
+  createdAt: string
+  updatedAt: string
+}
+
+export type MemberFormData = {
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+  memberId: string
+  status: MemberStatus
+  joinedAt: Date | null
+  expiresAt: Date | null
+  notes: string
+}
+
+export type MemberVerification = {
+  id: string
+  memberId: string
+  verifiedAt: string
+  ipAddress: string | null
+  userAgent: string | null
+}
+
+export type VerifyMemberResponse = {
+  success: boolean
+  error?: string
+  member?: {
+    firstName: string
+    lastName: string
+    memberId: string
+    status: MemberStatus
+    joinedAt: string
+    expiresAt: string | null
+  }
+}

@@ -8,6 +8,7 @@ export type IconName =
   | 'cloudSnow'
   | 'copy'
   | 'copyCheck'
+  | 'download'
   | 'externalLink'
   | 'eye'
   | 'eyeOff'
@@ -21,6 +22,7 @@ export type IconName =
   | 'mountainSnow'
   | 'pencil'
   | 'plus'
+  | 'search'
   | 'snowflake'
   | 'thermometerSnowflake'
   | 'trash'
@@ -34,6 +36,7 @@ type IconSize = Size
 
 export type IconProps = {
   className?: string
+  containerClassName?: string
   icon: IconName | BrandIconName
   size?: IconSize
 }

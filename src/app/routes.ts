@@ -12,6 +12,11 @@ export const routes = {
       new: '/admin/forecasts/new',
       root: '/admin/forecasts',
     },
+    members: {
+      edit: (id: string) => `/admin/members/${id}/edit`,
+      new: '/admin/members/new',
+      root: '/admin/members',
+    },
     root: '/admin',
   },
   auth: {
@@ -27,5 +32,6 @@ export const routes = {
   },
   home: '/',
   partners: '/partners',
+  verify: (code: string) => `/verify/${code}`,
   weatherStations: '/weather-stations',
 } as const

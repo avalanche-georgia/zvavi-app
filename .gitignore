@@ -45,6 +45,7 @@ next-env.d.ts
 AGENTS.md
 CLAUDE.md
 local/
+/supabase/
 
 # Auto-generated translation files (generated from YAML)
 /messages/*.json

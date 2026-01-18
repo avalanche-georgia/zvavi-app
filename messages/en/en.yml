@@ -52,10 +52,65 @@ admin:
   sidebar:
     forecasts: 'Forecasts'
     home: 'Home'
+    members: 'Members'
     menu: 'Admin menu'
     menuDescription: 'Admin navigation menu'
     openMenu: 'Open menu'
     closeMenu: 'Close menu'
+  members:
+    title:
+      create: 'Add Member'
+      edit: 'Edit Member'
+    notFound: 'Member not found.'
+    list:
+      columns:
+        actions: 'Actions'
+        expiresAt: 'Expires'
+        joinedAt: 'Joined'
+        memberId: 'Member ID'
+        name: 'Name'
+        status: 'Status'
+        type: 'Type'
+      noMembers: 'No members found.'
+    filters:
+      allStatuses: 'All Statuses'
+      allTypes: 'All Types'
+      searchPlaceholder: 'Search by name, ID or email...'
+    actions:
+      delete: 'Delete'
+      edit: 'Edit'
+    deleteMemberModal:
+      title: 'Delete Member?'
+      description: 'Do you want to permanently delete {name}?'
+    form:
+      labels:
+        email: 'Email'
+        expiresAt: 'Expires At'
+        firstName: 'First Name'
+        joinedAt: 'Joined At'
+        lastName: 'Last Name'
+        memberId: 'Member ID'
+        membershipType: 'Membership Type'
+        notes: 'Notes'
+        phone: 'Phone'
+        status: 'Status'
+      placeholders:
+        expiresAt: 'No expiration'
+        memberId: 'Leave empty to auto-generate'
+        notes: 'Internal notes (not visible to member)'
+    qrCode:
+      title: 'Member QR Code'
+      description: 'This QR code can be printed on a member card. When scanned, it shows the verification page.'
+      download: 'Download QR Code'
+    messages:
+      created: 'Member created successfully.'
+      deleted: 'Member deleted successfully.'
+      updated: 'Member updated successfully.'
+    statuses:
+      active: 'Active'
+      expired: 'Expired'
+      inactive: 'Inactive'
+      suspended: 'Suspended'
   forecasts:
     title: 'Forecasts'
     list:
@@ -161,3 +216,18 @@ weatherStations:
     ozon: 'Qumlistsikhe, Lower Gudauri, Hotel Ozon (1950m)'
     kudebi: 'Top of Kudebi Lift (3000m)'
     altihut: 'Altihut Kazbegi (3014m)'
+
+verify:
+  card:
+    expiresAt: 'Expires'
+    memberId: 'Member ID'
+    memberSince: 'Member Since'
+    verifiedBy: 'Membership verified by'
+  statuses:
+    active: 'Active'
+    expired: 'Expired'
+    inactive: 'Inactive'
+    suspended: 'Suspended'
+  invalid:
+    title: 'Invalid Member'
+    description: 'This verification code is not valid. The member may not exist or the code may have expired.'

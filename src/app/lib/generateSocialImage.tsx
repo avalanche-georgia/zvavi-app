@@ -21,6 +21,7 @@ export const generateSocialImage = () =>
           width: '100%',
         }}
       >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           alt="Logo"
           height={180}
