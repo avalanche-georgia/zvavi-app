@@ -41,19 +41,26 @@ const IconButton = ({ className, iconProps, size = 'md', ...props }: IconButtonP
   )
 
   if (isLink) {
-    const { href } = props as LinkButtonProps
+    const { href, ...rest } = props as LinkButtonProps
 
     return (
-      <Link className={sharedClassName} href={href}>
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      <Link className={sharedClassName} href={href} {...rest}>
         {iconElement}
       </Link>
     )
   }
 
-  const { disabled, onClick } = props as ButtonProps
+  const { disabled, onClick, ...rest } = props as ButtonProps
 
   return (
-    <button className={sharedClassName} disabled={disabled} onClick={onClick} type="button">
+    <button
+      className={sharedClassName}
+      disabled={disabled}
+      onClick={onClick}
+      type="button"
+      {...rest}
+    >
       {iconElement}
     </button>
   )

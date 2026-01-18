@@ -75,3 +75,10 @@ export const confidenceLevels = {
 
 export const dateFormat = 'dd MMM yyyy'
 export const timeFormat = 'HH:mm'
+
+export const memberStatuses = {
+  active: 'active',
+  expired: 'expired',
+  inactive: 'inactive',
+  suspended: 'suspended',
+} as const

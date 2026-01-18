@@ -29,6 +29,11 @@ common:
     error: 'Something went wrong. Please try again later.'
     success: 'Success.'
 
+  validation:
+    invalid_string: 'Invalid format'
+    required: 'Required'
+    too_small: 'Required'
+
   notFound:
     title: 'Oops...'
     message: |

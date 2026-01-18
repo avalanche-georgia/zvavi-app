@@ -13,14 +13,20 @@ const brandIconSources: Record<BrandIconName, React.ElementType> = {
 }
 const brandIcons = Object.keys(brandIconSources)
 
-const Icon = ({ className, icon, size = 'md' }: IconProps) => {
+const Icon = ({ className, containerClassName, icon, size = 'md' }: IconProps) => {
   const isBrand = brandIcons.includes(icon)
   const IconRenderer = isBrand
     ? brandIconSources[icon as BrandIconName]
     : iconRenderers[icon as IconName]
 
   return (
-    <div className={clsx('flex items-center justify-center', containerClassesBySize[size])}>
+    <div
+      className={clsx(
+        'flex items-center justify-center',
+        containerClassName,
+        containerClassesBySize[size],
+      )}
+    >
       {isBrand ? (
         <IconRenderer className={className} />
       ) : (
