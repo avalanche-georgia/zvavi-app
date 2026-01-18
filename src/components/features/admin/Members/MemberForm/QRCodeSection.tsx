@@ -2,10 +2,9 @@
 
 import { useCallback } from 'react'
 import { Icon } from '@components/icons'
-import { Button } from '@components/ui'
+import { BrandedQRCode, Button } from '@components/ui'
 import type { Member } from '@domain/types'
 import { useTranslations } from 'next-intl'
-import { QRCodeSVG } from 'qrcode.react'
 import { useCopyToClipboard } from 'usehooks-ts'
 
 import { downloadQRCode, getVerificationUrl } from '@/lib/qrcode'
@@ -35,7 +34,7 @@ const QRCodeSection = ({ member }: QRCodeSectionProps) => {
 
       <div className="flex flex-col items-center gap-4 md:flex-row md:items-start">
         <div className="rounded bg-white p-2 shadow">
-          <QRCodeSVG level="H" size={150} value={verificationUrl} />
+          <BrandedQRCode size={150} value={verificationUrl} />
         </div>
 
         <div className="flex flex-1 flex-col gap-2">

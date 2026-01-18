@@ -1,4 +1,5 @@
 export { AutoScrollList } from './AutoScrollList'
+export { default as BrandedQRCode } from './BrandedQRCode'
 export { default as Button } from './Button'
 export { default as Checkbox } from './Checkbox'
 export { default as DatePicker } from './DatePicker'

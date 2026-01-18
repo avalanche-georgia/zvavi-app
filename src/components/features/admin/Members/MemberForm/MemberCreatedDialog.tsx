@@ -2,10 +2,9 @@
 
 import { useCallback } from 'react'
 import { Icon } from '@components/icons'
-import { Button, Modal, ModalBody, ModalFooter } from '@components/ui'
+import { BrandedQRCode, Button, Modal, ModalBody, ModalFooter } from '@components/ui'
 import type { Member } from '@domain/types'
 import { useTranslations } from 'next-intl'
-import { QRCodeSVG } from 'qrcode.react'
 import { useCopyToClipboard } from 'usehooks-ts'
 
 import { downloadQRCode, getVerificationUrl } from '@/lib/qrcode'
@@ -45,7 +44,7 @@ const MemberCreatedDialog = ({ isOpen, member, onClose }: MemberCreatedDialogPro
           </p>
 
           <div className="rounded bg-white p-3 shadow">
-            <QRCodeSVG level="H" size={180} value={verificationUrl} />
+            <BrandedQRCode size={180} value={verificationUrl} />
           </div>
 
           <div className="flex w-full items-center gap-2">
