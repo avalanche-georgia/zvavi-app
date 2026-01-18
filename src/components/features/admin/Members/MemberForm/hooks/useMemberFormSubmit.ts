@@ -5,32 +5,34 @@ import type { Member, MemberFormData } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 type UseMemberFormSubmitParams = {
-  formData: MemberFormData
   memberId?: string
   onSuccess: (createdMember?: Member) => void
 }
 
-const useMemberFormSubmit = ({ formData, memberId, onSuccess }: UseMemberFormSubmitParams) => {
+const useMemberFormSubmit = ({ memberId, onSuccess }: UseMemberFormSubmitParams) => {
   const t = useTranslations()
   const { toastError, toastSuccess } = useToast()
   const { mutateAsync: createMember } = useMemberCreate()
   const { mutateAsync: updateMember } = useMemberUpdate()
 
-  const handleSubmit = useCallback(async () => {
-    try {
-      if (memberId) {
-        await updateMember({ ...formData, id: memberId })
-        toastSuccess(t('admin.members.messages.updated'))
-        onSuccess()
-      } else {
-        const created = await createMember(formData)
+  const handleSubmit = useCallback(
+    async (formData: MemberFormData) => {
+      try {
+        if (memberId) {
+          await updateMember({ ...formData, id: memberId })
+          toastSuccess(t('admin.members.messages.updated'))
+          onSuccess()
+        } else {
+          const created = await createMember(formData)
 
-        onSuccess(created)
+          onSuccess(created)
+        }
+      } catch (error) {
+        toastError('MemberForm | handleSubmit', { error })
       }
-    } catch (error) {
-      toastError('MemberForm | handleSubmit', { error })
-    }
-  }, [formData, memberId, createMember, updateMember, onSuccess, toastError, toastSuccess, t])
+    },
+    [memberId, createMember, updateMember, onSuccess, toastError, toastSuccess, t],
+  )
 
   return { handleSubmit }
 }

@@ -29,6 +29,11 @@ common:
     error: 'დაფიქსირდა შეცდომა. გთხოვთ სცადოთ მოგვიანებით.'
     success: 'წარმატება.'
 
+  validation:
+    invalid_string: 'არასწორი ფორმატი'
+    required: 'სავალდებულო'
+    too_small: 'სავალდებულო'
+
   notFound:
     title: 'Oops...'
     message: |
