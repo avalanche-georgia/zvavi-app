@@ -68,9 +68,21 @@ const addLogoToQR = async (qrDataUrl: string, logoSrc: string): Promise<string> 
 
       ctx.fillStyle = qrCodeConfig.bgColor
       const p2 = padding * 2
+      const centerX = logoX + logoSize / 2
+      const centerY = logoY + logoSize / 2
+      const radius = (logoSize + p2) / 2
 
-      ctx.fillRect(logoX - padding, logoY - padding, logoSize + p2, logoSize + p2)
+      ctx.beginPath()
+      ctx.arc(centerX, centerY, radius, 0, Math.PI * 2)
+      ctx.fill()
+
+      // Draw logo with circular clipping
+      ctx.save()
+      ctx.beginPath()
+      ctx.arc(centerX, centerY, logoSize / 2, 0, Math.PI * 2)
+      ctx.clip()
       ctx.drawImage(logo, logoX, logoY, logoSize, logoSize)
+      ctx.restore()
     }
   } catch {
     // If logo fails to load, return QR without logo
