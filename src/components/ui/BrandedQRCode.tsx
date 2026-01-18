@@ -12,7 +12,7 @@ type BrandedQRCodeProps = {
 }
 
 const BrandedQRCode = ({ size, value }: BrandedQRCodeProps) => {
-  const logoSize = Math.round(size * 0.25)
+  const logoSize = Math.round(size * qrCodeConfig.logo.sizeRatio)
 
   return (
     <div className="relative inline-block">
@@ -29,7 +29,7 @@ const BrandedQRCode = ({ size, value }: BrandedQRCodeProps) => {
         style={{ height: logoSize, width: logoSize }}
       >
         <Image
-          alt="Logo"
+          alt="Avalanche Georgia logo embedded in QR code"
           className="size-full object-contain"
           height={logoSize}
           src={logo}

@@ -70,11 +70,9 @@ admin:
         memberId: 'Member ID'
         name: 'Name'
         status: 'Status'
-        type: 'Type'
       noMembers: 'No members found.'
     filters:
       allStatuses: 'All Statuses'
-      allTypes: 'All Types'
       searchPlaceholder: 'Search by name, ID or email...'
     actions:
       delete: 'Delete'
@@ -90,7 +88,6 @@ admin:
         joinedAt: 'Joined At'
         lastName: 'Last Name'
         memberId: 'Member ID'
-        membershipType: 'Membership Type'
         notes: 'Notes'
         phone: 'Phone'
         status: 'Status'

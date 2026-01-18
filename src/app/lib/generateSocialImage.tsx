@@ -21,6 +21,10 @@ export const generateSocialImage = () =>
           width: '100%',
         }}
       >
+        {/*
+          Using <img> because this JSX is rendered by next/og's ImageResponse,
+          where the Next.js <Image> component is not supported.
+        */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           alt="Logo"

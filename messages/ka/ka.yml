@@ -70,11 +70,9 @@ admin:
         memberId: 'წევრის ID'
         name: 'სახელი'
         status: 'სტატუსი'
-        type: 'ტიპი'
       noMembers: 'წევრები ვერ მოიძებნა.'
     filters:
       allStatuses: 'ყველა სტატუსი'
-      allTypes: 'ყველა ტიპი'
       searchPlaceholder: 'ძიება სახელით, ID-ით ან ელფოსტით...'
     actions:
       delete: 'წაშლა'
@@ -90,7 +88,6 @@ admin:
         joinedAt: 'გაწევრიანების თარიღი'
         lastName: 'გვარი'
         memberId: 'წევრის ID'
-        membershipType: 'წევრობის ტიპი'
         notes: 'შენიშვნები'
         phone: 'ტელეფონი'
         status: 'სტატუსი'

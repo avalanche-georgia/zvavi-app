@@ -30,12 +30,18 @@ const addLogoToQR = (qrDataUrl: string, logoSrc: string): Promise<string> => {
       const logo = new Image()
 
       logo.onload = () => {
-        const logoSize = qrImage.width * 0.2
+        const { padding, sizeRatio } = qrCodeConfig.logo
+        const logoSize = qrImage.width * sizeRatio
         const logoX = (qrImage.width - logoSize) / 2
         const logoY = (qrImage.height - logoSize) / 2
 
         ctx.fillStyle = qrCodeConfig.bgColor
-        ctx.fillRect(logoX - 4, logoY - 4, logoSize + 8, logoSize + 8)
+        ctx.fillRect(
+          logoX - padding,
+          logoY - padding,
+          logoSize + padding * 2,
+          logoSize + padding * 2,
+        )
 
         ctx.drawImage(logo, logoX, logoY, logoSize, logoSize)
 
@@ -66,8 +72,8 @@ export const generateQRCodeDataUrl = async (verificationCode: string): Promise<s
       light: qrCodeConfig.bgColor,
     },
     errorCorrectionLevel: 'H',
-    margin: 2,
-    width: 300,
+    margin: qrCodeConfig.margin,
+    width: qrCodeConfig.width,
   })
 
   return addLogoToQR(qrDataUrl, qrCodeConfig.logo.src)

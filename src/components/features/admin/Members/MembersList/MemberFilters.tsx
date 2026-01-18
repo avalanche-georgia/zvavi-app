@@ -34,6 +34,7 @@ const MemberFilters = ({
           size="sm"
         />
         <input
+          aria-label={t('admin.members.filters.searchPlaceholder')}
           className="w-full rounded border border-gray-300 py-2 pl-10 pr-4 focus:border-blue-500 focus:outline-none"
           onChange={(e) => onSearchChange(e.target.value)}
           placeholder={t('admin.members.filters.searchPlaceholder')}

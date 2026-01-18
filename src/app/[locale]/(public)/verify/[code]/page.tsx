@@ -8,7 +8,7 @@ const VerifyPage = () => {
   const code = params.code as string
 
   if (!code) {
-    return null
+    return <div>Invalid or missing verification code.</div>
   }
 
   return <VerificationPage code={code} />
