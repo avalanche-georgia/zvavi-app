@@ -34,7 +34,7 @@ const QRCodeSection = ({ member }: QRCodeSectionProps) => {
 
       <div className="flex flex-col items-center gap-4 md:flex-row md:items-start">
         <div className="rounded bg-white p-2 shadow">
-          <BrandedQRCode size={150} value={verificationUrl} />
+          <BrandedQRCode size={250} value={verificationUrl} />
         </div>
 
         <div className="flex flex-1 flex-col gap-2">
