@@ -13,6 +13,11 @@ export const getVerificationUrl = (verificationCode: string): string => {
 const loadImageAsDataUrl = async (src: string): Promise<string> => {
   const absoluteUrl = new URL(src, window.location.origin).href
   const response = await fetch(absoluteUrl)
+
+  if (!response.ok) {
+    throw new Error(`Failed to load image: ${response.status} ${response.statusText}`)
+  }
+
   const blob = await response.blob()
 
   return new Promise((resolve) => {

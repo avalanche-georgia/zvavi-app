@@ -42,6 +42,7 @@ export default async function middleware(request: NextRequest) {
   if (
     pathname.startsWith('/_next') ||
     pathname.startsWith('/api') ||
+    pathname.startsWith('/images') ||
     publicRootFilesSet.has(pathname)
   ) {
     return NextResponse.next()
