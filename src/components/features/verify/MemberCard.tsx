@@ -6,6 +6,8 @@ import clsx from 'clsx'
 import { format } from 'date-fns'
 import { useTranslations } from 'next-intl'
 
+import { statusConfig } from './statusConfig'
+
 type MemberCardProps = {
   expiresAt: string | null
   firstName: string
@@ -13,13 +15,6 @@ type MemberCardProps = {
   lastName: string
   memberId: string
   status: MemberStatus
-}
-
-const statusStyles: Record<MemberStatus, { bg: string; icon: string; text: string }> = {
-  active: { bg: 'bg-green-100', icon: 'text-green-600', text: 'text-green-800' },
-  expired: { bg: 'bg-red-100', icon: 'text-red-600', text: 'text-red-800' },
-  inactive: { bg: 'bg-gray-100', icon: 'text-gray-600', text: 'text-gray-800' },
-  suspended: { bg: 'bg-yellow-100', icon: 'text-yellow-600', text: 'text-yellow-800' },
 }
 
 const MemberCard = ({
@@ -34,19 +29,17 @@ const MemberCard = ({
 
   const fullName = `${firstName} ${lastName}`
   const statusLabel = t(`verify.statuses.${status}`)
-  const styles = statusStyles[status]
+  const config = statusConfig[status]
 
   const formattedJoinedAt = format(new Date(joinedAt), 'dd/MM/yyyy')
   const formattedExpiresAt = expiresAt ? format(new Date(expiresAt), 'dd/MM/yyyy') : null
 
-  const isActive = status === 'active'
-
   return (
     <div className="w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-xl">
-      <div className={clsx('p-6 text-center', isActive ? 'bg-green-500' : 'bg-gray-500')}>
+      <div className={clsx('p-6 text-center', config.header.bg)}>
         <div className="mb-2 flex justify-center">
-          <div className={clsx('rounded-full p-3', isActive ? 'bg-green-400' : 'bg-gray-400')}>
-            <Icon className="text-white" icon="check" size="lg" />
+          <div className={clsx('rounded-full p-3', config.header.iconBg)}>
+            <Icon className="text-white" icon={config.icon} size="lg" />
           </div>
         </div>
         <h1 className="text-2xl font-bold text-white">{fullName}</h1>
@@ -55,7 +48,11 @@ const MemberCard = ({
       <div className="p-6">
         <div className="mb-4 flex items-center justify-center gap-2">
           <span
-            className={clsx('rounded-full px-4 py-1 text-sm font-medium', styles.bg, styles.text)}
+            className={clsx(
+              'rounded-full px-4 py-1 text-sm font-medium',
+              config.badge.bg,
+              config.badge.text,
+            )}
           >
             {statusLabel}
           </span>
