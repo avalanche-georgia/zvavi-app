@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { Checkbox, DatePicker } from '@components/ui'
+import { Checkbox, TimePicker } from '@components/ui'
 import { useTranslations } from 'next-intl'
 
 import type { ProblemFormData } from '../ProblemForm'
@@ -8,6 +8,8 @@ type TimeOfDayProps = {
   onTimeChange: (value: React.SetStateAction<ProblemFormData>) => void
   problemData: ProblemFormData
 }
+
+const timePickerClassName = 'w-20 rounded bg-gray-100 px-2'
 
 const TimeOfDay = ({ onTimeChange, problemData }: TimeOfDayProps) => {
   const t = useTranslations()
@@ -64,30 +66,22 @@ const TimeOfDay = ({ onTimeChange, problemData }: TimeOfDayProps) => {
         {!problemData.isAllDay && (
           <div className="flex items-center gap-1">
             <div>
-              <DatePicker
-                className="w-20 rounded bg-gray-100 px-2"
-                dateFormat="HH:mm"
+              <TimePicker
+                className={timePickerClassName}
                 isClearable
                 onChange={handleStartTimeChange}
-                placeholderText={t('common.words.from')}
-                selected={problemData.timeOfDay.start as Date | null}
-                showTimeSelect
-                showTimeSelectOnly
-                timeFormat="HH:mm"
+                placeholder={t('common.words.from')}
+                value={problemData.timeOfDay.start as Date | null}
               />
             </div>
             —
             <div>
-              <DatePicker
-                className="w-20 rounded bg-gray-100 px-2"
-                dateFormat="HH:mm"
+              <TimePicker
+                className={timePickerClassName}
                 isClearable
                 onChange={handleEndTimeChange}
-                placeholderText={t('common.words.to')}
-                selected={problemData.timeOfDay.end as Date | null}
-                showTimeSelect
-                showTimeSelectOnly
-                timeFormat="HH:mm"
+                placeholder={t('common.words.to')}
+                value={problemData.timeOfDay.end as Date | null}
               />
             </div>
           </div>

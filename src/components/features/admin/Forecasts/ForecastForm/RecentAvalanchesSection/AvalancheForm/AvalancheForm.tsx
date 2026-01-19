@@ -1,9 +1,11 @@
 import { useCallback, useState } from 'react'
-import { DatePicker, Textarea } from '@components/ui'
+import { DateTimePicker, Textarea } from '@components/ui'
 import type { Avalanche, AvalancheSize as AvalancheSizeType } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import { Aspects, AvalancheSize, Footer, InputBlock, type SetAspectsData } from '../../common'
+
+const dateTimePickerClassName = 'h-8 rounded bg-gray-100 px-2'
 
 export type AvalancheFormProps = {
   avalancheData: Avalanche
@@ -56,12 +58,10 @@ const AvalancheForm = ({ avalancheData, onClose, onSave }: AvalancheFormProps) =
       <section className="grid grid-cols-2 items-start gap-x-6">
         <div className="flex flex-col gap-3">
           <InputBlock label={tForm('recentAvalanches.labels.date')} labelClassName="w-32">
-            <DatePicker
-              className="h-8 rounded bg-gray-100 px-2"
-              dateFormat="dd.MM.yyyy HH:mm"
+            <DateTimePicker
+              className={dateTimePickerClassName}
               onChange={handleDateChange}
-              selected={data.date}
-              showTimeSelect
+              value={data.date}
             />
           </InputBlock>
 

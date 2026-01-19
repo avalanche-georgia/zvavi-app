@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { DatePicker } from '@components/ui'
+import { DateTimePicker } from '@components/ui'
 import type { BaseFormData } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
@@ -9,6 +9,8 @@ type ValidUntilProps = {
   formData: BaseFormData
   setFormData: (value: React.SetStateAction<BaseFormData>) => void
 }
+
+const dateTimePickerClassName = 'h-8 rounded bg-gray-100 px-2'
 
 const ValidUntil = ({ formData, setFormData }: ValidUntilProps) => {
   const tForecast = useTranslations('admin.forecast')
@@ -25,12 +27,10 @@ const ValidUntil = ({ formData, setFormData }: ValidUntilProps) => {
 
   return (
     <InputBlock label={tForecast('form.general.labels.validUntil')}>
-      <DatePicker
-        className="h-8 rounded bg-gray-100 px-2"
-        dateFormat="dd.MM.yyyy HH:mm"
+      <DateTimePicker
+        className={dateTimePickerClassName}
         onChange={handleValidUntilChange}
-        selected={formData.validUntil}
-        showTimeSelect
+        value={formData.validUntil}
       />
     </InputBlock>
   )
