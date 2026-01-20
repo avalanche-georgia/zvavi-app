@@ -35,7 +35,7 @@ const DatePicker = ({
     setOpen(false)
   }
 
-  const handleClear = (e: React.MouseEvent) => {
+  const handleClear = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation()
     onChange(null)
   }
@@ -59,26 +59,17 @@ const DatePicker = ({
             {value ? format(value, 'dd MMM yyyy') : placeholder}
           </span>
           {isClearable && value && (
-            <span
-              className="rounded p-0.5 hover:bg-gray-100"
-              onClick={handleClear}
-              onKeyDown={(e) => e.key === 'Enter' && handleClear(e as unknown as React.MouseEvent)}
-              role="button"
-              tabIndex={0}
-            >
+            <button className="rounded p-0.5 hover:bg-gray-100" onClick={handleClear} type="button">
               <X className="size-4 text-gray-500" />
-            </span>
+            </button>
           )}
         </HeadlessUIButton>
       </PopoverTrigger>
       <PopoverContent align="start" className="w-auto p-0">
         <Calendar
-          disabled={(date) => {
-            if (maxDate && date > maxDate) return true
-            if (minDate && date < minDate) return true
-
-            return false
-          }}
+          disabled={(date) =>
+            (maxDate != null && date > maxDate) || (minDate != null && date < minDate)
+          }
           mode="single"
           onSelect={handleSelect}
           selected={value ?? undefined}

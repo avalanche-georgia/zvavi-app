@@ -1,4 +1,5 @@
 import type { MemberStatus } from '@domain/types'
+import { isPast, parseISO, startOfDay } from 'date-fns'
 
 type MemberWithExpiration = {
   status: MemberStatus
@@ -15,10 +16,9 @@ const getEffectiveStatus = (member: MemberWithExpiration): MemberStatus => {
     return member.status
   }
 
-  const expirationDate = new Date(member.expiresAt)
-  const now = new Date()
+  const isExpired = isPast(startOfDay(parseISO(member.expiresAt)))
 
-  if (expirationDate < now && member.status !== 'expired') {
+  if (isExpired && member.status !== 'expired') {
     return 'expired'
   }
 
