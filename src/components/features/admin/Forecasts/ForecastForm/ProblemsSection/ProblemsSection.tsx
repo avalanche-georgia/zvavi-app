@@ -1,26 +1,31 @@
-import { type Dispatch, type SetStateAction, useCallback, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { Icon } from '@components/icons'
 import { Button } from '@components/ui'
 import { avalancheProblemTypes } from '@domain/constants'
 import type { Problem } from '@domain/types'
 import _uniqueId from 'lodash/uniqueId'
 import { useTranslations } from 'next-intl'
+import { useFieldArray, useFormContext } from 'react-hook-form'
 
 import prepareTimeOfDay from './prepareTimeOfDay'
 import { ProblemForm } from './ProblemForm'
 import { ProblemList } from './ProblemList'
 import type { FormState } from '../common'
 import { initialProblemData } from '../constants'
+import type { ForecastFormSchema } from '../schema'
 
-type ProblemsSectionProps = {
-  problems: Problem[]
-  setProblems: Dispatch<SetStateAction<Problem[]>>
-}
-
-const ProblemsSection = ({ problems, setProblems }: ProblemsSectionProps) => {
+const ProblemsSection = () => {
   const tForecast = useTranslations('admin.forecast')
+
+  const { control } = useFormContext<ForecastFormSchema>()
+  const { append, fields, remove, update } = useFieldArray({
+    control,
+    name: 'avalancheProblems',
+  })
+
   const [formState, setFormState] = useState<FormState>(null)
-  const selectedProblemTypes = useMemo(() => problems.map((problem) => problem.type), [problems])
+
+  const selectedProblemTypes = useMemo(() => fields.map((problem) => problem.type), [fields])
 
   const handleCreateFormOpen = useCallback(() => {
     setFormState({ mode: 'create' })
@@ -38,19 +43,28 @@ const ProblemsSection = ({ problems, setProblems }: ProblemsSectionProps) => {
         timeOfDay: prepareTimeOfDay(data.timeOfDay),
       }
 
-      setProblems((prev) => {
-        const isProblemExists = prev.some((problem) => problem.id === data.id)
+      const existingIndex = fields.findIndex((problem) => problem.id === data.id)
 
-        if (isProblemExists) {
-          return prev.map((problem) => (problem.id === data.id ? preparedProblem : problem))
-        }
-
-        return [...prev, preparedProblem]
-      })
+      if (existingIndex !== -1) {
+        update(existingIndex, preparedProblem)
+      } else {
+        append(preparedProblem)
+      }
 
       handleFormClose()
     },
-    [handleFormClose, setProblems],
+    [append, fields, handleFormClose, update],
+  )
+
+  const handleDelete = useCallback(
+    (id: string) => {
+      const index = fields.findIndex((problem) => problem.id === id)
+
+      if (index !== -1) {
+        remove(index)
+      }
+    },
+    [fields, remove],
   )
 
   const canAddProblem =
@@ -78,11 +92,11 @@ const ProblemsSection = ({ problems, setProblems }: ProblemsSectionProps) => {
 
       <ProblemList
         formState={formState}
-        onDelete={setProblems}
+        onDelete={handleDelete}
         onFormClose={handleFormClose}
         onFormOpen={setFormState}
         onFormSave={handleSubmit}
-        problems={problems}
+        problems={fields}
         selectedProblemTypes={selectedProblemTypes}
       />
     </section>
