@@ -1,5 +1,6 @@
 'use client'
 
+import { useUnsavedChangesWarning } from '@components/hooks'
 import { Button, TextInput } from '@components/ui'
 import type { ForecastFormData } from '@domain/types'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -45,9 +46,11 @@ const ForecastForm = ({ initialFormData, onCancel, onSuccess }: ForecastFormProp
   })
 
   const {
-    formState: { errors },
+    formState: { errors, isDirty },
     register,
   } = form
+
+  useUnsavedChangesWarning(isDirty)
 
   const { handleSubmit } = useForecastFormSubmit({
     initialForecastId: initialFormData.baseFormData.id,
