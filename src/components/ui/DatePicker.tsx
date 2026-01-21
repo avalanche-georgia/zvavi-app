@@ -39,7 +39,7 @@ const DatePicker = ({
     onChange(null)
   }
 
-  const showClearButton = isClearable && value
+  const isClearButtonVisible = isClearable && value
 
   return (
     <Popover onOpenChange={setOpen} open={open}>
@@ -51,7 +51,7 @@ const DatePicker = ({
               'px-3 py-2 text-sm ring-offset-white',
               'focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20',
               'disabled:cursor-not-allowed disabled:opacity-50',
-              showClearButton && 'pr-9',
+              isClearButtonVisible && 'pr-9',
               !value && 'text-gray-500',
             )}
             disabled={disabled}
@@ -63,7 +63,7 @@ const DatePicker = ({
             </span>
           </HeadlessUIButton>
         </PopoverTrigger>
-        {showClearButton && (
+        {isClearButtonVisible && (
           <button
             className="absolute right-2 top-1/2 -translate-y-1/2 rounded p-0.5 hover:bg-gray-100"
             onClick={handleClear}

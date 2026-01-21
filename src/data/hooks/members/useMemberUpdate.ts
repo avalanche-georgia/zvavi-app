@@ -1,5 +1,6 @@
 import { supabase } from '@data'
 import { membersKeys } from '@data/query-keys'
+import { serverDateFormat } from '@domain/constants'
 import type { MemberFormData } from '@domain/types'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { format } from 'date-fns'
@@ -11,8 +12,8 @@ type UpdatePayload = MemberFormData & { id: string }
 const updateMember = async ({ id, ...formData }: UpdatePayload): Promise<void> => {
   const payload = {
     ...formData,
-    expiresAt: formData.expiresAt ? format(formData.expiresAt, 'yyyy-MM-dd') : null,
-    joinedAt: formData.joinedAt ? format(formData.joinedAt, 'yyyy-MM-dd') : null,
+    expiresAt: formData.expiresAt ? format(formData.expiresAt, serverDateFormat) : null,
+    joinedAt: formData.joinedAt ? format(formData.joinedAt, serverDateFormat) : null,
   }
 
   const { error } = await supabase.from('members').update(convertCamelToSnake(payload)).eq('id', id)

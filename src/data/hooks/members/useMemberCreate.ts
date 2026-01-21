@@ -1,5 +1,6 @@
 import { supabase } from '@data'
 import { membersKeys } from '@data/query-keys'
+import { serverDateFormat } from '@domain/constants'
 import type { Member, MemberFormData } from '@domain/types'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { format } from 'date-fns'
@@ -9,8 +10,8 @@ import { convertCamelToSnake, convertSnakeToCamel, handleSupabaseError } from '.
 const createMember = async (formData: MemberFormData): Promise<Member> => {
   const payload = {
     ...formData,
-    expiresAt: formData.expiresAt ? format(formData.expiresAt, 'yyyy-MM-dd') : null,
-    joinedAt: formData.joinedAt ? format(formData.joinedAt, 'yyyy-MM-dd') : null,
+    expiresAt: formData.expiresAt ? format(formData.expiresAt, serverDateFormat) : null,
+    joinedAt: formData.joinedAt ? format(formData.joinedAt, serverDateFormat) : null,
     memberId: formData.memberId || null, // Let DB generate if empty
   }
 

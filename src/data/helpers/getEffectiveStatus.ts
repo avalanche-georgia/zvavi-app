@@ -7,6 +7,7 @@ type MemberWithExpiration = {
 }
 
 /**
+ * Temp Solution until improved on BE:
  * Computes the effective status of a member based on their stored status
  * and expiration date. A member is considered expired only AFTER their
  * expiration date (e.g., expiresAt = "21 Feb" is valid until 21 Feb 23:59,
