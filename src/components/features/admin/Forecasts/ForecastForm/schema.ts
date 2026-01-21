@@ -1,5 +1,15 @@
 import { z } from 'zod'
 
+const coerceId = z.preprocess(
+  (val) => (val != null ? String(val) : undefined),
+  z.string().optional(),
+)
+
+const coerceDate = z.preprocess(
+  (val) => (typeof val === 'string' ? new Date(val) : val),
+  z.date().nullable(),
+)
+
 const hazardLevelScale = z.enum(['1', '2', '3', '4', '5'])
 const aspect = z.enum(['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'])
 const avalancheSize = z.union([
@@ -23,12 +33,12 @@ const problemSchema = z.object({
   createdAt: z.string().optional(),
   description: z.string(),
   distribution: z.enum(['isolated', 'specific', 'widespread']),
-  id: z.string().optional(),
+  id: coerceId,
   isAllDay: z.boolean(),
   sensitivity: z.enum(['unreactive', 'stubborn', 'reactive', 'touchy']),
   timeOfDay: z.object({
-    end: z.date().or(z.string()).nullable(),
-    start: z.date().or(z.string()).nullable(),
+    end: coerceDate,
+    start: coerceDate,
   }),
   trend: z.enum(['deteriorating', 'improving', 'noChange']),
   type: z.enum([
@@ -47,9 +57,9 @@ const problemSchema = z.object({
 const avalancheSchema = z.object({
   aspects: aspectsSchema,
   createdAt: z.string().optional(),
-  date: z.date().nullable(),
+  date: coerceDate,
   description: z.string(),
-  id: z.string().optional(),
+  id: coerceId,
   size: avalancheSize,
 })
 

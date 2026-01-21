@@ -1,6 +1,6 @@
 'use client'
 
-import { useUnsavedChangesWarning } from '@components/hooks'
+import { useToast, useUnsavedChangesWarning } from '@components/hooks'
 import { Button, TextInput } from '@components/ui'
 import type { ForecastFormData } from '@domain/types'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -39,6 +39,7 @@ const convertToFormSchema = (data: ForecastFormData): ForecastFormSchema => ({
 const ForecastForm = ({ initialFormData, onCancel, onSuccess }: ForecastFormProps) => {
   const t = useTranslations()
   const tForecast = useTranslations('admin.forecast')
+  const { toastError } = useToast()
 
   const form = useForm<ForecastFormSchema>({
     defaultValues: convertToFormSchema(initialFormData),
@@ -56,6 +57,12 @@ const ForecastForm = ({ initialFormData, onCancel, onSuccess }: ForecastFormProp
     initialForecastId: initialFormData.baseFormData.id,
     onSuccess,
   })
+
+  const onSubmit = () => {
+    form.handleSubmit(handleSubmit, (validationErrors) => {
+      toastError('ForecastForm validation', { error: validationErrors })
+    })()
+  }
 
   const getError = (field: keyof ForecastFormSchema) =>
     errors[field] ? t(`common.validation.${errors[field]?.message}`) : undefined
@@ -98,7 +105,7 @@ const ForecastForm = ({ initialFormData, onCancel, onSuccess }: ForecastFormProp
           <Button onClick={onCancel} variant="secondary">
             {t('common.actions.cancel')}
           </Button>
-          <Button onClick={form.handleSubmit(handleSubmit)}>{t('common.actions.submit')}</Button>
+          <Button onClick={onSubmit}>{t('common.actions.submit')}</Button>
         </footer>
       </div>
     </FormProvider>
