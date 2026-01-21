@@ -4,7 +4,7 @@ import { useMemberDelete } from '@data/hooks/members'
 import { dateFormat } from '@domain/constants'
 import type { Member } from '@domain/types'
 import clsx from 'clsx'
-import { format, isPast, parseISO, startOfDay } from 'date-fns'
+import { format, isAfter, parseISO, startOfDay } from 'date-fns'
 import { useTranslations } from 'next-intl'
 
 import ActionButtons from './ActionButtons'
@@ -36,7 +36,8 @@ const MemberItem = ({ member }: MemberItemProps) => {
   const fullName = `${member.firstName} ${member.lastName}`
   const formattedJoinedAt = format(member.joinedAt, dateFormat)
   const formattedExpiresAt = member.expiresAt ? format(member.expiresAt, dateFormat) : '-'
-  const isExpired = member.expiresAt && isPast(startOfDay(parseISO(member.expiresAt)))
+  const isExpired =
+    member.expiresAt && isAfter(startOfDay(new Date()), startOfDay(parseISO(member.expiresAt)))
 
   return (
     <>

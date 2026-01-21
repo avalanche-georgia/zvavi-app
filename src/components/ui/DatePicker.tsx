@@ -35,36 +35,44 @@ const DatePicker = ({
     setOpen(false)
   }
 
-  const handleClear = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation()
+  const handleClear = () => {
     onChange(null)
   }
 
+  const showClearButton = isClearable && value
+
   return (
     <Popover onOpenChange={setOpen} open={open}>
-      <PopoverTrigger asChild>
-        <HeadlessUIButton
-          className={clsx(
-            'flex h-10 w-full items-center justify-between rounded-md border border-gray-300 bg-white',
-            'px-3 py-2 text-sm ring-offset-white',
-            'focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20',
-            'disabled:cursor-not-allowed disabled:opacity-50',
-            !value && 'text-gray-500',
-          )}
-          disabled={disabled}
-          type="button"
-        >
-          <span className="flex items-center gap-2">
-            <CalendarIcon className="size-4" />
-            {value ? format(value, 'dd MMM yyyy') : placeholder}
-          </span>
-          {isClearable && value && (
-            <button className="rounded p-0.5 hover:bg-gray-100" onClick={handleClear} type="button">
-              <X className="size-4 text-gray-500" />
-            </button>
-          )}
-        </HeadlessUIButton>
-      </PopoverTrigger>
+      <div className="relative flex">
+        <PopoverTrigger asChild>
+          <HeadlessUIButton
+            className={clsx(
+              'flex h-10 w-full items-center rounded-md border border-gray-300 bg-white',
+              'px-3 py-2 text-sm ring-offset-white',
+              'focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20',
+              'disabled:cursor-not-allowed disabled:opacity-50',
+              showClearButton && 'pr-9',
+              !value && 'text-gray-500',
+            )}
+            disabled={disabled}
+            type="button"
+          >
+            <span className="flex items-center gap-2">
+              <CalendarIcon className="size-4" />
+              {value ? format(value, 'dd MMM yyyy') : placeholder}
+            </span>
+          </HeadlessUIButton>
+        </PopoverTrigger>
+        {showClearButton && (
+          <button
+            className="absolute right-2 top-1/2 -translate-y-1/2 rounded p-0.5 hover:bg-gray-100"
+            onClick={handleClear}
+            type="button"
+          >
+            <X className="size-4 text-gray-500" />
+          </button>
+        )}
+      </div>
       <PopoverContent align="start" className="w-auto p-0">
         <Calendar
           disabled={(date) =>
