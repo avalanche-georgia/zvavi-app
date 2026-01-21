@@ -51,16 +51,13 @@ const RecentAvalanchesSection = () => {
     [append, fields, handleFormClose, update],
   )
 
-  const handleDelete = useCallback(
-    (id: string) => {
-      const index = fields.findIndex((avalanche) => avalanche.id === id)
+  const handleDelete = (id: string) => {
+    const index = fields.findIndex((avalanche) => avalanche.id === id)
 
-      if (index !== -1) {
-        remove(index)
-      }
-    },
-    [fields, remove],
-  )
+    if (index !== -1) {
+      remove(index)
+    }
+  }
 
   return (
     <section className="flex flex-col gap-4">

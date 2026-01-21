@@ -56,16 +56,13 @@ const ProblemsSection = () => {
     [append, fields, handleFormClose, update],
   )
 
-  const handleDelete = useCallback(
-    (id: string) => {
-      const index = fields.findIndex((problem) => problem.id === id)
+  const handleDelete = (id: string) => {
+    const index = fields.findIndex((problem) => problem.id === id)
 
-      if (index !== -1) {
-        remove(index)
-      }
-    },
-    [fields, remove],
-  )
+    if (index !== -1) {
+      remove(index)
+    }
+  }
 
   const canAddProblem =
     formState === null && selectedProblemTypes.length < Object.keys(avalancheProblemTypes).length
