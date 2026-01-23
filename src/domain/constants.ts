@@ -75,6 +75,7 @@ export const confidenceLevels = {
 
 export const dateFormat = 'dd MMM yyyy'
 export const timeFormat = 'HH:mm'
+export const serverDateFormat = 'yyyy-MM-dd'
 
 export const memberStatuses = {
   active: 'active',

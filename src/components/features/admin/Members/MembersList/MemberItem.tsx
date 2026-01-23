@@ -3,7 +3,8 @@ import { ConfirmationDialog } from '@components/shared'
 import { useMemberDelete } from '@data/hooks/members'
 import { dateFormat } from '@domain/constants'
 import type { Member } from '@domain/types'
-import { format } from 'date-fns'
+import clsx from 'clsx'
+import { format, isAfter, parseISO, startOfDay } from 'date-fns'
 import { useTranslations } from 'next-intl'
 
 import ActionButtons from './ActionButtons'
@@ -35,6 +36,8 @@ const MemberItem = ({ member }: MemberItemProps) => {
   const fullName = `${member.firstName} ${member.lastName}`
   const formattedJoinedAt = format(member.joinedAt, dateFormat)
   const formattedExpiresAt = member.expiresAt ? format(member.expiresAt, dateFormat) : '-'
+  const isExpired =
+    member.expiresAt && isAfter(startOfDay(new Date()), startOfDay(parseISO(member.expiresAt)))
 
   return (
     <>
@@ -45,7 +48,9 @@ const MemberItem = ({ member }: MemberItemProps) => {
           <StatusBadge status={member.status} />
         </Column>
         <Column>{formattedJoinedAt}</Column>
-        <Column>{formattedExpiresAt}</Column>
+        <Column className={clsx(isExpired && 'font-medium text-red-600')}>
+          {formattedExpiresAt}
+        </Column>
         <Column className="flex-1 pr-4 text-right">
           <ActionButtons
             editHref={routes.admin.members.edit(member.id)}

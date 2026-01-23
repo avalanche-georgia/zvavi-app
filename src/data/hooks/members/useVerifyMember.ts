@@ -1,4 +1,5 @@
 import { supabase } from '@data'
+import { getEffectiveStatus } from '@data/helpers'
 import { membersKeys } from '@data/query-keys'
 import type { VerifyMemberResponse } from '@domain/types'
 import type { QueryFunctionContext, UseQueryOptions } from '@tanstack/react-query'
@@ -13,6 +14,20 @@ type QueryOptions = Omit<
   'queryKey' | 'queryFn'
 > & { code: string }
 
+const applyEffectiveStatusToResponse = (response: Response): Response => {
+  if (!response.success || !response.member) {
+    return response
+  }
+
+  return {
+    ...response,
+    member: {
+      ...response.member,
+      status: getEffectiveStatus(response.member),
+    },
+  }
+}
+
 const verifyMember = async ({ queryKey }: QueryFunctionContext<QueryKey>): Promise<Response> => {
   const [, , code] = queryKey
 
@@ -26,7 +41,7 @@ const verifyMember = async ({ queryKey }: QueryFunctionContext<QueryKey>): Promi
     return { error: error.message, success: false }
   }
 
-  return data as Response
+  return applyEffectiveStatusToResponse(data as Response)
 }
 
 const useVerifyMember = ({ code, ...options }: QueryOptions) =>

@@ -3,13 +3,11 @@
 /* eslint-disable react/jsx-props-no-spreading, max-lines */
 
 import { DatePicker, InputBlock, Select, Textarea, TextInput, toOptions } from '@components/ui'
-import { dateFormat, memberStatuses } from '@domain/constants'
+import { memberStatuses } from '@domain/constants'
 import type { MemberFormData, MemberStatus } from '@domain/types'
+import { startOfDay } from 'date-fns'
 import { useTranslations } from 'next-intl'
-import { Controller, useFormContext } from 'react-hook-form'
-
-const datePickerClassName =
-  'w-full rounded border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none'
+import { Controller, useFormContext, useWatch } from 'react-hook-form'
 
 const FormFields = () => {
   const t = useTranslations()
@@ -18,9 +16,11 @@ const FormFields = () => {
     formState: { errors },
     register,
   } = useFormContext<MemberFormData>()
+  const joinedAt = useWatch({ control, name: 'joinedAt' })
   const statusOptions = toOptions(memberStatuses, (key) => t(`admin.members.statuses.${key}`))
   const getError = (field: keyof MemberFormData) =>
     errors[field] ? t(`common.validation.${errors[field]?.message}`) : undefined
+  const today = startOfDay(new Date())
 
   return (
     <>
@@ -74,10 +74,9 @@ const FormFields = () => {
             name="joinedAt"
             render={({ field }) => (
               <DatePicker
-                className={datePickerClassName}
-                dateFormat={dateFormat}
+                maxDate={today}
                 onChange={(date) => field.onChange(date)}
-                selected={field.value}
+                value={field.value}
               />
             )}
           />
@@ -88,12 +87,11 @@ const FormFields = () => {
             name="expiresAt"
             render={({ field }) => (
               <DatePicker
-                className={datePickerClassName}
-                dateFormat={dateFormat}
                 isClearable
+                minDate={joinedAt ? startOfDay(joinedAt) : undefined}
                 onChange={(date) => field.onChange(date)}
-                placeholderText={t('admin.members.form.placeholders.expiresAt')}
-                selected={field.value}
+                placeholder={t('admin.members.form.placeholders.expiresAt')}
+                value={field.value}
               />
             )}
           />
