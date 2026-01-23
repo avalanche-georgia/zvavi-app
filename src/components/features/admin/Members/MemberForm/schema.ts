@@ -12,7 +12,7 @@ export const memberFormSchema = z
       .refine((val) => val !== null, {
         message: 'required',
       })
-      .refine((val) => val === null || val <= startOfDay(new Date()), {
+      .refine((val) => val === null || startOfDay(val) <= startOfDay(new Date()), {
         message: 'joinedAtFuture',
       }),
     lastName: z.string().min(1, { message: 'too_small' }),
