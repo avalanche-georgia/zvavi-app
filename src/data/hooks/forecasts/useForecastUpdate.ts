@@ -41,7 +41,7 @@ const useForecastUpdate = () => {
   return useMutation<void, Error, ForecastFormPayload>({
     mutationFn: updateForecast,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: forecastsKeys.list() })
+      queryClient.invalidateQueries({ queryKey: forecastsKeys.all })
     },
   })
 }

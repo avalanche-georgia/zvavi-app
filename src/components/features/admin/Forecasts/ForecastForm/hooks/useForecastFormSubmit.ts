@@ -33,7 +33,14 @@ const useForecastFormSubmit = ({ initialForecastId, onSuccess }: UseForecastForm
       } = formData
 
       const payload = {
-        avalancheProblems: avalancheProblems.map(({ createdAt, id, ...rest }) => rest), // eslint-disable-line @typescript-eslint/no-unused-vars
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        avalancheProblems: avalancheProblems.map(({ createdAt, id, ...rest }) => ({
+          ...rest,
+          timeOfDay: {
+            end: rest.timeOfDay.end?.toISOString() ?? null,
+            start: rest.timeOfDay.start?.toISOString() ?? null,
+          },
+        })),
         forecast: {
           additionalHazards,
           forecaster,
@@ -44,7 +51,11 @@ const useForecastFormSubmit = ({ initialForecastId, onSuccess }: UseForecastForm
           validUntil: validUntil?.toISOString() ?? null,
           weather,
         },
-        recentAvalanches: recentAvalanches.map(({ createdAt, id, ...rest }) => rest), // eslint-disable-line @typescript-eslint/no-unused-vars
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        recentAvalanches: recentAvalanches.map(({ createdAt, id, ...rest }) => ({
+          ...rest,
+          date: rest.date?.toISOString() ?? null,
+        })),
       }
 
       const isEditing = Boolean(initialForecastId)
