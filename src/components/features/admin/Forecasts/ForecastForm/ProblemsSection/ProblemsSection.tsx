@@ -37,13 +37,13 @@ const ProblemsSection = () => {
 
   const handleSubmit = useCallback(
     (data: Problem) => {
-      const preparedProblem: Problem = {
-        id: data.id || _uniqueId('problem-'),
+      const preparedProblem = {
         ...data,
+        id: data.id ? String(data.id) : _uniqueId('problem-'),
         timeOfDay: prepareTimeOfDay(data.timeOfDay),
       }
 
-      const existingIndex = fields.findIndex((problem) => problem.id === data.id)
+      const existingIndex = fields.findIndex((problem) => problem.id === String(data.id))
 
       if (existingIndex !== -1) {
         update(existingIndex, preparedProblem)

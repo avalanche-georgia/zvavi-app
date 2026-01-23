@@ -44,7 +44,7 @@ export type Forecast = {
 }
 
 export type Problem = {
-  id?: string
+  id?: string | number
   aspects: Aspects
   avalancheSize: AvalancheSize
   confidence: Confidence
@@ -59,11 +59,12 @@ export type Problem = {
 }
 
 export type Avalanche = {
-  id?: string
+  id?: string | number
   aspects: Aspects
   createdAt?: string
-  date: Date | null
+  date: Date | string | null
   description: string
+  isDateUnknown: boolean
   size: AvalancheSize
 }
 

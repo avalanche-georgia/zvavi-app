@@ -6,11 +6,23 @@ import { useTranslations } from 'next-intl'
 
 const AvalancheItem = ({ avalanche }: { avalanche: Avalanche }) => {
   const t = useTranslations()
-  const { date, description, size } = avalanche
+  const { date, description, isDateUnknown, size } = avalanche
+
+  // eslint-disable-next-line no-nested-ternary
+  const dateDisplay = isDateUnknown
+    ? t('admin.forecast.form.recentAvalanches.labels.dateUnknown')
+    : date
+      ? format(date, dateFormat)
+      : null
 
   return (
     <div className="flex flex-col gap-4">
-      {date && <p className="font-semibold">{format(date, dateFormat)}</p>}
+      {dateDisplay && (
+        <div>
+          <span>{t('common.labels.date')}: </span>
+          <span className="font-semibold">{dateDisplay}</span>
+        </div>
+      )}
       <div className="flex items-start gap-8">
         <div className="w-20 rounded-lg bg-gray-200 p-2 text-center">
           <h4 className="flex-none font-semibold">

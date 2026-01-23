@@ -19,21 +19,28 @@ const AvalancheItem = ({ avalanche, canEdit, onDelete, onEdit }: AvalancheItemPr
   const tForm = useTranslations('admin.forecast.form')
   const [isDeletionDialogOpen, { setFalse: closeDeletionDialog, setTrue: openDeletionDialog }] =
     useBoolean(false)
-  const { date, description, size } = avalanche
+  const { date, description, isDateUnknown, size } = avalanche
+
+  // eslint-disable-next-line no-nested-ternary
+  const dateDisplay = isDateUnknown
+    ? tForm('recentAvalanches.labels.dateUnknown')
+    : date
+      ? format(date, dateFormat)
+      : null
 
   const handleDelete = useCallback(() => {
-    onDelete(avalanche.id!)
+    onDelete(String(avalanche.id!))
   }, [onDelete, avalanche])
 
   const handleEdit = useCallback(() => {
-    onEdit(avalanche.id!)
+    onEdit(String(avalanche.id!))
   }, [onEdit, avalanche])
 
   return (
     <>
       <div className="w-full rounded bg-black/[0.03] p-3">
         <div className="mb-3 flex items-center justify-between">
-          {date && <h3 className="text-xl font-semibold">{format(date, dateFormat)}</h3>}
+          {dateDisplay && <h3 className="text-xl font-semibold">{dateDisplay}</h3>}
           <ActionButtons canEdit={canEdit} onDelete={openDeletionDialog} onEdit={handleEdit} />
         </div>
 

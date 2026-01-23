@@ -11,6 +11,7 @@ import { useForecastFormSubmit } from './hooks'
 
 import { InputBlock } from './common'
 import AdditionalTextFields from './AdditionalTextFields'
+import convertToFormSchema from './convertToFormSchema'
 import { HazardLevels } from './HazardLevels'
 import { ProblemsSection } from './ProblemsSection'
 import { RecentAvalanchesSection } from './RecentAvalanchesSection'
@@ -23,18 +24,6 @@ type ForecastFormProps = {
   onCancel: VoidFunction
   onSuccess: VoidFunction
 }
-
-const convertToFormSchema = (data: ForecastFormData): ForecastFormSchema => ({
-  additionalHazards: data.baseFormData.additionalHazards,
-  avalancheProblems: data.forecastDetails.avalancheProblems,
-  forecaster: data.baseFormData.forecaster,
-  hazardLevels: data.baseFormData.hazardLevels,
-  recentAvalanches: data.forecastDetails.recentAvalanches,
-  snowpack: data.baseFormData.snowpack,
-  summary: data.baseFormData.summary,
-  validUntil: data.baseFormData.validUntil,
-  weather: data.baseFormData.weather,
-})
 
 const ForecastForm = ({ initialFormData, onCancel, onSuccess }: ForecastFormProps) => {
   const t = useTranslations()

@@ -48,5 +48,6 @@ export const initialAvalancheData: Avalanche = {
   },
   date: null,
   description: '',
+  isDateUnknown: false,
   size: 1,
 }

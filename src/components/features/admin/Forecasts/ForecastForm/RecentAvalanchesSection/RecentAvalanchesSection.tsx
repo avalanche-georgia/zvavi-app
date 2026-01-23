@@ -12,6 +12,13 @@ import type { FormState } from '../common'
 import { initialAvalancheData } from '../constants'
 import type { ForecastFormSchema } from '../schema'
 
+const toDate = (value: Date | string | null): Date | null => {
+  if (!value) return null
+  if (value instanceof Date) return value
+
+  return new Date(value)
+}
+
 const RecentAvalanchesSection = () => {
   const tAvalanches = useTranslations('admin.forecast.form.recentAvalanches')
 
@@ -33,12 +40,13 @@ const RecentAvalanchesSection = () => {
 
   const handleSubmit = useCallback(
     (data: Avalanche) => {
-      const preparedAvalanche: Avalanche = {
-        id: data.id || _uniqueId('avalanche-'),
+      const preparedAvalanche = {
         ...data,
+        date: toDate(data.date),
+        id: data.id ? String(data.id) : _uniqueId('avalanche-'),
       }
 
-      const existingIndex = fields.findIndex((a) => a.id === data.id)
+      const existingIndex = fields.findIndex((a) => a.id === String(data.id))
 
       if (existingIndex !== -1) {
         update(existingIndex, preparedAvalanche)

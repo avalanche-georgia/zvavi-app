@@ -1,9 +1,16 @@
 import { useCallback, useState } from 'react'
-import { DateTimePicker, Textarea } from '@components/ui'
+import { Checkbox, DateTimePicker, Textarea } from '@components/ui'
 import type { Avalanche, AvalancheSize as AvalancheSizeType } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import { Aspects, AvalancheSize, Footer, InputBlock, type SetAspectsData } from '../../common'
+
+const toDate = (value: Date | string | null): Date | null => {
+  if (!value) return null
+  if (value instanceof Date) return value
+
+  return new Date(value)
+}
 
 const dateTimePickerClassName = 'h-8 rounded bg-gray-100 px-2'
 
@@ -23,6 +30,17 @@ const AvalancheForm = ({ avalancheData, onClose, onSave }: AvalancheFormProps) =
       setData((prev) => ({
         ...prev,
         date: value,
+      }))
+    },
+    [setData],
+  )
+
+  const handleDateUnknownChange = useCallback(
+    (isChecked: boolean) => {
+      setData((prev) => ({
+        ...prev,
+        date: isChecked ? null : prev.date,
+        isDateUnknown: isChecked,
       }))
     },
     [setData],
@@ -58,11 +76,19 @@ const AvalancheForm = ({ avalancheData, onClose, onSave }: AvalancheFormProps) =
       <section className="grid grid-cols-2 items-start gap-x-6">
         <div className="flex flex-col gap-3">
           <InputBlock label={tForm('recentAvalanches.labels.date')} labelClassName="w-32">
-            <DateTimePicker
-              className={dateTimePickerClassName}
-              onChange={handleDateChange}
-              value={data.date}
-            />
+            <div className="flex items-center gap-4">
+              <DateTimePicker
+                className={dateTimePickerClassName}
+                onChange={handleDateChange}
+                value={toDate(data.date)}
+              />
+              <Checkbox
+                className="bg-gray-200"
+                isChecked={data.isDateUnknown}
+                label={tForm('recentAvalanches.labels.dateUnknown')}
+                onChange={handleDateUnknownChange}
+              />
+            </div>
           </InputBlock>
 
           <AvalancheSize onChange={handleSizeChange} value={data.size} />

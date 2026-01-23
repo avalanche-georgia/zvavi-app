@@ -23,11 +23,11 @@ const ProblemItem = ({ canEdit, onDelete, onEdit, problemData }: ProblemItemProp
   const { description, type: problemType } = problemData
 
   const handleDelete = useCallback(() => {
-    onDelete(problemData.id!)
+    onDelete(String(problemData.id!))
   }, [onDelete, problemData.id])
 
   const handleEdit = useCallback(() => {
-    onEdit(problemData.id!)
+    onEdit(String(problemData.id!))
   }, [onEdit, problemData])
 
   return (

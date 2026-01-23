@@ -210,6 +210,7 @@ admin:
           addAvalanche: 'Add Avalanche'
           deleteAvalanche: 'Delete Avalanche?'
           date: 'Date'
+          dateUnknown: 'Unknown'
 
 weatherStations:
   description: 'Real-time data from our network of weather stations'
