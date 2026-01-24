@@ -1,5 +1,6 @@
-import { DateTimePicker } from '@components/ui'
+import { dateTimeFormat } from '@domain/constants'
 import { useTranslations } from 'next-intl'
+import ReactDatePicker from 'react-datepicker'
 import { Controller, useFormContext } from 'react-hook-form'
 
 import { InputBlock } from './common'
@@ -8,8 +9,6 @@ import type { ForecastFormSchema } from './schema'
 type ValidUntilProps = {
   error?: string
 }
-
-const dateTimePickerClassName = 'h-8 rounded bg-gray-100 px-2'
 
 const ValidUntil = ({ error }: ValidUntilProps) => {
   const t = useTranslations()
@@ -21,10 +20,12 @@ const ValidUntil = ({ error }: ValidUntilProps) => {
         control={control}
         name="validUntil"
         render={({ field }) => (
-          <DateTimePicker
-            className={dateTimePickerClassName}
+          <ReactDatePicker
+            className="h-8 rounded bg-gray-100 px-2"
+            dateFormat={dateTimeFormat}
             onChange={(date) => field.onChange(date)}
-            value={field.value}
+            selected={field.value}
+            showTimeSelect
           />
         )}
       />
