@@ -1,16 +1,21 @@
 'use client'
 
+import { useToast, useUnsavedChangesWarning } from '@components/hooks'
 import { Button, TextInput } from '@components/ui'
 import type { ForecastFormData } from '@domain/types'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslations } from 'next-intl'
+import { FormProvider, useForm } from 'react-hook-form'
 
-import { useForecastFormState, useForecastFormSubmit } from './hooks'
+import { useForecastFormSubmit } from './hooks'
 
 import { InputBlock } from './common'
 import AdditionalTextFields from './AdditionalTextFields'
+import convertToFormSchema from './convertToFormSchema'
 import { HazardLevels } from './HazardLevels'
 import { ProblemsSection } from './ProblemsSection'
 import { RecentAvalanchesSection } from './RecentAvalanchesSection'
+import { type ForecastFormSchema, forecastFormSchema } from './schema'
 import TextAreaField from './TextAreaField'
 import ValidUntil from './ValidUntil'
 
@@ -20,74 +25,79 @@ type ForecastFormProps = {
   onSuccess: VoidFunction
 }
 
-// TODO: Implement Validations https://app.asana.com/0/1208747689500826/1209084695587061/f
 const ForecastForm = ({ initialFormData, onCancel, onSuccess }: ForecastFormProps) => {
   const t = useTranslations()
   const tForecast = useTranslations('admin.forecast')
+  const { toastError } = useToast()
 
-  const {
-    avalancheProblems,
-    formData,
-    handleTextFieldChange,
-    recentAvalanches,
-    setFormData,
-    setProblems,
-    setRecentAvalanches,
-  } = useForecastFormState(initialFormData)
-
-  const { handleSubmit } = useForecastFormSubmit({
-    avalancheProblems,
-    formData,
-    initialForecastId: initialFormData.baseFormData.id,
-    onSuccess,
-    recentAvalanches,
+  const form = useForm<ForecastFormSchema>({
+    defaultValues: convertToFormSchema(initialFormData),
+    resolver: zodResolver(forecastFormSchema),
   })
 
+  const {
+    formState: { errors, isDirty },
+    register,
+  } = form
+
+  useUnsavedChangesWarning(isDirty)
+
+  const { handleSubmit } = useForecastFormSubmit({
+    initialForecastId: initialFormData.baseFormData.id,
+    onSuccess,
+  })
+
+  const onSubmit = () => {
+    form.handleSubmit(handleSubmit, (validationErrors) => {
+      toastError('ForecastForm validation', { error: validationErrors })
+    })()
+  }
+
+  const getError = (field: keyof ForecastFormSchema) =>
+    errors[field] ? t(`common.validation.${errors[field]?.message}`) : undefined
+
   return (
-    <div className="rounded-lg bg-white shadow">
-      <section className="flex w-full flex-col gap-3 p-4 md:p-6 ">
-        <form className="flex w-full flex-col gap-6">
-          <div className="flex flex-col gap-4">
-            <h3 className="text-xl font-semibold">{tForecast('form.general.title')}</h3>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-x-6">
-              <InputBlock label={tForecast('form.general.labels.forecaster')}>
-                <TextInput
-                  className="flex-1"
-                  onChange={handleTextFieldChange('forecaster')}
-                  value={formData.forecaster}
-                />
-              </InputBlock>
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <FormProvider {...form}>
+      <div className="rounded-lg bg-white shadow">
+        <section className="flex w-full flex-col gap-3 p-4 md:p-6 ">
+          <form className="flex w-full flex-col gap-6">
+            <div className="flex flex-col gap-4">
+              <h3 className="text-xl font-semibold">{tForecast('form.general.title')}</h3>
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-x-6">
+                <InputBlock
+                  error={getError('forecaster')}
+                  label={tForecast('form.general.labels.forecaster')}
+                  required
+                >
+                  {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+                  <TextInput className="flex-1" {...register('forecaster')} />
+                </InputBlock>
 
-              <ValidUntil formData={formData} setFormData={setFormData} />
+                <ValidUntil error={getError('validUntil')} />
+              </div>
             </div>
-          </div>
 
-          <TextAreaField
-            formData={formData}
-            onChange={handleTextFieldChange('summary')}
-            type="summary"
-          />
-          <hr />
-          <HazardLevels setFormData={setFormData} value={formData.hazardLevels} />
-          <hr />
-          <ProblemsSection problems={avalancheProblems} setProblems={setProblems} />
-          <hr />
-          <RecentAvalanchesSection
-            avalanches={recentAvalanches}
-            setAvalanches={setRecentAvalanches}
-          />
-          <hr />
-          <AdditionalTextFields formData={formData} onChange={handleTextFieldChange} />
-        </form>
-      </section>
+            <TextAreaField type="summary" />
+            <hr />
+            <HazardLevels />
+            <hr />
+            <ProblemsSection />
+            <hr />
+            <RecentAvalanchesSection />
+            <hr />
+            <AdditionalTextFields />
+          </form>
+        </section>
 
-      <footer className="flex h-16 items-center justify-end gap-4 border-t px-4 md:px-6">
-        <Button onClick={onCancel} variant="secondary">
-          {t('common.actions.cancel')}
-        </Button>
-        <Button onClick={handleSubmit}>{t('common.actions.submit')}</Button>
-      </footer>
-    </div>
+        <footer className="flex h-16 items-center justify-end gap-4 border-t px-4 md:px-6">
+          <Button onClick={onCancel} variant="secondary">
+            {t('common.actions.cancel')}
+          </Button>
+          <Button onClick={onSubmit}>{t('common.actions.submit')}</Button>
+        </footer>
+      </div>
+    </FormProvider>
   )
 }
 

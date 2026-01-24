@@ -1,20 +1,22 @@
 import { Textarea } from '@components/ui'
-import type { BaseFormData } from '@domain/types'
 import { useTranslations } from 'next-intl'
+import { useFormContext } from 'react-hook-form'
+
+import type { ForecastFormSchema } from './schema'
 
 type TextAreaFieldProps = {
-  formData: BaseFormData
-  onChange: (value: React.ChangeEvent<HTMLTextAreaElement>) => void
   type: 'additionalHazards' | 'snowpack' | 'summary' | 'weather'
 }
 
-const TextAreaField = ({ formData, onChange, type }: TextAreaFieldProps) => {
+const TextAreaField = ({ type }: TextAreaFieldProps) => {
   const t = useTranslations()
+  const { register } = useFormContext<ForecastFormSchema>()
 
   return (
     <div className="flex flex-1 flex-col gap-4 pt-1.5">
       <h4 className="font-semibold">{t(`admin.forecast.form.general.labels.${type}`)}</h4>
-      <Textarea className="w-full" onChange={onChange} rows={6} value={formData[type] ?? ''} />
+      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+      <Textarea className="w-full" rows={6} {...register(type)} />
     </div>
   )
 }

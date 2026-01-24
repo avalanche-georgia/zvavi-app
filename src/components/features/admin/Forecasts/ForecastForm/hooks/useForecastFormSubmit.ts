@@ -1,76 +1,81 @@
 import { useCallback } from 'react'
 import { useToast } from '@components/hooks'
 import { useForecastCreate, useForecastUpdate } from '@data/hooks/forecasts'
-import type { Avalanche, BaseFormData, ForecastFormData, Problem } from '@domain/types'
+import type { ForecastFormData } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
+import type { ForecastFormSchema } from '../schema'
+
 export type UseForecastFormSubmitArgs = {
-  avalancheProblems: Problem[]
-  formData: BaseFormData
   initialForecastId: ForecastFormData['baseFormData']['id']
   onSuccess: VoidFunction
-  recentAvalanches: Avalanche[]
 }
 
-const useForecastFormSubmit = ({
-  avalancheProblems,
-  formData,
-  initialForecastId,
-  onSuccess,
-  recentAvalanches,
-}: UseForecastFormSubmitArgs) => {
+const useForecastFormSubmit = ({ initialForecastId, onSuccess }: UseForecastFormSubmitArgs) => {
   const t = useTranslations()
   const { mutateAsync: createForecast } = useForecastCreate()
   const { mutateAsync: updateForecast } = useForecastUpdate()
 
   const { toastError, toastSuccess } = useToast()
 
-  const handleSubmit = useCallback(async () => {
-    const { additionalHazards, forecaster, hazardLevels, snowpack, summary, validUntil, weather } =
-      formData
-
-    const payload = {
-      avalancheProblems: avalancheProblems.map(({ createdAt, id, ...rest }) => rest), // eslint-disable-line @typescript-eslint/no-unused-vars
-      forecast: {
+  const handleSubmit = useCallback(
+    async (formData: ForecastFormSchema) => {
+      const {
         additionalHazards,
+        avalancheProblems,
         forecaster,
         hazardLevels,
-        id: initialForecastId,
+        recentAvalanches,
         snowpack,
         summary,
-        validUntil: validUntil?.toISOString() ?? null,
+        validUntil,
         weather,
-      },
-      recentAvalanches: recentAvalanches.map(({ createdAt, id, ...rest }) => rest), // eslint-disable-line @typescript-eslint/no-unused-vars
-    }
+      } = formData
 
-    const isEditing = Boolean(initialForecastId)
-
-    try {
-      if (isEditing) {
-        await updateForecast(payload)
-        toastSuccess(t('admin.forecasts.messages.updated'))
-      } else {
-        await createForecast(payload)
-        toastSuccess(t('admin.forecasts.messages.created'))
+      const payload = {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        avalancheProblems: avalancheProblems.map(({ createdAt, id, ...rest }) => ({
+          ...rest,
+          timeOfDay: {
+            end: rest.timeOfDay.end?.toISOString() ?? null,
+            start: rest.timeOfDay.start?.toISOString() ?? null,
+          },
+        })),
+        forecast: {
+          additionalHazards,
+          forecaster,
+          hazardLevels,
+          id: initialForecastId,
+          snowpack,
+          summary,
+          validUntil: validUntil?.toISOString() ?? null,
+          weather,
+        },
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        recentAvalanches: recentAvalanches.map(({ createdAt, id, ...rest }) => ({
+          ...rest,
+          date: rest.date?.toISOString() ?? null,
+        })),
       }
 
-      onSuccess()
-    } catch (error) {
-      toastError('useForecastFormSubmit | handleSubmit', { error })
-    }
-  }, [
-    avalancheProblems,
-    createForecast,
-    formData,
-    initialForecastId,
-    onSuccess,
-    recentAvalanches,
-    t,
-    toastError,
-    toastSuccess,
-    updateForecast,
-  ])
+      const isEditing = Boolean(initialForecastId)
+
+      try {
+        if (isEditing) {
+          await updateForecast(payload)
+          toastSuccess(t('admin.forecasts.messages.updated'))
+        } else {
+          await createForecast(payload)
+          toastSuccess(t('admin.forecasts.messages.created'))
+        }
+
+        onSuccess()
+      } catch (error) {
+        toastError('useForecastFormSubmit | handleSubmit', { error })
+      }
+    },
+    [createForecast, initialForecastId, onSuccess, t, toastError, toastSuccess, updateForecast],
+  )
 
   return { handleSubmit }
 }

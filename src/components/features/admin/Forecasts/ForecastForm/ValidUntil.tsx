@@ -1,36 +1,34 @@
-import { useCallback } from 'react'
-import { DateTimePicker } from '@components/ui'
-import type { BaseFormData } from '@domain/types'
+import { dateTimeFormat } from '@domain/constants'
 import { useTranslations } from 'next-intl'
+import ReactDatePicker from 'react-datepicker'
+import { Controller, useFormContext } from 'react-hook-form'
 
 import { InputBlock } from './common'
+import type { ForecastFormSchema } from './schema'
 
 type ValidUntilProps = {
-  formData: BaseFormData
-  setFormData: (value: React.SetStateAction<BaseFormData>) => void
+  error?: string
 }
 
-const dateTimePickerClassName = 'h-8 rounded bg-gray-100 px-2'
-
-const ValidUntil = ({ formData, setFormData }: ValidUntilProps) => {
-  const tForecast = useTranslations('admin.forecast')
-
-  const handleValidUntilChange = useCallback(
-    (value: Date | null) => {
-      setFormData((prev) => ({
-        ...prev,
-        validUntil: value,
-      }))
-    },
-    [setFormData],
-  )
+const ValidUntil = ({ error }: ValidUntilProps) => {
+  const t = useTranslations()
+  const { control } = useFormContext<ForecastFormSchema>()
 
   return (
-    <InputBlock label={tForecast('form.general.labels.validUntil')}>
-      <DateTimePicker
-        className={dateTimePickerClassName}
-        onChange={handleValidUntilChange}
-        value={formData.validUntil}
+    <InputBlock error={error} label={t('admin.forecast.form.general.labels.validUntil')} required>
+      <Controller
+        control={control}
+        name="validUntil"
+        render={({ field }) => (
+          <ReactDatePicker
+            className="h-8 rounded bg-gray-100 px-2"
+            dateFormat={dateTimeFormat}
+            minDate={new Date()}
+            onChange={(date) => field.onChange(date)}
+            selected={field.value}
+            showTimeSelect
+          />
+        )}
       />
     </InputBlock>
   )

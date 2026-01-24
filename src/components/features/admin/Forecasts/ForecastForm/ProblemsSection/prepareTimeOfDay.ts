@@ -1,8 +1,10 @@
 import type { TimeRange } from '@domain/types'
 
-const prepareTimeOfDay = (timeOfDay: TimeRange) => ({
-  end: timeOfDay.end ? new Date(timeOfDay.end).toISOString() : null,
-  start: timeOfDay.start ? new Date(timeOfDay.start).toISOString() : null,
+type StrictTimeRange = { start: Date | null; end: Date | null }
+
+const prepareTimeOfDay = (timeOfDay: TimeRange): StrictTimeRange => ({
+  end: timeOfDay.end ? new Date(timeOfDay.end) : null,
+  start: timeOfDay.start ? new Date(timeOfDay.start) : null,
 })
 
 export default prepareTimeOfDay

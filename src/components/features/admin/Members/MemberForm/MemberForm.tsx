@@ -1,5 +1,6 @@
 'use client'
 
+import { useUnsavedChangesWarning } from '@components/hooks'
 import { Button } from '@components/ui'
 import type { Member, MemberFormData } from '@domain/types'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -26,6 +27,8 @@ const MemberForm = ({ initialFormData, member, onCancel, onSuccess }: MemberForm
     defaultValues: initialFormData,
     resolver: zodResolver(memberFormSchema),
   })
+
+  useUnsavedChangesWarning(form.formState.isDirty)
 
   const { handleSubmit } = useMemberFormSubmit({ memberId: member?.id, onSuccess })
 

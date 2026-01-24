@@ -1,6 +1,5 @@
 import { useCallback } from 'react'
 import type { Avalanche } from '@domain/types'
-import _uniqueId from 'lodash/uniqueId'
 import { useTranslations } from 'next-intl'
 
 import AvalancheItem from './AvalancheItem'
@@ -10,7 +9,7 @@ import { AvalancheForm, type AvalancheFormProps } from '../AvalancheForm'
 type AvalanchesListProps = {
   avalanches: Avalanche[]
   formState: FormState
-  onDelete: (avalanches: Avalanche[]) => void
+  onDelete: (id: string) => void
   onFormClose: AvalancheFormProps['onClose']
   onFormOpen: (state: { mode: 'edit'; id: string }) => void
   onFormSave: AvalancheFormProps['onSave']
@@ -33,13 +32,6 @@ const AvalanchesList = ({
     [onFormOpen],
   )
 
-  const handleDelete = useCallback(
-    (id: string) => {
-      onDelete(avalanches.filter((el) => el.id !== id))
-    },
-    [onDelete, avalanches],
-  )
-
   if (avalanches.length === 0 && formState === null) {
     return (
       <p className="text-center text-gray-500">
@@ -51,14 +43,14 @@ const AvalanchesList = ({
   return (
     <ul className="space-y-4">
       {avalanches.map((avalanche) => (
-        <li key={_uniqueId('avalanche-')}>
+        <li key={avalanche.id}>
           {formState?.mode === 'edit' && formState.id === avalanche.id ? (
             <AvalancheForm avalancheData={avalanche} onClose={onFormClose} onSave={onFormSave} />
           ) : (
             <AvalancheItem
               avalanche={avalanche}
               canEdit={formState === null}
-              onDelete={handleDelete}
+              onDelete={onDelete}
               onEdit={handleEdit}
             />
           )}

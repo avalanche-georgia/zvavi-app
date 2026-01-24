@@ -15,15 +15,16 @@ common:
     visitWebsite: 'ვიზიტი ვებგვერდზე'
 
   labels:
+    date: 'თარიღი'
     email: 'ელფოსტა'
     forecaster: 'პროგნოზის ავტორი'
     issuedAt: 'გამოცემის დრო'
+    leaveFeedback: 'მოაწოდეთ გამოხმაურება'
     overallDangerLevel: 'საერთო საშიშროების დონე'
     summary: 'შეჯამება'
     tapForDetails: 'დეტალების სანახავად შეეხეთ'
     validUntil: 'ძალაშია'
     wait: 'გთხოვთ დაიცადოთ...'
-    leaveFeedback: 'მოაწოდეთ გამოხმაურება'
 
   messages:
     error: 'დაფიქსირდა შეცდომა. გთხოვთ სცადოთ მოგვიანებით.'
