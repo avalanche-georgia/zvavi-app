@@ -23,6 +23,7 @@ const ValidUntil = ({ error }: ValidUntilProps) => {
           <ReactDatePicker
             className="h-8 rounded bg-gray-100 px-2"
             dateFormat={dateTimeFormat}
+            minDate={new Date()}
             onChange={(date) => field.onChange(date)}
             selected={field.value}
             showTimeSelect

@@ -47,7 +47,7 @@ const NewForecastPage = () => {
   const initialFormData = sourceForecast
     ? {
         ...initialBaseFormData,
-        baseFormData: { ...initialBaseFormData.baseFormData, id: undefined },
+        baseFormData: { ...initialBaseFormData.baseFormData, id: undefined, validUntil: null },
       }
     : initialBaseFormData
 
