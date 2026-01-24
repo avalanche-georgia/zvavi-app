@@ -12,7 +12,8 @@ const toDate = (value: Date | string | null): Date | null => {
   return new Date(value)
 }
 
-const dateTimePickerClassName = 'h-8 rounded bg-gray-100 px-2'
+const dateTimePickerClassName =
+  'h-8 rounded bg-gray-100 px-2 disabled:cursor-not-allowed disabled:bg-gray-50'
 
 export type AvalancheFormProps = {
   avalancheData: Avalanche
@@ -79,6 +80,7 @@ const AvalancheForm = ({ avalancheData, onClose, onSave }: AvalancheFormProps) =
             <div className="flex items-center gap-4">
               <DateTimePicker
                 className={dateTimePickerClassName}
+                disabled={data.isDateUnknown}
                 onChange={handleDateChange}
                 value={toDate(data.date)}
               />
