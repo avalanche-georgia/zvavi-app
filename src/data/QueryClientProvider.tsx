@@ -2,9 +2,18 @@
 
 import { isServer, QueryClient, QueryClientProvider as ClientProvider } from '@tanstack/react-query'
 
+import { reportError } from '@/lib/observability'
+
 function makeQueryClient() {
   return new QueryClient({
     defaultOptions: {
+      mutations: {
+        onError: (error) => {
+          if (typeof window !== 'undefined') {
+            reportError(error instanceof Error ? error : new Error(String(error)))
+          }
+        },
+      },
       queries: {
         staleTime: 60 * 1000,
       },
