@@ -7,6 +7,14 @@ import type { PropsWithChildren } from 'react'
 
 import { LD_CLIENT_SIDE_ID, observabilityConfig, sessionReplayConfig } from './config'
 
+// Silent logger for production
+const noopLogger = {
+  debug: () => {},
+  error: () => {},
+  info: () => {},
+  warn: () => {},
+}
+
 export const ObservabilityProvider = ({ children }: PropsWithChildren) => {
   if (!LD_CLIENT_SIDE_ID) {
     return children
@@ -20,6 +28,7 @@ export const ObservabilityProvider = ({ children }: PropsWithChildren) => {
         kind: 'user',
       }}
       options={{
+        logger: process.env.NODE_ENV === 'production' ? noopLogger : undefined,
         plugins: [new Observability(observabilityConfig), new SessionReplay(sessionReplayConfig)],
       }}
     >
