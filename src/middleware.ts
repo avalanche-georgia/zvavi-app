@@ -52,10 +52,10 @@ const publicRootFiles = [
 
 const publicRootFilesSet = new Set(publicRootFiles.map((f) => `/${f}`))
 
-// Regex to detect the old forecast URL format: /forecasts/{non-integer}
-// Matches: /en/forecasts/abc-123, /ka/forecasts/some-uuid
-// Does NOT match: /en/forecasts/42, /ka/forecasts/123
-const oldForecastPattern = /^\/(en|ka)\/forecasts\/(?!\d+$)[^/]+$/
+// Regex to detect the old forecast URL format: /forecasts/Gudauri_*
+// Matches: /en/forecasts/Gudauri_2024-03-27T08%3A00_MG%09
+// Does NOT match: /en/forecasts/123, /en/forecasts/current, /en/forecasts/history
+const oldForecastPattern = /^\/(en|ka)\/forecasts\/Gudauri_.*$/
 
 export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
