@@ -159,6 +159,9 @@ importers:
         specifier: ^4.3.5
         version: 4.3.5
     devDependencies:
+      '@launchdarkly/ldcli':
+        specifier: ^2.0.1
+        version: 2.0.1
       '@next/eslint-plugin-next':
         specifier: 15.5.7
         version: 15.5.7
@@ -1016,6 +1019,10 @@ packages:
   '@formatjs/intl-localematcher@0.5.7':
     resolution: {integrity: sha512-GGFtfHGQVFe/niOZp24Kal5b2i36eE2bNL0xi9Sg/yd0TR8aLjcteApZdHmismP5QQax1cMnZM9yWySUUjJteA==}
 
+  '@go-task/go-npm@0.2.0':
+    resolution: {integrity: sha512-vQbdtBvesHm8EUFHX8QKg4rbBodmu9VsAXH1ozpbiN5jdTMOYHTCMM31EurAYmY+rNNtxJQ4JGy6t383RPlqbw==}
+    hasBin: true
+
   '@headlessui/react@2.2.0':
     resolution: {integrity: sha512-RzCEg+LXsuI7mHiSomsu/gBJSjpupm6A1qIZ5sWjd7JhARNlMiSA4kKfJpCKwU9tE+zMRterhhrP74PvfJrpXQ==}
     engines: {node: '>=10'}
@@ -1225,6 +1232,9 @@ packages:
 
   '@launchdarkly/js-sdk-common@2.20.0':
     resolution: {integrity: sha512-g1Lyi5xL7AXAP6BP8BzRcqVqIhqOSVpA5Bx8Vvj8A/4A6sIHVz2vIZluykD/bJiKg1+G9ojm+OCfdL/c0ebi0A==}
+
+  '@launchdarkly/ldcli@2.0.1':
+    resolution: {integrity: sha512-xTLfQJ4943o3zstLB7+ey/3taOPcAdp5DSEfdWIlMpEdW3EoqBbNSDc505bOCzZoahqalQyGazPztMpl6/337Q==}
 
   '@launchdarkly/observability@0.5.1':
     resolution: {integrity: sha512-m6Y2NrI+2+iuLoUsuJEpukhIB+1WCqdO2Tn9Ik/8/wKhVyXs4Bn8KyfqwE7Ngclx4+7QApzwPgpjqMsnUlHm7Q==}
@@ -5373,6 +5383,8 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
+  '@go-task/go-npm@0.2.0': {}
+
   '@headlessui/react@2.2.0(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)':
     dependencies:
       '@floating-ui/react': 0.26.28(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)
@@ -5544,6 +5556,10 @@ snapshots:
       '@launchdarkly/js-client-sdk-common': 1.17.2
 
   '@launchdarkly/js-sdk-common@2.20.0': {}
+
+  '@launchdarkly/ldcli@2.0.1':
+    dependencies:
+      '@go-task/go-npm': 0.2.0
 
   '@launchdarkly/observability@0.5.1':
     dependencies:
