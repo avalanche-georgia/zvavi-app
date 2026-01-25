@@ -9,7 +9,9 @@ function makeQueryClient() {
     defaultOptions: {
       mutations: {
         onError: (error) => {
-          reportError(error instanceof Error ? error : new Error(String(error)))
+          if (typeof window !== 'undefined') {
+            reportError(error instanceof Error ? error : new Error(String(error)))
+          }
         },
       },
       queries: {
