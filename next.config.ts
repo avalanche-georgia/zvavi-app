@@ -4,6 +4,7 @@ import createNextIntlPlugin from 'next-intl/plugin'
 const withNextIntl = createNextIntlPlugin()
 
 const nextConfig: NextConfig = {
+  productionBrowserSourceMaps: true,
   webpack(config) {
     // SVG as React component
     config.module.rules.push({

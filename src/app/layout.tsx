@@ -10,6 +10,7 @@ import { Toaster } from 'sonner'
 import './globals.css'
 
 import { inter } from '@/fonts'
+import { ObservabilityProvider } from '@/lib/observability'
 import { baseUrl } from '@/routes'
 
 const siteDescription =
@@ -67,17 +68,19 @@ const Layout = async ({ children }: LayoutProps) => {
   return (
     <html lang={locale}>
       <body className={`${inter.className} flex min-h-dvh flex-col antialiased`}>
-        <NextIntlClientProvider messages={messages}>
-          <QueryClientProvider>
-            <SupabaseContextProvider>
-              <TooltipProvider delayDuration={100}>
-                <Toaster position="top-center" />
-                {children}
-                <SpeedInsights />
-              </TooltipProvider>
-            </SupabaseContextProvider>
-          </QueryClientProvider>
-        </NextIntlClientProvider>
+        <ObservabilityProvider>
+          <NextIntlClientProvider messages={messages}>
+            <QueryClientProvider>
+              <SupabaseContextProvider>
+                <TooltipProvider delayDuration={100}>
+                  <Toaster position="top-center" />
+                  {children}
+                  <SpeedInsights />
+                </TooltipProvider>
+              </SupabaseContextProvider>
+            </QueryClientProvider>
+          </NextIntlClientProvider>
+        </ObservabilityProvider>
       </body>
     </html>
   )
