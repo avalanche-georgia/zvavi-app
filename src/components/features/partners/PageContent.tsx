@@ -14,7 +14,7 @@ const PageContent = () => {
 
       <PartnersList tier={1} />
       <PartnersList tier={2} />
-      <PartnersList tier={3} />
+      <PartnersList scrollDirection="backward" tier={3} />
 
       <section className="space-y-3">
         <h3 className="text-xl font-semibold">{t('partners.becomePartner.title')}</h3>

@@ -1,18 +1,30 @@
 'use client'
 
-import AutoScroll from 'embla-carousel-auto-scroll'
+import AutoScroll, { type AutoScrollOptionsType } from 'embla-carousel-auto-scroll'
 import useEmblaCarousel from 'embla-carousel-react'
 import type { ReactNode } from 'react'
 
 type AutoScrollListProps = {
   children: ReactNode
   className?: string
-  speed?: number
+  speed?: AutoScrollOptionsType['speed']
+  direction?: AutoScrollOptionsType['direction']
 }
 
-const AutoScrollList = ({ children, className, speed = 0.5 }: AutoScrollListProps) => {
+const AutoScrollList = ({
+  children,
+  className,
+  direction = 'forward',
+  speed = 0.5,
+}: AutoScrollListProps) => {
   const [emblaRef] = useEmblaCarousel({ dragFree: true, loop: true }, [
-    AutoScroll({ speed, startDelay: 500, stopOnInteraction: false, stopOnMouseEnter: true }),
+    AutoScroll({
+      direction,
+      speed,
+      startDelay: 500,
+      stopOnInteraction: false,
+      stopOnMouseEnter: true,
+    }),
   ])
 
   return (
