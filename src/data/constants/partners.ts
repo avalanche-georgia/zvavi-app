@@ -6,6 +6,7 @@ import MtaLogo from '@assets/images/partnerLogos/mta.svg?component'
 import ozonLogo from '@assets/images/partnerLogos/ozon.png'
 import popoloLogo from '@assets/images/partnerLogos/popolo.jpeg'
 import snowLabLogo from '@assets/images/partnerLogos/snowlab.png'
+import travelBarLogo from '@assets/images/partnerLogos/travelBar.jpg'
 import vagabondLogo from '@assets/images/partnerLogos/vagabond.png'
 import vitaminKudebiLogo from '@assets/images/partnerLogos/vitaminKudebi.png'
 import { type StaticImageData } from 'next/image'
@@ -100,6 +101,13 @@ export const partners: Record<PartnerTier, Partner[]> = {
       logo: buruSportsLogo,
       name: 'Buru Sports',
       url: 'https://burusports.ge/',
+    },
+    {
+      id: 'travel-bar',
+      isRounded: true,
+      logo: travelBarLogo,
+      name: 'Travel Bar',
+      url: 'https://www.instagram.com/gudauribar/',
     },
   ],
 }

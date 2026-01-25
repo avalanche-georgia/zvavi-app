@@ -3,6 +3,7 @@
 import { AutoScrollList } from '@components/ui'
 import { type Partner, partners, type PartnerTier } from '@data/constants/partners'
 import clsx from 'clsx'
+import type { AutoScrollOptionsType } from 'embla-carousel-auto-scroll'
 
 import FirstTierPartner from './FirstTierPartner'
 import PartnerBadge from './PartnerBadge'
@@ -14,7 +15,12 @@ const CardRendererByTier: Record<PartnerTier, React.ComponentType<{ partner: Par
   3: PartnerBadge,
 }
 
-const PartnersList = ({ tier }: { tier: PartnerTier }) => {
+type PartnersListProps = {
+  scrollDirection?: AutoScrollOptionsType['direction']
+  tier: PartnerTier
+}
+
+const PartnersList = ({ scrollDirection, tier }: PartnersListProps) => {
   const PartnerComponent = CardRendererByTier[tier]
   const filteredPartners = partners[tier].filter((partner) => !partner.isHidden)
 
@@ -23,7 +29,7 @@ const PartnersList = ({ tier }: { tier: PartnerTier }) => {
   return (
     <>
       <div className="space-y-3">
-        <AutoScrollList className="overflow-hidden">
+        <AutoScrollList className="overflow-hidden" direction={scrollDirection}>
           {filteredPartners.map((partner) => (
             <li
               key={partner.id}

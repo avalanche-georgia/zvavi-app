@@ -1,6 +1,8 @@
 import { useTranslations } from 'next-intl'
 import { toast } from 'sonner'
 
+import { reportError } from '@/lib/observability'
+
 type ToastData = {
   message?: string
   error?: string | unknown
@@ -13,6 +15,7 @@ const useToast = () => {
     if (error) {
       // eslint-disable-next-line no-console
       console.error(`${scope}: `, error)
+      reportError(error instanceof Error ? error : new Error(String(error)), { scope })
     }
 
     return toast.error(message ?? t('common.messages.error'), {
