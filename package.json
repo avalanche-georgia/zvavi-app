@@ -10,7 +10,7 @@
     "prepare": "husky",
     "convert-messages": "node scripts/convert-messages.js",
     "export-translations": "node scripts/export-translations.js",
-    "postbuild": "[ -n \"$VERCEL\" ] && ldcli sourcemaps upload --app-version $VERCEL_GIT_COMMIT_SHA --path .next/static/chunks --base-path /_next/static/chunks --project default || true"
+    "postbuild": "[ -n \"$VERCEL\" ] && ldcli sourcemaps upload --access-token $LAUNCHDARKLY_ACCESS_TOKEN --app-version $VERCEL_GIT_COMMIT_SHA --path .next/static/chunks --base-path /_next/static/chunks --project default || true"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
