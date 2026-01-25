@@ -217,7 +217,6 @@ weatherStations:
   stations:
     altihut: 'Altihut, Kazbegi (3014m)'
     kudebi: 'Top of Kudebi Lift, Gudauri (3000m)'
-    ozon: 'Qumlistsikhe, Lower Gudauri, Hotel Ozon (1950m)'
     vitaminCafe: 'Vitamin Cafe, Gudauri (2688m)'
 
 verify:
