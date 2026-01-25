@@ -215,9 +215,10 @@ admin:
 weatherStations:
   description: 'Real-time data from our network of weather stations'
   stations:
+    altihut: 'Altihut, Kazbegi (3014m)'
+    kudebi: 'Top of Kudebi Lift, Gudauri (3000m)'
     ozon: 'Qumlistsikhe, Lower Gudauri, Hotel Ozon (1950m)'
-    kudebi: 'Top of Kudebi Lift (3000m)'
-    altihut: 'Altihut Kazbegi (3014m)'
+    vitaminCafe: 'Vitamin Cafe, Gudauri (2688m)'
 
 verify:
   card:

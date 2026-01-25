@@ -5,15 +5,19 @@ type WeatherStation = {
 
 export const weatherStations: WeatherStation[] = [
   {
-    id: 'ozon',
-    url: 'https://www.wunderground.com/dashboard/pws/I90583577',
+    id: 'altihut',
+    url: 'https://www.wunderground.com/dashboard/pws/IMTSKH8',
   },
   {
     id: 'kudebi',
     url: 'https://www.wunderground.com/dashboard/pws/IMTSKH9',
   },
   {
-    id: 'altihut',
-    url: 'https://www.wunderground.com/dashboard/pws/IMTSKH8',
+    id: 'vitaminCafe',
+    url: 'https://www.ecowitt.net/home/share?authorize=BYREP7',
+  },
+  {
+    id: 'ozon',
+    url: 'https://www.wunderground.com/dashboard/pws/I90583577',
   },
 ]
