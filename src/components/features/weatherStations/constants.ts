@@ -16,4 +16,8 @@ export const weatherStations: WeatherStation[] = [
     id: 'vitaminCafe',
     url: 'https://www.ecowitt.net/home/share?authorize=BYREP7',
   },
+  {
+    id: 'bedoni',
+    url: 'https://www.wunderground.com/dashboard/pws/I90583634',
+  },
 ]
