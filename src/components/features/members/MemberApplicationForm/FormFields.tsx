@@ -25,12 +25,24 @@ const FormFields = () => {
   return (
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
-        <InputBlock error={getError('fullName')} label={t('joinUs.apply.labels.fullName')} required>
+        <InputBlock
+          error={getError('firstName')}
+          label={t('joinUs.apply.labels.firstName')}
+          required
+        >
           <TextInput
-            {...register('fullName')}
-            placeholder={t('joinUs.apply.placeholders.fullName')}
+            {...register('firstName')}
+            placeholder={t('joinUs.apply.placeholders.firstName')}
           />
         </InputBlock>
+
+        <InputBlock error={getError('lastName')} label={t('joinUs.apply.labels.lastName')} required>
+          <TextInput
+            {...register('lastName')}
+            placeholder={t('joinUs.apply.placeholders.lastName')}
+          />
+        </InputBlock>
+
         <InputBlock error={getError('email')} label={t('joinUs.apply.labels.email')} required>
           <TextInput
             {...register('email')}
@@ -38,18 +50,15 @@ const FormFields = () => {
             type="email"
           />
         </InputBlock>
+
         <InputBlock error={getError('phone')} label={t('joinUs.apply.labels.phone')} required>
           <TextInput {...register('phone')} placeholder={t('joinUs.apply.placeholders.phone')} />
         </InputBlock>
-        <InputBlock error={getError('address')} label={t('joinUs.apply.labels.address')}>
-          <TextInput
-            {...register('address')}
-            placeholder={t('joinUs.apply.placeholders.address')}
-          />
-        </InputBlock>
+
         <InputBlock label={t('joinUs.apply.labels.age')}>
           <TextInput {...register('age')} inputMode="numeric" min={0} type="number" />
         </InputBlock>
+
         <InputBlock label={t('joinUs.apply.labels.gender')}>
           <Controller
             control={control}
@@ -64,13 +73,22 @@ const FormFields = () => {
             )}
           />
         </InputBlock>
+
+        <InputBlock error={getError('address')} label={t('joinUs.apply.labels.address')}>
+          <TextInput
+            {...register('address')}
+            placeholder={t('joinUs.apply.placeholders.address')}
+          />
+        </InputBlock>
+
+        <InputBlock label={t('joinUs.apply.labels.occupation')}>
+          <TextInput
+            {...register('occupation')}
+            placeholder={t('joinUs.apply.placeholders.occupation')}
+          />
+        </InputBlock>
       </div>
-      <InputBlock label={t('joinUs.apply.labels.occupation')}>
-        <TextInput
-          {...register('occupation')}
-          placeholder={t('joinUs.apply.placeholders.occupation')}
-        />
-      </InputBlock>
+
       <InputBlock label={t('joinUs.apply.labels.motivation')}>
         <Textarea
           {...register('motivation')}

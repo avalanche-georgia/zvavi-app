@@ -39,7 +39,8 @@ joinUs:
   apply:
     title: 'Membership Application'
     labels:
-      fullName: 'Full Name'
+      firstName: 'First Name'
+      lastName: 'Last Name'
       email: 'Email'
       address: 'Where are you from?'
       phone: 'Phone Number'
@@ -52,7 +53,8 @@ joinUs:
       female: 'Female'
       preferNotToSay: 'Prefer not to say'
     placeholders:
-      fullName: 'John Doe'
+      firstName: 'John'
+      lastName: 'Doe'
       email: 'john@example.com'
       phone: '+995 ...'
       address: 'City, Country'

@@ -30,8 +30,9 @@ const MemberApplicationForm = () => {
       age: '',
       charterAgreed: undefined as unknown as true,
       email: '',
-      fullName: '',
+      firstName: '',
       gender: '',
+      lastName: '',
       motivation: '',
       occupation: '',
       paymentMethod: undefined as unknown as MemberApplicationFormData['paymentMethod'],
@@ -44,9 +45,10 @@ const MemberApplicationForm = () => {
     setIsSubmitting(true)
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { age, charterAgreed, gender, motivation, occupation, ...rest } = data
+    const { address, age, charterAgreed, gender, motivation, occupation, ...rest } = data
     const payload = convertCamelToSnake({
       ...rest,
+      address: address || null,
       age: age ? Number(age) : null,
       gender: gender || null,
       motivation: motivation || null,

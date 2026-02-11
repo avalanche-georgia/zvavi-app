@@ -39,7 +39,8 @@ joinUs:
   apply:
     title: 'წევრობის განაცხადი'
     labels:
-      fullName: 'სახელი და გვარი'
+      firstName: 'სახელი'
+      lastName: 'გვარი'
       email: 'ელ. ფოსტა'
       address: 'საიდან ხართ?'
       phone: 'ტელეფონის ნომერი'
@@ -52,7 +53,8 @@ joinUs:
       female: 'მდედრობითი'
       preferNotToSay: 'არ მსურს მითითება'
     placeholders:
-      fullName: 'სახელი გვარი'
+      firstName: 'სახელი'
+      lastName: 'გვარი'
       email: 'john@example.com'
       phone: '+995 ...'
       address: 'ქალაქი, ქვეყანა'
