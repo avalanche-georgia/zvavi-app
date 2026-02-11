@@ -41,12 +41,23 @@ joinUs:
     labels:
       fullName: 'Full Name'
       email: 'Email'
-      address: 'Physical Address'
+      address: 'Where are you from?'
       phone: 'Phone Number'
+      age: 'Age'
+      gender: 'Gender'
       occupation: 'What is your occupation?'
       motivation: 'What is your motivation for becoming a member of Avalanche Georgia?'
+    genderOptions:
+      male: 'Male'
+      female: 'Female'
+      preferNotToSay: 'Prefer not to say'
     placeholders:
-      address: 'Optional'
+      fullName: 'John Doe'
+      email: 'john@example.com'
+      phone: '+995 ...'
+      address: 'City, Country'
+      gender: 'Select gender'
+      occupation: 'e.g. Mountain guide, Software engineer...'
       motivation: 'Tell us about your interest in avalanche safety...'
     charter:
       checkbox: 'I agree to the <link>Standards of Behaviour and Interaction</link> in Section 9 of the Organisation''s Charter'

@@ -27,9 +27,11 @@ const MemberApplicationForm = () => {
   const form = useForm<MemberApplicationFormData>({
     defaultValues: {
       address: '',
+      age: '',
       charterAgreed: undefined as unknown as true,
       email: '',
       fullName: '',
+      gender: '',
       motivation: '',
       occupation: '',
       paymentMethod: undefined as unknown as MemberApplicationFormData['paymentMethod'],
@@ -42,8 +44,14 @@ const MemberApplicationForm = () => {
     setIsSubmitting(true)
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { charterAgreed, ...rest } = data
-    const payload = convertCamelToSnake(rest)
+    const { age, charterAgreed, gender, motivation, occupation, ...rest } = data
+    const payload = convertCamelToSnake({
+      ...rest,
+      age: age ? Number(age) : null,
+      gender: gender || null,
+      motivation: motivation || null,
+      occupation: occupation || null,
+    })
 
     const { error } = await supabase.from('member_applications').insert(payload)
 

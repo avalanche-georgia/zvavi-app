@@ -41,12 +41,23 @@ joinUs:
     labels:
       fullName: 'სახელი და გვარი'
       email: 'ელ. ფოსტა'
-      address: 'მისამართი'
+      address: 'საიდან ხართ?'
       phone: 'ტელეფონის ნომერი'
+      age: 'ასაკი'
+      gender: 'სქესი'
       occupation: 'რა არის თქვენი საქმიანობა?'
       motivation: 'რა არის თქვენი მოტივაცია ზვავი საქართველოს წევრობისთვის?'
+    genderOptions:
+      male: 'მამრობითი'
+      female: 'მდედრობითი'
+      preferNotToSay: 'არ მსურს მითითება'
     placeholders:
-      address: 'არასავალდებულო'
+      fullName: 'სახელი გვარი'
+      email: 'john@example.com'
+      phone: '+995 ...'
+      address: 'ქალაქი, ქვეყანა'
+      gender: 'აირჩიეთ სქესი'
+      occupation: 'მაგ. მთის გიდი, პროგრამისტი...'
       motivation: 'მოგვიყევით თქვენი ინტერესის შესახებ ზვავის უსაფრთხოებაში...'
     charter:
       checkbox: 'ვეთანხმები <link>ქცევისა და ურთიერთობის სტანდარტებს</link> ორგანიზაციის წესდების მე-9 ნაწილში'

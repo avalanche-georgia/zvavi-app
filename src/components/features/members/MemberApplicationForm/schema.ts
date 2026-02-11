@@ -6,11 +6,13 @@ export type PaymentMethod = (typeof paymentMethods)[number]
 
 export const memberApplicationSchema = z.object({
   address: z.string().default(''),
+  age: z.string().default(''),
   charterAgreed: z.literal(true, { error: () => ({ message: 'required' }) }),
   email: z.string().email({ message: 'invalid_string' }),
   fullName: z.string().min(1, { message: 'too_small' }),
-  motivation: z.string().min(1, { message: 'too_small' }),
-  occupation: z.string().min(1, { message: 'too_small' }),
+  gender: z.string().default(''),
+  motivation: z.string().default(''),
+  occupation: z.string().default(''),
   paymentMethod: z.enum(paymentMethods, { message: 'required' }),
   phone: z.string().min(1, { message: 'too_small' }),
 })
