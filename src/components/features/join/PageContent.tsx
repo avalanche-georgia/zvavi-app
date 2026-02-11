@@ -1,10 +1,11 @@
-import { links } from '@components/constants'
 import { HTMLContainer } from '@components/shared'
 import { useTranslations } from 'next-intl'
 
 import EducateSection from './EducateSection'
 import FinancialSection from './FinancialSection'
 import VolunteerSection from './VolunteerSection'
+
+import { routes } from '@/routes'
 
 const PageContent = () => {
   const t = useTranslations()
@@ -17,7 +18,7 @@ const PageContent = () => {
           component="p"
           content={t.rich('joinUs.page.volunteer.becomeAMember', {
             a: (chunks) =>
-              `<a class="text-primary underline" href="${links.memberForm}" rel="noreferrer" target="_blank">${chunks}</a>`,
+              `<a class="text-primary underline" href="${routes.about.apply}">${chunks}</a>`,
           })}
         />
       </div>

@@ -1,5 +1,6 @@
 export { default as ButtonLink } from './ButtonLink'
 export { ConfirmationDialog } from './ConfirmationDialog'
+export { default as CopyField } from './CopyField'
 export { DisclaimerGate } from './Disclaimer'
 export { HazardLevelBanner } from './HazardLevelBanner'
 export { default as HTMLContainer } from './HTMLContainer'

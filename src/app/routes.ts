@@ -3,6 +3,7 @@ export const baseUrl = 'https://avalanche.ge'
 export const routes = {
   about: {
     aboutUs: '/about/about-us',
+    apply: '/about/join-us/apply',
     contact: '/about/contact',
     joinUs: '/about/join-us',
   },

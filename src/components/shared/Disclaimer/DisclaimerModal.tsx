@@ -26,7 +26,6 @@ const DisclaimerModal = ({ onAccept }: { onAccept: VoidFunction }) => {
         <div className="mb-4 flex flex-col gap-6">
           <p>{t('common.disclaimer.content')}</p>
           <Checkbox
-            className="bg-gray-200"
             isChecked={isAccepted}
             label={t('common.disclaimer.checkbox')}
             onChange={setIsAccepted}

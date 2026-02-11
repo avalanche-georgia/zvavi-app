@@ -1,7 +1,6 @@
 import { bankDetailsGEL, bankDetailsUSDEUR } from '@components/constants'
+import { CopyField } from '@components/shared'
 import { useTranslations } from 'next-intl'
-
-import CopyField from './CopyField'
 
 const BankRequisitesSection = () => {
   const t = useTranslations()
@@ -12,7 +11,6 @@ const BankRequisitesSection = () => {
       <div className="mb-2">
         <p className="mb-1">{t('contact.bank.GEL')}</p>
         <div className="space-y-2 rounded-lg border p-3 shadow-sm">
-          <CopyField label={t('contact.bank.labels.code')} value={bankDetailsGEL.code} />
           <CopyField label={t('contact.bank.labels.name')} value={bankDetailsGEL.name} />
           <CopyField label={t('contact.bank.labels.account')} value={bankDetailsGEL.account} />
         </div>
@@ -20,8 +18,10 @@ const BankRequisitesSection = () => {
       <div>
         <p className="mb-1">{t('contact.bank.USDEUR')}</p>
         <div className="space-y-2 rounded-lg border p-3 shadow-sm">
-          <CopyField label={t('contact.bank.labels.swift')} value={bankDetailsUSDEUR.code} />
+          <CopyField label={t('contact.bank.labels.name')} value={bankDetailsUSDEUR.name} />
           <CopyField label={t('contact.bank.labels.account')} value={bankDetailsUSDEUR.account} />
+          <CopyField label={t('contact.bank.labels.bankName')} value={bankDetailsUSDEUR.bankName} />
+          <CopyField label={t('contact.bank.labels.swift')} value={bankDetailsUSDEUR.code} />
           <CopyField label={t('contact.bank.labels.address')} value={bankDetailsUSDEUR.address} />
         </div>
       </div>

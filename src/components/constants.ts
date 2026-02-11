@@ -56,14 +56,15 @@ export const links = {
 
 export const bankDetailsGEL = {
   account: 'GE39TB7640836020100012',
-  code: 'TBCBGE 22',
   name: 'Avalanche Georgia',
 }
 
 export const bankDetailsUSDEUR = {
   account: 'GE78TB7640836120100005',
   address: '5 Luarsab Sharashidze Street, Tbilisi 0108, Georgia',
+  bankName: 'JSC TBC Bank',
   code: 'TBCBGE 22',
+  name: 'Avalanche Georgia',
 }
 
 export const feedbackFormURL = 'https://forms.gle/xAAdyPGbcaTwPR7K6'
