@@ -56,6 +56,7 @@ export const links = {
 
 export const bankDetailsGEL = {
   account: 'GE39TB7640836020100012',
+  bankName: 'JSC TBC Bank',
   name: 'Avalanche Georgia',
 }
 

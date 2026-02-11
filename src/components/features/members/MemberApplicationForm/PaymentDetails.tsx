@@ -12,8 +12,9 @@ const PaymentDetails = ({ method }: { method: PaymentMethod | undefined }) => {
   if (method === 'bank_gel') {
     return (
       <div className="flex flex-col gap-3 rounded-lg bg-gray-50 p-4">
-        <CopyField label={t('joinUs.apply.payment.beneficiary')} value={bankDetailsGEL.name} />
+        <CopyField label={t('joinUs.apply.payment.bankName')} value={bankDetailsGEL.bankName} />
         <CopyField label={t('joinUs.apply.payment.account')} value={bankDetailsGEL.account} />
+        <CopyField label={t('joinUs.apply.payment.beneficiary')} value={bankDetailsGEL.name} />
       </div>
     )
   }
