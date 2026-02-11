@@ -78,6 +78,11 @@ joinUs:
       account: 'Account'
       address: 'Address'
       contactMe: 'None of the above — please contact me'
+    success:
+      title: 'Application Submitted!'
+      description: 'Thank you for applying. Your application is now under review. Once your membership is approved, your status will be updated automatically — you can check it anytime using the QR code or link below.'
+      qrHint: 'Save this QR code — it''s your personal membership verification link.'
+      downloadQR: 'Download QR Code'
+      contactTitle: 'Have questions or need help?'
     messages:
-      success: 'Your application has been submitted successfully!'
       error: 'Failed to submit application. Please try again.'

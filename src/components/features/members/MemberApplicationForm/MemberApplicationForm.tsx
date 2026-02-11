@@ -3,26 +3,28 @@
 import { useState } from 'react'
 import { useToast } from '@components/hooks'
 import { Button } from '@components/ui'
-import { convertCamelToSnake } from '@data/helpers'
-import { supabase } from '@data/index'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslations } from 'next-intl'
 import { FormProvider, useForm } from 'react-hook-form'
 import { useRouter } from 'src/i18n/navigation'
 
+import ApplicationSuccess from './ApplicationSuccess'
 import CharterAgreement from './CharterAgreement'
 import FormFields from './FormFields'
 import PaymentSection from './PaymentSection'
 import type { MemberApplicationFormData } from './schema'
 import { memberApplicationSchema } from './schema'
+import type { SubmitResult } from './submitApplication'
+import submitApplication from './submitApplication'
 
 import { routes } from '@/routes'
 
 const MemberApplicationForm = () => {
   const t = useTranslations()
   const router = useRouter()
-  const { toastError, toastSuccess } = useToast()
+  const { toastError } = useToast()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [result, setResult] = useState<SubmitResult | null>(null)
 
   const form = useForm<MemberApplicationFormData>({
     defaultValues: {
@@ -44,32 +46,24 @@ const MemberApplicationForm = () => {
   const onSubmit = async (data: MemberApplicationFormData) => {
     setIsSubmitting(true)
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { address, age, charterAgreed, gender, motivation, occupation, ...rest } = data
-    const payload = convertCamelToSnake({
-      ...rest,
-      address: address || null,
-      age: age ? Number(age) : null,
-      gender: gender || null,
-      motivation: motivation || null,
-      occupation: occupation || null,
-    })
+    try {
+      const submitResult = await submitApplication(data)
 
-    const { error } = await supabase.from('member_applications').insert(payload)
-
-    setIsSubmitting(false)
-
-    if (error) {
+      setResult(submitResult)
+    } catch (error) {
       toastError('MemberApplicationForm', {
         error,
         message: t('joinUs.apply.messages.error'),
       })
-
-      return
+    } finally {
+      setIsSubmitting(false)
     }
+  }
 
-    toastSuccess(t('joinUs.apply.messages.success'))
-    router.push(routes.about.joinUs)
+  if (result) {
+    return (
+      <ApplicationSuccess memberId={result.memberId} verificationCode={result.verificationCode} />
+    )
   }
 
   return (
