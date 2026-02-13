@@ -1,20 +1,7 @@
 -- Add 'pending' status to member_status enum
 ALTER TYPE "public"."member_status" ADD VALUE IF NOT EXISTS 'pending';
 
--- Allow anonymous users to create pending members
-DROP POLICY IF EXISTS "Anyone can create pending member" ON "public"."members";
-CREATE POLICY "Anyone can create pending member"
-  ON "public"."members"
-  FOR INSERT TO anon
-  WITH CHECK (status = 'pending');
-
--- Allow anon to read back the member row after insert (.insert().select())
-DROP POLICY IF EXISTS "Anon can read pending members" ON "public"."members";
-CREATE POLICY "Anon can read pending members"
-  ON "public"."members"
-  FOR SELECT TO anon
-  USING (status = 'pending');
-
+-- Member applications table
 CREATE TABLE IF NOT EXISTS "public"."member_applications" (
   "id" uuid DEFAULT gen_random_uuid() NOT NULL PRIMARY KEY,
   "first_name" varchar(100) NOT NULL,
@@ -34,12 +21,6 @@ CREATE TABLE IF NOT EXISTS "public"."member_applications" (
 
 ALTER TABLE "public"."member_applications" ENABLE ROW LEVEL SECURITY;
 
-DROP POLICY IF EXISTS "Anyone can submit application" ON "public"."member_applications";
-CREATE POLICY "Anyone can submit application"
-  ON "public"."member_applications"
-  FOR INSERT TO anon, authenticated
-  WITH CHECK (true);
-
 DROP POLICY IF EXISTS "Authenticated users can read applications" ON "public"."member_applications";
 CREATE POLICY "Authenticated users can read applications"
   ON "public"."member_applications"
@@ -57,3 +38,50 @@ CREATE POLICY "Authenticated users can delete applications"
   ON "public"."member_applications"
   FOR DELETE TO authenticated
   USING (true);
+
+-- RPC function: both inserts in one transaction, SECURITY DEFINER bypasses RLS
+-- so no anon policies needed on members or member_applications
+CREATE OR REPLACE FUNCTION submit_member_application(
+  p_first_name text,
+  p_last_name text,
+  p_email text,
+  p_phone text,
+  p_payment_method text,
+  p_address text DEFAULT NULL,
+  p_occupation text DEFAULT NULL,
+  p_motivation text DEFAULT NULL,
+  p_age integer DEFAULT NULL,
+  p_gender text DEFAULT NULL
+) RETURNS json
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public, extensions
+AS $$
+DECLARE
+  v_member record;
+BEGIN
+  INSERT INTO members (first_name, last_name, email, phone, status)
+  VALUES (p_first_name, p_last_name, p_email, p_phone, 'pending')
+  RETURNING id, member_id, verification_code INTO v_member;
+
+  INSERT INTO member_applications (
+    first_name, last_name, email, phone,
+    address, occupation, motivation, age, gender,
+    payment_method, member_id
+  ) VALUES (
+    p_first_name, p_last_name, p_email, p_phone,
+    p_address, p_occupation, p_motivation, p_age, p_gender,
+    p_payment_method, v_member.id
+  );
+
+  RETURN json_build_object(
+    'memberId', v_member.member_id,
+    'verificationCode', v_member.verification_code
+  );
+END;
+$$;
+
+-- Remove anon policies that are no longer needed (RPC handles it)
+DROP POLICY IF EXISTS "Anyone can create pending member" ON "public"."members";
+DROP POLICY IF EXISTS "Anon can read pending members" ON "public"."members";
+DROP POLICY IF EXISTS "Anyone can submit application" ON "public"."member_applications";

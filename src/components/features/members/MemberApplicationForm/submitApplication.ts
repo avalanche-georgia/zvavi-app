@@ -1,4 +1,3 @@
-import { convertCamelToSnake } from '@data/helpers'
 import { supabase } from '@data/index'
 
 import type { MemberApplicationFormData } from './schema'
@@ -9,38 +8,22 @@ export type SubmitResult = { memberId: string; verificationCode: string }
 const submitApplication = async ({ charterAgreed, ...data }: MemberApplicationFormData) => {
   const { address, age, gender, motivation, occupation, ...rest } = data
 
-  const { data: member, error: memberError } = await supabase
-    .from('members')
-    .insert({
-      email: rest.email,
-      first_name: rest.firstName,
-      last_name: rest.lastName,
-      phone: rest.phone,
-      status: 'pending',
-    })
-    .select('id, member_id, verification_code')
-    .single()
-
-  if (memberError) throw memberError
-
-  const payload = convertCamelToSnake({
-    ...rest,
-    address: address || null,
-    age: age ? Number(age) : null,
-    gender: gender || null,
-    memberId: member.id,
-    motivation: motivation || null,
-    occupation: occupation || null,
+  const { data: result, error } = await supabase.rpc('submit_member_application', {
+    p_address: address || null,
+    p_age: age ? Number(age) : null,
+    p_email: rest.email,
+    p_first_name: rest.firstName,
+    p_gender: gender || null,
+    p_last_name: rest.lastName,
+    p_motivation: motivation || null,
+    p_occupation: occupation || null,
+    p_payment_method: rest.paymentMethod,
+    p_phone: rest.phone,
   })
-
-  const { error } = await supabase.from('member_applications').insert(payload)
 
   if (error) throw error
 
-  return {
-    memberId: member.member_id,
-    verificationCode: member.verification_code,
-  } as SubmitResult
+  return result as SubmitResult
 }
 
 export default submitApplication
