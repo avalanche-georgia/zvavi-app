@@ -8,6 +8,8 @@ import type { Member } from '@domain/types'
 import { addYears, startOfDay } from 'date-fns'
 import { useTranslations } from 'next-intl'
 
+import { getVerificationUrl } from '@/lib/qrcode'
+
 type ApproveDialogProps = {
   isOpen: boolean
   member: Member
@@ -31,17 +33,30 @@ const ApproveDialog = ({ isOpen, member, onClose }: ApproveDialogProps) => {
     }
   }, [isOpen])
 
+  const fullName = `${member.firstName} ${member.lastName}`
+
   const handleApprove = async () => {
     try {
       await updateMember({ expiresAt, id: member.id, joinedAt, status: 'active' })
+
+      if (member.email) {
+        fetch('/api/notify/member-approved', {
+          body: JSON.stringify({
+            email: member.email,
+            name: fullName,
+            verificationUrl: getVerificationUrl(member.verificationCode),
+          }),
+          headers: { 'Content-Type': 'application/json' },
+          method: 'POST',
+        }).catch(() => {})
+      }
+
       toastSuccess(t('admin.members.messages.approved'))
       onClose()
     } catch (error) {
       toastError('ApproveDialog', { error })
     }
   }
-
-  const fullName = `${member.firstName} ${member.lastName}`
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={t('admin.members.approveModal.title')}>
