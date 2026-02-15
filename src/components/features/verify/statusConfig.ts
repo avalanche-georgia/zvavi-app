@@ -23,6 +23,11 @@ export const statusConfig: Record<MemberStatus, StatusConfig> = {
     header: { bg: 'bg-gray-500', iconBg: 'bg-gray-400' },
     icon: 'xMark',
   },
+  pending: {
+    badge: { bg: 'bg-blue-100', text: 'text-blue-800' },
+    header: { bg: 'bg-blue-500', iconBg: 'bg-blue-400' },
+    icon: 'info',
+  },
   suspended: {
     badge: { bg: 'bg-amber-100', text: 'text-amber-800' },
     header: { bg: 'bg-amber-500', iconBg: 'bg-amber-400' },

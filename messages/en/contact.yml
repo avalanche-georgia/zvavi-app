@@ -12,6 +12,7 @@ contact:
     labels:
       account: 'Account'
       address: 'Address'
+      bankName: 'Bank Name'
       code: 'Bank Code'
       name: 'Name of Beneficiary'
       swift: 'Bank Code (SWIFT Code)'

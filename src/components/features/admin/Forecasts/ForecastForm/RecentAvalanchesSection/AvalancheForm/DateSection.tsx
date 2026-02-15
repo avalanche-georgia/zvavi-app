@@ -57,7 +57,6 @@ const DateSection = ({ data, setData }: DateSectionProps) => {
           />
         </div>
         <Checkbox
-          className="bg-gray-200"
           isChecked={data.isDateUnknown}
           label={t('admin.forecast.form.recentAvalanches.labels.dateUnknown')}
           onChange={handleDateUnknownChange}

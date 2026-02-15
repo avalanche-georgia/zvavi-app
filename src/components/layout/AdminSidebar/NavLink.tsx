@@ -6,13 +6,14 @@ import { Link } from 'src/i18n/navigation'
 import type { NavItem } from './types'
 
 type NavLinkProps = {
+  badge?: number
   isActive?: boolean
   item: NavItem
   onClick?: () => void
 }
 
-const NavLink = ({ isActive, item, onClick }: NavLinkProps) => {
-  const t = useTranslations('admin.sidebar')
+const NavLink = ({ badge, isActive, item, onClick }: NavLinkProps) => {
+  const t = useTranslations()
 
   return (
     <Link
@@ -24,7 +25,12 @@ const NavLink = ({ isActive, item, onClick }: NavLinkProps) => {
       onClick={onClick}
     >
       <Icon className="size-5" icon={item.icon} />
-      {t(item.label)}
+      {t(`admin.sidebar.${item.label}`)}
+      {badge != null && badge > 0 && (
+        <span className="ml-auto flex size-5 items-center justify-center rounded-full bg-blue-500 text-xs text-white">
+          {badge}
+        </span>
+      )}
     </Link>
   )
 }

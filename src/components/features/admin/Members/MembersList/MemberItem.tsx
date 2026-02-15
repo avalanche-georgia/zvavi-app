@@ -8,6 +8,7 @@ import { format, isAfter, parseISO, startOfDay } from 'date-fns'
 import { useTranslations } from 'next-intl'
 
 import ActionButtons from './ActionButtons'
+import ApproveDialog from './ApproveDialog'
 import Column from './Column'
 import StatusBadge from './StatusBadge'
 
@@ -21,6 +22,8 @@ const MemberItem = ({ member }: MemberItemProps) => {
   const t = useTranslations()
   const { mutateAsync: deleteMember } = useMemberDelete()
   const [isDeletionDialogOpen, { setFalse: closeDeletionDialog, setTrue: openDeletionDialog }] =
+    useBoolean(false)
+  const [isApproveDialogOpen, { setFalse: closeApproveDialog, setTrue: openApproveDialog }] =
     useBoolean(false)
   const { toastError, toastSuccess } = useToast()
 
@@ -38,10 +41,11 @@ const MemberItem = ({ member }: MemberItemProps) => {
   const formattedExpiresAt = member.expiresAt ? format(member.expiresAt, dateFormat) : '-'
   const isExpired =
     member.expiresAt && isAfter(startOfDay(new Date()), startOfDay(parseISO(member.expiresAt)))
+  const isPending = member.status === 'pending'
 
   return (
     <>
-      <div className="flex h-12 items-center gap-4 px-4">
+      <div className={clsx('flex h-12 items-center gap-4 px-4', { 'bg-primary/5': isPending })}>
         <Column className="w-48">{fullName}</Column>
         <Column>{member.memberId}</Column>
         <Column>
@@ -54,7 +58,9 @@ const MemberItem = ({ member }: MemberItemProps) => {
         <Column className="flex-1 pr-4 text-right">
           <ActionButtons
             editHref={routes.admin.members.edit(member.id)}
+            isPending={isPending}
             memberId={member.memberId}
+            onApprove={openApproveDialog}
             onDelete={openDeletionDialog}
             verificationCode={member.verificationCode}
           />
@@ -69,6 +75,8 @@ const MemberItem = ({ member }: MemberItemProps) => {
         title={t('admin.members.deleteMemberModal.title')}
         variant="delete"
       />
+
+      <ApproveDialog isOpen={isApproveDialogOpen} member={member} onClose={closeApproveDialog} />
     </>
   )
 }

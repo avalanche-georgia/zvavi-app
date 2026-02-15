@@ -7,12 +7,21 @@ import { downloadQRCode, getVerificationUrl } from '@/lib/qrcode'
 
 type ActionButtonsProps = {
   editHref: string
+  isPending?: boolean
   memberId: string
+  onApprove?: VoidFunction
   onDelete: VoidFunction
   verificationCode: string
 }
 
-const ActionButtons = ({ editHref, memberId, onDelete, verificationCode }: ActionButtonsProps) => {
+const ActionButtons = ({
+  editHref,
+  isPending,
+  memberId,
+  onApprove,
+  onDelete,
+  verificationCode,
+}: ActionButtonsProps) => {
   const t = useTranslations()
   const [, copyToClipboard] = useCopyToClipboard()
 
@@ -30,6 +39,15 @@ const ActionButtons = ({ editHref, memberId, onDelete, verificationCode }: Actio
 
   return (
     <div className="flex items-center justify-end gap-2">
+      {isPending && (
+        <Tooltip content={t('admin.members.actions.approve')}>
+          <IconButton
+            className="hover:stroke-green-600"
+            iconProps={{ icon: 'check' }}
+            onClick={onApprove}
+          />
+        </Tooltip>
+      )}
       <Tooltip content={t('admin.members.qrCode.copyUrl')}>
         <IconButton iconProps={{ icon: 'copy' }} onClick={handleCopyUrl} />
       </Tooltip>

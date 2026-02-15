@@ -91,7 +91,7 @@ export type ForecastFormData = {
 
 export type FullForecast = Forecast & ForecastDetails
 
-export type MemberStatus = 'active' | 'inactive' | 'suspended' | 'expired'
+export type MemberStatus = 'active' | 'inactive' | 'pending' | 'suspended' | 'expired'
 
 export type Member = {
   id: string

@@ -19,7 +19,7 @@ export const memberFormSchema = z
     memberId: z.string(),
     notes: z.string(),
     phone: z.string(),
-    status: z.enum(['active', 'inactive', 'suspended', 'expired']),
+    status: z.enum(['active', 'inactive', 'pending', 'suspended', 'expired']),
   })
   .refine(
     (data) => {

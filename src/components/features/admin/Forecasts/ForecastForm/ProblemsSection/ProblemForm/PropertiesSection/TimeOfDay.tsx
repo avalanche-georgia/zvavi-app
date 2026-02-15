@@ -56,7 +56,6 @@ const TimeOfDay = ({ onTimeChange, problemData }: TimeOfDayProps) => {
       <h4 className="w-28 flex-none font-semibold">{tProblems('labels.timeOfDay')}</h4>
       <div className="flex flex-1 items-center justify-between gap-4">
         <Checkbox
-          className="bg-gray-200"
           isChecked={problemData.isAllDay}
           label={tProblems('labels.allDay')}
           labelPosition="left"

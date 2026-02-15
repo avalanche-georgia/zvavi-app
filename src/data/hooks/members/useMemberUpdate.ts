@@ -7,7 +7,7 @@ import { format } from 'date-fns'
 
 import { convertCamelToSnake, handleSupabaseError } from '../../helpers'
 
-type UpdatePayload = MemberFormData & { id: string }
+type UpdatePayload = Partial<MemberFormData> & { id: string }
 
 const updateMember = async ({ id, ...formData }: UpdatePayload): Promise<void> => {
   const payload = {
