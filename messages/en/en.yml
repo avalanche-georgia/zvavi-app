@@ -75,8 +75,12 @@ admin:
       allStatuses: 'All Statuses'
       searchPlaceholder: 'Search by name, ID or email...'
     actions:
+      approve: 'Approve'
       delete: 'Delete'
       edit: 'Edit'
+    approveModal:
+      title: 'Approve Member'
+      description: 'Approve {name} as an active member with the following membership dates:'
     deleteMemberModal:
       title: 'Delete Member?'
       description: 'Do you want to permanently delete {name}?'
@@ -104,6 +108,7 @@ admin:
       successDescription: 'QR code is ready for {name}'
       done: 'Done'
     messages:
+      approved: 'Member approved successfully.'
       created: 'Member created successfully.'
       deleted: 'Member deleted successfully.'
       updated: 'Member updated successfully.'
@@ -111,6 +116,7 @@ admin:
       active: 'Active'
       expired: 'Expired'
       inactive: 'Inactive'
+      pending: 'Pending'
       suspended: 'Suspended'
   forecasts:
     title: 'Forecasts'
@@ -232,6 +238,7 @@ verify:
     active: 'Active'
     expired: 'Expired'
     inactive: 'Inactive'
+    pending: 'Pending'
     suspended: 'Suspended'
   invalid:
     title: 'Invalid Member'

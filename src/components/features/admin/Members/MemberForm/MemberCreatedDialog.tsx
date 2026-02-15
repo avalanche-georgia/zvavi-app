@@ -2,10 +2,10 @@
 
 import { useCallback } from 'react'
 import { Icon } from '@components/icons'
+import { CopyInput } from '@components/shared'
 import { BrandedQRCode, Button, Modal, ModalBody, ModalFooter } from '@components/ui'
 import type { Member } from '@domain/types'
 import { useTranslations } from 'next-intl'
-import { useCopyToClipboard } from 'usehooks-ts'
 
 import { downloadQRCode, getVerificationUrl } from '@/lib/qrcode'
 
@@ -17,7 +17,6 @@ type MemberCreatedDialogProps = {
 
 const MemberCreatedDialog = ({ isOpen, member, onClose }: MemberCreatedDialogProps) => {
   const t = useTranslations()
-  const [, copyToClipboard] = useCopyToClipboard()
 
   const verificationUrl = member ? getVerificationUrl(member.verificationCode) : ''
   const fullName = member ? `${member.firstName} ${member.lastName}` : ''
@@ -28,10 +27,6 @@ const MemberCreatedDialog = ({ isOpen, member, onClose }: MemberCreatedDialogPro
 
     await downloadQRCode(member.verificationCode, fileName)
   }, [member])
-
-  const handleCopyUrl = useCallback(() => {
-    copyToClipboard(verificationUrl)
-  }, [copyToClipboard, verificationUrl])
 
   if (!member) return null
 
@@ -47,13 +42,8 @@ const MemberCreatedDialog = ({ isOpen, member, onClose }: MemberCreatedDialogPro
             <BrandedQRCode size={180} value={verificationUrl} />
           </div>
 
-          <div className="flex w-full items-center gap-2">
-            <code className="flex-1 truncate rounded bg-gray-100 px-3 py-2 text-xs">
-              {verificationUrl}
-            </code>
-            <Button onClick={handleCopyUrl} variant="secondary">
-              <Icon icon="copy" size="sm" />
-            </Button>
+          <div className="w-full">
+            <CopyInput value={verificationUrl} />
           </div>
 
           <Button className="w-full" onClick={handleDownload} variant="secondary">

@@ -32,19 +32,20 @@ const Select = ({ className, onChange, options, placeholder, value }: SelectProp
     <SelectPrimitive.Trigger
       className={twMerge(
         clsx(
-          'flex h-10 w-full items-center justify-between rounded-md border border-gray-300 bg-white',
-          'px-3 py-2 text-sm ring-offset-white',
-          'placeholder:text-gray-500',
-          'focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20',
+          'flex h-8 w-full items-center justify-between rounded border border-transparent bg-gray-100',
+          'px-3 text-sm transition-colors',
+          '[&:hover:not(:focus)]:border-primary/50',
+          'focus:border-primary focus:outline-none',
+          'data-[state=open]:border-primary',
           'disabled:cursor-not-allowed disabled:opacity-50',
-          '[&>span]:line-clamp-1',
+          'data-[placeholder]:text-gray-400 [&>span]:line-clamp-1',
           className,
         ),
       )}
     >
       <SelectPrimitive.Value placeholder={placeholder} />
       <SelectPrimitive.Icon asChild>
-        <ChevronDown className="size-4 opacity-50" />
+        <ChevronDown className="size-4 text-gray-500" />
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
 
@@ -67,14 +68,14 @@ const Select = ({ className, onChange, options, placeholder, value }: SelectProp
               className={clsx(
                 'relative flex w-full cursor-default select-none items-center rounded-sm',
                 'py-1.5 pl-8 pr-2 text-sm outline-none',
-                'focus:bg-gray-100 focus:text-gray-900',
+                'focus:bg-primary/10 focus:text-gray-900',
                 'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
               )}
               value={option.value}
             >
               <span className="absolute left-2 flex size-3.5 items-center justify-center">
                 <SelectPrimitive.ItemIndicator>
-                  <Check className="size-4" />
+                  <Check className="size-4 text-primary" />
                 </SelectPrimitive.ItemIndicator>
               </span>
               <SelectPrimitive.ItemText>{option.label}</SelectPrimitive.ItemText>

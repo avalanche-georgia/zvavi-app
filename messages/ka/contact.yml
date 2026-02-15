@@ -12,6 +12,7 @@ contact:
     labels:
       account: 'ანგარიში'
       address: 'მისამართი'
+      bankName: 'ბანკის სახელი'
       code: 'საბანკო კოდი'
       name: 'მიმღების სახელი'
       swift: 'საბანკო კოდი (SWIFT)'

@@ -2,3 +2,5 @@
 .branches
 .temp
 .env
+
+auth_data_dump.sql

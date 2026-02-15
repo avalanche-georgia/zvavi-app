@@ -28,7 +28,7 @@ const Checkbox = ({
         'group flex size-5 cursor-pointer items-center justify-center rounded-md p-0.5 ring-1',
         'ring-inset ring-white/15 data-[hover]:ring-primary',
         'transition-[background-color,box-shadow] data-[checked]:bg-primary',
-        { 'bg-white': !className?.includes('bg-') },
+        { 'bg-gray-100': !className?.includes('bg-') },
         className,
       )}
       onChange={onChange}

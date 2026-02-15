@@ -1,6 +1,7 @@
 'use client'
 
 import { Icon } from '@components'
+import { usePendingMembersCount } from '@data/hooks/members'
 import clsx from 'clsx'
 import { useTranslations } from 'next-intl'
 import { Link, usePathname } from 'src/i18n/navigation'
@@ -18,6 +19,7 @@ type SidebarContentProps = {
 const SidebarContent = ({ onItemClick }: SidebarContentProps) => {
   const pathname = usePathname()
   const t = useTranslations()
+  const pendingCount = usePendingMembersCount()
 
   return (
     <div className="flex h-full flex-col">
@@ -30,6 +32,7 @@ const SidebarContent = ({ onItemClick }: SidebarContentProps) => {
         {navItems.map((item) => (
           <NavLink
             key={item.href}
+            badge={item.label === 'members' ? pendingCount : undefined}
             isActive={pathname.startsWith(item.href)}
             item={item}
             onClick={onItemClick}

@@ -7,11 +7,14 @@ const TextInput = (props: InputHTMLAttributes<HTMLInputElement>) => (
   <Input
     {...props}
     className={clsx(
-      'rounded border-none bg-gray-100 px-3 py-1.5 text-sm dark:bg-white/5',
-      'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2',
-      'transition-colors data-[focus]:outline-primary/40',
-      'data-[hover]:bg-black/[0.03] dark:data-[hover]:bg-white/[0.08]',
-      'data-[focus]:bg-black/[0.03] dark:data-[focus]:bg-white/[0.08]',
+      'h-8 rounded border border-transparent bg-gray-100 px-3 text-sm dark:bg-white/5',
+      'transition-colors focus:outline-none',
+      props.readOnly
+        ? 'cursor-default'
+        : [
+            'data-[focus]:border-primary [&[data-hover]:not([data-focus])]:border-primary/50',
+            'dark:data-[focus]:bg-white/[0.08] dark:[&[data-hover]:not([data-focus])]:bg-white/[0.08]',
+          ],
       props.className,
     )}
   />

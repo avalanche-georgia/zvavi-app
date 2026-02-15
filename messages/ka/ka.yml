@@ -75,8 +75,12 @@ admin:
       allStatuses: 'ყველა სტატუსი'
       searchPlaceholder: 'ძიება სახელით, ID-ით ან ელფოსტით...'
     actions:
+      approve: 'დამტკიცება'
       delete: 'წაშლა'
       edit: 'რედაქტირება'
+    approveModal:
+      title: 'წევრის დამტკიცება'
+      description: 'დაამტკიცეთ {name} აქტიურ წევრად შემდეგი თარიღებით:'
     deleteMemberModal:
       title: 'წავშალოთ წევრი?'
       description: 'გსურთ სამუდამოდ წაშალოთ {name}?'
@@ -104,6 +108,7 @@ admin:
       successDescription: 'QR კოდი მზადაა {name}-სთვის'
       done: 'დახურვა'
     messages:
+      approved: 'წევრი წარმატებით დამტკიცდა.'
       created: 'წევრი წარმატებით დაემატა.'
       deleted: 'წევრი წარმატებით წაიშალა.'
       updated: 'წევრი წარმატებით განახლდა.'
@@ -111,6 +116,7 @@ admin:
       active: 'აქტიური'
       expired: 'ვადაგასული'
       inactive: 'არააქტიური'
+      pending: 'მოლოდინში'
       suspended: 'შეჩერებული'
   forecasts:
     title: 'პროგნოზები'
@@ -232,6 +238,7 @@ verify:
     active: 'აქტიური'
     expired: 'ვადაგასული'
     inactive: 'არააქტიური'
+    pending: 'მოლოდინში'
     suspended: 'შეჩერებული'
   invalid:
     title: 'არასწორი წევრი'

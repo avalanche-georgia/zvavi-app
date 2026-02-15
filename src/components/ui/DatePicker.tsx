@@ -75,6 +75,7 @@ const DatePicker = ({
       </div>
       <PopoverContent align="start" className="w-auto p-0">
         <Calendar
+          defaultMonth={value ?? undefined}
           disabled={(date) =>
             (maxDate != null && date > maxDate) || (minDate != null && date < minDate)
           }
