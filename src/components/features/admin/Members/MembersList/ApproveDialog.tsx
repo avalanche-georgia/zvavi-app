@@ -36,6 +36,8 @@ const ApproveDialog = ({ isOpen, member, onClose }: ApproveDialogProps) => {
   const fullName = `${member.firstName} ${member.lastName}`
 
   const handleApprove = async () => {
+    if (!joinedAt) return
+
     try {
       await updateMember({ expiresAt, id: member.id, joinedAt, status: 'active' })
 

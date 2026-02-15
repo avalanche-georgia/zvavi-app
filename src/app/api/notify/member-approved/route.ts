@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
 
+import { createClient } from '@/lib/supabase/server'
+
 type RequestBody = {
   email: string
   name: string
@@ -44,6 +46,15 @@ const buildEmailHtml = (name: string, verificationUrl: string) => `
 </body></html>`
 
 export const POST = async (request: Request) => {
+  const supabase = await createClient()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   if (!process.env.RESEND_API_KEY) {
     return NextResponse.json({ ok: true, skipped: true })
   }
