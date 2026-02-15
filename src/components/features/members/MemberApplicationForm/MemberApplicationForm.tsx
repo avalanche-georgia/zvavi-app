@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { useToast } from '@components/hooks'
+import { useToast, useUnsavedChangesWarning } from '@components/hooks'
 import { Button } from '@components/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslations } from 'next-intl'
@@ -42,6 +42,8 @@ const MemberApplicationForm = () => {
     },
     resolver: zodResolver(memberApplicationSchema),
   })
+
+  useUnsavedChangesWarning(form.formState.isDirty)
 
   const onSubmit = async (data: MemberApplicationFormData) => {
     setIsSubmitting(true)

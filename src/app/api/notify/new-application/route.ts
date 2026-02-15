@@ -15,8 +15,11 @@ export const POST = async (request: Request) => {
 
   const { email, name, paymentMethod } = (await request.json()) as RequestBody
 
+  const isProduction = process.env.VERCEL_ENV === 'production'
+  const prefix = isProduction ? '' : '[Test] '
+
   const text = [
-    '<b>New Member Application</b>',
+    `<b>${prefix}New Member Application</b>`,
     '',
     `<b>Name:</b> ${name}`,
     `<b>Email:</b> ${email}`,
