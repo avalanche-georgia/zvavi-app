@@ -64,7 +64,7 @@ export const POST = async (request: Request) => {
 
   try {
     await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL || 'Avalanche Georgia <noreply@avalanche.ge>',
+      from: process.env.RESEND_FROM_EMAIL || 'Avalanche Georgia <noreply@contact.avalanche.ge>',
       html: buildEmailHtml(name, verificationUrl),
       subject: 'Your Avalanche Georgia membership has been approved!',
       to: email,
