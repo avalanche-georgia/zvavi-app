@@ -12,6 +12,7 @@ import ApplicationSuccess from './ApplicationSuccess'
 import CharterAgreement from './CharterAgreement'
 import FormFields from './FormFields'
 import PaymentSection from './PaymentSection'
+import PrivacyConsent from './PrivacyConsent'
 import type { MemberApplicationFormData } from './schema'
 import { memberApplicationSchema } from './schema'
 import type { SubmitResult } from './submitApplication'
@@ -39,6 +40,7 @@ const MemberApplicationForm = () => {
       occupation: '',
       paymentMethod: undefined as unknown as MemberApplicationFormData['paymentMethod'],
       phone: '',
+      privacyAgreed: undefined as unknown as true,
     },
     resolver: zodResolver(memberApplicationSchema),
   })
@@ -74,6 +76,7 @@ const MemberApplicationForm = () => {
       <form className="flex flex-col gap-6" onSubmit={form.handleSubmit(onSubmit)}>
         <FormFields />
         <CharterAgreement />
+        <PrivacyConsent />
         <PaymentSection />
 
         <div className="flex items-center justify-end gap-4">
