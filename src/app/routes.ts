@@ -33,6 +33,8 @@ export const routes = {
   },
   home: '/',
   partners: '/partners',
+  privacy: '/privacy-policy',
+  terms: '/terms-of-service',
   verify: (code: string) => `/verify/${code}`,
   weatherStations: '/weather-stations',
 } as const

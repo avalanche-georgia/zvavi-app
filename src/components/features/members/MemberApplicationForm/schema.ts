@@ -16,6 +16,7 @@ export const memberApplicationSchema = z.object({
   occupation: z.string().default(''),
   paymentMethod: z.enum(paymentMethods, { message: 'required' }),
   phone: z.string().trim().min(1, { message: 'too_small' }),
+  privacyAgreed: z.literal(true, { error: () => ({ message: 'required' }) }),
 })
 
 export type MemberApplicationFormData = z.input<typeof memberApplicationSchema>

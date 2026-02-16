@@ -17,6 +17,12 @@ seo:
   partners:
     title: 'Partners'
     description: 'Our partners who make avalanche forecasting in Georgia possible.'
+  privacy:
+    title: 'Privacy Policy'
+    description: 'Learn how Avalanche Georgia collects, uses, and protects your personal data.'
+  terms:
+    title: 'Terms of Service'
+    description: 'Terms and conditions for using Avalanche Georgia services and membership.'
   weatherStations:
     title: 'Weather Stations'
     description: 'Real-time weather data from stations in Gudauri and Georgian mountains.'

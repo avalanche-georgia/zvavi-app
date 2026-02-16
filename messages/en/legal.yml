@@ -1,0 +1,83 @@
+legal:
+  privacy:
+    title: 'Privacy Policy'
+    lastUpdated: 'Last updated: February 2026'
+    intro: 'Avalanche Georgia ("we", "us", "our") is committed to protecting your personal data. This Privacy Policy explains how we collect, use, and safeguard information when you apply for membership or use our services.'
+    dataCollected:
+      title: 'What Data We Collect'
+      description: 'When you submit a membership application, we collect the following personal information:'
+      items:
+        - 'Full name (first and last name)'
+        - 'Email address'
+        - 'Phone number'
+        - 'Address (city, country)'
+        - 'Age'
+        - 'Gender'
+        - 'Occupation'
+        - 'Motivation for joining'
+        - 'Payment method preference'
+    purpose:
+      title: 'Why We Collect Your Data'
+      description: 'We use your personal data for the following purposes:'
+      items:
+        - 'Processing and managing your membership application'
+        - 'Communicating with you about your membership status'
+        - 'Contacting you about organisation activities and events'
+        - 'Internal membership administration'
+    storage:
+      title: 'How Your Data Is Stored'
+      description: 'Your data is stored securely using Supabase, a cloud database platform with encryption at rest and in transit. We take reasonable measures to protect your information from unauthorized access, alteration, or destruction.'
+    access:
+      title: 'Who Has Access'
+      description: 'Access to your personal data is restricted to authorised organisation administrators who need it for membership management purposes. We do not sell, share, or distribute your personal data to third parties.'
+    retention:
+      title: 'Data Retention'
+      description: 'We retain your personal data for as long as your membership is active, plus a reasonable period after membership ends for administrative purposes. You may request deletion of your data at any time.'
+    rights:
+      title: 'Your Rights'
+      description: 'You have the right to:'
+      items:
+        - 'Access the personal data we hold about you'
+        - 'Request correction of inaccurate data'
+        - 'Request deletion of your data'
+        - 'Withdraw consent for data processing'
+      contact: 'To exercise any of these rights, please contact us at <email>zvavisaqartvelo@gmail.com</email>.'
+    changes:
+      title: 'Changes to This Policy'
+      description: 'We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated revision date.'
+
+  terms:
+    title: 'Terms of Service'
+    lastUpdated: 'Last updated: February 2026'
+    intro: 'By using the services of Avalanche Georgia ("we", "us", "our") or applying for membership, you agree to the following terms.'
+    membership:
+      title: 'Membership'
+      description: 'Avalanche Georgia is a registered non-profit, volunteer-driven organisation. Membership is open to anyone who supports our mission of improving avalanche safety in Georgia. Membership applications are subject to review and approval by the organisation.'
+    volunteerNature:
+      title: 'Volunteer Nature'
+      description: 'All contributions to Avalanche Georgia are voluntary. Members are not employees and are not entitled to compensation for their participation unless otherwise explicitly agreed upon.'
+    acceptableUse:
+      title: 'Acceptable Use'
+      description: 'By using our services, you agree to:'
+      items:
+        - 'Provide accurate and truthful information in your membership application'
+        - 'Abide by the Standards of Behaviour and Interaction outlined in the organisation''s Charter'
+        - 'Use our forecasts and information responsibly and not as a substitute for your own judgement in the backcountry'
+    disclaimer:
+      title: 'Disclaimer'
+      description: 'Avalanche forecasts and safety information provided by Avalanche Georgia are based on the best available data but cannot guarantee accuracy. Backcountry travel inherently carries risks. You are solely responsible for your own safety decisions in the mountains. Avalanche Georgia and its members accept no liability for any injury, loss, or damage arising from the use of our information.'
+    fees:
+      title: 'Membership Fees'
+      description: 'Membership is subject to an annual fee as specified during the application process. Fees support the operational costs of the organisation and are non-refundable unless otherwise decided by the organisation.'
+    governingLaw:
+      title: 'Governing Law'
+      description: 'These terms are governed by and construed in accordance with the laws of Georgia.'
+    changes:
+      title: 'Changes to These Terms'
+      description: 'We may update these Terms of Service from time to time. Continued use of our services after changes constitutes acceptance of the new terms.'
+    contact:
+      title: 'Contact'
+      description: 'If you have any questions about these terms, please contact us at <email>zvavisaqartvelo@gmail.com</email>.'
+
+  consent:
+    checkbox: 'I agree to the <link>Privacy Policy</link> and <link2>Terms of Service</link2>'
