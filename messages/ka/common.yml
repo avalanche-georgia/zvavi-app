@@ -31,7 +31,7 @@ common:
     success: 'წარმატება.'
 
   validation:
-    expiresAtBeforeJoined: 'უნდა იყოს გაწევრიანების თარიღის შემდეგ'
+    expiresAtBeforeJoined: 'ვადის თარიღი უნდა იყოს გაწევრიანების თარიღის შემდეგ'
     invalid_string: 'არასწორი ფორმატი'
     joinedAtFuture: 'არ შეიძლება იყოს მომავალში'
     required: 'სავალდებულო'

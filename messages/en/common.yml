@@ -31,7 +31,7 @@ common:
     success: 'Success.'
 
   validation:
-    expiresAtBeforeJoined: 'Must be after joined date'
+    expiresAtBeforeJoined: 'Expiration date must be after joined date'
     invalid_string: 'Invalid format'
     joinedAtFuture: 'Cannot be in the future'
     required: 'Required'
