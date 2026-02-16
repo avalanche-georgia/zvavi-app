@@ -12,8 +12,11 @@ const notifyAdmin = (name: string, email: string, paymentMethod: string) => {
   }).catch(() => {})
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const submitApplication = async ({ charterAgreed, ...data }: MemberApplicationFormData) => {
+const submitApplication = async ({
+  charterAgreed, // eslint-disable-line @typescript-eslint/no-unused-vars
+  privacyAgreed, // eslint-disable-line @typescript-eslint/no-unused-vars
+  ...data
+}: MemberApplicationFormData) => {
   const { address, age, gender, motivation, occupation, ...rest } = data
 
   const { data: result, error } = await supabase.rpc('submit_member_application', {
