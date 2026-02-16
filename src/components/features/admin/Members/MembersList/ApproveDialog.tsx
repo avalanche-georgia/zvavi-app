@@ -5,7 +5,7 @@ import { useToast } from '@components/hooks'
 import { Button, DatePicker, InputBlock, Modal, ModalBody, ModalFooter } from '@components/ui'
 import { useMemberUpdate } from '@data/hooks/members'
 import type { Member } from '@domain/types'
-import { addYears, startOfDay } from 'date-fns'
+import { addYears, isSameDay, startOfDay } from 'date-fns'
 import { useTranslations } from 'next-intl'
 
 import { getVerificationUrl } from '@/lib/qrcode'
@@ -37,6 +37,12 @@ const ApproveDialog = ({ isOpen, member, onClose }: ApproveDialogProps) => {
 
   const handleApprove = async () => {
     if (!joinedAt) return
+
+    if (expiresAt && (isSameDay(expiresAt, joinedAt) || expiresAt < joinedAt)) {
+      toastError('ApproveDialog', { message: t('common.validation.expiresAtBeforeJoined') })
+
+      return
+    }
 
     try {
       await updateMember({ expiresAt, id: member.id, joinedAt, status: 'active' })
