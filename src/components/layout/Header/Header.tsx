@@ -45,7 +45,9 @@ const Header = () => {
           <MobileMenuButton />
 
           {isAuthenticated && (
-            <Button onClick={handleLogOutClick}>{t('auth.logout.button')}</Button>
+            <Button className="hidden md:flex" onClick={handleLogOutClick}>
+              {t('auth.logout.button')}
+            </Button>
           )}
         </div>
       </div>
