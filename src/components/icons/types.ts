@@ -15,6 +15,7 @@ export type IconName =
   | 'handshake'
   | 'home'
   | 'info'
+  | 'logOut'
   | 'mail'
   | 'mapPin'
   | 'mapPinned'

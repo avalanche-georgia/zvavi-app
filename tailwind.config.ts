@@ -20,7 +20,7 @@ export default {
         foreground: 'var(--foreground)',
         hazard: {
           1: '#6AC828',
-          2: '#F4E04D',
+          2: '#F8F024',
           3: '#F88F2C',
           4: '#EB450B',
           5: '#1B1A1E',
