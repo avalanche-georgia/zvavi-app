@@ -1,13 +1,19 @@
 'use client'
 
+import { useCallback } from 'react'
+import { useAuth, useToast } from '@components/hooks'
 import { Icon } from '@components/icons'
+import { supabase } from '@data'
 import { useTranslations } from 'next-intl'
+import { useRouter } from 'src/i18n/navigation'
 import { Drawer } from 'vaul'
 
 import { navMenuItems } from './constants'
 
 import MobileNavAccordion from './MobileNavAccordion'
 import MobileNavLink from './MobileNavLink'
+
+import { routes } from '@/routes'
 
 type MobileNavProps = {
   isOpen: boolean
@@ -16,6 +22,19 @@ type MobileNavProps = {
 
 const MobileNav = ({ isOpen, onClose }: MobileNavProps) => {
   const t = useTranslations()
+  const router = useRouter()
+  const { isAuthenticated } = useAuth()
+  const { toastError } = useToast()
+
+  const handleSignOut = useCallback(async () => {
+    try {
+      await supabase.auth.signOut()
+      onClose()
+      router.push(routes.auth.login)
+    } catch (error) {
+      toastError('MobileNav | handleSignOut', { error, message: 'Error logging out' })
+    }
+  }, [onClose, router, toastError])
 
   return (
     <Drawer.Root direction="top" onOpenChange={(open) => !open && onClose()} open={isOpen}>
@@ -48,6 +67,20 @@ const MobileNav = ({ isOpen, onClose }: MobileNavProps) => {
 
               return <MobileNavLink key={item.id} item={item} onClose={onClose} />
             })}
+
+            {isAuthenticated && (
+              <>
+                <hr className="mx-4 my-2" />
+                <button
+                  className="flex w-full items-center gap-3 px-4 py-3 text-base text-gray-700"
+                  onClick={handleSignOut}
+                  type="button"
+                >
+                  <Icon className="size-5" icon="logOut" />
+                  {t('auth.logout.button')}
+                </button>
+              </>
+            )}
           </nav>
         </Drawer.Content>
       </Drawer.Portal>
