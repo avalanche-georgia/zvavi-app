@@ -9,7 +9,7 @@ import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { Drawer } from 'vaul'
 
-import DescriptionRow, { DESCRIPTION_LABEL_KEYS } from './HazardLevelDescriptionRows'
+import DescriptionRow, { descriptionLabelKeys } from './HazardLevelDescriptionRows'
 
 type Props = {
   isOpen: boolean
@@ -62,13 +62,13 @@ const HazardLevelInfoDrawer = ({ isOpen, level, onClose, zone }: Props) => {
           <Drawer.Description asChild>
             <div className="flex-1 overflow-y-auto p-4">
               <dl className="flex flex-col gap-4">
-                {sentences.map((sentence, i) => (
-                  <DescriptionRow
-                    key={DESCRIPTION_LABEL_KEYS[i]}
-                    labelKey={DESCRIPTION_LABEL_KEYS[i]}
-                    text={sentence}
-                  />
-                ))}
+                {descriptionLabelKeys.map((labelKey, i) => {
+                  const sentence = sentences[i]
+
+                  if (!sentence) return null
+
+                  return <DescriptionRow key={labelKey} labelKey={labelKey} text={sentence} />
+                })}
               </dl>
             </div>
           </Drawer.Description>

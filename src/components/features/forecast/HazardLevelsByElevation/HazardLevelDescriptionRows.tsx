@@ -1,8 +1,10 @@
+'use client'
+
 import { useTranslations } from 'next-intl'
 
-export const DESCRIPTION_LABEL_KEYS = ['travelAdvice', 'likelihood', 'sizeAndDistribution'] as const
+export const descriptionLabelKeys = ['travelAdvice', 'likelihood', 'sizeAndDistribution'] as const
 
-export type LabelKey = (typeof DESCRIPTION_LABEL_KEYS)[number]
+export type LabelKey = (typeof descriptionLabelKeys)[number]
 
 const TravelAdviceText = ({ text }: { text: string }) => {
   const dot = text.indexOf('. ')

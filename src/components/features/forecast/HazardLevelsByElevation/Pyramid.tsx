@@ -55,7 +55,10 @@ const Pyramid = ({ hazardLevels }: { hazardLevels: HazardLevelsType }) => {
             className={clsx('flex cursor-pointer', height)}
             onClick={() => setSelected({ level: zone, zoneLabel })}
             onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') setSelected({ level: zone, zoneLabel })
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault()
+                setSelected({ level: zone, zoneLabel })
+              }
             }}
             role="button"
             tabIndex={0}
@@ -82,14 +85,12 @@ const Pyramid = ({ hazardLevels }: { hazardLevels: HazardLevelsType }) => {
         ))}
       </div>
 
-      {selected && (
-        <HazardLevelInfoDrawer
-          isOpen
-          level={selected.level}
-          onClose={() => setSelected(null)}
-          zone={selected.zoneLabel}
-        />
-      )}
+      <HazardLevelInfoDrawer
+        isOpen={selected !== null}
+        level={selected?.level ?? highAlpine}
+        onClose={() => setSelected(null)}
+        zone={selected?.zoneLabel}
+      />
     </>
   )
 }

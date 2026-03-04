@@ -26,7 +26,7 @@ const HazardLevelBanner = ({ forecast, onInfoClick }: HazardLevelBannerProps) =>
   const icon = hazardIcons[hazardLevels.overall]
   const isExtremeRisk = hazardLevels.overall === '5'
 
-  const handleInfoClick = (e: React.MouseEvent) => {
+  const handleInfoClick = (e: React.SyntheticEvent) => {
     e.stopPropagation()
     e.preventDefault()
 
@@ -55,10 +55,14 @@ const HazardLevelBanner = ({ forecast, onInfoClick }: HazardLevelBannerProps) =>
           <h4 className="text-3xl font-semibold">{t(titleKey)}</h4>
         </div>
 
-        <button
-          className="relative flex flex-col items-center gap-1"
+        <div
+          className="relative flex cursor-pointer flex-col items-center gap-1"
           onClick={handleInfoClick}
-          type="button"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') handleInfoClick(e)
+          }}
+          role="button"
+          tabIndex={0}
         >
           <Image alt="Danger level" height={80} src={icon} width={80} />
           <MousePointerClick
@@ -68,7 +72,7 @@ const HazardLevelBanner = ({ forecast, onInfoClick }: HazardLevelBannerProps) =>
             )}
             size={18}
           />
-        </button>
+        </div>
       </div>
 
       <hr className={isExtremeRisk ? 'border-white/20' : 'border-black/20'} />
