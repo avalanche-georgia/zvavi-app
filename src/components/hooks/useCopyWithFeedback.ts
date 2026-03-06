@@ -5,7 +5,7 @@ import { useCopyToClipboard, useEventCallback } from 'usehooks-ts'
 
 const useCopyWithFeedback = (value: string) => {
   const [isCopied, setIsCopied] = useState(false)
-  const resetTimerRef = useRef<ReturnType<typeof setTimeout>>()
+  const resetTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   const [, copyToClipboard] = useCopyToClipboard()
 
   useEffect(() => {
