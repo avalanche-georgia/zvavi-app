@@ -1,5 +1,5 @@
-import FacebookIcon from '@assets/icons/brand/facebook.svg?component'
-import InstagramIcon from '@assets/icons/brand/instagram.svg?component'
+import FacebookIcon from '@assets/icons/brand/facebook.svg'
+import InstagramIcon from '@assets/icons/brand/instagram.svg'
 import clsx from 'clsx'
 
 import { containerClassesBySize, iconSizesBySize } from './constants'
