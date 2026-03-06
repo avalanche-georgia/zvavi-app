@@ -57,7 +57,7 @@ const publicRootFilesSet = new Set(publicRootFiles.map((f) => `/${f}`))
 // Does NOT match: /en/forecasts/123, /en/forecasts/current, /en/forecasts/history
 const oldForecastPattern = /^\/(en|ka)\/forecasts\/Gudauri_.*$/
 
-export default async function middleware(request: NextRequest) {
+export default async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   // Log suspicious requests to old forecast URL formats
