@@ -47,9 +47,12 @@ const HazardLevelInfoDrawer = ({ isOpen, level, onClose, zone }: Props) => {
             >
               <Image alt="Danger level" height={64} src={hazardIcons[level]} width={64} />
               <div className="flex flex-1 flex-col gap-1">
-                <p className="text-sm font-semibold">{`${t('common.labels.overallDangerLevel')} — ${level}`}</p>
+                <p className="text-sm font-semibold">
+                  {zone
+                    ? `${t('common.labels.zoneDangerLevel', { zone })} — ${level}`
+                    : `${t('common.labels.overallDangerLevel')} — ${level}`}
+                </p>
                 <h3 className="text-2xl font-semibold">{t(hazardLevelNamesByScale[level])}</h3>
-                {zone && <p className="text-sm opacity-80">{zone}</p>}
               </div>
               <Drawer.Close asChild>
                 <IconButton

@@ -21,6 +21,7 @@ common:
     issuedAt: 'გამოცემის დრო'
     leaveFeedback: 'მოაწოდეთ გამოხმაურება'
     overallDangerLevel: 'საერთო საშიშროების დონე'
+    zoneDangerLevel: '{zone} საშიშროების დონე'
     summary: 'შეჯამება'
     tapForDetails: 'დეტალების სანახავად შეეხეთ'
     validUntil: 'ძალაშია'
