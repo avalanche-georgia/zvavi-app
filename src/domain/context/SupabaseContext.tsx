@@ -8,7 +8,6 @@ type SupabaseContextType = { supabase: typeof supabase }
 const SupabaseContext = createContext<SupabaseContextType | undefined>(undefined)
 
 export const SupabaseContextProvider = ({ children }: { children: ReactNode }) => {
-  // eslint-disable-next-line react/jsx-no-constructed-context-values
   return <SupabaseContext.Provider value={{ supabase }}>{children}</SupabaseContext.Provider>
 }
 

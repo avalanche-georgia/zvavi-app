@@ -48,7 +48,6 @@ const PrivacyPolicyContent = () => {
         </ul>
         <p>
           {t.rich('legal.privacy.rights.contact', {
-            // eslint-disable-next-line react/no-unstable-nested-components
             email: (chunks) => (
               <a className="text-primary underline" href={`mailto:${links.email}`}>
                 {chunks}

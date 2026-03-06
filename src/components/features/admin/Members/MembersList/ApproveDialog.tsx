@@ -28,6 +28,7 @@ const ApproveDialog = ({ isOpen, member, onClose }: ApproveDialogProps) => {
     if (isOpen) {
       const today = startOfDay(new Date())
 
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setJoinedAt(today)
       setExpiresAt(addYears(today, 1))
     }

@@ -20,6 +20,7 @@ const DisclaimerGate = ({ children }: { children: React.ReactNode }) => {
   const [accepted, setAccepted] = useState<boolean | null>(null)
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setAccepted(getDisclaimerAccepted())
   }, [])
 

@@ -1,5 +1,7 @@
 import { FlatCompat } from '@eslint/eslintrc'
 import js from '@eslint/js'
+import nextCoreWebVitals from 'eslint-config-next/core-web-vitals'
+import nextTypescript from 'eslint-config-next/typescript'
 import prettier from 'eslint-plugin-prettier'
 import simpleImportSort from 'eslint-plugin-simple-import-sort'
 import sortDestructureKeys from 'eslint-plugin-sort-destructure-keys'
@@ -19,19 +21,14 @@ export default [
   {
     ignores: ['scripts/**'],
   },
+  // Next.js flat configs (react, react-hooks, jsx-a11y, @typescript-eslint, import all included)
+  ...nextCoreWebVitals,
+  ...nextTypescript,
+  // Legacy configs that don't conflict with the above
   ...compat.extends(
-    'next/core-web-vitals',
-    'next/typescript',
     'eslint:recommended',
     'plugin:prettier/recommended',
     'plugin:tailwindcss/recommended',
-    'airbnb',
-    'airbnb/hooks',
-    'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:prettier/recommended',
-    'plugin:tailwindcss/recommended',
-    'plugin:@typescript-eslint/recommended',
   ),
   {
     plugins: {
@@ -47,8 +44,12 @@ export default [
       'import/no-cycle': 'off',
       'import/order': 'off',
       'import/prefer-default-export': 'off',
+      'no-import-assign': 'off',
       'no-param-reassign': 'off',
+      'no-redeclare': 'off',
+      'no-undef': 'off',
       'no-underscore-dangle': 'off',
+      'no-unused-vars': 'off',
       'padding-line-between-statements': [
         'error',
         {

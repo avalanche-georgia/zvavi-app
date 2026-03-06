@@ -8,7 +8,6 @@ const AvalancheItem = ({ avalanche }: { avalanche: Avalanche }) => {
   const t = useTranslations()
   const { date, description, isDateUnknown, size } = avalanche
 
-  // eslint-disable-next-line no-nested-ternary
   const dateDisplay = isDateUnknown
     ? t('admin.forecast.form.recentAvalanches.labels.dateUnknown')
     : date

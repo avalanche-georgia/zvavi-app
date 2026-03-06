@@ -22,7 +22,6 @@ const useQuery = <
   useEffect(() => {
     if (!data.error) return
 
-    // eslint-disable-next-line no-console
     console.error(options.errorDescription || '', data.error)
   }, [data.error]) // eslint-disable-line react-hooks/exhaustive-deps
 
