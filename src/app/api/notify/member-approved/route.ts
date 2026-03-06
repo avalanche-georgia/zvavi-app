@@ -70,7 +70,6 @@ export const POST = async (request: Request) => {
       to: email,
     })
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error('[Resend notify] Error:', error)
   }
 

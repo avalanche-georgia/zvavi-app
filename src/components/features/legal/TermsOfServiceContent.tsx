@@ -51,7 +51,6 @@ const TermsOfServiceContent = () => {
         <h3 className="text-lg font-semibold">{t('legal.terms.contact.title')}</h3>
         <p>
           {t.rich('legal.terms.contact.description', {
-            // eslint-disable-next-line react/no-unstable-nested-components
             email: (chunks) => (
               <a className="text-primary underline" href={`mailto:${links.email}`}>
                 {chunks}
