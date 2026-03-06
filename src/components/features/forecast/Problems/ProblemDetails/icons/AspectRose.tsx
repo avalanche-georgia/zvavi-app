@@ -47,7 +47,6 @@ const AspectRose = ({ selectedAspects }: { selectedAspects: Problem['aspects'] }
         const textElement = (
           <text
             className={clsx(
-              // eslint-disable-next-line no-nested-ternary
               isDirectionActive
                 ? 'fill-violet-700'
                 : nonRotatingLabels.includes(direction)

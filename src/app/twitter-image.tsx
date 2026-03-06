@@ -1,4 +1,3 @@
-/* eslint-disable prefer-destructuring */
 import { generateSocialImage, socialImageConfig } from './lib/generateSocialImage'
 
 export const runtime = 'edge'

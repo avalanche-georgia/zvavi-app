@@ -31,13 +31,11 @@ const PrivacyConsent = () => {
         />
         <span className="text-sm">
           {t.rich('legal.consent.checkbox', {
-            // eslint-disable-next-line react/no-unstable-nested-components
             link: (chunks) => (
               <Link className="text-primary underline" href={routes.privacy} target="_blank">
                 {chunks}
               </Link>
             ),
-            // eslint-disable-next-line react/no-unstable-nested-components
             link2: (chunks) => (
               <Link className="text-primary underline" href={routes.terms} target="_blank">
                 {chunks}

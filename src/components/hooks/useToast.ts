@@ -13,7 +13,6 @@ const useToast = () => {
 
   const toastError = (scope: string, { error, message }: ToastData) => {
     if (error) {
-      // eslint-disable-next-line no-console
       console.error(`${scope}: `, error)
       reportError(error instanceof Error ? error : new Error(String(error)), { scope })
     }

@@ -21,7 +21,6 @@ const AvalancheItem = ({ avalanche, canEdit, onDelete, onEdit }: AvalancheItemPr
     useBoolean(false)
   const { date, description, isDateUnknown, size } = avalanche
 
-  // eslint-disable-next-line no-nested-ternary
   const dateDisplay = isDateUnknown
     ? tForm('recentAvalanches.labels.dateUnknown')
     : date

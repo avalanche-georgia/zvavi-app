@@ -43,7 +43,6 @@ const CharterAgreement = () => {
         />
         <span className="text-sm">
           {t.rich('joinUs.apply.charter.checkbox', {
-            // eslint-disable-next-line react/no-unstable-nested-components
             link: (chunks) => <CharterDrawerButton chunks={chunks} />,
           })}
         </span>

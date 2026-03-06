@@ -7,7 +7,6 @@ type RadioOptionProps = {
 }
 
 const RadioOption = ({ label, value }: RadioOptionProps) => (
-  // eslint-disable-next-line jsx-a11y/label-has-associated-control
   <label className="flex cursor-pointer items-center gap-2">
     <Radio.Root
       className={clsx(
