@@ -21,6 +21,7 @@ common:
     issuedAt: 'Issued at'
     leaveFeedback: 'Leave Feedback'
     overallDangerLevel: 'Overall danger level'
+    zoneDangerLevel: '{zone} danger level'
     summary: 'Summary'
     tapForDetails: 'Tap for details'
     validUntil: 'Valid Until'
