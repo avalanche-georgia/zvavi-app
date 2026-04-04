@@ -98,6 +98,18 @@ import MyIcon from '@assets/icons/my-icon.svg?component'  // React component
 import iconUrl from '@assets/icons/my-icon.svg'            // static URL
 ```
 
+### Tailwind CSS v4
+
+Config lives in `src/app/globals.css` as a `@theme {}` block — there is no `tailwind.config.ts`.
+
+Key v4 syntax differences from v3:
+- Data variants: `data-hover:` `data-focus:` `data-disabled:` — **no square brackets** (v3 used `data-[hover]:`)
+- CSS variable shorthand: `h-(--foo)` instead of `h-[var(--foo)]`
+- Outline: `outline-hidden` instead of `outline-none`
+- Opacity: `bg-black/3` instead of `bg-black/[0.03]`
+- Border radius scale shifted: `rounded-xs` = old `rounded-sm`, `rounded-sm` = old `rounded`
+- Class ordering enforced by `prettier-plugin-tailwindcss` — auto-sorted on format, do not reorder manually
+
 ### UI Components
 Gradually migrating from Headless UI / Radix to **base-ui** (`@base-ui/react`). New components should use base-ui.
 

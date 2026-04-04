@@ -15,12 +15,12 @@ Professional avalanche forecasting platform for backcountry skiing in Georgia (C
 
 ## Tech Stack
 
-- **Next.js 15** (App Router) + **React 19 RC**
+- **Next.js 16** (App Router) + **React 19**
 - **Supabase** — Postgres database + auth
 - **TanStack Query 5** — server state & caching
-- **Tailwind CSS** + **base-ui** / Radix UI / Headless UI
-- **next-intl** — i18n (en/ka)
-- **Zod** + **React Hook Form** — validation
+- **Tailwind CSS v4** + **base-ui** / Radix UI / Headless UI
+- **next-intl v4** — i18n (en/ka)
+- **Zod v4** + **React Hook Form** — validation
 - **Vercel** — hosting, analytics, speed insights
 
 ## Quick Start
