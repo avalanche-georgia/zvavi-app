@@ -42,8 +42,6 @@ next-env.d.ts
 
 # other
 .idea/
-AGENTS.md
-CLAUDE.md
 local/
 
 # Auto-generated translation files (generated from YAML)
