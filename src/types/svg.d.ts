@@ -1,3 +1,5 @@
+declare module '*.css' {}
+
 // Brand and partner SVGs — processed by SVGR via Turbopack rules
 declare module '@assets/icons/brand/facebook.svg' {
   const Component: React.FunctionComponent<React.SVGProps<SVGSVGElement>>
