@@ -15,7 +15,7 @@ Professional avalanche forecasting platform for backcountry skiing in Georgia (C
 
 ## Tech Stack
 
-- **Next.js 16** (App Router) + **React 19**
+- **Next.js 15** (App Router) + **React 19 RC**
 - **Supabase** — Postgres database + auth
 - **TanStack Query 5** — server state & caching
 - **Tailwind CSS** + **base-ui** / Radix UI / Headless UI
@@ -31,7 +31,7 @@ pnpm install
 pnpm dev                     # http://localhost:3000
 ```
 
-Required env vars: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`
+Required env vars: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 
 ## Further Reading
 

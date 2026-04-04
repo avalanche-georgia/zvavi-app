@@ -2,12 +2,16 @@
 
 Developer and agent guide for the Zvavi avalanche forecasting app.
 
+## When Adding a New Feature
+
+If the work introduces a new user-facing feature or meaningfully changes existing functionality, update `FEATURES.md` to reflect it. Keep the description high-level and user-facing — no implementation details, route paths, or internal tooling. The file is written for a non-technical audience (e.g. partners).
+
 ## Commands
 
 ```bash
 pnpm dev              # dev server at http://localhost:3000
 pnpm build            # convert-messages + production build
-pnpm lint             # ESLint + Prettier (always run with --fix in CI/hooks)
+pnpm lint             # ESLint check only (no auto-fix; formatting is applied by lint-staged on pre-commit)
 pnpm convert-messages # compile messages/en/*.yml + messages/ka/*.yml → JSON
 pnpm export-translations # export en.json + ka.json → messages/translations.csv
 ```
