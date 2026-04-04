@@ -20,10 +20,10 @@ type SpinnerProps = {
 } & React.ComponentProps<'svg'>
 
 const Spinner = ({ label, size = 'md', ...props }: SpinnerProps) => (
-  <div className="absolute left-1/2 top-1/2 flex size-full -translate-x-1/2 -translate-y-1/2 cursor-wait flex-col items-center justify-center gap-2">
+  <div className="absolute top-1/2 left-1/2 flex size-full -translate-x-1/2 -translate-y-1/2 cursor-wait flex-col items-center justify-center gap-2">
     <LoaderIcon
       aria-label="Loading"
-      className={clsx('animate-spin text-primary', iconClassBySize[size])}
+      className={clsx('text-primary animate-spin', iconClassBySize[size])}
       role="status"
       {...props} // eslint-disable-line react/jsx-props-no-spreading
     />

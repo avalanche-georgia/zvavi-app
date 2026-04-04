@@ -25,7 +25,7 @@ const CurrentForecast = ({ forecast }: { forecast: Forecast }) => {
           initial={{ opacity: 0, scale: 0.96 }}
           transition={{ duration: 0.24, ease: 'easeOut' }}
         >
-          <Link href={routes.forecasts.current}>
+          <Link className="block" href={routes.forecasts.current}>
             <HazardLevelBanner forecast={forecast} onInfoClick={() => setDrawerOpen(true)} />
           </Link>
           <p className="text-center text-sm text-gray-500">{t('forecast.previewNote')}</p>

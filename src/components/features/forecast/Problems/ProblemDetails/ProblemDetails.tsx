@@ -22,7 +22,7 @@ const ProblemDetails = ({ problem }: { problem: Problem }) => {
   return (
     <>
       {description && (
-        <p className="mb-4 whitespace-pre-line text-justify text-sm">{description}</p>
+        <p className="mb-4 text-justify text-sm whitespace-pre-line">{description}</p>
       )}
       <div className="grid grid-cols-2 justify-items-center gap-2">
         <AvalancheSize avalancheSize={avalancheSize} />

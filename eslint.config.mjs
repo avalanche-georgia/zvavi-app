@@ -25,11 +25,7 @@ export default [
   ...nextCoreWebVitals,
   ...nextTypescript,
   // Legacy configs that don't conflict with the above
-  ...compat.extends(
-    'eslint:recommended',
-    'plugin:prettier/recommended',
-    'plugin:tailwindcss/recommended',
-  ),
+  ...compat.extends('eslint:recommended', 'plugin:prettier/recommended'),
   {
     plugins: {
       prettier,
@@ -119,8 +115,6 @@ export default [
       'sort-destructure-keys/sort-destructure-keys': ['error', { caseSensitive: true }],
       'sort-keys': ['error', 'asc'],
       'sort-keys-fix/sort-keys-fix': 'error',
-      'tailwindcss/classnames-order': 'error',
-      'tailwindcss/no-custom-classname': 'off',
     },
   },
   {

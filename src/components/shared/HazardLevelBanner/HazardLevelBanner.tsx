@@ -67,7 +67,7 @@ const HazardLevelBanner = ({ forecast, onInfoClick }: HazardLevelBannerProps) =>
           <Image alt="Danger level" height={80} src={icon} width={80} />
           <MousePointerClick
             className={clsx(
-              'absolute bottom-0 right-3.5 fill-white stroke-1',
+              'absolute right-3.5 bottom-0 fill-white stroke-1',
               isExtremeRisk ? 'stroke-white/60' : 'text-black/80',
             )}
             size={18}

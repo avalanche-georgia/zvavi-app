@@ -34,7 +34,7 @@ const PaymentDetails = ({ method }: { method: PaymentMethod | undefined }) => {
   if (method === 'wise') {
     return (
       <a
-        className="text-sm text-primary underline"
+        className="text-primary text-sm underline"
         href={links.wise}
         rel="noreferrer"
         target="_blank"

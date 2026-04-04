@@ -26,14 +26,14 @@ const Checkbox = ({
       checked={isChecked}
       className={clsx(
         'group flex size-5 cursor-pointer items-center justify-center rounded-md p-0.5 ring-1',
-        'ring-inset ring-white/15 data-[hover]:ring-primary',
-        'transition-[background-color,box-shadow] data-[checked]:bg-primary',
+        'data-hover:ring-primary ring-white/15 ring-inset',
+        'data-checked:bg-primary transition-[background-color,box-shadow]',
         { 'bg-gray-100': !className?.includes('bg-') },
         className,
       )}
       onChange={onChange}
     >
-      <Icon className="hidden stroke-white group-data-[checked]:block" icon="check" size="sm" />
+      <Icon className="hidden stroke-white group-data-checked:block" icon="check" size="sm" />
     </HeadlessUICheckbox>
 
     {label && labelPosition === 'right' && <Label className="cursor-pointer">{label}</Label>}

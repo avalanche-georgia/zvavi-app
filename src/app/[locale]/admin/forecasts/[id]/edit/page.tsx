@@ -13,7 +13,7 @@ const NotFound = () => {
   const t = useTranslations()
 
   return (
-    <div className="rounded-lg bg-white p-6 text-center shadow">
+    <div className="rounded-lg bg-white p-6 text-center shadow-sm">
       <p className="text-gray-600">{t('admin.forecast.notFound')}</p>
     </div>
   )

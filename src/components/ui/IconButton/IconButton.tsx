@@ -27,10 +27,10 @@ const IconButton = ({ className, iconProps, size = 'md', ...props }: IconButtonP
 
   const sharedClassName = twMerge(
     clsx(
-      'flex items-center justify-center rounded transition-colors',
+      'flex items-center justify-center rounded-sm transition-colors',
       'disabled' in props && props.disabled
         ? 'cursor-not-allowed stroke-gray-400'
-        : 'stroke-gray-500 hover:stroke-gray-900 lg:hover:bg-black/[0.05]',
+        : 'stroke-gray-500 hover:stroke-gray-900 lg:hover:bg-black/5',
       containerClassesBySize[size],
       className,
     ),

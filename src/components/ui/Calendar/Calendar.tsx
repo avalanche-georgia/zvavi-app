@@ -18,13 +18,13 @@ const navButtonStyles = clsx(
 const dropdownStyles = clsx(
   'h-8 cursor-pointer appearance-none rounded-md border border-gray-200 bg-white',
   'px-3 pr-7 text-sm font-medium',
-  'focus:outline-none focus:ring-2 focus:ring-blue-500',
+  'focus:outline-hidden focus:ring-2 focus:ring-blue-500',
 )
 
 const dayButtonStyles = clsx(
   'inline-flex size-9 items-center justify-center rounded-md p-0 text-sm font-normal',
   'hover:bg-gray-100 hover:text-gray-900',
-  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500',
+  'focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-500',
 )
 
 const currentYear = new Date().getFullYear()
@@ -43,7 +43,7 @@ const Dropdown = ({ 'aria-label': ariaLabel, onChange, options, value }: Dropdow
         </option>
       ))}
     </select>
-    <ChevronDown className="pointer-events-none absolute right-2 top-1/2 size-3 -translate-y-1/2 text-gray-500" />
+    <ChevronDown className="pointer-events-none absolute top-1/2 right-2 size-3 -translate-y-1/2 text-gray-500" />
   </div>
 )
 
@@ -69,7 +69,7 @@ const Calendar = ({ className, classNames, showOutsideDays = true, ...props }: C
       range_end: 'rounded-r-md',
       range_middle: 'aria-selected:bg-gray-100 aria-selected:text-gray-900',
       range_start: 'rounded-l-md',
-      selected: '[&>button]:bg-primary [&>button]:text-white [&>button]:hover:bg-primary',
+      selected: '[&>button]:bg-primary [&>button]:text-white hover:[&>button]:bg-primary',
       today: '[&>button]:bg-gray-100 [&>button]:font-semibold',
       week: 'mt-2 flex w-full',
       weekday: 'size-9 text-xs font-normal text-gray-500',

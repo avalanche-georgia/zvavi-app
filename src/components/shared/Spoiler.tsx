@@ -13,10 +13,7 @@ const Spoiler = ({ children, isInitiallyOpen, title }: SpoilerProps) => (
       <>
         <DisclosureButton className="group flex w-full items-center justify-between p-4">
           <span className="text-sm">{title}</span>
-          <Icon
-            className="transition duration-200 group-data-[open]:rotate-180"
-            icon="chevronDown"
-          />
+          <Icon className="transition duration-200 group-data-open:rotate-180" icon="chevronDown" />
         </DisclosureButton>
         <Transition
           enter="transition-all duration-200 ease-out"

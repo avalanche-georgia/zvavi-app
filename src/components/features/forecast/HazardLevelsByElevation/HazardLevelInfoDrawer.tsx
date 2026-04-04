@@ -36,7 +36,7 @@ const HazardLevelInfoDrawer = ({ isOpen, level, onClose, zone }: Props) => {
     >
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-black/30" />
-        <Drawer.Content className="fixed inset-x-0 bottom-0 mx-auto flex max-h-[calc(100dvh-72px)] max-w-screen-md flex-col rounded-t-2xl bg-white outline-none">
+        <Drawer.Content className="fixed inset-x-0 bottom-0 mx-auto flex max-h-[calc(100dvh-72px)] max-w-(--breakpoint-md) flex-col rounded-t-2xl bg-white outline-hidden">
           <Drawer.Title asChild>
             <header
               className={clsx(

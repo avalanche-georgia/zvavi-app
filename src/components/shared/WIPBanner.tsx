@@ -50,7 +50,7 @@ const WIPBanner = () => {
           </p>
 
           <Link
-            className="flex items-center gap-2 text-sm text-primary underline"
+            className="text-primary flex items-center gap-2 text-sm underline"
             href={feedbackFormURL}
             rel="noopener noreferrer"
             target="_blank"

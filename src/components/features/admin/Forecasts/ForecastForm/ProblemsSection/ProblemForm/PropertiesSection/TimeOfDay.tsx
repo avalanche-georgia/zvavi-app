@@ -9,7 +9,7 @@ type TimeOfDayProps = {
   problemData: ProblemFormData
 }
 
-const timePickerClassName = 'w-20 rounded bg-gray-100 px-2'
+const timePickerClassName = 'w-20 rounded-sm bg-gray-100 px-2'
 
 const TimeOfDay = ({ onTimeChange, problemData }: TimeOfDayProps) => {
   const t = useTranslations()

@@ -40,10 +40,10 @@ const MobileNav = ({ isOpen, onClose }: MobileNavProps) => {
     <Drawer.Root direction="top" onOpenChange={(open) => !open && onClose()} open={isOpen}>
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 z-40 bg-black/20" />
-        <Drawer.Content className="fixed inset-x-0 top-0 z-50 flex flex-col bg-white shadow-xl outline-none">
+        <Drawer.Content className="fixed inset-x-0 top-0 z-50 flex flex-col bg-white shadow-xl outline-hidden">
           <Drawer.Title asChild>
             <div className="flex items-center justify-between border-b px-4 py-3">
-              <span className="text-lg font-semibold text-primary">{t('navigation.menu')}</span>
+              <span className="text-primary text-lg font-semibold">{t('navigation.menu')}</span>
               <button
                 aria-label={t('navigation.closeMenu')}
                 className="rounded-lg p-2 hover:bg-gray-100"

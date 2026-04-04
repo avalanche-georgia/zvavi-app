@@ -49,7 +49,7 @@ const ForgotPasswordPage = () => {
   return (
     <div className="flex w-full flex-col items-center justify-center">
       <form className="w-full max-w-sm px-4" onSubmit={handleSendResetLinkClick}>
-        <Fieldset className="space-y-6 rounded p-6 dark:text-white sm:p-10">
+        <Fieldset className="space-y-6 rounded-sm p-6 sm:p-10 dark:text-white">
           <Legend className="text-center text-2xl font-semibold">
             {t('auth.forgotPassword.title')}
           </Legend>

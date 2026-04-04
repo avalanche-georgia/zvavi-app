@@ -21,7 +21,7 @@ const ValidUntil = ({ error }: ValidUntilProps) => {
         name="validUntil"
         render={({ field }) => (
           <ReactDatePicker
-            className="h-8 rounded bg-gray-100 px-2"
+            className="h-8 rounded-sm bg-gray-100 px-2"
             dateFormat={dateTimeFormat}
             minDate={new Date()}
             onChange={(date) => field.onChange(date)}

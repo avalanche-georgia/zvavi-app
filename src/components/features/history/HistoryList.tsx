@@ -19,7 +19,7 @@ const HistoryList = ({ forecasts }: HistoryListProps) => (
         <Link
           className={clsx(
             'inline-flex items-center gap-3 rounded-lg px-4 py-1',
-            'text-gray-700 transition-colors hover:text-black active:bg-primary/10 lg:hover:bg-primary/10',
+            'active:bg-primary/10 lg:hover:bg-primary/10 text-gray-700 transition-colors hover:text-black',
           )}
           href={`${routes.forecasts.root}/${forecast.id}`}
         >

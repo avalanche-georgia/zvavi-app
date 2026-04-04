@@ -9,7 +9,7 @@ const MainPartnerCard = ({ partner }: { partner: Partner }) => {
   return (
     <Drawer content={<PartnerInfo partner={partner} />} title={name}>
       <button
-        className="flex h-36 w-64 flex-col items-center gap-3 rounded-2xl bg-primary/10 px-8 py-3"
+        className="bg-primary/10 flex h-36 w-64 flex-col items-center gap-3 rounded-2xl px-8 py-3"
         type="button"
       >
         <div
