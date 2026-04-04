@@ -22,7 +22,7 @@ const SetNewPasswordPageForm = () => {
       className="mx-auto flex max-w-sm flex-col items-center justify-center px-4"
       onSubmit={handleNewPasswordSubmit}
     >
-      <Fieldset className="space-y-6 rounded p-6 dark:text-white sm:p-10">
+      <Fieldset className="space-y-6 rounded-sm p-6 sm:p-10 dark:text-white">
         <Legend className="text-center text-2xl font-semibold">
           {t('auth.setNewPassword.title')}
         </Legend>

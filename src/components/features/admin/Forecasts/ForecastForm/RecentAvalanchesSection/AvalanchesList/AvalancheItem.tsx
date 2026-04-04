@@ -37,7 +37,7 @@ const AvalancheItem = ({ avalanche, canEdit, onDelete, onEdit }: AvalancheItemPr
 
   return (
     <>
-      <div className="w-full rounded bg-black/[0.03] p-3">
+      <div className="w-full rounded-sm bg-black/3 p-3">
         <div className="mb-3 flex items-center justify-between">
           {dateDisplay && <h3 className="text-xl font-semibold">{dateDisplay}</h3>}
           <ActionButtons canEdit={canEdit} onDelete={openDeletionDialog} onEdit={handleEdit} />

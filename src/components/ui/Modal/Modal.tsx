@@ -22,15 +22,15 @@ const Modal = ({
   titleClassName,
 }: ModalProps) => {
   return (
-    <Dialog as="div" className="relative z-10 focus:outline-none" onClose={onClose} open={isOpen}>
+    <Dialog as="div" className="relative z-10 focus:outline-hidden" onClose={onClose} open={isOpen}>
       <DialogBackdrop className="fixed inset-0 bg-black/30" transition />
 
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div className="flex min-h-full items-center justify-center p-8">
           <DialogPanel
             className={clsx(
-              'data-[closed]:transform-[scale(95%)] duration-300 ease-out data-[closed]:opacity-0',
-              'max-w-screen-lg rounded-md bg-white md:min-w-[512px]',
+              'duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0',
+              'max-w-(--breakpoint-lg) rounded-md bg-white md:min-w-[512px]',
               className,
             )}
             transition

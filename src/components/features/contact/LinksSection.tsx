@@ -11,7 +11,7 @@ const LinksSection = () => {
   return (
     <section>
       <h4 className="mb-2 text-lg font-semibold">{t('contact.title')}</h4>
-      <p className="mb-3 whitespace-pre-line text-justify">{t('contact.description')}</p>
+      <p className="mb-3 text-justify whitespace-pre-line">{t('contact.description')}</p>
       <ContactLinkList />
 
       <ButtonLink

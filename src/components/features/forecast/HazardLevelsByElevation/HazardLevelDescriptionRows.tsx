@@ -28,7 +28,7 @@ const DescriptionRow = ({ labelKey, text }: DescriptionRowProps) => {
 
   return (
     <div>
-      <dt className="mb-1 text-xs font-semibold uppercase tracking-wide text-gray-400">
+      <dt className="mb-1 text-xs font-semibold tracking-wide text-gray-400 uppercase">
         {t(`forecast.hazardLevels.descriptionLabels.${labelKey}`)}
       </dt>
       <dd className="text-sm leading-relaxed text-gray-700">

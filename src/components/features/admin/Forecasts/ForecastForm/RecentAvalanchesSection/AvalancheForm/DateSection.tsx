@@ -48,7 +48,7 @@ const DateSection = ({ data, setData }: DateSectionProps) => {
       <div className="flex items-center gap-4">
         <div>
           <ReactDatePicker
-            className="h-8 rounded bg-gray-100 px-2 disabled:cursor-not-allowed disabled:bg-gray-50"
+            className="h-8 rounded-sm bg-gray-100 px-2 disabled:cursor-not-allowed disabled:bg-gray-50"
             dateFormat={dateTimeFormat}
             disabled={data.isDateUnknown}
             onChange={handleDateChange}

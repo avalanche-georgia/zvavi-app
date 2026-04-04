@@ -35,7 +35,7 @@ const MemberForm = ({ initialFormData, member, onCancel, onSuccess }: MemberForm
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <FormProvider {...form}>
-      <div className="rounded-lg bg-white shadow">
+      <div className="rounded-lg bg-white shadow-sm">
         <section className="flex w-full flex-col gap-6 p-4 md:p-6">
           <h2 className="text-xl font-semibold">
             {member ? t('admin.members.title.edit') : t('admin.members.title.create')}

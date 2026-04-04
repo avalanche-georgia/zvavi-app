@@ -13,7 +13,7 @@ const SizeScale = ({ className, size }: { size: AvalancheSize; className?: strin
           <div
             key={height}
             className={clsx(
-              'w-4 rounded-sm',
+              'w-4 rounded-xs',
               isActive ? 'bg-violet-600' : 'bg-violet-300 opacity-30',
             )}
             style={{ height }}

@@ -18,18 +18,18 @@ const useToast = () => {
     }
 
     return toast.error(message ?? t('common.messages.error'), {
-      className: '!bg-red-100 border !border-red-300 !text-red-700',
+      className: 'bg-red-100! border border-red-300! text-red-700!',
     })
   }
 
   const toastSuccess = (message?: string) =>
     toast.success(message ?? t('common.messages.success'), {
-      className: '!bg-green-100 border !border-green-300 !text-green-700',
+      className: 'bg-green-100! border border-green-300! text-green-700!',
     })
 
   const toastInfo = (message: string) =>
     toast.info(message, {
-      className: '!bg-blue-100 border !border-blue-300 !text-blue-700',
+      className: 'bg-blue-100! border border-blue-300! text-blue-700!',
     })
 
   return {

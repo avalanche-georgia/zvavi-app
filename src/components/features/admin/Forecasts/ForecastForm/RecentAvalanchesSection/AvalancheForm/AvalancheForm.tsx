@@ -43,7 +43,7 @@ const AvalancheForm = ({ avalancheData, onClose, onSave }: AvalancheFormProps) =
   }
 
   return (
-    <div className="flex flex-col gap-6 rounded border p-3">
+    <div className="flex flex-col gap-6 rounded-sm border p-3">
       <section className="grid grid-cols-2 items-start gap-x-6">
         <div className="flex flex-col gap-3">
           <DateSection data={data} setData={setData} />

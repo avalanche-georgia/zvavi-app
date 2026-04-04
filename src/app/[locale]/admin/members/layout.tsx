@@ -3,7 +3,7 @@ type LayoutProps = {
 }
 
 const Layout = ({ children }: Readonly<LayoutProps>) => {
-  return <div className="mx-auto max-w-screen-xl">{children}</div>
+  return <div className="mx-auto max-w-(--breakpoint-xl)">{children}</div>
 }
 
 export default Layout

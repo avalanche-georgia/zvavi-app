@@ -32,7 +32,7 @@ const ProblemItem = ({ canEdit, onDelete, onEdit, problemData }: ProblemItemProp
 
   return (
     <>
-      <div className="w-full rounded bg-black/[0.03] p-3">
+      <div className="w-full rounded-sm bg-black/3 p-3">
         <div className="mb-3 flex items-center justify-between">
           <h3 className="text-xl font-semibold">
             {tForm(`problems.options.problemType.${problemType}`)}

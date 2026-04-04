@@ -27,7 +27,7 @@ const AspectSelector = ({ onChange, selectedAspects }: AspectSelectorProps) => {
   )
 
   return (
-    <div className="inline-flex items-center gap-1 rounded bg-gray-100 p-1 text-sm dark:bg-white/5">
+    <div className="inline-flex items-center gap-1 rounded-sm bg-gray-100 p-1 text-sm dark:bg-white/5">
       {aspectOptions.map((option) => (
         <AspectOption
           key={option.value}

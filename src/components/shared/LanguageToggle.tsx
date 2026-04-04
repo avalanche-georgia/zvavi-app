@@ -54,7 +54,7 @@ const LanguageToggle = () => {
   return (
     <ToggleGroup.Root
       aria-label="Select language"
-      className="inline-flex items-center overflow-hidden rounded border shadow-sm backdrop-blur"
+      className="inline-flex items-center overflow-hidden rounded-sm border shadow-xs backdrop-blur-sm"
       disabled={isPending}
       onValueChange={handleChange}
       type="single"
@@ -66,7 +66,7 @@ const LanguageToggle = () => {
           aria-label={value === 'en' ? 'English' : 'Georgian'}
           className={clsx(
             'relative flex min-w-[44px] items-center justify-center px-1 py-0.5',
-            'transition-colors data-[state=on]:bg-slate-600 data-[state=off]:hover:bg-primary/10',
+            'data-[state=off]:hover:bg-primary/10 transition-colors data-[state=on]:bg-slate-600',
           )}
           value={value}
         >

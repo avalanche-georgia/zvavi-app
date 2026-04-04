@@ -3,10 +3,10 @@ import clsx from 'clsx'
 import { Link, type LinkProps } from 'src/i18n/navigation'
 
 const linkClassName =
-  'flex items-center gap-1 rounded bg-primary px-3 py-1.5 text-sm text-white transition-colors ' +
-  'focus:outline-none data-[active]:translate-y-px data-[hover]:bg-primary/90 ' +
-  'data-[disabled]:cursor-not-allowed data-[disabled]:bg-primary/60 ' +
-  'max-w-max data-[focus]:outline-1 data-[focus]:outline-primary/40'
+  'flex items-center gap-1 rounded-sm bg-primary px-3 py-1.5 text-sm text-white transition-colors ' +
+  'focus:outline-hidden data-active:translate-y-px data-hover:bg-primary/90 ' +
+  'data-disabled:cursor-not-allowed data-disabled:bg-primary/60 ' +
+  'max-w-max data-focus:outline-1 data-focus:outline-primary/40'
 
 type ButtonLinkProps = {
   children: React.ReactNode

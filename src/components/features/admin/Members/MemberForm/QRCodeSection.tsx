@@ -24,11 +24,11 @@ const QRCodeSection = ({ member }: QRCodeSectionProps) => {
   }, [member.memberId, member.verificationCode])
 
   return (
-    <div className="rounded bg-gray-50 p-4">
+    <div className="rounded-sm bg-gray-50 p-4">
       <h3 className="mb-4 font-medium">{t('admin.members.qrCode.title')}</h3>
 
       <div className="flex flex-col items-center gap-4 md:flex-row md:items-start">
-        <div className="rounded bg-white p-2 shadow">
+        <div className="rounded-sm bg-white p-2 shadow-sm">
           <BrandedQRCode size={250} value={verificationUrl} />
         </div>
 
