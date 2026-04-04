@@ -53,7 +53,7 @@ const MobileNavAccordion = ({ item, onClose }: MobileNavAccordionProps) => {
               <Link
                 key={child.id}
                 className={clsx(
-                  'flex items-center gap-3 py-2.5 pl-12 pr-4 text-sm',
+                  'flex items-center gap-3 py-2.5 pr-4 pl-12 text-sm',
                   isChildActive ? 'text-primary' : 'text-gray-600',
                 )}
                 href={child.path}

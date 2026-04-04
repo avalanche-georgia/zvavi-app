@@ -11,7 +11,7 @@ const FirstTierPartner = ({ partner }: { partner: Partner }) => {
   return (
     <Drawer content={<PartnerInfo partner={partner} />} title={name}>
       <button
-        className="flex w-full flex-col items-center gap-4 rounded-2xl bg-primary/10 p-4"
+        className="bg-primary/10 flex w-full flex-col items-center gap-4 rounded-2xl p-4"
         type="button"
       >
         <div

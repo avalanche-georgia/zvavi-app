@@ -20,7 +20,7 @@ const StationsList = () => {
           </div>
 
           <Link
-            className="flex items-center gap-2 transition-colors active:text-primary lg:hover:text-primary lg:hover:underline"
+            className="active:text-primary lg:hover:text-primary flex items-center gap-2 transition-colors lg:hover:underline"
             href={station.url}
             rel="noopener noreferrer"
             target="_blank"

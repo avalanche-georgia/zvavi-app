@@ -38,7 +38,7 @@ const MemberCreatedDialog = ({ isOpen, member, onClose }: MemberCreatedDialogPro
             {t('admin.members.qrCode.successDescription', { name: fullName })}
           </p>
 
-          <div className="rounded bg-white p-3 shadow">
+          <div className="rounded-sm bg-white p-3 shadow-sm">
             <BrandedQRCode size={180} value={verificationUrl} />
           </div>
 

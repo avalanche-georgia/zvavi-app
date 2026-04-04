@@ -40,8 +40,8 @@ const NavDropdown = ({ item }: { item: NavMenuGroup }) => {
         className={clsx(
           'flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium',
           'transition-colors duration-150',
-          'hover:bg-gray-100 hover:text-primary focus:outline-none',
-          'data-[state=open]:bg-gray-100 data-[state=open]:text-primary',
+          'hover:text-primary hover:bg-gray-100 focus:outline-hidden',
+          'data-[state=open]:text-primary data-[state=open]:bg-gray-100',
           isActive ? 'text-primary' : 'text-gray-700',
         )}
       >
@@ -69,7 +69,7 @@ const NavDropdown = ({ item }: { item: NavMenuGroup }) => {
               <DropdownMenu.Item key={child.id} asChild>
                 <Link
                   className={clsx(
-                    'flex items-center gap-2 rounded-lg px-3 py-2 text-sm outline-none',
+                    'flex items-center gap-2 rounded-lg px-3 py-2 text-sm outline-hidden',
                     'transition-colors duration-150',
                     'hover:bg-gray-100 focus:bg-gray-100',
                     isChildActive ? 'text-primary' : 'text-gray-700',

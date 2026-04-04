@@ -49,7 +49,7 @@ const ProblemForm = ({ onClose, onSave, problemData, selectedProblemTypes }: Pro
   }
 
   return (
-    <div className="flex flex-col gap-10 rounded border p-3">
+    <div className="flex flex-col gap-10 rounded-sm border p-3">
       <section className="grid grid-cols-2 items-start gap-x-6">
         <div className="flex flex-col gap-3">
           <ProblemType

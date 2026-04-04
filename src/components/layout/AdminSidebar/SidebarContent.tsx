@@ -24,7 +24,7 @@ const SidebarContent = ({ onItemClick }: SidebarContentProps) => {
   return (
     <div className="flex h-full flex-col">
       <div className="flex h-14 items-center border-b px-4">
-        <Link className="text-lg font-semibold text-primary" href={routes.admin.root}>
+        <Link className="text-primary text-lg font-semibold" href={routes.admin.root}>
           {t('admin.title')}
         </Link>
       </div>
@@ -43,7 +43,7 @@ const SidebarContent = ({ onItemClick }: SidebarContentProps) => {
       <div className="border-t p-3">
         <Link
           className={clsx(
-            'flex items-center gap-3 rounded px-3 py-2 text-sm font-medium transition-colors',
+            'flex items-center gap-3 rounded-sm px-3 py-2 text-sm font-medium transition-colors',
             'text-gray-700 hover:bg-gray-100',
           )}
           href={routes.home}

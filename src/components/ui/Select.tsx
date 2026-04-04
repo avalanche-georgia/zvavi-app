@@ -32,13 +32,13 @@ const Select = ({ className, onChange, options, placeholder, value }: SelectProp
     <SelectPrimitive.Trigger
       className={twMerge(
         clsx(
-          'flex h-8 w-full items-center justify-between rounded border border-transparent bg-gray-100',
+          'flex h-8 w-full items-center justify-between rounded-sm border border-transparent bg-gray-100',
           'px-3 text-sm transition-colors',
           '[&:hover:not(:focus)]:border-primary/50',
-          'focus:border-primary focus:outline-none',
+          'focus:border-primary focus:outline-hidden',
           'data-[state=open]:border-primary',
           'disabled:cursor-not-allowed disabled:opacity-50',
-          'data-[placeholder]:text-gray-400 [&>span]:line-clamp-1',
+          'data-placeholder:text-gray-400 [&>span]:line-clamp-1',
           className,
         ),
       )}
@@ -61,21 +61,21 @@ const Select = ({ className, onChange, options, placeholder, value }: SelectProp
         )}
         position="popper"
       >
-        <SelectPrimitive.Viewport className="h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)] p-1">
+        <SelectPrimitive.Viewport className="h-(--radix-select-trigger-height) w-full min-w-(--radix-select-trigger-width) p-1">
           {options.map((option) => (
             <SelectPrimitive.Item
               key={option.value}
               className={clsx(
-                'relative flex w-full cursor-default select-none items-center rounded-sm',
-                'py-1.5 pl-8 pr-2 text-sm outline-none',
+                'relative flex w-full cursor-default items-center rounded-xs select-none',
+                'py-1.5 pr-2 pl-8 text-sm outline-hidden',
                 'focus:bg-primary/10 focus:text-gray-900',
-                'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+                'data-disabled:pointer-events-none data-disabled:opacity-50',
               )}
               value={option.value}
             >
               <span className="absolute left-2 flex size-3.5 items-center justify-center">
                 <SelectPrimitive.ItemIndicator>
-                  <Check className="size-4 text-primary" />
+                  <Check className="text-primary size-4" />
                 </SelectPrimitive.ItemIndicator>
               </span>
               <SelectPrimitive.ItemText>{option.label}</SelectPrimitive.ItemText>

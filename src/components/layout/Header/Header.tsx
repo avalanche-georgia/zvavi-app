@@ -31,10 +31,10 @@ const Header = () => {
 
   return (
     <header className="sticky inset-0 z-40 bg-white shadow-md">
-      <div className="mx-auto flex max-w-screen-xl items-center justify-between gap-4 px-4 py-3">
+      <div className="mx-auto flex max-w-(--breakpoint-xl) items-center justify-between gap-4 px-4 py-3">
         <Link className="flex shrink-0 items-center gap-2" href="/">
           <Image alt="Logo" height={32} src={Logo} width={32} />
-          <h1 className="text-xl font-semibold text-primary md:text-2xl">Avalanche.ge</h1>
+          <h1 className="text-primary text-xl font-semibold md:text-2xl">Avalanche.ge</h1>
         </Link>
 
         <DesktopNav />

@@ -18,7 +18,7 @@ const NavLink = ({ badge, isActive, item, onClick }: NavLinkProps) => {
   return (
     <Link
       className={clsx(
-        'flex items-center gap-3 rounded px-3 py-2 text-sm font-medium transition-colors',
+        'flex items-center gap-3 rounded-sm px-3 py-2 text-sm font-medium transition-colors',
         isActive ? 'bg-primary/10 text-primary' : 'text-gray-700 hover:bg-gray-100',
       )}
       href={item.href}

@@ -22,8 +22,8 @@ const AspectOption = ({ onChange, option, selectedOptions }: AspectOptionProps) 
   return (
     <button
       className={clsx(
-        'flex size-7 items-center justify-center rounded text-gray-900 outline-none transition ',
-        isSelected ? 'bg-white/90' : 'hover:bg-black/[0.03]',
+        'flex size-7 items-center justify-center rounded-sm text-gray-900 outline-hidden transition',
+        isSelected ? 'bg-white/90' : 'hover:bg-black/3',
       )}
       onClick={handleToggle}
       type="button"

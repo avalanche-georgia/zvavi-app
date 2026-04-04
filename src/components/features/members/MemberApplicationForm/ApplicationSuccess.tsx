@@ -29,7 +29,7 @@ const ApplicationSuccess = ({ memberId, verificationCode }: SubmitResult) => {
         <p className="max-w-md text-sm text-gray-600">{t('joinUs.apply.success.description')}</p>
       </div>
 
-      <div className="flex rounded-lg border bg-white p-4 shadow">
+      <div className="flex rounded-lg border bg-white p-4 shadow-sm">
         <BrandedQRCode size={200} value={verificationUrl} />
       </div>
 
@@ -46,7 +46,7 @@ const ApplicationSuccess = ({ memberId, verificationCode }: SubmitResult) => {
 
       <div className="w-full max-w-md rounded-lg border border-gray-200 bg-gray-50 p-4">
         <p className="mb-1 text-sm font-medium">{t('joinUs.apply.success.contactTitle')}</p>
-        <a className="text-sm text-primary underline" href={`mailto:${links.email}`}>
+        <a className="text-primary text-sm underline" href={`mailto:${links.email}`}>
           {links.email}
         </a>
       </div>

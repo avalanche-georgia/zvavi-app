@@ -10,7 +10,7 @@ const BankRequisitesSection = () => {
       <h4 className="text-lg font-semibold">{t('contact.bank.title')}</h4>
       <div className="mb-2">
         <p className="mb-1">{t('contact.bank.GEL')}</p>
-        <div className="space-y-2 rounded-lg border p-3 shadow-sm">
+        <div className="space-y-2 rounded-lg border p-3 shadow-xs">
           <CopyField label={t('joinUs.apply.payment.bankName')} value={bankDetailsGEL.bankName} />
           <CopyField label={t('contact.bank.labels.account')} value={bankDetailsGEL.account} />
           <CopyField label={t('contact.bank.labels.name')} value={bankDetailsGEL.name} />
@@ -18,7 +18,7 @@ const BankRequisitesSection = () => {
       </div>
       <div>
         <p className="mb-1">{t('contact.bank.USDEUR')}</p>
-        <div className="space-y-2 rounded-lg border p-3 shadow-sm">
+        <div className="space-y-2 rounded-lg border p-3 shadow-xs">
           <CopyField label={t('contact.bank.labels.name')} value={bankDetailsUSDEUR.name} />
           <CopyField label={t('contact.bank.labels.account')} value={bankDetailsUSDEUR.account} />
           <CopyField label={t('contact.bank.labels.bankName')} value={bankDetailsUSDEUR.bankName} />

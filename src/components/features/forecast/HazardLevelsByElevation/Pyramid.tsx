@@ -48,7 +48,7 @@ const Pyramid = ({ hazardLevels }: { hazardLevels: HazardLevelsType }) => {
 
   return (
     <>
-      <div className="absolute bottom-0 right-0 flex flex-col items-end gap-[5px] pb-[18px]">
+      <div className="absolute right-0 bottom-0 flex flex-col items-end gap-[5px] pb-[18px]">
         {elevationZones.map(({ height, id, leftClip, leftWidth, rightClip, zone, zoneLabel }) => (
           <div
             key={id}
@@ -73,7 +73,7 @@ const Pyramid = ({ hazardLevels }: { hazardLevels: HazardLevelsType }) => {
                 backgroundColorByHazardLevel[zone],
               )}
             >
-              <p className="rounded bg-white px-2 py-1 text-xs">
+              <p className="rounded-sm bg-white px-2 py-1 text-xs">
                 {t(hazardLevelNamesByScale[zone])}
               </p>
             </div>
