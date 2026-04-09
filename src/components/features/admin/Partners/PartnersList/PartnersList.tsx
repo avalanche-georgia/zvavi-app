@@ -37,7 +37,7 @@ const PartnersList = ({ partners }: { partners: Partner[] }) => {
         </ButtonLink>
       </div>
 
-      <div className="w-full rounded-sm border bg-white p-4 shadow-sm">
+      <div className="flex max-h-[calc(100vh-12rem)] w-full flex-col overflow-hidden rounded-sm border bg-white p-4 shadow-sm">
         <div className="flex w-full items-center gap-4 rounded-t bg-gray-100 px-4 py-1.5">
           <div className="w-68 shrink-0 font-semibold">{t('admin.partners.list.columns.name')}</div>
           <div className="min-w-40 flex-1 font-semibold">
@@ -54,19 +54,21 @@ const PartnersList = ({ partners }: { partners: Partner[] }) => {
           </div>
         </div>
 
-        {filteredPartners.length === 0 ? (
-          <div className="py-8 text-center text-gray-500">
-            {t('admin.partners.list.noPartners')}
-          </div>
-        ) : (
-          <ul className="flex flex-col">
-            {filteredPartners.map((partner) => (
-              <li key={partner.id} className="border-b last:border-0 even:bg-gray-100/60">
-                <PartnerItem partner={partner} />
-              </li>
-            ))}
-          </ul>
-        )}
+        <div className="overflow-y-auto">
+          {filteredPartners.length === 0 ? (
+            <div className="py-8 text-center text-gray-500">
+              {t('admin.partners.list.noPartners')}
+            </div>
+          ) : (
+            <ul className="flex flex-col">
+              {filteredPartners.map((partner) => (
+                <li key={partner.id} className="border-b last:border-0 even:bg-gray-100/60">
+                  <PartnerItem partner={partner} />
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
     </>
   )

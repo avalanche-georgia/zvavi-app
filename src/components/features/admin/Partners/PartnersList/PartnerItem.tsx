@@ -2,6 +2,7 @@ import { useBoolean, useToast } from '@components/hooks'
 import { ConfirmationDialog } from '@components/shared'
 import { usePartnerDelete } from '@data/hooks/partners'
 import type { Partner } from '@domain/types'
+import clsx from 'clsx'
 import { useTranslations } from 'next-intl'
 
 import ActionButtons from './ActionButtons'
@@ -34,11 +35,10 @@ const PartnerItem = ({ partner }: { partner: Partner }) => {
         <div className="w-14 shrink-0 text-center text-sm text-gray-600">{partner.tier}</div>
         <div className="w-24 shrink-0 text-center">
           <span
-            className={
-              partner.isActive
-                ? 'rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700'
-                : 'rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-500'
-            }
+            className={clsx(
+              'rounded-full px-2 py-0.5 text-xs font-medium shadow-sm',
+              partner.isActive ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500',
+            )}
           >
             {partner.isActive
               ? t('admin.members.statuses.active')
