@@ -23,7 +23,7 @@ const PageContent = ({ initialPartners }: PageContentProps) => {
     <div className="flex flex-col gap-8">
       <p>{t('partners.description')}</p>
 
-      <PartnersList partners={byTier(1)} tier={1} />
+      <PartnersList partners={byTier(1)} scrollDirection="backward" tier={1} />
       <PartnersList partners={byTier(2)} tier={2} />
       <PartnersList partners={byTier(3)} scrollDirection="backward" tier={3} />
 
