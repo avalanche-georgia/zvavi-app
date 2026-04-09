@@ -14,6 +14,7 @@ export type IconName =
   | 'eyeOff'
   | 'handshake'
   | 'home'
+  | 'image'
   | 'info'
   | 'logOut'
   | 'mail'

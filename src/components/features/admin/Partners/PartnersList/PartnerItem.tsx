@@ -24,14 +24,15 @@ const PartnerItem = ({ partner }: { partner: Partner }) => {
     }
   }
 
-  const benefit = partner.benefitEn ?? '-'
+  const benefit = partner.benefitEn || '-'
 
   return (
     <>
       <div className="flex h-12 items-center gap-4 px-4">
         <div className="w-68 shrink-0">{partner.nameEn}</div>
         <div className="min-w-40 flex-1 truncate text-sm text-gray-600">{benefit}</div>
-        <div className="shrink-0">
+        <div className="w-14 shrink-0 text-center text-sm text-gray-600">{partner.tier}</div>
+        <div className="w-24 shrink-0 text-center">
           <span
             className={
               partner.isActive
@@ -44,7 +45,7 @@ const PartnerItem = ({ partner }: { partner: Partner }) => {
               : t('admin.members.statuses.inactive')}
           </span>
         </div>
-        <div className="w-24 shrink-0">
+        <div className="w-30 shrink-0">
           <ActionButtons
             editHref={routes.admin.partners.edit(partner.id)}
             onDelete={openDeletionDialog}

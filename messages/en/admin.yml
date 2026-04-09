@@ -83,6 +83,7 @@ admin:
         actions: 'Actions'
         name: 'Name'
         benefit: 'Benefit'
+        tier: 'Tier'
         status: 'Status'
       noPartners: 'No partners found.'
     filters:

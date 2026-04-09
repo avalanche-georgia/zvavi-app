@@ -83,6 +83,7 @@ admin:
         actions: 'მოქმედებები'
         name: 'სახელი'
         benefit: 'შეღავათი'
+        tier: 'დონე'
         status: 'სტატუსი'
       noPartners: 'პარტნიორები ვერ მოიძებნა.'
     filters:

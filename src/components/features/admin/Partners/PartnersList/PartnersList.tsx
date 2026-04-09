@@ -43,8 +43,13 @@ const PartnersList = ({ partners }: { partners: Partner[] }) => {
           <div className="min-w-40 flex-1 font-semibold">
             {t('admin.partners.list.columns.benefit')}
           </div>
-          <div className="shrink-0 font-semibold">{t('admin.partners.list.columns.status')}</div>
-          <div className="w-24 shrink-0 text-right font-semibold">
+          <div className="w-14 shrink-0 text-center font-semibold">
+            {t('admin.partners.list.columns.tier')}
+          </div>
+          <div className="w-24 shrink-0 text-center font-semibold">
+            {t('admin.partners.list.columns.status')}
+          </div>
+          <div className="w-30 shrink-0 text-right font-semibold">
             {t('admin.partners.list.columns.actions')}
           </div>
         </div>
@@ -56,7 +61,7 @@ const PartnersList = ({ partners }: { partners: Partner[] }) => {
         ) : (
           <ul className="flex flex-col">
             {filteredPartners.map((partner) => (
-              <li key={partner.id} className="border-b last:border-0">
+              <li key={partner.id} className="border-b last:border-0 even:bg-gray-100/60">
                 <PartnerItem partner={partner} />
               </li>
             ))}
