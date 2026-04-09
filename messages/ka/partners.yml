@@ -1,4 +1,9 @@
 partners:
+  benefits:
+    triggerLabel: 'იხილეთ წევრის შეღავათები'
+    drawerTitle: 'წევრის შეღავათები'
+    noBenefits: 'ამჟამად პარტნიორის შეღავათები არ არის ხელმისაწვდომი.'
+
   main:
     title: 'მთავარი პარტნიორები'
     seeAllButton: 'ყველა პარტნიორი'

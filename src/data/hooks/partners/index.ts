@@ -1,0 +1,7 @@
+export { default as useAllPartnersQuery } from './useAllPartnersQuery'
+export { default as useLogoUpload } from './useLogoUpload'
+export { default as usePartnerCreate } from './usePartnerCreate'
+export { default as usePartnerDelete } from './usePartnerDelete'
+export { default as usePartnerQuery } from './usePartnerQuery'
+export { default as usePartnersQuery } from './usePartnersQuery'
+export { default as usePartnerUpdate } from './usePartnerUpdate'

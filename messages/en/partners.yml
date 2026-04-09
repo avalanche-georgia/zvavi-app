@@ -1,4 +1,9 @@
 partners:
+  benefits:
+    triggerLabel: 'See Member Benefits'
+    drawerTitle: 'Member Benefits'
+    noBenefits: 'No partner benefits available at the moment.'
+
   main:
     title: 'Main Partners'
     seeAllButton: 'See All Partners'

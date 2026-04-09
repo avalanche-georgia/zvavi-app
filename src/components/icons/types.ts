@@ -27,6 +27,7 @@ export type IconName =
   | 'snowflake'
   | 'thermometerSnowflake'
   | 'trash'
+  | 'upload'
   | 'userPlus'
   | 'users'
   | 'xMark'

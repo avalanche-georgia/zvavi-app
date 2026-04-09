@@ -47,6 +47,9 @@ Forecasters can create, edit, duplicate, and publish forecasts through a structu
 ### Member Management
 Administrators can manage the team roster: add members, update their status (active, inactive, pending, suspended, expired), set membership validity dates, and generate or view their verification QR codes.
 
+### Partner Benefits Management
+Administrators can manage a list of partner organizations and the exclusive discounts or perks they offer to Avalanche Georgia members. Each partner has a name, optional benefit description, logo, and website — all stored in both English and Georgian. Active partners are displayed to the public in a "Member Benefits" drawer accessible from the Join Us page and the member verification card.
+
 ---
 
 ## Bilingual Support
