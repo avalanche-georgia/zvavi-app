@@ -1,5 +1,6 @@
 'use client'
 
+import { PartnerBenefitsDrawer } from '@components/features/join'
 import { Spinner } from '@components/ui'
 import { useVerifyMember } from '@data/hooks/members'
 import { useTranslations } from 'next-intl'
@@ -32,7 +33,7 @@ const VerificationPage = ({ code }: VerificationPageProps) => {
   }
 
   return (
-    <div className="flex min-h-[50vh] items-center justify-center p-4">
+    <div className="flex min-h-[50vh] flex-col items-center justify-center gap-10 p-4">
       <MemberCard
         expiresAt={data.member.expiresAt}
         firstName={data.member.firstName}
@@ -41,6 +42,8 @@ const VerificationPage = ({ code }: VerificationPageProps) => {
         memberId={data.member.memberId}
         status={data.member.status}
       />
+
+      <PartnerBenefitsDrawer />
     </div>
   )
 }

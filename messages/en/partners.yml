@@ -1,4 +1,9 @@
 partners:
+  benefits:
+    triggerLabel: 'See Member Benefits'
+    drawerTitle: 'Member Benefits'
+    noBenefits: 'No partner benefits available at the moment.'
+
   main:
     title: 'Main Partners'
     seeAllButton: 'See All Partners'
@@ -14,6 +19,10 @@ partners:
   becomePartner:
     title: 'Want to become a Partner?'
     description: 'We’re always open to collaboration with organizations and individuals who share our mission of mountain safety and education. Let’s make the mountains safer — together.'
+
+  drawer:
+    descriptionLabel: 'About'
+    benefitLabel: 'Member Benefit'
 
   info:
     vagabond: 'Vagabond Adventures are the premier English-speaking (& German, Czech, French et al!) provider of ski/snowboard lessons, ski holiday packages & off-piste guiding at Gudauri, Georgia. With their intimate local knowledge, they also organise fantastic ski safari tours throughout the country, combining resort, off-piste & snowcat skiing with the incredible Georgian culture.'

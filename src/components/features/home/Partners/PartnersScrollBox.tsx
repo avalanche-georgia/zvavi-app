@@ -1,5 +1,5 @@
 import { AutoScrollList } from '@components/ui'
-import type { Partner } from '@data/constants/partners'
+import type { Partner } from '@domain/types'
 import clsx from 'clsx'
 
 import { MainPartnerCard } from './MainPartnerCard'

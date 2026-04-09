@@ -122,6 +122,37 @@ export type MemberFormData = {
   notes: string
 }
 
+export type PartnerTier = 1 | 2 | 3
+
+export type Partner = {
+  id: string
+  nameEn: string
+  nameKa: string | null
+  descriptionEn: string | null
+  descriptionKa: string | null
+  benefitEn: string | null
+  benefitKa: string | null
+  logoUrl: string
+  websiteUrl: string
+  tier: PartnerTier
+  isActive: boolean
+  createdAt: string
+  updatedAt: string
+}
+
+export type PartnerFormData = {
+  nameEn: string
+  nameKa: string
+  descriptionEn: string
+  descriptionKa: string
+  benefitEn: string
+  benefitKa: string
+  logoUrl: string
+  websiteUrl: string
+  tier: PartnerTier | null
+  isActive: boolean
+}
+
 export type MemberVerification = {
   id: string
   memberId: string

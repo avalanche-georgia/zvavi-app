@@ -1,34 +1,39 @@
+'use client'
+
+import { useLocalizeField } from '@components/hooks'
 import { Drawer } from '@components/ui'
-import type { Partner } from '@data/constants/partners'
+import type { Partner } from '@domain/types'
 
 import PartnerInfo from './PartnerInfo'
 import PartnerLogo from './PartnerLogo'
 
-const PartnerButton = ({ logo, name }: { name: Partner['name']; logo: Partner['logo'] }) => (
-  <>
-    <div className="flex size-24 flex-none items-center justify-center overflow-hidden rounded-xl">
-      <PartnerLogo
-        className="size-full"
-        imageSize={{ height: 96, width: 96 }}
-        logo={logo}
-        name={name}
-      />
-    </div>
-
-    <h4 className="text-lg font-semibold text-gray-900">{name}</h4>
-  </>
-)
+const badgeClassName = 'flex items-center gap-2 rounded-xl bg-gray-100 p-3'
 
 const SecondTierPartner = ({ partner }: { partner: Partner }) => {
-  const { infoKey, logo, name, url } = partner
-  const hasInfo = Boolean(infoKey)
+  const localizeField = useLocalizeField()
+  const name = localizeField(partner.nameEn, partner.nameKa)
+  const hasDrawerContent = Boolean(
+    partner.benefitEn || partner.benefitKa || partner.descriptionEn || partner.descriptionKa,
+  )
 
-  const badgeClassName = 'flex items-center gap-2 rounded-xl bg-gray-100 p-3'
+  const logoNode = (
+    <>
+      <div className="flex size-24 flex-none items-center justify-center overflow-hidden rounded-xl">
+        <PartnerLogo className="size-full object-contain" logoUrl={partner.logoUrl} name={name} />
+      </div>
+      <h4 className="text-lg font-semibold text-gray-900">{name}</h4>
+    </>
+  )
 
-  if (!hasInfo) {
+  if (!hasDrawerContent) {
     return (
-      <a className={badgeClassName} href={url} rel="noopener noreferrer" target="_blank">
-        <PartnerButton logo={logo} name={name} />
+      <a
+        className={badgeClassName}
+        href={partner.websiteUrl}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        {logoNode}
       </a>
     )
   }
@@ -36,7 +41,7 @@ const SecondTierPartner = ({ partner }: { partner: Partner }) => {
   return (
     <Drawer content={<PartnerInfo partner={partner} />} title={name}>
       <button className={badgeClassName} type="button">
-        <PartnerButton logo={logo} name={name} />
+        {logoNode}
       </button>
     </Drawer>
   )

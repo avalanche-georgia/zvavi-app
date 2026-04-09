@@ -21,22 +21,29 @@ export const toOptions = (
 
 type SelectProps = {
   className?: string
+  hasError?: boolean
   onChange: (value: string) => void
   options: SelectOption[]
   placeholder?: string
-  value: string
+  value: string | undefined
 }
 
-const Select = ({ className, onChange, options, placeholder, value }: SelectProps) => (
+const Select = ({ className, hasError, onChange, options, placeholder, value }: SelectProps) => (
   <SelectPrimitive.Root onValueChange={onChange} value={value}>
     <SelectPrimitive.Trigger
       className={twMerge(
         clsx(
-          'flex h-8 w-full items-center justify-between rounded-sm border border-transparent bg-gray-100',
+          'flex h-8 w-full items-center justify-between rounded-sm border bg-gray-100',
           'px-3 text-sm transition-colors',
-          '[&:hover:not(:focus)]:border-primary/50',
-          'focus:border-primary focus:outline-hidden',
-          'data-[state=open]:border-primary',
+          hasError
+            ? 'border-red-500'
+            : [
+                'border-transparent',
+                '[&:hover:not(:focus)]:border-primary/50',
+                'focus:border-primary',
+                'data-[state=open]:border-primary',
+              ],
+          'focus:outline-hidden',
           'disabled:cursor-not-allowed disabled:opacity-50',
           'data-placeholder:text-gray-400 [&>span]:line-clamp-1',
           className,
