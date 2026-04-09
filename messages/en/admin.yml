@@ -109,7 +109,7 @@ admin:
         benefitEn: 'Optional'
         benefitKa: 'Optional'
         tier: 'Select tier'
-        websiteUrl: 'Optional'
+        websiteUrl: 'https://example.com'
       hints:
         logo: 'PNG, JPG, WebP or SVG · max 500 KB'
       actions:

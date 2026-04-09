@@ -109,7 +109,7 @@ admin:
         benefitEn: 'სურვილისამებრ'
         benefitKa: 'სურვილისამებრ'
         tier: 'აირჩიეთ დონე'
-        websiteUrl: 'სურვილისამებრ'
+        websiteUrl: 'https://example.com'
       hints:
         logo: 'PNG, JPG, WebP ან SVG · მაქს. 500 KB'
       actions:

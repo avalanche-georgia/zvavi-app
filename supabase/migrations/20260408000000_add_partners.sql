@@ -5,7 +5,7 @@ create table partners (
   benefit_en  text,
   benefit_ka  text,
   logo_url    text not null,
-  website_url text,
+  website_url text not null,
   tier        integer not null default 1 check (tier in (1, 2, 3)),
   is_active   boolean not null default true,
   created_at  timestamptz default now(),

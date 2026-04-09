@@ -131,7 +131,7 @@ export type Partner = {
   benefitEn: string | null
   benefitKa: string | null
   logoUrl: string
-  websiteUrl: string | null
+  websiteUrl: string
   tier: PartnerTier
   isActive: boolean
   createdAt: string

@@ -22,7 +22,7 @@ const getInitialFormData = (partner: Partner | null): PartnerFormData => {
     nameEn: partner.nameEn,
     nameKa: partner.nameKa ?? '',
     tier: partner.tier,
-    websiteUrl: partner.websiteUrl ?? '',
+    websiteUrl: partner.websiteUrl,
   }
 }
 

@@ -10,7 +10,7 @@ export const partnerFormSchema = z.object({
   tier: z
     .nullable(z.union([z.literal(1), z.literal(2), z.literal(3)]))
     .refine((val): val is 1 | 2 | 3 => val !== null, { message: 'required' }),
-  websiteUrl: z.string(),
+  websiteUrl: z.string().trim().min(1, { message: 'required' }),
 })
 
 export type PartnerFormSchema = z.infer<typeof partnerFormSchema>

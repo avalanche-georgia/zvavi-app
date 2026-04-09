@@ -33,7 +33,7 @@ const FormFields = () => {
           label={t('admin.partners.form.labels.nameEn')}
           required
         >
-          <TextInput {...register('nameEn')} />
+          <TextInput {...register('nameEn')} hasError={!!errors.nameEn} />
         </InputBlock>
         <InputBlock error={getError('nameKa')} label={t('admin.partners.form.labels.nameKa')}>
           <TextInput
@@ -92,9 +92,11 @@ const FormFields = () => {
           <InputBlock
             error={getError('websiteUrl')}
             label={t('admin.partners.form.labels.websiteUrl')}
+            required
           >
             <TextInput
               {...register('websiteUrl')}
+              hasError={!!errors.websiteUrl}
               placeholder={t('admin.partners.form.placeholders.websiteUrl')}
             />
           </InputBlock>
