@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef } from 'react'
+import { useToast } from '@components/hooks'
 import { Icon } from '@components/icons'
 import { Button } from '@components/ui'
 import { useLogoUpload } from '@data/hooks/partners'
@@ -12,6 +13,7 @@ import Logo from './Logo'
 
 const LogoUpload = () => {
   const t = useTranslations()
+  const { toastError } = useToast()
   const { isUploading, upload } = useLogoUpload()
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -27,9 +29,18 @@ const LogoUpload = () => {
     const file = event.target.files?.[0]
 
     if (!file) return
-    const url = await upload(file)
 
-    if (url) setValue('logoUrl', url, { shouldDirty: true, shouldValidate: true })
+    const result = await upload(file)
+
+    if (result.error) {
+      toastError('LogoUpload | handleFileChange', {
+        error: result.error,
+        message: t(`admin.partners.form.errors.logo.${result.error}`),
+      })
+    } else {
+      setValue('logoUrl', result.url, { shouldDirty: true, shouldValidate: true })
+    }
+
     event.target.value = ''
   }
 

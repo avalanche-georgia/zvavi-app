@@ -122,7 +122,7 @@ admin:
       errors:
         logo:
           invalidType: 'Use PNG, JPG, WebP, or SVG only.'
-          tooLarge: 'File exceeds 500 KB limit.'
+          tooLarge: 'File exceeds 512 KB limit.'
           uploadFailed: 'Upload failed. Please try again.'
     messages:
       created: 'Partner created successfully.'
