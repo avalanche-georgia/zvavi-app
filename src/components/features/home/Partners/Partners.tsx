@@ -1,6 +1,8 @@
+'use client'
+
 import { PageSection } from '@components/layout'
 import { ButtonLink } from '@components/shared'
-import { partners } from '@data/constants/partners'
+import { usePartnersQuery } from '@data/hooks/partners'
 import { useTranslations } from 'next-intl'
 
 import { MainPartnerPlaceholder } from './MainPartnerCard'
@@ -8,19 +10,19 @@ import PartnersScrollBox from './PartnersScrollBox'
 
 import { routes } from '@/routes'
 
-const partnerList = partners[1].filter((partner) => !partner.isHidden)
-
 const Partners = () => {
   const t = useTranslations()
+  const { data: partners = [] } = usePartnersQuery()
+  const tier1Partners = partners.filter((partner) => partner.tier === 1)
 
   return (
     <PageSection title={t('partners.main.title')}>
-      {partnerList.length === 0 ? (
+      {tier1Partners.length === 0 ? (
         <div className="flex justify-center">
           <MainPartnerPlaceholder />
         </div>
       ) : (
-        <PartnersScrollBox partners={partnerList} />
+        <PartnersScrollBox partners={tier1Partners} />
       )}
 
       <ButtonLink className="mt-4" href={routes.partners}>

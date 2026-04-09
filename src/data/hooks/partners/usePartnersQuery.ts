@@ -22,8 +22,9 @@ const fetchPartners = async (): Promise<Partner[]> => {
   return convertSnakeToCamel(data) as Partner[]
 }
 
-const usePartnersQuery = () => {
+const usePartnersQuery = (initialData?: Partner[]) => {
   return useQuery<Partner[], Error>({
+    initialData,
     queryFn: fetchPartners,
     queryKey: partnersKeys.active(),
   })
