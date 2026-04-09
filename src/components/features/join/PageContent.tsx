@@ -3,6 +3,7 @@ import { useTranslations } from 'next-intl'
 
 import EducateSection from './EducateSection'
 import FinancialSection from './FinancialSection'
+import PartnerBenefitsDrawer from './PartnerBenefitsDrawer'
 import VolunteerSection from './VolunteerSection'
 
 import { routes } from '@/routes'
@@ -22,6 +23,8 @@ const PageContent = () => {
           })}
         />
       </div>
+
+      <PartnerBenefitsDrawer />
 
       <VolunteerSection />
       <FinancialSection />

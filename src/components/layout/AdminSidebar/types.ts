@@ -1,5 +1,5 @@
 export type NavItem = {
   href: string
-  icon: 'cloudSnow' | 'home' | 'users'
+  icon: 'cloudSnow' | 'handshake' | 'home' | 'users'
   label: string
 }

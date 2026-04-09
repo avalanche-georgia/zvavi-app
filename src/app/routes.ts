@@ -18,6 +18,11 @@ export const routes = {
       new: '/admin/members/new',
       root: '/admin/members',
     },
+    partners: {
+      edit: (id: string) => `/admin/partners/${id}/edit`,
+      new: '/admin/partners/new',
+      root: '/admin/partners',
+    },
     root: '/admin',
   },
   auth: {
