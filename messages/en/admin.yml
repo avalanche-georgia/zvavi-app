@@ -115,7 +115,7 @@ admin:
         tier: 'Select tier'
         websiteUrl: 'https://example.com'
       hints:
-        logo: 'PNG, JPG, WebP or SVG · max 500 KB'
+        logo: 'PNG, JPG, WebP or SVG · max 512 KB'
       actions:
         logoUpload: 'Upload logo'
         logoReplace: 'Replace logo'

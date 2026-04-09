@@ -115,7 +115,7 @@ admin:
         tier: 'აირჩიეთ დონე'
         websiteUrl: 'https://example.com'
       hints:
-        logo: 'PNG, JPG, WebP ან SVG · მაქს. 500 KB'
+        logo: 'PNG, JPG, WebP ან SVG · მაქს. 512 KB'
       actions:
         logoUpload: 'ლოგოს ატვირთვა'
         logoReplace: 'ლოგოს შეცვლა'

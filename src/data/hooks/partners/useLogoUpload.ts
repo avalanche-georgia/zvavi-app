@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react'
 import { supabase } from '@data'
 
 const bucket = 'partner-logos'
-const maxSize = 512 * 1024 // 500 KB
+const maxSize = 512 * 1024 // 512 KB
 const allowedTypes = ['image/png', 'image/jpeg', 'image/webp', 'image/svg+xml']
 
 export type LogoUploadError = 'invalidType' | 'tooLarge' | 'uploadFailed'
@@ -35,7 +35,7 @@ const useLogoUpload = (): UseLogoUploadResult => {
     setIsUploading(true)
 
     try {
-      const ext = file.name.split('.').pop()
+      const ext = file.name.includes('.') ? file.name.split('.').pop() : file.type.split('/').pop()
       const path = `${crypto.randomUUID()}.${ext}`
 
       const { error: uploadError } = await supabase.storage.from(bucket).upload(path, file)

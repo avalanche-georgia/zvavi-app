@@ -84,6 +84,8 @@ supabase/
    t('admin.members.statuses.active')   // correct
    ```
    Never use `useTranslations('admin.members')` + short keys.
+4. Translations go in **scope-specific YAML files** (e.g. `partners.yml`, `members.yml`) — not in the catch-all `en.yml`/`ka.yml`
+5. Separate major scopes in YAML files with an empty line between them
 
 ### Route Constants
 All route paths live in `src/app/routes.ts`. Use the exported helpers instead of hardcoded strings:
@@ -141,6 +143,9 @@ No `@i18n` alias — use `src/i18n/navigation` directly.
 - Use `type` imports for type-only imports (`@typescript-eslint/consistent-type-imports`)
 - Zod v4: use `{ error: () => ({ message: '...' }) }` not `{ errorMap: ... }`
 - For DB inserts use `convertCamelToSnake` from `@data/helpers`
+- Always use explicit variable names — never single-letter or abbreviated (`partner` not `p`, `error` not `e`)
+- React types: use the global `React.*` namespace — do not import types from `react` (`React.ReactNode`, `React.ChangeEvent<T>`)
+- Prop types: inline (`{ prop: Type }`) when a component has one prop; named `type` only for two or more props
 
 ---
 

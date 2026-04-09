@@ -23,7 +23,7 @@ create policy "Admins can manage partners" on partners
   for all using (auth.role() = 'authenticated');
 
 create trigger partners_updated_at before update on partners
-  for each row execute procedure update_updated_at_column();
+  for each row execute function update_updated_at_column();
 
 -- Storage bucket for partner logos
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
@@ -31,7 +31,7 @@ insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_typ
     'partner-logos',
     'partner-logos',
     true,
-    524288,  -- 512 KB, matches client-side validation
+    524288,  -- 512 KB (512 * 1024), matches client-side validation
     array['image/png', 'image/jpeg', 'image/webp', 'image/svg+xml']
   );
 
@@ -89,7 +89,7 @@ insert into partners (name_en, name_ka, description_en, description_ka, benefit_
   '',
   'https://datosskola.com/',
   2,
-  true
+  false
 ),
 (
   'Drunk Cherry',
@@ -101,7 +101,7 @@ insert into partners (name_en, name_ka, description_en, description_ka, benefit_
   '',
   'https://www.instagram.com/gudauri_drunkcherry/',
   2,
-  true
+  false
 ),
 (
   'Ozon Gudauri',
@@ -113,7 +113,7 @@ insert into partners (name_en, name_ka, description_en, description_ka, benefit_
   '',
   'https://www.ozongudauri.com/',
   2,
-  true
+  false
 ),
 (
   'Popolo Pizza',
@@ -125,7 +125,7 @@ insert into partners (name_en, name_ka, description_en, description_ka, benefit_
   '',
   'https://instagram.com/popolo.tbilisi',
   2,
-  true
+  false
 ),
 (
   'Snowlab Gudauri',
@@ -137,7 +137,7 @@ insert into partners (name_en, name_ka, description_en, description_ka, benefit_
   '',
   'https://snow-lab.com',
   2,
-  true
+  false
 ),
 
 -- Tier 3
@@ -151,7 +151,7 @@ insert into partners (name_en, name_ka, description_en, description_ka, benefit_
   '',
   'https://www.adrenaline.ge/',
   3,
-  true
+  false
 ),
 (
   'Buru Sports',
@@ -163,7 +163,7 @@ insert into partners (name_en, name_ka, description_en, description_ka, benefit_
   '',
   'https://burusports.ge/',
   3,
-  true
+  false
 ),
 (
   'Travel Bar',
@@ -175,7 +175,7 @@ insert into partners (name_en, name_ka, description_en, description_ka, benefit_
   '',
   'https://www.instagram.com/gudauribar/',
   3,
-  true
+  false
 ),
 (
   'Vitamin Kudebi',
@@ -187,5 +187,5 @@ insert into partners (name_en, name_ka, description_en, description_ka, benefit_
   '',
   'https://www.facebook.com/vitaminkudebi',
   3,
-  true
+  false
 );
