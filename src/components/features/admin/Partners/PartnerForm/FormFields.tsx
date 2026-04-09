@@ -41,6 +41,27 @@ const FormFields = () => {
             placeholder={t('admin.partners.form.placeholders.nameKa')}
           />
         </InputBlock>
+        <InputBlock
+          error={getError('descriptionEn')}
+          label={t('admin.partners.form.labels.descriptionEn')}
+        >
+          <Textarea
+            {...register('descriptionEn')}
+            placeholder={t('admin.partners.form.placeholders.descriptionEn')}
+            rows={4}
+          />
+        </InputBlock>
+        <InputBlock
+          error={getError('descriptionKa')}
+          label={t('admin.partners.form.labels.descriptionKa')}
+        >
+          <Textarea
+            {...register('descriptionKa')}
+            placeholder={t('admin.partners.form.placeholders.descriptionKa')}
+            rows={4}
+          />
+        </InputBlock>
+
         <InputBlock error={getError('benefitEn')} label={t('admin.partners.form.labels.benefitEn')}>
           <Textarea
             {...register('benefitEn')}
@@ -55,6 +76,7 @@ const FormFields = () => {
             rows={3}
           />
         </InputBlock>
+
         <div className="flex gap-4">
           <InputBlock
             className="flex-1"

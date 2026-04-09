@@ -5,6 +5,8 @@ const getInitialFormData = (partner: Partner | null): PartnerFormData => {
     return {
       benefitEn: '',
       benefitKa: '',
+      descriptionEn: '',
+      descriptionKa: '',
       isActive: true,
       logoUrl: '',
       nameEn: '',
@@ -17,6 +19,8 @@ const getInitialFormData = (partner: Partner | null): PartnerFormData => {
   return {
     benefitEn: partner.benefitEn ?? '',
     benefitKa: partner.benefitKa ?? '',
+    descriptionEn: partner.descriptionEn ?? '',
+    descriptionKa: partner.descriptionKa ?? '',
     isActive: partner.isActive,
     logoUrl: partner.logoUrl,
     nameEn: partner.nameEn,

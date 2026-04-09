@@ -2,6 +2,8 @@ create table partners (
   id          uuid primary key default gen_random_uuid(),
   name_en     text not null,
   name_ka     text,
+  description_en text,
+  description_ka text,
   benefit_en  text,
   benefit_ka  text,
   logo_url    text not null,

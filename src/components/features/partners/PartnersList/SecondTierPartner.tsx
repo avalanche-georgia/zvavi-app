@@ -12,7 +12,9 @@ const badgeClassName = 'flex items-center gap-2 rounded-xl bg-gray-100 p-3'
 const SecondTierPartner = ({ partner }: { partner: Partner }) => {
   const localizeField = useLocalizeField()
   const name = localizeField(partner.nameEn, partner.nameKa)
-  const hasBenefit = Boolean(partner.benefitEn || partner.benefitKa)
+  const hasDrawerContent = Boolean(
+    partner.benefitEn || partner.benefitKa || partner.descriptionEn || partner.descriptionKa,
+  )
 
   const logoNode = (
     <>
@@ -23,7 +25,7 @@ const SecondTierPartner = ({ partner }: { partner: Partner }) => {
     </>
   )
 
-  if (!hasBenefit) {
+  if (!hasDrawerContent) {
     return (
       <a
         className={badgeClassName}

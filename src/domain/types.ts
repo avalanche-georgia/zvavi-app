@@ -128,6 +128,8 @@ export type Partner = {
   id: string
   nameEn: string
   nameKa: string | null
+  descriptionEn: string | null
+  descriptionKa: string | null
   benefitEn: string | null
   benefitKa: string | null
   logoUrl: string
@@ -141,6 +143,8 @@ export type Partner = {
 export type PartnerFormData = {
   nameEn: string
   nameKa: string
+  descriptionEn: string
+  descriptionKa: string
   benefitEn: string
   benefitKa: string
   logoUrl: string

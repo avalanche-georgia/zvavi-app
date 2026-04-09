@@ -100,6 +100,8 @@ admin:
         nameKa: 'სახელი (KA)'
         benefitEn: 'შეღავათი (EN)'
         benefitKa: 'შეღავათი (KA)'
+        descriptionEn: 'აღწერა (EN)'
+        descriptionKa: 'აღწერა (KA)'
         logo: 'ლოგო'
         websiteUrl: 'ვებსაიტის URL'
         tier: 'დონე'
@@ -108,6 +110,8 @@ admin:
         nameKa: 'სურვილისამებრ'
         benefitEn: 'სურვილისამებრ'
         benefitKa: 'სურვილისამებრ'
+        descriptionEn: 'სურვილისამებრ'
+        descriptionKa: 'სურვილისამებრ'
         tier: 'აირჩიეთ დონე'
         websiteUrl: 'https://example.com'
       hints:
