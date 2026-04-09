@@ -122,6 +122,8 @@ export type MemberFormData = {
   notes: string
 }
 
+export type PartnerTier = 1 | 2 | 3
+
 export type Partner = {
   id: string
   nameEn: string
@@ -130,6 +132,7 @@ export type Partner = {
   benefitKa: string | null
   logoUrl: string
   websiteUrl: string | null
+  tier: PartnerTier
   isActive: boolean
   createdAt: string
   updatedAt: string
@@ -142,6 +145,7 @@ export type PartnerFormData = {
   benefitKa: string
   logoUrl: string
   websiteUrl: string
+  tier: PartnerTier | null
   isActive: boolean
 }
 

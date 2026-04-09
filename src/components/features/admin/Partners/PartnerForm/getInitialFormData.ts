@@ -9,6 +9,7 @@ const getInitialFormData = (partner: Partner | null): PartnerFormData => {
       logoUrl: '',
       nameEn: '',
       nameKa: '',
+      tier: null,
       websiteUrl: '',
     }
   }
@@ -20,6 +21,7 @@ const getInitialFormData = (partner: Partner | null): PartnerFormData => {
     logoUrl: partner.logoUrl,
     nameEn: partner.nameEn,
     nameKa: partner.nameKa ?? '',
+    tier: partner.tier,
     websiteUrl: partner.websiteUrl ?? '',
   }
 }

@@ -101,11 +101,13 @@ admin:
         benefitKa: 'შეღავათი (KA)'
         logo: 'ლოგო'
         websiteUrl: 'ვებსაიტის URL'
+        tier: 'დონე'
         isActive: 'აქტიური'
       placeholders:
         nameKa: 'სურვილისამებრ'
         benefitEn: 'სურვილისამებრ'
         benefitKa: 'სურვილისამებრ'
+        tier: 'აირჩიეთ დონე'
         websiteUrl: 'სურვილისამებრ'
       hints:
         logo: 'PNG, JPG, WebP ან SVG · მაქს. 500 KB'

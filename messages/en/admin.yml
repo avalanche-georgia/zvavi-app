@@ -101,11 +101,13 @@ admin:
         benefitKa: 'Benefit (KA)'
         logo: 'Logo'
         websiteUrl: 'Website URL'
+        tier: 'Tier'
         isActive: 'Active'
       placeholders:
         nameKa: 'Optional'
         benefitEn: 'Optional'
         benefitKa: 'Optional'
+        tier: 'Select tier'
         websiteUrl: 'Optional'
       hints:
         logo: 'PNG, JPG, WebP or SVG · max 500 KB'

@@ -2,8 +2,8 @@
 
 /* eslint-disable react/jsx-props-no-spreading */
 
-import { InputBlock, Switch, Textarea, TextInput } from '@components/ui'
-import type { PartnerFormData } from '@domain/types'
+import { InputBlock, Select, Switch, Textarea, TextInput } from '@components/ui'
+import type { PartnerFormData, PartnerTier } from '@domain/types'
 import { useTranslations } from 'next-intl'
 import { Controller, useFormContext } from 'react-hook-form'
 
@@ -18,6 +18,11 @@ const FormFields = () => {
   } = useFormContext<PartnerFormData>()
   const getError = (field: keyof PartnerFormData) =>
     errors[field] ? t(`common.validation.${errors[field]?.message}`) : undefined
+
+  const tierOptions = ([1, 2, 3] as PartnerTier[]).map((tier) => ({
+    label: `${tier} - ${t(`partners.levels.${tier}`)}`,
+    value: String(tier),
+  }))
 
   return (
     <>
@@ -63,6 +68,21 @@ const FormFields = () => {
           <TextInput
             {...register('websiteUrl')}
             placeholder={t('admin.partners.form.placeholders.websiteUrl')}
+          />
+        </InputBlock>
+        <InputBlock error={getError('tier')} label={t('admin.partners.form.labels.tier')} required>
+          <Controller
+            control={control}
+            name="tier"
+            render={({ field }) => (
+              <Select
+                hasError={!!errors.tier}
+                onChange={(value) => field.onChange(Number(value) as PartnerTier)}
+                options={tierOptions}
+                placeholder={t('admin.partners.form.placeholders.tier')}
+                value={field.value ? String(field.value) : undefined}
+              />
+            )}
           />
         </InputBlock>
         <InputBlock error={getError('isActive')} label={t('admin.partners.form.labels.isActive')}>
