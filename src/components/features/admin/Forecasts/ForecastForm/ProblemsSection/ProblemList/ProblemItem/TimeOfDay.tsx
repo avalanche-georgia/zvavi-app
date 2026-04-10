@@ -11,13 +11,13 @@ type TimeOfDayProps = {
 }
 
 const TimeOfDay = ({ isAllDay, timeOfDay }: TimeOfDayProps) => {
-  const tProblems = useTranslations('admin.forecast.form.problems')
+  const t = useTranslations()
 
   return (
-    <PropertyWrapper title={tProblems('labels.timeOfDay')}>
+    <PropertyWrapper title={t('admin.forecast.form.problems.labels.timeOfDay')}>
       <p>
         {isAllDay
-          ? tProblems('labels.allDay')
+          ? t('admin.forecast.form.problems.labels.allDay')
           : `${format(timeOfDay?.start as Date, timeFormat)} — ${format(timeOfDay?.end as Date, timeFormat)}`}
       </p>
     </PropertyWrapper>

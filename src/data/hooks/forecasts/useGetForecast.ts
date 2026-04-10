@@ -44,6 +44,7 @@ const fetchForecast = async ({ queryKey }: QueryFunctionContext<QueryKey>): Prom
     .from('avalanche_problems')
     .select()
     .match({ forecast_id: variables.forecastId })
+    .order('order')
 
   if (problemsError) {
     throw new Error(problemsError.message)

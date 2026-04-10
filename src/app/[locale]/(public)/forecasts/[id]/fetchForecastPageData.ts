@@ -21,7 +21,7 @@ export const fetchForecastPageData = async (
         .select()
         .eq('forecast_id', forecastId)
         .order('date', { ascending: false }),
-      supabase.from('avalanche_problems').select().eq('forecast_id', forecastId),
+      supabase.from('avalanche_problems').select().eq('forecast_id', forecastId).order('order'),
       supabase
         .from('forecasts')
         .select('id')

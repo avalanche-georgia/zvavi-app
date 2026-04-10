@@ -15,6 +15,7 @@ export type IconName =
   | 'link'
   | 'eye'
   | 'eyeOff'
+  | 'grip'
   | 'handshake'
   | 'home'
   | 'image'

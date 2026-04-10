@@ -34,6 +34,7 @@ export const initialProblemData: ProblemFormData = {
   description: '',
   distribution: 'isolated',
   isAllDay: true,
+  order: 0,
   sensitivity: 'reactive',
   timeOfDay: { end: null, start: null },
   trend: 'deteriorating',

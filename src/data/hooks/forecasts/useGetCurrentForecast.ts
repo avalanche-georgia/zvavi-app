@@ -49,6 +49,7 @@ const fetchCurrentForecast = async ({
     .from('avalanche_problems')
     .select()
     .match({ forecast_id: currentForecast.id })
+    .order('order')
 
   if (problemsError) {
     throw new Error(problemsError.message)

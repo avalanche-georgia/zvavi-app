@@ -27,6 +27,7 @@ const problemSchema = z.object({
   distribution: z.enum(['isolated', 'specific', 'widespread']),
   id: z.string().optional(),
   isAllDay: z.boolean(),
+  order: z.number(),
   sensitivity: z.enum(['unreactive', 'stubborn', 'reactive', 'touchy']),
   timeOfDay: z.object({
     end: nullableDate,
