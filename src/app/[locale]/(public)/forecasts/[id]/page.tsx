@@ -3,10 +3,10 @@ import { PageWrapper } from '@components/layout'
 import type { HazardLevelScale } from '@domain/types'
 import { format } from 'date-fns'
 import type { Metadata } from 'next'
+import { headers } from 'next/headers'
 import { notFound } from 'next/navigation'
 
 import { createClient } from '@/lib/supabase/server'
-import { baseUrl } from '@/routes'
 
 const hazardLevelLabels: Record<HazardLevelScale, string> = {
   1: 'Low',
@@ -23,6 +23,10 @@ export const generateMetadata = async (props: Props): Promise<Metadata> => {
   const forecastId = Number(params.id)
 
   if (isNaN(forecastId)) return {}
+
+  const requestHeaders = await headers()
+  const host = requestHeaders.get('host') ?? 'avalanche.ge'
+  const origin = `https://${host}`
 
   const supabase = await createClient()
   const { data } = await supabase
@@ -43,7 +47,7 @@ export const generateMetadata = async (props: Props): Promise<Metadata> => {
     description,
     openGraph: {
       description,
-      images: [`${baseUrl}/api/og?id=${forecastId}`],
+      images: [`${origin}/api/og?id=${forecastId}`],
       title,
     },
     title,
