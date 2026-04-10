@@ -42,7 +42,7 @@ const ProblemList = ({
 
   return (
     <ul className="space-y-4">
-      {problems.map((problem) => (
+      {problems.map((problem, index) => (
         <li key={problem.id}>
           {formState?.mode === 'edit' && formState.id === problem.id ? (
             <ProblemForm
@@ -56,6 +56,7 @@ const ProblemList = ({
               canEdit={formState === null}
               onDelete={onDelete}
               onEdit={handleEdit}
+              order={index + 1}
               problemData={problem}
             />
           )}
