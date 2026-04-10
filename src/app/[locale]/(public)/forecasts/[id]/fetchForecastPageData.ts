@@ -33,10 +33,26 @@ export const fetchForecastPageData = async (
 
   if (!forecastResult.data) return null
 
+  if (recentAvalanchesResult.error) {
+    console.error('fetchForecastPageData | recent_avalanches query failed', {
+      error: recentAvalanchesResult.error,
+      forecastId,
+    })
+    throw new Error(recentAvalanchesResult.error.message)
+  }
+
+  if (avalancheProblemsResult.error) {
+    console.error('fetchForecastPageData | avalanche_problems query failed', {
+      error: avalancheProblemsResult.error,
+      forecastId,
+    })
+    throw new Error(avalancheProblemsResult.error.message)
+  }
+
   const initialForecast = convertSnakeToCamel({
     ...forecastResult.data,
-    avalancheProblems: avalancheProblemsResult.data ?? [],
-    recentAvalanches: recentAvalanchesResult.data ?? [],
+    avalancheProblems: avalancheProblemsResult.data,
+    recentAvalanches: recentAvalanchesResult.data,
   }) as FullForecast
 
   const isCurrentForecast = forecastResult.data.id === currentForecastResult.data?.id
