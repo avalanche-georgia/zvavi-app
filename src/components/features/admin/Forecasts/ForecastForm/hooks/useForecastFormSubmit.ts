@@ -34,8 +34,9 @@ const useForecastFormSubmit = ({ initialForecastId, onSuccess }: UseForecastForm
 
       const payload = {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        avalancheProblems: avalancheProblems.map(({ createdAt, id, ...rest }) => ({
+        avalancheProblems: avalancheProblems.map(({ createdAt, id, ...rest }, index) => ({
           ...rest,
+          order: index,
           timeOfDay: {
             end: rest.timeOfDay.end?.toISOString() ?? null,
             start: rest.timeOfDay.start?.toISOString() ?? null,

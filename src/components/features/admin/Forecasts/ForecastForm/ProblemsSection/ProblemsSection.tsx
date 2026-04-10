@@ -18,7 +18,7 @@ const ProblemsSection = () => {
   const tForecast = useTranslations('admin.forecast')
 
   const { control } = useFormContext<ForecastFormSchema>()
-  const { append, fields, remove, update } = useFieldArray({
+  const { append, fields, move, remove, update } = useFieldArray({
     control,
     name: 'avalancheProblems',
   })
@@ -93,6 +93,7 @@ const ProblemsSection = () => {
         onFormClose={handleFormClose}
         onFormOpen={setFormState}
         onFormSave={handleSubmit}
+        onReorder={move}
         problems={fields}
         selectedProblemTypes={selectedProblemTypes}
       />

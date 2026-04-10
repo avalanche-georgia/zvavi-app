@@ -9,7 +9,7 @@ type ActionButtonsProps = {
 const ActionButtons = ({ canEdit = true, onDelete, onEdit }: ActionButtonsProps) => (
   <div className="flex items-center gap-2">
     <IconButton disabled={!canEdit} iconProps={{ icon: 'pencil' }} onClick={onEdit} />
-    <IconButton iconProps={{ icon: 'trash' }} onClick={onDelete} />
+    <IconButton disabled={!canEdit} iconProps={{ icon: 'trash' }} onClick={onDelete} />
   </div>
 )
 

@@ -52,6 +52,7 @@ export type Problem = {
   description: string
   distribution: Distribution
   isAllDay: boolean
+  order: number
   sensitivity: Sensitivity
   timeOfDay: TimeRange
   trend: Trend

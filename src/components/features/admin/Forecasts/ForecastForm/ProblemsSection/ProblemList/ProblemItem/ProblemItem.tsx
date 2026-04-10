@@ -1,4 +1,5 @@
 import { useCallback } from 'react'
+import { IconButton } from '@components'
 import { useBoolean } from '@components/hooks'
 import { ConfirmationDialog } from '@components/shared'
 import type { Problem } from '@domain/types'
@@ -9,14 +10,22 @@ import { ActionButtons, Aspects } from '../../../common/listItem'
 
 type ProblemItemProps = {
   canEdit: boolean
+  dragHandleRef: (element: Element | null) => void
   onDelete: (id: string) => void
   onEdit: (id: string) => void
+  order: number
   problemData: Problem
 }
 
-const ProblemItem = ({ canEdit, onDelete, onEdit, problemData }: ProblemItemProps) => {
-  const tActions = useTranslations('common.actions')
-  const tForm = useTranslations('admin.forecast.form')
+const ProblemItem = ({
+  canEdit,
+  dragHandleRef,
+  onDelete,
+  onEdit,
+  order,
+  problemData,
+}: ProblemItemProps) => {
+  const t = useTranslations()
   const [isDeletionDialogOpen, { setFalse: closeDeletionDialog, setTrue: openDeletionDialog }] =
     useBoolean(false)
 
@@ -32,23 +41,35 @@ const ProblemItem = ({ canEdit, onDelete, onEdit, problemData }: ProblemItemProp
 
   return (
     <>
-      <div className="w-full rounded-sm bg-black/3 p-3">
-        <div className="mb-3 flex items-center justify-between">
-          <h3 className="text-xl font-semibold">
-            {tForm(`problems.options.problemType.${problemType}`)}
+      <div className="w-full rounded-sm bg-slate-100 p-3 shadow">
+        <div className="mb-3 flex items-center gap-3">
+          <IconButton
+            ref={dragHandleRef}
+            aria-label="Drag to reorder"
+            iconProps={{ icon: 'grip' }}
+          />
+
+          <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-gray-200 text-sm font-bold">
+            {order}
+          </span>
+
+          <h3 className="flex-1 text-xl font-semibold">
+            {t(`admin.forecast.form.problems.options.problemType.${problemType}`)}
           </h3>
 
           <ActionButtons canEdit={canEdit} onDelete={openDeletionDialog} onEdit={handleEdit} />
         </div>
 
-        <div className="mb-6 flex items-center justify-between gap-6">
+        <div className="mb-3 flex items-start gap-6">
           <Properties problemData={problemData} />
           <Aspects className="w-[355px]" item={problemData} />
         </div>
 
         {description && (
           <div>
-            <h4 className="mb-2 font-semibold">{tForm('common.labels.description')}:</h4>
+            <h4 className="mb-2 font-semibold">
+              {t('admin.forecast.form.common.labels.description')}:
+            </h4>
             <p className="max-h-28 overflow-y-auto text-justify">{description}</p>
           </div>
         )}
@@ -58,7 +79,7 @@ const ProblemItem = ({ canEdit, onDelete, onEdit, problemData }: ProblemItemProp
         isOpen={isDeletionDialogOpen}
         onClose={closeDeletionDialog}
         onConfirm={handleDelete}
-        title={`${tActions('delete')} ${tForm(`problems.options.problemType.${problemType}`)}?`}
+        title={`${t('common.actions.delete')} ${t(`admin.forecast.form.problems.options.problemType.${problemType}`)}?`}
         variant="delete"
       />
     </>
