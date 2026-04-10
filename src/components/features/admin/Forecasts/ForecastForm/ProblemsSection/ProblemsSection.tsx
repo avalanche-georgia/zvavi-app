@@ -56,13 +56,6 @@ const ProblemsSection = () => {
     [append, fields, handleFormClose, update],
   )
 
-  const handleReorder = useCallback(
-    (from: number, to: number) => {
-      move(from, to)
-    },
-    [move],
-  )
-
   const handleDelete = (id: string) => {
     const index = fields.findIndex((problem) => problem.id === id)
 
@@ -100,7 +93,7 @@ const ProblemsSection = () => {
         onFormClose={handleFormClose}
         onFormOpen={setFormState}
         onFormSave={handleSubmit}
-        onReorder={handleReorder}
+        onReorder={move}
         problems={fields}
         selectedProblemTypes={selectedProblemTypes}
       />

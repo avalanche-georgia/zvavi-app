@@ -10,3 +10,6 @@ UPDATE "public"."avalanche_problems" ap
 SET "order" = ranked.row_order
 FROM ranked
 WHERE ap.id = ranked.id;
+
+CREATE INDEX IF NOT EXISTS idx_avalanche_problems_forecast_order
+  ON "public"."avalanche_problems" (forecast_id, "order");
