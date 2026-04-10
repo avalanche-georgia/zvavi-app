@@ -122,7 +122,7 @@ admin:
       errors:
         logo:
           invalidType: 'გამოიყენეთ PNG, JPG, WebP ან SVG.'
-          tooLarge: 'ფაილი აღემატება 500 KB-ს.'
+          tooLarge: 'ფაილი აღემატება 512 KB-ს.'
           uploadFailed: 'ატვირთვა ვერ მოხერხდა. სცადეთ თავიდან.'
     messages:
       created: 'პარტნიორი წარმატებით დაემატა.'

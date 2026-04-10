@@ -7,29 +7,23 @@ const allowedTypes = ['image/png', 'image/jpeg', 'image/webp', 'image/svg+xml']
 
 export type LogoUploadError = 'invalidType' | 'tooLarge' | 'uploadFailed'
 
+type UploadResult = { url: string; error: null } | { url: null; error: LogoUploadError }
+
 type UseLogoUploadResult = {
-  error: LogoUploadError | null
   isUploading: boolean
-  upload: (file: File) => Promise<string | null>
+  upload: (file: File) => Promise<UploadResult>
 }
 
 const useLogoUpload = (): UseLogoUploadResult => {
   const [isUploading, setIsUploading] = useState(false)
-  const [error, setError] = useState<LogoUploadError | null>(null)
 
-  const upload = useCallback(async (file: File): Promise<string | null> => {
-    setError(null)
-
+  const upload = useCallback(async (file: File): Promise<UploadResult> => {
     if (!allowedTypes.includes(file.type)) {
-      setError('invalidType')
-
-      return null
+      return { error: 'invalidType', url: null }
     }
 
     if (file.size > maxSize) {
-      setError('tooLarge')
-
-      return null
+      return { error: 'tooLarge', url: null }
     }
 
     setIsUploading(true)
@@ -44,17 +38,15 @@ const useLogoUpload = (): UseLogoUploadResult => {
 
       const { data } = supabase.storage.from(bucket).getPublicUrl(path)
 
-      return data.publicUrl
+      return { error: null, url: data.publicUrl }
     } catch {
-      setError('uploadFailed')
-
-      return null
+      return { error: 'uploadFailed', url: null }
     } finally {
       setIsUploading(false)
     }
   }, [])
 
-  return { error, isUploading, upload }
+  return { isUploading, upload }
 }
 
 export default useLogoUpload
