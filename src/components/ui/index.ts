@@ -1,3 +1,4 @@
+export { default as Alert } from './Alert'
 export { AutoScrollList } from './AutoScrollList'
 export { default as BrandedQRCode } from './BrandedQRCode'
 export { default as Button } from './Button'

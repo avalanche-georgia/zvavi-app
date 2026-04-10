@@ -6,6 +6,8 @@ import type { Metadata } from 'next'
 import { headers } from 'next/headers'
 import { notFound } from 'next/navigation'
 
+import { fetchForecastPageData } from './fetchForecastPageData'
+
 import { createClient } from '@/lib/supabase/server'
 
 const hazardLevelLabels: Record<HazardLevelScale, string> = {
@@ -62,20 +64,17 @@ const ForecastPage = async (props: Props) => {
     notFound()
   }
 
-  const supabase = await createClient()
-  const { data } = await supabase
-    .from('forecasts')
-    .select('id')
-    .match({ id: forecastId, status: 'published' })
-    .single()
+  const data = await fetchForecastPageData(forecastId)
 
   if (!data) {
     notFound()
   }
 
+  const { initialForecast, isCurrentForecast } = data
+
   return (
     <PageWrapper>
-      <ForecastContainer forecastId={forecastId} />
+      <ForecastContainer initialForecast={initialForecast} isCurrentForecast={isCurrentForecast} />
     </PageWrapper>
   )
 }
