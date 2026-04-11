@@ -9,33 +9,35 @@ import ForecastItem from './ForecastItem'
 import { routes } from '@/routes'
 
 const ForecastsList = ({ forecasts }: { forecasts: FullForecast[] }) => {
-  const tAdmin = useTranslations('admin')
+  const t = useTranslations()
 
   return (
     <>
       <ButtonLink className="mb-4 ml-auto" href={routes.admin.forecasts.new}>
         <Icon icon="plus" size="sm" />
-        {tAdmin('forecast.title.create')}
+        {t('admin.forecast.title.create')}
       </ButtonLink>
 
-      <div className="w-full rounded-sm border bg-white p-4 shadow-sm">
+      <div className="flex max-h-[calc(100vh-12rem)] w-full flex-col overflow-hidden rounded-sm border bg-white p-4 shadow-sm">
         <div className="flex w-full items-center gap-4 rounded-t bg-gray-100 px-4 py-1.5">
-          <Column className="font-semibold">{tAdmin('forecasts.list.columns.forecaster')}</Column>
-          <Column className="font-semibold">{tAdmin('forecasts.list.columns.createdAt')}</Column>
-          <Column className="font-semibold">{tAdmin('forecasts.list.columns.validUntil')}</Column>
-          <Column className="font-semibold">{tAdmin('forecasts.list.columns.status')}</Column>
+          <Column className="font-semibold">{t('admin.forecasts.list.columns.forecaster')}</Column>
+          <Column className="font-semibold">{t('admin.forecasts.list.columns.createdAt')}</Column>
+          <Column className="font-semibold">{t('admin.forecasts.list.columns.validUntil')}</Column>
+          <Column className="font-semibold">{t('admin.forecasts.list.columns.status')}</Column>
           <Column className="pr-4 text-right font-semibold">
-            {tAdmin('forecasts.list.columns.actions')}
+            {t('admin.forecasts.list.columns.actions')}
           </Column>
         </div>
 
-        <ul className="flex flex-col">
-          {forecasts.map((forecast) => (
-            <li key={forecast.id} className="border-b last:border-0">
-              <ForecastItem forecast={forecast} />
-            </li>
-          ))}
-        </ul>
+        <div className="overflow-y-auto">
+          <ul className="flex flex-col">
+            {forecasts.map((forecast) => (
+              <li key={forecast.id} className="border-b last:border-0 even:bg-gray-100/60">
+                <ForecastItem forecast={forecast} />
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </>
   )
