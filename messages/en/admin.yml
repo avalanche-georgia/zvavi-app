@@ -139,6 +139,7 @@ admin:
         status: 'Status'
         validUntil: 'Valid Until'
     actions:
+      copyUrl: 'Copy URL'
       delete: 'Delete'
       duplicate: 'Duplicate'
       edit: 'Edit'

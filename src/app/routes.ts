@@ -35,6 +35,7 @@ export const routes = {
     forecastArea: '/forecasts/forecast-area',
     history: '/forecasts/history',
     root: '/forecasts',
+    view: (id: number) => `/forecasts/${id}`,
   },
   home: '/',
   partners: '/partners',

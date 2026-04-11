@@ -139,6 +139,7 @@ admin:
         status: 'სტატუსი'
         validUntil: 'ძალაშია'
     actions:
+      copyUrl: 'URL-ის კოპირება'
       delete: 'წაშლა'
       duplicate: 'დუბლირება'
       edit: 'რედაქტირება'

@@ -70,6 +70,7 @@ const ForecastItem = ({ forecast }: ForecastItemProps) => {
         <Column className="pr-4 text-right">
           <ActionButtons
             editHref={routes.admin.forecasts.edit(forecast.id)}
+            forecastPath={routes.forecasts.view(forecast.id)}
             isPublished={isPublished}
             onDelete={openDeletionDialog}
             onDuplicate={handleDuplicate}
