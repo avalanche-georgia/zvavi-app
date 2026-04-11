@@ -139,6 +139,7 @@ admin:
         status: 'Status'
         validUntil: 'Valid Until'
     actions:
+      copyUrl: 'Copy URL'
       delete: 'Delete'
       duplicate: 'Duplicate'
       edit: 'Edit'
@@ -158,6 +159,7 @@ admin:
       published: 'Forecast is now published.'
       unpublished: 'Forecast is now unpublished.'
       updated: 'Forecast updated successfully.'
+      urlCopied: 'Forecast URL copied to clipboard.'
 
   forecast:
     notFound: 'Forecast not found.'

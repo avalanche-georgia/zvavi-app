@@ -21,7 +21,7 @@ const HistoryList = ({ forecasts }: HistoryListProps) => (
             'inline-flex items-center gap-3 rounded-lg px-4 py-1',
             'active:bg-primary/10 lg:hover:bg-primary/10 text-gray-700 transition-colors hover:text-black',
           )}
-          href={`${routes.forecasts.root}/${forecast.id}`}
+          href={routes.forecasts.view(forecast.id)}
         >
           <Image
             alt="Danger level"

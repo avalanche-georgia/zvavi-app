@@ -139,6 +139,7 @@ admin:
         status: 'სტატუსი'
         validUntil: 'ძალაშია'
     actions:
+      copyUrl: 'URL-ის კოპირება'
       delete: 'წაშლა'
       duplicate: 'დუბლირება'
       edit: 'რედაქტირება'
@@ -158,6 +159,7 @@ admin:
       published: 'პროგნოზი გამოქვეყნებულია.'
       unpublished: 'პროგნოზი მოხსნილია გამოქვეყნებიდან.'
       updated: 'პროგნოზი წარმატებით განახლდა.'
+      urlCopied: 'პროგნოზის URL დაკოპირდა.'
 
   forecast:
     notFound: 'პროგნოზი ვერ მოიძებნა.'

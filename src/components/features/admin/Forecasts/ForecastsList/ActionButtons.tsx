@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl'
 type ActionButtonsProps = {
   editHref: string
   isPublished: boolean
+  onCopyUrl: VoidFunction
   onDelete: VoidFunction
   onDuplicate: VoidFunction
   onStatusToggle: VoidFunction
@@ -12,6 +13,7 @@ type ActionButtonsProps = {
 const ActionButtons = ({
   editHref,
   isPublished,
+  onCopyUrl,
   onDelete,
   onDuplicate,
   onStatusToggle,
@@ -20,6 +22,9 @@ const ActionButtons = ({
 
   return (
     <div className="flex items-center justify-end gap-2">
+      <Tooltip content={t('copyUrl')}>
+        <IconButton iconProps={{ icon: 'externalLink' }} onClick={onCopyUrl} />
+      </Tooltip>
       <Tooltip content={t(isPublished ? 'unpublish' : 'publish')}>
         <IconButton iconProps={{ icon: isPublished ? 'eyeOff' : 'eye' }} onClick={onStatusToggle} />
       </Tooltip>
