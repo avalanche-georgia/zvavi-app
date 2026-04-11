@@ -1,7 +1,10 @@
+'use client'
+
 import { useCallback } from 'react'
+import { useCopyWithFeedback } from '@components/hooks'
 import { IconButton, Tooltip } from '@components/ui'
+import clsx from 'clsx'
 import { useTranslations } from 'next-intl'
-import { useCopyToClipboard } from 'usehooks-ts'
 
 import { downloadQRCode, getVerificationUrl } from '@/lib/qrcode'
 
@@ -23,19 +26,11 @@ const ActionButtons = ({
   verificationCode,
 }: ActionButtonsProps) => {
   const t = useTranslations()
-  const [, copyToClipboard] = useCopyToClipboard()
+  const { handleCopy, isCopied } = useCopyWithFeedback(getVerificationUrl(verificationCode))
 
   const handleDownloadQR = useCallback(async () => {
-    const fileName = `member-qr-${memberId}`
-
-    await downloadQRCode(verificationCode, fileName)
+    await downloadQRCode(verificationCode, `member-qr-${memberId}`)
   }, [memberId, verificationCode])
-
-  const handleCopyUrl = useCallback(() => {
-    const url = getVerificationUrl(verificationCode)
-
-    copyToClipboard(url)
-  }, [copyToClipboard, verificationCode])
 
   return (
     <div className="flex items-center justify-end gap-2">
@@ -49,7 +44,11 @@ const ActionButtons = ({
         </Tooltip>
       )}
       <Tooltip content={t('admin.members.qrCode.copyUrl')}>
-        <IconButton iconProps={{ icon: 'copy' }} onClick={handleCopyUrl} />
+        <IconButton
+          className={clsx(isCopied && 'animate-copy-pop stroke-green-600!')}
+          iconProps={{ icon: isCopied ? 'check' : 'link' }}
+          onClick={handleCopy}
+        />
       </Tooltip>
       <Tooltip content={t('admin.members.qrCode.download')}>
         <IconButton iconProps={{ icon: 'download' }} onClick={handleDownloadQR} />
