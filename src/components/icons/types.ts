@@ -12,6 +12,7 @@ export type IconName =
   | 'copyCheck'
   | 'download'
   | 'externalLink'
+  | 'link'
   | 'eye'
   | 'eyeOff'
   | 'handshake'

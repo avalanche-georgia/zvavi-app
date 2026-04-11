@@ -6,7 +6,6 @@ import type { FullForecast } from '@domain/types'
 import { format } from 'date-fns'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'src/i18n/navigation'
-import { useCopyToClipboard } from 'usehooks-ts'
 
 import ActionButtons from './ActionButtons'
 import Column from './Column'
@@ -28,7 +27,6 @@ const ForecastItem = ({ forecast }: ForecastItemProps) => {
   const [isStatusDialogOpen, { setFalse: closeStatusDialog, setTrue: openStatusDialog }] =
     useBoolean(false)
 
-  const [, copyToClipboard] = useCopyToClipboard()
   const { toastError, toastSuccess } = useToast()
   const formattedCreationDate = format(forecast.createdAt, dateFormat)
   const formattedValidUntilDate = format(forecast.validUntil, dateFormat)
@@ -41,13 +39,6 @@ const ForecastItem = ({ forecast }: ForecastItemProps) => {
     } catch (error) {
       toastError('ForecastItem | handleDelete', { error })
     }
-  }
-
-  const handleCopyUrl = async () => {
-    const url = `${window.location.origin}${routes.forecasts.view(forecast.id)}`
-
-    await copyToClipboard(url)
-    toastSuccess(t('admin.forecasts.messages.urlCopied'))
   }
 
   const handleDuplicate = () => {
@@ -79,8 +70,8 @@ const ForecastItem = ({ forecast }: ForecastItemProps) => {
         <Column className="pr-4 text-right">
           <ActionButtons
             editHref={routes.admin.forecasts.edit(forecast.id)}
+            forecastPath={routes.forecasts.view(forecast.id)}
             isPublished={isPublished}
-            onCopyUrl={handleCopyUrl}
             onDelete={openDeletionDialog}
             onDuplicate={handleDuplicate}
             onStatusToggle={openStatusDialog}
