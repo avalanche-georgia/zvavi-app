@@ -9,7 +9,7 @@ import { useFieldArray, useFormContext } from 'react-hook-form'
 import { AvalancheForm } from './AvalancheForm'
 import { AvalanchePickerModal } from './AvalanchePickerModal'
 import { AvalanchesList } from './AvalanchesList'
-import type { FormState } from '../common'
+import type { AvalancheFormState } from '../common'
 import { initialAvalancheData } from '../constants'
 import type { ForecastFormSchema } from '../schema'
 
@@ -25,7 +25,7 @@ const RecentAvalanchesSection = ({ forecastId }: { forecastId?: number }) => {
     name: 'recentAvalanches',
   })
 
-  const [formState, setFormState] = useState<FormState>(null)
+  const [formState, setFormState] = useState<AvalancheFormState>(null)
   const [isPickerOpen, { setFalse: closePicker, setTrue: openPicker }] = useBoolean(false)
 
   const handleCreateFormOpen = useCallback(() => setFormState({ mode: 'create' }), [])

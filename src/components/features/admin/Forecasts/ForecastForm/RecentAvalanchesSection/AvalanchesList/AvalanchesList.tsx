@@ -3,14 +3,14 @@ import type { Avalanche } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import AvalancheItem from './AvalancheItem'
-import type { FormState } from '../../common'
+import type { AvalancheFormState } from '../../common'
 import { AvalancheForm, type AvalancheFormProps } from '../AvalancheForm'
 
 type AvalancheWithLocalId = Avalanche & { localId: string }
 
 type AvalanchesListProps = {
   avalanches: AvalancheWithLocalId[]
-  formState: FormState
+  formState: AvalancheFormState
   onDelete: (localId: string) => void
   onFormClose: AvalancheFormProps['onClose']
   onFormOpen: (state: { mode: 'edit'; localId: string }) => void
