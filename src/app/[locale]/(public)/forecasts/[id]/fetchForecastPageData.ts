@@ -18,9 +18,9 @@ export const fetchForecastPageData = async (
       supabase.from('forecasts').select().match({ id: forecastId, status: 'published' }).single(),
       supabase
         .from('recent_avalanches')
-        .select()
-        .eq('forecast_id', forecastId)
-        .order('date', { ascending: false }),
+        .select('*, forecast_avalanche!inner(forecast_id)')
+        .eq('forecast_avalanche.forecast_id', forecastId)
+        .order('created_at', { ascending: false }),
       supabase.from('avalanche_problems').select().eq('forecast_id', forecastId).order('order'),
       supabase
         .from('forecasts')

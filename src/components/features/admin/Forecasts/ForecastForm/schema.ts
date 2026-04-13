@@ -52,7 +52,7 @@ const avalancheSchema = z.object({
   createdAt: z.string().optional(),
   date: nullableDate,
   description: z.string(),
-  id: z.string().optional(),
+  id: z.number().optional(),
   isDateUnknown: z.boolean(),
   size: avalancheSize,
 })

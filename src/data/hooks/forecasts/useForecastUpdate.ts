@@ -1,7 +1,12 @@
 import { supabase } from '@data'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { attachDetailsToForecast, detachDetailsFromForecast } from './helpers'
+import {
+  attachAvalanchesToForecast,
+  attachDetailsToForecast,
+  detachAvalanchesFromForecast,
+  detachDetailsFromForecast,
+} from './helpers'
 
 import type { ForecastFormPayload } from './types'
 import { convertCamelToSnake, handleSupabaseError } from '../../helpers'
@@ -20,19 +25,19 @@ const updateForecast = async ({
 
   if (!forecast.id) throw new Error('Failed to update forecast')
 
-  // At this stage (MVP) we re-create all problems and avalanches intentionally
-  // Delete old avalanche problems and recent avalanches.
-  await detachDetailsFromForecast('avalanche_problems', forecast.id)
-  await detachDetailsFromForecast('recent_avalanches', forecast.id)
+  await Promise.all([
+    detachDetailsFromForecast('avalanche_problems', forecast.id),
+    detachAvalanchesFromForecast(forecast.id),
+  ])
 
-  // Insert new avalanche problems and recent avalanches
-  if (avalancheProblems.length) {
-    await attachDetailsToForecast('avalanche_problems', forecast.id, avalancheProblems)
-  }
-
-  if (recentAvalanches.length) {
-    await attachDetailsToForecast('recent_avalanches', forecast.id, recentAvalanches)
-  }
+  await Promise.all([
+    avalancheProblems.length
+      ? attachDetailsToForecast('avalanche_problems', forecast.id, avalancheProblems)
+      : Promise.resolve(),
+    recentAvalanches.length
+      ? attachAvalanchesToForecast(forecast.id, recentAvalanches)
+      : Promise.resolve(),
+  ])
 }
 
 const useForecastUpdate = () => {

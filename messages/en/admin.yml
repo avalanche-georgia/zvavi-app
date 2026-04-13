@@ -227,6 +227,11 @@ admin:
         noAvalanches: 'No avalanches have been added yet.'
         labels:
           addAvalanche: 'Add Avalanche'
+          addFromExisting: 'Pick Existing'
+          addSelected: 'Add Selected ({count})'
           deleteAvalanche: 'Delete Avalanche?'
           date: 'Date'
           dateUnknown: 'Unknown'
+          noAvalanchesInDB: 'No other avalanches found in the database.'
+          pickAvalanches: 'Pick Existing Avalanches'
+          usedInForecasts: 'Used in forecasts:'

@@ -1,5 +1,5 @@
 import { supabase } from '@data'
-import { attachDetailsToForecast } from '@data/hooks/forecasts/helpers'
+import { attachAvalanchesToForecast, attachDetailsToForecast } from '@data/hooks/forecasts/helpers'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import type { ForecastFormPayload } from './types'
@@ -22,13 +22,14 @@ const createForecast = async ({
 
   if (!forecastId) throw new Error('Failed to create forecast')
 
-  if (avalancheProblems.length) {
-    await attachDetailsToForecast('avalanche_problems', forecastId, avalancheProblems)
-  }
-
-  if (recentAvalanches.length) {
-    await attachDetailsToForecast('recent_avalanches', forecastId, recentAvalanches)
-  }
+  await Promise.all([
+    avalancheProblems.length
+      ? attachDetailsToForecast('avalanche_problems', forecastId, avalancheProblems)
+      : Promise.resolve(),
+    recentAvalanches.length
+      ? attachAvalanchesToForecast(forecastId, recentAvalanches)
+      : Promise.resolve(),
+  ])
 }
 
 const useForecastCreate = () => {
@@ -37,7 +38,7 @@ const useForecastCreate = () => {
   return useMutation<void, Error, ForecastFormPayload>({
     mutationFn: createForecast,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: forecastsKeys.list() })
+      queryClient.invalidateQueries({ queryKey: forecastsKeys.all })
     },
   })
 }

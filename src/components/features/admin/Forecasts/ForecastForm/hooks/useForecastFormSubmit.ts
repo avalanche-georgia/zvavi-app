@@ -53,7 +53,7 @@ const useForecastFormSubmit = ({ initialForecastId, onSuccess }: UseForecastForm
           weather,
         },
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        recentAvalanches: recentAvalanches.map(({ createdAt, id, ...rest }) => ({
+        recentAvalanches: recentAvalanches.map(({ createdAt, ...rest }) => ({
           ...rest,
           date: rest.date?.toISOString() ?? null,
         })),
