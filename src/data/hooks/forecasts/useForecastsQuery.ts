@@ -9,7 +9,7 @@ import { forecastsKeys } from '../../query-keys'
 const fetchForecasts = async (): Promise<FullForecast[]> => {
   const { data, error } = await supabase
     .from('forecasts')
-    .select('*, avalanche_problems(*), recent_avalanches(*)')
+    .select('*, avalanche_problems(*)')
     .order('created_at', { ascending: false })
 
   if (error) {

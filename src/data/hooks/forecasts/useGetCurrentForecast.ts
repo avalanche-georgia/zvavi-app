@@ -37,9 +37,9 @@ const fetchCurrentForecast = async ({
 
   const { data: recentAvalanches, error: avalanchesError } = await supabase
     .from('recent_avalanches')
-    .select()
-    .match({ forecast_id: currentForecast.id })
-    .order('date', { ascending: false })
+    .select('*, forecast_avalanche!inner(forecast_id)')
+    .eq('forecast_avalanche.forecast_id', currentForecast.id)
+    .order('created_at', { ascending: false })
 
   if (avalanchesError) {
     throw new Error(avalanchesError.message)
