@@ -29,7 +29,7 @@ const AvalanchePickerModal = ({
       avalanches.filter(
         (avalanche) =>
           !currentForecastId ||
-          !avalanche.forecastAvalanche.some((fa) => fa.forecastId === currentForecastId),
+          !avalanche.forecastAvalanche.some((entry) => entry.forecastId === currentForecastId),
       ),
     [avalanches, currentForecastId],
   )

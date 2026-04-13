@@ -23,7 +23,7 @@ const AvalanchePickerRow = ({ avalanche, isSelected, onToggle }: AvalanchePicker
       : null
 
   const forecastDates = forecastAvalanche
-    .map((fa) => format(new Date(fa.forecasts.createdAt), dateFormat))
+    .map((entry) => format(new Date(entry.forecasts.createdAt), dateFormat))
     .join(', ')
 
   const handleToggle = useCallback(() => onToggle(id), [id, onToggle])

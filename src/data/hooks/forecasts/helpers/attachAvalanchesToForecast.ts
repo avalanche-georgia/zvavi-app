@@ -10,12 +10,19 @@ const attachAvalanchesToForecast = async (
     const { id, ...rest } = avalanche
 
     if (id != null) {
-      // Existing avalanche — link via junction table only
-      const { error } = await supabase
+      // Existing avalanche — update record and link via junction table
+      const { error: updateError } = await supabase
+        .from('recent_avalanches')
+        .update(convertCamelToSnake(rest))
+        .eq('id', id)
+
+      handleSupabaseError(updateError)
+
+      const { error: linkError } = await supabase
         .from('forecast_avalanche')
         .insert({ avalanche_id: id, forecast_id: forecastId })
 
-      handleSupabaseError(error)
+      handleSupabaseError(linkError)
     } else {
       // New avalanche — insert row then link
       const { data: inserted, error: insertError } = await supabase
