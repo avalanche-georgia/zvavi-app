@@ -61,10 +61,15 @@ const RecentAvalanchesSection = ({ forecastId }: { forecastId?: number }) => {
 
   const handlePickerConfirm = useCallback(
     (selected: Avalanche[]) => {
-      selected.forEach((avalanche) => append({ ...avalanche, date: toDate(avalanche.date) }))
+      const existingIds = new Set(fields.map((field) => field.id).filter((id) => id != null))
+
+      selected
+        .filter((avalanche) => !avalanche.id || !existingIds.has(avalanche.id))
+        .forEach((avalanche) => append({ ...avalanche, date: toDate(avalanche.date) }))
+
       closePicker()
     },
-    [append, closePicker],
+    [append, closePicker, fields],
   )
 
   return (

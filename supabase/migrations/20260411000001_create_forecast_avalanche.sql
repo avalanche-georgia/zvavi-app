@@ -30,3 +30,5 @@ select forecast_id, id from recent_avalanches where forecast_id is not null;
 -- Make forecast_id nullable so new avalanches (not yet tied to a forecast via FK) can be inserted
 -- The junction table is now the source of truth; this column is kept for rollback safety
 alter table recent_avalanches alter column forecast_id drop not null;
+
+create index forecast_avalanche_avalanche_id_idx on forecast_avalanche (avalanche_id);
