@@ -6,12 +6,14 @@ import AvalancheItem from './AvalancheItem'
 import type { FormState } from '../../common'
 import { AvalancheForm, type AvalancheFormProps } from '../AvalancheForm'
 
+type AvalancheWithLocalId = Avalanche & { localId: string }
+
 type AvalanchesListProps = {
-  avalanches: Avalanche[]
+  avalanches: AvalancheWithLocalId[]
   formState: FormState
-  onDelete: (id: string) => void
+  onDelete: (localId: string) => void
   onFormClose: AvalancheFormProps['onClose']
-  onFormOpen: (state: { mode: 'edit'; id: string }) => void
+  onFormOpen: (state: { mode: 'edit'; localId: string }) => void
   onFormSave: AvalancheFormProps['onSave']
 }
 
@@ -26,8 +28,8 @@ const AvalanchesList = ({
   const t = useTranslations()
 
   const handleEdit = useCallback(
-    (id: string) => {
-      onFormOpen({ id, mode: 'edit' })
+    (localId: string) => {
+      onFormOpen({ localId, mode: 'edit' })
     },
     [onFormOpen],
   )
@@ -43,8 +45,8 @@ const AvalanchesList = ({
   return (
     <ul className="space-y-4">
       {avalanches.map((avalanche) => (
-        <li key={avalanche.id}>
-          {formState?.mode === 'edit' && formState.id === avalanche.id ? (
+        <li key={avalanche.localId}>
+          {formState?.mode === 'edit' && formState.localId === avalanche.localId ? (
             <AvalancheForm avalancheData={avalanche} onClose={onFormClose} onSave={onFormSave} />
           ) : (
             <AvalancheItem

@@ -6,6 +6,7 @@ import type {
 const forecastsKeys = {
   all: ['forecastsKeys'] as const,
 
+  allAvalanches: () => [...forecastsKeys.all, 'allAvalanches'] as const,
   current: (variables: CurrentForecastQueryVariables) =>
     [...forecastsKeys.all, 'current', variables] as const,
   item: (variables: ForecastQueryVariables) => [...forecastsKeys.all, 'item', variables] as const,

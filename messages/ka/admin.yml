@@ -227,6 +227,11 @@ admin:
         noAvalanches: 'ჯერ არ დამატებულა ზვავები.'
         labels:
           addAvalanche: 'ზვავის დამატება'
+          addFromExisting: 'არსებულიდან დამატება'
+          addSelected: 'არჩეულის დამატება ({count})'
           deleteAvalanche: 'წავშალოთ ზვავი?'
           date: 'თარიღი'
           dateUnknown: 'უცნობია'
+          noAvalanchesInDB: 'სხვა ზვავები ბაზაში ვერ მოიძებნა.'
+          pickAvalanches: 'არსებული ზვავის არჩევა'
+          usedInForecasts: 'გამოყენებულია პროგნოზებში:'

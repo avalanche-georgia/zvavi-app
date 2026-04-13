@@ -1,4 +1,4 @@
 export type FormState = {
-  id?: string
+  localId?: string
   mode: 'create' | 'edit'
 } | null

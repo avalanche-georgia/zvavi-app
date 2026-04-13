@@ -60,7 +60,7 @@ export type Problem = {
 }
 
 export type Avalanche = {
-  id?: string | number
+  id?: number
   aspects: Aspects
   createdAt?: string
   date: Date | string | null

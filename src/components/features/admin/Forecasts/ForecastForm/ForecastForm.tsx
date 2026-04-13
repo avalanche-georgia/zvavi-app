@@ -84,7 +84,7 @@ const ForecastForm = ({ initialFormData, onCancel, onSuccess }: ForecastFormProp
             <hr />
             <ProblemsSection />
             <hr />
-            <RecentAvalanchesSection />
+            <RecentAvalanchesSection forecastId={initialFormData.baseFormData.id} />
             <hr />
             <AdditionalTextFields />
           </form>
