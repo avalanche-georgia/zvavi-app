@@ -227,7 +227,7 @@ admin:
         noAvalanches: 'ჯერ არ დამატებულა ზვავები.'
         labels:
           addAvalanche: 'ზვავის დამატება'
-          addFromExisting: 'არსებულიდან დამატება'
+          addFromExisting: 'არსებულის არჩევა'
           addSelected: 'არჩეულის დამატება ({count})'
           deleteAvalanche: 'წავშალოთ ზვავი?'
           date: 'თარიღი'

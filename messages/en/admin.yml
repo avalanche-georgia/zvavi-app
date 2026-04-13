@@ -227,7 +227,7 @@ admin:
         noAvalanches: 'No avalanches have been added yet.'
         labels:
           addAvalanche: 'Add Avalanche'
-          addFromExisting: 'Add from Existing'
+          addFromExisting: 'Pick Existing'
           addSelected: 'Add Selected ({count})'
           deleteAvalanche: 'Delete Avalanche?'
           date: 'Date'

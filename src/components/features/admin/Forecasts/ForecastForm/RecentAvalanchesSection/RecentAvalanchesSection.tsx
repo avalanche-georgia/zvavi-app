@@ -73,6 +73,7 @@ const RecentAvalanchesSection = ({ forecastId }: { forecastId?: number }) => {
         <h3 className="text-xl font-semibold">{t('admin.forecast.form.recentAvalanches.title')}</h3>
         <div className="ml-auto flex gap-2">
           <Button disabled={formState !== null} onClick={openPicker} variant="secondary">
+            <Icon icon="history" size="sm" />
             {t('admin.forecast.form.recentAvalanches.labels.addFromExisting')}
           </Button>
           <Button disabled={formState !== null} onClick={handleCreateFormOpen}>
