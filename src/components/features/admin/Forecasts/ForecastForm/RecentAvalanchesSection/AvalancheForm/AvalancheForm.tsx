@@ -3,7 +3,9 @@ import { Textarea } from '@components/ui'
 import type { Avalanche, AvalancheSize as AvalancheSizeType } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
+import AvalancheDetailsSection from './AvalancheDetailsSection'
 import DateSection from './DateSection'
+import Quantity from './Quantity'
 import { Aspects, AvalancheSize, Footer, type SetAspectsData } from '../../common'
 
 export type AvalancheFormProps = {
@@ -19,20 +21,14 @@ const AvalancheForm = ({ avalancheData, onClose, onSave }: AvalancheFormProps) =
 
   const handleSizeChange = useCallback(
     (value: AvalancheSizeType) => {
-      setData((prev) => ({
-        ...prev,
-        size: value,
-      }))
+      setData((prev) => ({ ...prev, size: value }))
     },
     [setData],
   )
 
   const handleDescriptionChange = useCallback(
     ({ target }: React.ChangeEvent<HTMLTextAreaElement>) => {
-      setData((prev) => ({
-        ...prev,
-        description: target.value,
-      }))
+      setData((prev) => ({ ...prev, description: target.value }))
     },
     [setData],
   )
@@ -47,12 +43,14 @@ const AvalancheForm = ({ avalancheData, onClose, onSave }: AvalancheFormProps) =
       <section className="grid grid-cols-2 items-start gap-x-6">
         <div className="flex flex-col gap-3">
           <DateSection data={data} setData={setData} />
-
           <AvalancheSize onChange={handleSizeChange} value={data.size} />
+          <Quantity quantity={data.quantity} setData={setData} />
         </div>
 
         <Aspects data={data} setData={setData as SetAspectsData} />
       </section>
+
+      <AvalancheDetailsSection data={data} setData={setData} />
 
       <div className="flex flex-col gap-4 pt-1.5">
         <h4 className="w-32 font-semibold">{t('admin.forecast.form.common.labels.description')}</h4>

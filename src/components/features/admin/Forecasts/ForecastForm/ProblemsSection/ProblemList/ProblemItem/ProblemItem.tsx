@@ -54,7 +54,7 @@ const ProblemItem = ({
           </span>
 
           <h3 className="flex-1 text-xl font-semibold">
-            {t(`admin.forecast.form.problems.options.problemType.${problemType}`)}
+            {t(`common.avalancheTypes.${problemType}`)}
           </h3>
 
           <ActionButtons canEdit={canEdit} onDelete={openDeletionDialog} onEdit={handleEdit} />
@@ -79,7 +79,7 @@ const ProblemItem = ({
         isOpen={isDeletionDialogOpen}
         onClose={closeDeletionDialog}
         onConfirm={handleDelete}
-        title={`${t('common.actions.delete')} ${t(`admin.forecast.form.problems.options.problemType.${problemType}`)}?`}
+        title={`${t('common.actions.delete')} ${t(`common.avalancheTypes.${problemType}`)}?`}
         variant="delete"
       />
     </>

@@ -50,10 +50,23 @@ common:
     alpine: 'Alpine'
     subAlpine: 'Sub Alpine'
 
+  avalancheTypes:
+    cornice: 'Cornice'
+    deepSlab: 'Deep Slab'
+    glide: 'Glide'
+    looseDry: 'Loose Dry'
+    looseWet: 'Loose Wet'
+    persistentSlab: 'Persistent Slab'
+    stormSlab: 'Storm Slab'
+    unknown: 'Unknown'
+    wetSlab: 'Wet Slab'
+    windSlab: 'Wind Slab'
+
   words:
     from: 'From'
     overall: 'Overall'
     to: 'To'
+    unknown: 'Unknown'
 
   disclaimer:
     title: '⚠️ Disclaimer ⚠️'
