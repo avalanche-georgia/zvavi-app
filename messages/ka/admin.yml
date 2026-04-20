@@ -168,6 +168,7 @@ admin:
     form:
       general:
         title: 'ზოგადი ინფორმაცია'
+        formattingHint: 'ფორმატირება: **სქელი** · *დახრილი*'
         labels:
           additionalHazards: 'დამატებითი საფრთხეები'
           forecaster: 'პროგნოზის ავტორი'

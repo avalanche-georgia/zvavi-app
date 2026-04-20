@@ -168,6 +168,7 @@ admin:
     form:
       general:
         title: 'General Info'
+        formattingHint: 'Formatting: **bold** · *italic*'
         labels:
           additionalHazards: 'Additional Hazards'
           forecaster: 'Forecaster'

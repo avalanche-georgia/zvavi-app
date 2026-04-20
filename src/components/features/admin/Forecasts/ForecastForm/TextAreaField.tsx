@@ -1,4 +1,4 @@
-import { Textarea } from '@components/ui'
+import { InfoIcon, Textarea } from '@components/ui'
 import { useTranslations } from 'next-intl'
 import { useFormContext } from 'react-hook-form'
 
@@ -14,7 +14,10 @@ const TextAreaField = ({ type }: TextAreaFieldProps) => {
 
   return (
     <div className="flex flex-1 flex-col gap-4 pt-1.5">
-      <h4 className="font-semibold">{t(`admin.forecast.form.general.labels.${type}`)}</h4>
+      <div className="flex items-center gap-1.5">
+        <h4 className="font-semibold">{t(`admin.forecast.form.general.labels.${type}`)}</h4>
+        <InfoIcon content={t('admin.forecast.form.general.formattingHint')} />
+      </div>
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <Textarea className="w-full" rows={6} {...register(type)} />
     </div>
