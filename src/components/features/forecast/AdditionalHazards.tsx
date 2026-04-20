@@ -1,4 +1,4 @@
-import { Spoiler } from '@components/shared'
+import { MarkdownContent, Spoiler } from '@components/shared'
 import { useTranslations } from 'next-intl'
 
 const AdditionalHazards = ({ additionalHazards }: { additionalHazards: string }) => {
@@ -6,7 +6,7 @@ const AdditionalHazards = ({ additionalHazards }: { additionalHazards: string })
 
   return (
     <Spoiler title={t('forecast.sections.additionalHazards.title')}>
-      <p>{additionalHazards}</p>
+      <MarkdownContent content={additionalHazards} />
     </Spoiler>
   )
 }

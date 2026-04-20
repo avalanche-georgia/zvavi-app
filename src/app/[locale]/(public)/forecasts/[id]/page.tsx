@@ -11,6 +11,7 @@ import { fetchForecastPageData } from './fetchForecastPageData'
 import { createClient } from '@/lib/supabase/server'
 
 const hazardLevelLabels: Record<HazardLevelScale, string> = {
+  0: 'No Rating',
   1: 'Low',
   2: 'Moderate',
   3: 'Considerable',

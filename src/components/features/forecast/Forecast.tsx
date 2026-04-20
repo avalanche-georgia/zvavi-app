@@ -1,4 +1,4 @@
-import { ButtonLink, HazardLevelBanner, Spoiler } from '@components/shared'
+import { ButtonLink, HazardLevelBanner, MarkdownContent, Spoiler } from '@components/shared'
 import type { FullForecast } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
@@ -28,16 +28,16 @@ const Forecast = ({ forecast }: { forecast: FullForecast }) => {
     <div className="space-y-4">
       <HazardLevelBanner forecast={forecast} />
       <Spoiler title={t('common.labels.summary')}>
-        <p className="text-justify whitespace-pre-line">{summary}</p>
+        <MarkdownContent content={summary} />
       </Spoiler>
       <HazardLevelsByElevation hazardLevels={hazardLevels} />
-      <Problems problems={avalancheProblems} />
+      {avalancheProblems.length > 0 ? <Problems problems={avalancheProblems} /> : <hr />}
 
       <section className="space-y-4">
         <RecentAvalanches avalanches={recentAvalanches} />
-        <Snowpack snowpack={snowpack} />
+        {snowpack && <Snowpack snowpack={snowpack} />}
         {additionalHazards && <AdditionalHazards additionalHazards={additionalHazards} />}
-        <Weather weather={weather} />
+        {weather && <Weather weather={weather} />}
       </section>
 
       <ButtonLink href={routes.forecasts.forecastArea}>{t('forecast.viewForecastArea')}</ButtonLink>

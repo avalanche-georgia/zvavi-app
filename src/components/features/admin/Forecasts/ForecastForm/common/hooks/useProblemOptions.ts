@@ -38,7 +38,7 @@ const useProblemOptions = () => {
     'options.confidence',
     tProblems,
   )
-  const hazardLevelOptions = _range(1, 6).map((level) => ({ label: level, value: String(level) }))
+  const hazardLevelOptions = _range(0, 6).map((level) => ({ label: level, value: String(level) }))
 
   return {
     avalancheSizeOptions,

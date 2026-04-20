@@ -1,6 +1,7 @@
 import type { HazardLevelScale } from '@domain/types'
 
 export const hazardColors: Record<HazardLevelScale, string> = {
+  0: '#9ca3af',
   1: '#6ac828',
   2: '#f8f024',
   3: '#f88f2c',
@@ -9,6 +10,7 @@ export const hazardColors: Record<HazardLevelScale, string> = {
 }
 
 export const hazardLevelLabels: Record<HazardLevelScale, string> = {
+  0: 'No Rating',
   1: 'Low',
   2: 'Moderate',
   3: 'Considerable',
@@ -17,6 +19,7 @@ export const hazardLevelLabels: Record<HazardLevelScale, string> = {
 }
 
 export const hazardIconFiles: Record<HazardLevelScale, string> = {
+  0: 'none',
   1: 'low',
   2: 'moderate',
   3: 'considerable',
