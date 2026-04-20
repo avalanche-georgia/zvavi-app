@@ -31,7 +31,7 @@ const Forecast = ({ forecast }: { forecast: FullForecast }) => {
         <MarkdownContent content={summary} />
       </Spoiler>
       <HazardLevelsByElevation hazardLevels={hazardLevels} />
-      {avalancheProblems.length > 0 && <Problems problems={avalancheProblems} />}
+      {avalancheProblems.length > 0 ? <Problems problems={avalancheProblems} /> : <hr />}
 
       <section className="space-y-4">
         <RecentAvalanches avalanches={recentAvalanches} />
