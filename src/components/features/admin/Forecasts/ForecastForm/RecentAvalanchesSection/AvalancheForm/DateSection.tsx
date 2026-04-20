@@ -15,10 +15,11 @@ const toDate = (value: Date | string | null): Date | null => {
 
 type DateSectionProps = {
   data: Avalanche
+  error?: string
   setData: React.Dispatch<React.SetStateAction<Avalanche>>
 }
 
-const DateSection = ({ data, setData }: DateSectionProps) => {
+const DateSection = ({ data, error, setData }: DateSectionProps) => {
   const t = useTranslations()
 
   const handleDateChange = useCallback(
@@ -36,10 +37,15 @@ const DateSection = ({ data, setData }: DateSectionProps) => {
   )
 
   return (
-    <InputBlock label={t('admin.forecast.form.recentAvalanches.labels.date')} labelClassName="w-32">
+    <InputBlock
+      error={error}
+      label={t('admin.forecast.form.recentAvalanches.labels.date')}
+      labelClassName="w-32"
+    >
       <DatePicker
         className="h-8 w-42"
         disabled={data.isDateUnknown}
+        hasError={!!error}
         maxDate={new Date()}
         onChange={handleDateChange}
         showTime

@@ -50,24 +50,29 @@ const problemSchema = z.object({
 const avalancheTypeEnum = z.union([z.enum(avalancheTypes), z.literal('unknown')])
 const avalancheTriggerEnum = z.enum(avalancheTriggers)
 
-const avalancheSchema = z.object({
-  aspects: aspectsSchema,
-  createdAt: z.string().optional(),
-  date: nullableDate,
-  description: z.string(),
-  id: z.number().optional(),
-  involvement: z.string(),
-  isDateUnknown: z.boolean(),
-  latitude: z.number().nullable(),
-  location: z.string(),
-  longitude: z.number().nullable(),
-  quantity: z.number().min(1).nullable(),
-  size: avalancheSize,
-  slabDepth: z.number().nullable(),
-  trigger: avalancheTriggerEnum.nullable(),
-  type: avalancheTypeEnum.nullable(),
-  width: z.number().nullable(),
-})
+const avalancheSchema = z
+  .object({
+    aspects: aspectsSchema,
+    createdAt: z.string().optional(),
+    date: nullableDate,
+    description: z.string(),
+    id: z.number().optional(),
+    involvement: z.string(),
+    isDateUnknown: z.boolean(),
+    latitude: z.number().nullable(),
+    location: z.string(),
+    longitude: z.number().nullable(),
+    quantity: z.number().min(1),
+    size: avalancheSize,
+    slabDepth: z.number().nullable(),
+    trigger: avalancheTriggerEnum,
+    type: avalancheTypeEnum,
+    width: z.number().nullable(),
+  })
+  .superRefine((data, ctx) => {
+    if (!data.isDateUnknown && data.date === null)
+      ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'required', path: ['date'] })
+  })
 
 export const forecastFormSchema = z
   .object({

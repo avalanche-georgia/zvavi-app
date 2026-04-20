@@ -7,7 +7,7 @@ import { InputBlock } from '../../common'
 
 type QuantityProps = {
   setData: React.Dispatch<React.SetStateAction<Avalanche>>
-  quantity: number | null
+  quantity: number
 }
 
 const Quantity = ({ quantity, setData }: QuantityProps) => {

@@ -8,10 +8,11 @@ import { useAvalancheDetailsForm } from './useAvalancheDetailsForm'
 
 export type AvalancheDetailsSectionProps = {
   data: Avalanche
+  errors?: { trigger?: string; type?: string }
   setData: Dispatch<SetStateAction<Avalanche>>
 }
 
-const AvalancheDetailsSection = ({ data, setData }: AvalancheDetailsSectionProps) => {
+const AvalancheDetailsSection = ({ data, errors, setData }: AvalancheDetailsSectionProps) => {
   const t = useTranslations()
   const { handleChange, handleInputChange, triggerOptions, typeOptions } =
     useAvalancheDetailsForm(setData)
@@ -20,8 +21,12 @@ const AvalancheDetailsSection = ({ data, setData }: AvalancheDetailsSectionProps
     <div className="flex flex-col gap-3">
       <div className="grid grid-cols-2 gap-3">
         <div className="grid grid-cols-2 gap-3">
-          <InputBlock label={t('admin.forecast.form.recentAvalanches.labels.type')}>
+          <InputBlock
+            error={errors?.type}
+            label={t('admin.forecast.form.recentAvalanches.labels.type')}
+          >
             <Select
+              hasError={!!errors?.type}
               onChange={(value) => handleChange('type')(value)}
               options={typeOptions}
               placeholder={t('admin.forecast.form.recentAvalanches.labels.typePlaceholder')}
@@ -29,8 +34,12 @@ const AvalancheDetailsSection = ({ data, setData }: AvalancheDetailsSectionProps
             />
           </InputBlock>
 
-          <InputBlock label={t('admin.forecast.form.recentAvalanches.labels.trigger')}>
+          <InputBlock
+            error={errors?.trigger}
+            label={t('admin.forecast.form.recentAvalanches.labels.trigger')}
+          >
             <Select
+              hasError={!!errors?.trigger}
               onChange={(value) => handleChange('trigger')(value)}
               options={triggerOptions}
               placeholder={t('admin.forecast.form.recentAvalanches.labels.triggerPlaceholder')}

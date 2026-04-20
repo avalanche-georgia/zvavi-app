@@ -30,7 +30,7 @@ const convertToFormSchema = (data: ForecastFormData): ForecastFormSchema => ({
     latitude: avalanche.latitude ?? null,
     location: avalanche.location ?? '',
     longitude: avalanche.longitude ?? null,
-    quantity: avalanche.quantity ?? null,
+    quantity: avalanche.quantity ?? 1,
     slabDepth: avalanche.slabDepth ?? null,
     trigger: avalanche.trigger ?? null,
     type: avalanche.type ?? null,

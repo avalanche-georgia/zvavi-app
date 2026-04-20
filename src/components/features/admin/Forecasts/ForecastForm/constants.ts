@@ -54,7 +54,7 @@ export const initialAvalancheData: Avalanche = {
   latitude: null,
   location: '',
   longitude: null,
-  quantity: null,
+  quantity: 1,
   size: 1,
   slabDepth: null,
   trigger: null,

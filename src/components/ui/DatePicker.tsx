@@ -15,6 +15,7 @@ import useDatePicker from './useDatePicker'
 type DatePickerProps = {
   className?: string
   disabled?: boolean
+  hasError?: boolean
   isClearable?: boolean
   maxDate?: Date
   minDate?: Date
@@ -27,6 +28,7 @@ type DatePickerProps = {
 const DatePicker = ({
   className,
   disabled = false,
+  hasError = false,
   isClearable = false,
   maxDate,
   minDate,
@@ -46,7 +48,8 @@ const DatePicker = ({
           <HeadlessUIButton
             className={twMerge(
               clsx(
-                'flex h-10 w-full items-center rounded-md border border-gray-300 bg-white',
+                'flex h-10 w-full items-center rounded-md border bg-white',
+                hasError ? 'border-red-500' : 'border-gray-300',
                 className,
                 'px-3 py-2 text-sm ring-offset-white',
                 'focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-hidden',

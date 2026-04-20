@@ -1,6 +1,11 @@
 import { useCallback, useState } from 'react'
 import { Textarea } from '@components/ui'
-import type { Avalanche, AvalancheSize as AvalancheSizeType } from '@domain/types'
+import type {
+  Avalanche,
+  AvalancheSize as AvalancheSizeType,
+  AvalancheTrigger,
+  AvalancheType,
+} from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import AvalancheDetailsSection from './AvalancheDetailsSection'
@@ -14,27 +19,53 @@ export type AvalancheFormProps = {
   onSave: (data: Avalanche) => void
 }
 
+type FormErrors = {
+  date?: string
+  trigger?: string
+  type?: string
+}
+
+const validate = (data: Avalanche): FormErrors => {
+  const errors: FormErrors = {}
+
+  if (!data.isDateUnknown && !data.date) errors.date = 'required'
+  if (!data.type) errors.type = 'required'
+  if (!data.trigger) errors.trigger = 'required'
+
+  return errors
+}
+
 const AvalancheForm = ({ avalancheData, onClose, onSave }: AvalancheFormProps) => {
   const t = useTranslations()
 
   const [data, setData] = useState(avalancheData)
+  const [errors, setErrors] = useState<FormErrors>({})
 
-  const handleSizeChange = useCallback(
-    (value: AvalancheSizeType) => {
-      setData((prev) => ({ ...prev, size: value }))
-    },
-    [setData],
-  )
+  const handleSizeChange = useCallback((value: AvalancheSizeType) => {
+    setData((prev) => ({ ...prev, size: value }))
+  }, [])
 
   const handleDescriptionChange = useCallback(
     ({ target }: React.ChangeEvent<HTMLTextAreaElement>) => {
       setData((prev) => ({ ...prev, description: target.value }))
     },
-    [setData],
+    [],
   )
 
   const handleSave = () => {
-    onSave(data)
+    const formErrors = validate(data)
+
+    if (Object.keys(formErrors).length > 0) {
+      setErrors(formErrors)
+
+      return
+    }
+
+    onSave({
+      ...data,
+      trigger: data.trigger as AvalancheTrigger,
+      type: data.type as AvalancheType | 'unknown',
+    })
     onClose()
   }
 
@@ -42,15 +73,19 @@ const AvalancheForm = ({ avalancheData, onClose, onSave }: AvalancheFormProps) =
     <div className="flex flex-col gap-6 rounded-sm border p-3">
       <section className="grid grid-cols-2 items-start gap-x-6">
         <div className="flex flex-col gap-3">
-          <DateSection data={data} setData={setData} />
+          <DateSection data={data} error={errors.date} setData={setData} />
           <AvalancheSize onChange={handleSizeChange} value={data.size} />
-          <Quantity quantity={data.quantity} setData={setData} />
+          <Quantity quantity={data.quantity ?? 1} setData={setData} />
         </div>
 
         <Aspects data={data} setData={setData as SetAspectsData} />
       </section>
 
-      <AvalancheDetailsSection data={data} setData={setData} />
+      <AvalancheDetailsSection
+        data={data}
+        errors={{ trigger: errors.trigger, type: errors.type }}
+        setData={setData}
+      />
 
       <div className="flex flex-col gap-4 pt-1.5">
         <h4 className="w-32 font-semibold">{t('admin.forecast.form.common.labels.description')}</h4>
