@@ -12,6 +12,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
+  --color-hazard-0: #d0d5de;
   --color-hazard-1: #6ac828;
   --color-hazard-2: #f8f024;
   --color-hazard-3: #f88f2c;

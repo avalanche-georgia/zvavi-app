@@ -31,13 +31,13 @@ const Forecast = ({ forecast }: { forecast: FullForecast }) => {
         <MarkdownContent content={summary} />
       </Spoiler>
       <HazardLevelsByElevation hazardLevels={hazardLevels} />
-      <Problems problems={avalancheProblems} />
+      {avalancheProblems.length > 0 && <Problems problems={avalancheProblems} />}
 
       <section className="space-y-4">
         <RecentAvalanches avalanches={recentAvalanches} />
-        <Snowpack snowpack={snowpack} />
+        {snowpack && <Snowpack snowpack={snowpack} />}
         {additionalHazards && <AdditionalHazards additionalHazards={additionalHazards} />}
-        <Weather weather={weather} />
+        {weather && <Weather weather={weather} />}
       </section>
 
       <ButtonLink href={routes.forecasts.forecastArea}>{t('forecast.viewForecastArea')}</ButtonLink>

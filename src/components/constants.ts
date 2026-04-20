@@ -11,12 +11,14 @@ import considerable from '@assets/icons/hazardLevel/considerable.svg'
 import high from '@assets/icons/hazardLevel/high.svg'
 import low from '@assets/icons/hazardLevel/low.svg'
 import moderate from '@assets/icons/hazardLevel/moderate.svg'
+import noRating from '@assets/icons/hazardLevel/none.svg'
 import type { AvalancheProblemTypes, HazardLevelScale } from '@domain/types'
 import type { StaticImageData } from 'next/image'
 
 type HazardIcons = Record<HazardLevelScale, StaticImageData>
 
 export const hazardIcons: HazardIcons = {
+  0: noRating,
   1: low,
   2: moderate,
   3: considerable,
@@ -37,6 +39,7 @@ export const problemIcons: Record<AvalancheProblemTypes, StaticImageData> = {
 }
 
 export const backgroundColorByHazardLevel = {
+  0: 'bg-hazard-0',
   1: 'bg-hazard-1',
   2: 'bg-hazard-2',
   3: 'bg-hazard-3',

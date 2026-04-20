@@ -17,11 +17,13 @@ forecast:
     high: 'High'
     low: 'Low'
     moderate: 'Moderate'
+    noRating: 'No Rating'
     descriptionLabels:
       likelihood: 'Likelihood'
       sizeAndDistribution: 'Size and Distribution'
       travelAdvice: 'Travel Advice'
     descriptions:
+      0: 'Hazard level has not been specified for this forecast.'
       1: 'Generally safe avalanche conditions. Watch for unstable snow on isolated terrain features. | Natural and human-triggered avalanches unlikely. | Small avalanches in isolated areas or extreme terrain.'
       2: 'Heightened avalanche conditions on specific terrain features. Evaluate snow and terrain carefully; identify features of concern. | Natural avalanches unlikely; human-triggered avalanches possible. | Small avalanches in specific areas; or large avalanches in isolated areas.'
       3: 'Dangerous avalanche conditions. Careful snowpack evaluation, cautious route-finding, and conservative decision-making essential. | Natural avalanches possible; human-triggered avalanches likely. | Small avalanches in many areas; or large avalanches in specific areas; or very large avalanches in isolated areas.'

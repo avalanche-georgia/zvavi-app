@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 const nullableDate = z.date().nullable()
 
-const hazardLevelScale = z.enum(['1', '2', '3', '4', '5'])
+const hazardLevelScale = z.enum(['0', '1', '2', '3', '4', '5'])
 const aspect = z.enum(['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'])
 const avalancheSize = z.union([
   z.literal(1),

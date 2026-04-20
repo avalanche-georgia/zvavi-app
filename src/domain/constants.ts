@@ -6,9 +6,11 @@ export const hazardLevelNames: Record<HazardLevel, string> = {
   high: 'forecast.hazardLevels.high',
   low: 'forecast.hazardLevels.low',
   moderate: 'forecast.hazardLevels.moderate',
+  noRating: 'forecast.hazardLevels.noRating',
 }
 
 export const hazardLevelNamesByScale: Record<HazardLevelScale, string> = {
+  0: hazardLevelNames.noRating,
   1: hazardLevelNames.low,
   2: hazardLevelNames.moderate,
   3: hazardLevelNames.considerable,

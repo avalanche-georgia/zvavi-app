@@ -7,9 +7,9 @@ import type {
   trends,
 } from '@domain/constants'
 
-export type HazardLevel = 'low' | 'moderate' | 'considerable' | 'high' | 'extreme'
+export type HazardLevel = 'noRating' | 'low' | 'moderate' | 'considerable' | 'high' | 'extreme'
 
-export type HazardLevelScale = '1' | '2' | '3' | '4' | '5'
+export type HazardLevelScale = '0' | '1' | '2' | '3' | '4' | '5'
 export type ElevationZone = 'highAlpine' | 'alpine' | 'subAlpine'
 export type TimeRange = { start: Date | string | null; end: Date | string | null }
 
