@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
     return new Response('Forecast not found', { status: 404 })
   }
 
-  const level = forecast.hazard_levels?.overall as HazardLevelScale
+  const level = (forecast.hazard_levels?.overall ?? 0) as HazardLevelScale
   const bgColor = hazardColors[level]
   const levelName = hazardLevelLabels[level]
   const isLight = level !== '5'
