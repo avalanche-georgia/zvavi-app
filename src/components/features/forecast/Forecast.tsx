@@ -28,7 +28,9 @@ const Forecast = ({ forecast }: { forecast: FullForecast }) => {
     <div className="space-y-4">
       <HazardLevelBanner forecast={forecast} />
       <Spoiler title={t('common.labels.summary')}>
-        <MarkdownContent content={summary} />
+        <div className="text-justify">
+          <MarkdownContent content={summary} />
+        </div>
       </Spoiler>
       <HazardLevelsByElevation hazardLevels={hazardLevels} />
       {avalancheProblems.length > 0 ? <Problems problems={avalancheProblems} /> : <hr />}

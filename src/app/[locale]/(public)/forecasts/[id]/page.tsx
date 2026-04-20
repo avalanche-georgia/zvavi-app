@@ -40,7 +40,7 @@ export const generateMetadata = async (props: Props): Promise<Metadata> => {
 
   if (!data) return {}
 
-  const level = data.hazard_levels?.overall as HazardLevelScale
+  const level = (data.hazard_levels?.overall ?? 0) as HazardLevelScale
   const levelName = hazardLevelLabels[level]
   const validUntil = data.valid_until ? format(new Date(data.valid_until), 'dd MMM yyyy') : null
   const title = `${levelName} Avalanche Hazard${validUntil ? ` · Valid until ${validUntil}` : ''}`
