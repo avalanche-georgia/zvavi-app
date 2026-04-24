@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react'
-import { Textarea } from '@components/ui'
+import { InfoIcon, Textarea } from '@components/ui'
 import type {
   Avalanche,
   AvalancheSize as AvalancheSizeType,
@@ -88,7 +88,10 @@ const AvalancheForm = ({ avalancheData, onClose, onSave }: AvalancheFormProps) =
       />
 
       <div className="flex flex-col gap-4 pt-1.5">
-        <h4 className="w-32 font-semibold">{t('admin.forecast.form.common.labels.description')}</h4>
+        <div className="flex items-center gap-1.5">
+          <h4 className="font-semibold">{t('admin.forecast.form.common.labels.description')}</h4>
+          <InfoIcon content={t('admin.forecast.form.general.formattingHint')} />
+        </div>
         <Textarea
           className="w-full"
           onChange={handleDescriptionChange}

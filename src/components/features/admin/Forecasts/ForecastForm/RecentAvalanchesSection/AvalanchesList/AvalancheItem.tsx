@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { useBoolean } from '@components/hooks'
-import { ConfirmationDialog } from '@components/shared'
+import { ConfirmationDialog, MarkdownContent } from '@components/shared'
 import { dateFormat } from '@domain/constants'
 import type { Avalanche } from '@domain/types'
 import { format } from 'date-fns'
@@ -49,7 +49,9 @@ const AvalancheItem = ({ avalanche, canEdit, onDelete, onEdit }: AvalancheItemPr
             <h4 className="mb-2 font-semibold">
               {t('admin.forecast.form.common.labels.description')}:
             </h4>
-            <p className="max-h-28 overflow-y-auto text-justify">{description}</p>
+            <div className="max-h-28 overflow-y-auto text-justify">
+              <MarkdownContent content={description} />
+            </div>
           </div>
         )}
       </div>

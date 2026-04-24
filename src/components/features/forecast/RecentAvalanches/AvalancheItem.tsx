@@ -1,97 +1,36 @@
-import { Aspects } from '@components/features/admin/Forecasts/ForecastForm/common/listItem'
-import { dateFormat } from '@domain/constants'
+import MarkdownContent from '@components/shared/MarkdownContent'
 import type { Avalanche } from '@domain/types'
-import { format } from 'date-fns'
 import { useTranslations } from 'next-intl'
 
-type PropertyRowProps = { label: string; value: React.ReactNode }
-
-const PropertyRow = ({ label, value }: PropertyRowProps) => (
-  <div>
-    <span className="font-semibold">{label}: </span>
-    <span>{value}</span>
-  </div>
-)
+import AvalancheAspects from './AvalancheAspects'
+import AvalancheHero from './AvalancheHero'
 
 const AvalancheItem = ({ avalanche }: { avalanche: Avalanche }) => {
   const t = useTranslations()
-  const {
-    date,
-    description,
-    isDateUnknown,
-    location,
-    quantity,
-    size,
-    slabDepth,
-    trigger,
-    type,
-    width,
-  } = avalanche
-
-  const dateDisplay = isDateUnknown
-    ? t('admin.forecast.form.recentAvalanches.labels.dateUnknown')
-    : date
-      ? format(date, dateFormat)
-      : null
-
-  const dimensionsDisplay =
-    width || slabDepth
-      ? [width ? `${width}m` : null, slabDepth ? `${slabDepth}cm` : null]
-          .filter(Boolean)
-          .join(' / ')
-      : null
+  const { aspects, description, trigger } = avalanche
 
   return (
-    <div className="flex flex-col gap-4">
-      {dateDisplay && <PropertyRow label={t('common.labels.date')} value={dateDisplay} />}
+    <div className="space-y-4 rounded-2xl border border-gray-200 bg-white p-4">
+      <AvalancheHero avalanche={avalanche} />
 
-      <div className="flex items-start gap-8">
-        <div className="w-20 rounded-lg bg-gray-200 p-2 text-center">
-          <h4 className="flex-none font-semibold">
-            {t('forecast.sections.recentAvalanches.labels.size')}:
-          </h4>
-          <p className="text-3xl">{size}</p>
-        </div>
+      <div className="flex items-start gap-3 sm:gap-4">
+        <AvalancheAspects aspects={aspects} trigger={trigger} />
 
-        <Aspects item={avalanche} />
+        {trigger && (
+          <div>
+            <p className="text-[10px] tracking-wider text-gray-400 uppercase">
+              {t('forecast.sections.recentAvalanches.labels.trigger')}
+            </p>
+            <p className="text-base font-semibold">{t(`common.avalancheTriggers.${trigger}`)}</p>
+          </div>
+        )}
       </div>
 
-      {type && (
-        <PropertyRow
-          label={t('forecast.sections.recentAvalanches.labels.type')}
-          value={t(`common.avalancheTypes.${type}`)}
-        />
+      {description && (
+        <div className="border-t border-dashed border-gray-200 pt-3 text-sm text-gray-600">
+          <MarkdownContent content={description} />
+        </div>
       )}
-
-      {trigger && (
-        <PropertyRow
-          label={t('forecast.sections.recentAvalanches.labels.trigger')}
-          value={t(`common.avalancheTriggers.${trigger}`)}
-        />
-      )}
-
-      {quantity != null && (
-        <PropertyRow
-          label={t('forecast.sections.recentAvalanches.labels.quantity')}
-          value={quantity}
-        />
-      )}
-
-      {dimensionsDisplay && (
-        <PropertyRow
-          label={t('forecast.sections.recentAvalanches.labels.dimensions')}
-          value={dimensionsDisplay}
-        />
-      )}
-
-      {location && (
-        <PropertyRow
-          label={t('forecast.sections.recentAvalanches.labels.location')}
-          value={location}
-        />
-      )}
-
-      {description && <p className="text-justify">{description}</p>}
     </div>
   )
 }
