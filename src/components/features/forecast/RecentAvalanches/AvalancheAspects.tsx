@@ -1,6 +1,8 @@
 import type { Aspect, Aspects, AvalancheTrigger, ElevationZone } from '@domain/types'
 import clsx from 'clsx'
 
+import MountainIcon from './MountainIcon'
+
 type Cell = Aspect | null
 
 const compassLayout: Cell[][] = [
@@ -45,9 +47,12 @@ const AvalancheAspects = ({ aspects, trigger }: AvalancheAspectsProps) => {
 
         return (
           <div key={zone} className="flex items-center gap-2 border-r pr-3 sm:pr-4">
-            <span className="w-14 flex-none text-right text-[9px] font-bold tracking-wide text-gray-400 uppercase">
-              {zoneLabels[zone]}
-            </span>
+            <div className="flex w-14 flex-none flex-col items-center gap-0.5">
+              <MountainIcon activeZone={zone} />
+              <span className="text-center text-[9px] font-bold tracking-wide text-gray-400 uppercase">
+                {zoneLabels[zone]}
+              </span>
+            </div>
             <div className="grid grid-cols-3 gap-0.5">
               {compassLayout.map((row, rowIndex) =>
                 row.map((cell, colIndex) =>
