@@ -5,38 +5,41 @@ import {
   sensitivityLevelsSorted,
   trends,
 } from '@domain/constants'
-import type { AvalancheProblemTypes } from '@domain/types'
+import type { AvalancheProblemType } from '@domain/types'
 import _range from 'lodash/range'
 import { useTranslations } from 'next-intl'
 
 import { generateOptions } from '../helpers'
 
 const useProblemOptions = () => {
-  const tProblems = useTranslations('admin.forecast.form.problems')
+  const t = useTranslations()
 
   const problemTypeOptions = generateOptions(
     Object.values(avalancheProblemTypes),
-    'options.problemType',
-    tProblems,
-  ) as { label: string; value: AvalancheProblemTypes }[]
+    'common.avalancheTypes',
+    t,
+  ) as { label: string; value: AvalancheProblemType }[]
 
   const avalancheSizeOptions = _range(1, 6).map((level) => ({ label: level, value: level }))
   const sensitivityOptions = generateOptions(
     sensitivityLevelsSorted,
-    'options.sensitivityLevel',
-    tProblems,
+    'admin.forecast.form.problems.options.sensitivityLevel',
+    t,
   )
   const distributionOptions = generateOptions(
     Object.values(distributionTypes),
-    'options.distribution',
-    tProblems,
+    'admin.forecast.form.problems.options.distribution',
+    t,
   )
-
-  const trendOptions = generateOptions(Object.values(trends), 'options.trend', tProblems)
+  const trendOptions = generateOptions(
+    Object.values(trends),
+    'admin.forecast.form.problems.options.trend',
+    t,
+  )
   const confidenceOptions = generateOptions(
     Object.values(confidenceLevels),
-    'options.confidence',
-    tProblems,
+    'admin.forecast.form.problems.options.confidence',
+    t,
   )
   const hazardLevelOptions = _range(0, 6).map((level) => ({ label: level, value: String(level) }))
 

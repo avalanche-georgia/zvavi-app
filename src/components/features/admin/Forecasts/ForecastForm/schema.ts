@@ -1,16 +1,26 @@
+import {
+  aspects,
+  avalancheTriggers,
+  avalancheTypes,
+  confidenceLevels,
+  distributionTypes,
+  sensitivityLevels,
+  trends,
+} from '@domain/constants'
+import type { Aspect, AvalancheSize } from '@domain/types'
 import { z } from 'zod'
 
 const nullableDate = z.date().nullable()
 
 const hazardLevelScale = z.enum(['0', '1', '2', '3', '4', '5'])
-const aspect = z.enum(['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'])
+const aspect = z.enum(Object.keys(aspects) as [Aspect, ...Aspect[]])
 const avalancheSize = z.union([
   z.literal(1),
   z.literal(2),
   z.literal(3),
   z.literal(4),
   z.literal(5),
-])
+]) satisfies z.ZodType<AvalancheSize>
 
 const aspectsSchema = z.object({
   alpine: z.array(aspect),
@@ -21,41 +31,48 @@ const aspectsSchema = z.object({
 const problemSchema = z.object({
   aspects: aspectsSchema,
   avalancheSize,
-  confidence: z.enum(['low', 'moderate', 'high']),
+  confidence: z.enum(confidenceLevels),
   createdAt: z.string().optional(),
   description: z.string(),
-  distribution: z.enum(['isolated', 'specific', 'widespread']),
+  distribution: z.enum(distributionTypes),
   id: z.string().optional(),
   isAllDay: z.boolean(),
   order: z.number(),
-  sensitivity: z.enum(['unreactive', 'stubborn', 'reactive', 'touchy']),
+  sensitivity: z.enum(sensitivityLevels),
   timeOfDay: z.object({
     end: nullableDate,
     start: nullableDate,
   }),
-  trend: z.enum(['deteriorating', 'improving', 'noChange']),
-  type: z.enum([
-    'cornice',
-    'deepSlab',
-    'glide',
-    'looseDry',
-    'looseWet',
-    'persistentSlab',
-    'stormSlab',
-    'wetSlab',
-    'windSlab',
-  ]),
+  trend: z.enum(trends),
+  type: z.enum(avalancheTypes),
 })
 
-const avalancheSchema = z.object({
-  aspects: aspectsSchema,
-  createdAt: z.string().optional(),
-  date: nullableDate,
-  description: z.string(),
-  id: z.number().optional(),
-  isDateUnknown: z.boolean(),
-  size: avalancheSize,
-})
+const avalancheTypeEnum = z.union([z.enum(avalancheTypes), z.literal('unknown')])
+const avalancheTriggerEnum = z.enum(avalancheTriggers)
+
+const avalancheSchema = z
+  .object({
+    aspects: aspectsSchema,
+    createdAt: z.string().optional(),
+    date: nullableDate,
+    description: z.string(),
+    id: z.number().optional(),
+    involvement: z.string().nullable(),
+    isDateUnknown: z.boolean(),
+    latitude: z.number().nullable(),
+    location: z.string().nullable(),
+    longitude: z.number().nullable(),
+    quantity: z.number().min(1),
+    size: avalancheSize,
+    slabDepth: z.number().nullable(),
+    trigger: avalancheTriggerEnum,
+    type: avalancheTypeEnum,
+    width: z.number().nullable(),
+  })
+  .superRefine((data, ctx) => {
+    if (!data.isDateUnknown && data.date === null)
+      ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'required', path: ['date'] })
+  })
 
 export const forecastFormSchema = z
   .object({

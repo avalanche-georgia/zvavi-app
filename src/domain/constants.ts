@@ -18,7 +18,7 @@ export const hazardLevelNamesByScale: Record<HazardLevelScale, string> = {
   5: hazardLevelNames.extreme,
 }
 
-export const avalancheProblemTypes = {
+export const avalancheTypes = {
   cornice: 'cornice',
   deepSlab: 'deepSlab',
   glide: 'glide',
@@ -28,7 +28,18 @@ export const avalancheProblemTypes = {
   stormSlab: 'stormSlab',
   wetSlab: 'wetSlab',
   windSlab: 'windSlab',
-}
+} as const
+
+export const avalancheProblemTypes = avalancheTypes
+
+export const avalancheTriggers = {
+  explosives: 'explosives',
+  natural: 'natural',
+  riderAccidental: 'riderAccidental',
+  riderCut: 'riderCut',
+  unknown: 'unknown',
+  vehicle: 'vehicle',
+} as const
 
 export const aspects = {
   e: 'E',
@@ -61,19 +72,19 @@ export const distributionTypes = {
   isolated: 'isolated',
   specific: 'specific',
   widespread: 'widespread',
-}
+} as const
 
 export const trends = {
   deteriorating: 'deteriorating',
   improving: 'improving',
   noChange: 'noChange',
-}
+} as const
 
 export const confidenceLevels = {
   high: 'high',
   low: 'low',
   moderate: 'moderate',
-}
+} as const
 
 export const dateFormat = 'dd MMM yyyy'
 export const timeFormat = 'HH:mm'

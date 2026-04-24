@@ -14,7 +14,7 @@ const Problem = ({ problem }: { problem: ProblemType }) => {
   return (
     <Drawer
       content={<ProblemDetails problem={problem} />}
-      title={t(`admin.forecast.form.problems.options.problemType.${problem.type}`)}
+      title={t(`common.avalancheTypes.${problem.type}`)}
     >
       <button
         className="flex w-full items-center justify-between gap-2 rounded-2xl bg-gray-100 p-3 shadow-md"
@@ -32,9 +32,7 @@ const Problem = ({ problem }: { problem: ProblemType }) => {
               />
             )}
           </div>
-          <h3 className="font-semibold">
-            {t(`admin.forecast.form.problems.options.problemType.${problem.type}`)}
-          </h3>
+          <h3 className="font-semibold">{t(`common.avalancheTypes.${problem.type}`)}</h3>
         </div>
 
         <Icon icon="chevronRight" />

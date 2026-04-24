@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { DragDropProvider, type DragEndEvent } from '@dnd-kit/react'
 import { isSortableOperation } from '@dnd-kit/react/sortable'
-import type { AvalancheProblemTypes, Problem } from '@domain/types'
+import type { AvalancheProblemType, Problem } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import { ProblemItem } from './ProblemItem'
@@ -17,7 +17,7 @@ type ProblemsListProps = {
   onFormSave: ProblemFormProps['onSave']
   onReorder: (from: number, to: number) => void
   problems: Problem[]
-  selectedProblemTypes: AvalancheProblemTypes[]
+  selectedProblemTypes: AvalancheProblemType[]
 }
 
 const ProblemList = ({

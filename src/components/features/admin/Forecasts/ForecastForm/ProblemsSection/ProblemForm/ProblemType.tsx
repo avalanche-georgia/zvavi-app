@@ -1,5 +1,5 @@
 import { type Dispatch, type SetStateAction, useCallback, useEffect, useMemo } from 'react'
-import type { AvalancheProblemTypes } from '@domain/types'
+import type { AvalancheProblemType } from '@domain/types'
 import { useTranslations } from 'next-intl'
 import Select, { type SingleValue } from 'react-select'
 
@@ -10,7 +10,7 @@ import { useProblemOptions } from '../../common/hooks'
 export type ProblemTypeProps = {
   onTypeChange: Dispatch<SetStateAction<ProblemFormData>>
   problemData: ProblemFormData
-  selectedProblemTypes: AvalancheProblemTypes[]
+  selectedProblemTypes: AvalancheProblemType[]
 }
 
 const ProblemType = ({ onTypeChange, problemData, selectedProblemTypes }: ProblemTypeProps) => {
@@ -28,10 +28,10 @@ const ProblemType = ({ onTypeChange, problemData, selectedProblemTypes }: Proble
   }, [problemTypeOptions, selectedProblemTypes, problemData.type])
 
   const handleTypeChange = useCallback(
-    (value: SingleValue<{ value: AvalancheProblemTypes; label: string }>) => {
+    (value: SingleValue<{ value: AvalancheProblemType; label: string }>) => {
       onTypeChange((prev) => ({
         ...prev,
-        type: value?.value as AvalancheProblemTypes,
+        type: value?.value as AvalancheProblemType,
       }))
     },
     [onTypeChange],

@@ -1,6 +1,7 @@
 import type {
   aspects,
-  avalancheProblemTypes,
+  avalancheTriggers,
+  avalancheTypes,
   confidenceLevels,
   distributionTypes,
   sensitivityLevels,
@@ -19,7 +20,9 @@ export type User = {
 }
 
 export type AvalancheSize = 1 | 2 | 3 | 4 | 5
-export type AvalancheProblemTypes = keyof typeof avalancheProblemTypes
+export type AvalancheType = keyof typeof avalancheTypes
+export type AvalancheTrigger = keyof typeof avalancheTriggers
+export type AvalancheProblemType = AvalancheType
 export type Confidence = keyof typeof confidenceLevels
 export type Distribution = keyof typeof distributionTypes
 export type Sensitivity = keyof typeof sensitivityLevels
@@ -56,7 +59,7 @@ export type Problem = {
   sensitivity: Sensitivity
   timeOfDay: TimeRange
   trend: Trend
-  type: AvalancheProblemTypes
+  type: AvalancheProblemType
 }
 
 export type Avalanche = {
@@ -65,8 +68,35 @@ export type Avalanche = {
   createdAt?: string
   date: Date | string | null
   description: string
+  involvement: string | null
   isDateUnknown: boolean
+  latitude: number | null
+  location: string | null
+  longitude: number | null
+  quantity: number
   size: AvalancheSize
+  slabDepth: number | null
+  trigger: AvalancheTrigger
+  type: AvalancheType | 'unknown'
+  width: number | null
+}
+
+export type AvalancheFormData = {
+  id?: number
+  aspects: Aspects
+  date: Date | null
+  description: string
+  involvement: string | null
+  isDateUnknown: boolean
+  latitude: number | null
+  location: string | null
+  longitude: number | null
+  quantity: number
+  size: AvalancheSize
+  slabDepth: number | null
+  trigger: AvalancheTrigger | null
+  type: AvalancheType | 'unknown' | null
+  width: number | null
 }
 
 export type ForecastDetails = {
