@@ -68,10 +68,10 @@ export type Avalanche = {
   createdAt?: string
   date: Date | string | null
   description: string
-  involvement: string
+  involvement: string | null
   isDateUnknown: boolean
   latitude: number | null
-  location: string
+  location: string | null
   longitude: number | null
   quantity: number
   size: AvalancheSize
@@ -86,10 +86,10 @@ export type AvalancheFormData = {
   aspects: Aspects
   date: Date | null
   description: string
-  involvement: string
+  involvement: string | null
   isDateUnknown: boolean
   latitude: number | null
-  location: string
+  location: string | null
   longitude: number | null
   quantity: number
   size: AvalancheSize

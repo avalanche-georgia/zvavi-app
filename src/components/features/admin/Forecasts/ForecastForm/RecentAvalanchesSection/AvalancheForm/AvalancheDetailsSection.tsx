@@ -70,7 +70,11 @@ const AvalancheDetailsSection = ({ data, errors, setData }: AvalancheDetailsSect
       </div>
 
       <InputBlock label={t('admin.forecast.form.recentAvalanches.labels.involvement')}>
-        <Textarea onChange={handleInputChange('involvement')} rows={2} value={data.involvement} />
+        <Textarea
+          onChange={handleInputChange('involvement')}
+          rows={2}
+          value={data.involvement ?? ''}
+        />
       </InputBlock>
     </div>
   )

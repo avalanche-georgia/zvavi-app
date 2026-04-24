@@ -62,6 +62,7 @@ const AvalancheForm = ({ avalancheData, onClose, onSave }: AvalancheFormProps) =
 
     onSave({
       ...data,
+      date: data.isDateUnknown ? null : data.date,
       trigger: data.trigger!,
       type: data.type!,
     })

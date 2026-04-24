@@ -35,10 +35,10 @@ const AspectCell = ({ active, label }: { active: boolean; label: string }) => (
   </div>
 )
 
-const AvalancheAspects = ({ aspects, trigger }: AvalancheAspectsProps) => {
+const AvalancheAspects = ({ aspects }: AvalancheAspectsProps) => {
   const zonesWithAspects = elevationZones.filter((zone) => aspects[zone].length > 0)
 
-  if (zonesWithAspects.length === 0 && !trigger) return null
+  if (zonesWithAspects.length === 0) return null
 
   return (
     <div className="flex flex-none flex-col gap-2">

@@ -21,7 +21,7 @@ const LocationFields = ({ data, setData }: AvalancheDetailsSectionProps) => {
         <TextInput
           name="avalanche-location"
           onChange={handleInputChange('location')}
-          value={data.location}
+          value={data.location ?? ''}
         />
       </InputBlock>
 

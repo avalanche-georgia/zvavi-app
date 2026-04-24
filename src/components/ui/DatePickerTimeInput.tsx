@@ -9,6 +9,8 @@ type DatePickerTimeInputProps = {
 
 const DatePickerTimeInput = ({ onChange, value }: DatePickerTimeInputProps) => {
   const handleChange = (time: string): void => {
+    if (!time) return
+
     const [hours, minutes] = time.split(':').map(Number)
     const base = value ?? new Date()
 
