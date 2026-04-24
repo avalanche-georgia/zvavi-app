@@ -21,7 +21,7 @@ const zoneLabels: Record<ElevationZone, string> = {
 
 type AvalancheAspectsProps = {
   aspects: Aspects
-  trigger: AvalancheTrigger | null
+  trigger: AvalancheTrigger
 }
 
 const AspectCell = ({ active, label }: { active: boolean; label: string }) => (

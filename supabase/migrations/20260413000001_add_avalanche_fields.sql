@@ -14,7 +14,7 @@ create type avalanche_trigger as enum (
   'unknown'
 );
 
--- Add new columns to recent_avalanches (all nullable — no back-fill needed)
+-- Add new columns to recent_avalanches (all nullable — back-filled below where required)
 alter table recent_avalanches
   add column type          avalanche_type,
   add column quantity      smallint,
@@ -25,3 +25,16 @@ alter table recent_avalanches
   add column involvement   text,
   add column width         numeric,
   add column slab_depth    numeric;
+
+-- Back-fill existing records and enforce NOT NULL on required fields
+update recent_avalanches set trigger = 'unknown' where trigger is null;
+alter table recent_avalanches alter column trigger set not null;
+
+update recent_avalanches set type = 'unknown' where type is null;
+alter table recent_avalanches alter column type set not null;
+
+update recent_avalanches set size = 1 where size is null;
+alter table recent_avalanches alter column size set not null;
+
+update recent_avalanches set quantity = 1 where quantity is null;
+alter table recent_avalanches alter column quantity set not null;

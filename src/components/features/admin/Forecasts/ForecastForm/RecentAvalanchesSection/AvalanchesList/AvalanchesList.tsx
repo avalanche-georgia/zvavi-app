@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import type { Avalanche } from '@domain/types'
+import type { Avalanche, AvalancheFormData } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import AvalancheItem from './AvalancheItem'
@@ -7,6 +7,11 @@ import type { AvalancheFormState } from '../../common'
 import { AvalancheForm, type AvalancheFormProps } from '../AvalancheForm'
 
 type AvalancheWithLocalId = Avalanche & { localId: string }
+
+const toFormData = ({ date, ...rest }: AvalancheWithLocalId): AvalancheFormData => ({
+  ...rest,
+  date: date instanceof Date ? date : date ? new Date(date) : null,
+})
 
 type AvalanchesListProps = {
   avalanches: AvalancheWithLocalId[]
@@ -47,7 +52,11 @@ const AvalanchesList = ({
       {avalanches.map((avalanche) => (
         <li key={avalanche.localId}>
           {formState?.mode === 'edit' && formState.localId === avalanche.localId ? (
-            <AvalancheForm avalancheData={avalanche} onClose={onFormClose} onSave={onFormSave} />
+            <AvalancheForm
+              avalancheData={toFormData(avalanche)}
+              onClose={onFormClose}
+              onSave={onFormSave}
+            />
           ) : (
             <AvalancheItem
               avalanche={avalanche}

@@ -1,10 +1,10 @@
 import { type Dispatch, type SetStateAction, useCallback } from 'react'
 import { toOptions } from '@components/ui'
 import { avalancheProblemTypes, avalancheTriggers } from '@domain/constants'
-import type { Avalanche } from '@domain/types'
+import type { AvalancheFormData } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
-export const useAvalancheDetailsForm = (setData: Dispatch<SetStateAction<Avalanche>>) => {
+export const useAvalancheDetailsForm = (setData: Dispatch<SetStateAction<AvalancheFormData>>) => {
   const t = useTranslations()
 
   const typeOptions = [
@@ -23,7 +23,7 @@ export const useAvalancheDetailsForm = (setData: Dispatch<SetStateAction<Avalanc
   ]
 
   const handleChange = useCallback(
-    (field: keyof Avalanche) => (value: unknown) =>
+    (field: keyof AvalancheFormData) => (value: unknown) =>
       setData((prev) => ({ ...prev, [field]: value })),
     [setData],
   )

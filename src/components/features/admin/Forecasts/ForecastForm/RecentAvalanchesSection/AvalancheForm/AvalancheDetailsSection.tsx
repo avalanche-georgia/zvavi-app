@@ -1,15 +1,15 @@
 import { type Dispatch, type SetStateAction } from 'react'
 import { InputBlock, NumberInput, Select, Textarea } from '@components/ui'
-import type { Avalanche } from '@domain/types'
+import type { AvalancheFormData } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import LocationFields from './LocationFields'
 import { useAvalancheDetailsForm } from './useAvalancheDetailsForm'
 
 export type AvalancheDetailsSectionProps = {
-  data: Avalanche
+  data: AvalancheFormData
   errors?: { trigger?: string; type?: string }
-  setData: Dispatch<SetStateAction<Avalanche>>
+  setData: Dispatch<SetStateAction<AvalancheFormData>>
 }
 
 const AvalancheDetailsSection = ({ data, errors, setData }: AvalancheDetailsSectionProps) => {

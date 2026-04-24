@@ -1,22 +1,15 @@
 import { useCallback } from 'react'
 import { Checkbox } from '@components'
 import { DatePicker } from '@components/ui'
-import type { Avalanche } from '@domain/types'
+import type { AvalancheFormData } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import { InputBlock } from '../../common'
 
-const toDate = (value: Date | string | null): Date | null => {
-  if (!value) return null
-  if (value instanceof Date) return value
-
-  return new Date(value)
-}
-
 type DateSectionProps = {
-  data: Avalanche
+  data: AvalancheFormData
   error?: string
-  setData: React.Dispatch<React.SetStateAction<Avalanche>>
+  setData: React.Dispatch<React.SetStateAction<AvalancheFormData>>
 }
 
 const DateSection = ({ data, error, setData }: DateSectionProps) => {
@@ -49,7 +42,7 @@ const DateSection = ({ data, error, setData }: DateSectionProps) => {
         maxDate={new Date()}
         onChange={handleDateChange}
         showTime
-        value={toDate(data.date)}
+        value={data.date}
       />
       <Checkbox
         isChecked={data.isDateUnknown}

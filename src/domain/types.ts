@@ -73,7 +73,25 @@ export type Avalanche = {
   latitude: number | null
   location: string
   longitude: number | null
-  quantity: number | null
+  quantity: number
+  size: AvalancheSize
+  slabDepth: number | null
+  trigger: AvalancheTrigger
+  type: AvalancheType | 'unknown'
+  width: number | null
+}
+
+export type AvalancheFormData = {
+  id?: number
+  aspects: Aspects
+  date: Date | null
+  description: string
+  involvement: string
+  isDateUnknown: boolean
+  latitude: number | null
+  location: string
+  longitude: number | null
+  quantity: number
   size: AvalancheSize
   slabDepth: number | null
   trigger: AvalancheTrigger | null
