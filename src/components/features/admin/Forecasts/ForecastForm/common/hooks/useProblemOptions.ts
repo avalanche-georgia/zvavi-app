@@ -5,7 +5,7 @@ import {
   sensitivityLevelsSorted,
   trends,
 } from '@domain/constants'
-import type { AvalancheType } from '@domain/types'
+import type { AvalancheProblemType } from '@domain/types'
 import _range from 'lodash/range'
 import { useTranslations } from 'next-intl'
 
@@ -18,7 +18,7 @@ const useProblemOptions = () => {
     Object.values(avalancheProblemTypes),
     'common.avalancheTypes',
     t,
-  ) as { label: string; value: AvalancheType }[]
+  ) as { label: string; value: AvalancheProblemType }[]
 
   const avalancheSizeOptions = _range(1, 6).map((level) => ({ label: level, value: level }))
   const sensitivityOptions = generateOptions(

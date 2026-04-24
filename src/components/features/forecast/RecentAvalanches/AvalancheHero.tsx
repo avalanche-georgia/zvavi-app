@@ -23,7 +23,7 @@ const AvalancheHero = ({ avalanche }: { avalanche: Avalanche }) => {
   const dateDisplay = isDateUnknown
     ? t('forecast.sections.recentAvalanches.labels.dateUnknown')
     : date
-      ? format(date, dateFormat)
+      ? format(new Date(date), dateFormat)
       : null
 
   const typeIcon = type && type !== 'unknown' ? problemIcons[type] : null

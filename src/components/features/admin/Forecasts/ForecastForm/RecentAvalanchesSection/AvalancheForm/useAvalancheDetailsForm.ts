@@ -1,6 +1,6 @@
 import { type Dispatch, type SetStateAction, useCallback } from 'react'
 import { toOptions } from '@components/ui'
-import { avalancheProblemTypes, avalancheTriggers } from '@domain/constants'
+import { avalancheTriggers, avalancheTypes } from '@domain/constants'
 import type { AvalancheFormData } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
@@ -8,7 +8,7 @@ export const useAvalancheDetailsForm = (setData: Dispatch<SetStateAction<Avalanc
   const t = useTranslations()
 
   const typeOptions = [
-    ...toOptions(avalancheProblemTypes, (key) => t(`common.avalancheTypes.${key}`)),
+    ...toOptions(avalancheTypes, (key) => t(`common.avalancheTypes.${key}`)),
     { label: t('common.avalancheTypes.unknown'), value: 'unknown' },
   ]
 
@@ -35,7 +35,13 @@ export const useAvalancheDetailsForm = (setData: Dispatch<SetStateAction<Avalanc
 
         setData((prev) => ({
           ...prev,
-          [field]: isCoord ? (target.value === '' ? null : Number(target.value)) : target.value,
+          [field]: isCoord
+            ? target.value === ''
+              ? null
+              : Number.isFinite(Number(target.value))
+                ? Number(target.value)
+                : null
+            : target.value,
         }))
       },
     [setData],
