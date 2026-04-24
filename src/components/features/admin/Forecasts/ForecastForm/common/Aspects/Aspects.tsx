@@ -1,15 +1,17 @@
 import { useCallback } from 'react'
-import type { Aspect, Avalanche, ElevationZone, Problem } from '@domain/types'
+import type { Aspect, Avalanche, AvalancheFormData, ElevationZone, Problem } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import { AspectSelector } from './AspectSelector'
 import type { ProblemFormData } from '../../ProblemsSection/ProblemForm'
 import InputBlock from '../InputBlock'
 
-export type SetAspectsData = (value: React.SetStateAction<Problem | Avalanche>) => void
+export type SetAspectsData = (
+  value: React.SetStateAction<Problem | Avalanche | AvalancheFormData>,
+) => void
 
 type AspectsProps = {
-  data: ProblemFormData | Avalanche
+  data: ProblemFormData | Avalanche | AvalancheFormData
   setData: SetAspectsData
 }
 

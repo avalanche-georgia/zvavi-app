@@ -1,4 +1,4 @@
-import type { Avalanche, ForecastFormData } from '@domain/types'
+import type { AvalancheFormData, ForecastFormData } from '@domain/types'
 
 import type { ProblemFormData } from './ProblemsSection/ProblemForm'
 
@@ -41,7 +41,7 @@ export const initialProblemData: ProblemFormData = {
   type: undefined,
 }
 
-export const initialAvalancheData: Avalanche = {
+export const initialAvalancheData: AvalancheFormData = {
   aspects: {
     alpine: [],
     highAlpine: [],
@@ -49,6 +49,15 @@ export const initialAvalancheData: Avalanche = {
   },
   date: null,
   description: '',
+  involvement: '',
   isDateUnknown: false,
+  latitude: null,
+  location: '',
+  longitude: null,
+  quantity: 1,
   size: 1,
+  slabDepth: null,
+  trigger: null,
+  type: null,
+  width: null,
 }

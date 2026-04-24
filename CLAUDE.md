@@ -60,6 +60,31 @@ supabase/
 
 ---
 
+## Domain Model
+
+### Avalanche Types
+
+There are three distinct entities, all sharing the same base type vocabulary:
+
+- **Avalanche type** (`avalancheTypes`) — the canonical list of avalanche classifications (cornice, deepSlab, glide, etc.). Source of truth.
+- **Avalanche problem type** (`avalancheProblemTypes`) — alias of `avalancheTypes`. A problem represents "this type of avalanche *may* occur". Same set, different concept.
+- **Recent avalanche** — a recorded real-world event. Its `type` is `AvalancheType | 'unknown' | null` because the type of an actual event may be unidentified.
+
+In code:
+```ts
+// constants.ts
+export const avalancheTypes = { cornice: 'cornice', deepSlab: 'deepSlab', ... } as const
+export const avalancheProblemTypes = avalancheTypes  // alias — same data, clearer intent at import site
+
+// types.ts
+export type AvalancheType = keyof typeof avalancheTypes
+export type AvalancheProblemType = AvalancheType     // alias for problem context
+```
+
+Import `avalancheTypes` when working with avalanche events; import `avalancheProblemTypes` when working with forecast problems.
+
+---
+
 ## Key Patterns
 
 ### Data Flow

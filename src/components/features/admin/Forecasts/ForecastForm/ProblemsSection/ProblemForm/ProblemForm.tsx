@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from 'react'
 import { Textarea } from '@components/ui'
-import type { AvalancheProblemTypes, Problem } from '@domain/types'
+import type { AvalancheProblemType, Problem } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import type { ProblemTypeProps } from './ProblemType'
@@ -10,7 +10,7 @@ import ProblemType from './ProblemType'
 import { PropertiesSection } from './PropertiesSection'
 import { Aspects, AvalancheSize, Footer, type SetAspectsData } from '../../common'
 
-export type ProblemFormData = Omit<Problem, 'type'> & { type?: AvalancheProblemTypes }
+export type ProblemFormData = Omit<Problem, 'type'> & { type?: AvalancheProblemType }
 
 export type ProblemFormProps = {
   onClose: VoidFunction

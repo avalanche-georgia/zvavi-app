@@ -50,10 +50,31 @@ common:
     alpine: 'ალპური'
     subAlpine: 'ქვედა ალპური'
 
+  avalancheTypes:
+    cornice: 'ყინულის ქორნისი'
+    deepSlab: 'ღრმა ფენა'
+    glide: 'სრიალა'
+    looseDry: 'ფხვიერი მშრალი'
+    looseWet: 'ფხვიერი სველი'
+    persistentSlab: 'მუდმივი ფენა'
+    stormSlab: 'ქარიშხლის ფენა'
+    unknown: 'უცნობი'
+    wetSlab: 'სველი ფენა'
+    windSlab: 'ქარის ფენა'
+
+  avalancheTriggers:
+    explosives: 'ფეთქებადი'
+    natural: 'ბუნებრივი'
+    riderAccidental: 'მოთხილამური (შემთხვევითი)'
+    riderCut: 'მოთხილამური (განზრახ)'
+    unknown: 'უცნობი'
+    vehicle: 'სატრანსპორტო საშუალება'
+
   words:
     from: 'დან'
     overall: 'საერთო'
     to: 'მდე'
+    unknown: 'უცნობი'
 
   disclaimer:
     title: '⚠️ უარყოფა ⚠️'
