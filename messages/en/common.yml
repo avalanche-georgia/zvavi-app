@@ -62,6 +62,14 @@ common:
     wetSlab: 'Wet Slab'
     windSlab: 'Wind Slab'
 
+  avalancheTriggers:
+    explosives: 'Explosives'
+    natural: 'Natural'
+    riderAccidental: 'Rider (accidental)'
+    riderCut: 'Rider (intentional cut)'
+    unknown: 'Unknown'
+    vehicle: 'Vehicle'
+
   words:
     from: 'From'
     overall: 'Overall'

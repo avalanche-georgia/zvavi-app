@@ -62,6 +62,14 @@ common:
     wetSlab: 'სველი ფენა'
     windSlab: 'ქარის ფენა'
 
+  avalancheTriggers:
+    explosives: 'ფეთქებადი'
+    natural: 'ბუნებრივი'
+    riderAccidental: 'მოთხილამური (შემთხვევითი)'
+    riderCut: 'მოთხილამური (განზრახ)'
+    unknown: 'უცნობი'
+    vehicle: 'სატრანსპორტო საშუალება'
+
   words:
     from: 'დან'
     overall: 'საერთო'

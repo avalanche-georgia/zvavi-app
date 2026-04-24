@@ -88,7 +88,12 @@ forecast:
       title: 'ბოლო ზვავები'
       noAvalanches: 'ჯერ არაფერია დაფიქსირებული'
       labels:
+        dimensions: 'სიგანე / ფილის სიღრმე'
+        location: 'მდებარეობა'
+        quantity: 'რაოდენობა'
         size: 'ზომა'
+        trigger: 'ტრიგერი'
+        type: 'ტიპი'
     partners:
       title: 'პროგნოზი შესაძლებელი გახდა'
     snowpack:
