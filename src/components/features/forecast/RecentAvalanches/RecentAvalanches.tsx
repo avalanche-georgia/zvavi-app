@@ -1,3 +1,5 @@
+'use client'
+
 import Spoiler from '@components/shared/Spoiler'
 import type { Avalanche } from '@domain/types'
 import { useTranslations } from 'next-intl'
@@ -20,11 +22,10 @@ const RecentAvalanches = ({ avalanches }: { avalanches: Avalanche[] }) => {
 
   return (
     <Spoiler title={t('forecast.sections.recentAvalanches.title')}>
-      <ul>
-        {avalanches.map((avalanche, index) => (
+      <ul className="flex flex-col gap-3">
+        {avalanches.map((avalanche) => (
           <li key={avalanche.id}>
             <AvalancheItem avalanche={avalanche} />
-            {index < avalanches.length - 1 && <hr className="my-4 border-gray-300" />}
           </li>
         ))}
       </ul>

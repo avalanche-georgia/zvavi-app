@@ -1,12 +1,13 @@
 import { useCallback } from 'react'
 import { useBoolean } from '@components/hooks'
-import { ConfirmationDialog } from '@components/shared'
+import { ConfirmationDialog, MarkdownContent } from '@components/shared'
 import { dateFormat } from '@domain/constants'
 import type { Avalanche } from '@domain/types'
 import { format } from 'date-fns'
 import { useTranslations } from 'next-intl'
 
-import { ActionButtons, Aspects, PropertyWrapper } from '../../common/listItem'
+import AvalancheItemProperties from './AvalancheItemProperties'
+import { ActionButtons, Aspects } from '../../common/listItem'
 
 type AvalancheItemProps = {
   avalanche: Avalanche & { localId: string }
@@ -19,7 +20,7 @@ const AvalancheItem = ({ avalanche, canEdit, onDelete, onEdit }: AvalancheItemPr
   const t = useTranslations()
   const [isDeletionDialogOpen, { setFalse: closeDeletionDialog, setTrue: openDeletionDialog }] =
     useBoolean(false)
-  const { date, description, isDateUnknown, localId, size } = avalanche
+  const { date, description, isDateUnknown, localId } = avalanche
 
   const dateDisplay = isDateUnknown
     ? t('admin.forecast.form.recentAvalanches.labels.dateUnknown')
@@ -27,13 +28,8 @@ const AvalancheItem = ({ avalanche, canEdit, onDelete, onEdit }: AvalancheItemPr
       ? format(date, dateFormat)
       : null
 
-  const handleDelete = useCallback(() => {
-    onDelete(localId)
-  }, [onDelete, localId])
-
-  const handleEdit = useCallback(() => {
-    onEdit(localId)
-  }, [onEdit, localId])
+  const handleDelete = useCallback(() => onDelete(localId), [onDelete, localId])
+  const handleEdit = useCallback(() => onEdit(localId), [onEdit, localId])
 
   return (
     <>
@@ -43,13 +39,8 @@ const AvalancheItem = ({ avalanche, canEdit, onDelete, onEdit }: AvalancheItemPr
           <ActionButtons canEdit={canEdit} onDelete={openDeletionDialog} onEdit={handleEdit} />
         </div>
 
-        <div className="flex items-start gap-6">
-          <div className="flex-1">
-            <PropertyWrapper title={t('admin.forecast.form.common.labels.avalancheSize')}>
-              <p>{size}</p>
-            </PropertyWrapper>
-          </div>
-
+        <div className="mb-4 flex items-start gap-6">
+          <AvalancheItemProperties avalanche={avalanche} />
           <Aspects className="w-[355px]" item={avalanche} />
         </div>
 
@@ -58,7 +49,9 @@ const AvalancheItem = ({ avalanche, canEdit, onDelete, onEdit }: AvalancheItemPr
             <h4 className="mb-2 font-semibold">
               {t('admin.forecast.form.common.labels.description')}:
             </h4>
-            <p className="max-h-28 overflow-y-auto text-justify">{description}</p>
+            <div className="max-h-28 overflow-y-auto text-justify">
+              <MarkdownContent content={description} />
+            </div>
           </div>
         )}
       </div>

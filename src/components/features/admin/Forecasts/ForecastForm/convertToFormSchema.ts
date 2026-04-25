@@ -24,8 +24,6 @@ const convertToFormSchema = (data: ForecastFormData): ForecastFormSchema => ({
   recentAvalanches: data.forecastDetails.recentAvalanches.map((avalanche) => ({
     ...avalanche,
     date: toDate(avalanche.date),
-    id: avalanche.id != null ? Number(avalanche.id) : undefined,
-    isDateUnknown: avalanche.isDateUnknown ?? false,
   })),
   snowpack: data.baseFormData.snowpack,
   summary: data.baseFormData.summary,
