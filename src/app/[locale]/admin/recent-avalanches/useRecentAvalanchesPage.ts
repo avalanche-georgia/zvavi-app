@@ -70,7 +70,7 @@ const useRecentAvalanchesPage = () => {
     [updateFilters],
   )
 
-  const handleFiltersClear = useCallback(
+  const handleFiltersReset = useCallback(
     () => updateFilters({ dateFrom: null, dateTo: null }),
     [updateFilters],
   )
@@ -87,7 +87,7 @@ const useRecentAvalanchesPage = () => {
     onDateFromChange: handleDateFromChange,
     onDateModeChange: handleDateModeChange,
     onDateToChange: handleDateToChange,
-    onFiltersClear: handleFiltersClear,
+    onFiltersReset: handleFiltersReset,
     onPageChange: handlePageChange,
     page,
     totalPages,

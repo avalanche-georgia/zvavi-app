@@ -4,7 +4,7 @@ import type { AvalancheFormSchema } from './schema'
 
 const emptyAspects = { alpine: [], highAlpine: [], subAlpine: [] }
 
-const getInitialFormData = (avalanche: Avalanche): AvalancheFormSchema => ({
+const getInitialFormData = (avalanche: Partial<Avalanche>): AvalancheFormSchema => ({
   aspects: avalanche.aspects ?? emptyAspects,
   date: avalanche.date ? new Date(avalanche.date as string) : null,
   description: avalanche.description ?? '',

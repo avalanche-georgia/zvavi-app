@@ -7,39 +7,61 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslations } from 'next-intl'
 import { FormProvider, useForm } from 'react-hook-form'
 
+import useRecentAvalancheCreateFormSubmit from './hooks/useRecentAvalancheCreateFormSubmit'
 import useRecentAvalancheFormSubmit from './hooks/useRecentAvalancheFormSubmit'
 
 import FormFields from './FormFields'
 import getInitialFormData from './getInitialFormData'
 import { type AvalancheFormSchema, avalancheFormSchema } from './schema'
 
-type RecentAvalancheFormProps = {
+type EditProps = {
   avalanche: Avalanche & { id: number }
+  mode: 'edit'
+}
+
+type CreateProps = {
+  avalanche?: never
+  mode: 'create'
+}
+
+type RecentAvalancheFormProps = (EditProps | CreateProps) & {
   onCancel: VoidFunction
   onSuccess: VoidFunction
 }
 
-const RecentAvalancheForm = ({ avalanche, onCancel, onSuccess }: RecentAvalancheFormProps) => {
+const RecentAvalancheForm = ({
+  avalanche,
+  mode,
+  onCancel,
+  onSuccess,
+}: RecentAvalancheFormProps) => {
   const t = useTranslations()
 
   const form = useForm<AvalancheFormSchema>({
-    defaultValues: getInitialFormData(avalanche),
+    defaultValues: getInitialFormData(avalanche ?? {}),
     resolver: zodResolver(avalancheFormSchema),
   })
 
   useUnsavedChangesWarning(form.formState.isDirty)
 
-  const { handleSubmit } = useRecentAvalancheFormSubmit({
-    avalancheId: avalanche.id,
+  const { handleSubmit: handleEditSubmit } = useRecentAvalancheFormSubmit({
+    avalancheId: avalanche?.id ?? 0,
     onSuccess,
   })
+
+  const { handleSubmit: handleCreateSubmit } = useRecentAvalancheCreateFormSubmit({ onSuccess })
+
+  const handleSubmit = mode === 'edit' ? handleEditSubmit : handleCreateSubmit
+
+  const titleKey =
+    mode === 'edit' ? 'admin.recentAvalanches.title.edit' : 'admin.recentAvalanches.title.create'
 
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <FormProvider {...form}>
       <div className="rounded-lg bg-white shadow-sm">
         <section className="flex w-full flex-col gap-6 p-4 md:p-6">
-          <h2 className="text-xl font-semibold">{t('admin.recentAvalanches.title.edit')}</h2>
+          <h2 className="text-xl font-semibold">{t(titleKey)}</h2>
 
           <form className="flex w-full flex-col gap-6" onSubmit={form.handleSubmit(handleSubmit)}>
             <FormFields />

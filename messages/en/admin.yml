@@ -249,6 +249,7 @@ admin:
 
   recentAvalanches:
     title:
+      create: New Avalanche
       edit: Edit Avalanche
       list: Recent Avalanches
 
@@ -266,7 +267,7 @@ admin:
       total: 'Shown: {shown} of {total}'
 
     filters:
-      clear: Clear filters
+      reset: Reset filters
       dateMode:
         created: Created at
         occurred: Occurred at
@@ -297,4 +298,5 @@ admin:
         trigger: Select trigger
         type: Select type
       messages:
+        created: Avalanche created successfully.
         updated: Avalanche updated successfully.

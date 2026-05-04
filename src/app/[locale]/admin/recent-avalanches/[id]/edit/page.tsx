@@ -1,6 +1,6 @@
 'use client'
 
-import { RecentAvalancheForm } from '@components/features/admin/RecentAvalanches/RecentAvalancheForm'
+import { RecentAvalancheForm } from '@components/features/admin/RecentAvalanches'
 import { Spinner } from '@components/ui'
 import { useRecentAvalancheQuery } from '@data/hooks/recentAvalanches'
 import { useParams } from 'next/navigation'
@@ -46,6 +46,7 @@ const EditRecentAvalanchePage = () => {
   return (
     <RecentAvalancheForm
       avalanche={avalanche as typeof avalanche & { id: number }}
+      mode="edit"
       onCancel={handleBack}
       onSuccess={handleBack}
     />

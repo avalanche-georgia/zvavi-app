@@ -21,6 +21,7 @@ const sectionTitles: Record<string, SectionTitles> = {
     main: 'admin.sidebar.partners',
   },
   'recent-avalanches': {
+    create: 'admin.recentAvalanches.title.create',
     edit: 'admin.recentAvalanches.title.edit',
     main: 'admin.recentAvalanches.title.list',
   },

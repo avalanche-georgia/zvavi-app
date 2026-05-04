@@ -8,10 +8,10 @@ type RecentAvalanchesFiltersProps = {
   dateFrom: Date | null
   dateMode: DateMode
   dateTo: Date | null
-  onClear: VoidFunction
   onDateFromChange: (date: Date | null) => void
   onDateModeChange: (mode: DateMode) => void
   onDateToChange: (date: Date | null) => void
+  onReset: VoidFunction
 }
 
 const today = new Date()
@@ -20,10 +20,10 @@ const RecentAvalanchesFilters = ({
   dateFrom,
   dateMode,
   dateTo,
-  onClear,
   onDateFromChange,
   onDateModeChange,
   onDateToChange,
+  onReset,
 }: RecentAvalanchesFiltersProps) => {
   const t = useTranslations()
 
@@ -44,7 +44,7 @@ const RecentAvalanchesFilters = ({
 
       <div className="flex items-center gap-2">
         <DatePicker
-          className="w-42"
+          className="h-9 w-42"
           isClearable
           maxDate={dateTo ?? today}
           onChange={onDateFromChange}
@@ -55,7 +55,7 @@ const RecentAvalanchesFilters = ({
 
       <div className="flex items-center gap-2">
         <DatePicker
-          className="w-42"
+          className="h-9 w-42"
           isClearable
           maxDate={today}
           minDate={dateFrom ?? undefined}
@@ -66,8 +66,8 @@ const RecentAvalanchesFilters = ({
       </div>
 
       {hasFilters && (
-        <Button onClick={onClear} variant="secondary">
-          {t('admin.recentAvalanches.filters.clear')}
+        <Button onClick={onReset} variant="outline">
+          {t('admin.recentAvalanches.filters.reset')}
         </Button>
       )}
     </div>

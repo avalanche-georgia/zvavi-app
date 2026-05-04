@@ -249,6 +249,7 @@ admin:
 
   recentAvalanches:
     title:
+      create: ახალი ზვავი
       edit: ზვავის რედაქტირება
       list: ბოლო ზვავები
 
@@ -266,7 +267,7 @@ admin:
       total: "ნაჩვენებია: {shown} / {total}"
 
     filters:
-      clear: ფილტრების გასუფთავება
+      reset: ფილტრების გადატვირთვა
       dateMode:
         created: შექმნის თარიღი
         occurred: მოვლენის თარიღი
@@ -297,4 +298,5 @@ admin:
         trigger: აირჩიეთ გამომწვევი
         type: აირჩიეთ სახეობა
       messages:
+        created: ზვავი წარმატებით დაემატა.
         updated: ზვავი წარმატებით განახლდა.
