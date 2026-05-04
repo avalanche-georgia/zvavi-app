@@ -23,6 +23,10 @@ export const routes = {
       new: '/admin/partners/new',
       root: '/admin/partners',
     },
+    recentAvalanches: {
+      edit: (id: number) => `/admin/recent-avalanches/${id}/edit`,
+      root: '/admin/recent-avalanches',
+    },
     root: '/admin',
   },
   auth: {

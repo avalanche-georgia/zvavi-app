@@ -5,6 +5,7 @@ common:
     confirm: 'Confirm'
     continue: 'Continue'
     delete: 'Delete'
+    edit: 'Edit'
     getInTouch: 'Get in Touch'
     learnMore: 'Learn More'
     open: 'Open'

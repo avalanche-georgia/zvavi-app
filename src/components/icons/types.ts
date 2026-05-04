@@ -4,6 +4,7 @@ export type IconName =
   | 'atSign'
   | 'check'
   | 'chevronDown'
+  | 'chevronLeft'
   | 'chevronRight'
   | 'circleAlert'
   | 'circleCheck'

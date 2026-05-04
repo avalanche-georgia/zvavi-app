@@ -7,6 +7,7 @@ admin:
     members: 'წევრები'
     menu: 'ადმინ მენიუ'
     partners: 'პარტნიორები'
+    recentAvalanches: 'ბოლო ზვავები'
     menuDescription: 'ადმინისტრაციული სანავიგაციო მენიუ'
     openMenu: 'მენიუს გახსნა'
     closeMenu: 'მენიუს დახურვა'
@@ -245,3 +246,55 @@ admin:
             riderAccidental: 'მოთხილამური (შემთხვევითი)'
             riderCut: 'მოთხილამური (განზრახ)'
             vehicle: 'სატრანსპორტო საშუალება'
+
+  recentAvalanches:
+    title:
+      edit: ზვავის რედაქტირება
+      list: ბოლო ზვავები
+
+    list:
+      columns:
+        actions: მოქმედებები
+        createdAt: შექმნილია
+        date: თარიღი
+        description: აღწერა
+        location: ადგილმდებარეობა
+        size: ზომა
+        trigger: გამომწვევი
+        type: სახეობა
+      empty: ზვავის ჩანაწერები არ მოიძებნა.
+      total: "ნაჩვენებია: {shown} / {total}"
+
+    filters:
+      clear: ფილტრების გასუფთავება
+      dateMode:
+        created: შექმნის თარიღი
+        occurred: მოვლენის თარიღი
+      placeholder: აირჩიეთ თარიღის დიაპაზონი
+
+    pagination:
+      page: "გვ. {current} / {total}"
+
+    actions:
+      deleteDescription: ეს ჩანაწერი სამუდამოდ წაიშლება.
+      deleteTitle: ზვავის წაშლა
+
+    form:
+      labels:
+        description: აღწერა
+        involvement: ჩართულობა
+        isDateUnknown: თარიღი უცნობია
+        latitude: განედი
+        location: ადგილი
+        longitude: გრძედი
+        quantity: რაოდენობა
+        size: ზომა
+        slabDepth: ფილის სისქე (სმ)
+        trigger: გამომწვევი
+        type: სახეობა
+        width: სიგანე (მ)
+      placeholders:
+        trigger: აირჩიეთ გამომწვევი
+        type: აირჩიეთ სახეობა
+      messages:
+        updated: ზვავი წარმატებით განახლდა.

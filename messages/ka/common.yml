@@ -5,6 +5,7 @@ common:
     confirm: 'დადასტურება'
     continue: 'გაგრძელება'
     delete: 'წაშლა'
+    edit: 'რედაქტირება'
     getInTouch: 'დაგვიკავშირდით'
     learnMore: 'გაიგეთ მეტი'
     open: 'გახსნა'
