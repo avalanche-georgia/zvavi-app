@@ -252,6 +252,7 @@ admin:
       create: New Avalanche
       edit: Edit Avalanche
       list: Recent Avalanches
+    notFound: Avalanche not found.
 
     list:
       columns:

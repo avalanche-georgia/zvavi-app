@@ -252,6 +252,7 @@ admin:
       create: ახალი ზვავი
       edit: ზვავის რედაქტირება
       list: ბოლო ზვავები
+    notFound: ზვავი ვერ მოიძებნა.
 
     list:
       columns:

@@ -1,6 +1,7 @@
 common:
   actions:
     add: 'დამატება'
+    backToList: 'სიაში დაბრუნება'
     cancel: 'გაუქმება'
     confirm: 'დადასტურება'
     continue: 'გაგრძელება'

@@ -1,6 +1,7 @@
 import { supabase } from '@data'
 import { recentAvalanchesKeys } from '@data/query-keys'
 import type { Avalanche } from '@domain/types'
+import type { UseQueryOptions } from '@tanstack/react-query'
 
 import { useQuery } from '@/tanstack-query/hooks'
 
@@ -17,8 +18,16 @@ const fetchRecentAvalanche = async (id: number): Promise<Avalanche | null> => {
   return convertSnakeToCamel(data) as Avalanche
 }
 
-const useRecentAvalancheQuery = (id: number) =>
-  useQuery<Avalanche | null, Error>({
+type QueryKey = ReturnType<typeof recentAvalanchesKeys.item>
+
+type QueryOptions = Omit<
+  UseQueryOptions<Avalanche | null, Error, Avalanche | null, QueryKey>,
+  'queryFn' | 'queryKey'
+> & { id: number }
+
+const useRecentAvalancheQuery = ({ id, ...options }: QueryOptions) =>
+  useQuery({
+    ...options,
     queryFn: () => fetchRecentAvalanche(id),
     queryKey: recentAvalanchesKeys.item(id),
   })

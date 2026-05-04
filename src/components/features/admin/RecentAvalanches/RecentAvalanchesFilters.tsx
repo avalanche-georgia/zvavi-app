@@ -35,35 +35,31 @@ const RecentAvalanchesFilters = ({
   ]
 
   return (
-    <div className="mb-4 flex flex-wrap items-center gap-4 rounded-sm border bg-white p-3 shadow-sm">
+    <div className="flex flex-wrap items-center gap-4">
       <RadioGroup
         onChange={(value) => onDateModeChange(value as DateMode)}
         options={dateModeOptions}
         value={dateMode}
       />
 
-      <div className="flex items-center gap-2">
-        <DatePicker
-          className="h-9 w-42"
-          isClearable
-          maxDate={dateTo ?? today}
-          onChange={onDateFromChange}
-          placeholder={t('common.words.from')}
-          value={dateFrom}
-        />
-      </div>
+      <DatePicker
+        className="h-9 w-42"
+        isClearable
+        maxDate={dateTo ?? today}
+        onChange={onDateFromChange}
+        placeholder={t('common.words.from')}
+        value={dateFrom}
+      />
 
-      <div className="flex items-center gap-2">
-        <DatePicker
-          className="h-9 w-42"
-          isClearable
-          maxDate={today}
-          minDate={dateFrom ?? undefined}
-          onChange={onDateToChange}
-          placeholder={t('common.words.to')}
-          value={dateTo}
-        />
-      </div>
+      <DatePicker
+        className="h-9 w-42"
+        isClearable
+        maxDate={today}
+        minDate={dateFrom ?? undefined}
+        onChange={onDateToChange}
+        placeholder={t('common.words.to')}
+        value={dateTo}
+      />
 
       {hasFilters && (
         <Button onClick={onReset} variant="outline">

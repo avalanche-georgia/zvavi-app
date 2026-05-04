@@ -32,31 +32,35 @@ const RecentAvalanchesContainer = () => {
 
   return (
     <>
-      <ButtonLink className="mb-4 ml-auto" href={routes.admin.recentAvalanches.new}>
-        <Icon icon="plus" size="sm" />
-        {t('admin.recentAvalanches.title.create')}
-      </ButtonLink>
+      <div className="sticky top-0 z-10 flex items-center justify-between gap-4 border-b bg-white px-4 py-3 md:px-6">
+        <RecentAvalanchesFilters
+          dateFrom={dateFrom}
+          dateMode={dateMode}
+          dateTo={dateTo}
+          onDateFromChange={onDateFromChange}
+          onDateModeChange={onDateModeChange}
+          onDateToChange={onDateToChange}
+          onReset={onFiltersReset}
+        />
 
-      <RecentAvalanchesFilters
-        dateFrom={dateFrom}
-        dateMode={dateMode}
-        dateTo={dateTo}
-        onDateFromChange={onDateFromChange}
-        onDateModeChange={onDateModeChange}
-        onDateToChange={onDateToChange}
-        onReset={onFiltersReset}
-      />
+        <ButtonLink href={routes.admin.recentAvalanches.new}>
+          <Icon icon="plus" size="sm" />
+          {t('admin.recentAvalanches.title.create')}
+        </ButtonLink>
+      </div>
 
-      <RecentAvalanchesTable
-        avalanches={avalanches}
-        grandTotal={grandTotal}
-        isPending={isPending}
-        paginationProps={{
-          currentPage: page,
-          onPageChange,
-          totalPages,
-        }}
-      />
+      <div className="p-4 md:p-6">
+        <RecentAvalanchesTable
+          avalanches={avalanches}
+          grandTotal={grandTotal}
+          isPending={isPending}
+          paginationProps={{
+            currentPage: page,
+            onPageChange,
+            totalPages,
+          }}
+        />
+      </div>
     </>
   )
 }

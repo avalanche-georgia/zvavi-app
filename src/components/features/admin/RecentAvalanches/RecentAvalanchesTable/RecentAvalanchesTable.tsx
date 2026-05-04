@@ -14,10 +14,12 @@ const RecentAvalanchesTable = ({
   isPending,
   paginationProps,
 }: RecentAvalanchesTableProps) => (
-  <div className="flex max-h-[calc(100vh-14rem)] w-full flex-col overflow-hidden rounded-sm border bg-white shadow-sm">
+  <div className="relative flex max-h-[calc(100vh-14rem)] w-full flex-col overflow-hidden rounded-sm border bg-white shadow-sm">
     <TableHeader />
     {isPending ? (
-      <Spinner size="lg" />
+      <div className="flex h-screen items-center justify-center">
+        <Spinner />
+      </div>
     ) : (
       <>
         <TableContent avalanches={avalanches} />

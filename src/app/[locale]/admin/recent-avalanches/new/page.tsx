@@ -12,7 +12,11 @@ const NewRecentAvalanchePage = () => {
     router.push(routes.admin.recentAvalanches.root)
   }
 
-  return <RecentAvalancheForm mode="create" onCancel={handleBack} onSuccess={handleBack} />
+  return (
+    <div className="p-4 md:p-6">
+      <RecentAvalancheForm mode="create" onCancel={handleBack} onSuccess={handleBack} />
+    </div>
+  )
 }
 
 export default NewRecentAvalanchePage

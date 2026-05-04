@@ -6,7 +6,7 @@ import { useRecentAvalanchesPaginatedQuery } from '@data/hooks/recentAvalanches'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'src/i18n/navigation'
 
-const pageSize = 20
+const pageSize = 15
 
 const useRecentAvalanchesPage = () => {
   const router = useRouter()
