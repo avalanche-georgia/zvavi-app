@@ -1,5 +1,7 @@
+import type { IconName } from '@components/icons'
+
 export type NavItem = {
   href: string
-  icon: 'cloudSnow' | 'handshake' | 'home' | 'users'
+  icon: IconName
   label: string
 }

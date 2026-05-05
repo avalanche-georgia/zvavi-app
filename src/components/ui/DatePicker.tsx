@@ -86,6 +86,7 @@ const DatePicker = ({
           mode="single"
           onSelect={handleSelect}
           selected={value ?? undefined}
+          showOutsideDays={false}
         />
         {showTime && <DatePickerTimeInput onChange={onChange} value={value} />}
       </PopoverContent>

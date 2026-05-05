@@ -1,10 +1,12 @@
 common:
   actions:
     add: 'Add'
+    backToList: 'Back to List'
     cancel: 'Cancel'
     confirm: 'Confirm'
     continue: 'Continue'
     delete: 'Delete'
+    edit: 'Edit'
     getInTouch: 'Get in Touch'
     learnMore: 'Learn More'
     open: 'Open'
