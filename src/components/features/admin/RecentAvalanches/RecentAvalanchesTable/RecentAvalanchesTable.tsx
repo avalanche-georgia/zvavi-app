@@ -1,6 +1,6 @@
 'use client'
 
-import { Spinner } from 'src/components/ui'
+import { Spinner } from '@components/ui'
 
 import TableContent from './TableContent'
 import TableFooter, { type TableFooterProps } from './TableFooter'

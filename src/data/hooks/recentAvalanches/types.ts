@@ -3,7 +3,6 @@ import type { Avalanche } from '@domain/types'
 export type DateMode = 'occurred' | 'created'
 
 export type ListFilterParams = {
-  createdTo?: string
   dateFrom?: string
   dateTo?: string
   dateMode: DateMode

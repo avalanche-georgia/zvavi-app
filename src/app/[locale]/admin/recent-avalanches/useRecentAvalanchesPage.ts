@@ -76,6 +76,11 @@ const useRecentAvalanchesPage = () => {
   )
 
   const totalPages = data ? Math.max(1, Math.ceil(data.totalCount / pageSize)) : 1
+  const clampedPage = Math.min(page, totalPages)
+
+  if (!isPending && data && clampedPage !== page) {
+    updateParams({ page: String(clampedPage) })
+  }
 
   return {
     avalanches: data?.avalanches ?? [],
@@ -89,7 +94,7 @@ const useRecentAvalanchesPage = () => {
     onDateToChange: handleDateToChange,
     onFiltersReset: handleFiltersReset,
     onPageChange: handlePageChange,
-    page,
+    page: clampedPage,
     totalPages,
   }
 }
