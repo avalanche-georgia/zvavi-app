@@ -44,6 +44,9 @@ A password-protected back-office for the forecasting team.
 ### Forecast Authoring
 Forecasters can create, edit, duplicate, and publish forecasts through a structured form covering all hazard levels, problem types, and narrative fields. Drafts are invisible to the public until explicitly published.
 
+### Recent Avalanche Catalog
+Administrators can browse all recorded avalanche observations in a paginated table, filter by occurrence or creation date, and edit or delete individual records directly — without going through a forecast.
+
 ### Member Management
 Administrators can manage the team roster: add members, update their status (active, inactive, pending, suspended, expired), set membership validity dates, and generate or view their verification QR codes.
 
