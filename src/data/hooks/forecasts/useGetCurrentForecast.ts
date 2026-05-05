@@ -1,5 +1,5 @@
 import { supabase } from '@data'
-import type { Forecast, FullForecast } from '@domain/types'
+import type { Forecast, FullForecast, RegionId } from '@domain/types'
 import type { QueryFunctionContext, UseQueryOptions } from '@tanstack/react-query'
 
 import { useQuery } from '@/tanstack-query/hooks'
@@ -13,13 +13,13 @@ type Response = Forecast | FullForecast | undefined
 const fetchCurrentForecast = async ({
   queryKey,
 }: QueryFunctionContext<QueryKey>): Promise<Response> => {
-  const [, , variables] = queryKey
+  const [, regionId, , variables] = queryKey
 
-  // Get latest published forecast
   const { data: forecastData, error: forecastError } = await supabase
     .from('forecasts')
     .select()
     .eq('status', 'published')
+    .eq('region_id', regionId)
     .order('created_at', { ascending: false })
     .limit(1)
 
@@ -65,20 +65,20 @@ const fetchCurrentForecast = async ({
 type QueryOptions = Omit<
   UseQueryOptions<Response, unknown, Response, QueryKey>,
   'queryKey' | 'queryFn'
-> & { isShort?: boolean }
+> & { isShort?: boolean; regionId: RegionId }
 
 function useGetCurrentForecast(
-  options: { isShort: true } & Partial<QueryOptions>,
+  options: { isShort: true; regionId: RegionId } & Partial<QueryOptions>,
 ): ReturnType<typeof useQuery<Forecast | undefined>>
 
 function useGetCurrentForecast(
-  options?: { isShort?: false } & Partial<QueryOptions>,
+  options: { isShort?: false; regionId: RegionId } & Partial<QueryOptions>,
 ): ReturnType<typeof useQuery<FullForecast | undefined>>
 
-function useGetCurrentForecast({ isShort = false, ...options }: Partial<QueryOptions> = {}) {
+function useGetCurrentForecast({ isShort = false, regionId, ...options }: QueryOptions) {
   return useQuery({
     queryFn: fetchCurrentForecast,
-    queryKey: forecastsKeys.current({ isShort }),
+    queryKey: forecastsKeys.current(regionId, { isShort }),
     ...options,
   })
 }

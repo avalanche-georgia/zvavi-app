@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { useToast } from '@components/hooks'
 import { useForecastCreate, useForecastUpdate } from '@data/hooks/forecasts'
-import type { ForecastFormData } from '@domain/types'
+import type { ForecastFormData, RegionId } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import type { ForecastFormSchema } from '../schema'
@@ -9,9 +9,14 @@ import type { ForecastFormSchema } from '../schema'
 export type UseForecastFormSubmitArgs = {
   initialForecastId: ForecastFormData['baseFormData']['id']
   onSuccess: VoidFunction
+  regionId: RegionId
 }
 
-const useForecastFormSubmit = ({ initialForecastId, onSuccess }: UseForecastFormSubmitArgs) => {
+const useForecastFormSubmit = ({
+  initialForecastId,
+  onSuccess,
+  regionId,
+}: UseForecastFormSubmitArgs) => {
   const t = useTranslations()
   const { mutateAsync: createForecast } = useForecastCreate()
   const { mutateAsync: updateForecast } = useForecastUpdate()
@@ -47,6 +52,7 @@ const useForecastFormSubmit = ({ initialForecastId, onSuccess }: UseForecastForm
           forecaster,
           hazardLevels,
           id: initialForecastId,
+          regionId,
           snowpack,
           summary,
           validUntil: validUntil?.toISOString() ?? null,
@@ -75,7 +81,16 @@ const useForecastFormSubmit = ({ initialForecastId, onSuccess }: UseForecastForm
         toastError('useForecastFormSubmit | handleSubmit', { error })
       }
     },
-    [createForecast, initialForecastId, onSuccess, t, toastError, toastSuccess, updateForecast],
+    [
+      createForecast,
+      initialForecastId,
+      onSuccess,
+      regionId,
+      t,
+      toastError,
+      toastSuccess,
+      updateForecast,
+    ],
   )
 
   return { handleSubmit }

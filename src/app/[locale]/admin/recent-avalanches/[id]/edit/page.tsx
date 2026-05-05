@@ -4,6 +4,7 @@ import { RecentAvalancheForm } from '@components/features/admin/RecentAvalanches
 import { ButtonLink } from '@components/shared'
 import { Spinner } from '@components/ui'
 import { useRecentAvalancheQuery } from '@data/hooks/recentAvalanches'
+import { regionIds } from '@domain/constants'
 import { useParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'src/i18n/navigation'
@@ -18,7 +19,13 @@ const EditRecentAvalanchePage = () => {
   const id = Number(params.id)
   const isValidId = id > 0 && !Number.isNaN(id)
 
-  const { data: avalanche, isPending } = useRecentAvalancheQuery({ enabled: isValidId, id })
+  // TODO(PR 3): replace with regionId from admin route/context
+  const regionIdMock = regionIds.gudauri
+  const { data: avalanche, isPending } = useRecentAvalancheQuery({
+    enabled: isValidId,
+    id,
+    regionId: regionIdMock,
+  })
 
   const handleBack = () => {
     router.push(routes.admin.recentAvalanches.root)

@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useState } from 'react'
 import { Button, Modal, ModalBody, ModalFooter, Spinner } from '@components/ui'
 import { useAllRecentAvalanchesQuery } from '@data/hooks/forecasts'
+import { regionIds } from '@domain/constants'
 import type { Avalanche } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
@@ -22,7 +23,12 @@ const AvalanchePickerModal = ({
   const t = useTranslations()
   const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set())
 
-  const { data: avalanches = [], isLoading } = useAllRecentAvalanchesQuery({ enabled: isOpen })
+  // TODO(PR 3): replace with regionId from forecast form context
+  const regionIdMock = regionIds.gudauri
+  const { data: avalanches = [], isLoading } = useAllRecentAvalanchesQuery({
+    enabled: isOpen,
+    regionId: regionIdMock,
+  })
 
   const availableAvalanches = useMemo(
     () =>

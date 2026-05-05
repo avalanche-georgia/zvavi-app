@@ -1,3 +1,5 @@
+import type { RegionId } from '@domain/types'
+
 import type {
   CurrentForecastQueryVariables,
   ForecastQueryVariables,
@@ -6,11 +8,14 @@ import type {
 const forecastsKeys = {
   all: ['forecastsKeys'] as const,
 
-  allAvalanches: () => [...forecastsKeys.all, 'allAvalanches'] as const,
-  current: (variables: CurrentForecastQueryVariables) =>
-    [...forecastsKeys.all, 'current', variables] as const,
-  item: (variables: ForecastQueryVariables) => [...forecastsKeys.all, 'item', variables] as const,
-  list: () => [...forecastsKeys.all, 'list'] as const,
+  allAvalanches: (regionId: RegionId) =>
+    [...forecastsKeys.byRegion(regionId), 'allAvalanches'] as const,
+  byRegion: (regionId: RegionId) => [...forecastsKeys.all, regionId] as const,
+  current: (regionId: RegionId, variables: CurrentForecastQueryVariables) =>
+    [...forecastsKeys.byRegion(regionId), 'current', variables] as const,
+  item: (regionId: RegionId, variables: ForecastQueryVariables) =>
+    [...forecastsKeys.byRegion(regionId), 'item', variables] as const,
+  list: (regionId: RegionId) => [...forecastsKeys.byRegion(regionId), 'list'] as const,
 }
 
 export default forecastsKeys

@@ -17,7 +17,7 @@ const useForecastDelete = () => {
   return useMutation<void, Error, Forecast['id']>({
     mutationFn: deleteForecast,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: forecastsKeys.list() })
+      queryClient.invalidateQueries({ queryKey: forecastsKeys.all })
     },
   })
 }

@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { convertCamelToSnake, handleSupabaseError } from '../../helpers'
 
 const createRecentAvalanche = async (formData: AvalancheFormData): Promise<void> => {
+  if (!formData.regionId) throw new Error('regionId is required to create a recent avalanche')
   const { error } = await supabase.from('recent_avalanches').insert(convertCamelToSnake(formData))
 
   handleSupabaseError(error)

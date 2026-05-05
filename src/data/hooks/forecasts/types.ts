@@ -1,10 +1,11 @@
-import type { Avalanche, Forecast, ForecastDetails, HazardLevels } from '@domain/types'
+import type { Forecast, ForecastDetails, HazardLevels, RegionId } from '@domain/types'
 
 type ForecastBaseData = {
   id?: Forecast['id']
   additionalHazards: string
   forecaster: string
   hazardLevels: HazardLevels
+  regionId: RegionId
   snowpack: string
   summary: string
   validUntil: string | null

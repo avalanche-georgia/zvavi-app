@@ -8,6 +8,8 @@ import { convertCamelToSnake, handleSupabaseError } from '../../helpers'
 type UpdatePayload = AvalancheFormData & { id: number }
 
 const updateRecentAvalanche = async ({ id, ...formData }: UpdatePayload): Promise<void> => {
+  if (!formData.regionId) throw new Error('regionId is required to update a recent avalanche')
+
   const { error } = await supabase
     .from('recent_avalanches')
     .update(convertCamelToSnake(formData))
@@ -23,7 +25,12 @@ const useRecentAvalancheUpdate = () => {
     mutationFn: updateRecentAvalanche,
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: recentAvalanchesKeys.all })
-      queryClient.invalidateQueries({ queryKey: recentAvalanchesKeys.item(variables.id) })
+
+      if (variables.regionId) {
+        queryClient.invalidateQueries({
+          queryKey: recentAvalanchesKeys.item(variables.regionId, variables.id),
+        })
+      }
     },
   })
 }

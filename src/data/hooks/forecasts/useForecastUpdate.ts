@@ -17,6 +17,8 @@ const updateForecast = async ({
   forecast,
   recentAvalanches,
 }: ForecastFormPayload): Promise<void> => {
+  if (!forecast.regionId) throw new Error('regionId is required to update a forecast')
+
   const { error: forecastError } = await supabase
     .from('forecasts')
     .upsert(convertCamelToSnake(forecast))

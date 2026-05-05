@@ -1,9 +1,10 @@
 import { supabase } from '@data'
 import { recentAvalanchesKeys } from '@data/query-keys'
+import type { RegionId } from '@domain/types'
 
 import { useQuery } from '@/tanstack-query/hooks'
 
-import type { AvalancheListItem } from './types'
+import type { AvalancheListItem, ListFilterParams } from './types'
 import { convertSnakeToCamel } from '../../helpers'
 
 type PaginatedResult = {
@@ -12,22 +13,17 @@ type PaginatedResult = {
   totalCount: number
 }
 
-type QueryParams = {
-  dateFrom?: string
-  dateTo?: string
-  dateMode: 'occurred' | 'created'
-  page: number
-  pageSize: number
-}
+type QueryParams = ListFilterParams & { regionId: RegionId }
 
 const fetchPaginatedAvalanches = async (params: QueryParams): Promise<PaginatedResult> => {
-  const { dateFrom, dateMode, dateTo, page, pageSize } = params
+  const { dateFrom, dateMode, dateTo, page, pageSize, regionId } = params
   const offset = (page - 1) * pageSize
   const dateField = dateMode === 'created' ? 'created_at' : 'date'
 
   let avalanchesQuery = supabase
     .from('recent_avalanches')
     .select('*, forecast_avalanche(forecast_id)', { count: 'exact' })
+    .eq('region_id', regionId)
     .order('created_at', { ascending: false })
 
   if (dateFrom) avalanchesQuery = avalanchesQuery.gte(dateField, dateFrom)
@@ -37,7 +33,10 @@ const fetchPaginatedAvalanches = async (params: QueryParams): Promise<PaginatedR
 
   const [{ count, data, error }, { count: grandTotal, error: totalError }] = await Promise.all([
     avalanchesQuery,
-    supabase.from('recent_avalanches').select('*', { count: 'exact', head: true }),
+    supabase
+      .from('recent_avalanches')
+      .select('*', { count: 'exact', head: true })
+      .eq('region_id', regionId),
   ])
 
   if (error) throw new Error(error.message)
@@ -50,10 +49,13 @@ const fetchPaginatedAvalanches = async (params: QueryParams): Promise<PaginatedR
   } as PaginatedResult
 }
 
-const useRecentAvalanchesPaginatedQuery = (params: QueryParams) =>
-  useQuery<PaginatedResult, Error>({
+const useRecentAvalanchesPaginatedQuery = (params: QueryParams) => {
+  const { regionId, ...filterParams } = params
+
+  return useQuery<PaginatedResult, Error>({
     queryFn: () => fetchPaginatedAvalanches(params),
-    queryKey: recentAvalanchesKeys.list(params),
+    queryKey: recentAvalanchesKeys.list(regionId, filterParams),
   })
+}
 
 export default useRecentAvalanchesPaginatedQuery

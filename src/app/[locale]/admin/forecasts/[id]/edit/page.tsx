@@ -3,6 +3,7 @@
 import { ForecastForm, getInitialFormData } from '@components/features/admin/Forecasts/ForecastForm'
 import { Spinner } from '@components/ui'
 import { useAdminGetForecast } from '@data/hooks/forecasts'
+import { regionIds } from '@domain/constants'
 import { useParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'src/i18n/navigation'
@@ -25,7 +26,9 @@ const EditForecastPage = () => {
 
   const forecastId = Number(params.id)
 
-  const { data: forecast, isPending } = useAdminGetForecast({ forecastId })
+  // TODO(PR 3): replace with regionId from admin route/context
+  const regionIdMock = regionIds.gudauri
+  const { data: forecast, isPending } = useAdminGetForecast({ forecastId, regionId: regionIdMock })
 
   const handleCancel = () => {
     router.push(routes.admin.forecasts.root)

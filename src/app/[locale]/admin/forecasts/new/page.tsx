@@ -3,6 +3,7 @@
 import { ForecastForm, getInitialFormData } from '@components/features/admin/Forecasts/ForecastForm'
 import { Spinner } from '@components/ui'
 import { useAdminGetForecast } from '@data/hooks/forecasts'
+import { regionIds } from '@domain/constants'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'src/i18n/navigation'
 
@@ -16,6 +17,9 @@ const NewForecastPage = () => {
   const isValidDuplicateId =
     parsedDuplicateId !== null && !Number.isNaN(parsedDuplicateId) && parsedDuplicateId > 0
 
+  // TODO(PR 3): replace with regionId from admin route/context
+  const regionIdMock = regionIds.gudauri
+
   const {
     data: sourceForecast,
     isError,
@@ -23,6 +27,7 @@ const NewForecastPage = () => {
   } = useAdminGetForecast({
     enabled: isValidDuplicateId,
     forecastId: parsedDuplicateId ?? 0,
+    regionId: regionIdMock,
   })
 
   const handleCancel = () => {

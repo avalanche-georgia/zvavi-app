@@ -2,6 +2,7 @@
 
 import { useToast, useUnsavedChangesWarning } from '@components/hooks'
 import { Button, TextInput } from '@components/ui'
+import { regionIds } from '@domain/constants'
 import type { ForecastFormData } from '@domain/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslations } from 'next-intl'
@@ -42,9 +43,12 @@ const ForecastForm = ({ initialFormData, onCancel, onSuccess }: ForecastFormProp
 
   useUnsavedChangesWarning(isDirty)
 
+  // TODO(PR 3): replace with regionId from admin route/context
+  const regionIdMock = regionIds.gudauri
   const { handleSubmit } = useForecastFormSubmit({
     initialForecastId: initialFormData.baseFormData.id,
     onSuccess,
+    regionId: regionIdMock,
   })
 
   const onSubmit = () => {
