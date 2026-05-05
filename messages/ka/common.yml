@@ -1,10 +1,12 @@
 common:
   actions:
     add: 'დამატება'
+    backToList: 'სიაში დაბრუნება'
     cancel: 'გაუქმება'
     confirm: 'დადასტურება'
     continue: 'გაგრძელება'
     delete: 'წაშლა'
+    edit: 'რედაქტირება'
     getInTouch: 'დაგვიკავშირდით'
     learnMore: 'გაიგეთ მეტი'
     open: 'გახსნა'
