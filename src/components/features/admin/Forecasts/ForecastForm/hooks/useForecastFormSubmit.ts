@@ -62,6 +62,7 @@ const useForecastFormSubmit = ({
         recentAvalanches: recentAvalanches.map(({ createdAt, ...rest }) => ({
           ...rest,
           date: rest.date?.toISOString() ?? null,
+          regionId,
         })),
       }
 

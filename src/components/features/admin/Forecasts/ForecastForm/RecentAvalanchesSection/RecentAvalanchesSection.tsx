@@ -32,7 +32,7 @@ const RecentAvalanchesSection = ({ forecastId }: { forecastId?: number }) => {
   const handleFormClose = useCallback(() => setFormState(null), [])
 
   const handleSubmit = useCallback(
-    (data: Avalanche) => {
+    (data: Omit<Avalanche, 'regionId'>) => {
       const prepared = { ...data, date: toDate(data.date) }
 
       if (formState?.mode === 'edit' && formState.localId) {

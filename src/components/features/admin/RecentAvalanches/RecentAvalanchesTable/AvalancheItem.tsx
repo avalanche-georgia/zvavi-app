@@ -5,6 +5,7 @@ import { ConfirmationDialog } from '@components/shared'
 import type { AvalancheListItem } from '@data/hooks/recentAvalanches'
 import { useRecentAvalancheDelete } from '@data/hooks/recentAvalanches'
 import { dateFormat } from '@domain/constants'
+import type { RegionId } from '@domain/types'
 import { format } from 'date-fns'
 import { useTranslations } from 'next-intl'
 
@@ -13,7 +14,12 @@ import DescriptionCellContent from './DescriptionCellContent'
 
 import { routes } from '@/routes'
 
-const AvalancheItem = ({ avalanche }: { avalanche: AvalancheListItem }) => {
+type AvalancheItemProps = {
+  avalanche: AvalancheListItem
+  regionId: RegionId
+}
+
+const AvalancheItem = ({ avalanche, regionId }: AvalancheItemProps) => {
   const t = useTranslations()
   const { mutateAsync: deleteAvalanche } = useRecentAvalancheDelete()
   const [isDeletionDialogOpen, { setFalse: closeDeletionDialog, setTrue: openDeletionDialog }] =
@@ -31,7 +37,7 @@ const AvalancheItem = ({ avalanche }: { avalanche: AvalancheListItem }) => {
 
   const handleDelete = async () => {
     try {
-      await deleteAvalanche(id)
+      await deleteAvalanche({ id, regionId })
       closeDeletionDialog()
       toastSuccess()
     } catch (error) {
@@ -59,7 +65,7 @@ const AvalancheItem = ({ avalanche }: { avalanche: AvalancheListItem }) => {
         </div>
         <div className="w-20 shrink-0">
           <ActionButtons
-            editHref={routes.admin.recentAvalanches.edit(id)}
+            editHref={routes.admin.recentAvalanches.editInRegion(id, regionId)}
             onDelete={openDeletionDialog}
           />
         </div>

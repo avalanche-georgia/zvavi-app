@@ -24,13 +24,11 @@ const useRecentAvalancheUpdate = () => {
   return useMutation<void, Error, UpdatePayload>({
     mutationFn: updateRecentAvalanche,
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: recentAvalanchesKeys.all })
+      const { regionId } = variables
 
-      if (variables.regionId) {
-        queryClient.invalidateQueries({
-          queryKey: recentAvalanchesKeys.item(variables.regionId, variables.id),
-        })
-      }
+      queryClient.invalidateQueries({
+        queryKey: regionId ? recentAvalanchesKeys.byRegion(regionId) : recentAvalanchesKeys.all,
+      })
     },
   })
 }

@@ -25,7 +25,11 @@ export const routes = {
     },
     recentAvalanches: {
       edit: (id: number) => `/admin/recent-avalanches/${id}/edit`,
+      editInRegion: (id: number, regionId: string) =>
+        `/admin/recent-avalanches/${id}/edit?regionId=${regionId}`,
+      listByRegion: (regionId: string) => `/admin/recent-avalanches?regionId=${regionId}`,
       new: '/admin/recent-avalanches/new',
+      newInRegion: (regionId: string) => `/admin/recent-avalanches/new?regionId=${regionId}`,
       root: '/admin/recent-avalanches',
     },
     root: '/admin',

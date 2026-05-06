@@ -4,9 +4,9 @@ import { useTranslations } from 'next-intl'
 
 import AvalancheItem from './AvalancheItem'
 import type { AvalancheFormState } from '../../common'
-import { AvalancheForm, type AvalancheFormProps } from '../AvalancheForm'
+import { AvalancheForm } from '../AvalancheForm'
 
-type AvalancheWithLocalId = Avalanche & { localId: string }
+type AvalancheWithLocalId = Omit<Avalanche, 'regionId'> & { localId: string }
 
 const toFormData = ({ date, ...rest }: AvalancheWithLocalId): AvalancheFormData => ({
   ...rest,
@@ -17,9 +17,9 @@ type AvalanchesListProps = {
   avalanches: AvalancheWithLocalId[]
   formState: AvalancheFormState
   onDelete: (localId: string) => void
-  onFormClose: AvalancheFormProps['onClose']
+  onFormClose: VoidFunction
   onFormOpen: (state: { mode: 'edit'; localId: string }) => void
-  onFormSave: AvalancheFormProps['onSave']
+  onFormSave: (data: Omit<Avalanche, 'regionId'>) => void
 }
 
 const AvalanchesList = ({

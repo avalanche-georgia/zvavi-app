@@ -5,15 +5,21 @@ import {
   RecentAvalanchesTable,
 } from '@components/features/admin/RecentAvalanches'
 import { Icon } from '@components/icons'
-import { ButtonLink } from '@components/shared'
+import { ButtonLink, RegionTabs } from '@components/shared'
+import { defaultRegionId } from '@domain/constants'
+import type { Region, RegionId } from '@domain/types'
+import { useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 
 import useRecentAvalanchesPage from './useRecentAvalanchesPage'
 
 import { routes } from '@/routes'
 
-const RecentAvalanchesContainer = () => {
+const RecentAvalanchesContainer = ({ initialRegions }: { initialRegions?: Region[] }) => {
   const t = useTranslations()
+  const searchParams = useSearchParams()
+  const regionId = (searchParams.get('regionId') as RegionId) ?? defaultRegionId
+
   const {
     avalanches,
     dateFrom,
@@ -32,6 +38,10 @@ const RecentAvalanchesContainer = () => {
 
   return (
     <>
+      <div className="flex items-center border-b bg-white px-4 md:px-6">
+        <RegionTabs currentRegionId={regionId} initialRegions={initialRegions} />
+      </div>
+
       <div className="sticky top-0 z-10 flex items-center justify-between gap-4 border-b bg-white px-4 py-3 md:px-6">
         <RecentAvalanchesFilters
           dateFrom={dateFrom}
@@ -43,7 +53,7 @@ const RecentAvalanchesContainer = () => {
           onReset={onFiltersReset}
         />
 
-        <ButtonLink href={routes.admin.recentAvalanches.new}>
+        <ButtonLink href={routes.admin.recentAvalanches.newInRegion(regionId)}>
           <Icon icon="plus" size="sm" />
           {t('admin.recentAvalanches.title.create')}
         </ButtonLink>
@@ -59,6 +69,7 @@ const RecentAvalanchesContainer = () => {
             onPageChange,
             totalPages,
           }}
+          regionId={regionId}
         />
       </div>
     </>

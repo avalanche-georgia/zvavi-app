@@ -3,7 +3,8 @@
 import { useCallback } from 'react'
 import type { DateMode } from '@data/hooks/recentAvalanches'
 import { useRecentAvalanchesPaginatedQuery } from '@data/hooks/recentAvalanches'
-import { regionIds } from '@domain/constants'
+import { defaultRegionId } from '@domain/constants'
+import type { RegionId } from '@domain/types'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'src/i18n/navigation'
 
@@ -13,6 +14,7 @@ const useRecentAvalanchesPage = () => {
   const router = useRouter()
   const searchParams = useSearchParams()
 
+  const regionId = (searchParams.get('regionId') as RegionId) ?? defaultRegionId
   const page = Math.max(1, Number(searchParams.get('page')) || 1)
   const dateMode = (searchParams.get('dateMode') as DateMode) || 'occurred'
   const dateFromParam = searchParams.get('dateFrom')
@@ -21,15 +23,13 @@ const useRecentAvalanchesPage = () => {
   const dateFrom = dateFromParam ? new Date(dateFromParam) : null
   const dateTo = dateToParam ? new Date(dateToParam) : null
 
-  // TODO(PR 3): replace with regionId from admin route/context
-  const regionIdMock = regionIds.gudauri
   const { data, isPending } = useRecentAvalanchesPaginatedQuery({
     dateFrom: dateFromParam ?? undefined,
     dateMode,
     dateTo: dateToParam ?? undefined,
     page,
     pageSize: pageSize,
-    regionId: regionIdMock,
+    regionId,
   })
 
   const updateParams = useCallback(

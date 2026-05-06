@@ -17,8 +17,12 @@ const useRecentAvalancheCreate = () => {
 
   return useMutation<void, Error, AvalancheFormData>({
     mutationFn: createRecentAvalanche,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: recentAvalanchesKeys.all })
+    onSuccess: (_, variables) => {
+      const { regionId } = variables
+
+      queryClient.invalidateQueries({
+        queryKey: regionId ? recentAvalanchesKeys.byRegion(regionId) : recentAvalanchesKeys.all,
+      })
     },
   })
 }

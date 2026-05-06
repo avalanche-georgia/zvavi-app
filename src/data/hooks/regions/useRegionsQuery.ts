@@ -18,8 +18,9 @@ const fetchRegions = async (): Promise<Region[]> => {
   return convertSnakeToCamel(data ?? []) as Region[]
 }
 
-const useRegionsQuery = () =>
+const useRegionsQuery = (initialData?: Region[]) =>
   useQuery<Region[], Error>({
+    initialData,
     queryFn: fetchRegions,
     queryKey: regionsKeys.list(),
   })

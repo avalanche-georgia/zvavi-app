@@ -90,7 +90,7 @@ export type Avalanche = {
   location: string | null
   longitude: number | null
   quantity: number
-  regionId?: RegionId
+  regionId: RegionId
   size: AvalancheSize
   slabDepth: number | null
   trigger: AvalancheTrigger
