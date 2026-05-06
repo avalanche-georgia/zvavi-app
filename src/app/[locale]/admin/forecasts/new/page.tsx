@@ -3,7 +3,8 @@
 import { ForecastForm, getInitialFormData } from '@components/features/admin/Forecasts/ForecastForm'
 import { Spinner } from '@components/ui'
 import { useAdminGetForecast } from '@data/hooks/forecasts'
-import { regionIds } from '@domain/constants'
+import { defaultRegionId } from '@domain/constants'
+import type { RegionId } from '@domain/types'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'src/i18n/navigation'
 
@@ -12,13 +13,11 @@ import { routes } from '@/routes'
 const NewForecastPage = () => {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const regionId = (searchParams.get('regionId') as RegionId) ?? defaultRegionId
   const duplicateId = searchParams.get('duplicateId')
   const parsedDuplicateId = duplicateId ? parseInt(duplicateId, 10) : null
   const isValidDuplicateId =
     parsedDuplicateId !== null && !Number.isNaN(parsedDuplicateId) && parsedDuplicateId > 0
-
-  // TODO(PR 3): replace with regionId from admin route/context
-  const regionIdMock = regionIds.gudauri
 
   const {
     data: sourceForecast,
@@ -27,15 +26,15 @@ const NewForecastPage = () => {
   } = useAdminGetForecast({
     enabled: isValidDuplicateId,
     forecastId: parsedDuplicateId ?? 0,
-    regionId: regionIdMock,
+    regionId,
   })
 
   const handleCancel = () => {
-    router.push(routes.admin.forecasts.root)
+    router.push(routes.admin.forecasts.listByRegion(regionId))
   }
 
   const handleSuccess = () => {
-    router.push(routes.admin.forecasts.root)
+    router.push(routes.admin.forecasts.listByRegion(regionId))
   }
 
   if (isValidDuplicateId && isLoading) {
@@ -62,6 +61,7 @@ const NewForecastPage = () => {
         initialFormData={initialFormData}
         onCancel={handleCancel}
         onSuccess={handleSuccess}
+        regionId={regionId}
       />
     </div>
   )

@@ -10,6 +10,8 @@ export const routes = {
   admin: {
     forecasts: {
       edit: (id: number) => `/admin/forecasts/${id}/edit`,
+      editInRegion: (id: number, regionId: string) =>
+        `/admin/forecasts/${id}/edit?regionId=${regionId}`,
       listByRegion: (regionId: string) => `/admin/forecasts?regionId=${regionId}`,
       new: '/admin/forecasts/new',
       newInRegion: (regionId: string) => `/admin/forecasts/new?regionId=${regionId}`,

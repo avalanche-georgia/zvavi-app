@@ -3,8 +3,9 @@
 import { ForecastForm, getInitialFormData } from '@components/features/admin/Forecasts/ForecastForm'
 import { Spinner } from '@components/ui'
 import { useAdminGetForecast } from '@data/hooks/forecasts'
-import { regionIds } from '@domain/constants'
-import { useParams } from 'next/navigation'
+import { defaultRegionId } from '@domain/constants'
+import type { RegionId } from '@domain/types'
+import { useParams, useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'src/i18n/navigation'
 
@@ -23,19 +24,18 @@ const NotFound = () => {
 const EditForecastPage = () => {
   const router = useRouter()
   const params = useParams()
+  const searchParams = useSearchParams()
 
   const forecastId = Number(params.id)
-
-  // TODO(PR 3): replace with regionId from admin route/context
-  const regionIdMock = regionIds.gudauri
-  const { data: forecast, isPending } = useAdminGetForecast({ forecastId, regionId: regionIdMock })
+  const regionId = (searchParams.get('regionId') as RegionId) ?? defaultRegionId
+  const { data: forecast, isPending } = useAdminGetForecast({ forecastId, regionId })
 
   const handleCancel = () => {
-    router.push(routes.admin.forecasts.root)
+    router.push(routes.admin.forecasts.listByRegion(regionId))
   }
 
   const handleSuccess = () => {
-    router.push(routes.admin.forecasts.root)
+    router.push(routes.admin.forecasts.listByRegion(regionId))
   }
 
   if (Number.isNaN(forecastId)) {
@@ -60,6 +60,7 @@ const EditForecastPage = () => {
         initialFormData={getInitialFormData(forecast)}
         onCancel={handleCancel}
         onSuccess={handleSuccess}
+        regionId={regionId}
       />
     </div>
   )
