@@ -137,6 +137,7 @@ admin:
         actions: 'Actions'
         createdAt: 'Created At'
         forecaster: 'Forecaster'
+        publishedAt: 'Published At'
         status: 'Status'
         validUntil: 'Valid Until'
     actions:

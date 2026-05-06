@@ -57,11 +57,13 @@ const NewForecastPage = () => {
     : initialBaseFormData
 
   return (
-    <ForecastForm
-      initialFormData={initialFormData}
-      onCancel={handleCancel}
-      onSuccess={handleSuccess}
-    />
+    <div className="mx-auto max-w-xl p-4 md:p-6">
+      <ForecastForm
+        initialFormData={initialFormData}
+        onCancel={handleCancel}
+        onSuccess={handleSuccess}
+      />
+    </div>
   )
 }
 

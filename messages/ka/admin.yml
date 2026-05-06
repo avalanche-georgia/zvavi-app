@@ -137,6 +137,7 @@ admin:
         actions: 'მოქმედებები'
         createdAt: 'შექმნის თარიღი'
         forecaster: 'პროგნოზის ავტორი'
+        publishedAt: 'გამოქვეყნებულია'
         status: 'სტატუსი'
         validUntil: 'ძალაშია'
     actions:
