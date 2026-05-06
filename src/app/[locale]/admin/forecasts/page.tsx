@@ -1,19 +1,30 @@
-'use client'
-
-import { ForecastsList } from '@components/features/admin/Forecasts/ForecastsList'
+import { Suspense } from 'react'
 import { Spinner } from '@components/ui'
-import { useForecastsQuery } from '@data/hooks'
-import { useTranslations } from 'next-intl'
+import { convertSnakeToCamel } from '@data/helpers'
+import type { Region } from '@domain/types'
+import { createClient } from 'src/lib/supabase/server'
 
-const ForecastPage = () => {
-  const t = useTranslations()
-  const { data: forecasts, isPending } = useForecastsQuery()
+import ForecastsContainer from './ForecastsContainer'
 
-  if (isPending) return <Spinner label={t('common.labels.wait')} size="lg" />
+const fetchRegions = async (): Promise<Region[]> => {
+  const supabase = await createClient()
+  const { data } = await supabase
+    .from('regions')
+    .select('*')
+    .eq('is_active', true)
+    .order('display_order', { ascending: true })
 
-  if (!forecasts) return null
-
-  return <ForecastsList forecasts={forecasts} />
+  return convertSnakeToCamel(data ?? []) as Region[]
 }
 
-export default ForecastPage
+const ForecastsPage = async () => {
+  const initialRegions = await fetchRegions()
+
+  return (
+    <Suspense fallback={<Spinner size="lg" />}>
+      <ForecastsContainer initialRegions={initialRegions} />
+    </Suspense>
+  )
+}
+
+export default ForecastsPage

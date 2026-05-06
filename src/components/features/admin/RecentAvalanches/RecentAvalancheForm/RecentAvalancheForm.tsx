@@ -2,7 +2,7 @@
 
 import { useUnsavedChangesWarning } from '@components/hooks'
 import { Button } from '@components/ui'
-import type { Avalanche } from '@domain/types'
+import type { Avalanche, RegionId } from '@domain/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslations } from 'next-intl'
 import { FormProvider, useForm } from 'react-hook-form'
@@ -27,6 +27,7 @@ type CreateProps = {
 type RecentAvalancheFormProps = (EditProps | CreateProps) & {
   onCancel: VoidFunction
   onSuccess: VoidFunction
+  regionId: RegionId
 }
 
 const RecentAvalancheForm = ({
@@ -34,6 +35,7 @@ const RecentAvalancheForm = ({
   mode,
   onCancel,
   onSuccess,
+  regionId,
 }: RecentAvalancheFormProps) => {
   const t = useTranslations()
 
@@ -47,22 +49,21 @@ const RecentAvalancheForm = ({
   const { handleSubmit: handleEditSubmit } = useRecentAvalancheFormSubmit({
     avalancheId: avalanche?.id ?? 0,
     onSuccess,
+    regionId,
   })
 
-  const { handleSubmit: handleCreateSubmit } = useRecentAvalancheCreateFormSubmit({ onSuccess })
+  const { handleSubmit: handleCreateSubmit } = useRecentAvalancheCreateFormSubmit({
+    onSuccess,
+    regionId,
+  })
 
   const handleSubmit = mode === 'edit' ? handleEditSubmit : handleCreateSubmit
-
-  const titleKey =
-    mode === 'edit' ? 'admin.recentAvalanches.title.edit' : 'admin.recentAvalanches.title.create'
 
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <FormProvider {...form}>
       <div className="rounded-lg bg-white shadow-sm">
         <section className="flex w-full flex-col gap-6 p-4 md:p-6">
-          <h2 className="text-xl font-semibold">{t(titleKey)}</h2>
-
           <form className="flex w-full flex-col gap-6" onSubmit={form.handleSubmit(handleSubmit)}>
             <FormFields />
           </form>

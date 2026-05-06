@@ -15,7 +15,7 @@ import { Aspects, AvalancheSize, Footer, type SetAspectsData } from '../../commo
 export type AvalancheFormProps = {
   avalancheData: AvalancheFormData
   onClose: VoidFunction
-  onSave: (data: Avalanche) => void
+  onSave: (data: Omit<Avalanche, 'regionId'>) => void
 }
 
 type FormErrors = {

@@ -1,0 +1,6 @@
+regions:
+  names:
+    gudauri: 'Gudauri'
+
+  selector:
+    label: 'Region'

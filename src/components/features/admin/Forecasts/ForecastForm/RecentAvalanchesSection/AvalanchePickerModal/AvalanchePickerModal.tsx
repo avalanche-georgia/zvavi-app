@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react'
 import { Button, Modal, ModalBody, ModalFooter, Spinner } from '@components/ui'
 import { useAllRecentAvalanchesQuery } from '@data/hooks/forecasts'
-import type { Avalanche } from '@domain/types'
+import type { Avalanche, RegionId } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import AvalanchePickerRow from './AvalanchePickerRow'
@@ -11,6 +11,7 @@ type AvalanchePickerModalProps = {
   isOpen: boolean
   onClose: () => void
   onConfirm: (selected: Avalanche[]) => void
+  regionId: RegionId
 }
 
 const AvalanchePickerModal = ({
@@ -18,11 +19,15 @@ const AvalanchePickerModal = ({
   isOpen,
   onClose,
   onConfirm,
+  regionId,
 }: AvalanchePickerModalProps) => {
   const t = useTranslations()
   const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set())
 
-  const { data: avalanches = [], isLoading } = useAllRecentAvalanchesQuery({ enabled: isOpen })
+  const { data: avalanches = [], isLoading } = useAllRecentAvalanchesQuery({
+    enabled: isOpen,
+    regionId,
+  })
 
   const availableAvalanches = useMemo(
     () =>
