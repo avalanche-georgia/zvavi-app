@@ -14,8 +14,13 @@ type QueryOptions = Omit<
   'queryFn' | 'queryKey'
 > & { id: number; regionId: RegionId }
 
-const fetchRecentAvalanche = async (id: number): Promise<Avalanche | null> => {
-  const { data, error } = await supabase.from('recent_avalanches').select('*').eq('id', id).single()
+const fetchRecentAvalanche = async (id: number, regionId: RegionId): Promise<Avalanche | null> => {
+  const { data, error } = await supabase
+    .from('recent_avalanches')
+    .select('*')
+    .eq('id', id)
+    .eq('region_id', regionId)
+    .single()
 
   if (error) {
     if (error.code === 'PGRST116') return null
@@ -28,7 +33,7 @@ const fetchRecentAvalanche = async (id: number): Promise<Avalanche | null> => {
 const useRecentAvalancheQuery = ({ id, regionId, ...options }: QueryOptions) =>
   useQuery({
     ...options,
-    queryFn: () => fetchRecentAvalanche(id),
+    queryFn: () => fetchRecentAvalanche(id, regionId),
     queryKey: recentAvalanchesKeys.item(regionId, id),
   })
 

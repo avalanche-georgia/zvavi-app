@@ -16,12 +16,12 @@ type QueryOptions = Omit<
 > & { forecastId: FullForecast['id']; regionId: RegionId }
 
 const fetchForecast = async ({ queryKey }: QueryFunctionContext<QueryKey>): Promise<Response> => {
-  const [, , , variables] = queryKey
+  const [, regionId, , variables] = queryKey
 
   const { data: forecastData, error: forecastError } = await supabase
     .from('forecasts')
     .select()
-    .match({ id: variables.forecastId, status: 'published' })
+    .match({ id: variables.forecastId, region_id: regionId, status: 'published' })
     .single()
 
   if (forecastError) {
