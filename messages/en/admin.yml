@@ -133,6 +133,7 @@ admin:
   forecasts:
     title: 'Forecasts'
     list:
+      empty: 'No forecasts yet.'
       columns:
         actions: 'Actions'
         createdAt: 'Created At'
@@ -250,7 +251,7 @@ admin:
 
   recentAvalanches:
     title:
-      create: New Avalanche
+      create: Create Avalanche
       edit: Edit Avalanche
       list: Recent Avalanches
     notFound: Avalanche not found.

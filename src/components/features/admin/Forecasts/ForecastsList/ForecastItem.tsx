@@ -2,7 +2,7 @@ import { useBoolean, useToast } from '@components/hooks'
 import { ConfirmationDialog } from '@components/shared'
 import { useForecastDelete, useForecastStatusToggle } from '@data/hooks/forecasts'
 import { dateFormat } from '@domain/constants'
-import type { FullForecast } from '@domain/types'
+import type { FullForecast, RegionId } from '@domain/types'
 import { format } from 'date-fns'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'src/i18n/navigation'
@@ -13,9 +13,10 @@ import { routes } from '@/routes'
 
 type ForecastItemProps = {
   forecast: FullForecast
+  regionId: RegionId
 }
 
-const ForecastItem = ({ forecast }: ForecastItemProps) => {
+const ForecastItem = ({ forecast, regionId }: ForecastItemProps) => {
   const t = useTranslations()
   const router = useRouter()
 
@@ -44,7 +45,7 @@ const ForecastItem = ({ forecast }: ForecastItemProps) => {
   }
 
   const handleDuplicate = () => {
-    router.push(`${routes.admin.forecasts.new}?duplicateId=${id}`)
+    router.push(`${routes.admin.forecasts.newInRegion(regionId)}&duplicateId=${id}`)
   }
 
   const isPublished = status === 'published'

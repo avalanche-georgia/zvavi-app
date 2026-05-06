@@ -1,3 +1,7 @@
+import type { RegionId } from '@domain/types'
+import { useSearchParams } from 'next/navigation'
+import { useTranslations } from 'next-intl'
+
 type SectionTitles = {
   create?: string
   edit?: string
@@ -27,16 +31,21 @@ const sectionTitles: Record<string, SectionTitles> = {
   },
 }
 
-export const resolvePageTitleKey = (pathname: string): string => {
+export const usePageTitle = (pathname: string): string => {
+  const t = useTranslations()
   const segments = pathname.split('/').filter(Boolean)
   const config = sectionTitles[segments[1]]
 
-  if (!config) return 'admin.title'
+  const searchParams = useSearchParams()
+  const regionId = searchParams.get('regionId') as RegionId | null
+  const regionSuffix = regionId ? `— ${t(`regions.names.${regionId}`)}` : ''
+
+  if (!config) return t('admin.title')
 
   const last = segments.at(-1)
 
-  if (last === 'new' && config.create) return config.create
-  if (last === 'edit' && config.edit) return config.edit
+  if (last === 'new' && config.create) return `${t(config.create)} ${regionSuffix}`
+  if (last === 'edit' && config.edit) return `${t(config.edit)} ${regionSuffix}`
 
-  return config.main
+  return t(config.main)
 }

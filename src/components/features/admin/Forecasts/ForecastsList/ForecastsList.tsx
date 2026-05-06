@@ -1,9 +1,14 @@
-import type { FullForecast } from '@domain/types'
+import type { FullForecast, RegionId } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import ForecastItem from './ForecastItem'
 
-const ForecastsList = ({ forecasts }: { forecasts: FullForecast[] }) => {
+type ForecastsListProps = {
+  forecasts: FullForecast[]
+  regionId: RegionId
+}
+
+const ForecastsList = ({ forecasts, regionId }: ForecastsListProps) => {
   const t = useTranslations()
 
   return (
@@ -22,13 +27,17 @@ const ForecastsList = ({ forecasts }: { forecasts: FullForecast[] }) => {
       </div>
 
       <div className="overflow-y-auto">
-        <ul className="flex flex-col">
-          {forecasts.map((forecast) => (
-            <li key={forecast.id} className="border-b last:border-0 even:bg-gray-100/60">
-              <ForecastItem forecast={forecast} />
-            </li>
-          ))}
-        </ul>
+        {forecasts.length === 0 ? (
+          <p className="py-8 text-center text-gray-500">{t('admin.forecasts.list.empty')}</p>
+        ) : (
+          <ul className="flex flex-col">
+            {forecasts.map((forecast) => (
+              <li key={forecast.id} className="border-b last:border-0 even:bg-gray-100/60">
+                <ForecastItem forecast={forecast} regionId={regionId} />
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   )

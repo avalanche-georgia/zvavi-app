@@ -43,7 +43,7 @@ const ForecastsContainer = ({ initialRegions }: ForecastsContainerProps) => {
             <Spinner />
           </div>
         ) : (
-          <ForecastsList forecasts={forecasts ?? []} />
+          <ForecastsList forecasts={forecasts ?? []} regionId={regionId} />
         )}
       </div>
     </>

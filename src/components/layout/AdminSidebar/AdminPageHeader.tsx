@@ -4,7 +4,7 @@ import { Icon } from '@components/icons'
 import { useTranslations } from 'next-intl'
 import { usePathname } from 'src/i18n/navigation'
 
-import { resolvePageTitleKey } from './resolvePageTitleKey'
+import { usePageTitle } from './usePageTitle'
 import UserMenu from './UserMenu'
 
 type AdminPageHeaderProps = {
@@ -14,7 +14,7 @@ type AdminPageHeaderProps = {
 const AdminPageHeader = ({ onOpenMenu }: AdminPageHeaderProps) => {
   const t = useTranslations()
   const pathname = usePathname()
-  const titleKey = resolvePageTitleKey(pathname)
+  const title = usePageTitle(pathname)
 
   return (
     <header className="flex h-14 shrink-0 items-center justify-between border-b bg-white px-4 md:px-6">
@@ -27,7 +27,7 @@ const AdminPageHeader = ({ onOpenMenu }: AdminPageHeaderProps) => {
         >
           <Icon className="size-5" icon="menu" />
         </button>
-        <h1 className="ml-2 text-lg font-semibold md:ml-0">{t(titleKey)}</h1>
+        <h1 className="ml-2 text-lg font-semibold md:ml-0">{title}</h1>
       </div>
       <UserMenu />
     </header>

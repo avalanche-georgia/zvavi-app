@@ -59,20 +59,11 @@ const RecentAvalancheForm = ({
 
   const handleSubmit = mode === 'edit' ? handleEditSubmit : handleCreateSubmit
 
-  const titleKey =
-    mode === 'edit' ? 'admin.recentAvalanches.title.edit' : 'admin.recentAvalanches.title.create'
-
-  const regionName = t(`regions.names.${regionId}`)
-
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <FormProvider {...form}>
       <div className="rounded-lg bg-white shadow-sm">
         <section className="flex w-full flex-col gap-6 p-4 md:p-6">
-          <h2 className="text-xl font-semibold">
-            {t(titleKey)} — {regionName}
-          </h2>
-
           <form className="flex w-full flex-col gap-6" onSubmit={form.handleSubmit(handleSubmit)}>
             <FormFields />
           </form>
