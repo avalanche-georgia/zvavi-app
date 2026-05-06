@@ -1,4 +1,4 @@
-import type { Aspect, Avalanche, Problem } from '@domain/types'
+import type { Aspect, Aspects as AspectsData } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import PropertyWrapper from './PropertyWrapper'
@@ -9,7 +9,7 @@ const getAspectsString = (aspects: Aspect[]) => {
   return aspects.map((aspect) => aspect.toUpperCase()).join(', ')
 }
 
-const Aspects = ({ className, item }: { item: Problem | Avalanche; className?: string }) => {
+const Aspects = ({ className, item }: { item: { aspects: AspectsData }; className?: string }) => {
   const t = useTranslations()
   const { alpine, highAlpine, subAlpine } = item.aspects
 

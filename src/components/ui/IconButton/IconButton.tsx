@@ -45,7 +45,7 @@ const IconButton = ({ className, iconProps, size = 'md', ...props }: IconButtonP
 
     return (
       // eslint-disable-next-line react/jsx-props-no-spreading
-      <Link className={sharedClassName} href={href} {...rest}>
+      <Link className={sharedClassName} href={href} prefetch={false} {...rest}>
         {iconElement}
       </Link>
     )

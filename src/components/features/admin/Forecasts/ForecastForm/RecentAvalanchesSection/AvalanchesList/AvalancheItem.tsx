@@ -10,7 +10,7 @@ import AvalancheItemProperties from './AvalancheItemProperties'
 import { ActionButtons, Aspects } from '../../common/listItem'
 
 type AvalancheItemProps = {
-  avalanche: Avalanche & { localId: string }
+  avalanche: Omit<Avalanche, 'regionId'> & { localId: string }
   canEdit: boolean
   onDelete: (localId: string) => void
   onEdit: (localId: string) => void

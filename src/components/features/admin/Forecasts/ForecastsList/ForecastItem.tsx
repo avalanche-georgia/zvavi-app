@@ -2,21 +2,21 @@ import { useBoolean, useToast } from '@components/hooks'
 import { ConfirmationDialog } from '@components/shared'
 import { useForecastDelete, useForecastStatusToggle } from '@data/hooks/forecasts'
 import { dateFormat } from '@domain/constants'
-import type { FullForecast } from '@domain/types'
+import type { FullForecast, RegionId } from '@domain/types'
 import { format } from 'date-fns'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'src/i18n/navigation'
 
 import ActionButtons from './ActionButtons'
-import Column from './Column'
 
 import { routes } from '@/routes'
 
 type ForecastItemProps = {
   forecast: FullForecast
+  regionId: RegionId
 }
 
-const ForecastItem = ({ forecast }: ForecastItemProps) => {
+const ForecastItem = ({ forecast, regionId }: ForecastItemProps) => {
   const t = useTranslations()
   const router = useRouter()
 
@@ -27,14 +27,17 @@ const ForecastItem = ({ forecast }: ForecastItemProps) => {
   const [isStatusDialogOpen, { setFalse: closeStatusDialog, setTrue: openStatusDialog }] =
     useBoolean(false)
 
+  const { createdAt, forecaster, id, publishedAt, status, validUntil } = forecast
+
   const { toastError, toastSuccess } = useToast()
-  const formattedCreationDate = format(forecast.createdAt, dateFormat)
-  const formattedValidUntilDate = format(forecast.validUntil, dateFormat)
+  const formattedCreationDate = format(createdAt, dateFormat)
+  const formattedValidUntilDate = format(validUntil, dateFormat)
+  const formattedPublishedAtDate = publishedAt ? format(publishedAt, dateFormat) : '–'
   const deleteDescription = `${t('admin.forecasts.deleteForecastModal.description')} ${t('common.words.from').toLowerCase()} ${formattedCreationDate} ${t('common.words.to').toLowerCase()} ${formattedValidUntilDate}?`
 
   const handleDelete = async () => {
     try {
-      await deleteForecast(forecast.id)
+      await deleteForecast(id)
       toastSuccess(t('admin.forecasts.messages.deleted'))
     } catch (error) {
       toastError('ForecastItem | handleDelete', { error })
@@ -42,15 +45,15 @@ const ForecastItem = ({ forecast }: ForecastItemProps) => {
   }
 
   const handleDuplicate = () => {
-    router.push(`${routes.admin.forecasts.new}?duplicateId=${forecast.id}`)
+    router.push(`${routes.admin.forecasts.newInRegion(regionId)}&duplicateId=${id}`)
   }
 
-  const isPublished = forecast.status === 'published'
+  const isPublished = status === 'published'
   const statusKey = isPublished ? 'unpublish' : 'publish'
 
   const handleStatusToggle = async () => {
     try {
-      await toggleStatus({ forecastId: forecast.id, status: isPublished ? 'draft' : 'published' })
+      await toggleStatus({ forecastId: id, status: isPublished ? 'draft' : 'published' })
 
       toastSuccess(t(`admin.forecasts.messages.${isPublished ? 'unpublished' : 'published'}`))
     } catch (error) {
@@ -63,20 +66,21 @@ const ForecastItem = ({ forecast }: ForecastItemProps) => {
   return (
     <>
       <div className="flex h-12 items-center gap-4 px-4">
-        <Column>{forecast.forecaster}</Column>
-        <Column>{formattedCreationDate}</Column>
-        <Column>{formattedValidUntilDate}</Column>
-        <Column>{forecast.status}</Column>
-        <Column className="pr-4 text-right">
+        <div className="w-64">{forecaster}</div>
+        <div className="w-32">{formattedCreationDate}</div>
+        <div className="w-32">{formattedValidUntilDate}</div>
+        <div className="w-32 flex-1">{formattedPublishedAtDate}</div>
+        <div className="w-28">{status}</div>
+        <div className="w-52 pr-4 text-right">
           <ActionButtons
-            editHref={routes.admin.forecasts.edit(forecast.id)}
-            forecastPath={routes.forecasts.view(forecast.id)}
+            editHref={routes.admin.forecasts.editInRegion(id, regionId)}
+            forecastPath={routes.forecasts.view(id)}
             isPublished={isPublished}
             onDelete={openDeletionDialog}
             onDuplicate={handleDuplicate}
             onStatusToggle={openStatusDialog}
           />
-        </Column>
+        </div>
       </div>
 
       <ConfirmationDialog

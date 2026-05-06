@@ -20,7 +20,7 @@ const useForecastStatusToggle = () => {
   return useMutation<void, Error, ForecastStatusToggleVariables>({
     mutationFn: toggleStatus,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: forecastsKeys.list() })
+      queryClient.invalidateQueries({ queryKey: forecastsKeys.all })
     },
   })
 }

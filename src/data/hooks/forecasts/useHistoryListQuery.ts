@@ -1,7 +1,7 @@
 import { supabase } from '@data'
 import { convertSnakeToCamel } from '@data/helpers'
 import { forecastsKeys } from '@data/query-keys'
-import type { Forecast } from '@domain/types'
+import type { Forecast, RegionId } from '@domain/types'
 import type { QueryFunction } from '@tanstack/react-query'
 
 import { useQuery } from '@/tanstack-query/hooks'
@@ -9,11 +9,14 @@ import { useQuery } from '@/tanstack-query/hooks'
 type QueryKey = ReturnType<typeof forecastsKeys.list>
 type HistoryListResponse = Pick<Forecast, 'publishedAt' | 'id' | 'hazardLevels'>[]
 
-const fetchHistoryList: QueryFunction<HistoryListResponse, QueryKey> = async () => {
+const fetchHistoryList: QueryFunction<HistoryListResponse, QueryKey> = async ({ queryKey }) => {
+  const [, regionId] = queryKey
+
   const { data, error } = await supabase
     .from('forecasts')
     .select('id, published_at, hazard_levels')
     .eq('status', 'published')
+    .eq('region_id', regionId)
     .lt('valid_until', new Date().toISOString())
     .order('published_at', { ascending: false })
 
@@ -26,10 +29,10 @@ const fetchHistoryList: QueryFunction<HistoryListResponse, QueryKey> = async () 
   return convertSnakeToCamel(data) as HistoryListResponse
 }
 
-const useHistoryListQuery = () =>
+const useHistoryListQuery = (regionId: RegionId) =>
   useQuery({
     queryFn: fetchHistoryList,
-    queryKey: forecastsKeys.list(),
+    queryKey: forecastsKeys.list(regionId),
   })
 
 export default useHistoryListQuery

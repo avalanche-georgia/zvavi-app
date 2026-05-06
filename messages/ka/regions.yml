@@ -1,0 +1,6 @@
+regions:
+  names:
+    gudauri: 'გუდაური'
+
+  selector:
+    label: 'რეგიონი'

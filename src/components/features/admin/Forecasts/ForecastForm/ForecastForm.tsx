@@ -2,7 +2,7 @@
 
 import { useToast, useUnsavedChangesWarning } from '@components/hooks'
 import { Button, TextInput } from '@components/ui'
-import type { ForecastFormData } from '@domain/types'
+import type { ForecastFormData, RegionId } from '@domain/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslations } from 'next-intl'
 import { FormProvider, useForm } from 'react-hook-form'
@@ -23,9 +23,10 @@ type ForecastFormProps = {
   initialFormData: ForecastFormData
   onCancel: VoidFunction
   onSuccess: VoidFunction
+  regionId: RegionId
 }
 
-const ForecastForm = ({ initialFormData, onCancel, onSuccess }: ForecastFormProps) => {
+const ForecastForm = ({ initialFormData, onCancel, onSuccess, regionId }: ForecastFormProps) => {
   const t = useTranslations()
   const tForecast = useTranslations('admin.forecast')
   const { toastError } = useToast()
@@ -45,6 +46,7 @@ const ForecastForm = ({ initialFormData, onCancel, onSuccess }: ForecastFormProp
   const { handleSubmit } = useForecastFormSubmit({
     initialForecastId: initialFormData.baseFormData.id,
     onSuccess,
+    regionId,
   })
 
   const onSubmit = () => {
@@ -84,7 +86,10 @@ const ForecastForm = ({ initialFormData, onCancel, onSuccess }: ForecastFormProp
             <hr />
             <ProblemsSection />
             <hr />
-            <RecentAvalanchesSection forecastId={initialFormData.baseFormData.id} />
+            <RecentAvalanchesSection
+              forecastId={initialFormData.baseFormData.id}
+              regionId={regionId}
+            />
             <hr />
             <AdditionalTextFields />
           </form>

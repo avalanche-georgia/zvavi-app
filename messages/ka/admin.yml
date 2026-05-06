@@ -133,10 +133,12 @@ admin:
   forecasts:
     title: 'პროგნოზები'
     list:
+      empty: 'პროგნოზები არ არის.'
       columns:
         actions: 'მოქმედებები'
         createdAt: 'შექმნის თარიღი'
         forecaster: 'პროგნოზის ავტორი'
+        publishedAt: 'გამოქვეყნებულია'
         status: 'სტატუსი'
         validUntil: 'ძალაშია'
     actions:
@@ -249,7 +251,7 @@ admin:
 
   recentAvalanches:
     title:
-      create: ახალი ზვავი
+      create: შექმენით ზვავი
       edit: ზვავის რედაქტირება
       list: ბოლო ზვავები
     notFound: ზვავი ვერ მოიძებნა.

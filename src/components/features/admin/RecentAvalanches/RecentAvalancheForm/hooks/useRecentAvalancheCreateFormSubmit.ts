@@ -1,12 +1,20 @@
 import { useCallback } from 'react'
 import { useToast } from '@components/hooks'
 import { useRecentAvalancheCreate } from '@data/hooks/recentAvalanches'
-import type { AvalancheTrigger, AvalancheType } from '@domain/types'
+import type { AvalancheTrigger, AvalancheType, RegionId } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import type { AvalancheFormSchema } from '../schema'
 
-const useRecentAvalancheCreateFormSubmit = ({ onSuccess }: { onSuccess: VoidFunction }) => {
+type UseRecentAvalancheCreateFormSubmitParams = {
+  onSuccess: VoidFunction
+  regionId: RegionId
+}
+
+const useRecentAvalancheCreateFormSubmit = ({
+  onSuccess,
+  regionId,
+}: UseRecentAvalancheCreateFormSubmitParams) => {
   const t = useTranslations()
   const { toastError, toastSuccess } = useToast()
   const { mutateAsync: createAvalanche } = useRecentAvalancheCreate()
@@ -16,6 +24,7 @@ const useRecentAvalancheCreateFormSubmit = ({ onSuccess }: { onSuccess: VoidFunc
       try {
         await createAvalanche({
           ...formData,
+          regionId,
           trigger: formData.trigger as AvalancheTrigger,
           type: formData.type as AvalancheType | 'unknown',
         })
@@ -25,7 +34,7 @@ const useRecentAvalancheCreateFormSubmit = ({ onSuccess }: { onSuccess: VoidFunc
         toastError('RecentAvalancheForm | handleSubmit', { error })
       }
     },
-    [createAvalanche, onSuccess, toastError, toastSuccess, t],
+    [createAvalanche, onSuccess, regionId, toastError, toastSuccess, t],
   )
 
   return { handleSubmit }

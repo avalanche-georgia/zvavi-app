@@ -1,11 +1,17 @@
 'use client'
 
 import type { AvalancheListItem } from '@data/hooks/recentAvalanches'
+import type { RegionId } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import AvalancheItem from './AvalancheItem'
 
-const TableContent = ({ avalanches }: { avalanches: AvalancheListItem[] }) => {
+type TableContentProps = {
+  avalanches: AvalancheListItem[]
+  regionId: RegionId
+}
+
+const TableContent = ({ avalanches, regionId }: TableContentProps) => {
   const t = useTranslations()
 
   return (
@@ -18,7 +24,7 @@ const TableContent = ({ avalanches }: { avalanches: AvalancheListItem[] }) => {
         <ul className="flex flex-col">
           {avalanches.map((avalanche) => (
             <li key={avalanche.id} className="border-b last:border-0 even:bg-gray-100/60">
-              <AvalancheItem avalanche={avalanche} />
+              <AvalancheItem avalanche={avalanche} regionId={regionId} />
             </li>
           ))}
         </ul>
