@@ -44,11 +44,15 @@ const regionForecastEntries: RegionForecastEntry[] = [
 
 const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
   const supabase = await createClient()
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from('regions')
     .select('id')
     .eq('is_active', true)
     .order('display_order', { ascending: true })
+
+  if (error) {
+    console.error('sitemap: failed to fetch regions', error.message)
+  }
 
   const activeRegionIds = (data ?? []).map((r) => r.id as string)
 

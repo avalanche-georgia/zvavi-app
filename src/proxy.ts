@@ -1,3 +1,4 @@
+import { regionIds, regionLocalStorageKey } from '@domain/constants'
 import { createServerClient } from '@supabase/ssr'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
@@ -7,8 +8,7 @@ import { defaultLocale, locales } from './i18n/config'
 
 import { updateSession } from '@/lib/supabase/middleware'
 
-const knownRegions = new Set(['gudauri'])
-const regionCookieName = 'zvavi.region'
+const knownRegions = new Set<string>(Object.values(regionIds))
 
 // Log suspicious requests to old forecast URL formats (non-integer IDs)
 const logSuspiciousRequest = async (request: NextRequest) => {
@@ -106,7 +106,7 @@ export default async function proxy(request: NextRequest) {
   if (bareForecastsMatch) {
     const locale = bareForecastsMatch[1]
     const rest = bareForecastsMatch[2] ?? ''
-    const cookieRegion = request.cookies.get(regionCookieName)?.value
+    const cookieRegion = request.cookies.get(regionLocalStorageKey)?.value
     const regionId = cookieRegion && knownRegions.has(cookieRegion) ? cookieRegion : null
 
     if (!regionId) {
