@@ -3,7 +3,7 @@
 import { StaleForecastBanner } from '@components/shared'
 import { Spinner } from '@components/ui'
 import { useGetForecast } from '@data/hooks/forecasts'
-import { regionIds } from '@domain/constants'
+import { useRegionContext } from '@domain/context/RegionContext'
 import type { FullForecast } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
@@ -16,12 +16,11 @@ type ForecastContainerProps = {
 
 const ForecastContainer = ({ initialForecast, isCurrentForecast }: ForecastContainerProps) => {
   const t = useTranslations()
-  // TODO(PR 4): replace with regionId from RegionContext
-  const regionIdMock = regionIds.gudauri
+  const { region } = useRegionContext()
   const { data: forecast, isPending } = useGetForecast({
     forecastId: initialForecast.id,
     initialData: initialForecast,
-    regionId: regionIdMock,
+    regionId: region!.id,
   })
 
   if (isPending || !forecast) {
@@ -31,7 +30,7 @@ const ForecastContainer = ({ initialForecast, isCurrentForecast }: ForecastConta
   return (
     <div>
       {!isCurrentForecast && <StaleForecastBanner />}
-      <Forecast forecast={forecast} />
+      <Forecast forecast={forecast} regionId={region!.id} />
     </div>
   )
 }

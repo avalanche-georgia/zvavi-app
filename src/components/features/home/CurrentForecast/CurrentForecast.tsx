@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import HazardLevelInfoDrawer from '@components/features/forecast/HazardLevelsByElevation/HazardLevelInfoDrawer'
 import { HazardLevelBanner } from '@components/shared'
+import { useRegionContext } from '@domain/context/RegionContext'
 import type { Forecast } from '@domain/types'
 import { AnimatePresence, motion } from 'motion/react'
 import { useTranslations } from 'next-intl'
@@ -12,10 +13,11 @@ import { routes } from '@/routes'
 
 const CurrentForecast = ({ forecast }: { forecast: Forecast }) => {
   const t = useTranslations()
+  const { region } = useRegionContext()
   const [drawerOpen, setDrawerOpen] = useState(false)
 
   return (
-    <>
+    <div className="pt-3">
       <AnimatePresence mode="wait">
         <motion.section
           key={forecast.id}
@@ -25,8 +27,12 @@ const CurrentForecast = ({ forecast }: { forecast: Forecast }) => {
           initial={{ opacity: 0, scale: 0.96 }}
           transition={{ duration: 0.24, ease: 'easeOut' }}
         >
-          <Link className="block" href={routes.forecasts.current}>
-            <HazardLevelBanner forecast={forecast} onInfoClick={() => setDrawerOpen(true)} />
+          <Link className="block" href={routes.forecastsByRegion(region!.id).current}>
+            <HazardLevelBanner
+              forecast={forecast}
+              onInfoClick={() => setDrawerOpen(true)}
+              regionName={t(`regions.names.${region!.id}`)}
+            />
           </Link>
           <p className="text-center text-sm text-gray-500">{t('forecast.previewNote')}</p>
         </motion.section>
@@ -37,7 +43,7 @@ const CurrentForecast = ({ forecast }: { forecast: Forecast }) => {
         level={forecast.hazardLevels.overall}
         onClose={() => setDrawerOpen(false)}
       />
-    </>
+    </div>
   )
 }
 

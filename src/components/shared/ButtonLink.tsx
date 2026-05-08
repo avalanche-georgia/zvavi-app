@@ -1,26 +1,39 @@
+'use client'
+
 import { Icon } from '@components/icons'
+import { type ButtonVariant, buttonVariantStyles } from '@components/ui/Button'
 import clsx from 'clsx'
 import { Link, type LinkProps } from 'src/i18n/navigation'
 
-const linkClassName =
-  'flex items-center gap-1 rounded-sm bg-primary px-3 py-1.5 text-sm text-white transition-colors ' +
-  'focus:outline-hidden data-active:translate-y-px data-hover:bg-primary/90 ' +
-  'data-disabled:cursor-not-allowed data-disabled:bg-primary/60 ' +
-  'max-w-max data-focus:outline-1 data-focus:outline-primary/40'
-
-type ButtonLinkProps = {
+type ButtonLinkCommonProps = {
   children: React.ReactNode
   className?: string
-  isExternal?: boolean
-} & (LinkProps | React.AnchorHTMLAttributes<HTMLAnchorElement>)
+  variant?: ButtonVariant
+}
 
-const ButtonLink = ({ children, className, isExternal = false, ...linkProps }: ButtonLinkProps) => {
+type ButtonLinkProps =
+  | (ButtonLinkCommonProps & { isExternal?: false } & LinkProps)
+  | (ButtonLinkCommonProps & { isExternal: true } & React.AnchorHTMLAttributes<HTMLAnchorElement>)
+
+const baseStyles = [
+  'flex max-w-max items-center gap-1 rounded-sm px-3 py-1.5 text-sm transition-colors',
+  'focus:outline-hidden data-active:translate-y-px',
+  'data-disabled:cursor-not-allowed',
+  'data-focus:outline-1',
+]
+
+const ButtonLink = ({
+  children,
+  className,
+  isExternal = false,
+  variant = 'primary',
+  ...linkProps
+}: ButtonLinkProps) => {
+  const classes = clsx(baseStyles, buttonVariantStyles[variant], className)
+
   if (isExternal) {
     return (
-      <a
-        className={clsx(linkClassName, className)}
-        {...(linkProps as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
-      >
+      <a className={classes} {...(linkProps as React.AnchorHTMLAttributes<HTMLAnchorElement>)}>
         <span>{children}</span>
         <Icon icon="externalLink" size="sm" />
       </a>
@@ -29,7 +42,7 @@ const ButtonLink = ({ children, className, isExternal = false, ...linkProps }: B
 
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
-    <Link className={clsx(linkClassName, className)} {...(linkProps as LinkProps)}>
+    <Link className={classes} {...(linkProps as LinkProps)}>
       {children}
     </Link>
   )

@@ -4,7 +4,7 @@ import { useContext } from 'react'
 
 import RegionContext, { type RegionContextType } from './RegionContext'
 
-const useRegion = (): RegionContextType => {
+const useRegionContext = (): RegionContextType => {
   const context = useContext(RegionContext)
 
   if (!context) {
@@ -14,4 +14,4 @@ const useRegion = (): RegionContextType => {
   return context
 }
 
-export default useRegion
+export default useRegionContext

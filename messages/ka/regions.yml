@@ -2,5 +2,8 @@ regions:
   names:
     gudauri: 'გუდაური'
 
+  picker:
+    title: 'აირჩიეთ რეგიონი'
+
   selector:
-    label: 'რეგიონი'
+    label: 'რეგიონის არჩევა'

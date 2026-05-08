@@ -2,27 +2,26 @@
 
 import { Spinner } from '@components/ui'
 import { useGetCurrentForecast } from '@data/hooks/forecasts'
-import { regionIds } from '@domain/constants'
+import { useRegionContext } from '@domain/context/RegionContext'
 
 import CurrentForecast from './CurrentForecast'
 
 const CurrentForecastContainer = () => {
-  // TODO(PR 4): replace with regionId from RegionContext
-  const regionIdMock = regionIds.gudauri
+  const { region } = useRegionContext()
   const { data: forecast, isPending } = useGetCurrentForecast({
     isShort: true,
-    regionId: regionIdMock,
+    regionId: region!.id,
   })
 
   if (isPending) {
     return (
-      <div className="relative h-[209px]">
+      <div className="relative h-[229px]">
         <Spinner />
       </div>
     )
   }
 
-  if (!forecast) return <div aria-hidden className="h-[209px]" />
+  if (!forecast) return <div aria-hidden className="h-[229px]" />
 
   return <CurrentForecast forecast={forecast} />
 }

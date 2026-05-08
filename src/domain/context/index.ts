@@ -1,2 +1,2 @@
-export { RegionProvider, useRegion } from './RegionContext'
+export { RegionContextProvider, useRegionContext } from './RegionContext'
 export { SupabaseContextProvider, useSupabase } from './SupabaseContext'
