@@ -8,8 +8,12 @@ seo:
   currentForecast:
     title: 'მიმდინარე ზვავის პროგნოზი — {regionName}'
     description: 'უახლესი ზვავის პროგნოზი {regionName}-სთვის. შეამოწმეთ საფრთხის დონე და თოვლის პირობები.'
+  forecastArea:
+    title: 'პროგნოზის ზონა — {regionName}'
+    description: 'ნახეთ ზვავის პროგნოზის ზონის რუკა {regionName}-სთვის.'
+
   history:
-    title: 'პროგნოზების ისტორია'
+    title: 'პროგნოზების ისტორია — {regionName}'
     description: 'დაათვალიერეთ წარსული ზვავის პროგნოზები {regionName}-სთვის.'
   joinUs:
     title: 'შემოგვიერთდით'

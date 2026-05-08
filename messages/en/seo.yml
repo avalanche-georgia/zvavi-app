@@ -8,8 +8,12 @@ seo:
   currentForecast:
     title: 'Current Avalanche Forecast — {regionName}'
     description: 'Latest avalanche forecast for {regionName}. Check current danger levels and snow conditions.'
+  forecastArea:
+    title: 'Forecast Area — {regionName}'
+    description: 'View the avalanche forecast zone map for {regionName}.'
+
   history:
-    title: 'Forecast History'
+    title: 'Forecast History — {regionName}'
     description: 'Browse past avalanche forecasts for {regionName}.'
   joinUs:
     title: 'Join Us'

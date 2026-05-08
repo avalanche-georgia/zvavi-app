@@ -12,7 +12,7 @@ export const generateMetadata = async ({ params }: HistoryPageProps): Promise<Me
 
   return {
     description: t('seo.history.description', { regionName: t(`regions.names.${regionId}`) }),
-    title: t('seo.history.title'),
+    title: t('seo.history.title', { regionName: t(`regions.names.${regionId}`) }),
   }
 }
 
