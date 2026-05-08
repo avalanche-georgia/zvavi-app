@@ -3,13 +3,9 @@ import { Button as HeadlessUIButton } from '@headlessui/react'
 import clsx from 'clsx'
 import type { ButtonHTMLAttributes } from 'react'
 
-type ButtonVariant = 'outline' | 'primary' | 'secondary'
+export type ButtonVariant = 'outline' | 'primary' | 'secondary'
 
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: ButtonVariant
-}
-
-const variantStyles = {
+export const buttonVariantStyles: Record<ButtonVariant, string[]> = {
   outline: [
     'border border-gray-300 bg-transparent text-gray-700',
     'data-hover:bg-gray-50',
@@ -30,6 +26,10 @@ const variantStyles = {
   ],
 }
 
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+  variant?: ButtonVariant
+}
+
 const Button = ({ variant = 'primary', ...props }: ButtonProps) => (
   <HeadlessUIButton
     {...props}
@@ -38,7 +38,7 @@ const Button = ({ variant = 'primary', ...props }: ButtonProps) => (
       'focus:outline-hidden data-active:translate-y-px',
       'data-disabled:cursor-not-allowed',
       'data-focus:outline-1',
-      variantStyles[variant],
+      buttonVariantStyles[variant],
       props.className,
     )}
   >

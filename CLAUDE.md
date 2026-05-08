@@ -40,8 +40,9 @@ src/
 │   └── icons/               # SVG icon components
 ├── data/
 │   ├── hooks/               # React Query hooks (forecasts/, members/)
+│   ├── queries/             # shared server-side fetch functions (fetchActiveRegions, fetchTier1Partners, …)
 │   ├── query-keys/          # cache key definitions
-│   └── helpers/             # convertCamelToSnake, convertSnakeToCamel, handleSupabaseError, …
+│   └── helpers/             # pure utils only: convertCamelToSnake, convertSnakeToCamel, handleSupabaseError, …
 ├── domain/
 │   ├── types.ts             # all TypeScript type definitions
 │   ├── constants.ts         # enums, label maps, date format strings
@@ -92,6 +93,13 @@ Import `avalancheTypes` when working with avalanche events; import `avalanchePro
 2. Hook queries Supabase; response converted via `convertSnakeToCamel()`
 3. Mutation hooks (`useForecastCreate`, `useMemberUpdate`, etc.) convert via `convertCamelToSnake()` before insert
 4. On success, `queryClient.invalidateQueries(keys.all)` refreshes cache
+
+### Server-Side Data Fetching
+Never write Supabase query logic inline inside a page or component. Extract to a dedicated fetch function:
+- **Single caller** → co-locate next to the page/component (e.g. `fetchForecastPageData.ts` next to its page)
+- **Multiple callers or generic** → `src/data/queries/` (e.g. `fetchActiveRegions`, `fetchTier1Partners`)
+
+`src/data/helpers/` is for **pure utility functions only** (converters, error handlers). DB fetch functions belong in `src/data/queries/`.
 
 ### Form Pattern
 - `react-hook-form` + `zodResolver` + `FormProvider`

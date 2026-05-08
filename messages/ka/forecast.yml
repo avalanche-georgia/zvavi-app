@@ -1,4 +1,7 @@
 forecast:
+  pageTitle: '{regionName} ზვავის პროგნოზი'
+  forecastAreaPageTitle: '{regionName} პროგნოზის ტერიტორია'
+  historyPageTitle: '{regionName} პროგნოზების ისტორია'
   previewNote: 'დააწკაპუნეთ ბანერზე სრული პროგნოზისთვის'
   viewForecastArea: 'პროგნოზის ტერიტორიის ნახვა'
 

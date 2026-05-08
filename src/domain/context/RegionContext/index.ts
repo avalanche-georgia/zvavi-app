@@ -1,2 +1,2 @@
-export { default as RegionProvider } from './RegionProvider'
-export { default as useRegion } from './useRegion'
+export { default as RegionContextProvider } from './RegionContextProvider'
+export { default as useRegionContext } from './useRegionContext'

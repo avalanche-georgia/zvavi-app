@@ -4,7 +4,7 @@ import { createContext } from 'react'
 import type { Region } from '@domain/types'
 
 export type RegionContextType = {
-  region: Region
+  region: Region | null
   regions: Region[]
 }
 
