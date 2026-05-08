@@ -2,5 +2,8 @@ regions:
   names:
     gudauri: 'Gudauri'
 
+  picker:
+    title: 'Choose a region'
+
   selector:
-    label: 'Region'
+    label: 'Select region'

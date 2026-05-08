@@ -12,7 +12,12 @@ import Weather from './Weather'
 
 import { routes } from '@/routes'
 
-const Forecast = ({ forecast }: { forecast: FullForecast }) => {
+type ForecastProps = {
+  forecast: FullForecast
+  regionId: string
+}
+
+const Forecast = ({ forecast, regionId }: ForecastProps) => {
   const t = useTranslations()
   const {
     additionalHazards,
@@ -42,7 +47,9 @@ const Forecast = ({ forecast }: { forecast: FullForecast }) => {
         {weather && <Weather weather={weather} />}
       </section>
 
-      <ButtonLink href={routes.forecasts.forecastArea}>{t('forecast.viewForecastArea')}</ButtonLink>
+      <ButtonLink href={routes.forecastsByRegion(regionId).forecastArea}>
+        {t('forecast.viewForecastArea')}
+      </ButtonLink>
 
       <ForecastPartnersSection />
     </div>

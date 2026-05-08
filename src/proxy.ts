@@ -7,6 +7,9 @@ import { defaultLocale, locales } from './i18n/config'
 
 import { updateSession } from '@/lib/supabase/middleware'
 
+const knownRegions = new Set(['gudauri'])
+const regionCookieName = 'zvavi.region'
+
 // Log suspicious requests to old forecast URL formats (non-integer IDs)
 const logSuspiciousRequest = async (request: NextRequest) => {
   try {
@@ -94,6 +97,23 @@ export default async function proxy(request: NextRequest) {
     const redirectUrl = new URL(`/${defaultLocale}${pathname}`, request.url)
 
     return NextResponse.redirect(redirectUrl)
+  }
+
+  // Redirect bare /[locale]/forecasts(/...) to region-scoped URL
+  const bareForecastsRegex = new RegExp(`^/(${localePattern})/forecasts(/.*)?$`)
+  const bareForecastsMatch = pathname.match(bareForecastsRegex)
+
+  if (bareForecastsMatch) {
+    const locale = bareForecastsMatch[1]
+    const rest = bareForecastsMatch[2] ?? ''
+    const cookieRegion = request.cookies.get(regionCookieName)?.value
+    const regionId = cookieRegion && knownRegions.has(cookieRegion) ? cookieRegion : null
+
+    if (!regionId) {
+      return NextResponse.redirect(new URL(`/${locale}`, request.url))
+    }
+
+    return NextResponse.redirect(new URL(`/${locale}/${regionId}/forecasts${rest}`, request.url))
   }
 
   // Update the request locale

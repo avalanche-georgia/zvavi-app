@@ -3,12 +3,14 @@
 import { useCallback } from 'react'
 import { useAuth, useToast } from '@components/hooks'
 import { Icon } from '@components/icons'
+import { LanguageToggle, RegionSelect } from '@components/shared'
 import { supabase } from '@data'
+import { useRegionContext } from '@domain/context/RegionContext'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'src/i18n/navigation'
 import { Drawer } from 'vaul'
 
-import { navMenuItems } from './constants'
+import { getNavMenuItems } from './constants'
 
 import MobileNavAccordion from './MobileNavAccordion'
 import MobileNavLink from './MobileNavLink'
@@ -25,6 +27,8 @@ const MobileNav = ({ isOpen, onClose }: MobileNavProps) => {
   const router = useRouter()
   const { isAuthenticated } = useAuth()
   const { toastError } = useToast()
+  const { region } = useRegionContext()
+  const navMenuItems = getNavMenuItems(region?.id ?? null)
 
   const handleSignOut = useCallback(async () => {
     try {
@@ -44,14 +48,18 @@ const MobileNav = ({ isOpen, onClose }: MobileNavProps) => {
           <Drawer.Title asChild>
             <div className="flex items-center justify-between border-b px-4 py-3">
               <span className="text-primary text-lg font-semibold">{t('navigation.menu')}</span>
-              <button
-                aria-label={t('navigation.closeMenu')}
-                className="rounded-lg p-2 hover:bg-gray-100"
-                onClick={onClose}
-                type="button"
-              >
-                <Icon className="size-6" icon="xMark" />
-              </button>
+              <div className="flex items-center gap-2">
+                <LanguageToggle />
+                <RegionSelect onSelect={onClose} />
+                <button
+                  aria-label={t('navigation.closeMenu')}
+                  className="rounded-lg p-2 hover:bg-gray-100"
+                  onClick={onClose}
+                  type="button"
+                >
+                  <Icon className="size-6" icon="xMark" />
+                </button>
+              </div>
             </div>
           </Drawer.Title>
           <Drawer.Description className="sr-only">

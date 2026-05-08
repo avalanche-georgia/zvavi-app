@@ -74,7 +74,7 @@ const ForecastItem = ({ forecast, regionId }: ForecastItemProps) => {
         <div className="w-52 pr-4 text-right">
           <ActionButtons
             editHref={routes.admin.forecasts.editInRegion(id, regionId)}
-            forecastPath={routes.forecasts.view(id)}
+            forecastPath={routes.forecastsByRegion(regionId).view(id)}
             isPublished={isPublished}
             onDelete={openDeletionDialog}
             onDuplicate={handleDuplicate}

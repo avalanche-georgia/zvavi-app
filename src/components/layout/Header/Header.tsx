@@ -3,7 +3,7 @@
 import { useCallback } from 'react'
 import Logo from '@assets/images/logo.png'
 import { useAuth, useToast } from '@components/hooks'
-import { LanguageToggle } from '@components/shared'
+import { LanguageToggle, RegionSelect } from '@components/shared'
 import { Button } from '@components/ui'
 import { supabase } from '@data'
 import Image from 'next/image'
@@ -40,7 +40,13 @@ const Header = () => {
         <DesktopNav />
 
         <div className="flex shrink-0 items-center gap-4">
-          <LanguageToggle />
+          <div className="hidden lg:block">
+            <LanguageToggle />
+          </div>
+
+          <div className="hidden lg:block">
+            <RegionSelect />
+          </div>
 
           <MobileMenuButton />
 

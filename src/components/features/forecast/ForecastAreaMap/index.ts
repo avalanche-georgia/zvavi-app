@@ -1,1 +1,1 @@
-export { default as GudauriForecastAreaMap } from './gudauri'
+export { default as ForecastAreaMap } from './ForecastAreaMap'

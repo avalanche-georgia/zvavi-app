@@ -5,6 +5,7 @@ import { format } from 'date-fns'
 import type { Metadata } from 'next'
 import { headers } from 'next/headers'
 import { notFound } from 'next/navigation'
+import { getTranslations } from 'next-intl/server'
 
 import { fetchForecastPageData } from './fetchForecastPageData'
 
@@ -19,9 +20,9 @@ const hazardLevelLabels: Record<HazardLevelScale, string> = {
   5: 'Extreme',
 }
 
-type Props = { params: Promise<{ id: string }> }
+type ForecastPageProps = { params: Promise<{ id: string; region: string }> }
 
-export const generateMetadata = async (props: Props): Promise<Metadata> => {
+export const generateMetadata = async (props: ForecastPageProps): Promise<Metadata> => {
   const params = await props.params
   const forecastId = Number(params.id)
 
@@ -57,7 +58,7 @@ export const generateMetadata = async (props: Props): Promise<Metadata> => {
   }
 }
 
-const ForecastPage = async (props: Props) => {
+const ForecastPage = async (props: ForecastPageProps) => {
   const params = await props.params
   const forecastId = Number(params.id)
 
@@ -72,9 +73,12 @@ const ForecastPage = async (props: Props) => {
   }
 
   const { initialForecast, isCurrentForecast } = data
+  const t = await getTranslations()
 
   return (
-    <PageWrapper>
+    <PageWrapper
+      title={t('forecast.pageTitle', { regionName: t(`regions.names.${params.region}`) })}
+    >
       <ForecastContainer initialForecast={initialForecast} isCurrentForecast={isCurrentForecast} />
     </PageWrapper>
   )
