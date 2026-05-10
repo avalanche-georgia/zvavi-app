@@ -6,6 +6,7 @@ Professional avalanche forecasting platform for backcountry skiing in Georgia (C
 
 ## Features
 
+- Region picker map on homepage — each region colored by current hazard level
 - Daily avalanche forecasts with hazard levels, problem breakdowns, and recent avalanche history
 - Interactive forecast area maps (Leaflet/GeoJSON)
 - Real-time weather station data

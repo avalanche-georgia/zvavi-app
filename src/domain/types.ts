@@ -54,7 +54,7 @@ export type Forecast = {
   hazardLevels: HazardLevels
   id: number
   publishedAt: string | null
-  regionId?: RegionId
+  regionId: RegionId
   snowpack: string
   status: 'draft' | 'published'
   summary: string
