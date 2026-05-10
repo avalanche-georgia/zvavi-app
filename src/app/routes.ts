@@ -45,7 +45,7 @@ export const routes = {
   },
   forecastsByRegion: (regionId: string) => ({
     current: `/${regionId}/forecasts/current`,
-    forecastArea: `/${regionId}/forecasts/forecast-area`,
+    forecastArea: `/${regionId}/forecast-area`,
     history: `/${regionId}/forecasts/history`,
     root: `/${regionId}/forecasts`,
     view: (id: number) => `/${regionId}/forecasts/${id}`,

@@ -4,6 +4,7 @@ regions:
 
   picker:
     title: 'Choose a region'
+    openRegionPage: 'Open region page'
 
   selector:
     label: 'Select region'

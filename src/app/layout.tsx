@@ -14,7 +14,7 @@ import { ObservabilityProvider } from '@/lib/observability'
 import { baseUrl } from '@/routes'
 
 const siteDescription =
-  'Avalanche forecast for Gudauri and Georgian backcountry. Weather and snow conditions for skiers and snowboarders.'
+  'Avalanche forecasts for Georgian backcountry. Weather and snow conditions for skiers and snowboarders.'
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const locale = await getLocale()
