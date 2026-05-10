@@ -4,6 +4,8 @@ regions:
 
   picker:
     title: 'Choose a region'
+    subtitle: 'Tap a region to view the current forecast'
+    moreSoon: 'More regions coming soon'
 
   selector:
     label: 'Select region'

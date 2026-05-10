@@ -177,6 +177,7 @@ No `@i18n` alias — use `src/i18n/navigation` directly.
 - Zod v4: use `{ error: () => ({ message: '...' }) }` not `{ errorMap: ... }`
 - For DB inserts use `convertCamelToSnake` from `@data/helpers`
 - Always use explicit variable names — never single-letter or abbreviated (`partner` not `p`, `error` not `e`)
+- Always camelCase — constants, types, variables. Never SCREAMING_CASE or snake_case in TypeScript. Deviation requires argued justification.
 - React types: use the global `React.*` namespace — do not import types from `react` (`React.ReactNode`, `React.ChangeEvent<T>`)
 - Prop types: inline (`{ prop: Type }`) when a component has one prop; named `type` only for two or more props
 
