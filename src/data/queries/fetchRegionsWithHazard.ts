@@ -23,7 +23,6 @@ const fetchRegionsWithHazard = cache(async (): Promise<RegionWithHazard[]> => {
     )
     .eq('status', 'published')
     .order('published_at', { ascending: false })
-    .limit(regions.length)
 
   handleSupabaseError(error)
 
