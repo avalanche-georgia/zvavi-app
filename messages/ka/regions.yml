@@ -4,8 +4,6 @@ regions:
 
   picker:
     title: 'აირჩიეთ რეგიონი'
-    subtitle: 'შეეხეთ რეგიონს მიმდინარე პროგნოზის სანახავად'
-    moreSoon: 'მეტი რეგიონი მალე'
     openRegionPage: 'რეგიონის გვერდი'
 
   selector:

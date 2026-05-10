@@ -24,7 +24,10 @@ const RegionPickerMapClient = ({ regions }: RegionPickerMapClientProps) => {
   const boundsPadding: FitBoundsOptions['padding'] = regions.length > 1 ? [50, 50] : [130, 130]
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-3">
+      <div className="text-center">
+        <h2 className="text-xl font-bold">{t('regions.picker.title')}</h2>
+      </div>
       <MapContainer
         bounds={regionBounds ?? undefined}
         boundsOptions={regionBounds ? { padding: boundsPadding } : undefined}
@@ -40,7 +43,6 @@ const RegionPickerMapClient = ({ regions }: RegionPickerMapClientProps) => {
           <RegionPolygon key={region.id} region={region} />
         ))}
       </MapContainer>
-      <p className="text-center text-sm text-gray-400">{t('regions.picker.moreSoon')}</p>
     </div>
   )
 }
