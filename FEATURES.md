@@ -1,8 +1,12 @@
 # Features
 
+## Region Picker
+
+The homepage shows an interactive map of all active forecast regions, each polygon colored by its current overall hazard level. Tapping a region opens a summary popup with the hazard icon, level, and a link to the region page. The selected region is remembered between visits.
+
 ## Avalanche Forecasts
 
-Daily professional forecasts covering the Gudauri backcountry area. Each forecast includes:
+Daily professional forecasts for each active region in the Georgian backcountry. Each forecast includes:
 
 - **Danger levels** for multiple elevation zones (sub-alpine, alpine, high-alpine) on the standard 1–5 European scale
 - **Avalanche problem breakdown** — up to 9 problem types (storm slab, wind slab, persistent slab, wet slab, cornices, etc.) with affected aspects, elevation bands, likelihood, and size
@@ -13,7 +17,7 @@ Forecasts are authored in a draft/publish workflow, so forecasters can prepare a
 
 ## Forecast Area Map
 
-Interactive map showing the Gudauri forecast area boundary, giving users a clear spatial reference for where the forecast applies.
+Interactive map showing the forecast area boundary for each region, giving users a clear spatial reference for where the forecast applies.
 
 ## Forecast Archive
 
