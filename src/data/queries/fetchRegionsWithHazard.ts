@@ -1,4 +1,5 @@
 import { cache } from 'react'
+import { handleSupabaseError } from '@data/helpers'
 import type { HazardLevelScale, Region } from '@domain/types'
 
 import fetchActiveRegions from './fetchActiveRegions'
@@ -13,7 +14,7 @@ const fetchRegionsWithHazard = cache(async (): Promise<RegionWithHazard[]> => {
 
   if (!regions.length) return []
 
-  const { data: forecasts } = await supabase
+  const { data: forecasts, error } = await supabase
     .from('forecasts')
     .select('region_id, hazard_levels')
     .in(
@@ -22,6 +23,9 @@ const fetchRegionsWithHazard = cache(async (): Promise<RegionWithHazard[]> => {
     )
     .eq('status', 'published')
     .order('published_at', { ascending: false })
+    .limit(regions.length)
+
+  handleSupabaseError(error)
 
   const latestByRegion = new Map<string, string | null>()
 

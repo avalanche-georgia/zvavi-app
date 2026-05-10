@@ -24,6 +24,6 @@ export const hoverStrokeClassByLevel: Record<HazardLevelScale, string> = {
   '1': 'hover:stroke-[#44841a]',
   '2': 'hover:stroke-[#a5a500]',
   '3': 'hover:stroke-[#a15a1c]',
-  '4': 'hover:stroke-[#982e07]',
+  '4': 'hover:stroke-[#822906]',
   '5': 'hover:stroke-[#4d4d57]',
 }

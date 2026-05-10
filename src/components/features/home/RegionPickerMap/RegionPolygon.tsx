@@ -17,7 +17,7 @@ import { routes } from '@/routes'
 
 const RegionPolygon = ({ region }: { region: RegionWithHazard }) => {
   const t = useTranslations()
-  const geoJsonRef = useRef<LeafletGeoJSON>(null)
+  const geoJsonRef = useRef<LeafletGeoJSON | null>(null)
   const level = region.overallHazardLevel ?? '0'
   const color = hazardHexColors[level]
   const icon = hazardIcons[level]
