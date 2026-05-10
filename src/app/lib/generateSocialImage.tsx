@@ -54,7 +54,8 @@ export const generateSocialImage = () =>
             textAlign: 'center',
           }}
         >
-          Avalanche forecast for Gudauri and Georgian backcountry
+          {/* TODO: per-region OG image */}
+          Avalanche forecasts for Georgian backcountry
         </div>
 
         <div
