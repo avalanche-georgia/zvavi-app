@@ -21,7 +21,7 @@ const fetchRegionsWithHazard = cache(async (): Promise<RegionWithHazard[]> => {
       regions.map((region) => region.id),
     )
     .eq('status', 'published')
-    .order('valid_from', { ascending: false })
+    .order('published_at', { ascending: false })
 
   const latestByRegion = new Map<string, string | null>()
 

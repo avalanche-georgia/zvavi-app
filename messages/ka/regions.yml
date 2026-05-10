@@ -6,6 +6,7 @@ regions:
     title: 'აირჩიეთ რეგიონი'
     subtitle: 'შეეხეთ რეგიონს მიმდინარე პროგნოზის სანახავად'
     moreSoon: 'მეტი რეგიონი მალე'
+    openRegionPage: 'რეგიონის გვერდი'
 
   selector:
     label: 'რეგიონის არჩევა'

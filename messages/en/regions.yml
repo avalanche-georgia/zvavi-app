@@ -6,6 +6,7 @@ regions:
     title: 'Choose a region'
     subtitle: 'Tap a region to view the current forecast'
     moreSoon: 'More regions coming soon'
+    openRegionPage: 'Open region page'
 
   selector:
     label: 'Select region'
