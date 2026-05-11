@@ -179,7 +179,7 @@ admin:
       errors:
         avatar:
           invalidType: 'გამოიყენეთ JPG, PNG ან WebP.'
-          tooLarge: 'ფაილი აღემატება 2 MB-ს.'
+          tooLarge: 'ფაილი აღემატება 5 MB-ს.'
           uploadFailed: 'ატვირთვა ვერ მოხერხდა. სცადეთ თავიდან.'
 
     messages:

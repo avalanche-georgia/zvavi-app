@@ -14,7 +14,7 @@ const emailSchema = z.object({
 
 type EmailFormSchema = z.infer<typeof emailSchema>
 
-const EmailUpdateForm = ({ onCancel }: { onCancel: VoidFunction }) => {
+const EmailUpdateForm = ({ onClose }: { onClose: VoidFunction }) => {
   const t = useTranslations()
   const { updateEmail } = useEmailUpdate()
 
@@ -31,7 +31,7 @@ const EmailUpdateForm = ({ onCancel }: { onCancel: VoidFunction }) => {
   const handleSubmit = async (data: EmailFormSchema) => {
     const success = await updateEmail(data.email)
 
-    if (success) onCancel()
+    if (success) onClose()
   }
 
   return (
@@ -48,7 +48,7 @@ const EmailUpdateForm = ({ onCancel }: { onCancel: VoidFunction }) => {
         </InputBlock>
         <p className="text-xs text-gray-500">{t('admin.profile.security.hints.emailChange')}</p>
         <div className="ml-auto flex gap-3">
-          <Button onClick={onCancel} variant="secondary">
+          <Button onClick={onClose} variant="secondary">
             {t('common.actions.cancel')}
           </Button>
           <Button type="submit">{t('common.actions.save')}</Button>

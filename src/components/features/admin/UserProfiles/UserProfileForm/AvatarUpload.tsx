@@ -36,6 +36,8 @@ const AvatarUpload = ({ profile }: AvatarUploadProps) => {
 
     const result = await upload(id, file, avatarUrl)
 
+    event.target.value = ''
+
     if (!result.error) {
       toastSuccess(t('admin.profile.messages.avatarUpdated'))
 
@@ -47,8 +49,6 @@ const AvatarUpload = ({ profile }: AvatarUploadProps) => {
       message: t(`admin.profile.form.errors.avatar.${result.error}`),
     })
     setIsImageLoading(false)
-
-    event.target.value = ''
   }
 
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {

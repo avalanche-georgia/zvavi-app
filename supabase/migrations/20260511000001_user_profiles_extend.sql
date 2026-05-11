@@ -64,13 +64,16 @@ LEFT JOIN public.user_profiles p ON p.id = u.id
 WHERE p.id IS NULL
 ON CONFLICT (id) DO NOTHING;
 
--- Step 7: RLS — user can update only their own profile
+-- Step 7: RLS — user can update only their own profile (role column is immutable by users)
 DROP POLICY IF EXISTS "user can update own profile" ON public.user_profiles;
 CREATE POLICY "user can update own profile"
   ON public.user_profiles FOR UPDATE
   TO authenticated
   USING (id = auth.uid())
-  WITH CHECK (id = auth.uid());
+  WITH CHECK (
+    id = auth.uid()
+    AND role = (SELECT role FROM public.user_profiles WHERE id = auth.uid())
+  );
 
 -- Step 8: Storage — avatars bucket (public, 5 MB limit, images only)
 INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
@@ -87,7 +90,10 @@ DROP POLICY IF EXISTS "authenticated delete own avatars" ON storage.objects;
 
 CREATE POLICY "authenticated upload avatars"
   ON storage.objects FOR INSERT TO authenticated
-  WITH CHECK (bucket_id = 'avatars');
+  WITH CHECK (
+    bucket_id = 'avatars'
+    AND name LIKE auth.uid()::text || '/%'
+  );
 
 CREATE POLICY "public read avatars"
   ON storage.objects FOR SELECT TO public

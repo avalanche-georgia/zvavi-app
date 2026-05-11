@@ -35,7 +35,7 @@ const SecuritySection = ({ email }: SecuritySectionProps) => {
               </Button>
             )}
           </div>
-          {emailOpen && <EmailUpdateForm onCancel={closeEmail} />}
+          {emailOpen && <EmailUpdateForm onClose={closeEmail} />}
         </div>
 
         <div className="flex flex-col gap-4 pt-6">

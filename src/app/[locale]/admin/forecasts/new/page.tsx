@@ -30,7 +30,7 @@ const NewForecastPage = () => {
     regionId,
   })
 
-  const { data: currentProfile } = useCurrentUserProfileQuery()
+  const { data: currentProfile, isPending: isProfilePending } = useCurrentUserProfileQuery()
 
   const handleCancel = () => {
     router.push(routes.admin.forecasts.listByRegion(regionId))
@@ -40,7 +40,7 @@ const NewForecastPage = () => {
     router.push(routes.admin.forecasts.listByRegion(regionId))
   }
 
-  if (isValidDuplicateId && isLoading) {
+  if (isProfilePending || (isValidDuplicateId && isLoading)) {
     return <Spinner />
   }
 
