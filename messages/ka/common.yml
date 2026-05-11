@@ -17,8 +17,11 @@ common:
     visitWebsite: 'ვიზიტი ვებგვერდზე'
 
   labels:
+    confirmPassword: 'დაადასტურე პაროლი'
     date: 'თარიღი'
     email: 'ელფოსტა'
+    newPassword: 'ახალი პაროლი'
+    password: 'პაროლი'
     forecaster: 'პროგნოზის ავტორი'
     issuedAt: 'გამოცემის დრო'
     leaveFeedback: 'მოაწოდეთ გამოხმაურება'
@@ -35,8 +38,11 @@ common:
 
   validation:
     expiresAtBeforeJoined: 'ვადის თარიღი უნდა იყოს გაწევრიანების თარიღის შემდეგ'
+    invalidCredentials: 'მიმდინარე პაროლი არასწორია'
     invalid_string: 'არასწორი ფორმატი'
     joinedAtFuture: 'არ შეიძლება იყოს მომავალში'
+    passwordMismatch: 'პაროლები არ ემთხვევა'
+    passwordTooShort: 'მინიმუმ 8 სიმბოლო'
     required: 'სავალდებულო'
     too_small: 'სავალდებულო'
 

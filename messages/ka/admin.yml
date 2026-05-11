@@ -163,6 +163,44 @@ admin:
       unpublished: 'პროგნოზი მოხსნილია გამოქვეყნებიდან.'
       updated: 'პროგნოზი წარმატებით განახლდა.'
 
+  profile:
+    title: 'ჩემი პროფილი'
+
+    form:
+      labels:
+        about: 'ჩემ შესახებ'
+        firstName: 'სახელი'
+        lastName: 'გვარი'
+      hints:
+        avatar: 'JPG, PNG ან WebP · მაქს. 5 MB'
+      actions:
+        avatarUpload: 'ფოტოს ატვირთვა'
+        avatarReplace: 'ფოტოს შეცვლა'
+      errors:
+        avatar:
+          invalidType: 'გამოიყენეთ JPG, PNG ან WebP.'
+          tooLarge: 'ფაილი აღემატება 2 MB-ს.'
+          uploadFailed: 'ატვირთვა ვერ მოხერხდა. სცადეთ თავიდან.'
+
+    messages:
+      updated: 'პროფილი წარმატებით განახლდა.'
+      avatarUpdated: 'ფოტო განახლდა.'
+
+    security:
+      title: 'უსაფრთხოება'
+      labels:
+        currentPassword: 'მიმდინარე პაროლი'
+        email: 'ელფოსტის მისამართი'
+        newEmail: 'ახალი ელფოსტა'
+      actions:
+        changeEmail: 'ელფოსტის შეცვლა'
+        changePassword: 'პაროლის შეცვლა'
+      hints:
+        emailChange: 'ახალ მისამართზე გაიგზავნება დადასტურების ბმული. ელფოსტა განახლდება დადასტურების შემდეგ.'
+      messages:
+        emailSent: 'დადასტურების წერილი გაგზავნილია. შეამოწმეთ შემოსული წერილები.'
+        passwordUpdated: 'პაროლი წარმატებით განახლდა.'
+
   forecast:
     notFound: 'პროგნოზი ვერ მოიძებნა.'
     title:

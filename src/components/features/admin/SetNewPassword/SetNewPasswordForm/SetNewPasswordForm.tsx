@@ -28,7 +28,7 @@ const SetNewPasswordPageForm = () => {
         </Legend>
 
         <Field>
-          <Label className="text-sm/6">{t('auth.labels.password')}</Label>
+          <Label className="text-sm/6">{t('common.labels.password')}</Label>
           <TextInput
             className="w-full"
             onBlur={handleValidatePasswords}
@@ -39,7 +39,7 @@ const SetNewPasswordPageForm = () => {
         </Field>
 
         <Field>
-          <Label className="text-sm/6">{t('auth.labels.confirmPassword')}</Label>
+          <Label className="text-sm/6">{t('common.labels.confirmPassword')}</Label>
           <TextInput
             className="w-full"
             onBlur={handleValidatePasswords}

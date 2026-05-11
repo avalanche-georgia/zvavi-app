@@ -3,6 +3,7 @@
 import { ForecastForm, getInitialFormData } from '@components/features/admin/Forecasts/ForecastForm'
 import { Spinner } from '@components/ui'
 import { useAdminGetForecast } from '@data/hooks/forecasts'
+import { useCurrentUserProfileQuery } from '@data/hooks/userProfiles'
 import { defaultRegionId } from '@domain/constants'
 import type { RegionId } from '@domain/types'
 import { useSearchParams } from 'next/navigation'
@@ -29,6 +30,8 @@ const NewForecastPage = () => {
     regionId,
   })
 
+  const { data: currentProfile } = useCurrentUserProfileQuery()
+
   const handleCancel = () => {
     router.push(routes.admin.forecasts.listByRegion(regionId))
   }
@@ -47,6 +50,8 @@ const NewForecastPage = () => {
     return <Spinner />
   }
 
+  const forecasterName = currentProfile?.fullName ?? ''
+
   const initialBaseFormData = getInitialFormData(sourceForecast ?? null)
   const initialFormData = sourceForecast
     ? {
@@ -55,10 +60,15 @@ const NewForecastPage = () => {
       }
     : initialBaseFormData
 
+  const initialFormDataPrefilled = {
+    ...initialFormData,
+    baseFormData: { ...initialFormData.baseFormData, forecaster: forecasterName },
+  }
+
   return (
     <div className="mx-auto max-w-7xl p-4 md:p-6">
       <ForecastForm
-        initialFormData={initialFormData}
+        initialFormData={initialFormDataPrefilled}
         onCancel={handleCancel}
         onSuccess={handleSuccess}
         regionId={regionId}
