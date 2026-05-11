@@ -4,9 +4,24 @@ import type {
   avalancheTypes,
   confidenceLevels,
   distributionTypes,
+  regionIds,
   sensitivityLevels,
   trends,
 } from '@domain/constants'
+import type { FeatureCollection } from 'geojson'
+
+export type RegionId = keyof typeof regionIds
+
+export type Region = {
+  id: RegionId
+  isActive: boolean
+  displayOrder: number
+  mapCenter: { lat: number; lng: number } | null
+  defaultZoom: number | null
+  forecastZone: FeatureCollection | null
+  createdAt: string
+  updatedAt: string
+}
 
 export type HazardLevel = 'noRating' | 'low' | 'moderate' | 'considerable' | 'high' | 'extreme'
 
@@ -17,6 +32,20 @@ export type TimeRange = { start: Date | string | null; end: Date | string | null
 export type User = {
   id: string
   email: string
+}
+
+export type UserRole = 'forecaster' | 'trainee' | 'admin'
+
+export type UserProfile = {
+  id: string
+  email: string
+  firstName: string | null
+  lastName: string | null
+  fullName: string
+  about: string | null
+  avatarUrl: string | null
+  role: UserRole
+  createdAt: string
 }
 
 export type AvalancheSize = 1 | 2 | 3 | 4 | 5
@@ -39,6 +68,7 @@ export type Forecast = {
   hazardLevels: HazardLevels
   id: number
   publishedAt: string | null
+  regionId: RegionId
   snowpack: string
   status: 'draft' | 'published'
   summary: string
@@ -74,6 +104,7 @@ export type Avalanche = {
   location: string | null
   longitude: number | null
   quantity: number
+  regionId: RegionId
   size: AvalancheSize
   slabDepth: number | null
   trigger: AvalancheTrigger
@@ -92,6 +123,7 @@ export type AvalancheFormData = {
   location: string | null
   longitude: number | null
   quantity: number
+  regionId?: RegionId
   size: AvalancheSize
   slabDepth: number | null
   trigger: AvalancheTrigger | null
@@ -109,6 +141,7 @@ export type BaseFormData = {
   additionalHazards: string
   forecaster: string
   hazardLevels: HazardLevels
+  regionId?: RegionId
   snowpack: string
   summary: string
   validUntil: Date | null

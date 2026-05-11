@@ -1,12 +1,13 @@
 'use client'
 
 import { Icon } from '@components/icons'
+import { useRegionContext } from '@domain/context/RegionContext'
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import clsx from 'clsx'
 import { useTranslations } from 'next-intl'
 import { Link, usePathname } from 'src/i18n/navigation'
 
-import { navMenuItems } from './constants'
+import { getNavMenuItems } from './constants'
 
 import type { NavMenuGroup, NavMenuLink } from './types'
 
@@ -88,18 +89,23 @@ const NavDropdown = ({ item }: { item: NavMenuGroup }) => {
   )
 }
 
-const DesktopNav = () => (
-  <nav className="hidden items-center gap-1 lg:flex">
-    {navMenuItems.map((item) => {
-      if (item.isHidden) return null
+const DesktopNav = () => {
+  const { region } = useRegionContext()
+  const navMenuItems = getNavMenuItems(region?.id ?? null)
 
-      if (item.children) {
-        return <NavDropdown key={item.id} item={item} />
-      }
+  return (
+    <nav className="hidden items-center gap-1 lg:flex">
+      {navMenuItems.map((item) => {
+        if (item.isHidden) return null
 
-      return <NavLink key={item.id} item={item} />
-    })}
-  </nav>
-)
+        if (item.children) {
+          return <NavDropdown key={item.id} item={item} />
+        }
+
+        return <NavLink key={item.id} item={item} />
+      })}
+    </nav>
+  )
+}
 
 export default DesktopNav

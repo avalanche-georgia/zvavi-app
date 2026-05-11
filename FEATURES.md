@@ -1,8 +1,12 @@
 # Features
 
+## Region Picker
+
+The homepage shows an interactive map of all active forecast regions, each polygon colored by its current overall hazard level. Tapping a region opens a summary popup with the hazard icon, level, and a link to the region page. The selected region is remembered between visits.
+
 ## Avalanche Forecasts
 
-Daily professional forecasts covering the Gudauri backcountry area. Each forecast includes:
+Daily professional forecasts for each active region in the Georgian backcountry. Each forecast includes:
 
 - **Danger levels** for multiple elevation zones (sub-alpine, alpine, high-alpine) on the standard 1–5 European scale
 - **Avalanche problem breakdown** — up to 9 problem types (storm slab, wind slab, persistent slab, wet slab, cornices, etc.) with affected aspects, elevation bands, likelihood, and size
@@ -13,7 +17,7 @@ Forecasts are authored in a draft/publish workflow, so forecasters can prepare a
 
 ## Forecast Area Map
 
-Interactive map showing the Gudauri forecast area boundary, giving users a clear spatial reference for where the forecast applies.
+Interactive map showing the forecast area boundary for each region, giving users a clear spatial reference for where the forecast applies.
 
 ## Forecast Archive
 
@@ -44,8 +48,14 @@ A password-protected back-office for the forecasting team.
 ### Forecast Authoring
 Forecasters can create, edit, duplicate, and publish forecasts through a structured form covering all hazard levels, problem types, and narrative fields. Drafts are invisible to the public until explicitly published.
 
+### Recent Avalanche Catalog
+Administrators can browse all recorded avalanche observations in a paginated table, filter by occurrence or creation date, and edit or delete individual records directly — without going through a forecast.
+
 ### Member Management
 Administrators can manage the team roster: add members, update their status (active, inactive, pending, suspended, expired), set membership validity dates, and generate or view their verification QR codes.
+
+### Staff Profiles
+Forecasters and administrators can view and edit their own profile — including display name, a short bio, and a profile photo. The photo and name are shown in the admin panel header. When creating a forecast, the forecaster field is automatically prefilled with the logged-in user's name.
 
 ### Partner Benefits Management
 Administrators can manage a list of partner organizations and the exclusive discounts or perks they offer to Avalanche Georgia members. Each partner has a name, optional benefit description, logo, and website — all stored in both English and Georgian. Active partners are displayed to the public in a "Member Benefits" drawer accessible from the Join Us page and the member verification card.

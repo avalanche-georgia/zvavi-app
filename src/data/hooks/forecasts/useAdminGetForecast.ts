@@ -1,5 +1,5 @@
 import { supabase } from '@data'
-import type { FullForecast } from '@domain/types'
+import type { FullForecast, RegionId } from '@domain/types'
 import type { QueryFunctionContext, UseQueryOptions } from '@tanstack/react-query'
 
 import { useQuery } from '@/tanstack-query/hooks'
@@ -13,15 +13,16 @@ type Response = FullForecast | undefined
 type QueryOptions = Omit<
   UseQueryOptions<Response, unknown, Response, QueryKey>,
   'queryKey' | 'queryFn'
-> & { forecastId: FullForecast['id'] }
+> & { forecastId: FullForecast['id']; regionId: RegionId }
 
 const fetchForecast = async ({ queryKey }: QueryFunctionContext<QueryKey>): Promise<Response> => {
-  const [, , variables] = queryKey
+  const [, regionId, , variables] = queryKey
 
   const { data: forecastData, error: forecastError } = await supabase
     .from('forecasts')
     .select()
     .eq('id', variables.forecastId)
+    .eq('region_id', regionId)
     .single()
 
   if (forecastError) {
@@ -57,10 +58,10 @@ const fetchForecast = async ({ queryKey }: QueryFunctionContext<QueryKey>): Prom
   }) as Response
 }
 
-const useAdminGetForecast = ({ forecastId, ...options }: QueryOptions) =>
+const useAdminGetForecast = ({ forecastId, regionId, ...options }: QueryOptions) =>
   useQuery({
     queryFn: fetchForecast,
-    queryKey: forecastsKeys.item({ forecastId }),
+    queryKey: forecastsKeys.item(regionId, { forecastId }),
     ...options,
   })
 

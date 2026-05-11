@@ -1,6 +1,8 @@
 import avalancheGIF from '@assets/images/avalanche.gif'
 import { PageWrapper } from '@components/layout'
 import { ButtonLink } from '@components/shared'
+import { regionLocalStorageKey } from '@domain/constants'
+import { cookies } from 'next/headers'
 import Image from 'next/image'
 import { getTranslations } from 'next-intl/server'
 
@@ -8,6 +10,9 @@ import { routes } from '@/routes'
 
 const NotFound = async () => {
   const t = await getTranslations()
+  const cookieStore = await cookies()
+  const regionId = cookieStore.get(regionLocalStorageKey)?.value
+  const href = regionId ? routes.forecastsByRegion(regionId).current : routes.home
 
   return (
     <PageWrapper>
@@ -27,7 +32,7 @@ const NotFound = async () => {
         <h1 className="text-2xl font-semibold text-gray-900">{t('common.notFound.title')}</h1>
         <p className="max-w-lg whitespace-pre-line text-gray-600">{t('common.notFound.message')}</p>
 
-        <ButtonLink href={routes.forecasts.current}>{t('common.notFound.linkText')}</ButtonLink>
+        <ButtonLink href={href}>{t('common.notFound.linkText')}</ButtonLink>
       </div>
     </PageWrapper>
   )

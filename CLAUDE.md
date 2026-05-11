@@ -40,8 +40,9 @@ src/
 │   └── icons/               # SVG icon components
 ├── data/
 │   ├── hooks/               # React Query hooks (forecasts/, members/)
+│   ├── queries/             # shared server-side fetch functions (fetchActiveRegions, fetchTier1Partners, …)
 │   ├── query-keys/          # cache key definitions
-│   └── helpers/             # convertCamelToSnake, convertSnakeToCamel, handleSupabaseError, …
+│   └── helpers/             # pure utils only: convertCamelToSnake, convertSnakeToCamel, handleSupabaseError, …
 ├── domain/
 │   ├── types.ts             # all TypeScript type definitions
 │   ├── constants.ts         # enums, label maps, date format strings
@@ -93,8 +94,15 @@ Import `avalancheTypes` when working with avalanche events; import `avalanchePro
 3. Mutation hooks (`useForecastCreate`, `useMemberUpdate`, etc.) convert via `convertCamelToSnake()` before insert
 4. On success, `queryClient.invalidateQueries(keys.all)` refreshes cache
 
+### Server-Side Data Fetching
+Never write Supabase query logic inline inside a page or component. Extract to a dedicated fetch function:
+- **Single caller** → co-locate next to the page/component (e.g. `fetchForecastPageData.ts` next to its page)
+- **Multiple callers or generic** → `src/data/queries/` (e.g. `fetchActiveRegions`, `fetchTier1Partners`)
+
+`src/data/helpers/` is for **pure utility functions only** (converters, error handlers). DB fetch functions belong in `src/data/queries/`.
+
 ### Form Pattern
-- `react-hook-form` + `zodResolver` + `FormProvider`
+- **All forms must use `react-hook-form` + `zodResolver` + `FormProvider`**
 - `getInitialFormData(item | null)` initializes form state from domain type or defaults
 - `InputBlock` wraps label + input + error display
 - `Controller` used for complex fields (DatePicker, Select, AspectSelector)
@@ -109,7 +117,7 @@ Import `avalancheTypes` when working with avalanche events; import `avalanchePro
    t('admin.members.statuses.active')   // correct
    ```
    Never use `useTranslations('admin.members')` + short keys.
-4. Translations go in **scope-specific YAML files** (e.g. `partners.yml`, `members.yml`) — not in the catch-all `en.yml`/`ka.yml`
+4. Each YAML file owns one **top-level scope key** — the filename matches the key (e.g. `partners.yml` → `partners:`, `admin.yml` → `admin:`). Adding keys under an existing scope (e.g. `admin.profile`) means editing the existing file (`admin.yml`), never creating a new file with the same root key. A new file is only justified when introducing a brand-new top-level key. Never put new content in the catch-all `en.yml`/`ka.yml`.
 5. Separate major scopes in YAML files with an empty line between them
 
 ### Route Constants
@@ -169,8 +177,12 @@ No `@i18n` alias — use `src/i18n/navigation` directly.
 - Zod v4: use `{ error: () => ({ message: '...' }) }` not `{ errorMap: ... }`
 - For DB inserts use `convertCamelToSnake` from `@data/helpers`
 - Always use explicit variable names — never single-letter or abbreviated (`partner` not `p`, `error` not `e`)
+- Always camelCase — variables and constants. Types use PascalCase (`Region`, `HazardLevelScale`). Never SCREAMING_CASE or snake_case in TypeScript. Deviation requires argued justification.
 - React types: use the global `React.*` namespace — do not import types from `react` (`React.ReactNode`, `React.ChangeEvent<T>`)
 - Prop types: inline (`{ prop: Type }`) when a component has one prop; named `type` only for two or more props
+- Destructure objects when accessed more than 1–2 times in the same scope. Exception: skip destructuring when it would lose useful object context, or when the variable would need to be recreated on every render anyway
+- Avoid inline functions in JSX props unless the body is a single simple call (e.g. `onClick={() => foo()}`). For multi-line or non-trivial handlers, define a named function in the component body
+- Prefer early return (guard clause) over positive-condition wrapping: `if (!x) return` then do the work, not `if (x) { do the work }`
 
 ---
 

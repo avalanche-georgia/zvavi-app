@@ -10,7 +10,11 @@ export const routes = {
   admin: {
     forecasts: {
       edit: (id: number) => `/admin/forecasts/${id}/edit`,
+      editInRegion: (id: number, regionId: string) =>
+        `/admin/forecasts/${id}/edit?regionId=${regionId}`,
+      listByRegion: (regionId: string) => `/admin/forecasts?regionId=${regionId}`,
       new: '/admin/forecasts/new',
+      newInRegion: (regionId: string) => `/admin/forecasts/new?regionId=${regionId}`,
       root: '/admin/forecasts',
     },
     members: {
@@ -23,6 +27,16 @@ export const routes = {
       new: '/admin/partners/new',
       root: '/admin/partners',
     },
+    profile: '/admin/profile',
+    recentAvalanches: {
+      edit: (id: number) => `/admin/recent-avalanches/${id}/edit`,
+      editInRegion: (id: number, regionId: string) =>
+        `/admin/recent-avalanches/${id}/edit?regionId=${regionId}`,
+      listByRegion: (regionId: string) => `/admin/recent-avalanches?regionId=${regionId}`,
+      new: '/admin/recent-avalanches/new',
+      newInRegion: (regionId: string) => `/admin/recent-avalanches/new?regionId=${regionId}`,
+      root: '/admin/recent-avalanches',
+    },
     root: '/admin',
   },
   auth: {
@@ -30,16 +44,17 @@ export const routes = {
     login: '/auth/login',
     setNewPassword: '/auth/set-new-password',
   },
-  forecasts: {
-    current: '/forecasts/current',
-    forecastArea: '/forecasts/forecast-area',
-    history: '/forecasts/history',
-    root: '/forecasts',
-    view: (id: number) => `/forecasts/${id}`,
-  },
+  forecastsByRegion: (regionId: string) => ({
+    current: `/${regionId}/forecasts/current`,
+    forecastArea: `/${regionId}/forecast-area`,
+    history: `/${regionId}/forecasts/history`,
+    root: `/${regionId}/forecasts`,
+    view: (id: number) => `/${regionId}/forecasts/${id}`,
+  }),
   home: '/',
   partners: '/partners',
   privacy: '/privacy-policy',
+  regionHome: (regionId: string) => `/${regionId}`,
   terms: '/terms-of-service',
   verify: (code: string) => `/verify/${code}`,
   weatherStations: '/weather-stations',

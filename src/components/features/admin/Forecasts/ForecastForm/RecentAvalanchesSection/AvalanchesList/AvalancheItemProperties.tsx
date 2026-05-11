@@ -3,7 +3,7 @@ import { useTranslations } from 'next-intl'
 
 import { PropertyWrapper } from '../../common/listItem'
 
-const AvalancheItemProperties = ({ avalanche }: { avalanche: Avalanche }) => {
+const AvalancheItemProperties = ({ avalanche }: { avalanche: Omit<Avalanche, 'regionId'> }) => {
   const t = useTranslations()
   const { location, quantity, size, slabDepth, trigger, type, width } = avalanche
 

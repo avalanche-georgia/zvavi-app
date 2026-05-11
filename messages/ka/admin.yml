@@ -7,6 +7,7 @@ admin:
     members: 'წევრები'
     menu: 'ადმინ მენიუ'
     partners: 'პარტნიორები'
+    recentAvalanches: 'ბოლო ზვავები'
     menuDescription: 'ადმინისტრაციული სანავიგაციო მენიუ'
     openMenu: 'მენიუს გახსნა'
     closeMenu: 'მენიუს დახურვა'
@@ -132,10 +133,12 @@ admin:
   forecasts:
     title: 'პროგნოზები'
     list:
+      empty: 'პროგნოზები არ არის.'
       columns:
         actions: 'მოქმედებები'
         createdAt: 'შექმნის თარიღი'
         forecaster: 'პროგნოზის ავტორი'
+        publishedAt: 'გამოქვეყნებულია'
         status: 'სტატუსი'
         validUntil: 'ძალაშია'
     actions:
@@ -159,6 +162,44 @@ admin:
       published: 'პროგნოზი გამოქვეყნებულია.'
       unpublished: 'პროგნოზი მოხსნილია გამოქვეყნებიდან.'
       updated: 'პროგნოზი წარმატებით განახლდა.'
+
+  profile:
+    title: 'ჩემი პროფილი'
+
+    form:
+      labels:
+        about: 'ჩემ შესახებ'
+        firstName: 'სახელი'
+        lastName: 'გვარი'
+      hints:
+        avatar: 'JPG, PNG ან WebP · მაქს. 5 MB'
+      actions:
+        avatarUpload: 'ფოტოს ატვირთვა'
+        avatarReplace: 'ფოტოს შეცვლა'
+      errors:
+        avatar:
+          invalidType: 'გამოიყენეთ JPG, PNG ან WebP.'
+          tooLarge: 'ფაილი აღემატება 5 MB-ს.'
+          uploadFailed: 'ატვირთვა ვერ მოხერხდა. სცადეთ თავიდან.'
+
+    messages:
+      updated: 'პროფილი წარმატებით განახლდა.'
+      avatarUpdated: 'ფოტო განახლდა.'
+
+    security:
+      title: 'უსაფრთხოება'
+      labels:
+        currentPassword: 'მიმდინარე პაროლი'
+        email: 'ელფოსტის მისამართი'
+        newEmail: 'ახალი ელფოსტა'
+      actions:
+        changeEmail: 'ელფოსტის შეცვლა'
+        changePassword: 'პაროლის შეცვლა'
+      hints:
+        emailChange: 'ახალ მისამართზე გაიგზავნება დადასტურების ბმული. ელფოსტა განახლდება დადასტურების შემდეგ.'
+      messages:
+        emailSent: 'დადასტურების წერილი გაგზავნილია. შეამოწმეთ შემოსული წერილები.'
+        passwordUpdated: 'პაროლი წარმატებით განახლდა.'
 
   forecast:
     notFound: 'პროგნოზი ვერ მოიძებნა.'
@@ -245,3 +286,58 @@ admin:
             riderAccidental: 'მოთხილამური (შემთხვევითი)'
             riderCut: 'მოთხილამური (განზრახ)'
             vehicle: 'სატრანსპორტო საშუალება'
+
+  recentAvalanches:
+    title:
+      create: შექმენით ზვავი
+      edit: ზვავის რედაქტირება
+      list: ბოლო ზვავები
+    notFound: ზვავი ვერ მოიძებნა.
+
+    list:
+      columns:
+        actions: მოქმედებები
+        createdAt: შექმნილია
+        date: თარიღი
+        description: აღწერა
+        location: ადგილმდებარეობა
+        size: ზომა
+        trigger: გამომწვევი
+        type: სახეობა
+      empty: ზვავის ჩანაწერები არ მოიძებნა.
+      total: "ნაჩვენებია: {shown} / {total}"
+
+    filters:
+      reset: ფილტრების გადატვირთვა
+      dateMode:
+        created: შექმნის თარიღი
+        occurred: მოვლენის თარიღი
+      placeholder: აირჩიეთ თარიღის დიაპაზონი
+
+    pagination:
+      page: "გვ. {current} / {total}"
+
+    actions:
+      deleteDescription: ეს ჩანაწერი სამუდამოდ წაიშლება.
+      deleteTitle: ზვავის წაშლა
+
+    form:
+      labels:
+        description: აღწერა
+        involvement: ჩართულობა
+        isDateUnknown: თარიღი უცნობია
+        latitude: განედი
+        location: ადგილი
+        longitude: გრძედი
+        quantity: რაოდენობა
+        size: ზომა
+        slabDepth: ფილის სისქე (სმ)
+        trigger: გამომწვევი
+        type: სახეობა
+        width: სიგანე (მ)
+      placeholders:
+        trigger: აირჩიეთ გამომწვევი
+        type: აირჩიეთ სახეობა
+      messages:
+        created: ზვავი წარმატებით დაემატა.
+        updated: ზვავი წარმატებით განახლდა.

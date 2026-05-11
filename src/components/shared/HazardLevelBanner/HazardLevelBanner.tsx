@@ -11,13 +11,15 @@ import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 
 import ForecastMeta from './ForecastMeta'
+import RegionBadge from './RegionBadge'
 
 type HazardLevelBannerProps = {
   forecast: Forecast
   onInfoClick?: VoidFunction
+  regionName?: string
 }
 
-const HazardLevelBanner = ({ forecast, onInfoClick }: HazardLevelBannerProps) => {
+const HazardLevelBanner = ({ forecast, onInfoClick, regionName }: HazardLevelBannerProps) => {
   const t = useTranslations()
   const { hazardLevels } = forecast
   const [isInfoDrawerOpen, setIsInfoDrawerOpen] = useState(false)
@@ -40,10 +42,18 @@ const HazardLevelBanner = ({ forecast, onInfoClick }: HazardLevelBannerProps) =>
   return (
     <div
       className={clsx(
-        'flex flex-col gap-4 rounded-2xl p-4 shadow-md',
+        'relative flex flex-col gap-4 rounded-2xl p-4 shadow-md',
+        regionName ? 'px-4 pt-6 pb-4' : 'p-4',
         backgroundColorByHazardLevel[hazardLevels.overall],
       )}
     >
+      {regionName && (
+        <RegionBadge
+          colorClass={backgroundColorByHazardLevel[hazardLevels.overall]}
+          isExtremeRisk={isExtremeRisk}
+          regionName={regionName}
+        />
+      )}
       <div className="flex items-center justify-between">
         <div
           className={clsx(

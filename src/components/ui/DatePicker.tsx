@@ -48,7 +48,7 @@ const DatePicker = ({
           <HeadlessUIButton
             className={twMerge(
               clsx(
-                'flex h-10 w-full items-center rounded-md border bg-white',
+                'flex h-10 w-full items-center rounded border bg-white',
                 hasError ? 'border-red-500' : 'border-gray-300',
                 className,
                 'px-3 py-2 text-sm ring-offset-white',
@@ -86,6 +86,7 @@ const DatePicker = ({
           mode="single"
           onSelect={handleSelect}
           selected={value ?? undefined}
+          showOutsideDays={false}
         />
         {showTime && <DatePickerTimeInput onChange={onChange} value={value} />}
       </PopoverContent>

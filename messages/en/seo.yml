@@ -1,16 +1,20 @@
 seo:
   about:
     title: 'About Us'
-    description: 'Learn about Avalanche Georgia - providing avalanche forecasts and safety information for Gudauri and Georgian backcountry.'
+    description: 'Learn about Avalanche Georgia - providing avalanche forecasts and safety information for Georgian backcountry.'
   contact:
     title: 'Contact'
     description: 'Get in touch with Avalanche Georgia team. Report observations, ask questions, or provide feedback.'
   currentForecast:
-    title: 'Current Avalanche Forecast'
-    description: 'Latest avalanche forecast for Gudauri and Georgian backcountry. Check current danger levels and snow conditions.'
+    title: 'Current Avalanche Forecast — {regionName}'
+    description: 'Latest avalanche forecast for {regionName}. Check current danger levels and snow conditions.'
+  forecastArea:
+    title: 'Forecast Area — {regionName}'
+    description: 'View the avalanche forecast zone map for {regionName}.'
+
   history:
-    title: 'Forecast History'
-    description: 'Browse past avalanche forecasts for Gudauri and Georgian backcountry.'
+    title: 'Forecast History — {regionName}'
+    description: 'Browse past avalanche forecasts for {regionName}.'
   joinUs:
     title: 'Join Us'
     description: 'Join the Avalanche Georgia team. Help us improve avalanche safety in Georgian backcountry.'
@@ -25,4 +29,4 @@ seo:
     description: 'Terms and conditions for using Avalanche Georgia services and membership.'
   weatherStations:
     title: 'Weather Stations'
-    description: 'Real-time weather data from stations in Gudauri and Georgian mountains.'
+    description: 'Real-time weather data from stations across Georgian mountains.'

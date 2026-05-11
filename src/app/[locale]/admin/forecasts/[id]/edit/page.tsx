@@ -3,7 +3,9 @@
 import { ForecastForm, getInitialFormData } from '@components/features/admin/Forecasts/ForecastForm'
 import { Spinner } from '@components/ui'
 import { useAdminGetForecast } from '@data/hooks/forecasts'
-import { useParams } from 'next/navigation'
+import { defaultRegionId } from '@domain/constants'
+import type { RegionId } from '@domain/types'
+import { useParams, useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'src/i18n/navigation'
 
@@ -22,17 +24,18 @@ const NotFound = () => {
 const EditForecastPage = () => {
   const router = useRouter()
   const params = useParams()
+  const searchParams = useSearchParams()
 
   const forecastId = Number(params.id)
-
-  const { data: forecast, isPending } = useAdminGetForecast({ forecastId })
+  const regionId = (searchParams.get('regionId') as RegionId) ?? defaultRegionId
+  const { data: forecast, isPending } = useAdminGetForecast({ forecastId, regionId })
 
   const handleCancel = () => {
-    router.push(routes.admin.forecasts.root)
+    router.push(routes.admin.forecasts.listByRegion(regionId))
   }
 
   const handleSuccess = () => {
-    router.push(routes.admin.forecasts.root)
+    router.push(routes.admin.forecasts.listByRegion(regionId))
   }
 
   if (Number.isNaN(forecastId)) {
@@ -52,11 +55,14 @@ const EditForecastPage = () => {
   }
 
   return (
-    <ForecastForm
-      initialFormData={getInitialFormData(forecast)}
-      onCancel={handleCancel}
-      onSuccess={handleSuccess}
-    />
+    <div className="mx-auto max-w-7xl p-4 md:p-6">
+      <ForecastForm
+        initialFormData={getInitialFormData(forecast)}
+        onCancel={handleCancel}
+        onSuccess={handleSuccess}
+        regionId={regionId}
+      />
+    </div>
   )
 }
 

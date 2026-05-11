@@ -1,0 +1,10 @@
+regions:
+  names:
+    gudauri: 'გუდაური'
+
+  picker:
+    title: 'აირჩიეთ რეგიონი'
+    openRegionPage: 'რეგიონის გვერდი'
+
+  selector:
+    label: 'რეგიონის არჩევა'
