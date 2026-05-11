@@ -8,6 +8,11 @@ import { handleSupabaseError } from '../../helpers'
 const bucket = 'avatars'
 const maxSize = 5 * 1024 * 1024 // 5 MB
 const allowedTypes = ['image/jpeg', 'image/png', 'image/webp']
+const mimeToExt: Record<string, string> = {
+  'image/jpeg': 'jpg',
+  'image/png': 'png',
+  'image/webp': 'webp',
+}
 
 export type AvatarUploadError = 'invalidType' | 'tooLarge' | 'uploadFailed'
 
@@ -45,9 +50,7 @@ const useAvatarUpload = (): UseAvatarUploadResult => {
       setIsUploading(true)
 
       try {
-        const ext = file.name.includes('.')
-          ? file.name.split('.').pop()
-          : file.type.split('/').pop()
+        const ext = mimeToExt[file.type]!
         const path = `${userId}/${Date.now()}.${ext}`
 
         const { error: uploadError } = await supabase.storage.from(bucket).upload(path, file, {
