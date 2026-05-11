@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import { useToast } from '@components/hooks'
+import { useDiceBearAvatar, useToast } from '@components/hooks'
 import { Icon } from '@components/icons'
 import { Button } from '@components/ui'
 import { useAvatarUpload } from '@data/hooks/userProfiles'
@@ -21,8 +21,8 @@ const AvatarUpload = ({ profile }: AvatarUploadProps) => {
 
   const { avatarUrl, fullName, id } = profile
 
-  const dicebearSrc = `https://api.dicebear.com/9.x/open-peeps/svg?seed=${id}`
-  const avatarSrc = avatarUrl ?? dicebearSrc
+  const diceBearSrc = useDiceBearAvatar(id)
+  const avatarSrc = avatarUrl ?? diceBearSrc
 
   const [isImageLoading, setIsImageLoading] = useState(true)
   const isLoading = isUploading || isImageLoading
@@ -52,7 +52,9 @@ const AvatarUpload = ({ profile }: AvatarUploadProps) => {
   }
 
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
-    ;(e.currentTarget as HTMLImageElement).src = dicebearSrc
+    const img = e.currentTarget as HTMLImageElement
+
+    img.src = diceBearSrc
     setIsImageLoading(false)
   }
 

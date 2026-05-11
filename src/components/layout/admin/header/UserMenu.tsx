@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback } from 'react'
-import { useAuth, useToast } from '@components/hooks'
+import { useAuth, useDiceBearAvatar, useToast } from '@components/hooks'
 import { Icon } from '@components/icons'
 import { Button, Skeleton } from '@components/ui'
 import { supabase } from '@data'
@@ -29,17 +29,14 @@ const UserMenu = () => {
 
   const { email: userEmail, id: userId } = user ?? {}
 
+  const diceBearSrc = useDiceBearAvatar(userId ?? '')
   const displayName = profile?.fullName || userEmail
-  const avatarSrc =
-    profile?.avatarUrl ??
-    (userId ? `https://api.dicebear.com/9.x/open-peeps/svg?seed=${userId}` : null)
+  const avatarSrc = profile?.avatarUrl ?? diceBearSrc
 
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    if (!userId) return
-
     const img = e.currentTarget as HTMLImageElement
 
-    img.src = `https://api.dicebear.com/9.x/open-peeps/svg?seed=${userId}`
+    img.src = diceBearSrc
   }
 
   if (isAuthLoading || isProfilePending) {

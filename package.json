@@ -19,6 +19,8 @@
   },
   "dependencies": {
     "@base-ui/react": "^1.1.0",
+    "@dicebear/collection": "^9.4.2",
+    "@dicebear/core": "^9.4.2",
     "@dnd-kit/react": "^0.3.2",
     "@eslint/eslintrc": "^3.1.0",
     "@eslint/js": "^9.14.0",
