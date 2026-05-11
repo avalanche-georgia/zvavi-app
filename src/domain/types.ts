@@ -34,6 +34,20 @@ export type User = {
   email: string
 }
 
+export type UserRole = 'forecaster' | 'trainee' | 'admin'
+
+export type UserProfile = {
+  id: string
+  email: string
+  firstName: string | null
+  lastName: string | null
+  fullName: string
+  about: string | null
+  avatarUrl: string | null
+  role: UserRole
+  createdAt: string
+}
+
 export type AvalancheSize = 1 | 2 | 3 | 4 | 5
 export type AvalancheType = keyof typeof avalancheTypes
 export type AvalancheTrigger = keyof typeof avalancheTriggers

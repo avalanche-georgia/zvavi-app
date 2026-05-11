@@ -25,9 +25,6 @@ modal:
 auth:
   errors:
     invalidSession: 'Invalid or expired session. Please request a new password reset link.'
-  labels:
-    password: 'Password'
-    confirmPassword: 'Confirm Password'
   login:
     title: 'Login'
     signIn: 'Sign In'

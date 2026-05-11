@@ -54,6 +54,9 @@ Administrators can browse all recorded avalanche observations in a paginated tab
 ### Member Management
 Administrators can manage the team roster: add members, update their status (active, inactive, pending, suspended, expired), set membership validity dates, and generate or view their verification QR codes.
 
+### Staff Profiles
+Forecasters and administrators can view and edit their own profile — including display name, a short bio, and a profile photo. The photo and name are shown in the admin panel header. When creating a forecast, the forecaster field is automatically prefilled with the logged-in user's name.
+
 ### Partner Benefits Management
 Administrators can manage a list of partner organizations and the exclusive discounts or perks they offer to Avalanche Georgia members. Each partner has a name, optional benefit description, logo, and website — all stored in both English and Georgian. Active partners are displayed to the public in a "Member Benefits" drawer accessible from the Join Us page and the member verification card.
 

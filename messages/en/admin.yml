@@ -163,6 +163,44 @@ admin:
       unpublished: 'Forecast is now unpublished.'
       updated: 'Forecast updated successfully.'
 
+  profile:
+    title: 'My Profile'
+
+    form:
+      labels:
+        about: 'About'
+        firstName: 'First Name'
+        lastName: 'Last Name'
+      hints:
+        avatar: 'JPG, PNG or WebP · max 5 MB'
+      actions:
+        avatarUpload: 'Upload photo'
+        avatarReplace: 'Replace photo'
+      errors:
+        avatar:
+          invalidType: 'Use JPG, PNG or WebP only.'
+          tooLarge: 'File exceeds 5 MB limit.'
+          uploadFailed: 'Upload failed. Please try again.'
+
+    messages:
+      updated: 'Profile updated successfully.'
+      avatarUpdated: 'Photo updated.'
+
+    security:
+      title: 'Security'
+      labels:
+        currentPassword: 'Current Password'
+        email: 'Email Address'
+        newEmail: 'New Email'
+      actions:
+        changeEmail: 'Change Email'
+        changePassword: 'Change Password'
+      hints:
+        emailChange: 'A confirmation link will be sent to your new address. Your email will update after you confirm.'
+      messages:
+        emailSent: 'Confirmation email sent. Check your inbox.'
+        passwordUpdated: 'Password updated successfully.'
+
   forecast:
     notFound: 'Forecast not found.'
     title:

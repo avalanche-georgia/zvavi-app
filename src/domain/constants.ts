@@ -102,6 +102,12 @@ export const regionIds = {
   gudauri: 'gudauri',
 } as const
 
+export const userRoles = {
+  admin: 'admin',
+  forecaster: 'forecaster',
+  trainee: 'trainee',
+} as const
+
 // UI/UX fallback for public read queries only. Never use in data mutations.
 export const defaultRegionId = 'gudauri'
 export const regionLocalStorageKey = 'zvavi.region'

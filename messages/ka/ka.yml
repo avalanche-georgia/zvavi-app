@@ -25,9 +25,6 @@ modal:
 auth:
   errors:
     invalidSession: 'სესია არასწორია ან ვადაგასულია. გთხოვთ მოითხოვოთ პაროლის აღდგენის ახალი ბმული.'
-  labels:
-    password: 'პაროლი'
-    confirmPassword: 'დაადასტურე პაროლი'
   login:
     title: 'შესვლა'
     signIn: 'შესვლა'

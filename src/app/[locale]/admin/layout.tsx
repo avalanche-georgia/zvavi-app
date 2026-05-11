@@ -1,13 +1,15 @@
 'use client'
 
 import { useBoolean } from '@components/hooks'
-import { AdminPageHeader, AdminSidebar, MobileDrawer } from '@components/layout'
+import { AdminPageHeader, AdminSidebar, MobileDrawer } from '@components/layout/admin'
+import { useCurrentUserProfileQuery } from '@data/hooks/userProfiles'
 
 type LayoutProps = {
   children: React.ReactNode
 }
 
 const AdminLayout = ({ children }: Readonly<LayoutProps>) => {
+  useCurrentUserProfileQuery()
   const [isOpen, { setFalse: close, setTrue: open }] = useBoolean(false)
 
   return (
