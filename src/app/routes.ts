@@ -27,6 +27,7 @@ export const routes = {
       new: '/admin/partners/new',
       root: '/admin/partners',
     },
+    profile: '/admin/profile',
     recentAvalanches: {
       edit: (id: number) => `/admin/recent-avalanches/${id}/edit`,
       editInRegion: (id: number, regionId: string) =>

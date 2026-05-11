@@ -36,6 +36,7 @@ export type IconName =
   | 'trash'
   | 'triangleAlert'
   | 'upload'
+  | 'user'
   | 'userPlus'
   | 'users'
   | 'xMark'

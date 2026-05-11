@@ -17,9 +17,12 @@ common:
     visitWebsite: 'Visit Website'
 
   labels:
+    confirmPassword: 'Confirm Password'
     date: 'Date'
     email: 'Email'
     forecaster: 'Forecaster'
+    newPassword: 'New Password'
+    password: 'Password'
     issuedAt: 'Issued at'
     leaveFeedback: 'Leave Feedback'
     overallDangerLevel: 'Overall danger level'
@@ -35,8 +38,11 @@ common:
 
   validation:
     expiresAtBeforeJoined: 'Expiration date must be after joined date'
+    invalidCredentials: 'Incorrect current password'
     invalid_string: 'Invalid format'
     joinedAtFuture: 'Cannot be in the future'
+    passwordMismatch: 'Passwords do not match'
+    passwordTooShort: 'Minimum 8 characters'
     required: 'Required'
     too_small: 'Required'
 

@@ -102,7 +102,7 @@ Never write Supabase query logic inline inside a page or component. Extract to a
 `src/data/helpers/` is for **pure utility functions only** (converters, error handlers). DB fetch functions belong in `src/data/queries/`.
 
 ### Form Pattern
-- `react-hook-form` + `zodResolver` + `FormProvider`
+- **All forms must use `react-hook-form` + `zodResolver` + `FormProvider`**
 - `getInitialFormData(item | null)` initializes form state from domain type or defaults
 - `InputBlock` wraps label + input + error display
 - `Controller` used for complex fields (DatePicker, Select, AspectSelector)
@@ -117,7 +117,7 @@ Never write Supabase query logic inline inside a page or component. Extract to a
    t('admin.members.statuses.active')   // correct
    ```
    Never use `useTranslations('admin.members')` + short keys.
-4. Translations go in **scope-specific YAML files** (e.g. `partners.yml`, `members.yml`) — not in the catch-all `en.yml`/`ka.yml`
+4. Each YAML file owns one **top-level scope key** — the filename matches the key (e.g. `partners.yml` → `partners:`, `admin.yml` → `admin:`). Adding keys under an existing scope (e.g. `admin.profile`) means editing the existing file (`admin.yml`), never creating a new file with the same root key. A new file is only justified when introducing a brand-new top-level key. Never put new content in the catch-all `en.yml`/`ka.yml`.
 5. Separate major scopes in YAML files with an empty line between them
 
 ### Route Constants
@@ -180,6 +180,9 @@ No `@i18n` alias — use `src/i18n/navigation` directly.
 - Always camelCase — variables and constants. Types use PascalCase (`Region`, `HazardLevelScale`). Never SCREAMING_CASE or snake_case in TypeScript. Deviation requires argued justification.
 - React types: use the global `React.*` namespace — do not import types from `react` (`React.ReactNode`, `React.ChangeEvent<T>`)
 - Prop types: inline (`{ prop: Type }`) when a component has one prop; named `type` only for two or more props
+- Destructure objects when accessed more than 1–2 times in the same scope. Exception: skip destructuring when it would lose useful object context, or when the variable would need to be recreated on every render anyway
+- Avoid inline functions in JSX props unless the body is a single simple call (e.g. `onClick={() => foo()}`). For multi-line or non-trivial handlers, define a named function in the component body
+- Prefer early return (guard clause) over positive-condition wrapping: `if (!x) return` then do the work, not `if (x) { do the work }`
 
 ---
 

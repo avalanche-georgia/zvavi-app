@@ -16,6 +16,7 @@ export { Popover, PopoverAnchor, PopoverContent, PopoverTrigger } from './Popove
 export { default as RadioGroup } from './RadioGroup'
 export { default as RadioOption } from './RadioOption'
 export { default as Select, type SelectOption, toOptions } from './Select'
+export { default as Skeleton } from './Skeleton'
 export { default as Spinner } from './Spinner'
 export { default as Switch } from './Switch'
 export { default as Textarea } from './Textarea'
