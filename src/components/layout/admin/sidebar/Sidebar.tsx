@@ -1,9 +1,9 @@
 import SidebarContent from './SidebarContent'
 
-const AdminSidebar = () => (
+const Sidebar = () => (
   <aside className="hidden h-full w-56 shrink-0 border-r bg-white md:block">
     <SidebarContent />
   </aside>
 )
 
-export default AdminSidebar
+export default Sidebar

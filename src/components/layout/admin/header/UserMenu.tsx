@@ -3,7 +3,7 @@
 import { useCallback } from 'react'
 import { useAuth, useToast } from '@components/hooks'
 import { Icon } from '@components/icons'
-import { Button } from '@components/ui'
+import { Button, Skeleton } from '@components/ui'
 import { supabase } from '@data'
 import { useCurrentUserProfileQuery } from '@data/hooks/userProfiles'
 import { useTranslations } from 'next-intl'
@@ -14,9 +14,9 @@ import { routes } from '@/routes'
 const UserMenu = () => {
   const router = useRouter()
   const t = useTranslations()
-  const { user } = useAuth()
+  const { isLoading: isAuthLoading, user } = useAuth()
   const { toastError } = useToast()
-  const { data: profile } = useCurrentUserProfileQuery()
+  const { data: profile, isPending: isProfilePending } = useCurrentUserProfileQuery()
 
   const handleSignOut = useCallback(async () => {
     try {
@@ -40,6 +40,18 @@ const UserMenu = () => {
     const img = e.currentTarget as HTMLImageElement
 
     img.src = `https://api.dicebear.com/9.x/open-peeps/svg?seed=${userId}`
+  }
+
+  if (isAuthLoading || isProfilePending) {
+    return (
+      <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2.5">
+          <Skeleton className="size-8 shrink-0 rounded-full" />
+          <Skeleton className="hidden h-3.5 w-24 md:block" />
+        </div>
+        <Skeleton className="h-8 w-16 rounded-md" />
+      </div>
+    )
   }
 
   return (
