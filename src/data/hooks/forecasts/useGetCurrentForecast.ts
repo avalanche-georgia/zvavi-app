@@ -32,6 +32,7 @@ const fetchCurrentForecast = async ({
   const currentForecast = forecastData[0]
 
   if (variables.isShort) {
+    // TODO: type-safe DB conversion — https://app.asana.com/1/1208747886147296/project/1208747689500826/task/1214630622531225
     return convertSnakeToCamel(currentForecast) as Forecast
   }
 
@@ -55,6 +56,7 @@ const fetchCurrentForecast = async ({
     throw new Error(problemsError.message)
   }
 
+  // TODO: type-safe DB conversion — https://app.asana.com/1/1208747886147296/project/1208747689500826/task/1214630622531225
   return convertSnakeToCamel({
     ...currentForecast,
     avalancheProblems: problems ?? [],

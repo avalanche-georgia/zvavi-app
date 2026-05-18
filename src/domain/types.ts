@@ -4,23 +4,18 @@ import type {
   avalancheTypes,
   confidenceLevels,
   distributionTypes,
-  regionIds,
   sensitivityLevels,
   trends,
 } from '@domain/constants'
 import type { FeatureCollection } from 'geojson'
 
-export type RegionId = keyof typeof regionIds
+import type { Enums, Tables } from '@/lib/supabase/types'
 
-export type Region = {
-  id: RegionId
-  isActive: boolean
-  displayOrder: number
+export type RegionId = Enums<'region_id'>
+
+export type Region = Omit<Tables<'regions'>, 'mapCenter' | 'forecastZone'> & {
   mapCenter: { lat: number; lng: number } | null
-  defaultZoom: number | null
   forecastZone: FeatureCollection | null
-  createdAt: string
-  updatedAt: string
 }
 
 export type HazardLevel = 'noRating' | 'low' | 'moderate' | 'considerable' | 'high' | 'extreme'
@@ -141,24 +136,9 @@ export type ForecastFormData = {
 
 export type FullForecast = Forecast & ForecastDetails
 
-export type MemberStatus = 'active' | 'inactive' | 'pending' | 'suspended' | 'expired'
+export type MemberStatus = Enums<'member_status'>
 
-export type Member = {
-  id: string
-  firstName: string
-  lastName: string
-  email: string | null
-  phone: string | null
-  memberId: string
-  status: MemberStatus
-  joinedAt: string
-  expiresAt: string | null
-  verificationCode: string
-  authUserId: string | null
-  notes: string | null
-  createdAt: string
-  updatedAt: string
-}
+export type Member = Tables<'members'>
 
 export type MemberFormData = {
   firstName: string
@@ -174,21 +154,7 @@ export type MemberFormData = {
 
 export type PartnerTier = 1 | 2 | 3
 
-export type Partner = {
-  id: string
-  nameEn: string
-  nameKa: string | null
-  descriptionEn: string | null
-  descriptionKa: string | null
-  benefitEn: string | null
-  benefitKa: string | null
-  logoUrl: string
-  websiteUrl: string
-  tier: PartnerTier
-  isActive: boolean
-  createdAt: string
-  updatedAt: string
-}
+export type Partner = Omit<Tables<'partners'>, 'tier'> & { tier: PartnerTier }
 
 export type PartnerFormData = {
   nameEn: string
