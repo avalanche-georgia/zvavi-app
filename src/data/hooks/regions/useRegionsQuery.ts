@@ -15,6 +15,7 @@ const fetchRegions = async (): Promise<Region[]> => {
 
   if (error) throw new Error(error.message)
 
+  // TODO: type-safe DB conversion — https://app.asana.com/1/1208747886147296/project/1208747689500826/task/1214630622531225
   return convertSnakeToCamel(data ?? []) as Region[]
 }
 

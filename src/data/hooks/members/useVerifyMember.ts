@@ -33,7 +33,7 @@ const verifyMember = async ({ queryKey }: QueryFunctionContext<QueryKey>): Promi
 
   const { data, error } = await supabase.rpc('verify_member', {
     client_ip: null,
-    client_user_agent: typeof navigator !== 'undefined' ? navigator.userAgent : null,
+    client_user_agent: typeof navigator !== 'undefined' ? navigator.userAgent : undefined,
     code,
   })
 

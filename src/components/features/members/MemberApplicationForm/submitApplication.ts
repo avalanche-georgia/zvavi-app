@@ -20,14 +20,14 @@ const submitApplication = async ({
   const { address, age, gender, motivation, occupation, ...rest } = data
 
   const { data: result, error } = await supabase.rpc('submit_member_application', {
-    p_address: address || null,
-    p_age: age ? Number(age) : null,
+    p_address: address || undefined,
+    p_age: age ? Number(age) : undefined,
     p_email: rest.email,
     p_first_name: rest.firstName,
-    p_gender: gender || null,
+    p_gender: gender || undefined,
     p_last_name: rest.lastName,
-    p_motivation: motivation || null,
-    p_occupation: occupation || null,
+    p_motivation: motivation || undefined,
+    p_occupation: occupation || undefined,
     p_payment_method: rest.paymentMethod,
     p_phone: rest.phone,
   })

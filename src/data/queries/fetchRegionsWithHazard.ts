@@ -29,7 +29,7 @@ const fetchRegionsWithHazard = cache(async (): Promise<RegionWithHazard[]> => {
   const latestByRegion = new Map<string, string | null>()
 
   for (const forecast of forecasts ?? []) {
-    if (!latestByRegion.has(forecast.region_id)) {
+    if (forecast.region_id && !latestByRegion.has(forecast.region_id)) {
       const levels = forecast.hazard_levels as Record<string, string> | null
 
       latestByRegion.set(forecast.region_id, levels?.overall ?? null)

@@ -41,7 +41,9 @@ export const generateMetadata = async (props: ForecastPageProps): Promise<Metada
 
   if (!data) return {}
 
-  const level = (data.hazard_levels?.overall ?? 0) as HazardLevelScale
+  // TODO: type-safe DB conversion — https://app.asana.com/1/1208747886147296/project/1208747689500826/task/1214630622531225
+  const level = ((data.hazard_levels as Record<string, string> | null)?.overall ??
+    0) as HazardLevelScale
   const levelName = hazardLevelLabels[level]
   const validUntil = data.valid_until ? format(new Date(data.valid_until), 'dd MMM yyyy') : null
   const title = `${levelName} Avalanche Hazard${validUntil ? ` · Valid until ${validUntil}` : ''}`
