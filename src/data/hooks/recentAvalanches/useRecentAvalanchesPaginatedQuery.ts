@@ -42,6 +42,7 @@ const fetchPaginatedAvalanches = async (params: QueryParams): Promise<PaginatedR
   if (error) throw new Error(error.message)
   if (totalError) throw new Error(totalError.message)
 
+  // TODO: type-safe DB conversion — https://app.asana.com/1/1208747886147296/project/1208747689500826/task/1214630622531225
   return {
     avalanches: convertSnakeToCamel(data ?? []),
     grandTotal: grandTotal ?? 0,

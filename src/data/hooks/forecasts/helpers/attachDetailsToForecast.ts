@@ -1,8 +1,10 @@
 import { supabase } from '@data'
 import { convertCamelToSnake, handleSupabaseError } from '@data/helpers'
 
+import type { Database } from '@/lib/supabase/database.types'
+
 const attachDetailsToForecast = async <T>(
-  tableName: string,
+  tableName: keyof Database['public']['Tables'],
   forecastId: number,
   items: T[],
 ): Promise<void> => {
