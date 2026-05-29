@@ -14,6 +14,7 @@ pnpm build            # convert-messages + production build
 pnpm lint             # ESLint check only (no auto-fix; formatting is applied by lint-staged on pre-commit)
 pnpm convert-messages # compile messages/en/*.yml + messages/ka/*.yml → JSON
 pnpm export-translations # export en.json + ka.json → messages/translations.csv
+pnpm typegen          # regenerate src/lib/supabase/database.types.ts from local Supabase schema
 ```
 
 When fixing lint issues, run `npx eslint --fix` (not without `--fix`) to auto-resolve formatting and import sorting in one pass.
@@ -87,6 +88,48 @@ Import `avalancheTypes` when working with avalanche events; import `avalanchePro
 ---
 
 ## Key Patterns
+
+### Supabase Type Generation
+
+`src/lib/supabase/database.types.ts` is **auto-generated** — never edit it by hand. Regenerate after schema changes:
+
+```bash
+pnpm typegen
+```
+
+Helper generics in `src/lib/supabase/types.ts` wrap the generated types:
+
+| Helper | Use for |
+|--------|---------|
+| `Tables<'table'>` | camelCase row type (use in domain types and hooks) |
+| `DbRow<'table'>` | raw snake_case row (use only inside conversion helpers) |
+| `TablesInsert<'table'>` | insert payload type |
+| `TablesUpdate<'table'>` | update payload type |
+| `Enums<'enum_name'>` | DB enum union type |
+
+**Rule:** prefer `Tables<T>` over hand-written domain types. When the DB shape doesn't match the domain exactly, use `Omit + override`:
+
+```ts
+// Simple — DB shape matches domain exactly
+export type Member = Tables<'members'>
+
+// Override when DB type is too broad (e.g. number instead of literal union)
+export type Partner = Omit<Tables<'partners'>, 'tier'> & { tier: PartnerTier }
+
+// Override when DB returns Json but domain needs a concrete type
+export type Region = Omit<Tables<'regions'>, 'mapCenter' | 'forecastZone'> & {
+  mapCenter: { lat: number; lng: number } | null
+  forecastZone: FeatureCollection | null
+}
+
+// DB enums
+export type MemberStatus = Enums<'member_status'>
+export type RegionId = Enums<'region_id'>
+```
+
+Import from `@/lib/supabase/types` (not directly from `database.types`).
+
+---
 
 ### Data Flow
 1. Page calls a data hook (`useForecastsQuery`, `useMembersQuery`, etc.)
