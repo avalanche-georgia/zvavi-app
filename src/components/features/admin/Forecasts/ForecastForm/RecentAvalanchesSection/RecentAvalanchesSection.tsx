@@ -10,15 +10,14 @@ import useRecentAvalanchesSection from './useRecentAvalanchesSection'
 import { initialAvalancheData } from '../constants'
 
 type RecentAvalanchesSectionProps = {
-  forecastId?: number
   regionId: RegionId
 }
 
-const RecentAvalanchesSection = ({ forecastId, regionId }: RecentAvalanchesSectionProps) => {
+const RecentAvalanchesSection = ({ regionId }: RecentAvalanchesSectionProps) => {
   const t = useTranslations()
   const {
+    avalanches,
     closePicker,
-    fields,
     formState,
     handleCreateFormOpen,
     handleDelete,
@@ -27,6 +26,7 @@ const RecentAvalanchesSection = ({ forecastId, regionId }: RecentAvalanchesSecti
     handleSubmit,
     isPickerOpen,
     openPicker,
+    selectedAvalancheIds,
     setFormState,
   } = useRecentAvalanchesSection()
 
@@ -55,7 +55,7 @@ const RecentAvalanchesSection = ({ forecastId, regionId }: RecentAvalanchesSecti
       )}
 
       <AvalanchesList
-        avalanches={fields}
+        avalanches={avalanches}
         formState={formState}
         onDelete={handleDelete}
         onFormClose={handleFormClose}
@@ -63,13 +63,15 @@ const RecentAvalanchesSection = ({ forecastId, regionId }: RecentAvalanchesSecti
         onFormSave={handleSubmit}
       />
 
-      <AvalanchePickerModal
-        currentForecastId={forecastId}
-        isOpen={isPickerOpen}
-        onClose={closePicker}
-        onConfirm={handlePickerConfirm}
-        regionId={regionId}
-      />
+      {isPickerOpen && (
+        <AvalanchePickerModal
+          isOpen={isPickerOpen}
+          onClose={closePicker}
+          onConfirm={handlePickerConfirm}
+          regionId={regionId}
+          selectedAvalancheIds={selectedAvalancheIds}
+        />
+      )}
     </section>
   )
 }

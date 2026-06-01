@@ -11,7 +11,7 @@ const toDate = (value: Date | string | null): Date | null =>
 
 const useRecentAvalanchesSection = () => {
   const { control } = useFormContext<ForecastFormSchema>()
-  const { append, fields, remove, update } = useFieldArray({
+  const { append, fields, remove, replace, update } = useFieldArray({
     control,
     keyName: 'localId',
     name: 'recentAvalanches',
@@ -53,20 +53,21 @@ const useRecentAvalanchesSection = () => {
 
   const handlePickerConfirm = useCallback(
     (selected: Avalanche[]) => {
-      const existingIds = new Set(fields.map((field) => field.id).filter((id) => id != null))
+      const nonPickerFields = fields.filter((field) => field.id == null)
 
-      selected
-        .filter((avalanche) => !avalanche.id || !existingIds.has(avalanche.id))
-        .forEach((avalanche) => append({ ...avalanche, date: toDate(avalanche.date) }))
+      replace([
+        ...nonPickerFields,
+        ...selected.map((avalanche) => ({ ...avalanche, date: toDate(avalanche.date) })),
+      ])
 
       closePicker()
     },
-    [append, closePicker, fields],
+    [closePicker, fields, replace],
   )
 
   return {
+    avalanches: fields,
     closePicker,
-    fields,
     formState,
     handleCreateFormOpen,
     handleDelete,
@@ -75,6 +76,7 @@ const useRecentAvalanchesSection = () => {
     handleSubmit,
     isPickerOpen,
     openPicker,
+    selectedAvalancheIds: fields.flatMap((field) => (field.id != null ? [field.id] : [])),
     setFormState,
   }
 }
