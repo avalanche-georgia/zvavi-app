@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import { ForecastForm, getInitialFormData } from '@components/features/admin/Forecasts/ForecastForm'
 import { RequireRegionId } from '@components/shared'
 import { Spinner } from '@components/ui'
@@ -31,13 +32,19 @@ const NewForecastContent = ({ regionId }: { regionId: RegionId }) => {
 
   const { data: currentProfile, isPending: isProfilePending } = useCurrentUserProfileQuery()
 
+  const shouldRedirectOnInvalidDuplicate = isValidDuplicateId && (isError || !sourceForecast)
+
+  useEffect(() => {
+    if (!shouldRedirectOnInvalidDuplicate) return
+
+    router.replace(routes.admin.forecasts.new)
+  }, [shouldRedirectOnInvalidDuplicate, router])
+
   if (isProfilePending || (isValidDuplicateId && isLoading)) {
     return <Spinner />
   }
 
-  if (isValidDuplicateId && (isError || !sourceForecast)) {
-    router.replace(routes.admin.forecasts.new)
-
+  if (shouldRedirectOnInvalidDuplicate) {
     return <Spinner />
   }
 

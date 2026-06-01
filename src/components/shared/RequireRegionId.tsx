@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import { Spinner } from '@components/ui'
 import type { RegionId } from '@domain/types'
 import { useSearchParams } from 'next/navigation'
@@ -15,9 +16,13 @@ const RequireRegionId = ({ children, fallbackRoute }: RequireRegionIdProps) => {
   const searchParams = useSearchParams()
   const regionId = searchParams.get('regionId') as RegionId | null
 
-  if (!regionId) {
-    router.replace(fallbackRoute)
+  useEffect(() => {
+    if (!regionId) {
+      router.replace(fallbackRoute)
+    }
+  }, [fallbackRoute, regionId, router])
 
+  if (!regionId) {
     return <Spinner />
   }
 
