@@ -1,11 +1,11 @@
 'use client'
 
 import { ForecastForm, getInitialFormData } from '@components/features/admin/Forecasts/ForecastForm'
+import { RequireRegionId } from '@components/shared'
 import { Spinner } from '@components/ui'
 import { useAdminGetForecast } from '@data/hooks/forecasts'
-import { defaultRegionId } from '@domain/constants'
 import type { RegionId } from '@domain/types'
-import { useParams, useSearchParams } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'src/i18n/navigation'
 
@@ -21,13 +21,11 @@ const NotFound = () => {
   )
 }
 
-const EditForecastPage = () => {
+const EditForecastContent = ({ regionId }: { regionId: RegionId }) => {
   const router = useRouter()
   const params = useParams()
-  const searchParams = useSearchParams()
 
   const forecastId = Number(params.id)
-  const regionId = (searchParams.get('regionId') as RegionId) ?? defaultRegionId
   const { data: forecast, isPending } = useAdminGetForecast({ forecastId, regionId })
 
   const handleCancel = () => {
@@ -65,5 +63,11 @@ const EditForecastPage = () => {
     </div>
   )
 }
+
+const EditForecastPage = () => (
+  <RequireRegionId fallbackRoute={routes.admin.forecasts.root}>
+    {(regionId) => <EditForecastContent regionId={regionId} />}
+  </RequireRegionId>
+)
 
 export default EditForecastPage

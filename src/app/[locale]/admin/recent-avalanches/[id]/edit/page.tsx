@@ -1,26 +1,24 @@
 'use client'
 
 import { RecentAvalancheForm } from '@components/features/admin/RecentAvalanches'
+import { RequireRegionId } from '@components/shared'
 import { ButtonLink } from '@components/shared'
 import { Spinner } from '@components/ui'
 import { useRecentAvalancheQuery } from '@data/hooks/recentAvalanches'
-import { defaultRegionId } from '@domain/constants'
 import type { RegionId } from '@domain/types'
-import { useParams, useSearchParams } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'src/i18n/navigation'
 
 import { routes } from '@/routes'
 
-const EditRecentAvalanchePage = () => {
+const EditRecentAvalancheContent = ({ regionId }: { regionId: RegionId }) => {
   const t = useTranslations()
   const router = useRouter()
   const params = useParams()
-  const searchParams = useSearchParams()
 
   const id = Number(params.id)
   const isValidId = id > 0 && !Number.isNaN(id)
-  const regionId = (searchParams.get('regionId') as RegionId) ?? defaultRegionId
 
   const { data: avalanche, isPending } = useRecentAvalancheQuery({
     enabled: isValidId,
@@ -65,5 +63,11 @@ const EditRecentAvalanchePage = () => {
     </div>
   )
 }
+
+const EditRecentAvalanchePage = () => (
+  <RequireRegionId fallbackRoute={routes.admin.recentAvalanches.root}>
+    {(regionId) => <EditRecentAvalancheContent regionId={regionId} />}
+  </RequireRegionId>
+)
 
 export default EditRecentAvalanchePage
