@@ -86,10 +86,7 @@ const ForecastForm = ({ initialFormData, onCancel, onSuccess, regionId }: Foreca
             <hr />
             <ProblemsSection />
             <hr />
-            <RecentAvalanchesSection
-              forecastId={initialFormData.baseFormData.id}
-              regionId={regionId}
-            />
+            <RecentAvalanchesSection regionId={regionId} />
             <hr />
             <AdditionalTextFields />
           </form>
