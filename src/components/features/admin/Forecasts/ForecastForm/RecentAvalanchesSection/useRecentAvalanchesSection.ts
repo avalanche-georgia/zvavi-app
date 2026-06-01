@@ -53,13 +53,17 @@ const useRecentAvalanchesSection = () => {
 
   const handlePickerConfirm = useCallback(
     (selected: Avalanche[]) => {
-      const nonPickerFields = fields.filter((field) => field.id == null)
+      const existingFieldById = new Map(
+        fields.filter((field) => field.id != null).map((field) => [field.id, field]),
+      )
+      const manuallyCreatedFields = fields.filter((field) => field.id == null)
+      const reconciledPickerFields = selected.map((avalanche) => {
+        const existingField = avalanche.id != null ? existingFieldById.get(avalanche.id) : undefined
 
-      replace([
-        ...nonPickerFields,
-        ...selected.map((avalanche) => ({ ...avalanche, date: toDate(avalanche.date) })),
-      ])
+        return existingField ?? { ...avalanche, date: toDate(avalanche.date) }
+      })
 
+      replace([...manuallyCreatedFields, ...reconciledPickerFields])
       closePicker()
     },
     [closePicker, fields, replace],
