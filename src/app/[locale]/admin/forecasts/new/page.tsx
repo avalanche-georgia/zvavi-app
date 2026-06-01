@@ -37,8 +37,8 @@ const NewForecastContent = ({ regionId }: { regionId: RegionId }) => {
   useEffect(() => {
     if (!shouldRedirectOnInvalidDuplicate) return
 
-    router.replace(routes.admin.forecasts.new)
-  }, [shouldRedirectOnInvalidDuplicate, router])
+    router.replace(routes.admin.forecasts.newInRegion(regionId))
+  }, [regionId, shouldRedirectOnInvalidDuplicate, router])
 
   if (isProfilePending || (isValidDuplicateId && isLoading)) {
     return <Spinner />
