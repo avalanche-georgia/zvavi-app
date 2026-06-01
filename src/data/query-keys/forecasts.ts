@@ -13,8 +13,8 @@ const forecastsKeys = {
   byRegion: (regionId: RegionId) => [...forecastsKeys.all, regionId] as const,
   current: (regionId: RegionId, variables: CurrentForecastQueryVariables) =>
     [...forecastsKeys.byRegion(regionId), 'current', variables] as const,
-  item: (regionId: RegionId, variables: ForecastQueryVariables) =>
-    [...forecastsKeys.byRegion(regionId), 'item', variables] as const,
+  item: (regionId: RegionId | undefined, variables: ForecastQueryVariables) =>
+    [...forecastsKeys.all, regionId, 'item', variables] as const,
   list: (regionId: RegionId) => [...forecastsKeys.byRegion(regionId), 'list'] as const,
 }
 

@@ -1,10 +1,8 @@
 'use client'
 
 import { ForecastForm, getInitialFormData } from '@components/features/admin/Forecasts/ForecastForm'
-import { RequireRegionId } from '@components/shared'
 import { Spinner } from '@components/ui'
 import { useAdminGetForecast } from '@data/hooks/forecasts'
-import type { RegionId } from '@domain/types'
 import { useParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'src/i18n/navigation'
@@ -21,20 +19,12 @@ const NotFound = () => {
   )
 }
 
-const EditForecastContent = ({ regionId }: { regionId: RegionId }) => {
+const EditForecastPage = () => {
   const router = useRouter()
   const params = useParams()
 
   const forecastId = Number(params.id)
-  const { data: forecast, isPending } = useAdminGetForecast({ forecastId, regionId })
-
-  const handleCancel = () => {
-    router.push(routes.admin.forecasts.listByRegion(regionId))
-  }
-
-  const handleSuccess = () => {
-    router.push(routes.admin.forecasts.listByRegion(regionId))
-  }
+  const { data: forecast, isPending } = useAdminGetForecast({ forecastId })
 
   if (Number.isNaN(forecastId)) {
     return <NotFound />
@@ -52,22 +42,24 @@ const EditForecastContent = ({ regionId }: { regionId: RegionId }) => {
     return <NotFound />
   }
 
+  const handleCancel = () => {
+    router.push(routes.admin.forecasts.listByRegion(forecast.regionId))
+  }
+
+  const handleSuccess = () => {
+    router.push(routes.admin.forecasts.listByRegion(forecast.regionId))
+  }
+
   return (
     <div className="mx-auto max-w-7xl p-4 md:p-6">
       <ForecastForm
         initialFormData={getInitialFormData(forecast)}
         onCancel={handleCancel}
         onSuccess={handleSuccess}
-        regionId={regionId}
+        regionId={forecast.regionId}
       />
     </div>
   )
 }
-
-const EditForecastPage = () => (
-  <RequireRegionId fallbackRoute={routes.admin.forecasts.root}>
-    {(regionId) => <EditForecastContent regionId={regionId} />}
-  </RequireRegionId>
-)
 
 export default EditForecastPage

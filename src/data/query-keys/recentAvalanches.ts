@@ -5,8 +5,8 @@ const recentAvalanchesKeys = {
   all: ['recentAvalanchesKeys'] as const,
 
   byRegion: (regionId: RegionId) => [...recentAvalanchesKeys.all, regionId] as const,
-  item: (regionId: RegionId, id: number) =>
-    [...recentAvalanchesKeys.byRegion(regionId), 'item', id] as const,
+  item: (regionId: RegionId | undefined, id: number) =>
+    [...recentAvalanchesKeys.all, regionId, 'item', id] as const,
   list: (regionId: RegionId, params: ListFilterParams) =>
     [...recentAvalanchesKeys.byRegion(regionId), 'list', params] as const,
 }

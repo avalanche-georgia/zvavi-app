@@ -1,18 +1,16 @@
 'use client'
 
 import { RecentAvalancheForm } from '@components/features/admin/RecentAvalanches'
-import { RequireRegionId } from '@components/shared'
 import { ButtonLink } from '@components/shared'
 import { Spinner } from '@components/ui'
 import { useRecentAvalancheQuery } from '@data/hooks/recentAvalanches'
-import type { RegionId } from '@domain/types'
 import { useParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'src/i18n/navigation'
 
 import { routes } from '@/routes'
 
-const EditRecentAvalancheContent = ({ regionId }: { regionId: RegionId }) => {
+const EditRecentAvalanchePage = () => {
   const t = useTranslations()
   const router = useRouter()
   const params = useParams()
@@ -20,15 +18,7 @@ const EditRecentAvalancheContent = ({ regionId }: { regionId: RegionId }) => {
   const id = Number(params.id)
   const isValidId = id > 0 && !Number.isNaN(id)
 
-  const { data: avalanche, isPending } = useRecentAvalancheQuery({
-    enabled: isValidId,
-    id,
-    regionId,
-  })
-
-  const handleBack = () => {
-    router.push(routes.admin.recentAvalanches.listByRegion(regionId))
-  }
+  const { data: avalanche, isPending } = useRecentAvalancheQuery({ enabled: isValidId, id })
 
   if (isValidId && isPending) {
     return (
@@ -43,12 +33,16 @@ const EditRecentAvalancheContent = ({ regionId }: { regionId: RegionId }) => {
       <div className="p-4 md:p-6">
         <div className="flex flex-col items-center gap-4 rounded-lg bg-white py-16 text-center shadow-sm">
           <p className="text-gray-500">{t('admin.recentAvalanches.notFound')}</p>
-          <ButtonLink href={routes.admin.recentAvalanches.listByRegion(regionId)}>
+          <ButtonLink href={routes.admin.recentAvalanches.root}>
             {t('common.actions.backToList')}
           </ButtonLink>
         </div>
       </div>
     )
+  }
+
+  const handleBack = () => {
+    router.push(routes.admin.recentAvalanches.listByRegion(avalanche.regionId))
   }
 
   return (
@@ -63,11 +57,5 @@ const EditRecentAvalancheContent = ({ regionId }: { regionId: RegionId }) => {
     </div>
   )
 }
-
-const EditRecentAvalanchePage = () => (
-  <RequireRegionId fallbackRoute={routes.admin.recentAvalanches.root}>
-    {(regionId) => <EditRecentAvalancheContent regionId={regionId} />}
-  </RequireRegionId>
-)
 
 export default EditRecentAvalanchePage
