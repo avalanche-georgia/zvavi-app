@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { Button, Modal, ModalBody, ModalFooter, Spinner } from '@components/ui'
 import { useAllRecentAvalanchesQuery } from '@data/hooks/forecasts'
 import type { Avalanche, RegionId } from '@domain/types'
@@ -7,37 +7,27 @@ import { useTranslations } from 'next-intl'
 import AvalanchePickerRow from './AvalanchePickerRow'
 
 type AvalanchePickerModalProps = {
-  currentForecastId: number | undefined
   isOpen: boolean
   onClose: () => void
   onConfirm: (selected: Avalanche[]) => void
   regionId: RegionId
+  selectedAvalancheIds: number[]
 }
 
 const AvalanchePickerModal = ({
-  currentForecastId,
   isOpen,
   onClose,
   onConfirm,
   regionId,
+  selectedAvalancheIds,
 }: AvalanchePickerModalProps) => {
   const t = useTranslations()
-  const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set())
+  const [selectedIds, setSelectedIds] = useState<Set<number>>(() => new Set(selectedAvalancheIds))
 
   const { data: avalanches = [], isLoading } = useAllRecentAvalanchesQuery({
     enabled: isOpen,
     regionId,
   })
-
-  const availableAvalanches = useMemo(
-    () =>
-      avalanches.filter(
-        (avalanche) =>
-          !currentForecastId ||
-          !avalanche.forecastAvalanche.some((entry) => entry.forecastId === currentForecastId),
-      ),
-    [avalanches, currentForecastId],
-  )
 
   const handleToggle = useCallback((id: number) => {
     setSelectedIds((prev) => {
@@ -54,36 +44,30 @@ const AvalanchePickerModal = ({
   }, [])
 
   const handleConfirm = useCallback(() => {
-    const selected = availableAvalanches
+    const selected = avalanches
       .filter((avalanche) => selectedIds.has(avalanche.id))
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .map(({ forecastAvalanche, ...rest }) => rest as Avalanche)
 
     onConfirm(selected)
-    setSelectedIds(new Set())
-  }, [availableAvalanches, onConfirm, selectedIds])
-
-  const handleClose = useCallback(() => {
-    setSelectedIds(new Set())
-    onClose()
-  }, [onClose])
+  }, [avalanches, onConfirm, selectedIds])
 
   return (
     <Modal
       isOpen={isOpen}
-      onClose={handleClose}
+      onClose={onClose}
       title={t('admin.forecast.form.recentAvalanches.labels.pickAvalanches')}
     >
       <ModalBody>
         {isLoading ? (
           <Spinner />
-        ) : availableAvalanches.length === 0 ? (
+        ) : avalanches.length === 0 ? (
           <p className="py-4 text-center text-gray-500">
             {t('admin.forecast.form.recentAvalanches.labels.noAvalanchesInDB')}
           </p>
         ) : (
           <ul className="max-h-[60vh] divide-y overflow-y-auto">
-            {availableAvalanches.map((avalanche) => (
+            {avalanches.map((avalanche) => (
               <AvalanchePickerRow
                 key={avalanche.id}
                 avalanche={avalanche}
@@ -96,10 +80,10 @@ const AvalanchePickerModal = ({
       </ModalBody>
 
       <ModalFooter>
-        <Button onClick={handleClose} variant="secondary">
+        <Button onClick={onClose} variant="secondary">
           {t('common.actions.cancel')}
         </Button>
-        <Button disabled={selectedIds.size === 0} onClick={handleConfirm}>
+        <Button onClick={handleConfirm}>
           {t('admin.forecast.form.recentAvalanches.labels.addSelected', {
             count: selectedIds.size,
           })}
