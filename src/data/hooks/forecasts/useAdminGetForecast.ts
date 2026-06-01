@@ -1,6 +1,6 @@
 import { supabase } from '@data'
 import type { FullForecast, RegionId } from '@domain/types'
-import type { QueryFunctionContext, UseQueryOptions } from '@tanstack/react-query'
+import type { UseQueryOptions } from '@tanstack/react-query'
 
 import { useQuery } from '@/tanstack-query/hooks'
 
@@ -13,17 +13,19 @@ type Response = FullForecast | undefined
 type QueryOptions = Omit<
   UseQueryOptions<Response, unknown, Response, QueryKey>,
   'queryKey' | 'queryFn'
-> & { forecastId: FullForecast['id']; regionId: RegionId }
+> & {
+  forecastId: FullForecast['id']
+  regionId?: RegionId
+}
 
-const fetchForecast = async ({ queryKey }: QueryFunctionContext<QueryKey>): Promise<Response> => {
-  const [, regionId, , variables] = queryKey
+const fetchForecast = async (forecastId: number, regionId?: RegionId): Promise<Response> => {
+  let query = supabase.from('forecasts').select().eq('id', forecastId)
 
-  const { data: forecastData, error: forecastError } = await supabase
-    .from('forecasts')
-    .select()
-    .eq('id', variables.forecastId)
-    .eq('region_id', regionId)
-    .single()
+  if (regionId) {
+    query = query.eq('region_id', regionId)
+  }
+
+  const { data: forecastData, error: forecastError } = await query.single()
 
   if (forecastError) {
     throw new Error(forecastError.message)
@@ -34,7 +36,7 @@ const fetchForecast = async ({ queryKey }: QueryFunctionContext<QueryKey>): Prom
   const { data: recentAvalanches, error: avalanchesError } = await supabase
     .from('recent_avalanches')
     .select('*, forecast_avalanche!inner(forecast_id)')
-    .eq('forecast_avalanche.forecast_id', variables.forecastId)
+    .eq('forecast_avalanche.forecast_id', forecastId)
     .order('created_at', { ascending: false })
 
   if (avalanchesError) {
@@ -44,7 +46,7 @@ const fetchForecast = async ({ queryKey }: QueryFunctionContext<QueryKey>): Prom
   const { data: problems, error: problemsError } = await supabase
     .from('avalanche_problems')
     .select()
-    .eq('forecast_id', variables.forecastId)
+    .eq('forecast_id', forecastId)
     .order('order')
 
   if (problemsError) {
@@ -61,7 +63,7 @@ const fetchForecast = async ({ queryKey }: QueryFunctionContext<QueryKey>): Prom
 
 const useAdminGetForecast = ({ forecastId, regionId, ...options }: QueryOptions) =>
   useQuery({
-    queryFn: fetchForecast,
+    queryFn: () => fetchForecast(forecastId, regionId),
     queryKey: forecastsKeys.item(regionId, { forecastId }),
     ...options,
   })
