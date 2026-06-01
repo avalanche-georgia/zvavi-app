@@ -1,17 +1,14 @@
 'use client'
 
 import { RecentAvalancheForm } from '@components/features/admin/RecentAvalanches'
-import { defaultRegionId } from '@domain/constants'
+import { RequireRegionId } from '@components/shared'
 import type { RegionId } from '@domain/types'
-import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'src/i18n/navigation'
 
 import { routes } from '@/routes'
 
-const NewRecentAvalanchePage = () => {
+const NewRecentAvalancheContent = ({ regionId }: { regionId: RegionId }) => {
   const router = useRouter()
-  const searchParams = useSearchParams()
-  const regionId = (searchParams.get('regionId') as RegionId) ?? defaultRegionId
 
   const handleBack = () => {
     router.push(routes.admin.recentAvalanches.listByRegion(regionId))
@@ -28,5 +25,11 @@ const NewRecentAvalanchePage = () => {
     </div>
   )
 }
+
+const NewRecentAvalanchePage = () => (
+  <RequireRegionId fallbackRoute={routes.admin.recentAvalanches.root}>
+    {(regionId) => <NewRecentAvalancheContent regionId={regionId} />}
+  </RequireRegionId>
+)
 
 export default NewRecentAvalanchePage
