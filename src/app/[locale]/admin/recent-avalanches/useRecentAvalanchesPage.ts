@@ -5,6 +5,7 @@ import type { DateMode } from '@data/hooks/recentAvalanches'
 import { useRecentAvalanchesPaginatedQuery } from '@data/hooks/recentAvalanches'
 import { defaultRegionId } from '@domain/constants'
 import type { RegionId } from '@domain/types'
+import { endOfDay, startOfDay } from 'date-fns'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'src/i18n/navigation'
 
@@ -65,12 +66,13 @@ const useRecentAvalanchesPage = () => {
   )
 
   const handleDateFromChange = useCallback(
-    (date: Date | null) => updateFilters({ dateFrom: date ? date.toISOString() : null }),
+    (date: Date | null) =>
+      updateFilters({ dateFrom: date ? startOfDay(date).toISOString() : null }),
     [updateFilters],
   )
 
   const handleDateToChange = useCallback(
-    (date: Date | null) => updateFilters({ dateTo: date ? date.toISOString() : null }),
+    (date: Date | null) => updateFilters({ dateTo: date ? endOfDay(date).toISOString() : null }),
     [updateFilters],
   )
 
