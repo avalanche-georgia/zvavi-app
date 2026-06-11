@@ -12,6 +12,7 @@ export type IconName =
   | 'copy'
   | 'copyCheck'
   | 'download'
+  | 'ellipsisVertical'
   | 'externalLink'
   | 'eye'
   | 'eyeOff'
@@ -38,6 +39,7 @@ export type IconName =
   | 'upload'
   | 'user'
   | 'userPlus'
+  | 'userRoundCheck'
   | 'users'
   | 'xMark'
 

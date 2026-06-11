@@ -2,9 +2,17 @@
 
 import { useCallback } from 'react'
 import { useCopyWithFeedback } from '@components/hooks'
-import { IconButton, Tooltip } from '@components/ui'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  IconButton,
+  Tooltip,
+} from '@components/ui'
 import clsx from 'clsx'
 import { useTranslations } from 'next-intl'
+import { Link } from 'src/i18n/navigation'
 
 import { downloadQRCode, getVerificationUrl } from '@/lib/qrcode'
 
@@ -38,27 +46,52 @@ const ActionButtons = ({
         <Tooltip content={t('admin.members.actions.approve')}>
           <IconButton
             className="hover:stroke-green-600"
-            iconProps={{ icon: 'check' }}
+            iconProps={{ icon: 'userRoundCheck' }}
             onClick={onApprove}
           />
         </Tooltip>
       )}
-      <Tooltip content={t('admin.members.qrCode.copyUrl')}>
-        <IconButton
-          className={clsx(isCopied && 'animate-copy-pop stroke-green-600!')}
-          iconProps={{ icon: isCopied ? 'check' : 'link' }}
-          onClick={handleCopy}
+
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          aria-label={t('common.actions.more')}
+          render={
+            <IconButton
+              className="data-popup-open:bg-black/5 data-popup-open:stroke-gray-900"
+              iconProps={{ icon: 'ellipsisVertical' }}
+            />
+          }
         />
-      </Tooltip>
-      <Tooltip content={t('admin.members.qrCode.download')}>
-        <IconButton iconProps={{ icon: 'download' }} onClick={handleDownloadQR} />
-      </Tooltip>
-      <Tooltip content={t('admin.members.actions.edit')}>
-        <IconButton href={editHref} iconProps={{ icon: 'pencil' }} />
-      </Tooltip>
-      <Tooltip content={t('admin.members.actions.delete')}>
-        <IconButton iconProps={{ icon: 'trash' }} onClick={onDelete} />
-      </Tooltip>
+        <DropdownMenuContent>
+          <DropdownMenuItem
+            className={isCopied ? 'text-green-600' : undefined}
+            closeOnClick={false}
+            iconProps={{
+              className: clsx(isCopied && 'animate-copy-pop stroke-green-600!'),
+              icon: isCopied ? 'check' : 'link',
+            }}
+            onClick={handleCopy}
+          >
+            {t('admin.members.qrCode.copyUrl')}
+          </DropdownMenuItem>
+
+          <DropdownMenuItem iconProps={{ icon: 'download' }} onClick={handleDownloadQR}>
+            {t('admin.members.qrCode.download')}
+          </DropdownMenuItem>
+
+          <DropdownMenuItem iconProps={{ icon: 'pencil' }} render={<Link href={editHref} />}>
+            {t('admin.members.actions.edit')}
+          </DropdownMenuItem>
+
+          <DropdownMenuItem
+            className="text-red-600 data-highlighted:bg-red-50"
+            iconProps={{ icon: 'trash' }}
+            onClick={onDelete}
+          >
+            {t('admin.members.actions.delete')}
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   )
 }

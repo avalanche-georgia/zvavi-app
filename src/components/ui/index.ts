@@ -6,6 +6,12 @@ export { Calendar } from './Calendar'
 export { default as Checkbox } from './Checkbox'
 export { default as DatePicker } from './DatePicker'
 export { Drawer } from './Drawer'
+export {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from './DropdownMenu'
 export { IconButton } from './IconButton'
 export { default as InfoIcon } from './InfoIcon'
 export { default as InputBlock } from './InputBlock'

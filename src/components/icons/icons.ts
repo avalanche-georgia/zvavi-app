@@ -12,6 +12,7 @@ import {
   CopyCheckIcon,
   CopyIcon,
   DownloadIcon,
+  EllipsisVerticalIcon,
   ExternalLink,
   EyeIcon,
   EyeOffIcon,
@@ -38,6 +39,7 @@ import {
   UploadIcon,
   UserIcon,
   UserPlusIcon,
+  UserRoundCheck,
   UsersIcon,
   XIcon,
 } from 'lucide-react'
@@ -54,6 +56,7 @@ export const iconRenderers: Record<IconName, LucideIcon> = {
   copy: CopyIcon,
   copyCheck: CopyCheckIcon,
   download: DownloadIcon,
+  ellipsisVertical: EllipsisVerticalIcon,
   externalLink: ExternalLink,
   eye: EyeIcon,
   eyeOff: EyeOffIcon,
@@ -80,6 +83,7 @@ export const iconRenderers: Record<IconName, LucideIcon> = {
   upload: UploadIcon,
   user: UserIcon,
   userPlus: UserPlusIcon,
+  userRoundCheck: UserRoundCheck,
   users: UsersIcon,
   xMark: XIcon,
 }
