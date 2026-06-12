@@ -3,9 +3,10 @@ import { ConfirmationDialog } from '@components/shared'
 import { useMemberDelete } from '@data/hooks/members'
 import { dateFormat } from '@domain/constants'
 import type { Member } from '@domain/types'
-import clsx from 'clsx'
 import { format, isAfter, parseISO, startOfDay } from 'date-fns'
 import { useTranslations } from 'next-intl'
+import { Link } from 'src/i18n/navigation'
+import { cn } from 'src/lib/utils'
 
 import ActionButtons from './ActionButtons'
 import ApproveDialog from './ApproveDialog'
@@ -27,9 +28,11 @@ const MemberItem = ({ member }: MemberItemProps) => {
     useBoolean(false)
   const { toastError, toastSuccess } = useToast()
 
+  const { expiresAt, id, joinedAt, memberId, status, verificationCode } = member
+
   const handleDelete = async () => {
     try {
-      await deleteMember(member.id)
+      await deleteMember(id)
       toastSuccess(t('admin.members.messages.deleted'))
     } catch (error) {
       toastError('MemberItem | handleDelete', { error })
@@ -37,32 +40,35 @@ const MemberItem = ({ member }: MemberItemProps) => {
   }
 
   const fullName = `${member.firstName} ${member.lastName}`
-  const formattedJoinedAt = format(member.joinedAt, dateFormat)
-  const formattedExpiresAt = member.expiresAt ? format(member.expiresAt, dateFormat) : '-'
-  const isExpired =
-    member.expiresAt && isAfter(startOfDay(new Date()), startOfDay(parseISO(member.expiresAt)))
-  const isPending = member.status === 'pending'
+  const formattedJoinedAt = format(joinedAt, dateFormat)
+  const formattedExpiresAt = expiresAt ? format(expiresAt, dateFormat) : '-'
+  const isExpired = expiresAt && isAfter(startOfDay(new Date()), startOfDay(parseISO(expiresAt)))
+  const isPending = status === 'pending'
 
   return (
     <>
-      <div className={clsx('flex h-12 items-center gap-4 px-4', { 'bg-primary/5': isPending })}>
-        <Column className="w-48">{fullName}</Column>
-        <Column>{member.memberId}</Column>
+      <div className={cn('flex h-12 items-center gap-4 px-4', { 'bg-primary/5': isPending })}>
+        <Column className="w-56">
+          <Link className="hover:text-primary hover:underline" href={routes.admin.members.view(id)}>
+            {fullName}
+          </Link>
+        </Column>
+        <Column>{memberId}</Column>
         <Column>
-          <StatusBadge status={member.status} />
+          <StatusBadge status={status} />
         </Column>
         <Column>{formattedJoinedAt}</Column>
-        <Column className={clsx(isExpired && 'font-medium text-red-600')}>
+        <Column className={cn(isExpired && 'font-medium text-red-600')}>
           {formattedExpiresAt}
         </Column>
         <Column className="flex-1 pr-4 text-right">
           <ActionButtons
-            editHref={routes.admin.members.edit(member.id)}
+            editHref={routes.admin.members.edit(id)}
             isPending={isPending}
-            memberId={member.memberId}
+            memberId={memberId}
             onApprove={openApproveDialog}
             onDelete={openDeletionDialog}
-            verificationCode={member.verificationCode}
+            verificationCode={verificationCode}
           />
         </Column>
       </div>

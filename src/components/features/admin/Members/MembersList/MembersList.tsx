@@ -54,7 +54,7 @@ const MembersList = ({ members }: MembersListProps) => {
 
       <div className="w-full rounded-sm border bg-white p-4 shadow-sm">
         <div className="flex w-full items-center gap-4 rounded-t bg-gray-100 px-4 py-1.5">
-          <Column className="w-48 font-semibold">{t('admin.members.list.columns.name')}</Column>
+          <Column className="w-56 font-semibold">{t('admin.members.list.columns.name')}</Column>
           <Column className="font-semibold">{t('admin.members.list.columns.memberId')}</Column>
           <Column className="font-semibold">{t('admin.members.list.columns.status')}</Column>
           <Column className="font-semibold">{t('admin.members.list.columns.joinedAt')}</Column>

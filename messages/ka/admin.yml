@@ -73,6 +73,11 @@ admin:
       inactive: 'არააქტიური'
       pending: 'მოლოდინში'
       suspended: 'შეჩერებული'
+    view:
+      registeredAt: 'რეგისტრაცია'
+      noEmail: 'ელფოსტა არ არის'
+      noPhone: 'ტელეფონი არ არის'
+      noNotes: 'შენიშვნები არ არის'
 
   partners:
     title:

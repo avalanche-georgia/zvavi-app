@@ -1,4 +1,4 @@
-import clsx from 'clsx'
+import { cn } from '@/lib/utils'
 
 type ColumnProps = {
   children: React.ReactNode
@@ -6,7 +6,7 @@ type ColumnProps = {
 }
 
 const Column = ({ children, className }: ColumnProps) => (
-  <div className={clsx('w-40 shrink-0', className)}>{children}</div>
+  <div className={cn('w-40 shrink-0', className)}>{children}</div>
 )
 
 export default Column

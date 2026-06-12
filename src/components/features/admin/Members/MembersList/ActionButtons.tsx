@@ -54,7 +54,6 @@ const ActionButtons = ({
 
       <DropdownMenu>
         <DropdownMenuTrigger
-          aria-label={t('common.actions.more')}
           render={
             <IconButton
               className="data-popup-open:bg-black/5 data-popup-open:stroke-gray-900"
