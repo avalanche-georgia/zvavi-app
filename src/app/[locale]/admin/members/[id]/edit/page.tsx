@@ -13,8 +13,10 @@ const NotFound = () => {
   const t = useTranslations()
 
   return (
-    <div className="rounded-lg bg-white p-6 text-center shadow-sm">
-      <p className="text-gray-600">{t('admin.members.notFound')}</p>
+    <div className="mx-auto max-w-(--breakpoint-xl) p-4 md:p-6">
+      <div className="rounded-lg bg-white p-6 text-center shadow-sm">
+        <p className="text-gray-600">{t('admin.members.notFound')}</p>
+      </div>
     </div>
   )
 }
@@ -52,12 +54,14 @@ const EditMemberPage = () => {
   }
 
   return (
-    <MemberForm
-      initialFormData={getInitialFormData(member)}
-      member={member}
-      onCancel={handleCancel}
-      onSuccess={handleSuccess}
-    />
+    <div className="mx-auto max-w-(--breakpoint-xl) p-4 md:p-6">
+      <MemberForm
+        initialFormData={getInitialFormData(member)}
+        member={member}
+        onCancel={handleCancel}
+        onSuccess={handleSuccess}
+      />
+    </div>
   )
 }
 
