@@ -1,5 +1,4 @@
-import { Icon } from '@components/icons'
-import { Select, toOptions } from '@components/ui'
+import { SearchInput, Select, toOptions } from '@components/ui'
 import { memberStatuses } from '@domain/constants'
 import type { MemberStatus } from '@domain/types'
 import { useTranslations } from 'next-intl'
@@ -25,26 +24,15 @@ const MemberFilters = ({
   ]
 
   return (
-    <div className="mb-4 flex gap-4">
-      <div className="relative flex-1">
-        <Icon
-          className="text-gray-400"
-          containerClassName="absolute left-3 top-1/2 -translate-y-1/2"
-          icon="search"
-          size="sm"
-        />
-        <input
-          aria-label={t('admin.members.filters.searchPlaceholder')}
-          className="w-full rounded-sm border border-gray-300 py-2 pr-4 pl-10 focus:border-blue-500 focus:outline-hidden"
-          onChange={(e) => onSearchChange(e.target.value)}
-          placeholder={t('admin.members.filters.searchPlaceholder')}
-          type="text"
-          value={search}
-        />
-      </div>
-
+    <div className="flex gap-3">
+      <SearchInput
+        className="w-64"
+        onChange={onSearchChange}
+        placeholder={t('admin.members.filters.searchPlaceholder')}
+        value={search}
+      />
       <Select
-        className="w-48"
+        className="w-44"
         onChange={(value) => onStatusChange(value === 'all' ? '' : (value as MemberStatus))}
         options={statusOptions}
         value={statusFilter || 'all'}

@@ -40,17 +40,18 @@ const MembersList = ({ members }: MembersListProps) => {
 
   return (
     <>
-      <ButtonLink className="mb-4 ml-auto" href={routes.admin.members.new}>
-        <Icon icon="plus" size="sm" />
-        {t('admin.members.title.create')}
-      </ButtonLink>
-
-      <MemberFilters
-        onSearchChange={setSearch}
-        onStatusChange={setStatusFilter}
-        search={search}
-        statusFilter={statusFilter}
-      />
+      <div className="mb-4 flex items-center justify-end gap-3">
+        <MemberFilters
+          onSearchChange={setSearch}
+          onStatusChange={setStatusFilter}
+          search={search}
+          statusFilter={statusFilter}
+        />
+        <ButtonLink href={routes.admin.members.new}>
+          <Icon icon="plus" size="sm" />
+          {t('admin.members.title.create')}
+        </ButtonLink>
+      </div>
 
       <div className="w-full rounded-sm border bg-white p-4 shadow-sm">
         <div className="flex w-full items-center gap-4 rounded-t bg-gray-100 px-4 py-1.5">
