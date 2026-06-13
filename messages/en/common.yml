@@ -78,6 +78,9 @@ common:
     unknown: 'Unknown'
     vehicle: 'Vehicle'
 
+  table:
+    rowRange: '{from}–{to} of {total}'
+
   words:
     from: 'From'
     overall: 'Overall'

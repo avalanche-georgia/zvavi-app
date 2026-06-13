@@ -10,11 +10,11 @@ import {
   IconButton,
   Tooltip,
 } from '@components/ui'
-import clsx from 'clsx'
 import { useTranslations } from 'next-intl'
 import { Link } from 'src/i18n/navigation'
 
 import { downloadQRCode, getVerificationUrl } from '@/lib/qrcode'
+import { cn } from '@/lib/utils'
 
 type ActionButtonsProps = {
   editHref: string
@@ -66,7 +66,7 @@ const ActionButtons = ({
             className={isCopied ? 'text-green-600' : undefined}
             closeOnClick={false}
             iconProps={{
-              className: clsx(isCopied && 'animate-copy-pop stroke-green-600!'),
+              className: cn(isCopied && 'animate-copy-pop stroke-green-600!'),
               icon: isCopied ? 'check' : 'link',
             }}
             onClick={handleCopy}

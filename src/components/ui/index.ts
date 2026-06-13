@@ -4,6 +4,8 @@ export { default as BrandedQRCode } from './BrandedQRCode'
 export { default as Button } from './Button'
 export { Calendar } from './Calendar'
 export { default as Checkbox } from './Checkbox'
+export type { ColumnDef, OnChangeFn, PaginationState, Row } from './DataTable'
+export { createColumnHelper, DataTable } from './DataTable'
 export { default as DatePicker } from './DatePicker'
 export { Drawer } from './Drawer'
 export {
