@@ -21,7 +21,6 @@ const MembersList = ({ isLoading, members }: MembersListProps) => {
       columns={columns}
       data={members}
       emptyMessage={t('admin.members.list.noMembers')}
-      getRowClassName={(row) => (row.original.status === 'pending' ? 'bg-primary/5' : undefined)}
       isLoading={isLoading}
     />
   )
