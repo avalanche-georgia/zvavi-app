@@ -30,21 +30,21 @@ export const useMemberColumns = () => {
       ),
       header: t('admin.members.list.columns.name'),
       id: 'name',
-      meta: { className: 'w-64' },
+      meta: { className: 'w-56 shrink-0' },
     }),
     columnHelper.accessor('memberId', {
       header: t('admin.members.list.columns.memberId'),
-      meta: { className: 'w-48' },
+      meta: { className: 'w-44 shrink-0' },
     }),
     columnHelper.accessor('status', {
       cell: ({ getValue }) => <StatusBadge status={getValue()} />,
       header: t('admin.members.list.columns.status'),
-      meta: { className: 'w-40' },
+      meta: { className: 'w-28 shrink-0' },
     }),
     columnHelper.accessor('joinedAt', {
       cell: ({ getValue }) => format(getValue(), dateFormat),
       header: t('admin.members.list.columns.joinedAt'),
-      meta: { className: 'w-40' },
+      meta: { className: 'w-32 shrink-0' },
     }),
     columnHelper.accessor('expiresAt', {
       cell: ({ getValue }) => {
@@ -58,13 +58,12 @@ export const useMemberColumns = () => {
         )
       },
       header: t('admin.members.list.columns.expiresAt'),
-      meta: { className: 'w-40' },
+      meta: { className: 'w-28 shrink-0 flex-1' },
     }),
     columnHelper.display({
       cell: ({ row }) => <MemberActionsCell member={row.original} />,
       header: t('admin.members.list.columns.actions'),
       id: 'actions',
-      meta: { className: 'text-right' },
     }),
   ]
 }

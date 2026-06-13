@@ -2,8 +2,9 @@
 
 import { Menu } from '@base-ui/react/menu'
 import type { IconProps } from '@components/icons'
-import clsx from 'clsx'
 import { Icon } from 'src/components'
+
+import { cn } from '@/lib/utils'
 
 const DropdownMenu = Menu.Root
 
@@ -25,7 +26,7 @@ const DropdownMenuContent = ({
   <Menu.Portal>
     <Menu.Positioner align={align} side={side} sideOffset={sideOffset}>
       <Menu.Popup
-        className={clsx(
+        className={cn(
           'z-50 min-w-40 overflow-hidden rounded-lg p-2',
           'bg-white shadow-lg ring-1 ring-black/5 outline-hidden',
           'data-open:animate-[fadeIn_150ms_ease-out,scaleIn_150ms_ease-out]',
@@ -58,7 +59,7 @@ const DropdownMenuItem = ({
   render,
 }: DropdownMenuItemProps) => (
   <Menu.Item
-    className={clsx(
+    className={cn(
       'flex h-9 w-full cursor-default items-center gap-2 rounded-lg px-3',
       'text-sm text-gray-700 outline-hidden transition-colors select-none',
       'data-highlighted:bg-gray-100',

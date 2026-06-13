@@ -8,23 +8,23 @@ type DataTableHeaderProps<TData extends RowData> = {
 }
 
 const DataTableHeader = <TData extends RowData>({ table }: DataTableHeaderProps<TData>) => (
-  <thead className="sticky top-0 z-10">
+  <>
     {table.getHeaderGroups().map((headerGroup) => (
-      <tr key={headerGroup.id} className="bg-gray-100">
+      <div
+        key={headerGroup.id}
+        className="flex shrink-0 items-center gap-4 border-b bg-gray-100 px-4 py-1.5"
+      >
         {headerGroup.headers.map((header) => (
-          <th
+          <div
             key={header.id}
-            className={cn(
-              'px-4 py-1.5 text-left text-sm font-semibold',
-              header.column.columnDef.meta?.className,
-            )}
+            className={cn('text-sm font-semibold', header.column.columnDef.meta?.className)}
           >
             {flexRender(header.column.columnDef.header, header.getContext())}
-          </th>
+          </div>
         ))}
-      </tr>
+      </div>
     ))}
-  </thead>
+  </>
 )
 
 export default DataTableHeader

@@ -7,10 +7,11 @@ import { useTranslations } from 'next-intl'
 import { useMemberColumns } from './columns'
 
 type MembersListProps = {
+  isLoading?: boolean
   members: Member[]
 }
 
-const MembersList = ({ members }: MembersListProps) => {
+const MembersList = ({ isLoading, members }: MembersListProps) => {
   const t = useTranslations()
   const columns = useMemberColumns()
 
@@ -20,6 +21,8 @@ const MembersList = ({ members }: MembersListProps) => {
       columns={columns}
       data={members}
       emptyMessage={t('admin.members.list.noMembers')}
+      getRowClassName={(row) => (row.original.status === 'pending' ? 'bg-primary/5' : undefined)}
+      isLoading={isLoading}
     />
   )
 }

@@ -42,7 +42,7 @@ const ActionButtons = ({
 
   return (
     <div className="flex items-center justify-end gap-2">
-      {isPending && (
+      {isPending && onApprove && (
         <Tooltip content={t('admin.members.actions.approve')}>
           <IconButton
             className="hover:stroke-green-600"

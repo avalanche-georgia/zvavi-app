@@ -13,7 +13,7 @@ type SearchInputProps = {
 const SearchInput = ({ className, onChange, placeholder, value }: SearchInputProps) => (
   <div className={cn('relative', className)}>
     <TextInput
-      className={cn('w-full', value && 'pr-8')}
+      className="w-full pr-8"
       leftIcon="search"
       onChange={(event) => onChange(event.target.value)}
       placeholder={placeholder}

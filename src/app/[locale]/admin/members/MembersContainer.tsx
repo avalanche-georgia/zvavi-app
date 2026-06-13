@@ -4,7 +4,6 @@ import { useMemo, useState } from 'react'
 import { MemberFilters, MembersList } from '@components/features/admin/Members/MembersList'
 import { Icon } from '@components/icons'
 import { ButtonLink } from '@components/shared'
-import { Spinner } from '@components/ui'
 import { useMembersQuery } from '@data/hooks/members'
 import type { MemberStatus } from '@domain/types'
 import { useTranslations } from 'next-intl'
@@ -52,13 +51,7 @@ const MembersContainer = () => {
       </div>
 
       <div className="p-4 md:p-6">
-        {isPending ? (
-          <div className="flex items-center justify-center py-12">
-            <Spinner />
-          </div>
-        ) : (
-          <MembersList members={filteredMembers} />
-        )}
+        <MembersList isLoading={isPending} members={filteredMembers} />
       </div>
     </>
   )

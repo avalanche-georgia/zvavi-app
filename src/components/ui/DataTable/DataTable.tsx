@@ -4,7 +4,6 @@
 import { useState } from 'react'
 import {
   type ColumnDef,
-  flexRender,
   getCoreRowModel,
   getPaginationRowModel,
   type OnChangeFn,
@@ -15,9 +14,11 @@ import {
 } from '@tanstack/react-table'
 import { cn } from 'src/lib/utils'
 
+import DataTableBody from './DataTableBody'
 import DataTableFooter from './DataTableFooter'
 import DataTableHeader from './DataTableHeader'
 import './types'
+import Spinner from '../Spinner'
 
 type DataTableProps<TData extends RowData> = {
   className?: string
@@ -26,6 +27,8 @@ type DataTableProps<TData extends RowData> = {
   data: TData[]
   emptyMessage?: string
   getRowClassName?: (row: Row<TData>) => string | undefined
+  isFetching?: boolean
+  isLoading?: boolean
   onPaginationChange?: OnChangeFn<PaginationState>
   pagination?: PaginationState
   rowCount?: number
@@ -39,6 +42,8 @@ const DataTable = <TData extends RowData>({
   data,
   emptyMessage,
   getRowClassName,
+  isFetching,
+  isLoading,
   onPaginationChange,
   pagination,
   rowCount,
@@ -63,8 +68,6 @@ const DataTable = <TData extends RowData>({
     state: { pagination: pagination ?? internalPagination },
   })
 
-  const rows = table.getRowModel().rows
-
   return (
     <div
       className={cn(
@@ -72,40 +75,29 @@ const DataTable = <TData extends RowData>({
         className,
       )}
     >
-      <div className="min-h-0 flex-1 overflow-y-auto">
-        <table className="w-full">
-          <DataTableHeader table={table} />
-          <tbody>
-            {rows.length === 0 ? (
-              <tr>
-                <td className="py-8 text-center text-gray-500" colSpan={columns.length}>
-                  {emptyMessage}
-                </td>
-              </tr>
-            ) : (
-              rows.map((row) => (
-                <tr
-                  key={row.id}
-                  className={cn(
-                    'h-12 border-b last:border-0 even:bg-gray-100/60',
-                    getRowClassName?.(row),
-                  )}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <td
-                      key={cell.id}
-                      className={cn('px-4 text-sm', cell.column.columnDef.meta?.className)}
-                    >
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </td>
-                  ))}
-                </tr>
-              ))
+      <DataTableHeader table={table} />
+
+      {isLoading ? (
+        <div className="flex flex-1 items-center justify-center">
+          <Spinner />
+        </div>
+      ) : (
+        <>
+          <div className="relative flex-1 overflow-y-auto">
+            <DataTableBody
+              emptyMessage={emptyMessage}
+              getRowClassName={getRowClassName}
+              table={table}
+            />
+            {isFetching && (
+              <div className="absolute inset-0 flex items-center justify-center bg-white/60">
+                <Spinner />
+              </div>
             )}
-          </tbody>
-        </table>
-      </div>
-      <DataTableFooter table={table} />
+          </div>
+          <DataTableFooter table={table} />
+        </>
+      )}
     </div>
   )
 }
