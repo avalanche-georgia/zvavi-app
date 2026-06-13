@@ -1,4 +1,4 @@
-import type { Aspect, HazardLevel, HazardLevelScale } from './types'
+import type { Aspect, HazardLevel, HazardLevelScale, MemberStatus } from './types'
 
 export const hazardLevelNames: Record<HazardLevel, string> = {
   considerable: 'forecast.hazardLevels.considerable',
@@ -91,12 +91,13 @@ export const timeFormat = 'HH:mm'
 export const dateTimeFormat = 'dd.MM.yyyy HH:mm'
 export const serverDateFormat = 'yyyy-MM-dd'
 
-export const memberStatuses = {
+export const memberStatuses: Record<MemberStatus, MemberStatus> = {
   active: 'active',
   expired: 'expired',
   inactive: 'inactive',
+  pending: 'pending',
   suspended: 'suspended',
-} as const
+}
 
 export const regionIds = {
   gudauri: 'gudauri',
