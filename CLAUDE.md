@@ -6,6 +6,18 @@ Developer and agent guide for the Zvavi avalanche forecasting app.
 
 If the work introduces a new user-facing feature or meaningfully changes existing functionality, update `FEATURES.md` to reflect it. Keep the description high-level and user-facing — no implementation details, route paths, or internal tooling. The file is written for a non-technical audience (e.g. partners).
 
+## Prerequisites
+
+Global tools required — install once:
+
+| Tool | Install | Used for |
+|------|---------|----------|
+| **Node.js** | via [nvm](https://github.com/nvm-sh/nvm) or system | runtime |
+| **pnpm** | `npm install -g pnpm` | package manager |
+| **Supabase CLI** | `brew install supabase` | `typegen`, `db:push-prod`, migration commands |
+
+---
+
 ## Commands
 
 ```bash
@@ -15,6 +27,7 @@ pnpm lint             # ESLint check only (no auto-fix; formatting is applied by
 pnpm convert-messages # compile messages/en/*.yml + messages/ka/*.yml → JSON
 pnpm export-translations # export en.json + ka.json → messages/translations.csv
 pnpm typegen          # regenerate src/lib/supabase/database.types.ts from local Supabase schema
+pnpm db:push-prod     # push pending migrations to production, then re-link to staging
 ```
 
 When fixing lint issues, run `npx eslint --fix` (not without `--fix`) to auto-resolve formatting and import sorting in one pass.
@@ -88,6 +101,30 @@ Import `avalancheTypes` when working with avalanche events; import `avalanchePro
 ---
 
 ## Key Patterns
+
+### Database Migrations
+
+Two environments: **staging** (default, local dev) and **production**.
+
+**Development workflow (staging):**
+1. Write SQL, run it manually in the Supabase dashboard
+2. Save as `supabase/migrations/<timestamp>_name.sql`
+3. Mark applied so the CLI doesn't re-run it:
+   ```bash
+   supabase migration repair --status applied <timestamp>
+   ```
+
+**Pushing to production:**
+```bash
+pnpm db:push-prod
+```
+Links to production → pushes pending migrations → links back to staging.
+
+Requires in `.env.local`:
+- `SUPABASE_ACCESS_TOKEN` — personal access token from Supabase dashboard → Account → Access Tokens
+- `SUPABASE_PROD_PROJECT_REF` / `SUPABASE_STAGING_PROJECT_REF` — project refs
+
+---
 
 ### Supabase Type Generation
 
