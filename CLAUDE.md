@@ -6,6 +6,18 @@ Developer and agent guide for the Zvavi avalanche forecasting app.
 
 If the work introduces a new user-facing feature or meaningfully changes existing functionality, update `FEATURES.md` to reflect it. Keep the description high-level and user-facing — no implementation details, route paths, or internal tooling. The file is written for a non-technical audience (e.g. partners).
 
+## Prerequisites
+
+Global tools required — install once:
+
+| Tool | Install | Used for |
+|------|---------|----------|
+| **Node.js** | via [nvm](https://github.com/nvm-sh/nvm) or system | runtime |
+| **pnpm** | `npm install -g pnpm` | package manager |
+| **Supabase CLI** | `brew install supabase` | `typegen`, `db:push-prod`, migration commands |
+
+---
+
 ## Commands
 
 ```bash
@@ -111,8 +123,6 @@ Links to production → pushes pending migrations → links back to staging.
 Requires in `.env.local`:
 - `SUPABASE_ACCESS_TOKEN` — personal access token from Supabase dashboard → Account → Access Tokens
 - `SUPABASE_PROD_PROJECT_REF` / `SUPABASE_STAGING_PROJECT_REF` — project refs
-
-**Prerequisites:** Supabase CLI installed via Homebrew (`brew install supabase`).
 
 ---
 

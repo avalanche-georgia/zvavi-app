@@ -6,7 +6,7 @@ YELLOW='\033[1;33m'
 BOLD='\033[1m'
 RESET='\033[0m'
 
-info()    { echo -e "${BOLD}$1${RESET}"; }
-success() { echo -e "${GREEN}✓ $1${RESET}"; }
-error()   { echo -e "${RED}✗ $1${RESET}"; exit 1; }
-warn()    { echo -e "${YELLOW}⚠ $1${RESET}"; }
+info()    { printf "${BOLD}%b${RESET}\n" "$*"; }
+success() { printf "${GREEN}✓ %b${RESET}\n" "$*"; }
+error()   { printf "${RED}✗ %b${RESET}\n" "$*"; exit 1; }
+warn()    { printf "${YELLOW}⚠ %b${RESET}\n" "$*"; }
