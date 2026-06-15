@@ -10,7 +10,8 @@
     "prepare": "husky",
     "convert-messages": "node scripts/convert-messages.js",
     "export-translations": "node scripts/export-translations.js",
-    "typegen": "supabase gen types typescript --local > src/lib/supabase/database.types.ts"
+    "typegen": "supabase gen types typescript --local > src/lib/supabase/database.types.ts",
+    "db:push-prod": "bash scripts/db-push-prod.sh"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -101,7 +102,6 @@
     "lint-staged": "^15.2.10",
     "postcss": "^8.4.47",
     "prettier-plugin-tailwindcss": "^0.7.2",
-    "supabase": "^1.223.10",
     "tailwindcss": "^4.2.2",
     "typescript": "^6.0.2"
   },
