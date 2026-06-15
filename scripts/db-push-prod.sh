@@ -13,11 +13,13 @@ SUPABASE_PROD_PROJECT_REF=$(grep '^SUPABASE_PROD_PROJECT_REF=' .env.local | cut 
 SUPABASE_STAGING_PROJECT_REF=$(grep '^SUPABASE_STAGING_PROJECT_REF=' .env.local | cut -d '=' -f2- || true)
 export SUPABASE_ACCESS_TOKEN=$(grep '^SUPABASE_ACCESS_TOKEN=' .env.local | cut -d '=' -f2- || true)
 
-[ -z "$SUPABASE_PROD_PROJECT_REF" ] || [ -z "$SUPABASE_STAGING_PROJECT_REF" ] && \
+if [ -z "$SUPABASE_PROD_PROJECT_REF" ] || [ -z "$SUPABASE_STAGING_PROJECT_REF" ]; then
   error "SUPABASE_PROD_PROJECT_REF and SUPABASE_STAGING_PROJECT_REF must be set in .env.local"
+fi
 
-[ -z "$SUPABASE_ACCESS_TOKEN" ] && \
+if [ -z "$SUPABASE_ACCESS_TOKEN" ]; then
   error "SUPABASE_ACCESS_TOKEN must be set in .env.local\n  Get your token at: https://supabase.com/dashboard/account/tokens"
+fi
 
 trap 'supabase link --project-ref "$SUPABASE_STAGING_PROJECT_REF" > /dev/null 2>&1 || true' EXIT
 

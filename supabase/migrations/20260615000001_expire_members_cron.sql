@@ -1,8 +1,9 @@
 create extension if not exists pg_cron;
 
 do $$ begin
-  perform cron.unschedule('expire-members');
-exception when others then null;
+  if exists (select 1 from cron.job where jobname = 'expire-members') then
+    perform cron.unschedule('expire-members');
+  end if;
 end $$;
 
 select cron.schedule(
