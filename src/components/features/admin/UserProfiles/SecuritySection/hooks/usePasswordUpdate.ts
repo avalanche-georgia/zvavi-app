@@ -38,7 +38,10 @@ const usePasswordUpdate = () => {
 
         return true
       } catch (error) {
-        toastError('PasswordUpdateForm | updatePassword', { error })
+        toastError('PasswordUpdateForm | updatePassword', {
+          error,
+          message: error instanceof Error ? error.message : undefined,
+        })
 
         return false
       }
