@@ -10,3 +10,4 @@ info()    { printf "${BOLD}%b${RESET}\n" "$*"; }
 success() { printf "${GREEN}✓ %b${RESET}\n" "$*"; }
 error()   { printf "${RED}✗ %b${RESET}\n" "$*"; exit 1; }
 warn()    { printf "${YELLOW}⚠ %b${RESET}\n" "$*"; }
+run_cmd() { "$@" 2>&1 | sed '/^$/d; s/^/  /'; }
