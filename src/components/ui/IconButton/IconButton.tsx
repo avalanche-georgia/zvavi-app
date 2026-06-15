@@ -1,8 +1,7 @@
 import { type IconName, type IconProps, iconRenderers } from '@components/icons'
-import clsx from 'clsx'
 import type { ButtonHTMLAttributes, DetailedHTMLProps } from 'react'
 import { Link, type LinkProps } from 'src/i18n/navigation'
-import { twMerge } from 'tailwind-merge'
+import { cn } from 'src/lib/utils'
 
 import { containerClassesBySize, type IconButtonSize, iconSizesBySize } from './constants'
 
@@ -25,19 +24,17 @@ const IconButton = ({ className, iconProps, size = 'md', ...props }: IconButtonP
   const IconRenderer = iconRenderers[icon]
   const isLink = 'href' in props && props.href !== undefined
 
-  const sharedClassName = twMerge(
-    clsx(
-      'flex items-center justify-center rounded-sm transition-colors',
-      'disabled' in props && props.disabled
-        ? 'cursor-not-allowed stroke-gray-400'
-        : 'stroke-gray-500 hover:stroke-gray-900 lg:hover:bg-black/5',
-      containerClassesBySize[size],
-      className,
-    ),
+  const sharedClassName = cn(
+    'flex items-center justify-center rounded-sm transition-colors',
+    'disabled' in props && props.disabled
+      ? 'cursor-not-allowed stroke-gray-400'
+      : 'stroke-gray-500 hover:stroke-gray-900 lg:hover:bg-black/5',
+    containerClassesBySize[size],
+    className,
   )
 
   const iconElement = (
-    <IconRenderer className={clsx('stroke-inherit', iconClassName)} size={iconSizesBySize[size]} />
+    <IconRenderer className={cn('stroke-inherit', iconClassName)} size={iconSizesBySize[size]} />
   )
 
   if (isLink) {

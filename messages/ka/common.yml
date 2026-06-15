@@ -78,6 +78,9 @@ common:
     unknown: 'უცნობი'
     vehicle: 'სატრანსპორტო საშუალება'
 
+  table:
+    rowRange: '{from}–{to} / {total}'
+
   words:
     from: 'დან'
     overall: 'საერთო'

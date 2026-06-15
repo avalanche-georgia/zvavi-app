@@ -2,7 +2,7 @@
 
 import { Icon } from '@components/icons'
 import { ButtonLink } from '@components/shared'
-import { TextInput } from '@components/ui'
+import { SearchInput } from '@components/ui'
 import type { Partner } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
@@ -18,19 +18,12 @@ const PartnersList = ({ partners }: { partners: Partner[] }) => {
   return (
     <>
       <div className="mb-4 flex items-center justify-end gap-3">
-        <div className="relative">
-          <TextInput
-            className="w-52 pr-8"
-            onChange={(event) => setSearch(event.target.value)}
-            placeholder={t('admin.partners.filters.searchPlaceholder')}
-            value={search}
-          />
-          <Icon
-            containerClassName="pointer-events-none absolute top-1/2 right-2 -translate-y-1/2 text-gray-400"
-            icon="search"
-            size="sm"
-          />
-        </div>
+        <SearchInput
+          className="w-64"
+          onChange={setSearch}
+          placeholder={t('admin.partners.filters.searchPlaceholder')}
+          value={search}
+        />
         <ButtonLink href={routes.admin.partners.new}>
           <Icon icon="plus" size="sm" />
           {t('admin.partners.title.create')}

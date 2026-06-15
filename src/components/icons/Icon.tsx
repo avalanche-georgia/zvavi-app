@@ -1,6 +1,6 @@
 import FacebookIcon from '@assets/icons/brand/facebook.svg'
 import InstagramIcon from '@assets/icons/brand/instagram.svg'
-import clsx from 'clsx'
+import { cn } from 'src/lib/utils'
 
 import { containerClassesBySize, iconSizesBySize } from './constants'
 
@@ -21,7 +21,7 @@ const Icon = ({ className, containerClassName, icon, size = 'md' }: IconProps) =
 
   return (
     <div
-      className={clsx(
+      className={cn(
         'flex items-center justify-center',
         containerClassName,
         containerClassesBySize[size],

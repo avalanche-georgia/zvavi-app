@@ -4,8 +4,16 @@ export { default as BrandedQRCode } from './BrandedQRCode'
 export { default as Button } from './Button'
 export { Calendar } from './Calendar'
 export { default as Checkbox } from './Checkbox'
+export type { ColumnDef, OnChangeFn, PaginationState, Row } from './DataTable'
+export { createColumnHelper, DataTable } from './DataTable'
 export { default as DatePicker } from './DatePicker'
 export { Drawer } from './Drawer'
+export {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from './DropdownMenu'
 export { IconButton } from './IconButton'
 export { default as InfoIcon } from './InfoIcon'
 export { default as InputBlock } from './InputBlock'
@@ -15,6 +23,7 @@ export { Pagination, type PaginationProps } from './Pagination'
 export { Popover, PopoverAnchor, PopoverContent, PopoverTrigger } from './Popover'
 export { default as RadioGroup } from './RadioGroup'
 export { default as RadioOption } from './RadioOption'
+export { default as SearchInput } from './SearchInput'
 export { default as Select, type SelectOption, toOptions } from './Select'
 export { default as Skeleton } from './Skeleton'
 export { default as Spinner } from './Spinner'

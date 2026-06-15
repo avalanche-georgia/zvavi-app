@@ -219,6 +219,7 @@ No `@i18n` alias — use `src/i18n/navigation` directly.
 - Use `type` imports for type-only imports (`@typescript-eslint/consistent-type-imports`)
 - Zod v4: use `{ error: () => ({ message: '...' }) }` not `{ errorMap: ... }`
 - For DB inserts use `convertCamelToSnake` from `@data/helpers`
+- Use `cn()` from `@/lib/utils` for class merging — never import `clsx` directly. When editing a file, replace any existing `clsx` usage with `cn`
 - Always use explicit variable names — never single-letter or abbreviated (`partner` not `p`, `error` not `e`)
 - Always camelCase — variables and constants. Types use PascalCase (`Region`, `HazardLevelScale`). Never SCREAMING_CASE or snake_case in TypeScript. Deviation requires argued justification.
 - React types: use the global `React.*` namespace — do not import types from `react` (`React.ReactNode`, `React.ChangeEvent<T>`)

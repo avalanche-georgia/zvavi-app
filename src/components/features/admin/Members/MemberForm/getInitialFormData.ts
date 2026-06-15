@@ -11,7 +11,7 @@ const getInitialFormData = (member: Member | null): MemberFormData => {
       memberId: '',
       notes: '',
       phone: '',
-      status: 'active',
+      status: 'pending',
     }
   }
 

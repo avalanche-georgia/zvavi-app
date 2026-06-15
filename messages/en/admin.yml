@@ -73,6 +73,11 @@ admin:
       inactive: 'Inactive'
       pending: 'Pending'
       suspended: 'Suspended'
+    view:
+      registeredAt: 'Registered'
+      noEmail: 'No email provided'
+      noPhone: 'No phone provided'
+      noNotes: 'No notes'
 
   partners:
     title:
