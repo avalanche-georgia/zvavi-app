@@ -26,8 +26,8 @@ const FormFields = () => {
   const today = startOfDay(new Date())
 
   const handleExpiresAtChange = (date: Date | null) => {
-    setValue('expiresAt', date, { shouldValidate: true })
-    trigger('status')
+    setValue('expiresAt', date, { shouldDirty: true, shouldTouch: true, shouldValidate: true })
+    void trigger('status')
   }
 
   return (
