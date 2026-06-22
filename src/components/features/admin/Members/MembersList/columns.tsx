@@ -22,7 +22,7 @@ export const useMemberColumns = () => {
     columnHelper.accessor((row) => `${row.firstName} ${row.lastName}`, {
       cell: ({ row }) => (
         <Link
-          className="hover:text-primary hover:underline"
+          className="hover:text-primary transition-colors hover:underline"
           href={routes.admin.members.view(row.original.id)}
         >
           {row.original.firstName} {row.original.lastName}

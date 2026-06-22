@@ -29,5 +29,13 @@ export const memberFormSchema = z
     },
     { message: 'expiresAtBeforeJoined', path: ['expiresAt'] },
   )
+  .refine(
+    (data) => {
+      if (data.status !== 'active' || !data.expiresAt) return true
+
+      return startOfDay(data.expiresAt) >= startOfDay(new Date())
+    },
+    { message: 'activeWithExpiredDate', path: ['status'] },
+  )
 
 export type MemberFormSchema = z.infer<typeof memberFormSchema>
