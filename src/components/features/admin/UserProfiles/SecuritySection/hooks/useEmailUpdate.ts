@@ -18,7 +18,10 @@ const useEmailUpdate = () => {
 
         return true
       } catch (error) {
-        toastError('EmailUpdateForm | updateEmail', { error })
+        toastError('EmailUpdateForm | updateEmail', {
+          error,
+          message: error instanceof Error ? error.message : undefined,
+        })
 
         return false
       }
