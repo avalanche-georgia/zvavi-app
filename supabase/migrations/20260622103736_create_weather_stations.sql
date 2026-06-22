@@ -1,0 +1,47 @@
+create table weather_stations (
+  id uuid primary key default gen_random_uuid(),
+  name_en text not null,
+  name_ka text,
+  url text not null,
+  sort_order integer default null,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+
+alter table weather_stations enable row level security;
+
+create policy "public read" on weather_stations for select using (true);
+create policy "authenticated write" on weather_stations for all using (auth.role() = 'authenticated');
+
+create function auto_sort_weather_station()
+returns trigger language plpgsql as $$
+begin
+  if new.sort_order is null then
+    new.sort_order := coalesce((select max(sort_order) + 1 from weather_stations), 0);
+  end if;
+  return new;
+end;
+$$;
+
+create trigger weather_stations_auto_sort
+  before insert on weather_stations
+  for each row execute function auto_sort_weather_station();
+
+create function reorder_weather_stations(updates jsonb)
+returns void language plpgsql security definer as $$
+begin
+  update weather_stations
+  set sort_order = (elem->>'sort_order')::int
+  from jsonb_array_elements(updates) as elem
+  where id = (elem->>'id')::uuid;
+end;
+$$;
+
+revoke execute on function reorder_weather_stations(jsonb) from public;
+grant execute on function reorder_weather_stations(jsonb) to authenticated;
+
+insert into weather_stations (name_en, name_ka, url, sort_order) values
+  ('Altihut Kazbegi (3014m)', 'ალტიჰუტი, ყაზბეგი (3014მ)', 'https://www.wunderground.com/dashboard/pws/IMTSKH8', 0),
+  ('Top of Kudebi Lift, Gudauri (3000m)', 'კუდების საბაგიროს წვერი, გუდაური (3000მ)', 'https://www.wunderground.com/dashboard/pws/IMTSKH9', 1),
+  ('Vitamin Cafe, Gudauri (2688m)', 'ვიტამინის კაფე, გუდაური (2688მ)', 'https://www.ecowitt.net/home/share?authorize=BYREP7', 2),
+  ('Bedoni Village (1340m)', 'ბედონი სოფელი (1340მ)', 'https://www.wunderground.com/dashboard/pws/I90583634', 3);

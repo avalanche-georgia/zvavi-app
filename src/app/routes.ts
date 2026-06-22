@@ -39,6 +39,9 @@ export const routes = {
       root: '/admin/recent-avalanches',
     },
     root: '/admin',
+    weatherStations: {
+      root: '/admin/weather-stations',
+    },
   },
   auth: {
     forgotPassword: '/auth/forgot-password',
