@@ -15,12 +15,20 @@ const FormFields = () => {
     control,
     formState: { errors },
     register,
+    setValue,
+    trigger,
   } = useFormContext<MemberFormData>()
   const joinedAt = useWatch({ control, name: 'joinedAt' })
   const statusOptions = toOptions(memberStatuses, (key) => t(`admin.members.statuses.${key}`))
   const getError = (field: keyof MemberFormData) =>
     errors[field] ? t(`common.validation.${errors[field]?.message}`) : undefined
+  const hasError = (field: keyof MemberFormData) => !!errors[field]
   const today = startOfDay(new Date())
+
+  const handleExpiresAtChange = (date: Date | null) => {
+    setValue('expiresAt', date, { shouldDirty: true, shouldTouch: true, shouldValidate: true })
+    void trigger('status')
+  }
 
   return (
     <>
@@ -30,24 +38,25 @@ const FormFields = () => {
           label={t('admin.members.form.labels.firstName')}
           required
         >
-          <TextInput {...register('firstName')} />
+          <TextInput {...register('firstName')} hasError={hasError('firstName')} />
         </InputBlock>
         <InputBlock
           error={getError('lastName')}
           label={t('admin.members.form.labels.lastName')}
           required
         >
-          <TextInput {...register('lastName')} />
+          <TextInput {...register('lastName')} hasError={hasError('lastName')} />
         </InputBlock>
         <InputBlock error={getError('email')} label={t('admin.members.form.labels.email')}>
-          <TextInput {...register('email')} type="email" />
+          <TextInput {...register('email')} hasError={hasError('email')} type="email" />
         </InputBlock>
         <InputBlock error={getError('phone')} label={t('admin.members.form.labels.phone')}>
-          <TextInput {...register('phone')} />
+          <TextInput {...register('phone')} hasError={hasError('phone')} />
         </InputBlock>
         <InputBlock error={getError('memberId')} label={t('admin.members.form.labels.memberId')}>
           <TextInput
             {...register('memberId')}
+            hasError={hasError('memberId')}
             placeholder={t('admin.members.form.placeholders.memberId')}
           />
         </InputBlock>
@@ -57,6 +66,7 @@ const FormFields = () => {
             name="status"
             render={({ field }) => (
               <Select
+                hasError={hasError('status')}
                 onChange={(value) => field.onChange(value as MemberStatus)}
                 options={statusOptions}
                 value={field.value}
@@ -74,6 +84,7 @@ const FormFields = () => {
             name="joinedAt"
             render={({ field }) => (
               <DatePicker
+                hasError={hasError('joinedAt')}
                 maxDate={today}
                 onChange={(date) => field.onChange(date)}
                 value={field.value}
@@ -87,9 +98,10 @@ const FormFields = () => {
             name="expiresAt"
             render={({ field }) => (
               <DatePicker
+                hasError={hasError('expiresAt')}
                 isClearable
                 minDate={joinedAt ? startOfDay(joinedAt) : undefined}
-                onChange={(date) => field.onChange(date)}
+                onChange={handleExpiresAtChange}
                 placeholder={t('admin.members.form.placeholders.expiresAt')}
                 value={field.value}
               />

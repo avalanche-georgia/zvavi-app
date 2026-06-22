@@ -37,6 +37,7 @@ common:
     success: 'წარმატება.'
 
   validation:
+    activeWithExpiredDate: 'სტატუსი ვერ იქნება აქტიური, თუ ვადის თარიღი უკვე გასულია'
     expiresAtBeforeJoined: 'ვადის თარიღი უნდა იყოს გაწევრიანების თარიღის შემდეგ'
     invalidCredentials: 'მიმდინარე პაროლი არასწორია'
     invalid_string: 'არასწორი ფორმატი'
