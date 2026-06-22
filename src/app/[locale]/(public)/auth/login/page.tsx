@@ -37,7 +37,10 @@ const LoginPage = () => {
         handleSupabaseError(error)
         router.push(routes.admin.root)
       } catch (error) {
-        toastError('LoginPage | handleSignIn', { error })
+        toastError('LoginPage | handleSignIn', {
+          error,
+          message: error instanceof Error ? error.message : undefined,
+        })
       } finally {
         setIsPending(false)
       }

@@ -38,6 +38,7 @@ const ForgotPasswordPage = () => {
       } catch (error) {
         toastError('ForgotPasswordPage | handleSendResetLinkClick', {
           error,
+          message: error instanceof Error ? error.message : undefined,
         })
       } finally {
         setIsPending(false)

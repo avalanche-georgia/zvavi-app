@@ -62,13 +62,11 @@ const useSetNewPassword = () => {
           setIsPending(false)
         }, 3000)
       } catch (error) {
-        if (error instanceof Error) {
-          toastError('validatePasswords | handleNewPasswordSubmit', {
-            error,
-            message: error.message,
-          })
-          setIsPending(false)
-        }
+        toastError('validatePasswords | handleNewPasswordSubmit', {
+          error,
+          message: error instanceof Error ? error.message : undefined,
+        })
+        setIsPending(false)
       }
     },
     [errorMessage, locale, password, router, t, toastError, toastSuccess],
