@@ -8,6 +8,7 @@ admin:
     menu: 'ადმინ მენიუ'
     partners: 'პარტნიორები'
     recentAvalanches: 'ბოლო ზვავები'
+    weatherStations: 'ამინდის სადგურები'
     menuDescription: 'ადმინისტრაციული სანავიგაციო მენიუ'
     openMenu: 'მენიუს გახსნა'
     closeMenu: 'მენიუს დახურვა'
@@ -346,3 +347,25 @@ admin:
       messages:
         created: ზვავი წარმატებით დაემატა.
         updated: ზვავი წარმატებით განახლდა.
+
+  weatherStations:
+    title: 'ამინდის სადგურები'
+    new: 'ახალი სადგური'
+    noStations: 'ამინდის სადგურები არ მოიძებნა.'
+    dragToReorder: 'გადაადგილება თანმიმდევრობის შესაცვლელად'
+    deleteModal:
+      title: 'სადგურის წაშლა?'
+      description: 'გსურთ {name} სამუდამოდ წაშლა?'
+    form:
+      title:
+        create: 'სადგურის დამატება'
+        edit: 'სადგურის რედაქტირება'
+      labels:
+        altitude: 'სიმაღლე (მ)'
+        nameEn: 'დასახელება (EN)'
+        nameKa: 'დასახელება (KA)'
+        url: 'URL'
+      messages:
+        created: 'სადგური წარმატებით დაემატა.'
+        deleted: 'სადგური წარმატებით წაიშალა.'
+        updated: 'სადგური წარმატებით განახლდა.'

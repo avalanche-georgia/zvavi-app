@@ -44,6 +44,7 @@ common:
     joinedAtFuture: 'არ შეიძლება იყოს მომავალში'
     passwordMismatch: 'პაროლები არ ემთხვევა'
     passwordTooShort: 'მინიმუმ 8 სიმბოლო'
+    positive: '0-ზე მეტი უნდა იყოს'
     required: 'სავალდებულო'
     too_small: 'სავალდებულო'
 

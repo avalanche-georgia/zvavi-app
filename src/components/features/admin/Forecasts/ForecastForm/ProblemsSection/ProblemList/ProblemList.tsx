@@ -1,11 +1,11 @@
 import { useCallback } from 'react'
+import { SortableItem } from '@components/ui'
 import { DragDropProvider, type DragEndEvent } from '@dnd-kit/react'
 import { isSortableOperation } from '@dnd-kit/react/sortable'
 import type { AvalancheProblemType, Problem } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import { ProblemItem } from './ProblemItem'
-import SortableItem from './SortableItem'
 import type { FormState } from '../../common'
 import { ProblemForm, type ProblemFormProps } from '../ProblemForm'
 

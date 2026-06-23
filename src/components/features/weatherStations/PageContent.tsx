@@ -1,14 +1,19 @@
-import { useTranslations } from 'next-intl'
+import fetchWeatherStations from '@data/queries/fetchWeatherStations'
+import { getLocale, getTranslations } from 'next-intl/server'
 
 import StationsList from './StationsList'
 
-const PageContent = () => {
-  const t = useTranslations()
+const PageContent = async () => {
+  const [t, locale, stations] = await Promise.all([
+    getTranslations(),
+    getLocale(),
+    fetchWeatherStations(),
+  ])
 
   return (
     <>
       <p className="mb-4">{t('weatherStations.description')}</p>
-      <StationsList />
+      <StationsList locale={locale} stations={stations} />
     </>
   )
 }

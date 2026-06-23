@@ -7,4 +7,9 @@ export const navItems: NavItem[] = [
   { href: routes.admin.recentAvalanches.root, icon: 'mountainSnow', label: 'recentAvalanches' },
   { href: routes.admin.members.root, icon: 'users', label: 'members' },
   { href: routes.admin.partners.root, icon: 'handshake', label: 'partners' },
+  {
+    href: routes.admin.weatherStations.root,
+    icon: 'thermometerSnowflake',
+    label: 'weatherStations',
+  },
 ]

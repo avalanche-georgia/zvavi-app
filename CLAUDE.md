@@ -26,7 +26,7 @@ pnpm build            # convert-messages + production build
 pnpm lint             # ESLint check only (no auto-fix; formatting is applied by lint-staged on pre-commit)
 pnpm convert-messages # compile messages/en/*.yml + messages/ka/*.yml → JSON
 pnpm export-translations # export en.json + ka.json → messages/translations.csv
-pnpm typegen          # regenerate src/lib/supabase/database.types.ts from local Supabase schema
+pnpm typegen          # regenerate src/lib/supabase/database.types.ts from staging Supabase schema (requires SUPABASE_STAGING_PROJECT_REF)
 pnpm db:push-prod     # push pending migrations to production, then re-link to staging
 ```
 
@@ -41,7 +41,7 @@ src/
 ├── app/
 │   ├── [locale]/
 │   │   ├── (public)/        # public routes (forecasts, about, auth, verify, …)
-│   │   └── admin/           # protected admin routes (forecasts, members)
+│   │   └── admin/           # protected admin routes (forecasts, members, weather-stations)
 │   ├── api/notify/          # Telegram notification webhooks
 │   ├── tanstack-query/      # QueryClient configuration + custom useQuery wrapper
 │   └── routes.ts            # centralized route constants + builder helpers
