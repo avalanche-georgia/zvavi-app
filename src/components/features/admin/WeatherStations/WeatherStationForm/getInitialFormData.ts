@@ -1,6 +1,6 @@
-import type { WeatherStation, WeatherStationFormData } from '@domain/types'
+import type { WeatherStation } from '@domain/types'
 
-const getInitialFormData = (station: WeatherStation | null): WeatherStationFormData => {
+const getInitialFormData = (station: WeatherStation | null) => {
   if (!station) {
     return { altitude: undefined, nameEn: '', nameKa: '', url: '' }
   }
