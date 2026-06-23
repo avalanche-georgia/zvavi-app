@@ -27,10 +27,16 @@ create trigger weather_stations_auto_sort
   before insert on weather_stations
   for each row execute function auto_sort_weather_station();
 
+create trigger update_weather_stations_updated_at
+  before update on weather_stations
+  for each row execute function update_updated_at_column();
+
 create function reorder_weather_stations(updates jsonb)
-returns void language plpgsql security definer as $$
+returns void language plpgsql security definer
+set search_path = ''
+as $$
 begin
-  update weather_stations
+  update public.weather_stations
   set sort_order = (elem->>'sort_order')::int
   from jsonb_array_elements(updates) as elem
   where id = (elem->>'id')::uuid;

@@ -11,8 +11,7 @@ const useWeatherStationsReorder = () => {
   return useMutation<void, Error, WeatherStation[]>({
     mutationFn: async (ordered) => {
       const updates = ordered.map((station, index) => ({ id: station.id, sort_order: index }))
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { error } = await (supabase.rpc as any)('reorder_weather_stations', { updates })
+      const { error } = await supabase.rpc('reorder_weather_stations', { updates })
 
       handleSupabaseError(error)
     },
