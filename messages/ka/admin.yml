@@ -361,6 +361,7 @@ admin:
         create: 'სადგურის დამატება'
         edit: 'სადგურის რედაქტირება'
       labels:
+        altitude: 'სიმაღლე (მ)'
         nameEn: 'დასახელება (EN)'
         nameKa: 'დასახელება (KA)'
         url: 'URL'

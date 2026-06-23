@@ -41,7 +41,7 @@ src/
 ├── app/
 │   ├── [locale]/
 │   │   ├── (public)/        # public routes (forecasts, about, auth, verify, …)
-│   │   └── admin/           # protected admin routes (forecasts, members)
+│   │   └── admin/           # protected admin routes (forecasts, members, weather-stations)
 │   ├── api/notify/          # Telegram notification webhooks
 │   ├── tanstack-query/      # QueryClient configuration + custom useQuery wrapper
 │   └── routes.ts            # centralized route constants + builder helpers

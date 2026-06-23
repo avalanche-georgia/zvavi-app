@@ -45,6 +45,8 @@ const StationRow = ({ dragHandleRef, onEdit, station }: StationRowProps) => {
           {station.nameKa && <div className="truncate text-sm text-gray-400">{station.nameKa}</div>}
         </div>
 
+        <div className="shrink-0 text-sm text-gray-400">{station.altitude}m</div>
+
         <div className="flex shrink-0 items-center gap-1">
           <IconButton
             aria-label="Open station"

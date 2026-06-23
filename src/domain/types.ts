@@ -186,6 +186,7 @@ export type PartnerFormData = {
 export type WeatherStation = Tables<'weather_stations'>
 
 export type WeatherStationFormData = {
+  altitude: number | undefined
   nameEn: string
   nameKa: string
   url: string

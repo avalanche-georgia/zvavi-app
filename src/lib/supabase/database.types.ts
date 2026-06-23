@@ -651,6 +651,7 @@ export type Database = {
       }
       weather_stations: {
         Row: {
+          altitude: number
           created_at: string | null
           id: string
           name_en: string
@@ -660,6 +661,7 @@ export type Database = {
           url: string
         }
         Insert: {
+          altitude: number
           created_at?: string | null
           id?: string
           name_en: string
@@ -669,6 +671,7 @@ export type Database = {
           url: string
         }
         Update: {
+          altitude?: number | null
           created_at?: string | null
           id?: string
           name_en?: string

@@ -361,6 +361,7 @@ admin:
         create: 'Add Station'
         edit: 'Edit Station'
       labels:
+        altitude: 'Altitude (m)'
         nameEn: 'Name (EN)'
         nameKa: 'Name (KA)'
         url: 'URL'

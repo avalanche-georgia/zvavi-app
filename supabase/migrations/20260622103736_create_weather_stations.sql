@@ -3,6 +3,7 @@ create table weather_stations (
   name_en text not null,
   name_ka text,
   url text not null,
+  altitude integer not null,
   sort_order integer default null,
   created_at timestamptz default now(),
   updated_at timestamptz default now()
@@ -46,8 +47,8 @@ $$;
 revoke execute on function reorder_weather_stations(jsonb) from public;
 grant execute on function reorder_weather_stations(jsonb) to authenticated;
 
-insert into weather_stations (name_en, name_ka, url, sort_order) values
-  ('Altihut Kazbegi (3014m)', 'ალტიჰუტი, ყაზბეგი (3014მ)', 'https://www.wunderground.com/dashboard/pws/IMTSKH8', 0),
-  ('Top of Kudebi Lift, Gudauri (3000m)', 'კუდების საბაგიროს წვერი, გუდაური (3000მ)', 'https://www.wunderground.com/dashboard/pws/IMTSKH9', 1),
-  ('Vitamin Cafe, Gudauri (2688m)', 'ვიტამინის კაფე, გუდაური (2688მ)', 'https://www.ecowitt.net/home/share?authorize=BYREP7', 2),
-  ('Bedoni Village (1340m)', 'ბედონი სოფელი (1340მ)', 'https://www.wunderground.com/dashboard/pws/I90583634', 3);
+insert into weather_stations (name_en, name_ka, url, altitude, sort_order) values
+  ('Altihut Kazbegi', 'ალტიჰუტი, ყაზბეგი', 'https://www.wunderground.com/dashboard/pws/IMTSKH8', 3014, 0),
+  ('Top of Kudebi Lift, Gudauri', 'კუდების საბაგიროს წვერი, გუდაური', 'https://www.wunderground.com/dashboard/pws/IMTSKH9', 3000, 1),
+  ('Vitamin Cafe, Gudauri', 'ვიტამინის კაფე, გუდაური', 'https://www.ecowitt.net/home/share?authorize=BYREP7', 2688, 2),
+  ('Bedoni Village', 'ბედონი სოფელი', 'https://www.wunderground.com/dashboard/pws/I90583634', 1340, 3);

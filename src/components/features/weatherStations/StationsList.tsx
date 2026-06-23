@@ -22,9 +22,12 @@ const StationsList = async ({ locale, stations }: StationsListProps) => {
         >
           <div className="flex items-center gap-2">
             <Icon icon="mapPin" />
-            <span className="font-medium">
-              {locale === 'ka' && station.nameKa ? station.nameKa : station.nameEn}
-            </span>
+            <div>
+              <div className="font-medium">
+                {locale === 'ka' && station.nameKa ? station.nameKa : station.nameEn}
+              </div>
+              {station.altitude && <div className="text-sm text-gray-500">{station.altitude}m</div>}
+            </div>
           </div>
 
           <Link

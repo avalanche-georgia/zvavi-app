@@ -30,6 +30,19 @@ const FormFields = () => {
       </InputBlock>
 
       <InputBlock
+        error={getError('altitude')}
+        label={t('admin.weatherStations.form.labels.altitude')}
+        required
+      >
+        <TextInput
+          {...register('altitude', { setValueAs: (v) => (v === '' ? undefined : Number(v)) })}
+          hasError={!!errors.altitude}
+          min={1}
+          type="number"
+        />
+      </InputBlock>
+
+      <InputBlock
         className="md:col-span-2"
         error={getError('url')}
         label={t('admin.weatherStations.form.labels.url')}

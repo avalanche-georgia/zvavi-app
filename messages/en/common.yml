@@ -44,6 +44,7 @@ common:
     joinedAtFuture: 'Cannot be in the future'
     passwordMismatch: 'Passwords do not match'
     passwordTooShort: 'Minimum 8 characters'
+    positive: 'Must be greater than 0'
     required: 'Required'
     too_small: 'Required'
 
