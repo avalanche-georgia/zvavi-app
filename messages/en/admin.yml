@@ -8,6 +8,7 @@ admin:
     menu: 'Admin menu'
     partners: 'Partners'
     recentAvalanches: 'Recent Avalanches'
+    weatherStations: 'Weather Stations'
     menuDescription: 'Admin navigation menu'
     openMenu: 'Open menu'
     closeMenu: 'Close menu'
@@ -346,3 +347,25 @@ admin:
       messages:
         created: Avalanche created successfully.
         updated: Avalanche updated successfully.
+
+  weatherStations:
+    title: 'Weather Stations'
+    new: 'New Station'
+    noStations: 'No weather stations found.'
+    dragToReorder: 'Drag to reorder'
+    deleteModal:
+      title: 'Delete Station?'
+      description: 'Do you want to permanently delete {name}?'
+    form:
+      title:
+        create: 'Add Station'
+        edit: 'Edit Station'
+      labels:
+        altitude: 'Altitude (m)'
+        nameEn: 'Name (EN)'
+        nameKa: 'Name (KA)'
+        url: 'URL'
+      messages:
+        created: 'Station created successfully.'
+        deleted: 'Station deleted successfully.'
+        updated: 'Station updated successfully.'
