@@ -31,6 +31,7 @@ const WeatherStationsList = ({
       const { source, target } = event.operation
 
       if (!source || !target) return
+      if (source.initialIndex === target.index) return
       onReorder(source.initialIndex, target.index)
     },
     [onReorder],

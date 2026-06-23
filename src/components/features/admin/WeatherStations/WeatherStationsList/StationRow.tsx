@@ -33,12 +33,13 @@ const StationRow = ({ dragHandleRef, onEdit, station }: StationRowProps) => {
   return (
     <>
       <div className="flex h-14 items-center gap-3 px-4">
-        <IconButton
-          ref={dragHandleRef}
-          aria-label={t('admin.weatherStations.dragToReorder')}
-          className="cursor-grab active:cursor-grabbing"
-          iconProps={{ icon: 'grip' }}
-        />
+        <div ref={dragHandleRef}>
+          <IconButton
+            aria-label={t('admin.weatherStations.dragToReorder')}
+            className="cursor-grab active:cursor-grabbing"
+            iconProps={{ icon: 'grip' }}
+          />
+        </div>
 
         <div className="min-w-0 flex-1">
           <div className="font-medium">{station.nameEn}</div>
