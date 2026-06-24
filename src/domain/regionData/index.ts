@@ -5,6 +5,6 @@ import type { RegionGeoData } from './types'
 
 export type { RegionGeoData } from './types'
 
-export const regionGeoData: Record<RegionId, RegionGeoData> = {
+export const regionGeoData: Partial<Record<RegionId, RegionGeoData>> = {
   gudauri: gudauriGeoData,
 }

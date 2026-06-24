@@ -6,6 +6,7 @@ import {
   WeatherStationsList,
 } from '@components/features/admin/WeatherStations'
 import { useSortableList } from '@components/hooks'
+import { useToast } from '@components/hooks'
 import { Icon } from '@components/icons'
 import { Button } from '@components/ui'
 import { useWeatherStationsQuery, useWeatherStationsReorder } from '@data/hooks/weatherStations'
@@ -14,14 +15,18 @@ import { useTranslations } from 'next-intl'
 
 const WeatherStationsContainer = () => {
   const t = useTranslations()
+  const { toastError } = useToast()
   const { data: stations, isPending } = useWeatherStationsQuery()
   const { mutateAsync: reorder } = useWeatherStationsReorder()
 
-  const { handleReorder, localItems: localStations } = useSortableList(stations, reorder)
+  const { handleReorder, localItems: localStations } = useSortableList(stations, reorder, (error) =>
+    toastError('WeatherStationsContainer | handleReorder', { error }),
+  )
 
   const [formTarget, setFormTarget] = useState<WeatherStation | null | undefined>(undefined)
 
   const isModalOpen = formTarget !== undefined
+  const formKey = formTarget === undefined ? 'closed' : (formTarget?.id ?? 'new')
 
   const handleClose = () => setFormTarget(undefined)
   const handleNew = () => setFormTarget(null)
@@ -47,6 +52,7 @@ const WeatherStationsContainer = () => {
       </div>
 
       <WeatherStationFormModal
+        key={formKey}
         isOpen={isModalOpen}
         onClose={handleClose}
         station={formTarget ?? null}

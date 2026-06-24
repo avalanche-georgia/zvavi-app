@@ -1,6 +1,30 @@
 admin:
   title: 'ადმინისტრირება'
   selectSection: 'დასაწყებად აირჩიეთ სექცია გვერდითა მენიუდან.'
+
+  dashboard:
+    title: მიმოხილვა
+    metrics:
+      forecastsPublished: გამოქვეყნებული პროგნოზები
+      forecastsOf: '{total} რეგიონიდან'
+      pendingMembers: მომლოდინე წევრები
+      avalanchesWeek: 'ზვავები · 7 დღე'
+    regions:
+      title: პროგნოზის სტატუსი რეგიონების მიხედვით
+      valid: 'მოქმედია {date}-მდე'
+      expiringSoon: 'იწურება {date}'
+      noActive: აქტიური პროგნოზი არ არის
+    actions:
+      title: სწრაფი მოქმედებები
+      newForecast: ახალი პროგნოზი
+      memberRequests: წევრების მოთხოვნები
+      logAvalanche: ზვავის ჩაწერა
+    activity:
+      title: ბოლო აქტივობა
+      forecastPublished: '{region} პროგნოზი გამოქვეყნდა'
+      newMemberRequest: 'ახალი მოთხოვნა {name}-სგან'
+      avalancheLogged: 'ზვავი დაფიქსირდა · {region}'
+
   sidebar:
     forecasts: 'პროგნოზები'
     home: 'მთავარი'
