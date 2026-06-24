@@ -1,6 +1,7 @@
 regions:
   names:
     gudauri: 'გუდაური'
+    svaneti: 'სვანეთი'
 
   picker:
     title: 'აირჩიეთ რეგიონი'
