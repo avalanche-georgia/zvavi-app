@@ -3,7 +3,7 @@
 import { useToast } from '@components/hooks'
 import { Button } from '@components/ui'
 import { useWeatherStationCreate, useWeatherStationUpdate } from '@data/hooks/weatherStations'
-import type { WeatherStation, WeatherStationFormData } from '@domain/types'
+import type { WeatherStation } from '@domain/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslations } from 'next-intl'
 import { FormProvider, useForm } from 'react-hook-form'
@@ -30,14 +30,12 @@ const WeatherStationForm = ({ onClose, station }: WeatherStationFormProps) => {
   })
 
   const handleSubmit = async (fields: WeatherStationFormSchema) => {
-    const formData: WeatherStationFormData = { ...fields, nameKa: fields.nameKa || null }
-
     try {
       if (station) {
-        await updateStation({ ...formData, id: station.id })
+        await updateStation({ ...fields, id: station.id })
         toastSuccess(t('admin.weatherStations.form.messages.updated'))
       } else {
-        await createStation(formData)
+        await createStation(fields)
         toastSuccess(t('admin.weatherStations.form.messages.created'))
       }
 

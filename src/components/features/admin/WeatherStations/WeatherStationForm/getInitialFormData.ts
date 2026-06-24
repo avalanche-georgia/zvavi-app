@@ -8,7 +8,7 @@ const getInitialFormData = (station: WeatherStation | null) => {
   return {
     altitude: station.altitude,
     nameEn: station.nameEn,
-    nameKa: station.nameKa ?? '',
+    nameKa: station.nameKa,
     url: station.url,
   }
 }
