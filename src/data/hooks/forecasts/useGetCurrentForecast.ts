@@ -10,7 +10,7 @@ import { forecastsKeys } from '../../query-keys'
 type QueryKey = ReturnType<typeof forecastsKeys.current>
 type Response = Forecast | FullForecast | null
 
-const fetchCurrentForecast = async ({
+export const fetchCurrentForecast = async ({
   queryKey,
 }: QueryFunctionContext<QueryKey>): Promise<Response> => {
   const [, regionId, , variables] = queryKey

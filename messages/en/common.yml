@@ -14,6 +14,7 @@ common:
     save: 'Save'
     seeContactPage: 'See Contact Page'
     submit: 'Submit'
+    tryAgain: 'Try again'
     visitWebsite: 'Visit Website'
 
   labels:

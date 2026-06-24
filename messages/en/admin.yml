@@ -1,6 +1,30 @@
 admin:
   title: 'Admin'
   selectSection: 'Select a section from the sidebar to get started.'
+
+  dashboard:
+    title: Overview
+    metrics:
+      forecastsPublished: Forecasts published
+      forecastsOf: of {total} regions
+      pendingMembers: Pending members
+      avalanchesWeek: Avalanches · 7 days
+    regions:
+      title: Forecast status by region
+      valid: "Valid until {date}"
+      expiringSoon: "Expires {date}"
+      noActive: No active forecast
+    actions:
+      title: Quick actions
+      newForecast: New forecast
+      memberRequests: Member requests
+      logAvalanche: Log avalanche
+    activity:
+      title: Recent activity
+      forecastPublished: "{region} forecast published"
+      newMemberRequest: New request from {name}
+      avalancheLogged: "Avalanche logged · {region}"
+
   sidebar:
     forecasts: 'Forecasts'
     home: 'Home'

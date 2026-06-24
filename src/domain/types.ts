@@ -188,7 +188,7 @@ export type WeatherStation = Tables<'weather_stations'>
 export type WeatherStationFormData = {
   altitude: number
   nameEn: string
-  nameKa: string
+  nameKa: string | null
   url: string
 }
 

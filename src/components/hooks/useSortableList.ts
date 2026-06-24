@@ -6,6 +6,7 @@ type WithId = { id: string }
 const useSortableList = <T extends WithId>(
   items: T[] | undefined,
   onReorder: (ordered: T[]) => Promise<void>,
+  onError?: (error: unknown) => void,
 ) => {
   const [localItems, setLocalItems] = useState<T[]>(items ?? [])
 
@@ -16,18 +17,19 @@ const useSortableList = <T extends WithId>(
 
   const handleReorder = useCallback(
     async (fromIndex: number, toIndex: number) => {
-      const previous = localItems
+      const previousItems = localItems
       const reordered = moveItemInArray(localItems, fromIndex, toIndex)
 
       setLocalItems(reordered)
 
       try {
         await onReorder(reordered)
-      } catch {
-        setLocalItems(previous)
+      } catch (error) {
+        setLocalItems(previousItems)
+        onError?.(error)
       }
     },
-    [localItems, onReorder],
+    [localItems, onReorder, onError],
   )
 
   return { handleReorder, localItems }
