@@ -10,7 +10,7 @@ import { FormProvider, useForm } from 'react-hook-form'
 
 import FormFields from './FormFields'
 import getInitialFormData from './getInitialFormData'
-import type { WeatherStationFormFields } from './schema'
+import type { WeatherStationFormSchema } from './schema'
 import { weatherStationFormSchema } from './schema'
 
 type WeatherStationFormProps = {
@@ -24,12 +24,14 @@ const WeatherStationForm = ({ onClose, station }: WeatherStationFormProps) => {
   const { mutateAsync: createStation } = useWeatherStationCreate()
   const { mutateAsync: updateStation } = useWeatherStationUpdate()
 
-  const form = useForm<WeatherStationFormFields, unknown, WeatherStationFormData>({
+  const form = useForm<WeatherStationFormSchema>({
     defaultValues: getInitialFormData(station),
     resolver: zodResolver(weatherStationFormSchema),
   })
 
-  const handleSubmit = async (formData: WeatherStationFormData) => {
+  const handleSubmit = async (fields: WeatherStationFormSchema) => {
+    const formData: WeatherStationFormData = { ...fields, nameKa: fields.nameKa || null }
+
     try {
       if (station) {
         await updateStation({ ...formData, id: station.id })

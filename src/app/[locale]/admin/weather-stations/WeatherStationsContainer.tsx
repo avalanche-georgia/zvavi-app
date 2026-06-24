@@ -5,8 +5,7 @@ import {
   WeatherStationFormModal,
   WeatherStationsList,
 } from '@components/features/admin/WeatherStations'
-import { useSortableList } from '@components/hooks'
-import { useToast } from '@components/hooks'
+import { useSortableList, useToast } from '@components/hooks'
 import { Icon } from '@components/icons'
 import { Button } from '@components/ui'
 import { useWeatherStationsQuery, useWeatherStationsReorder } from '@data/hooks/weatherStations'

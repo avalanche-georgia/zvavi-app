@@ -10,4 +10,4 @@ export const weatherStationFormSchema = z.object({
   url: z.string().trim().min(1, { message: 'required' }),
 })
 
-export type WeatherStationFormFields = z.input<typeof weatherStationFormSchema>
+export type WeatherStationFormSchema = z.infer<typeof weatherStationFormSchema>

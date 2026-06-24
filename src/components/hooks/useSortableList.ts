@@ -17,6 +17,7 @@ const useSortableList = <T extends WithId>(
 
   const handleReorder = useCallback(
     async (fromIndex: number, toIndex: number) => {
+      const previousItems = localItems
       const reordered = moveItemInArray(localItems, fromIndex, toIndex)
 
       setLocalItems(reordered)
@@ -24,11 +25,11 @@ const useSortableList = <T extends WithId>(
       try {
         await onReorder(reordered)
       } catch (error) {
-        setLocalItems(items ?? [])
+        setLocalItems(previousItems)
         onError?.(error)
       }
     },
-    [localItems, onReorder, items, onError],
+    [localItems, onReorder, onError],
   )
 
   return { handleReorder, localItems }
