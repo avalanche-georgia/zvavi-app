@@ -1,7 +1,7 @@
 create table weather_stations (
   id uuid primary key default gen_random_uuid(),
   name_en text not null,
-  name_ka text,
+  name_ka text not null default '',
   url text not null,
   altitude integer not null,
   sort_order integer default null,
