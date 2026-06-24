@@ -15,7 +15,7 @@ type PaginatedResult = {
 
 type QueryParams = ListFilterParams & { regionId: RegionId }
 
-const fetchPaginatedAvalanches = async (params: QueryParams): Promise<PaginatedResult> => {
+export const fetchPaginatedAvalanches = async (params: QueryParams): Promise<PaginatedResult> => {
   const { dateFrom, dateMode, dateTo, page, pageSize, regionId } = params
   const offset = (page - 1) * pageSize
   const dateField = dateMode === 'created' ? 'created_at' : 'date'

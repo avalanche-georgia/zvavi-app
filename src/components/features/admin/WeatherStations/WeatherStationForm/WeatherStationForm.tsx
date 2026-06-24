@@ -1,6 +1,5 @@
 'use client'
 
-import { useCallback, useEffect } from 'react'
 import { useToast } from '@components/hooks'
 import { Button } from '@components/ui'
 import { useWeatherStationCreate, useWeatherStationUpdate } from '@data/hooks/weatherStations'
@@ -11,6 +10,7 @@ import { FormProvider, useForm } from 'react-hook-form'
 
 import FormFields from './FormFields'
 import getInitialFormData from './getInitialFormData'
+import type { WeatherStationFormSchema } from './schema'
 import { weatherStationFormSchema } from './schema'
 
 type WeatherStationFormProps = {
@@ -24,33 +24,28 @@ const WeatherStationForm = ({ onClose, station }: WeatherStationFormProps) => {
   const { mutateAsync: createStation } = useWeatherStationCreate()
   const { mutateAsync: updateStation } = useWeatherStationUpdate()
 
-  const form = useForm<WeatherStationFormData>({
+  const form = useForm<WeatherStationFormSchema>({
     defaultValues: getInitialFormData(station),
     resolver: zodResolver(weatherStationFormSchema),
   })
 
-  useEffect(() => {
-    form.reset(getInitialFormData(station))
-  }, [station]) // eslint-disable-line react-hooks/exhaustive-deps
+  const handleSubmit = async (fields: WeatherStationFormSchema) => {
+    const formData: WeatherStationFormData = { ...fields, nameKa: fields.nameKa || null }
 
-  const handleSubmit = useCallback(
-    async (formData: WeatherStationFormData) => {
-      try {
-        if (station) {
-          await updateStation({ ...formData, id: station.id })
-          toastSuccess(t('admin.weatherStations.form.messages.updated'))
-        } else {
-          await createStation(formData)
-          toastSuccess(t('admin.weatherStations.form.messages.created'))
-        }
-
-        onClose()
-      } catch (error) {
-        toastError('WeatherStationForm | handleSubmit', { error })
+    try {
+      if (station) {
+        await updateStation({ ...formData, id: station.id })
+        toastSuccess(t('admin.weatherStations.form.messages.updated'))
+      } else {
+        await createStation(formData)
+        toastSuccess(t('admin.weatherStations.form.messages.created'))
       }
-    },
-    [station, createStation, updateStation, onClose, toastError, toastSuccess, t],
-  )
+
+      onClose()
+    } catch (error) {
+      toastError('WeatherStationForm | handleSubmit', { error })
+    }
+  }
 
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading

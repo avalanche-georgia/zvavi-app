@@ -1,14 +1,15 @@
-'use client'
+import { Suspense } from 'react'
+import { AdminDashboard } from '@components/features/admin/Dashboard'
+import { Spinner } from '@components/ui'
+import fetchActiveRegions from '@data/queries/fetchActiveRegions'
 
-import { useTranslations } from 'next-intl'
-
-const AdminPage = () => {
-  const t = useTranslations()
+const AdminPage = async () => {
+  const initialRegions = await fetchActiveRegions()
 
   return (
-    <div className="flex flex-col items-center justify-center p-4 py-12 md:p-6">
-      <p className="text-gray-600">{t('admin.selectSection')}</p>
-    </div>
+    <Suspense fallback={<Spinner size="lg" />}>
+      <AdminDashboard initialRegions={initialRegions} />
+    </Suspense>
   )
 }
 

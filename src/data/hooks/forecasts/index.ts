@@ -3,6 +3,7 @@ export {
   type AvalancheWithForecasts,
   default as useAllRecentAvalanchesQuery,
 } from './useAllRecentAvalanchesQuery'
+export { default as useCurrentForecastsPerRegion } from './useCurrentForecastsPerRegion'
 export { default as useForecastCreate } from './useForecastCreate'
 export { default as useForecastDelete } from './useForecastDelete'
 export { default as useForecastStatusToggle } from './useForecastStatusToggle'

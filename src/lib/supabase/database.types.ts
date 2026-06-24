@@ -671,7 +671,7 @@ export type Database = {
           url: string
         }
         Update: {
-          altitude?: number | null
+          altitude?: number
           created_at?: string | null
           id?: string
           name_en?: string
@@ -734,7 +734,7 @@ export type Database = {
       forecast_status: 'draft' | 'published'
       hazard_level: '1' | '2' | '3' | '4' | '5'
       member_status: 'active' | 'inactive' | 'suspended' | 'expired' | 'pending'
-      region_id: 'gudauri'
+      region_id: 'gudauri' | 'svaneti'
       sensitivity: 'reactive' | 'stubborn' | 'touchy' | 'unreactive'
       snow_condition: 'dry' | 'wet'
       trend: 'deteriorating' | 'improving' | 'noChange'
@@ -892,7 +892,7 @@ export const Constants = {
       forecast_status: ['draft', 'published'],
       hazard_level: ['1', '2', '3', '4', '5'],
       member_status: ['active', 'inactive', 'suspended', 'expired', 'pending'],
-      region_id: ['gudauri'],
+      region_id: ['gudauri', 'svaneti'],
       sensitivity: ['reactive', 'stubborn', 'touchy', 'unreactive'],
       snow_condition: ['dry', 'wet'],
       trend: ['deteriorating', 'improving', 'noChange'],
