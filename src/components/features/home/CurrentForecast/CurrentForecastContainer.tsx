@@ -5,6 +5,7 @@ import { useGetCurrentForecast } from '@data/hooks/forecasts'
 import { useRegionContext } from '@domain/context/RegionContext'
 
 import CurrentForecast from './CurrentForecast'
+import NoForecastPlaceholder from './NoForecastPlaceholder'
 
 const CurrentForecastContainer = () => {
   const { region } = useRegionContext()
@@ -21,7 +22,7 @@ const CurrentForecastContainer = () => {
     )
   }
 
-  if (!forecast) return <div aria-hidden className="h-[229px]" />
+  if (!forecast) return <NoForecastPlaceholder />
 
   return <CurrentForecast forecast={forecast} />
 }

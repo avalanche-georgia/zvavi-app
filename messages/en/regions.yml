@@ -1,6 +1,7 @@
 regions:
   names:
     gudauri: 'Gudauri'
+    svaneti: 'Svaneti'
 
   picker:
     title: 'Choose a region'

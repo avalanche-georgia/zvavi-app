@@ -8,7 +8,7 @@ import { convertSnakeToCamel } from '../../helpers'
 import { forecastsKeys } from '../../query-keys'
 
 type QueryKey = ReturnType<typeof forecastsKeys.current>
-type Response = Forecast | FullForecast | undefined
+type Response = Forecast | FullForecast | null
 
 const fetchCurrentForecast = async ({
   queryKey,
@@ -27,7 +27,7 @@ const fetchCurrentForecast = async ({
     throw new Error(forecastError.message)
   }
 
-  if (!forecastData || forecastData.length === 0) return undefined
+  if (!forecastData || forecastData.length === 0) return null
 
   const currentForecast = forecastData[0]
 
@@ -71,11 +71,11 @@ type QueryOptions = Omit<
 
 function useGetCurrentForecast(
   options: { isShort: true; regionId: RegionId } & Partial<QueryOptions>,
-): ReturnType<typeof useQuery<Forecast | undefined>>
+): ReturnType<typeof useQuery<Forecast | null>>
 
 function useGetCurrentForecast(
   options: { isShort?: false; regionId: RegionId } & Partial<QueryOptions>,
-): ReturnType<typeof useQuery<FullForecast | undefined>>
+): ReturnType<typeof useQuery<FullForecast | null>>
 
 function useGetCurrentForecast({ isShort = false, regionId, ...options }: QueryOptions) {
   return useQuery({
