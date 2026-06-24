@@ -1,4 +1,4 @@
-import { ButtonLink } from '@components'
+import { ButtonLink } from '@components/shared'
 import { Snowflake } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
