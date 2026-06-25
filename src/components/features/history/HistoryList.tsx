@@ -1,40 +1,49 @@
-import { hazardIcons } from '@components/constants'
-import { dateFormat } from '@domain/constants'
-import type { Forecast } from '@domain/types'
-import clsx from 'clsx'
-import { format } from 'date-fns'
-import Image from 'next/image'
-import { Link } from 'src/i18n/navigation'
+'use client'
 
-import { routes } from '@/routes'
+import { Spoiler } from '@components/shared'
+import { useLocale, useTranslations } from 'next-intl'
+
+import type { ForecastItem } from './groupForecastsBySeasonAndMonth'
+import { groupForecastsBySeasonAndMonth } from './groupForecastsBySeasonAndMonth'
+import HistoryEmptyState from './HistoryEmptyState'
+import HistoryForecastRow from './HistoryForecastRow'
 
 type HistoryListProps = {
-  forecasts: Pick<Forecast, 'publishedAt' | 'id' | 'hazardLevels'>[]
+  forecasts: ForecastItem[]
   regionId: string
 }
 
-const HistoryList = ({ forecasts, regionId }: HistoryListProps) => (
-  <ul className="flex flex-col items-center">
-    {forecasts.map((forecast) => (
-      <li key={forecast.id}>
-        <Link
-          className={clsx(
-            'inline-flex items-center gap-3 rounded-lg px-4 py-1',
-            'active:bg-primary/10 lg:hover:bg-primary/10 text-gray-700 transition-colors hover:text-black',
-          )}
-          href={routes.forecastsByRegion(regionId).view(forecast.id)}
-        >
-          <Image
-            alt="Danger level"
-            height={48}
-            src={hazardIcons[forecast.hazardLevels.overall]}
-            width={48}
-          />
-          <span className="text-lg">{format(forecast.publishedAt!, dateFormat)}</span>
-        </Link>
-      </li>
-    ))}
-  </ul>
-)
+const HistoryList = ({ forecasts, regionId }: HistoryListProps) => {
+  const t = useTranslations()
+  const locale = useLocale()
+  const groups = groupForecastsBySeasonAndMonth(
+    forecasts,
+    locale,
+    t('forecast.history.winterSeason'),
+  )
+
+  if (forecasts.length === 0) return <HistoryEmptyState />
+
+  return (
+    <div className="flex flex-col gap-2">
+      {groups.map((season) => (
+        <Spoiler key={season.seasonLabel} title={`${season.seasonLabel} · ${season.count}`}>
+          {season.months.map((monthGroup) => (
+            <div key={monthGroup.monthLabel} className="mb-1">
+              <div className="px-2 py-2 text-xs font-semibold tracking-wide text-gray-400 uppercase">
+                {monthGroup.monthLabel}
+              </div>
+              <div className="flex flex-col gap-0.5">
+                {monthGroup.forecasts.map((forecast) => (
+                  <HistoryForecastRow key={forecast.id} forecast={forecast} regionId={regionId} />
+                ))}
+              </div>
+            </div>
+          ))}
+        </Spoiler>
+      ))}
+    </div>
+  )
+}
 
 export default HistoryList

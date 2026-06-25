@@ -1,38 +1,31 @@
 import { supabase } from '@data'
-import { convertSnakeToCamel } from '@data/helpers'
+import { convertSnakeToCamel, handleSupabaseError } from '@data/helpers'
 import { forecastsKeys } from '@data/query-keys'
 import type { Forecast, RegionId } from '@domain/types'
-import type { QueryFunction } from '@tanstack/react-query'
 
 import { useQuery } from '@/tanstack-query/hooks'
 
-type QueryKey = ReturnType<typeof forecastsKeys.list>
-type HistoryListResponse = Pick<Forecast, 'publishedAt' | 'id' | 'hazardLevels'>[]
+type HistoryListItem = Pick<Forecast, 'hazardLevels' | 'id' | 'publishedAt' | 'validUntil'>
 
-const fetchHistoryList: QueryFunction<HistoryListResponse, QueryKey> = async ({ queryKey }) => {
-  const [, regionId] = queryKey
-
+const fetchHistoryList = async (regionId: RegionId): Promise<HistoryListItem[]> => {
   const { data, error } = await supabase
     .from('forecasts')
-    .select('id, published_at, hazard_levels')
+    .select('id, published_at, hazard_levels, valid_until')
     .eq('status', 'published')
     .eq('region_id', regionId)
     .lt('valid_until', new Date().toISOString())
     .order('published_at', { ascending: false })
 
-  if (error) {
-    throw new Error(error.message)
-  }
+  handleSupabaseError(error)
 
   if (!data) return []
 
-  // TODO: type-safe DB conversion — https://app.asana.com/1/1208747886147296/project/1208747689500826/task/1214630622531225
-  return convertSnakeToCamel(data) as HistoryListResponse
+  return convertSnakeToCamel(data) as HistoryListItem[]
 }
 
 const useHistoryListQuery = (regionId: RegionId) =>
   useQuery({
-    queryFn: fetchHistoryList,
+    queryFn: () => fetchHistoryList(regionId),
     queryKey: forecastsKeys.list(regionId),
   })
 

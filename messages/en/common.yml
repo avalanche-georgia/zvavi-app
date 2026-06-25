@@ -14,6 +14,7 @@ common:
     save: 'Save'
     seeContactPage: 'See Contact Page'
     submit: 'Submit'
+    tryAgain: 'Try again'
     visitWebsite: 'Visit Website'
 
   labels:
@@ -44,6 +45,7 @@ common:
     joinedAtFuture: 'Cannot be in the future'
     passwordMismatch: 'Passwords do not match'
     passwordTooShort: 'Minimum 8 characters'
+    positive: 'Must be greater than 0'
     required: 'Required'
     too_small: 'Required'
 

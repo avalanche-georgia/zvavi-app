@@ -8,9 +8,9 @@ import { useParams } from 'next/navigation'
 import RegionContext from './RegionContext'
 
 type RegionContextProviderProps = {
+  children: React.ReactNode
   region: Region | null
   regions: Region[]
-  children: React.ReactNode
 }
 
 const RegionContextProvider = ({

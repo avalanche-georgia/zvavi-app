@@ -1,6 +1,30 @@
 admin:
   title: 'ადმინისტრირება'
   selectSection: 'დასაწყებად აირჩიეთ სექცია გვერდითა მენიუდან.'
+
+  dashboard:
+    title: მიმოხილვა
+    metrics:
+      forecastsPublished: გამოქვეყნებული პროგნოზები
+      forecastsOf: '{total} რეგიონიდან'
+      pendingMembers: მომლოდინე წევრები
+      avalanchesWeek: 'ზვავები · 7 დღე'
+    regions:
+      title: პროგნოზის სტატუსი რეგიონების მიხედვით
+      valid: 'მოქმედია {date}-მდე'
+      expiringSoon: 'იწურება {date}'
+      noActive: აქტიური პროგნოზი არ არის
+    actions:
+      title: სწრაფი მოქმედებები
+      newForecast: ახალი პროგნოზი
+      memberRequests: წევრების მოთხოვნები
+      logAvalanche: ზვავის ჩაწერა
+    activity:
+      title: ბოლო აქტივობა
+      forecastPublished: '{region} პროგნოზი გამოქვეყნდა'
+      newMemberRequest: 'ახალი მოთხოვნა {name}-სგან'
+      avalancheLogged: 'ზვავი დაფიქსირდა · {region}'
+
   sidebar:
     forecasts: 'პროგნოზები'
     home: 'მთავარი'
@@ -8,6 +32,7 @@ admin:
     menu: 'ადმინ მენიუ'
     partners: 'პარტნიორები'
     recentAvalanches: 'ბოლო ზვავები'
+    weatherStations: 'ამინდის სადგურები'
     menuDescription: 'ადმინისტრაციული სანავიგაციო მენიუ'
     openMenu: 'მენიუს გახსნა'
     closeMenu: 'მენიუს დახურვა'
@@ -346,3 +371,25 @@ admin:
       messages:
         created: ზვავი წარმატებით დაემატა.
         updated: ზვავი წარმატებით განახლდა.
+
+  weatherStations:
+    title: 'ამინდის სადგურები'
+    new: 'ახალი სადგური'
+    noStations: 'ამინდის სადგურები არ მოიძებნა.'
+    dragToReorder: 'გადაადგილება თანმიმდევრობის შესაცვლელად'
+    deleteModal:
+      title: 'სადგურის წაშლა?'
+      description: 'გსურთ {name} სამუდამოდ წაშლა?'
+    form:
+      title:
+        create: 'სადგურის დამატება'
+        edit: 'სადგურის რედაქტირება'
+      labels:
+        altitude: 'სიმაღლე (მ)'
+        nameEn: 'დასახელება (EN)'
+        nameKa: 'დასახელება (KA)'
+        url: 'URL'
+      messages:
+        created: 'სადგური წარმატებით დაემატა.'
+        deleted: 'სადგური წარმატებით წაიშალა.'
+        updated: 'სადგური წარმატებით განახლდა.'

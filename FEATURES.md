@@ -57,6 +57,9 @@ Administrators can manage the team roster: add members, update their status (act
 ### Staff Profiles
 Forecasters and administrators can view and edit their own profile — including display name, a short bio, and a profile photo. The photo and name are shown in the admin panel header. When creating a forecast, the forecaster field is automatically prefilled with the logged-in user's name.
 
+### Weather Station Management
+Administrators can manage the list of mountain weather stations: add, edit, delete, and reorder them via drag-and-drop. Each station has a name in English and Georgian, an altitude, and a link to its live data feed.
+
 ### Partner Benefits Management
 Administrators can manage a list of partner organizations and the exclusive discounts or perks they offer to Avalanche Georgia members. Each partner has a name, optional benefit description, logo, and website — all stored in both English and Georgian. Active partners are displayed to the public in a "Member Benefits" drawer accessible from the Join Us page and the member verification card.
 

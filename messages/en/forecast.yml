@@ -5,6 +5,12 @@ forecast:
   previewNote: 'Tap the banner to view full forecast'
   viewForecastArea: 'View Forecast Area'
 
+  history:
+    emptyTitle: 'No Forecasts Yet'
+    empty: 'There are no avalanche forecasts published for this region.'
+    winterSeason: 'Winter'
+    hazardIconAlt: 'Danger level'
+
   staleBanner:
     message: "You're viewing a past forecast."
     link: 'See current'
