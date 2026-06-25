@@ -5,6 +5,12 @@ forecast:
   previewNote: 'დააწკაპუნეთ ბანერზე სრული პროგნოზისთვის'
   viewForecastArea: 'პროგნოზის ტერიტორიის ნახვა'
 
+  history:
+    emptyTitle: 'პროგნოზები ჯერ არ არის'
+    empty: 'ამ რეგიონში ზვავის პროგნოზი ჯერ არ გამოქვეყნებულა.'
+    winterSeason: 'ზამთარი'
+    hazardIconAlt: 'საფრთხის დონე'
+
   staleBanner:
     message: 'ეს ძველი პროგნოზია.'
     link: 'მიმდინარე პროგნოზი'

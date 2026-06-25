@@ -86,6 +86,7 @@ export const confidenceLevels = {
   moderate: 'moderate',
 } as const
 
+export const shortDateFormat = 'dd MMM'
 export const dateFormat = 'dd MMM yyyy'
 export const timeFormat = 'HH:mm'
 export const dateTimeFormat = 'dd.MM.yyyy HH:mm'
