@@ -1,7 +1,7 @@
 import type { Forecast } from '@domain/types'
-import type { Locale } from 'date-fns'
 import { format } from 'date-fns'
-import { enUS, ka } from 'date-fns/locale'
+
+import { getDateFnsLocale } from '@/lib/dateFnsLocale'
 
 export type ForecastItem = Pick<Forecast, 'publishedAt' | 'id' | 'hazardLevels' | 'validUntil'>
 
@@ -14,12 +14,6 @@ export type SeasonGroup = {
   count: number
   months: MonthGroup[]
   seasonLabel: string
-}
-
-const dateFnsLocaleMap: Record<string, Locale> = { en: enUS, ka }
-
-export const getDateFnsLocale = (locale: string): Locale => {
-  return dateFnsLocaleMap[locale] ?? enUS
 }
 
 const getSeasonStartYear = (date: Date): number =>
@@ -36,6 +30,7 @@ export const groupForecastsBySeasonAndMonth = (
 
   for (const forecast of forecasts) {
     if (!forecast.publishedAt) continue
+
     const date = new Date(forecast.publishedAt)
     const seasonYear = getSeasonStartYear(date)
     const monthKey = format(date, 'MMMM yyyy', { locale: dateFnsLocale })

@@ -1,14 +1,14 @@
 import { hazardIcons } from '@components/constants'
 import { Icon } from '@components/icons'
-import { hazardLevelNamesByScale } from '@domain/constants'
+import { dateFormat, hazardLevelNamesByScale, shortDateFormat } from '@domain/constants'
 import { format } from 'date-fns'
 import Image from 'next/image'
 import { useLocale, useTranslations } from 'next-intl'
 import { Link } from 'src/i18n/navigation'
 
 import type { ForecastItem } from './groupForecastsBySeasonAndMonth'
-import { getDateFnsLocale } from './groupForecastsBySeasonAndMonth'
 
+import { getDateFnsLocale } from '@/lib/dateFnsLocale'
 import { routes } from '@/routes'
 
 type HistoryForecastRowProps = {
@@ -21,9 +21,11 @@ const HistoryForecastRow = ({ forecast, regionId }: HistoryForecastRowProps) => 
   const locale = useLocale()
   const dateFnsLocale = getDateFnsLocale(locale)
 
+  const publishedAtDate = new Date(forecast.publishedAt!)
+  const fmtOpts = { locale: dateFnsLocale }
   const dateRange = forecast.validUntil
-    ? `${format(new Date(forecast.publishedAt!), 'dd MMM', { locale: dateFnsLocale })} – ${format(new Date(forecast.validUntil), 'dd MMM yyyy', { locale: dateFnsLocale })}`
-    : format(new Date(forecast.publishedAt!), 'dd MMM yyyy', { locale: dateFnsLocale })
+    ? `${format(publishedAtDate, shortDateFormat, fmtOpts)} – ${format(new Date(forecast.validUntil), dateFormat, fmtOpts)}`
+    : format(publishedAtDate, dateFormat, fmtOpts)
 
   return (
     <Link
