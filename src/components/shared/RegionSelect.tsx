@@ -20,7 +20,6 @@ const RegionSelect = ({ onSelect }: RegionSelectProps) => {
   const { region, regions } = useRegionContext()
 
   const handleValueChange = (regionId: string | null) => {
-    console.log('regionId: ', regionId)
     if (!regionId) return
 
     document.cookie = `${regionLocalStorageKey}=${regionId}; path=/; max-age=31536000; SameSite=Lax`
