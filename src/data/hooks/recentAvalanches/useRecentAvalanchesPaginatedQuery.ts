@@ -16,7 +16,7 @@ type PaginatedResult = {
 type QueryParams = ListFilterParams & { regionId: RegionId }
 
 export const fetchPaginatedAvalanches = async (params: QueryParams): Promise<PaginatedResult> => {
-  const { dateFrom, dateMode, dateTo, page, pageSize, regionId } = params
+  const { dateFrom, dateMode, dateTo, page, pageSize, regionId, source, status } = params
   const offset = (page - 1) * pageSize
   const dateField = dateMode === 'created' ? 'created_at' : 'date'
 
@@ -28,6 +28,8 @@ export const fetchPaginatedAvalanches = async (params: QueryParams): Promise<Pag
 
   if (dateFrom) avalanchesQuery = avalanchesQuery.gte(dateField, dateFrom)
   if (dateTo) avalanchesQuery = avalanchesQuery.lte(dateField, dateTo)
+  if (source) avalanchesQuery = avalanchesQuery.eq('source', source)
+  if (status) avalanchesQuery = avalanchesQuery.eq('status', status)
 
   avalanchesQuery = avalanchesQuery.range(offset, offset + pageSize - 1)
 
