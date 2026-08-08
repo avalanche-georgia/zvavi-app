@@ -726,6 +726,24 @@ export type Database = {
         }
         Returns: Json
       }
+      submit_observation: {
+        Args: {
+          p_aspects?: Json
+          p_date?: string
+          p_description?: string
+          p_is_date_unknown?: boolean
+          p_latitude?: number
+          p_longitude?: number
+          p_region_id: Database['public']['Enums']['region_id']
+          p_size?: number
+          p_submitter_contact?: string
+          p_submitter_education?: string
+          p_submitter_name?: string
+          p_trigger?: Database['public']['Enums']['avalanche_trigger']
+          p_type?: Database['public']['Enums']['avalanche_type']
+        }
+        Returns: number
+      }
       verify_member: {
         Args: { client_ip?: unknown; client_user_agent?: string; code: string }
         Returns: Json
