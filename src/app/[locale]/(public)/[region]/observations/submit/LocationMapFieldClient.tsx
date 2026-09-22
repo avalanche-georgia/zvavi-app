@@ -33,6 +33,10 @@ const pinIcon = L.divIcon({
 const fallbackCenter: [number, number] = [42.1, 43.5]
 const fallbackZoom = 7
 
+// OpenTopoMap only serves tiles up to zoom 17 — without this, zooming past it
+// shows blank "max zoom layer = 17" placeholder tiles instead of the map.
+const maxZoom = 17
+
 const ClickHandler = ({ onPick }: { onPick: (lat: number, lng: number) => void }) => {
   useMapEvents({
     click: (event) => onPick(event.latlng.lat, event.latlng.lng),
@@ -85,13 +89,15 @@ const LocationMapFieldClient = ({
     <MapContainer
       bounds={bounds}
       center={bounds ? undefined : (regionCenter ?? fallbackCenter)}
-      className="z-30 h-[28.8rem] w-full cursor-crosshair rounded-xl"
+      className="z-30 h-116 w-full cursor-crosshair rounded-xl"
       maxBounds={bounds}
       maxBoundsViscosity={1}
+      maxZoom={maxZoom}
       zoom={bounds ? undefined : (region.defaultZoom ?? fallbackZoom)}
     >
       <TileLayer
         attribution='&copy; <a href="https://opentopomap.org">OpenTopoMap</a>, <a href="https://www.openstreetmap.org/copyright">OSM</a>'
+        maxNativeZoom={maxZoom}
         url="https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"
       />
       {(region.forecastZone as FeatureCollection | null)?.features.length ? (

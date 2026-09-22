@@ -11,7 +11,7 @@ import type { ObservationSubmitFormSchema } from './schema'
 
 const LocationMapFieldClient = dynamic(() => import('./LocationMapFieldClient'), {
   loading: () => (
-    <div className="flex h-[28.8rem] w-full items-center justify-center rounded-xl bg-gray-100">
+    <div className="flex h-116 w-full items-center justify-center rounded-xl bg-gray-100">
       <Spinner />
     </div>
   ),
