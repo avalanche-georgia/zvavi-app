@@ -3,14 +3,18 @@ import { RecentAvalanchesContainer } from '@components/features/admin/RecentAval
 import { Spinner } from '@components/ui'
 import fetchActiveRegions from '@data/queries/fetchActiveRegions'
 
-const RecentAvalanchesPage = async () => {
+const ObservationsPage = async () => {
   const initialRegions = await fetchActiveRegions()
 
   return (
     <Suspense fallback={<Spinner size="lg" />}>
-      <RecentAvalanchesContainer initialRegions={initialRegions} />
+      <RecentAvalanchesContainer
+        hideCreateAction
+        initialRegions={initialRegions}
+        source="external"
+      />
     </Suspense>
   )
 }
 
-export default RecentAvalanchesPage
+export default ObservationsPage
