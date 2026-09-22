@@ -1,6 +1,6 @@
 'use client'
 
-import { Select, toOptions } from '@components/ui'
+import { InputBlock, Select, toOptions } from '@components/ui'
 import { avalancheStatuses } from '@domain/constants'
 import type { AvalancheSource } from '@domain/types'
 import { useTranslations } from 'next-intl'
@@ -32,21 +32,23 @@ const SubmitterSection = ({
 
   const statusOptions = toOptions(avalancheStatuses, (key) => t(`common.avalancheStatuses.${key}`))
 
-  const statusControl = (
-    <Controller
-      control={form.control}
-      name="status"
-      render={({ field }) => (
-        <Select onChange={field.onChange} options={statusOptions} value={field.value} />
-      )}
-    />
+  const statusField = (
+    <InputBlock label={t('admin.recentAvalanches.form.labels.status')}>
+      <Controller
+        control={form.control}
+        name="status"
+        render={({ field }) => (
+          <Select onChange={field.onChange} options={statusOptions} value={field.value} />
+        )}
+      />
+    </InputBlock>
   )
 
-  if (!source) return <div className="w-64">{statusControl}</div>
+  if (!source) return <div className="grid grid-cols-2 gap-3">{statusField}</div>
 
   return (
-    <div className="flex flex-col gap-3 rounded-lg border border-gray-200 p-3">
-      <div className="flex items-center justify-between gap-3">
+    <div className="grid grid-cols-2 items-start gap-3">
+      <div className="flex flex-col gap-3 rounded-lg border border-gray-200 p-3">
         <div className="flex items-center gap-2">
           <span className="text-sm font-semibold text-gray-700">
             {t('admin.recentAvalanches.form.labels.submitterSection')}
@@ -54,21 +56,16 @@ const SubmitterSection = ({
           <SourceBadge source={source} />
         </div>
 
-        <div className="flex items-center gap-2">
-          <span className="text-sm font-medium text-gray-700">
-            {t('admin.recentAvalanches.form.labels.status')}
-          </span>
-          <div className="w-48">{statusControl}</div>
-        </div>
+        <SubmitterInfo
+          createdByUserId={createdByUserId}
+          isExternal={source === 'external'}
+          submitterContact={submitterContact}
+          submitterEducation={submitterEducation}
+          submitterName={submitterName}
+        />
       </div>
 
-      <SubmitterInfo
-        createdByUserId={createdByUserId}
-        isExternal={source === 'external'}
-        submitterContact={submitterContact}
-        submitterEducation={submitterEducation}
-        submitterName={submitterName}
-      />
+      {statusField}
     </div>
   )
 }
