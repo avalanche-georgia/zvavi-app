@@ -1,0 +1,11 @@
+observations:
+  pageTitle: 'დაკვირვებები — {regionName}'
+  empty: 'დაკვირვებები ჯერ არ არის მოწოდებული.'
+  submitCta: 'დაკვირვების მოწოდება'
+
+  filters:
+    reset: 'ფილტრების გადატვირთვა'
+
+  card:
+    dateUnknown: 'თარიღი უცნობია'
+    submittedBy: 'მოწოდებულია {submitterName}-ის მიერ'
