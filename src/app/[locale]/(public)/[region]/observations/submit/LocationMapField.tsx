@@ -30,7 +30,7 @@ const LocationMapField = () => {
   }
 
   return (
-    <InputBlock label={t('observations.submit.labels.location')}>
+    <InputBlock label={t('observations.submit.labels.location')} optional>
       <LocationMapFieldClient
         latitude={latitude}
         longitude={longitude}

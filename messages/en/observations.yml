@@ -15,11 +15,15 @@ observations:
     submit: 'Submit'
     success: 'Thank you — your observation has been submitted.'
     error: 'Something went wrong. Please try again.'
+    sections:
+      aboutYou: 'About you'
+      avalancheDetails: 'Avalanche details'
+      whenAndWhere: 'When & where'
     labels:
       date: 'Date'
       dateUnknown: 'Date unknown'
       description: 'Description'
-      location: 'Tap the map to mark the location (optional)'
+      location: 'Tap the map to mark the location'
       size: 'Size'
       submitterContact: 'Contact'
       submitterEducation: 'Avalanche education/training'
@@ -28,6 +32,6 @@ observations:
       type: 'Avalanche type'
     placeholders:
       submitterContact: 'How can we reach you? Email, phone, Instagram…'
-      submitterEducation: 'e.g. AIARE Level 1, none, self-taught…'
+      submitterEducation: 'e.g. AST 1, none, self-taught…'
       trigger: 'Select trigger'
       type: 'Select type'

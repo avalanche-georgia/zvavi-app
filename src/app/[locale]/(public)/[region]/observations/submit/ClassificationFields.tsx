@@ -20,10 +20,11 @@ const ClassificationFields = () => {
   const triggerOptions = toOptions(avalancheTriggers, (key) => t(`common.avalancheTriggers.${key}`))
 
   return (
-    <div className="grid grid-cols-2 gap-3">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <InputBlock
         error={form.formState.errors.type?.message}
         label={t('observations.submit.labels.type')}
+        optional
       >
         <Controller
           control={form.control}
@@ -43,6 +44,7 @@ const ClassificationFields = () => {
       <InputBlock
         error={form.formState.errors.trigger?.message}
         label={t('observations.submit.labels.trigger')}
+        optional
       >
         <Controller
           control={form.control}
@@ -59,7 +61,7 @@ const ClassificationFields = () => {
         />
       </InputBlock>
 
-      <div className="col-span-2">
+      <div className="sm:col-span-2">
         <InputBlock
           error={form.formState.errors.size?.message}
           label={t('observations.submit.labels.size')}
