@@ -25,9 +25,9 @@ export const submitObservationSchema = z.object({
   size: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]).nullable(),
   submitterContact: z.string().nullable(),
   submitterEducation: z.string().nullable(),
-  submitterName: z.string().nullable(),
-  trigger: z.enum(avalanche_trigger).nullable(),
-  type: z.enum(avalanche_type).nullable(),
+  submitterName: z.string().min(1),
+  trigger: z.enum(avalanche_trigger),
+  type: z.enum(avalanche_type),
 })
 
 export type SubmitObservationBody = z.infer<typeof submitObservationSchema>

@@ -21,12 +21,10 @@ const notifyAdmin = async (body: SubmitObservationBody): Promise<void> => {
     `<b>${prefix}New Observation</b>`,
     '',
     `<b>Region:</b> ${body.regionId}`,
-    `<b>Type:</b> ${body.type ?? 'unknown'}`,
+    `<b>Type:</b> ${body.type}`,
     `<b>Date:</b> ${body.isDateUnknown ? 'unknown' : (body.date ?? 'unknown')}`,
-    body.submitterName ? `<b>Submitted by:</b> ${escapeHtml(body.submitterName)}` : null,
-  ]
-    .filter(Boolean)
-    .join('\n')
+    `<b>Submitted by:</b> ${escapeHtml(body.submitterName)}`,
+  ].join('\n')
 
   try {
     const response = await fetch(

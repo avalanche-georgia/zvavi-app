@@ -15,7 +15,7 @@ const SubmitterFields = () => {
       <InputBlock
         error={form.formState.errors.submitterName?.message}
         label={t('observations.submit.labels.submitterName')}
-        optional
+        required
       >
         <Controller
           control={form.control}

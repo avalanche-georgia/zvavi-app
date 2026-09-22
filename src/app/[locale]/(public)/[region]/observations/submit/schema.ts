@@ -1,10 +1,6 @@
 import { sortedAspects } from '@domain/constants'
 import { z } from 'zod'
 
-import { Constants } from '@/lib/supabase/types'
-
-const { avalanche_trigger, avalanche_type } = Constants.public.Enums
-
 const aspectSchema = z.enum(sortedAspects)
 
 const aspectsSchema = z.object({
@@ -24,9 +20,11 @@ export const observationSubmitSchema = z.object({
   size: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]),
   submitterContact: z.string().nullable(),
   submitterEducation: z.string().nullable(),
-  submitterName: z.string().nullable(),
-  trigger: z.enum(avalanche_trigger).nullable(),
-  type: z.enum(avalanche_type).nullable(),
+  submitterName: z.string({ error: () => ({ message: 'required' }) }).min(1, {
+    message: 'required',
+  }),
+  trigger: z.string({ error: () => ({ message: 'required' }) }).min(1, { message: 'required' }),
+  type: z.string({ error: () => ({ message: 'required' }) }).min(1, { message: 'required' }),
 })
 
 export type ObservationSubmitFormSchema = z.infer<typeof observationSubmitSchema>

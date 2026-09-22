@@ -7,6 +7,7 @@ import { useRouter } from 'src/i18n/navigation'
 
 import type { ObservationSubmitFormSchema } from '../schema'
 
+import type { Enums } from '@/lib/supabase/types'
 import { routes } from '@/routes'
 
 type UseObservationSubmitFormSubmitParams = {
@@ -35,8 +36,8 @@ const useObservationSubmitFormSubmit = ({ regionId }: UseObservationSubmitFormSu
           submitterContact: formData.submitterContact,
           submitterEducation: formData.submitterEducation,
           submitterName: formData.submitterName,
-          trigger: formData.trigger,
-          type: formData.type,
+          trigger: formData.trigger as Enums<'avalanche_trigger'>,
+          type: formData.type as Enums<'avalanche_type'>,
         })
 
         toastSuccess(t('observations.submit.success'))

@@ -13,9 +13,9 @@ const getInitialFormData = (): ObservationSubmitFormSchema => ({
   size: 1,
   submitterContact: null,
   submitterEducation: null,
-  submitterName: null,
-  trigger: null,
-  type: null,
+  submitterName: '',
+  trigger: '',
+  type: '',
 })
 
 export default getInitialFormData

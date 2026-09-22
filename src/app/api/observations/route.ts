@@ -73,9 +73,9 @@ export const POST = async (request: Request) => {
     p_size: body.size ?? undefined,
     p_submitter_contact: body.submitterContact ?? undefined,
     p_submitter_education: body.submitterEducation ?? undefined,
-    p_submitter_name: body.submitterName ?? undefined,
-    p_trigger: body.trigger ?? undefined,
-    p_type: body.type ?? undefined,
+    p_submitter_name: body.submitterName,
+    p_trigger: body.trigger,
+    p_type: body.type,
   })
 
   if (error) {
