@@ -2,6 +2,12 @@ import type { SubmitObservationBody } from './schema'
 
 const { TELEGRAM_ADMIN_CHAT_ID, TELEGRAM_BOT_ADMIN_TOKEN } = process.env
 
+// Telegram's HTML parse mode rejects unescaped <, >, & — free-text user input
+// (submitterName) must be escaped or a submission with e.g. "<script>" in it
+// silently kills the whole notification (caught below, never surfaced).
+const escapeHtml = (value: string): string =>
+  value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
+
 // Called server-side right after submit_observation succeeds — there's already a
 // server hop here (client -> this route -> RPC), so a second client-triggered
 // fetch would just be a less reliable way to do the same thing.
@@ -17,7 +23,7 @@ const notifyAdmin = async (body: SubmitObservationBody): Promise<void> => {
     `<b>Region:</b> ${body.regionId}`,
     `<b>Type:</b> ${body.type ?? 'unknown'}`,
     `<b>Date:</b> ${body.isDateUnknown ? 'unknown' : (body.date ?? 'unknown')}`,
-    body.submitterName ? `<b>Submitted by:</b> ${body.submitterName}` : null,
+    body.submitterName ? `<b>Submitted by:</b> ${escapeHtml(body.submitterName)}` : null,
   ]
     .filter(Boolean)
     .join('\n')
