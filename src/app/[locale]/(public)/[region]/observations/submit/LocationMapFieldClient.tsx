@@ -14,13 +14,13 @@ const zoneStyle: PathOptions = {
   weight: 1.5,
 }
 
-// Brand-colored teardrop pin (matches --color-primary) instead of Leaflet's
+// Brand-colored teardrop pin (matches --color-brand-blue) instead of Leaflet's
 // stock blue marker. className cleared — Leaflet's default div-icon class adds
 // a white box background/border we don't want behind the SVG.
 const pinIcon = L.divIcon({
   className: '',
   html: `<svg width="25" height="41" viewBox="0 0 25 41" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12.5 0C5.596 0 0 5.596 0 12.5c0 9.375 12.5 28.5 12.5 28.5S25 21.875 25 12.5C25 5.596 19.404 0 12.5 0z" fill="var(--color-primary)"/>
+    <path d="M12.5 0C5.596 0 0 5.596 0 12.5c0 9.375 12.5 28.5 12.5 28.5S25 21.875 25 12.5C25 5.596 19.404 0 12.5 0z" fill="var(--color-brand-blue)"/>
     <circle cx="12.5" cy="12.5" r="4.5" fill="white"/>
   </svg>`,
   iconAnchor: [12, 41],
