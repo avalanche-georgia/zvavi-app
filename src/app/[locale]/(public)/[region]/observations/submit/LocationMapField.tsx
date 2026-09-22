@@ -10,7 +10,7 @@ import type { ObservationSubmitFormSchema } from './schema'
 
 const LocationMapFieldClient = dynamic(() => import('./LocationMapFieldClient'), {
   loading: () => (
-    <div className="flex h-80 w-full items-center justify-center rounded-xl bg-gray-100">
+    <div className="flex h-96 w-full items-center justify-center rounded-xl bg-gray-100">
       <Spinner />
     </div>
   ),
@@ -30,7 +30,11 @@ const LocationMapField = () => {
   }
 
   return (
-    <InputBlock label={t('observations.submit.labels.location')} optional>
+    <InputBlock
+      hint={t('observations.submit.hints.location')}
+      label={t('observations.submit.labels.location')}
+      optional
+    >
       <LocationMapFieldClient
         latitude={latitude}
         longitude={longitude}

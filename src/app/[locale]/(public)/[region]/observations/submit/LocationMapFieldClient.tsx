@@ -3,10 +3,16 @@
 import { useMemo } from 'react'
 import type { Region } from '@domain/types'
 import type { FeatureCollection } from 'geojson'
-import L, { geoJSON, type LatLngBounds } from 'leaflet'
-import { MapContainer, Marker, TileLayer, useMapEvents } from 'react-leaflet'
+import L, { geoJSON, type LatLngBounds, type PathOptions } from 'leaflet'
+import { GeoJSON, MapContainer, Marker, TileLayer, useMapEvents } from 'react-leaflet'
 
 import 'leaflet/dist/leaflet.css'
+
+const zoneStyle: PathOptions = {
+  color: '#dc2626',
+  fillOpacity: 0.05,
+  weight: 1.5,
+}
 
 // react-leaflet's default marker icon resolves relative to the bundler's asset
 // path, which breaks under Next.js — served from public/leaflet/ instead (copied
@@ -47,13 +53,14 @@ const LocationMapFieldClient = ({
   onChange,
   region,
 }: LocationMapFieldClientProps) => {
-  const bounds = useMemo<LatLngBounds | null>(() => {
+  const zoneBounds = useMemo<LatLngBounds | null>(() => {
     if (!region.forecastZone) return null
 
-    return geoJSON(region.forecastZone as FeatureCollection)
-      .getBounds()
-      .pad(0.2)
+    return geoJSON(region.forecastZone as FeatureCollection).getBounds()
   }, [region.forecastZone])
+
+  const viewBounds = zoneBounds?.pad(0.2)
+  const maxBounds = zoneBounds?.pad(0.5)
 
   const regionCenter: [number, number] | undefined = region.mapCenter
     ? [region.mapCenter.lat, region.mapCenter.lng]
@@ -61,15 +68,20 @@ const LocationMapFieldClient = ({
 
   return (
     <MapContainer
-      bounds={bounds ?? undefined}
-      center={bounds ? undefined : (regionCenter ?? fallbackCenter)}
-      className="z-30 h-80 w-full cursor-crosshair rounded-xl"
-      zoom={bounds ? undefined : (region.defaultZoom ?? fallbackZoom)}
+      bounds={viewBounds}
+      center={viewBounds ? undefined : (regionCenter ?? fallbackCenter)}
+      className="z-30 h-96 w-full cursor-crosshair rounded-xl"
+      maxBounds={maxBounds}
+      maxBoundsViscosity={1}
+      zoom={viewBounds ? undefined : (region.defaultZoom ?? fallbackZoom)}
     >
       <TileLayer
         attribution='&copy; <a href="https://opentopomap.org">OpenTopoMap</a>, <a href="https://www.openstreetmap.org/copyright">OSM</a>'
         url="https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"
       />
+      {(region.forecastZone as FeatureCollection | null)?.features.length ? (
+        <GeoJSON data={region.forecastZone as FeatureCollection} style={zoneStyle} />
+      ) : null}
       <ClickHandler onPick={onChange} />
       {latitude != null && longitude != null && (
         <Marker icon={pinIcon} position={[latitude, longitude]} />
