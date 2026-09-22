@@ -14,7 +14,7 @@ const FormFields = ({ source }: FormFieldsProps) => (
   <div className="flex flex-col gap-6">
     <TopSection />
     <DetailsSection />
-    <SubmitterSection isExternal={source === 'external'} source={source} />
+    <SubmitterSection source={source} />
   </div>
 )
 

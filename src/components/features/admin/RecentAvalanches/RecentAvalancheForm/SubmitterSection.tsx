@@ -10,13 +10,12 @@ import type { AvalancheFormSchema } from './schema'
 import SourceBadge from '../RecentAvalanchesTable/SourceBadge'
 
 type SubmitterSectionProps = {
-  isExternal: boolean
   // undefined when creating a new record — source is always 'team' there and not
-  // worth showing; only meaningful once a record exists and could be external.
+  // worth showing; only meaningful once a record exists.
   source: AvalancheSource | undefined
 }
 
-const SubmitterSection = ({ isExternal, source }: SubmitterSectionProps) => {
+const SubmitterSection = ({ source }: SubmitterSectionProps) => {
   const t = useTranslations()
   const form = useFormContext<AvalancheFormSchema>()
 
@@ -48,7 +47,7 @@ const SubmitterSection = ({ isExternal, source }: SubmitterSectionProps) => {
         <div className="grid grid-cols-2 gap-3">{statusField}</div>
       )}
 
-      {isExternal && (
+      {source && (
         <div className="grid grid-cols-2 gap-3">
           <InputBlock label={t('admin.recentAvalanches.form.labels.submitterName')}>
             <Controller
