@@ -11,7 +11,9 @@ import SourceBadge from '../RecentAvalanchesTable/SourceBadge'
 
 type SubmitterSectionProps = {
   isExternal: boolean
-  source: AvalancheSource
+  // undefined when creating a new record — source is always 'team' there and not
+  // worth showing; only meaningful once a record exists and could be external.
+  source: AvalancheSource | undefined
 }
 
 const SubmitterSection = ({ isExternal, source }: SubmitterSectionProps) => {
@@ -20,23 +22,31 @@ const SubmitterSection = ({ isExternal, source }: SubmitterSectionProps) => {
 
   const statusOptions = toOptions(avalancheStatuses, (key) => t(`common.avalancheStatuses.${key}`))
 
+  const statusField = (
+    <InputBlock label={t('admin.recentAvalanches.form.labels.status')}>
+      <Controller
+        control={form.control}
+        name="status"
+        render={({ field }) => (
+          <Select onChange={field.onChange} options={statusOptions} value={field.value} />
+        )}
+      />
+    </InputBlock>
+  )
+
   return (
     <div className="flex flex-col gap-3">
-      <div className="grid grid-cols-2 items-end gap-3">
-        <InputBlock label={t('admin.recentAvalanches.form.labels.source')}>
-          <SourceBadge source={source} />
-        </InputBlock>
+      {source ? (
+        <div className="grid grid-cols-2 items-end gap-3">
+          <InputBlock label={t('admin.recentAvalanches.form.labels.source')}>
+            <SourceBadge className="self-start" source={source} />
+          </InputBlock>
 
-        <InputBlock label={t('admin.recentAvalanches.form.labels.status')}>
-          <Controller
-            control={form.control}
-            name="status"
-            render={({ field }) => (
-              <Select onChange={field.onChange} options={statusOptions} value={field.value} />
-            )}
-          />
-        </InputBlock>
-      </div>
+          {statusField}
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 gap-3">{statusField}</div>
+      )}
 
       {isExternal && (
         <div className="grid grid-cols-2 gap-3">

@@ -7,7 +7,7 @@ import SubmitterSection from './SubmitterSection'
 import TopSection from './TopSection'
 
 type FormFieldsProps = {
-  source: AvalancheSource
+  source: AvalancheSource | undefined
 }
 
 const FormFields = ({ source }: FormFieldsProps) => (
