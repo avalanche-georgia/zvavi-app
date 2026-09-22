@@ -100,6 +100,11 @@ const LocationMapFieldClient = ({
         maxNativeZoom={maxZoom}
         url="https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"
       />
+      <TileLayer
+        attribution='<a href="https://www.opensnowmap.org/">OpenSnowMap</a>'
+        url="https://tiles.opensnowmap.org/pistes/{z}/{x}/{y}.png"
+      />
+
       {(region.forecastZone as FeatureCollection | null)?.features.length ? (
         <GeoJSON data={region.forecastZone as FeatureCollection} style={zoneStyle} />
       ) : null}
