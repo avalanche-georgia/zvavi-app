@@ -8,7 +8,6 @@ import { Controller, useFormContext } from 'react-hook-form'
 
 import type { AvalancheFormSchema } from './schema'
 import SubmitterInfo from './SubmitterInfo'
-import SourceBadge from '../RecentAvalanchesTable/SourceBadge'
 
 type SubmitterSectionProps = {
   createdByUserId: string | null
@@ -32,36 +31,25 @@ const SubmitterSection = ({
 
   const statusOptions = toOptions(avalancheStatuses, (key) => t(`common.avalancheStatuses.${key}`))
 
-  const statusField = (
-    <InputBlock label={t('admin.recentAvalanches.form.labels.status')}>
-      <Controller
-        control={form.control}
-        name="status"
-        render={({ field }) => (
-          <Select onChange={field.onChange} options={statusOptions} value={field.value} />
-        )}
-      />
-    </InputBlock>
-  )
-
   return (
     <div className="flex flex-col gap-3">
-      {source ? (
-        <div className="grid grid-cols-2 items-end gap-3">
-          <InputBlock label={t('admin.recentAvalanches.form.labels.source')}>
-            <SourceBadge className="self-start" source={source} />
-          </InputBlock>
-
-          {statusField}
-        </div>
-      ) : (
-        <div className="grid grid-cols-2 gap-3">{statusField}</div>
-      )}
+      <div className="grid grid-cols-2 gap-3">
+        <InputBlock label={t('admin.recentAvalanches.form.labels.status')}>
+          <Controller
+            control={form.control}
+            name="status"
+            render={({ field }) => (
+              <Select onChange={field.onChange} options={statusOptions} value={field.value} />
+            )}
+          />
+        </InputBlock>
+      </div>
 
       {source && (
         <SubmitterInfo
           createdByUserId={createdByUserId}
           isExternal={source === 'external'}
+          source={source}
           submitterContact={submitterContact}
           submitterEducation={submitterEducation}
           submitterName={submitterName}

@@ -367,11 +367,10 @@ admin:
         quantity: რაოდენობა
         size: ზომა
         slabDepth: ფილის სისქე (სმ)
-        source: წყარო
         status: სტატუსი
         submitterContact: კონტაქტი
         submitterEducation: განათლება
-        submitterName: სრული სახელი
+        submitterName: სახელი
         submitterSection: წარმდგენი
         trigger: გამომწვევი
         type: სახეობა
