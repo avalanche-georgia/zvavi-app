@@ -366,6 +366,11 @@ admin:
         quantity: Quantity
         size: Size
         slabDepth: Slab depth (cm)
+        source: Source
+        status: Status
+        submitterContact: Submitter contact
+        submitterEducation: Submitter education
+        submitterName: Submitter name
         trigger: Trigger
         type: Type
         width: Width (m)

@@ -65,7 +65,7 @@ const RecentAvalancheForm = ({
       <div className="rounded-lg bg-white shadow-sm">
         <section className="flex w-full flex-col gap-6 p-4 md:p-6">
           <form className="flex w-full flex-col gap-6" onSubmit={form.handleSubmit(handleSubmit)}>
-            <FormFields />
+            <FormFields source={avalanche?.source ?? 'team'} />
           </form>
         </section>
 
