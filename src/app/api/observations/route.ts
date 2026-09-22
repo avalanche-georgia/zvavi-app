@@ -6,16 +6,19 @@ import fetchPublicObservations from './fetchPublicObservations'
 import { submitObservationSchema } from './schema'
 
 import { createServiceRoleClient } from '@/lib/supabase/serviceRole'
+import { Constants } from '@/lib/supabase/types'
 
 // Hidden via CSS in the real form — a bot fills every field it sees, a human never sees this one.
 type HoneypotCheck = { honeypot?: unknown }
+
+const validRegionIds: readonly string[] = Constants.public.Enums.region_id
 
 export const GET = async (request: Request) => {
   const searchParams = new URL(request.url).searchParams
   const regionId = searchParams.get('regionId')
 
-  if (!regionId) {
-    return NextResponse.json({ error: 'regionId is required', ok: false }, { status: 400 })
+  if (!regionId || !validRegionIds.includes(regionId)) {
+    return NextResponse.json({ error: 'a valid regionId is required', ok: false }, { status: 400 })
   }
 
   try {

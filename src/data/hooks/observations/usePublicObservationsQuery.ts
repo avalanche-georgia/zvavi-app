@@ -15,7 +15,7 @@ type QueryOptions = Omit<
   regionId: RegionId
 }
 
-const fetchPublicObservations = async (
+const requestPublicObservations = async (
   regionId: RegionId,
   dateFrom?: string,
   dateTo?: string,
@@ -36,7 +36,7 @@ const fetchPublicObservations = async (
 const usePublicObservationsQuery = ({ dateFrom, dateTo, regionId, ...options }: QueryOptions) =>
   useQuery({
     ...options,
-    queryFn: () => fetchPublicObservations(regionId, dateFrom, dateTo),
+    queryFn: () => requestPublicObservations(regionId, dateFrom, dateTo),
     queryKey: observationsKeys.list(regionId, { dateFrom, dateTo }),
   })
 

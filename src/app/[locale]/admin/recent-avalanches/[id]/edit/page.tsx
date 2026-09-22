@@ -41,8 +41,10 @@ const EditRecentAvalanchePage = () => {
     )
   }
 
+  // Back navigation must return to wherever the admin came from — this edit route is
+  // shared by both /admin/recent-avalanches and /admin/observations.
   const handleBack = () => {
-    router.push(routes.admin.recentAvalanches.listByRegion(avalanche.regionId))
+    router.back()
   }
 
   return (
