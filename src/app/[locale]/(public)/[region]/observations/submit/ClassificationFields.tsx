@@ -1,6 +1,12 @@
 'use client'
 
-import { InputBlock, RadioGroup, Select, toOptions } from '@components/ui'
+import {
+  InputBlock,
+  RadioGroup,
+  Select,
+  toOptions,
+  toOptionsWithUnknownFirst,
+} from '@components/ui'
 import { avalancheTriggers, avalancheTypes } from '@domain/constants'
 import { useTranslations } from 'next-intl'
 import { Controller, useFormContext } from 'react-hook-form'
@@ -17,14 +23,16 @@ const ClassificationFields = () => {
     ...toOptions(avalancheTypes, (key) => t(`common.avalancheTypes.${key}`)),
     { label: t('common.avalancheTypes.unknown'), value: 'unknown' },
   ]
-  const triggerOptions = toOptions(avalancheTriggers, (key) => t(`common.avalancheTriggers.${key}`))
+  const triggerOptions = toOptionsWithUnknownFirst(avalancheTriggers, (key) =>
+    t(`common.avalancheTriggers.${key}`),
+  )
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <InputBlock
         error={form.formState.errors.type?.message}
         label={t('observations.submit.labels.type')}
-        optional
+        required
       >
         <Controller
           control={form.control}
@@ -44,7 +52,7 @@ const ClassificationFields = () => {
       <InputBlock
         error={form.formState.errors.trigger?.message}
         label={t('observations.submit.labels.trigger')}
-        optional
+        required
       >
         <Controller
           control={form.control}
