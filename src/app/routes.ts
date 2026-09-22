@@ -23,9 +23,6 @@ export const routes = {
       root: '/admin/members',
       view: (id: string) => `/admin/members/${id}`,
     },
-    observations: {
-      root: '/admin/observations',
-    },
     partners: {
       edit: (id: string) => `/admin/partners/${id}/edit`,
       new: '/admin/partners/new',

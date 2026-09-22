@@ -1,7 +1,9 @@
 'use client'
 
+import { useBoolean, useToast } from '@components/hooks'
 import { ConfirmationDialog } from '@components/shared'
 import type { AvalancheListItem } from '@data/hooks/recentAvalanches'
+import { useRecentAvalancheDelete } from '@data/hooks/recentAvalanches'
 import { dateFormat } from '@domain/constants'
 import type { RegionId } from '@domain/types'
 import { format } from 'date-fns'
@@ -9,10 +11,6 @@ import { useTranslations } from 'next-intl'
 
 import ActionButtons from './ActionButtons'
 import DescriptionCellContent from './DescriptionCellContent'
-import SourceBadge from './SourceBadge'
-import StatusBadge from './StatusBadge'
-import useAvalancheDeleteDialog from './useAvalancheDeleteDialog'
-import useAvalancheStatusToggle from './useAvalancheStatusToggle'
 
 import { routes } from '@/routes'
 
@@ -23,36 +21,29 @@ type AvalancheItemProps = {
 
 const AvalancheItem = ({ avalanche, regionId }: AvalancheItemProps) => {
   const t = useTranslations()
+  const { mutateAsync: deleteAvalanche } = useRecentAvalancheDelete()
+  const [isDeletionDialogOpen, { setFalse: closeDeletionDialog, setTrue: openDeletionDialog }] =
+    useBoolean(false)
+  const { toastError, toastSuccess } = useToast()
 
-  const {
-    createdAt,
-    date,
-    description,
-    id,
-    isDateUnknown,
-    location,
-    size,
-    source = 'team',
-    status = 'published',
-    trigger,
-    type,
-  } = avalanche
-
-  const { isPending: isTogglingStatus, toggleStatus } = useAvalancheStatusToggle({
-    id,
-    regionId,
-    status,
-  })
-  const { closeDialog, handleDelete, isOpen, openDialog } = useAvalancheDeleteDialog({
-    id,
-    regionId,
-  })
+  const { createdAt, date, description, id, isDateUnknown, location, size, trigger, type } =
+    avalanche
 
   const dateDisplay = isDateUnknown
     ? t('admin.forecast.form.recentAvalanches.labels.dateUnknown')
     : date
       ? format(new Date(date), dateFormat)
       : '—'
+
+  const handleDelete = async () => {
+    try {
+      await deleteAvalanche({ id, regionId })
+      closeDeletionDialog()
+      toastSuccess()
+    } catch (error) {
+      toastError('RecentAvalancheItem | handleDelete', { error })
+    }
+  }
 
   return (
     <>
@@ -69,30 +60,21 @@ const AvalancheItem = ({ avalanche, regionId }: AvalancheItemProps) => {
         </div>
         <div className="w-36 shrink-0 text-sm">{t(`common.avalancheTriggers.${trigger}`)}</div>
         <div className="w-36 shrink-0 truncate text-sm text-gray-600">{location ?? '—'}</div>
-        <div className="w-20 shrink-0">
-          <SourceBadge source={source} />
-        </div>
         <div className="min-w-0 flex-1 text-sm text-gray-600">
           <DescriptionCellContent description={description} />
         </div>
-        <div className="w-24 shrink-0">
-          <StatusBadge status={status} />
-        </div>
-        <div className="w-28 shrink-0">
+        <div className="w-20 shrink-0">
           <ActionButtons
             editHref={routes.admin.recentAvalanches.editInRegion(id, regionId)}
-            isTogglingStatus={isTogglingStatus}
-            onDelete={openDialog}
-            onTogglePublish={toggleStatus}
-            status={status}
+            onDelete={openDeletionDialog}
           />
         </div>
       </div>
 
       <ConfirmationDialog
         description={t('admin.recentAvalanches.actions.deleteDescription')}
-        isOpen={isOpen}
-        onClose={closeDialog}
+        isOpen={isDeletionDialogOpen}
+        onClose={closeDeletionDialog}
         onConfirm={handleDelete}
         title={t('admin.recentAvalanches.actions.deleteTitle')}
         variant="delete"

@@ -61,15 +61,6 @@ common:
     alpine: 'Alpine'
     subAlpine: 'Sub Alpine'
 
-  avalancheSources:
-    external: 'External'
-    team: 'Team'
-
-  avalancheStatuses:
-    archived: 'Archived'
-    draft: 'Draft'
-    published: 'Published'
-
   avalancheTypes:
     cornice: 'Cornice'
     deepSlab: 'Deep Slab'

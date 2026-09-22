@@ -1,15 +1,13 @@
-import type { Avalanche, AvalancheSource, AvalancheStatus } from '@domain/types'
+import type { Avalanche } from '@domain/types'
 
 export type DateMode = 'occurred' | 'created'
 
 export type ListFilterParams = {
   dateFrom?: string
-  dateMode: DateMode
   dateTo?: string
+  dateMode: DateMode
   page: number
   pageSize: number
-  source?: AvalancheSource
-  status?: AvalancheStatus
 }
 
 export type AvalancheListItem = Avalanche & {

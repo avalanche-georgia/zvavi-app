@@ -181,17 +181,6 @@ Never write Supabase query logic inline inside a page or component. Extract to a
 
 `src/data/helpers/` is for **pure utility functions only** (converters, error handlers). DB fetch functions belong in `src/data/queries/`.
 
-### Anonymous/Public Mutations and Reads
-
-Two different data-access patterns exist depending on who's on the other end, and both are intentional — don't unify them:
-
-- **Trusted (authenticated team members, admin UI)**: standard pattern — mutation hooks call `.insert()`/`.update()` directly on the table via `supabase-js`, gated by `authenticated`-only RLS policies. See any hook in `src/data/hooks/recentAvalanches/`.
-- **Untrusted (anonymous public submissions/reads, e.g. observations)**: goes through a Next.js API route (`src/app/api/.../route.ts`) using a service-role Supabase client (`createServiceRoleClient()` from `src/lib/supabase/serviceRole.ts`), calling either:
-  - a `SECURITY DEFINER` Postgres RPC for writes (e.g. `submit_observation`) — the RPC whitelists exactly which fields the caller can set (forces `source`, `status`, nulls `created_by_user_id`, etc.), which a plain "anon INSERT" RLS policy can't do since RLS only gates row visibility, not per-field values. `EXECUTE` on the RPC is revoked from `anon`/`authenticated` and granted only to `service_role`, so it's unreachable except through the route.
-  - an explicit safe column `SELECT` for reads that must exclude PII (e.g. `submitter_contact`, `submitter_education`) — RLS is row-level only, so it can't hide columns on rows a role can otherwise see; the service-role route selects only the public-safe columns instead.
-
-Why not just use an "anon RLS insert/select" policy for public data, like the plan first proposed? Because RLS can't validate shape, run anti-spam checks (honeypot), or restrict which columns are readable — a route with server-side Zod validation and an explicit column list closes gaps RLS structurally can't. Reserve this pattern for endpoints an anonymous person on the internet can hit; don't add it to internal admin mutations where the extra indirection buys nothing.
-
 ### Form Pattern
 - **All forms must use `react-hook-form` + `zodResolver` + `FormProvider`**
 - `getInitialFormData(item | null)` initializes form state from domain type or defaults

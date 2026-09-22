@@ -1,29 +1,21 @@
 'use client'
 
+import {
+  RecentAvalanchesFilters,
+  RecentAvalanchesTable,
+} from '@components/features/admin/RecentAvalanches'
 import { Icon } from '@components/icons'
 import { ButtonLink, RegionTabs } from '@components/shared'
 import { defaultRegionId } from '@domain/constants'
-import type { AvalancheSource, Region, RegionId } from '@domain/types'
+import type { Region, RegionId } from '@domain/types'
 import { useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 
-import RecentAvalanchesFilters from './RecentAvalanchesFilters'
-import { RecentAvalanchesTable } from './RecentAvalanchesTable'
 import useRecentAvalanchesPage from './useRecentAvalanchesPage'
 
 import { routes } from '@/routes'
 
-type RecentAvalanchesContainerProps = {
-  hideCreateAction?: boolean
-  initialRegions?: Region[]
-  source?: AvalancheSource
-}
-
-const RecentAvalanchesContainer = ({
-  hideCreateAction = false,
-  initialRegions,
-  source,
-}: RecentAvalanchesContainerProps) => {
+const RecentAvalanchesContainer = ({ initialRegions }: { initialRegions?: Region[] }) => {
   const t = useTranslations()
   const searchParams = useSearchParams()
   const regionId = (searchParams.get('regionId') as RegionId) ?? defaultRegionId
@@ -42,7 +34,7 @@ const RecentAvalanchesContainer = ({
     onPageChange,
     page,
     totalPages,
-  } = useRecentAvalanchesPage({ source })
+  } = useRecentAvalanchesPage()
 
   return (
     <>
@@ -61,12 +53,10 @@ const RecentAvalanchesContainer = ({
           onReset={onFiltersReset}
         />
 
-        {!hideCreateAction && (
-          <ButtonLink href={routes.admin.recentAvalanches.newInRegion(regionId)}>
-            <Icon icon="plus" size="sm" />
-            {t('admin.recentAvalanches.title.create')}
-          </ButtonLink>
-        )}
+        <ButtonLink href={routes.admin.recentAvalanches.newInRegion(regionId)}>
+          <Icon icon="plus" size="sm" />
+          {t('admin.recentAvalanches.title.create')}
+        </ButtonLink>
       </div>
 
       <div className="p-4 md:p-6">

@@ -16,7 +16,6 @@ const getInitialFormData = (avalanche: Partial<Avalanche>): AvalancheFormSchema 
   quantity: avalanche.quantity ?? 1,
   size: avalanche.size ?? 1,
   slabDepth: avalanche.slabDepth ?? null,
-  status: avalanche.status ?? 'published',
   trigger: avalanche.trigger ?? '',
   type: avalanche.type ?? '',
   width: avalanche.width ?? null,

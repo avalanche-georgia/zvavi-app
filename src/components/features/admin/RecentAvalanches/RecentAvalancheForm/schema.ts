@@ -21,7 +21,6 @@ export const avalancheFormSchema = z.object({
   quantity: z.number().int().min(1),
   size: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]),
   slabDepth: z.number().nullable(),
-  status: z.string({ error: () => ({ message: 'required' }) }).min(1, { message: 'required' }),
   trigger: z.string({ error: () => ({ message: 'required' }) }).min(1, { message: 'required' }),
   type: z.string({ error: () => ({ message: 'required' }) }).min(1, { message: 'required' }),
   width: z.number().nullable(),

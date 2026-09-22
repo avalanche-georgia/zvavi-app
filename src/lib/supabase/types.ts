@@ -1,7 +1,5 @@
 import type { Database } from './database.types'
 
-export { Constants } from './database.types'
-
 type CamelCaseKey<S extends string> = S extends `${infer Head}_${infer Tail}`
   ? `${Head}${Capitalize<CamelCaseKey<Tail>>}`
   : S

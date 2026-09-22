@@ -1,6 +1,5 @@
 export { default as forecastsKeys } from './forecasts'
 export { default as membersKeys } from './members'
-export { default as observationsKeys } from './observations'
 export { default as partnersKeys } from './partners'
 export { default as recentAvalanchesKeys } from './recentAvalanches'
 export { default as regionsKeys } from './regions'

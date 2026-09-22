@@ -30,7 +30,6 @@ admin:
     home: 'Home'
     members: 'Members'
     menu: 'Admin menu'
-    observations: 'Observations'
     partners: 'Partners'
     recentAvalanches: 'Recent Avalanches'
     weatherStations: 'Weather Stations'
@@ -333,8 +332,6 @@ admin:
         description: Description
         location: Location
         size: Size
-        source: Source
-        status: Status
         trigger: Trigger
         type: Type
       empty: No avalanches found.
@@ -353,8 +350,6 @@ admin:
     actions:
       deleteDescription: This avalanche record will be permanently deleted.
       deleteTitle: Delete Avalanche
-      publish: Publish
-      unpublish: Unpublish
 
     form:
       labels:
@@ -367,11 +362,6 @@ admin:
         quantity: Quantity
         size: Size
         slabDepth: Slab depth (cm)
-        status: Status
-        submitterContact: Contact
-        submitterEducation: Education
-        submitterName: Name
-        submitterSection: Submitter
         trigger: Trigger
         type: Type
         width: Width (m)
