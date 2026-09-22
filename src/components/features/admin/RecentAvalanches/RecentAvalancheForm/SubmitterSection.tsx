@@ -1,21 +1,32 @@
 'use client'
 
-import { InputBlock, Select, Textarea, TextInput, toOptions } from '@components/ui'
+import { InputBlock, Select, toOptions } from '@components/ui'
 import { avalancheStatuses } from '@domain/constants'
 import type { AvalancheSource } from '@domain/types'
 import { useTranslations } from 'next-intl'
 import { Controller, useFormContext } from 'react-hook-form'
 
 import type { AvalancheFormSchema } from './schema'
+import SubmitterInfo from './SubmitterInfo'
 import SourceBadge from '../RecentAvalanchesTable/SourceBadge'
 
 type SubmitterSectionProps = {
+  createdByUserId: string | null
   // undefined when creating a new record — source is always 'team' there and not
   // worth showing; only meaningful once a record exists.
   source: AvalancheSource | undefined
+  submitterContact: string | null
+  submitterEducation: string | null
+  submitterName: string | null
 }
 
-const SubmitterSection = ({ source }: SubmitterSectionProps) => {
+const SubmitterSection = ({
+  createdByUserId,
+  source,
+  submitterContact,
+  submitterEducation,
+  submitterName,
+}: SubmitterSectionProps) => {
   const t = useTranslations()
   const form = useFormContext<AvalancheFormSchema>()
 
@@ -48,39 +59,13 @@ const SubmitterSection = ({ source }: SubmitterSectionProps) => {
       )}
 
       {source && (
-        <div className="grid grid-cols-2 gap-3">
-          <InputBlock label={t('admin.recentAvalanches.form.labels.submitterName')}>
-            <Controller
-              control={form.control}
-              name="submitterName"
-              render={({ field }) => (
-                <TextInput onChange={field.onChange} value={field.value ?? ''} />
-              )}
-            />
-          </InputBlock>
-
-          <InputBlock label={t('admin.recentAvalanches.form.labels.submitterEducation')}>
-            <Controller
-              control={form.control}
-              name="submitterEducation"
-              render={({ field }) => (
-                <TextInput onChange={field.onChange} value={field.value ?? ''} />
-              )}
-            />
-          </InputBlock>
-
-          <div className="col-span-2">
-            <InputBlock label={t('admin.recentAvalanches.form.labels.submitterContact')}>
-              <Controller
-                control={form.control}
-                name="submitterContact"
-                render={({ field }) => (
-                  <Textarea onChange={field.onChange} rows={2} value={field.value ?? ''} />
-                )}
-              />
-            </InputBlock>
-          </div>
-        </div>
+        <SubmitterInfo
+          createdByUserId={createdByUserId}
+          isExternal={source === 'external'}
+          submitterContact={submitterContact}
+          submitterEducation={submitterEducation}
+          submitterName={submitterName}
+        />
       )}
     </div>
   )

@@ -1,20 +1,27 @@
 'use client'
 
-import type { AvalancheSource } from '@domain/types'
+import type { Avalanche } from '@domain/types'
 
 import DetailsSection from './DetailsSection'
 import SubmitterSection from './SubmitterSection'
 import TopSection from './TopSection'
 
 type FormFieldsProps = {
-  source: AvalancheSource | undefined
+  // undefined when creating a new record
+  avalanche: Avalanche | undefined
 }
 
-const FormFields = ({ source }: FormFieldsProps) => (
+const FormFields = ({ avalanche }: FormFieldsProps) => (
   <div className="flex flex-col gap-6">
     <TopSection />
     <DetailsSection />
-    <SubmitterSection source={source} />
+    <SubmitterSection
+      createdByUserId={avalanche?.createdByUserId ?? null}
+      source={avalanche?.source}
+      submitterContact={avalanche?.submitterContact ?? null}
+      submitterEducation={avalanche?.submitterEducation ?? null}
+      submitterName={avalanche?.submitterName ?? null}
+    />
   </div>
 )
 

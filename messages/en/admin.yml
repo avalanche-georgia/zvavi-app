@@ -369,9 +369,10 @@ admin:
         slabDepth: Slab depth (cm)
         source: Source
         status: Status
-        submitterContact: Submitter contact
-        submitterEducation: Submitter education
-        submitterName: Submitter name
+        submitterContact: Contact
+        submitterEducation: Education
+        submitterName: Full name
+        submitterSection: Submitter
         trigger: Trigger
         type: Type
         width: Width (m)

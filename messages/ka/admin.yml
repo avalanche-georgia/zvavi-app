@@ -369,9 +369,10 @@ admin:
         slabDepth: ფილის სისქე (სმ)
         source: წყარო
         status: სტატუსი
-        submitterContact: წარმდგენის კონტაქტი
-        submitterEducation: წარმდგენის განათლება
-        submitterName: წარმდგენის სახელი
+        submitterContact: კონტაქტი
+        submitterEducation: განათლება
+        submitterName: სრული სახელი
+        submitterSection: წარმდგენი
         trigger: გამომწვევი
         type: სახეობა
         width: სიგანე (მ)
