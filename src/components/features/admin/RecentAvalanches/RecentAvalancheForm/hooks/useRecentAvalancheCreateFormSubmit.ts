@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { useToast } from '@components/hooks'
 import { useRecentAvalancheCreate } from '@data/hooks/recentAvalanches'
-import type { AvalancheTrigger, AvalancheType, RegionId } from '@domain/types'
+import type { AvalancheStatus, AvalancheTrigger, AvalancheType, RegionId } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import type { AvalancheFormSchema } from '../schema'
@@ -25,6 +25,7 @@ const useRecentAvalancheCreateFormSubmit = ({
         await createAvalanche({
           ...formData,
           regionId,
+          status: formData.status as AvalancheStatus,
           trigger: formData.trigger as AvalancheTrigger,
           type: formData.type as AvalancheType | 'unknown',
         })

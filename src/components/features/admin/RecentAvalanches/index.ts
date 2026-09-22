@@ -1,3 +1,4 @@
 export { RecentAvalancheForm } from './RecentAvalancheForm'
+export { default as RecentAvalanchesContainer } from './RecentAvalanchesContainer'
 export { default as RecentAvalanchesFilters } from './RecentAvalanchesFilters'
 export { RecentAvalanchesTable } from './RecentAvalanchesTable'
