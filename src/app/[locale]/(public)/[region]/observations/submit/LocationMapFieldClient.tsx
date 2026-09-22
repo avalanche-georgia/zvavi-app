@@ -9,16 +9,22 @@ import { MapContainer, Marker, TileLayer, useMapEvents } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 
 // react-leaflet's default marker icon resolves relative to the bundler's asset
-// path, which breaks under Next.js — point it at the package's own CDN copy.
+// path, which breaks under Next.js — served from public/leaflet/ instead (copied
+// from node_modules/leaflet/dist/images) rather than depending on a CDN at runtime.
 const pinIcon = L.icon({
   iconAnchor: [12, 41],
-  iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+  iconRetinaUrl: '/leaflet/marker-icon-2x.png',
   iconSize: [25, 41],
-  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+  iconUrl: '/leaflet/marker-icon.png',
   popupAnchor: [1, -34],
   shadowSize: [41, 41],
-  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+  shadowUrl: '/leaflet/marker-shadow.png',
 })
+
+// Used only if a region has neither a forecast zone nor a map center — rough
+// center of Georgia, matching RegionPickerMapClient's own fallback.
+const fallbackCenter: [number, number] = [42.1, 43.5]
+const fallbackZoom = 7
 
 const ClickHandler = ({ onPick }: { onPick: (lat: number, lng: number) => void }) => {
   useMapEvents({
@@ -49,16 +55,16 @@ const LocationMapFieldClient = ({
       .pad(0.2)
   }, [region.forecastZone])
 
-  const fallbackCenter: [number, number] | undefined = region.mapCenter
+  const regionCenter: [number, number] | undefined = region.mapCenter
     ? [region.mapCenter.lat, region.mapCenter.lng]
     : undefined
 
   return (
     <MapContainer
       bounds={bounds ?? undefined}
-      center={bounds ? undefined : fallbackCenter}
+      center={bounds ? undefined : (regionCenter ?? fallbackCenter)}
       className="z-30 h-80 w-full cursor-crosshair rounded-xl"
-      zoom={bounds ? undefined : (region.defaultZoom ?? 10)}
+      zoom={bounds ? undefined : (region.defaultZoom ?? fallbackZoom)}
     >
       <TileLayer
         attribution='&copy; <a href="https://opentopomap.org">OpenTopoMap</a>, <a href="https://www.openstreetmap.org/copyright">OSM</a>'
