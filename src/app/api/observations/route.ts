@@ -3,6 +3,7 @@ import type { RegionId } from '@domain/types'
 import { NextResponse } from 'next/server'
 
 import fetchPublicObservations from './fetchPublicObservations'
+import notifyAdmin from './notifyAdmin'
 import { submitObservationSchema } from './schema'
 
 import { createServiceRoleClient } from '@/lib/supabase/serviceRole'
@@ -82,6 +83,8 @@ export const POST = async (request: Request) => {
 
     return NextResponse.json({ error: 'failed to submit observation', ok: false }, { status: 500 })
   }
+
+  await notifyAdmin(body)
 
   return NextResponse.json({ id: data, ok: true })
 }
