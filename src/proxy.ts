@@ -83,7 +83,6 @@ export default async function proxy(request: NextRequest) {
     pathname.startsWith('/_next') ||
     pathname.startsWith('/api') ||
     pathname.startsWith('/images') ||
-    pathname.startsWith('/leaflet') ||
     publicRootFilesSet.has(pathname)
   ) {
     return NextResponse.next()

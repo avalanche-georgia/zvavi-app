@@ -14,17 +14,18 @@ const zoneStyle: PathOptions = {
   weight: 1.5,
 }
 
-// react-leaflet's default marker icon resolves relative to the bundler's asset
-// path, which breaks under Next.js — served from public/leaflet/ instead (copied
-// from node_modules/leaflet/dist/images) rather than depending on a CDN at runtime.
-const pinIcon = L.icon({
+// Brand-colored teardrop pin (matches --color-primary) instead of Leaflet's
+// stock blue marker. className cleared — Leaflet's default div-icon class adds
+// a white box background/border we don't want behind the SVG.
+const pinIcon = L.divIcon({
+  className: '',
+  html: `<svg width="25" height="41" viewBox="0 0 25 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12.5 0C5.596 0 0 5.596 0 12.5c0 9.375 12.5 28.5 12.5 28.5S25 21.875 25 12.5C25 5.596 19.404 0 12.5 0z" fill="var(--color-primary)"/>
+    <circle cx="12.5" cy="12.5" r="4.5" fill="white"/>
+  </svg>`,
   iconAnchor: [12, 41],
-  iconRetinaUrl: '/leaflet/marker-icon-2x.png',
   iconSize: [25, 41],
-  iconUrl: '/leaflet/marker-icon.png',
   popupAnchor: [1, -34],
-  shadowSize: [41, 41],
-  shadowUrl: '/leaflet/marker-shadow.png',
 })
 
 // Used only if a region has neither a forecast zone nor a map center — rough
