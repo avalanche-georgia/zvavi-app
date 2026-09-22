@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 import type { Option } from '@components/ui'
-import clsx from 'clsx'
+
+import { cn } from '@/lib/utils'
 
 type AspectOptionProps = {
   option: Option
@@ -21,14 +22,14 @@ const AspectOption = ({ onChange, option, selectedOptions }: AspectOptionProps) 
 
   return (
     <button
-      className={clsx(
-        'flex size-7 items-center justify-center rounded-sm text-gray-900 outline-hidden transition',
+      className={cn(
+        'flex size-9 items-center justify-center rounded-sm text-gray-900 outline-hidden transition',
         isSelected ? 'bg-white/90' : 'hover:bg-black/3',
       )}
       onClick={handleToggle}
       type="button"
     >
-      <span className={clsx({ 'text-primary': isSelected })}>{option.label}</span>
+      <span className={cn({ 'text-primary': isSelected })}>{option.label}</span>
     </button>
   )
 }
