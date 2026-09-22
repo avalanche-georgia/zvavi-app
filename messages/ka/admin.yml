@@ -30,6 +30,7 @@ admin:
     home: 'მთავარი'
     members: 'წევრები'
     menu: 'ადმინ მენიუ'
+    observations: 'დაკვირვებები'
     partners: 'პარტნიორები'
     recentAvalanches: 'ბოლო ზვავები'
     weatherStations: 'ამინდის სადგურები'

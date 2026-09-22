@@ -1,21 +1,29 @@
 'use client'
 
-import {
-  RecentAvalanchesFilters,
-  RecentAvalanchesTable,
-} from '@components/features/admin/RecentAvalanches'
 import { Icon } from '@components/icons'
 import { ButtonLink, RegionTabs } from '@components/shared'
 import { defaultRegionId } from '@domain/constants'
-import type { Region, RegionId } from '@domain/types'
+import type { AvalancheSource, Region, RegionId } from '@domain/types'
 import { useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 
+import RecentAvalanchesFilters from './RecentAvalanchesFilters'
+import { RecentAvalanchesTable } from './RecentAvalanchesTable'
 import useRecentAvalanchesPage from './useRecentAvalanchesPage'
 
 import { routes } from '@/routes'
 
-const RecentAvalanchesContainer = ({ initialRegions }: { initialRegions?: Region[] }) => {
+type RecentAvalanchesContainerProps = {
+  hideCreateAction?: boolean
+  initialRegions?: Region[]
+  source?: AvalancheSource
+}
+
+const RecentAvalanchesContainer = ({
+  hideCreateAction = false,
+  initialRegions,
+  source,
+}: RecentAvalanchesContainerProps) => {
   const t = useTranslations()
   const searchParams = useSearchParams()
   const regionId = (searchParams.get('regionId') as RegionId) ?? defaultRegionId
@@ -34,7 +42,7 @@ const RecentAvalanchesContainer = ({ initialRegions }: { initialRegions?: Region
     onPageChange,
     page,
     totalPages,
-  } = useRecentAvalanchesPage()
+  } = useRecentAvalanchesPage({ source })
 
   return (
     <>
@@ -53,10 +61,12 @@ const RecentAvalanchesContainer = ({ initialRegions }: { initialRegions?: Region
           onReset={onFiltersReset}
         />
 
-        <ButtonLink href={routes.admin.recentAvalanches.newInRegion(regionId)}>
-          <Icon icon="plus" size="sm" />
-          {t('admin.recentAvalanches.title.create')}
-        </ButtonLink>
+        {!hideCreateAction && (
+          <ButtonLink href={routes.admin.recentAvalanches.newInRegion(regionId)}>
+            <Icon icon="plus" size="sm" />
+            {t('admin.recentAvalanches.title.create')}
+          </ButtonLink>
+        )}
       </div>
 
       <div className="p-4 md:p-6">

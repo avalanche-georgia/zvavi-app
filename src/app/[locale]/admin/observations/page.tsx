@@ -16,14 +16,18 @@ const fetchRegions = async (): Promise<Region[]> => {
   return convertSnakeToCamel(data ?? []) as Region[]
 }
 
-const RecentAvalanchesPage = async () => {
+const ObservationsPage = async () => {
   const initialRegions = await fetchRegions()
 
   return (
     <Suspense fallback={<Spinner size="lg" />}>
-      <RecentAvalanchesContainer initialRegions={initialRegions} />
+      <RecentAvalanchesContainer
+        hideCreateAction
+        initialRegions={initialRegions}
+        source="external"
+      />
     </Suspense>
   )
 }
 
-export default RecentAvalanchesPage
+export default ObservationsPage

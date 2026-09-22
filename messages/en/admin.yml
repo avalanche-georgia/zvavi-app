@@ -30,6 +30,7 @@ admin:
     home: 'Home'
     members: 'Members'
     menu: 'Admin menu'
+    observations: 'Observations'
     partners: 'Partners'
     recentAvalanches: 'Recent Avalanches'
     weatherStations: 'Weather Stations'
