@@ -1,0 +1,73 @@
+'use client'
+
+import { InputBlock, RadioGroup, Select, toOptions } from '@components/ui'
+import { avalancheTriggers, avalancheTypes } from '@domain/constants'
+import { useTranslations } from 'next-intl'
+import { Controller, useFormContext } from 'react-hook-form'
+
+import type { ObservationSubmitFormSchema } from './schema'
+
+const sizeOptions = [1, 2, 3, 4, 5].map((value) => ({ label: String(value), value }))
+
+const ClassificationFields = () => {
+  const t = useTranslations()
+  const form = useFormContext<ObservationSubmitFormSchema>()
+
+  const typeOptions = [
+    ...toOptions(avalancheTypes, (key) => t(`common.avalancheTypes.${key}`)),
+    { label: t('common.avalancheTypes.unknown'), value: 'unknown' },
+  ]
+  const triggerOptions = toOptions(avalancheTriggers, (key) => t(`common.avalancheTriggers.${key}`))
+
+  return (
+    <div className="grid grid-cols-2 gap-3">
+      <InputBlock label={t('observations.submit.labels.type')}>
+        <Controller
+          control={form.control}
+          name="type"
+          render={({ field }) => (
+            <Select
+              onChange={field.onChange}
+              options={typeOptions}
+              placeholder={t('observations.submit.placeholders.type')}
+              value={field.value ?? undefined}
+            />
+          )}
+        />
+      </InputBlock>
+
+      <InputBlock label={t('observations.submit.labels.trigger')}>
+        <Controller
+          control={form.control}
+          name="trigger"
+          render={({ field }) => (
+            <Select
+              onChange={field.onChange}
+              options={triggerOptions}
+              placeholder={t('observations.submit.placeholders.trigger')}
+              value={field.value ?? undefined}
+            />
+          )}
+        />
+      </InputBlock>
+
+      <div className="col-span-2">
+        <InputBlock label={t('observations.submit.labels.size')}>
+          <Controller
+            control={form.control}
+            name="size"
+            render={({ field }) => (
+              <RadioGroup
+                onChange={(value) => field.onChange(Number(value))}
+                options={sizeOptions}
+                value={field.value}
+              />
+            )}
+          />
+        </InputBlock>
+      </div>
+    </div>
+  )
+}
+
+export default ClassificationFields
