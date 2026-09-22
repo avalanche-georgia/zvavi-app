@@ -72,11 +72,11 @@ const AvalancheItem = ({ avalanche, regionId }: AvalancheItemProps) => {
         <div className="w-20 shrink-0">
           <SourceBadge source={source} />
         </div>
-        <div className="w-24 shrink-0">
-          <StatusBadge status={status} />
-        </div>
         <div className="min-w-0 flex-1 text-sm text-gray-600">
           <DescriptionCellContent description={description} />
+        </div>
+        <div className="w-24 shrink-0">
+          <StatusBadge status={status} />
         </div>
         <div className="w-28 shrink-0">
           <ActionButtons

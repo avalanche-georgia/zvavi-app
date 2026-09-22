@@ -26,11 +26,11 @@ const TableHeader = () => {
       <div className="w-20 shrink-0 text-sm font-semibold">
         {t('admin.recentAvalanches.list.columns.source')}
       </div>
-      <div className="w-24 shrink-0 text-sm font-semibold">
-        {t('admin.recentAvalanches.list.columns.status')}
-      </div>
       <div className="min-w-0 flex-1 text-sm font-semibold">
         {t('admin.recentAvalanches.list.columns.description')}
+      </div>
+      <div className="w-24 shrink-0 text-sm font-semibold">
+        {t('admin.recentAvalanches.list.columns.status')}
       </div>
       <div className="w-28 shrink-0 text-right text-sm font-semibold">
         {t('admin.recentAvalanches.list.columns.actions')}
