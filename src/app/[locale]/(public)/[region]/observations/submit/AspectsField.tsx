@@ -16,7 +16,7 @@ const AspectsField = () => {
   const aspects = form.watch('aspects')
 
   const handleChange = (zone: ElevationZone) => (values: Aspect[]) => {
-    form.setValue('aspects', { ...aspects, [zone]: values })
+    form.setValue('aspects', { ...aspects, [zone]: values }, { shouldDirty: true })
   }
 
   return (

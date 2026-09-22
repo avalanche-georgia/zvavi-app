@@ -25,8 +25,8 @@ const LocationMapField = () => {
   const longitude = form.watch('longitude')
 
   const handlePick = (lat: number, lng: number) => {
-    form.setValue('latitude', lat)
-    form.setValue('longitude', lng)
+    form.setValue('latitude', lat, { shouldDirty: true })
+    form.setValue('longitude', lng, { shouldDirty: true })
   }
 
   return (

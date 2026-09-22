@@ -14,7 +14,10 @@ const DateField = () => {
   const isDateUnknown = form.watch('isDateUnknown')
 
   return (
-    <InputBlock label={t('observations.submit.labels.date')}>
+    <InputBlock
+      error={form.formState.errors.date?.message}
+      label={t('observations.submit.labels.date')}
+    >
       <div className="flex items-center gap-3">
         <Controller
           control={form.control}
@@ -23,6 +26,7 @@ const DateField = () => {
             <DatePicker
               className="h-9 w-42"
               disabled={isDateUnknown}
+              hasError={!!form.formState.errors.date}
               maxDate={today}
               onChange={field.onChange}
               value={field.value}

@@ -12,7 +12,10 @@ const SubmitterFields = () => {
 
   return (
     <div className="flex flex-col gap-3">
-      <InputBlock label={t('observations.submit.labels.submitterName')}>
+      <InputBlock
+        error={form.formState.errors.submitterName?.message}
+        label={t('observations.submit.labels.submitterName')}
+      >
         <Controller
           control={form.control}
           name="submitterName"
@@ -20,7 +23,10 @@ const SubmitterFields = () => {
         />
       </InputBlock>
 
-      <InputBlock label={t('observations.submit.labels.submitterEducation')}>
+      <InputBlock
+        error={form.formState.errors.submitterEducation?.message}
+        label={t('observations.submit.labels.submitterEducation')}
+      >
         <Controller
           control={form.control}
           name="submitterEducation"
@@ -34,7 +40,10 @@ const SubmitterFields = () => {
         />
       </InputBlock>
 
-      <InputBlock label={t('observations.submit.labels.submitterContact')}>
+      <InputBlock
+        error={form.formState.errors.submitterContact?.message}
+        label={t('observations.submit.labels.submitterContact')}
+      >
         <Controller
           control={form.control}
           name="submitterContact"

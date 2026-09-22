@@ -11,7 +11,10 @@ const DescriptionField = () => {
   const form = useFormContext<ObservationSubmitFormSchema>()
 
   return (
-    <InputBlock label={t('observations.submit.labels.description')}>
+    <InputBlock
+      error={form.formState.errors.description?.message}
+      label={t('observations.submit.labels.description')}
+    >
       <Controller
         control={form.control}
         name="description"

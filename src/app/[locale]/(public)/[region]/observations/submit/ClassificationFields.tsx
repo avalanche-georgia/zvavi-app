@@ -21,12 +21,16 @@ const ClassificationFields = () => {
 
   return (
     <div className="grid grid-cols-2 gap-3">
-      <InputBlock label={t('observations.submit.labels.type')}>
+      <InputBlock
+        error={form.formState.errors.type?.message}
+        label={t('observations.submit.labels.type')}
+      >
         <Controller
           control={form.control}
           name="type"
           render={({ field }) => (
             <Select
+              hasError={!!form.formState.errors.type}
               onChange={field.onChange}
               options={typeOptions}
               placeholder={t('observations.submit.placeholders.type')}
@@ -36,12 +40,16 @@ const ClassificationFields = () => {
         />
       </InputBlock>
 
-      <InputBlock label={t('observations.submit.labels.trigger')}>
+      <InputBlock
+        error={form.formState.errors.trigger?.message}
+        label={t('observations.submit.labels.trigger')}
+      >
         <Controller
           control={form.control}
           name="trigger"
           render={({ field }) => (
             <Select
+              hasError={!!form.formState.errors.trigger}
               onChange={field.onChange}
               options={triggerOptions}
               placeholder={t('observations.submit.placeholders.trigger')}
@@ -52,7 +60,10 @@ const ClassificationFields = () => {
       </InputBlock>
 
       <div className="col-span-2">
-        <InputBlock label={t('observations.submit.labels.size')}>
+        <InputBlock
+          error={form.formState.errors.size?.message}
+          label={t('observations.submit.labels.size')}
+        >
           <Controller
             control={form.control}
             name="size"
