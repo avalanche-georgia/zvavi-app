@@ -6,11 +6,12 @@ import dynamic from 'next/dynamic'
 import { useTranslations } from 'next-intl'
 import { useFormContext } from 'react-hook-form'
 
+import LocationCoordinateFields from './LocationCoordinateFields'
 import type { ObservationSubmitFormSchema } from './schema'
 
 const LocationMapFieldClient = dynamic(() => import('./LocationMapFieldClient'), {
   loading: () => (
-    <div className="flex h-96 w-full items-center justify-center rounded-xl bg-gray-100">
+    <div className="flex h-[28.8rem] w-full items-center justify-center rounded-xl bg-gray-100">
       <Spinner />
     </div>
   ),
@@ -29,18 +30,29 @@ const LocationMapField = () => {
     form.setValue('longitude', lng, { shouldDirty: true })
   }
 
+  const handleCoordinateChange = (lat: number | null, lng: number | null) => {
+    form.setValue('latitude', lat, { shouldDirty: true })
+    form.setValue('longitude', lng, { shouldDirty: true })
+  }
+
   return (
     <InputBlock
       hint={t('observations.submit.hints.location')}
       label={t('observations.submit.labels.location')}
-      optional
     >
-      <LocationMapFieldClient
-        latitude={latitude}
-        longitude={longitude}
-        onChange={handlePick}
-        region={region!}
-      />
+      <div className="flex flex-col gap-3">
+        <LocationMapFieldClient
+          latitude={latitude}
+          longitude={longitude}
+          onChange={handlePick}
+          region={region!}
+        />
+        <LocationCoordinateFields
+          latitude={latitude}
+          longitude={longitude}
+          onChange={handleCoordinateChange}
+        />
+      </div>
     </InputBlock>
   )
 }
