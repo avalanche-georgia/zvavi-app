@@ -9,3 +9,25 @@ observations:
   card:
     dateUnknown: 'Date unknown'
     submittedBy: 'Reported by {submitterName}'
+
+  submit:
+    title: 'Submit an Observation — {regionName}'
+    submit: 'Submit'
+    success: 'Thank you — your observation has been submitted.'
+    error: 'Something went wrong. Please try again.'
+    labels:
+      date: 'Date'
+      dateUnknown: 'Date unknown'
+      description: 'Description'
+      location: 'Tap the map to mark the location (optional)'
+      size: 'Size'
+      submitterContact: 'Contact'
+      submitterEducation: 'Avalanche education/training'
+      submitterName: 'Your name'
+      trigger: 'Trigger'
+      type: 'Avalanche type'
+    placeholders:
+      submitterContact: 'How can we reach you? Email, phone, Instagram…'
+      submitterEducation: 'e.g. AIARE Level 1, none, self-taught…'
+      trigger: 'Select trigger'
+      type: 'Select type'

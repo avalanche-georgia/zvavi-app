@@ -9,3 +9,25 @@ observations:
   card:
     dateUnknown: 'თარიღი უცნობია'
     submittedBy: 'მოწოდებულია {submitterName}-ის მიერ'
+
+  submit:
+    title: 'დაკვირვების მოწოდება — {regionName}'
+    submit: 'გაგზავნა'
+    success: 'გმადლობთ — თქვენი დაკვირვება გაიგზავნა.'
+    error: 'დაფიქსირდა შეცდომა. გთხოვთ სცადოთ ხელახლა.'
+    labels:
+      date: 'თარიღი'
+      dateUnknown: 'თარიღი უცნობია'
+      description: 'აღწერა'
+      location: 'დააჭირეთ რუკას ადგილმდებარეობის მისანიშნებლად (არასავალდებულო)'
+      size: 'ზომა'
+      submitterContact: 'კონტაქტი'
+      submitterEducation: 'ზვავის უსაფრთხოების ტრენინგი'
+      submitterName: 'თქვენი სახელი'
+      trigger: 'გამომწვევი'
+      type: 'ზვავის ტიპი'
+    placeholders:
+      submitterContact: 'როგორ დაგიკავშირდეთ? ელფოსტა, ტელეფონი, Instagram…'
+      submitterEducation: 'მაგ. AIARE Level 1, არცერთი, თვითნასწავლი…'
+      trigger: 'აირჩიეთ გამომწვევი'
+      type: 'აირჩიეთ ტიპი'
