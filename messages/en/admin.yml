@@ -332,6 +332,8 @@ admin:
         description: Description
         location: Location
         size: Size
+        source: Source
+        status: Status
         trigger: Trigger
         type: Type
       empty: No avalanches found.
@@ -350,6 +352,8 @@ admin:
     actions:
       deleteDescription: This avalanche record will be permanently deleted.
       deleteTitle: Delete Avalanche
+      publish: Publish
+      unpublish: Unpublish
 
     form:
       labels:

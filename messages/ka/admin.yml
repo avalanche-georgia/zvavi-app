@@ -332,6 +332,8 @@ admin:
         description: აღწერა
         location: ადგილმდებარეობა
         size: ზომა
+        source: წყარო
+        status: სტატუსი
         trigger: გამომწვევი
         type: სახეობა
       empty: ზვავის ჩანაწერები არ მოიძებნა.
@@ -350,6 +352,8 @@ admin:
     actions:
       deleteDescription: ეს ჩანაწერი სამუდამოდ წაიშლება.
       deleteTitle: ზვავის წაშლა
+      publish: გამოქვეყნება
+      unpublish: გამოქვეყნების გაუქმება
 
     form:
       labels:

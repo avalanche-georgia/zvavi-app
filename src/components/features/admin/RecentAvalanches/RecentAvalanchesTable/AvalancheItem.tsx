@@ -11,6 +11,9 @@ import { useTranslations } from 'next-intl'
 
 import ActionButtons from './ActionButtons'
 import DescriptionCellContent from './DescriptionCellContent'
+import SourceBadge from './SourceBadge'
+import StatusToggle from './StatusToggle'
+import useAvalancheStatusToggle from './useAvalancheStatusToggle'
 
 import { routes } from '@/routes'
 
@@ -26,8 +29,25 @@ const AvalancheItem = ({ avalanche, regionId }: AvalancheItemProps) => {
     useBoolean(false)
   const { toastError, toastSuccess } = useToast()
 
-  const { createdAt, date, description, id, isDateUnknown, location, size, trigger, type } =
-    avalanche
+  const {
+    createdAt,
+    date,
+    description,
+    id,
+    isDateUnknown,
+    location,
+    size,
+    source = 'team',
+    status = 'published',
+    trigger,
+    type,
+  } = avalanche
+
+  const { isPending: isTogglingStatus, toggleStatus } = useAvalancheStatusToggle({
+    id,
+    regionId,
+    status,
+  })
 
   const dateDisplay = isDateUnknown
     ? t('admin.forecast.form.recentAvalanches.labels.dateUnknown')
@@ -60,6 +80,12 @@ const AvalancheItem = ({ avalanche, regionId }: AvalancheItemProps) => {
         </div>
         <div className="w-36 shrink-0 text-sm">{t(`common.avalancheTriggers.${trigger}`)}</div>
         <div className="w-36 shrink-0 truncate text-sm text-gray-600">{location ?? '—'}</div>
+        <div className="w-20 shrink-0">
+          <SourceBadge source={source} />
+        </div>
+        <div className="w-32 shrink-0">
+          <StatusToggle isPending={isTogglingStatus} onToggle={toggleStatus} status={status} />
+        </div>
         <div className="min-w-0 flex-1 text-sm text-gray-600">
           <DescriptionCellContent description={description} />
         </div>
