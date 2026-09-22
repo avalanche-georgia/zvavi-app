@@ -33,12 +33,17 @@ export const fetchPaginatedAvalanches = async (params: QueryParams): Promise<Pag
 
   avalanchesQuery = avalanchesQuery.range(offset, offset + pageSize - 1)
 
+  let grandTotalQuery = supabase
+    .from('recent_avalanches')
+    .select('*', { count: 'exact', head: true })
+    .eq('region_id', regionId)
+
+  if (source) grandTotalQuery = grandTotalQuery.eq('source', source)
+  if (status) grandTotalQuery = grandTotalQuery.eq('status', status)
+
   const [{ count, data, error }, { count: grandTotal, error: totalError }] = await Promise.all([
     avalanchesQuery,
-    supabase
-      .from('recent_avalanches')
-      .select('*', { count: 'exact', head: true })
-      .eq('region_id', regionId),
+    grandTotalQuery,
   ])
 
   if (error) throw new Error(error.message)

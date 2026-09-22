@@ -30,6 +30,7 @@ admin:
     home: 'მთავარი'
     members: 'წევრები'
     menu: 'ადმინ მენიუ'
+    observations: 'დაკვირვებები'
     partners: 'პარტნიორები'
     recentAvalanches: 'ბოლო ზვავები'
     weatherStations: 'ამინდის სადგურები'
@@ -332,6 +333,8 @@ admin:
         description: აღწერა
         location: ადგილმდებარეობა
         size: ზომა
+        source: წყარო
+        status: სტატუსი
         trigger: გამომწვევი
         type: სახეობა
       empty: ზვავის ჩანაწერები არ მოიძებნა.
@@ -350,6 +353,8 @@ admin:
     actions:
       deleteDescription: ეს ჩანაწერი სამუდამოდ წაიშლება.
       deleteTitle: ზვავის წაშლა
+      publish: გამოქვეყნება
+      unpublish: გამოქვეყნების გაუქმება
 
     form:
       labels:
@@ -362,6 +367,11 @@ admin:
         quantity: რაოდენობა
         size: ზომა
         slabDepth: ფილის სისქე (სმ)
+        status: სტატუსი
+        submitterContact: კონტაქტი
+        submitterEducation: განათლება
+        submitterName: სახელი
+        submitterSection: წარმდგენი
         trigger: გამომწვევი
         type: სახეობა
         width: სიგანე (მ)

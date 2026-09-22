@@ -1,12 +1,40 @@
 import { convertCamelToSnake } from '@data/helpers'
+import type { RegionId } from '@domain/types'
 import { NextResponse } from 'next/server'
 
+import fetchPublicObservations from './fetchPublicObservations'
 import { submitObservationSchema } from './schema'
 
 import { createServiceRoleClient } from '@/lib/supabase/serviceRole'
+import { Constants } from '@/lib/supabase/types'
 
 // Hidden via CSS in the real form — a bot fills every field it sees, a human never sees this one.
 type HoneypotCheck = { honeypot?: unknown }
+
+const validRegionIds: readonly string[] = Constants.public.Enums.region_id
+
+export const GET = async (request: Request) => {
+  const searchParams = new URL(request.url).searchParams
+  const regionId = searchParams.get('regionId')
+
+  if (!regionId || !validRegionIds.includes(regionId)) {
+    return NextResponse.json({ error: 'a valid regionId is required', ok: false }, { status: 400 })
+  }
+
+  try {
+    const observations = await fetchPublicObservations({
+      dateFrom: searchParams.get('dateFrom') ?? undefined,
+      dateTo: searchParams.get('dateTo') ?? undefined,
+      regionId: regionId as RegionId,
+    })
+
+    return NextResponse.json({ observations, ok: true })
+  } catch (error) {
+    console.error('[GET /api/observations] fetchPublicObservations failed:', error)
+
+    return NextResponse.json({ error: 'failed to fetch observations', ok: false }, { status: 500 })
+  }
+}
 
 export const POST = async (request: Request) => {
   let rawBody: unknown
