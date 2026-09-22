@@ -30,6 +30,13 @@ const RegionHomeQuickLinks = () => {
       >
         {t('navigation.history')}
       </ButtonLink>
+      <ButtonLink
+        className="max-w-none flex-1 justify-center py-3"
+        href={routes.observationsByRegion(regionId).root}
+        variant="outline"
+      >
+        {t('navigation.observations')}
+      </ButtonLink>
     </div>
   )
 }

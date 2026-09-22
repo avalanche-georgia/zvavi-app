@@ -18,6 +18,9 @@ seo:
   joinUs:
     title: 'Join Us'
     description: 'Join the Avalanche Georgia team. Help us improve avalanche safety in Georgian backcountry.'
+  observations:
+    title: 'Observations — {regionName}'
+    description: 'Community-reported avalanche observations for {regionName}.'
   partners:
     title: 'Partners'
     description: 'Our partners who make avalanche forecasting in Georgia possible.'

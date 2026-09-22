@@ -1,0 +1,11 @@
+observations:
+  pageTitle: 'Observations — {regionName}'
+  empty: 'No observations reported yet.'
+  submitCta: 'Submit an Observation'
+
+  filters:
+    reset: 'Reset filters'
+
+  card:
+    dateUnknown: 'Date unknown'
+    submittedBy: 'Reported by {submitterName}'
