@@ -2,6 +2,7 @@ import type {
   Aspect,
   AvalancheSource,
   AvalancheStatus,
+  AvalancheTrigger,
   HazardLevel,
   HazardLevelScale,
   MemberStatus,
@@ -58,6 +59,15 @@ export const avalancheTriggers = {
   unknown: 'unknown',
   vehicle: 'vehicle',
 } as const
+
+export const avalancheTriggersOrdered: AvalancheTrigger[] = [
+  'unknown',
+  'explosives',
+  'natural',
+  'riderAccidental',
+  'riderCut',
+  'vehicle',
+]
 
 export const aspects = {
   e: 'E',

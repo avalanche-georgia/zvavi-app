@@ -1,13 +1,7 @@
 'use client'
 
-import {
-  InputBlock,
-  NumberInput,
-  Select,
-  toOptions,
-  toOptionsWithUnknownFirst,
-} from '@components/ui'
-import { avalancheTriggers, avalancheTypes } from '@domain/constants'
+import { InputBlock, NumberInput, Select, toOptions } from '@components/ui'
+import { avalancheTriggersOrdered, avalancheTypes } from '@domain/constants'
 import { useTranslations } from 'next-intl'
 import { Controller, useFormContext } from 'react-hook-form'
 
@@ -22,7 +16,7 @@ const ClassificationFields = () => {
     { label: t('common.avalancheTypes.unknown'), value: 'unknown' },
   ]
 
-  const triggerOptions = toOptionsWithUnknownFirst(avalancheTriggers, (key) =>
+  const triggerOptions = toOptions(avalancheTriggersOrdered, (key) =>
     t(`common.avalancheTriggers.${key}`),
   )
 

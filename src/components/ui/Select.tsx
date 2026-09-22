@@ -19,24 +19,6 @@ export const toOptions = (
   return entries.map((key) => ({ label: t(key), value: key }))
 }
 
-// Domain constants must stay alphabetically sorted (enforced by sort-keys-fix),
-// so "unknown first" can't live on the constant itself — applied here instead,
-// as the one shared place both admin and public forms build these options from.
-export const toOptionsWithUnknownFirst = (
-  keys: readonly string[] | Record<string, string>,
-  t: (key: string) => string,
-): SelectOption[] => {
-  const options = toOptions(keys, t)
-  const unknownIndex = options.findIndex((option) => option.value === 'unknown')
-
-  if (unknownIndex <= 0) return options
-
-  const unknownOption = options[unknownIndex]!
-  const rest = options.filter((_, index) => index !== unknownIndex)
-
-  return [unknownOption, ...rest]
-}
-
 type SelectProps = {
   className?: string
   hasError?: boolean
