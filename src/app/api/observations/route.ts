@@ -69,6 +69,9 @@ export const POST = async (request: Request) => {
     p_is_date_unknown: body.isDateUnknown,
     p_latitude: body.latitude ?? undefined,
     p_longitude: body.longitude ?? undefined,
+    // @ts-expect-error p_quantity added by 20260808102960_submit_observation_add_quantity.sql,
+    // not yet applied to staging — remove this once `pnpm typegen` picks it up.
+    p_quantity: body.quantity,
     p_region_id: body.regionId,
     p_size: body.size ?? undefined,
     p_submitter_contact: body.submitterContact ?? undefined,

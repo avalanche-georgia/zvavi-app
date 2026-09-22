@@ -28,6 +28,7 @@ observations:
       latitude: 'განედი'
       location: 'მდებარეობა'
       longitude: 'გრძედი'
+      quantity: 'რაოდენობა'
       size: 'ზომა'
       submitterContact: 'კონტაქტი'
       submitterEducation: 'ზვავის უსაფრთხოების ტრენინგი'

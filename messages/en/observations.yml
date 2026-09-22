@@ -28,6 +28,7 @@ observations:
       latitude: 'Latitude'
       location: 'Location'
       longitude: 'Longitude'
+      quantity: 'Quantity'
       size: 'Size'
       submitterContact: 'Contact'
       submitterEducation: 'Avalanche education/training'

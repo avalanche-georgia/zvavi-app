@@ -31,6 +31,7 @@ const useObservationSubmitFormSubmit = ({ regionId }: UseObservationSubmitFormSu
           isDateUnknown: formData.isDateUnknown,
           latitude: formData.latitude,
           longitude: formData.longitude,
+          quantity: formData.quantity,
           regionId,
           size: formData.size,
           submitterContact: formData.submitterContact,

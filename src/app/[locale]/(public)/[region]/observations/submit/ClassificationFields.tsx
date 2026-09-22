@@ -1,6 +1,6 @@
 'use client'
 
-import { InputBlock, RadioGroup, Select, toOptions } from '@components/ui'
+import { InputBlock, NumberInput, RadioGroup, Select, toOptions } from '@components/ui'
 import { avalancheTriggersOrdered, avalancheTypes } from '@domain/constants'
 import { useTranslations } from 'next-intl'
 import { Controller, useFormContext } from 'react-hook-form'
@@ -63,24 +63,36 @@ const ClassificationFields = () => {
         />
       </InputBlock>
 
-      <div className="sm:col-span-2">
-        <InputBlock
-          error={form.formState.errors.size?.message}
-          label={t('observations.submit.labels.size')}
-        >
-          <Controller
-            control={form.control}
-            name="size"
-            render={({ field }) => (
-              <RadioGroup
-                onChange={(value) => field.onChange(Number(value))}
-                options={sizeOptions}
-                value={field.value}
-              />
-            )}
-          />
-        </InputBlock>
-      </div>
+      <InputBlock
+        error={form.formState.errors.size?.message}
+        label={t('observations.submit.labels.size')}
+      >
+        <Controller
+          control={form.control}
+          name="size"
+          render={({ field }) => (
+            <RadioGroup
+              onChange={(value) => field.onChange(Number(value))}
+              optionClassName="size-8 min-w-0 p-0 sm:size-10"
+              options={sizeOptions}
+              value={field.value}
+            />
+          )}
+        />
+      </InputBlock>
+
+      <InputBlock
+        error={form.formState.errors.quantity?.message}
+        label={t('observations.submit.labels.quantity')}
+      >
+        <Controller
+          control={form.control}
+          name="quantity"
+          render={({ field }) => (
+            <NumberInput min={1} onValueChange={field.onChange} value={field.value} />
+          )}
+        />
+      </InputBlock>
     </div>
   )
 }

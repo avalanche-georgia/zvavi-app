@@ -10,6 +10,7 @@ const getInitialFormData = (): ObservationSubmitFormSchema => ({
   isDateUnknown: true,
   latitude: null,
   longitude: null,
+  quantity: 1,
   size: 1,
   submitterContact: null,
   submitterEducation: null,

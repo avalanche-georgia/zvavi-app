@@ -21,6 +21,7 @@ export const submitObservationSchema = z.object({
   isDateUnknown: z.boolean(),
   latitude: z.number().nullable(),
   longitude: z.number().nullable(),
+  quantity: z.number().int().min(1),
   regionId: z.enum(region_id),
   size: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]).nullable(),
   submitterContact: z.string().nullable(),
