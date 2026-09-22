@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { useToast } from '@components/hooks'
 import { useObservationCreate } from '@data/hooks/observations'
-import type { AvalancheTrigger, AvalancheType, RegionId } from '@domain/types'
+import type { RegionId } from '@domain/types'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'src/i18n/navigation'
 
@@ -35,8 +35,8 @@ const useObservationSubmitFormSubmit = ({ regionId }: UseObservationSubmitFormSu
           submitterContact: formData.submitterContact,
           submitterEducation: formData.submitterEducation,
           submitterName: formData.submitterName,
-          trigger: formData.trigger as AvalancheTrigger | null,
-          type: formData.type as AvalancheType | null,
+          trigger: formData.trigger,
+          type: formData.type,
         })
 
         toastSuccess(t('observations.submit.success'))
