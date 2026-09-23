@@ -89,7 +89,12 @@ const ClassificationFields = () => {
           control={form.control}
           name="quantity"
           render={({ field }) => (
-            <NumberInput min={1} onValueChange={field.onChange} value={field.value} />
+            <NumberInput
+              className="w-42"
+              min={1}
+              onValueChange={field.onChange}
+              value={field.value}
+            />
           )}
         />
       </InputBlock>
