@@ -23,7 +23,7 @@ const AspectOption = ({ onChange, option, selectedOptions }: AspectOptionProps) 
   return (
     <button
       className={cn(
-        'flex size-9 items-center justify-center rounded-sm text-gray-900 outline-hidden transition',
+        'flex size-7 items-center justify-center rounded-sm text-gray-900 outline-hidden transition',
         isSelected ? 'bg-white/90' : 'hover:bg-black/3',
       )}
       onClick={handleToggle}
