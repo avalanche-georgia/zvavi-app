@@ -14,7 +14,6 @@ const DescriptionField = () => {
     <InputBlock
       error={form.formState.errors.description?.message}
       label={t('observations.submit.labels.description')}
-      optional
     >
       <Controller
         control={form.control}
