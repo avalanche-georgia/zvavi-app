@@ -43,7 +43,6 @@ const PhotosField = () => {
     <InputBlock
       error={errorMessage && t(`observations.submit.photos.errors.${errorMessage}`)}
       label={t('observations.submit.photos.label')}
-      optional
     >
       <div className="grid grid-cols-3 gap-2 sm:grid-cols-[repeat(3,9rem)] sm:gap-3">
         {photos.map((photo, index) => (
