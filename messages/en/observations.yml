@@ -17,6 +17,10 @@ observations:
     error: 'Something went wrong. Please try again.'
     hints:
       location: 'Tap or drag on the map to drop a pin at the location.'
+    avalancheDetailsInfo:
+      title: 'Avalanche details'
+      description: "We're building a full avalanche knowledge base for this site — it'll take some time to get there. In the meantime, this avalanche encyclopedia covers the key terms and definitions."
+      linkLabel: 'Avalanche Encyclopedia'
     sections:
       aboutYou: 'About you'
       avalancheDetails: 'Avalanche details'

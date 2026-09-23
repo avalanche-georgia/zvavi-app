@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl'
 
 import AspectsField from './AspectsField'
+import AvalancheDetailsInfo from './AvalancheDetailsInfo'
 import ClassificationFields from './ClassificationFields'
 import DateField from './DateField'
 import DescriptionField from './DescriptionField'
@@ -23,7 +24,10 @@ const FormFields = () => {
         <LocationMapField />
       </FormSection>
 
-      <FormSection title={t('observations.submit.sections.avalancheDetails')}>
+      <FormSection
+        info={<AvalancheDetailsInfo />}
+        title={t('observations.submit.sections.avalancheDetails')}
+      >
         <ClassificationFields />
         <AspectsField />
         <DescriptionField />
