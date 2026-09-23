@@ -14,6 +14,10 @@ const aspectsSchema = z.object({
 })
 
 // avalanche_trigger / avalanche_type already include 'unknown' at the DB level.
+// involvement is deliberately not exposed here — treated as internal-only
+// across the app (see its "(internal)" label on the forecast-nested avalanche
+// form); location (free text) is out of scope for the public form by product
+// decision.
 export const submitObservationSchema = z.object({
   aspects: aspectsSchema.nullable(),
   date: z.string().nullable(),
@@ -24,11 +28,13 @@ export const submitObservationSchema = z.object({
   quantity: z.number().int().min(1),
   regionId: z.enum(region_id),
   size: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]).nullable(),
+  slabDepth: z.number().nullable(),
   submitterContact: z.string().nullable(),
   submitterEducation: z.string().nullable(),
   submitterName: z.string().min(1),
   trigger: z.enum(avalanche_trigger),
   type: z.enum(avalanche_type),
+  width: z.number().nullable(),
 })
 
 export type SubmitObservationBody = z.infer<typeof submitObservationSchema>

@@ -74,11 +74,13 @@ export const POST = async (request: Request) => {
     p_quantity: body.quantity,
     p_region_id: body.regionId,
     p_size: body.size ?? undefined,
+    p_slab_depth: body.slabDepth ?? undefined,
     p_submitter_contact: body.submitterContact ?? undefined,
     p_submitter_education: body.submitterEducation ?? undefined,
     p_submitter_name: body.submitterName,
     p_trigger: body.trigger,
     p_type: body.type,
+    p_width: body.width ?? undefined,
   })
 
   if (error) {
