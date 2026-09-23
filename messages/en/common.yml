@@ -95,6 +95,7 @@ common:
 
   words:
     from: 'From'
+    optional: 'Optional'
     overall: 'Overall'
     to: 'To'
     unknown: 'Unknown'

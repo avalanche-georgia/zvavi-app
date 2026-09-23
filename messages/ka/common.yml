@@ -95,6 +95,7 @@ common:
 
   words:
     from: 'დან'
+    optional: 'არასავალდებულო'
     overall: 'საერთო'
     to: 'მდე'
     unknown: 'უცნობი'

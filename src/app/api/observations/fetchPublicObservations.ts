@@ -4,12 +4,13 @@ import type { Avalanche, RegionId } from '@domain/types'
 import { createServiceRoleClient } from '@/lib/supabase/serviceRole'
 
 // Explicit column list — never `select('*')` here. submitter_contact,
-// submitter_education, and created_by_user_id must never reach this
+// submitter_education, created_by_user_id, and involvement (internal-only,
+// see its "(internal)" label on the admin form) must never reach this
 // public-facing endpoint (see recent_avalanches RLS: anon can't read
 // external rows directly, this route is the only path to them).
 const publicColumns =
   'id, region_id, date, is_date_unknown, description, size, quantity, location, latitude, ' +
-  'longitude, type, trigger, aspects, involvement, width, slab_depth, photo_keys, ' +
+  'longitude, type, trigger, aspects, width, slab_depth, photo_keys, ' +
   'submitter_name, created_at'
 
 export type FetchPublicObservationsParams = {

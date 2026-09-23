@@ -1,4 +1,5 @@
 export { Aspects, type SetAspectsData } from './Aspects'
+export { AspectSelector } from './Aspects/AspectSelector'
 export { AvalancheSize } from './AvalancheSize'
 export { Footer } from './Footer'
 export * from './hooks'

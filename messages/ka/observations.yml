@@ -1,0 +1,52 @@
+observations:
+  pageTitle: 'დაკვირვებები — {regionName}'
+  empty: 'დაკვირვებები ჯერ არ არის მოწოდებული.'
+  submitCta: 'დაკვირვების მოწოდება'
+
+  filters:
+    reset: 'ფილტრების გადატვირთვა'
+
+  card:
+    dateUnknown: 'თარიღი უცნობია'
+    submittedBy: 'მოწოდებულია {submitterName}-ის მიერ'
+
+  submit:
+    title: 'დაკვირვების მოწოდება — {regionName}'
+    submit: 'გაგზავნა'
+    success: 'გმადლობთ — თქვენი დაკვირვება გაიგზავნა.'
+    error: 'დაფიქსირდა შეცდომა. გთხოვთ სცადოთ ხელახლა.'
+    hints:
+      location: 'დააჭირეთ ან გადაათრიეთ რუკაზე ადგილმდებარეობის მისანიშნებლად.'
+    avalancheDetailsInfo:
+      title: 'ზვავის დეტალები'
+      description: 'ვმუშაობთ ცოდნის სრულ ბაზაზე ამ საიტისთვის — ამას გარკვეული დრო სჭირდება. იმ დრომდე, ეს ზვავების ენციკლოპედია მოიცავს ძირითად ტერმინებსა და განმარტებებს.'
+      linkLabel: 'ზვავების ენციკლოპედია'
+    sections:
+      aboutYou: 'თქვენ შესახებ'
+      avalancheDetails: 'ზვავის დეტალები'
+      whenAndWhere: 'როდის და სად'
+    labels:
+      date: 'თარიღი'
+      dateUnknown: 'თარიღი უცნობია'
+      description: 'აღწერა'
+      latitude: 'განედი'
+      location: 'მდებარეობა'
+      longitude: 'გრძედი'
+      quantity: 'რაოდენობა'
+      size: 'ზომა'
+      slabDepth: 'ფილის სისქე (სმ)'
+      submitterContact: 'კონტაქტი'
+      submitterEducation: 'ზვავის უსაფრთხოების ტრენინგი'
+      submitterName: 'თქვენი სახელი'
+      trigger: 'გამომწვევი'
+      type: 'ზვავის ტიპი'
+      width: 'სიგანე (მ)'
+    placeholders:
+      description: 'სხვა რამე, რაც ღირს აღნიშვნა — ამინდი, თოვლის საფარი, ახლომახლო აქტივობა…'
+      latitude: 'მაგ. 42.6975'
+      longitude: 'მაგ. 44.4547'
+      submitterContact: 'როგორ დაგიკავშირდეთ? ელფოსტა, ტელეფონი, Instagram…'
+      submitterEducation: 'მაგ. AST 1, არცერთი, თვითნასწავლი…'
+      submitterName: 'ნინო ბერიძე'
+      trigger: 'აირჩიეთ გამომწვევი'
+      type: 'აირჩიეთ ტიპი'
