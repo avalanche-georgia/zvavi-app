@@ -8,6 +8,16 @@
 -- involvement is treated as internal-only across the app (see its "(internal)"
 -- label on the forecast-nested avalanche form), and location was left out of
 -- the public form's scope by product decision.
+--
+-- The new param list has a different arity than the currently-applied
+-- 13-param version (20260808102958_submit_observation_rpc.sql), so
+-- CREATE OR REPLACE would add a second overload instead of replacing it —
+-- Postgres identifies a function by name + argument types, not name alone.
+-- Drop the old signature first so exactly one version exists afterward.
+DROP FUNCTION IF EXISTS public.submit_observation(
+  region_id, numeric, numeric, timestamptz, boolean, avalanche_type,
+  avalanche_trigger, bigint, jsonb, text, text, text, text
+);
 
 CREATE OR REPLACE FUNCTION public.submit_observation(
   p_region_id            region_id,
