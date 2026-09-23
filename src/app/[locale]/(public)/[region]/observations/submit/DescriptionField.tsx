@@ -4,15 +4,18 @@ import { InputBlock, Textarea } from '@components/ui'
 import { useTranslations } from 'next-intl'
 import { Controller, useFormContext } from 'react-hook-form'
 
+import useFieldError from './hooks/useFieldError'
+
 import type { ObservationSubmitFormSchema } from './schema'
 
 const DescriptionField = () => {
   const t = useTranslations()
   const form = useFormContext<ObservationSubmitFormSchema>()
+  const getFieldError = useFieldError()
 
   return (
     <InputBlock
-      error={form.formState.errors.description?.message}
+      error={getFieldError('description')}
       label={t('observations.submit.labels.description')}
     >
       <Controller

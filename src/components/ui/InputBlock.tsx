@@ -39,7 +39,11 @@ const InputBlock = ({
         {hint && <InfoIcon content={hint} />}
       </span>
       {children}
-      {error && <span className="text-xs text-red-500">{error}</span>}
+      {error && (
+        <span className="text-xs text-red-500" data-field-error>
+          {error}
+        </span>
+      )}
     </div>
   )
 }

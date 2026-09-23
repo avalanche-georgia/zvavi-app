@@ -5,6 +5,8 @@ import { avalancheTriggersOrdered, avalancheTypesOrdered } from '@domain/constan
 import { useTranslations } from 'next-intl'
 import { Controller, useFormContext } from 'react-hook-form'
 
+import useFieldError from './hooks/useFieldError'
+
 import MeasurementFields from './MeasurementFields'
 import type { ObservationSubmitFormSchema } from './schema'
 
@@ -13,6 +15,7 @@ const sizeOptions = [1, 2, 3, 4, 5].map((value) => ({ label: String(value), valu
 const ClassificationFields = () => {
   const t = useTranslations()
   const form = useFormContext<ObservationSubmitFormSchema>()
+  const getFieldError = useFieldError()
 
   const typeOptions = toOptions(avalancheTypesOrdered, (key) => t(`common.avalancheTypes.${key}`))
   const triggerOptions = toOptions(avalancheTriggersOrdered, (key) =>
@@ -22,7 +25,7 @@ const ClassificationFields = () => {
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <InputBlock
-        error={form.formState.errors.type?.message}
+        error={getFieldError('type')}
         label={t('observations.submit.labels.type')}
         required
       >
@@ -42,7 +45,7 @@ const ClassificationFields = () => {
       </InputBlock>
 
       <InputBlock
-        error={form.formState.errors.trigger?.message}
+        error={getFieldError('trigger')}
         label={t('observations.submit.labels.trigger')}
         required
       >
@@ -61,10 +64,7 @@ const ClassificationFields = () => {
         />
       </InputBlock>
 
-      <InputBlock
-        error={form.formState.errors.size?.message}
-        label={t('observations.submit.labels.size')}
-      >
+      <InputBlock error={getFieldError('size')} label={t('observations.submit.labels.size')}>
         <Controller
           control={form.control}
           name="size"

@@ -37,7 +37,7 @@ A public application form for individuals interested in joining the avalanche fo
 
 ## Public Observations
 
-Anyone can report an avalanche they've witnessed — no account needed. The submission form lets a person mark the location on a map, describe what they saw, and optionally share their name and background. Submitted observations appear immediately on a public feed for the region, and administrators can unpublish a report if needed.
+Anyone can report an avalanche they've witnessed — no account needed. The submission form lets a person mark the location on a map, describe what they saw, attach up to three photos, and optionally share their name and background. Photos are shrunk automatically on the reporter's phone before sending, so even large camera shots upload quickly on a mountain connection, and each one can be previewed full-screen before submitting. Submitted observations appear immediately on a public feed for the region, and administrators can unpublish a report if needed.
 
 ## Partners
 
