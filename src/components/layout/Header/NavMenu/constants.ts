@@ -31,7 +31,7 @@ export const getNavMenuItems = (regionId: string | null): NavMenuItem[] => [
         titleId: 'navigation.history',
       },
       {
-        icon: 'mapPin',
+        icon: 'telescope',
         id: 'observations',
         path: routes.observationsByRegion(regionId ?? '').root,
         titleId: 'navigation.observations',
