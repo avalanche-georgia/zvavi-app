@@ -32,7 +32,7 @@ const RadioGroup = ({ name, onChange, optionClassName, options, value }: RadioGr
         <Radio
           key={option.value}
           className={cn(
-            'flex min-w-8 cursor-pointer items-center justify-center px-2 py-1 data-checked:bg-white/90 sm:px-3 sm:py-2',
+            'flex min-w-8 cursor-pointer items-center justify-center px-2 py-1 data-checked:bg-white/90',
             'data-checked:text-primary rounded transition-colors',
             optionClassName,
           )}
