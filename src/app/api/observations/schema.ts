@@ -1,9 +1,19 @@
-import { sortedAspects } from '@domain/constants'
+import { observationPhotoLimits, sortedAspects } from '@domain/constants'
 import { z } from 'zod'
 
 import { Constants } from '@/lib/supabase/types'
 
 const { avalanche_trigger, avalanche_type, region_id } = Constants.public.Enums
+
+// The observation id doesn't exist yet at upload time (photos are uploaded
+// while the form is still being filled in) and public submitters have no user
+// id, so keys are namespaced by month + a random UUID instead.
+export const photoKeyPattern =
+  /^observations\/\d{4}-\d{2}\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.(jpg|png)$/
+
+// Returned by POST /api/observations when a photo key has no uploaded object
+// behind it — the client maps it to a photo-specific message.
+export const photosNotFoundError = 'photos not found'
 
 const aspectSchema = z.enum(sortedAspects)
 
@@ -25,6 +35,10 @@ export const submitObservationSchema = z.object({
   isDateUnknown: z.boolean(),
   latitude: z.number().min(-90).max(90).nullable(),
   longitude: z.number().min(-180).max(180).nullable(),
+  photoKeys: z
+    .array(z.string().regex(photoKeyPattern))
+    .max(observationPhotoLimits.maxCount)
+    .refine((keys) => new Set(keys).size === keys.length),
   quantity: z.number().int().min(1).max(5),
   regionId: z.enum(region_id),
   size: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]).nullable(),

@@ -15,6 +15,7 @@ observations:
     submit: 'Submit'
     success: 'Thank you — your observation has been submitted.'
     error: 'Something went wrong. Please try again.'
+    waitingForPhotos: 'Will send once photos finish uploading…'
     hints:
       location: 'Tap or drag on the map to drop a pin at the location.'
     avalancheDetailsInfo:
@@ -50,3 +51,27 @@ observations:
       submitterName: 'Jane Doe'
       trigger: 'Select trigger'
       type: 'Select type'
+    photos:
+      label: 'Photos'
+      hint: 'Up to {max} photos · JPEG, PNG or HEIC · max {maxSize} MB each'
+      add: 'Add photo'
+      addMore: 'Add more'
+      count: '{count} of {max}'
+      preparing: 'Preparing…'
+      uploading: 'Uploading…'
+      failed: 'Upload failed'
+      retry: 'Retry'
+      remove: 'Remove photo'
+      open: 'Open photo {index}'
+      close: 'Close'
+      previous: 'Previous photo'
+      next: 'Next photo'
+      counter: '{current} / {total}'
+      errors:
+        uploading: 'Please wait until all photos finish uploading.'
+        failed: 'Some photos failed to upload. Check your connection, then tap Retry or remove them.'
+        notFound: "Some photos didn't reach our server. Remove them and add them again."
+        unsupported: '{files}: not a supported format. Please use JPEG, PNG or HEIC photos.'
+        tooLarge: '{files}: too large. Each photo must be under {maxSize} MB.'
+        unreadable: "{file} couldn't be opened in this browser. Try a JPEG version of the photo."
+        tooMany: 'You can add up to {max} photos — {skipped, plural, one {# photo was} other {# photos were}} not added.'

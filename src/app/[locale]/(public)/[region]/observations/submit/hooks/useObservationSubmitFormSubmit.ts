@@ -7,6 +7,7 @@ import { useRouter } from 'src/i18n/navigation'
 
 import type { ObservationSubmitFormData } from '../schema'
 
+import { photosNotFoundError } from '@/api/observations/schema'
 import { routes } from '@/routes'
 
 type UseObservationSubmitFormSubmitParams = {
@@ -30,6 +31,7 @@ const useObservationSubmitFormSubmit = ({ regionId }: UseObservationSubmitFormSu
           isDateUnknown: formData.isDateUnknown,
           latitude: formData.latitude,
           longitude: formData.longitude,
+          photoKeys: formData.photos,
           quantity: formData.quantity,
           regionId,
           size: formData.size,
@@ -45,9 +47,13 @@ const useObservationSubmitFormSubmit = ({ regionId }: UseObservationSubmitFormSu
         toastSuccess(t('observations.submit.success'))
         router.push(routes.observationsByRegion(regionId).root)
       } catch (error) {
+        const isPhotosNotFound = error instanceof Error && error.message === photosNotFoundError
+
         toastError('ObservationSubmitForm | handleSubmit', {
           error,
-          message: t('observations.submit.error'),
+          message: isPhotosNotFound
+            ? t('observations.submit.photos.errors.notFound')
+            : t('observations.submit.error'),
         })
       }
     },
