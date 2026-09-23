@@ -31,37 +31,39 @@ const MeasurementFields = () => {
         />
       </InputBlock>
 
-      <InputBlock label={t('observations.submit.labels.slabDepth')}>
-        <Controller
-          control={form.control}
-          name="slabDepth"
-          render={({ field }) => (
-            <NumberInput
-              className="w-28"
-              max={1000}
-              min={0}
-              onValueChange={field.onChange}
-              value={field.value}
-            />
-          )}
-        />
-      </InputBlock>
+      <div className="flex gap-4 sm:col-span-2">
+        <InputBlock label={t('observations.submit.labels.slabDepth')}>
+          <Controller
+            control={form.control}
+            name="slabDepth"
+            render={({ field }) => (
+              <NumberInput
+                className="w-28"
+                max={1000}
+                min={0}
+                onValueChange={field.onChange}
+                value={field.value}
+              />
+            )}
+          />
+        </InputBlock>
 
-      <InputBlock label={t('observations.submit.labels.width')}>
-        <Controller
-          control={form.control}
-          name="width"
-          render={({ field }) => (
-            <NumberInput
-              className="w-28"
-              max={500}
-              min={0}
-              onValueChange={field.onChange}
-              value={field.value}
-            />
-          )}
-        />
-      </InputBlock>
+        <InputBlock label={t('observations.submit.labels.width')}>
+          <Controller
+            control={form.control}
+            name="width"
+            render={({ field }) => (
+              <NumberInput
+                className="w-28"
+                max={500}
+                min={0}
+                onValueChange={field.onChange}
+                value={field.value}
+              />
+            )}
+          />
+        </InputBlock>
+      </div>
     </>
   )
 }
