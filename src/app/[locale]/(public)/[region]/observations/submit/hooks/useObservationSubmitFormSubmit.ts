@@ -34,11 +34,13 @@ const useObservationSubmitFormSubmit = ({ regionId }: UseObservationSubmitFormSu
           quantity: formData.quantity,
           regionId,
           size: formData.size,
+          slabDepth: formData.slabDepth,
           submitterContact: formData.submitterContact,
           submitterEducation: formData.submitterEducation,
           submitterName: formData.submitterName,
           trigger: formData.trigger as Enums<'avalanche_trigger'>,
           type: formData.type as Enums<'avalanche_type'>,
+          width: formData.width,
         })
 
         toastSuccess(t('observations.submit.success'))

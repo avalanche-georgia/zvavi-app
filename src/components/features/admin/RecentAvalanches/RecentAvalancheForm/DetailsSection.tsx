@@ -19,6 +19,8 @@ const DetailsSection = () => {
         <LocationFields />
       </div>
 
+      {/* Used for internal purposes only — deliberately not exposed on the public
+          observation submission form (see src/app/api/observations/schema.ts). */}
       <InputBlock label={t('admin.recentAvalanches.form.labels.involvement')}>
         <Controller
           control={form.control}

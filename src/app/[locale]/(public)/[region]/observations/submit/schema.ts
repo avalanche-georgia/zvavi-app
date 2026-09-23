@@ -19,6 +19,7 @@ export const observationSubmitSchema = z.object({
   longitude: z.number().nullable(),
   quantity: z.number().int().min(1),
   size: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]),
+  slabDepth: z.number().nullable(),
   submitterContact: z.string().nullable(),
   submitterEducation: z.string().nullable(),
   submitterName: z.string({ error: () => ({ message: 'required' }) }).min(1, {
@@ -26,6 +27,7 @@ export const observationSubmitSchema = z.object({
   }),
   trigger: z.string({ error: () => ({ message: 'required' }) }).min(1, { message: 'required' }),
   type: z.string({ error: () => ({ message: 'required' }) }).min(1, { message: 'required' }),
+  width: z.number().nullable(),
 })
 
 export type ObservationSubmitFormSchema = z.infer<typeof observationSubmitSchema>

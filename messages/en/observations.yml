@@ -30,11 +30,13 @@ observations:
       longitude: 'Longitude'
       quantity: 'Quantity'
       size: 'Size'
+      slabDepth: 'Slab depth (cm)'
       submitterContact: 'Contact'
       submitterEducation: 'Avalanche education/training'
       submitterName: 'Your name'
       trigger: 'Trigger'
       type: 'Avalanche type'
+      width: 'Width (m)'
     placeholders:
       submitterContact: 'How can we reach you? Email, phone, Instagram…'
       submitterEducation: 'e.g. AST 1, none, self-taught…'

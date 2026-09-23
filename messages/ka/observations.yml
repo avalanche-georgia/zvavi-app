@@ -30,11 +30,13 @@ observations:
       longitude: 'გრძედი'
       quantity: 'რაოდენობა'
       size: 'ზომა'
+      slabDepth: 'ფილის სისქე (სმ)'
       submitterContact: 'კონტაქტი'
       submitterEducation: 'ზვავის უსაფრთხოების ტრენინგი'
       submitterName: 'თქვენი სახელი'
       trigger: 'გამომწვევი'
       type: 'ზვავის ტიპი'
+      width: 'სიგანე (მ)'
     placeholders:
       submitterContact: 'როგორ დაგიკავშირდეთ? ელფოსტა, ტელეფონი, Instagram…'
       submitterEducation: 'მაგ. AST 1, არცერთი, თვითნასწავლი…'

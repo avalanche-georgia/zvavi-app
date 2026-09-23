@@ -12,11 +12,13 @@ const getInitialFormData = (): ObservationSubmitFormSchema => ({
   longitude: null,
   quantity: 1,
   size: 1,
+  slabDepth: null,
   submitterContact: null,
   submitterEducation: null,
   submitterName: '',
   trigger: '',
   type: '',
+  width: null,
 })
 
 export default getInitialFormData

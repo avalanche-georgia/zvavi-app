@@ -1,10 +1,11 @@
 'use client'
 
-import { InputBlock, NumberInput, RadioGroup, Select, toOptions } from '@components/ui'
+import { InputBlock, RadioGroup, Select, toOptions } from '@components/ui'
 import { avalancheTriggersOrdered, avalancheTypes } from '@domain/constants'
 import { useTranslations } from 'next-intl'
 import { Controller, useFormContext } from 'react-hook-form'
 
+import MeasurementFields from './MeasurementFields'
 import type { ObservationSubmitFormSchema } from './schema'
 
 const sizeOptions = [1, 2, 3, 4, 5].map((value) => ({ label: String(value), value }))
@@ -80,23 +81,7 @@ const ClassificationFields = () => {
         />
       </InputBlock>
 
-      <InputBlock
-        error={form.formState.errors.quantity?.message}
-        label={t('observations.submit.labels.quantity')}
-      >
-        <Controller
-          control={form.control}
-          name="quantity"
-          render={({ field }) => (
-            <NumberInput
-              className="w-28"
-              min={1}
-              onValueChange={field.onChange}
-              value={field.value}
-            />
-          )}
-        />
-      </InputBlock>
+      <MeasurementFields />
     </div>
   )
 }
