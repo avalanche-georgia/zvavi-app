@@ -65,6 +65,17 @@ export const avalancheStatuses: Record<AvalancheStatus, AvalancheStatus> = {
   published: 'published',
 }
 
+// Shared by the public submit form (client-side checks) and the upload-url
+// route (authoritative server-side checks — client compression is bypassable).
+export const observationPhotoLimits = {
+  maxCount: 3,
+  maxSizeBytes: 15 * 1024 * 1024,
+}
+
+// What may be uploaded — HEIC is accepted from the picker but always converted
+// to JPEG client-side first, so it's never stored.
+export const observationPhotoContentTypes = ['image/jpeg', 'image/png'] as const
+
 export const avalancheTriggers = {
   explosives: 'explosives',
   natural: 'natural',

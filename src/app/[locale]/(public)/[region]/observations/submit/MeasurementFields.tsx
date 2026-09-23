@@ -4,16 +4,19 @@ import { InputBlock, NumberInput } from '@components/ui'
 import { useTranslations } from 'next-intl'
 import { Controller, useFormContext } from 'react-hook-form'
 
+import useFieldError from './hooks/useFieldError'
+
 import type { ObservationSubmitFormSchema } from './schema'
 
 const MeasurementFields = () => {
   const t = useTranslations()
   const form = useFormContext<ObservationSubmitFormSchema>()
+  const getFieldError = useFieldError()
 
   return (
     <>
       <InputBlock
-        error={form.formState.errors.quantity?.message}
+        error={getFieldError('quantity')}
         label={t('observations.submit.labels.quantity')}
       >
         <Controller

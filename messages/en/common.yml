@@ -40,14 +40,16 @@ common:
   validation:
     activeWithExpiredDate: 'Status cannot be active when expiration date is in the past'
     expiresAtBeforeJoined: 'Expiration date must be after joined date'
+    invalid: 'Invalid value'
     invalidCredentials: 'Incorrect current password'
     invalid_string: 'Invalid format'
     joinedAtFuture: 'Cannot be in the future'
     passwordMismatch: 'Passwords do not match'
     passwordTooShort: 'Minimum 8 characters'
     positive: 'Must be greater than 0'
-    required: 'Required'
-    too_small: 'Required'
+    required: 'Required field'
+    tooLong: 'Too long'
+    too_small: 'Required field'
 
   notFound:
     title: 'Oops...'

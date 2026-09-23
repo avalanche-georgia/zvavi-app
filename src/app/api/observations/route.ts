@@ -4,7 +4,8 @@ import { NextResponse } from 'next/server'
 
 import fetchPublicObservations from './fetchPublicObservations'
 import notifyAdmin from './notifyAdmin'
-import { submitObservationSchema } from './schema'
+import { deletePhotos, promotePhotos, verifyPhotosExist } from './photoKeys'
+import { photosNotFoundError, submitObservationSchema } from './schema'
 
 import { createServiceRoleClient } from '@/lib/supabase/serviceRole'
 import { Constants } from '@/lib/supabase/types'
@@ -60,6 +61,21 @@ export const POST = async (request: Request) => {
   }
 
   const body = parsed.data
+
+  if (!(await verifyPhotosExist(body.photoKeys))) {
+    return NextResponse.json({ error: photosNotFoundError, ok: false }, { status: 400 })
+  }
+
+  let photoKeys: string[]
+
+  try {
+    photoKeys = await promotePhotos(body.photoKeys)
+  } catch (error) {
+    console.error('[POST /api/observations] promotePhotos failed:', error)
+
+    return NextResponse.json({ error: 'failed to submit observation', ok: false }, { status: 500 })
+  }
+
   const supabase = createServiceRoleClient()
 
   const { data, error } = await supabase.rpc('submit_observation', {
@@ -69,8 +85,7 @@ export const POST = async (request: Request) => {
     p_is_date_unknown: body.isDateUnknown,
     p_latitude: body.latitude === null ? undefined : roundCoordinate(body.latitude),
     p_longitude: body.longitude === null ? undefined : roundCoordinate(body.longitude),
-    // @ts-expect-error p_quantity added by 20260808102960_submit_observation_add_quantity.sql,
-    // not yet applied to staging — remove this once `pnpm typegen` picks it up.
+    p_photo_keys: photoKeys,
     p_quantity: body.quantity,
     p_region_id: body.regionId,
     p_size: body.size ?? undefined,
@@ -85,11 +100,13 @@ export const POST = async (request: Request) => {
 
   if (error) {
     console.error('[POST /api/observations] submit_observation failed:', error.message)
+    // Pending uploads stay, so the submitter can retry with the same keys
+    await deletePhotos(photoKeys)
 
     return NextResponse.json({ error: 'failed to submit observation', ok: false }, { status: 500 })
   }
 
-  await notifyAdmin(body)
+  await Promise.all([deletePhotos(body.photoKeys), notifyAdmin(body)])
 
   return NextResponse.json({ id: data, ok: true })
 }

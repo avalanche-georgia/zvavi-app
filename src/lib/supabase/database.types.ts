@@ -4,7 +4,7 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: '14.1'
+    PostgrestVersion: '14.5'
   }
   graphql_public: {
     Tables: {
@@ -734,13 +734,17 @@ export type Database = {
           p_is_date_unknown?: boolean
           p_latitude?: number
           p_longitude?: number
+          p_photo_keys?: string[]
+          p_quantity?: number
           p_region_id: Database['public']['Enums']['region_id']
           p_size?: number
+          p_slab_depth?: number
           p_submitter_contact?: string
           p_submitter_education?: string
           p_submitter_name?: string
           p_trigger?: Database['public']['Enums']['avalanche_trigger']
           p_type?: Database['public']['Enums']['avalanche_type']
+          p_width?: number
         }
         Returns: number
       }

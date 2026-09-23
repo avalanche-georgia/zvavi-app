@@ -4,6 +4,8 @@ import { Checkbox, DatePicker, InputBlock } from '@components/ui'
 import { useTranslations } from 'next-intl'
 import { Controller, useFormContext } from 'react-hook-form'
 
+import useFieldError from './hooks/useFieldError'
+
 import type { ObservationSubmitFormSchema } from './schema'
 
 const today = new Date()
@@ -11,13 +13,11 @@ const today = new Date()
 const DateField = () => {
   const t = useTranslations()
   const form = useFormContext<ObservationSubmitFormSchema>()
+  const getFieldError = useFieldError()
   const isDateUnknown = form.watch('isDateUnknown')
 
   return (
-    <InputBlock
-      error={form.formState.errors.date?.message}
-      label={t('observations.submit.labels.date')}
-    >
+    <InputBlock error={getFieldError('date')} label={t('observations.submit.labels.date')}>
       <div className="flex items-center gap-3">
         <Controller
           control={form.control}
