@@ -12,19 +12,20 @@ const aspectsSchema = z.object({
 export const observationSubmitSchema = z.object({
   aspects: aspectsSchema,
   date: z.date().nullable(),
-  description: z.string().nullable(),
+  description: z.string().max(2000).nullable(),
   honeypot: z.string(),
   isDateUnknown: z.boolean(),
-  latitude: z.number().nullable(),
-  longitude: z.number().nullable(),
+  latitude: z.number().min(-90).max(90).nullable(),
+  longitude: z.number().min(-180).max(180).nullable(),
   quantity: z.number().int().min(1),
   size: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]),
   slabDepth: z.number().nullable(),
-  submitterContact: z.string().nullable(),
-  submitterEducation: z.string().nullable(),
-  submitterName: z.string({ error: () => ({ message: 'required' }) }).min(1, {
-    message: 'required',
-  }),
+  submitterContact: z.string().max(200).nullable(),
+  submitterEducation: z.string().max(200).nullable(),
+  submitterName: z
+    .string({ error: () => ({ message: 'required' }) })
+    .min(1, { message: 'required' })
+    .max(100),
   trigger: z.string({ error: () => ({ message: 'required' }) }).min(1, { message: 'required' }),
   type: z.string({ error: () => ({ message: 'required' }) }).min(1, { message: 'required' }),
   width: z.number().nullable(),
