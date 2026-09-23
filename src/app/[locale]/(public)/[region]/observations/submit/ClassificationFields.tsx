@@ -73,7 +73,6 @@ const ClassificationFields = () => {
           render={({ field }) => (
             <RadioGroup
               onChange={(value) => field.onChange(Number(value))}
-              optionClassName="size-8 min-w-0 p-0 sm:size-10"
               options={sizeOptions}
               value={field.value}
             />

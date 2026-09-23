@@ -7,16 +7,11 @@ import { cn } from '@/lib/utils'
 type RadioGroupProps = {
   name?: string
   onChange: (value: string | number, name?: string) => void
-  // Overrides the default flexible-width option sizing — e.g. a fixed square
-  // for a short numeric picker, where the default padding would otherwise
-  // work fine but callers with longer labels (date filters, etc.) must not
-  // be forced into it.
-  optionClassName?: string
   options: Option[]
   value: string | number
 }
 
-const RadioGroup = ({ name, onChange, optionClassName, options, value }: RadioGroupProps) => {
+const RadioGroup = ({ name, onChange, options, value }: RadioGroupProps) => {
   const handleChange = (selectedValue: string | number) => {
     onChange(selectedValue, name)
   }
@@ -34,7 +29,6 @@ const RadioGroup = ({ name, onChange, optionClassName, options, value }: RadioGr
           className={cn(
             'flex min-w-8 cursor-pointer items-center justify-center px-2 py-1 data-checked:bg-white/90',
             'data-checked:text-primary rounded transition-colors',
-            optionClassName,
           )}
           value={option.value}
         >
