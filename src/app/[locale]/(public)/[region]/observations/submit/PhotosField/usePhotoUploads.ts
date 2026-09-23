@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef } from 'react'
 import { useFormContext, useWatch } from 'react-hook-form'
 
 import preparePhoto from './preparePhoto'
-import uploadPhoto from './uploadPhoto'
+import uploadPhoto, { discardUploadedPhoto } from './uploadPhoto'
 import type { ObservationSubmitFormSchema, PhotoUpload } from '../schema'
 
 const createPhotoId = () => `${Date.now()}-${Math.random().toString(36).slice(2)}`
@@ -46,15 +46,16 @@ const usePhotoUploads = ({
     (id: string) => {
       abortControllers.current.get(id)?.abort()
 
-      setPhotos((current) => {
-        const removed = current.find((photo) => photo.id === id)
+      const removed = getValues('photos').find((photo) => photo.id === id)
 
-        if (removed) URL.revokeObjectURL(removed.previewUrl)
+      if (!removed) return
 
-        return current.filter((photo) => photo.id !== id)
-      })
+      URL.revokeObjectURL(removed.previewUrl)
+      if (removed.key) discardUploadedPhoto(removed.key)
+
+      setPhotos((current) => current.filter((photo) => photo.id !== id))
     },
-    [setPhotos],
+    [getValues, setPhotos],
   )
 
   const startUpload = useCallback(

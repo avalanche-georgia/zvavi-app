@@ -4,7 +4,7 @@ import { observationPhotoContentTypes, observationPhotoLimits } from '@domain/co
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
-import { createPhotoKey } from '../photoKeys'
+import { createPendingPhotoKey } from '../photoKeys'
 
 import { createR2Client, observationsBucket } from '@/lib/r2'
 
@@ -34,7 +34,7 @@ export const POST = async (request: Request) => {
   }
 
   const { contentType, size } = parsed.data
-  const key = createPhotoKey(contentType)
+  const key = createPendingPhotoKey(contentType)
 
   try {
     const uploadUrl = await getSignedUrl(

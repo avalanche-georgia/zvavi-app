@@ -7,9 +7,12 @@ const { avalanche_trigger, avalanche_type, region_id } = Constants.public.Enums
 
 // The observation id doesn't exist yet at upload time (photos are uploaded
 // while the form is still being filled in) and public submitters have no user
-// id, so keys are namespaced by month + a random UUID instead.
-export const photoKeyPattern =
-  /^observations\/\d{4}-\d{2}\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.(jpg|png)$/
+// id, so uploads get a random UUID under a temporary prefix. On submit they're
+// promoted to `observations/{yyyy-MM}/{uuid}.{ext}` (see ./photoKeys).
+export const pendingPhotoKeyPrefix = 'pending/'
+
+export const pendingPhotoKeyPattern =
+  /^pending\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.(jpg|png)$/
 
 // Returned by POST /api/observations when a photo key has no uploaded object
 // behind it — the client maps it to a photo-specific message.
@@ -36,7 +39,7 @@ export const submitObservationSchema = z.object({
   latitude: z.number().min(-90).max(90).nullable(),
   longitude: z.number().min(-180).max(180).nullable(),
   photoKeys: z
-    .array(z.string().regex(photoKeyPattern))
+    .array(z.string().regex(pendingPhotoKeyPattern))
     .max(observationPhotoLimits.maxCount)
     .refine((keys) => new Set(keys).size === keys.length),
   quantity: z.number().int().min(1).max(5),

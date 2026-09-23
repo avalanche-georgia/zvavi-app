@@ -45,6 +45,18 @@ const putWithProgress = (
     request.send(blob)
   })
 
+// Fire-and-forget: a removed photo is dropped from storage right away instead
+// of waiting for the pending-upload lifecycle rule. Failures are harmless —
+// that rule still expires it.
+export const discardUploadedPhoto = (key: string) => {
+  fetch('/api/observations/pending-photos', {
+    body: JSON.stringify({ key }),
+    headers: { 'Content-Type': 'application/json' },
+    keepalive: true,
+    method: 'DELETE',
+  }).catch((error) => console.error('discardUploadedPhoto', error))
+}
+
 // Uploads straight to R2 through a short-lived presigned URL and returns the
 // object key — the only thing the observation itself stores.
 const uploadPhoto = async (blob: Blob, options: UploadPhotoOptions): Promise<string> => {
