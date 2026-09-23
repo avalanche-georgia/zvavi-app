@@ -36,9 +36,11 @@ const ObservationSubmitForm = () => {
       >
         <FormFields />
 
-        <Button disabled={form.formState.isSubmitting} type="submit">
-          {t('observations.submit.submit')}
-        </Button>
+        <div>
+          <Button className="ml-auto" disabled={form.formState.isSubmitting} type="submit">
+            {t('observations.submit.submit')}
+          </Button>
+        </div>
       </form>
     </FormProvider>
   )
