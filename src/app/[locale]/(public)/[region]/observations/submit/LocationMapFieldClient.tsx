@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import type { Region } from '@domain/types'
 import type { FeatureCollection } from 'geojson'
 import L, { geoJSON, type LatLngBounds, type PathOptions } from 'leaflet'
@@ -58,6 +58,23 @@ const ZoomLimiter = ({ bounds }: { bounds: LatLngBounds }) => {
   return null
 }
 
+// MapContainer's own bounds prop fits the region exactly on mount — this bumps
+// that one level closer. Guarded to run only once; setZoom isn't idempotent
+// like setMinZoom above, so re-firing would keep zooming in further.
+const InitialZoomBoost = () => {
+  const map = useMap()
+  const hasRun = useRef(false)
+
+  useEffect(() => {
+    if (hasRun.current) return
+
+    hasRun.current = true
+    map.setZoom(map.getZoom() + 1)
+  }, [map])
+
+  return null
+}
+
 type LocationMapFieldClientProps = {
   latitude: number | null
   longitude: number | null
@@ -93,7 +110,7 @@ const LocationMapFieldClient = ({
       maxBounds={bounds}
       maxBoundsViscosity={1}
       maxZoom={maxZoom}
-      zoom={bounds ? undefined : (region.defaultZoom ?? fallbackZoom)}
+      zoom={bounds ? undefined : (region.defaultZoom ?? fallbackZoom) + 1}
     >
       <TileLayer
         attribution='&copy; <a href="https://opentopomap.org">OpenTopoMap</a>, <a href="https://www.openstreetmap.org/copyright">OSM</a>'
@@ -109,6 +126,7 @@ const LocationMapFieldClient = ({
         <GeoJSON data={region.forecastZone as FeatureCollection} style={zoneStyle} />
       ) : null}
       {bounds && <ZoomLimiter bounds={bounds} />}
+      {bounds && <InitialZoomBoost />}
       <ClickHandler onPick={onChange} />
       {latitude != null && longitude != null && (
         <Marker icon={pinIcon} position={[latitude, longitude]} />
