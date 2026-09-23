@@ -39,7 +39,10 @@ observations:
       width: 'სიგანე (მ)'
     placeholders:
       description: 'სხვა რამე, რაც ღირს აღნიშვნა — ამინდი, თოვლის საფარი, ახლომახლო აქტივობა…'
+      latitude: 'მაგ. 42.6975'
+      longitude: 'მაგ. 44.4547'
       submitterContact: 'როგორ დაგიკავშირდეთ? ელფოსტა, ტელეფონი, Instagram…'
       submitterEducation: 'მაგ. AST 1, არცერთი, თვითნასწავლი…'
+      submitterName: 'ნინო ბერიძე'
       trigger: 'აირჩიეთ გამომწვევი'
       type: 'აირჩიეთ ტიპი'

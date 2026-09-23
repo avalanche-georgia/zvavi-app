@@ -20,7 +20,13 @@ const SubmitterFields = () => {
         <Controller
           control={form.control}
           name="submitterName"
-          render={({ field }) => <TextInput onChange={field.onChange} value={field.value ?? ''} />}
+          render={({ field }) => (
+            <TextInput
+              onChange={field.onChange}
+              placeholder={t('observations.submit.placeholders.submitterName')}
+              value={field.value ?? ''}
+            />
+          )}
         />
       </InputBlock>
 

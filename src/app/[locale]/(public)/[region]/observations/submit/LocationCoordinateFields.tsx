@@ -41,6 +41,7 @@ const LocationCoordinateFields = ({
         <TextInput
           onBlur={handleLatitudeBlur}
           onChange={(event) => onChange(parseCoordinate(event.target.value), longitude)}
+          placeholder={t('observations.submit.placeholders.latitude')}
           step="any"
           type="number"
           value={latitude ?? ''}
@@ -51,6 +52,7 @@ const LocationCoordinateFields = ({
         <TextInput
           onBlur={handleLongitudeBlur}
           onChange={(event) => onChange(latitude, parseCoordinate(event.target.value))}
+          placeholder={t('observations.submit.placeholders.longitude')}
           step="any"
           type="number"
           value={longitude ?? ''}

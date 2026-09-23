@@ -39,7 +39,10 @@ observations:
       width: 'Width (m)'
     placeholders:
       description: 'Anything else worth noting — weather, snowpack, nearby activity…'
+      latitude: 'e.g. 42.6975'
+      longitude: 'e.g. 44.4547'
       submitterContact: 'How can we reach you? Email, phone, Instagram…'
       submitterEducation: 'e.g. AST 1, none, self-taught…'
+      submitterName: 'Jane Doe'
       trigger: 'Select trigger'
       type: 'Select type'
