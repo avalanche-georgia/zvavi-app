@@ -1,6 +1,7 @@
 'use client'
 
 import { InputBlock, TextInput } from '@components/ui'
+import { roundCoordinate } from '@data/helpers'
 import { useTranslations } from 'next-intl'
 
 type LocationCoordinateFieldsProps = {
@@ -24,10 +25,21 @@ const LocationCoordinateFields = ({
 }: LocationCoordinateFieldsProps) => {
   const t = useTranslations()
 
+  // Rounded on blur, not on every keystroke — rounding while the user is
+  // still typing would fight their cursor and cut off digits mid-entry.
+  const handleLatitudeBlur = () => {
+    if (latitude !== null) onChange(roundCoordinate(latitude), longitude)
+  }
+
+  const handleLongitudeBlur = () => {
+    if (longitude !== null) onChange(latitude, roundCoordinate(longitude))
+  }
+
   return (
     <div className="grid grid-cols-2 gap-3">
       <InputBlock label={t('observations.submit.labels.latitude')}>
         <TextInput
+          onBlur={handleLatitudeBlur}
           onChange={(event) => onChange(parseCoordinate(event.target.value), longitude)}
           step="any"
           type="number"
@@ -37,6 +49,7 @@ const LocationCoordinateFields = ({
 
       <InputBlock label={t('observations.submit.labels.longitude')}>
         <TextInput
+          onBlur={handleLongitudeBlur}
           onChange={(event) => onChange(latitude, parseCoordinate(event.target.value))}
           step="any"
           type="number"

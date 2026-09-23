@@ -1,6 +1,7 @@
 'use client'
 
 import { InputBlock, Spinner } from '@components/ui'
+import { roundCoordinate } from '@data/helpers'
 import { useRegionContext } from '@domain/context/RegionContext'
 import dynamic from 'next/dynamic'
 import { useTranslations } from 'next-intl'
@@ -26,8 +27,8 @@ const LocationMapField = () => {
   const longitude = form.watch('longitude')
 
   const handlePick = (lat: number, lng: number) => {
-    form.setValue('latitude', lat, { shouldDirty: true })
-    form.setValue('longitude', lng, { shouldDirty: true })
+    form.setValue('latitude', roundCoordinate(lat), { shouldDirty: true })
+    form.setValue('longitude', roundCoordinate(lng), { shouldDirty: true })
   }
 
   const handleCoordinateChange = (lat: number | null, lng: number | null) => {

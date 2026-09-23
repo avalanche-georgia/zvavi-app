@@ -1,4 +1,4 @@
-import { convertCamelToSnake } from '@data/helpers'
+import { convertCamelToSnake, roundCoordinate } from '@data/helpers'
 import type { RegionId } from '@domain/types'
 import { NextResponse } from 'next/server'
 
@@ -67,8 +67,8 @@ export const POST = async (request: Request) => {
     p_date: body.date ?? undefined,
     p_description: body.description ?? undefined,
     p_is_date_unknown: body.isDateUnknown,
-    p_latitude: body.latitude ?? undefined,
-    p_longitude: body.longitude ?? undefined,
+    p_latitude: body.latitude === null ? undefined : roundCoordinate(body.latitude),
+    p_longitude: body.longitude === null ? undefined : roundCoordinate(body.longitude),
     // @ts-expect-error p_quantity added by 20260808102960_submit_observation_add_quantity.sql,
     // not yet applied to staging — remove this once `pnpm typegen` picks it up.
     p_quantity: body.quantity,
