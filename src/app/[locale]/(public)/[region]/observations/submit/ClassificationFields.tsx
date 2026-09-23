@@ -1,7 +1,7 @@
 'use client'
 
 import { InputBlock, RadioGroup, Select, toOptions } from '@components/ui'
-import { avalancheTriggersOrdered, avalancheTypes } from '@domain/constants'
+import { avalancheTriggersOrdered, avalancheTypesOrdered } from '@domain/constants'
 import { useTranslations } from 'next-intl'
 import { Controller, useFormContext } from 'react-hook-form'
 
@@ -14,10 +14,7 @@ const ClassificationFields = () => {
   const t = useTranslations()
   const form = useFormContext<ObservationSubmitFormSchema>()
 
-  const typeOptions = [
-    ...toOptions(avalancheTypes, (key) => t(`common.avalancheTypes.${key}`)),
-    { label: t('common.avalancheTypes.unknown'), value: 'unknown' },
-  ]
+  const typeOptions = toOptions(avalancheTypesOrdered, (key) => t(`common.avalancheTypes.${key}`))
   const triggerOptions = toOptions(avalancheTriggersOrdered, (key) =>
     t(`common.avalancheTriggers.${key}`),
   )

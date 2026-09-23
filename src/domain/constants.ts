@@ -3,6 +3,7 @@ import type {
   AvalancheSource,
   AvalancheStatus,
   AvalancheTrigger,
+  AvalancheType,
   HazardLevel,
   HazardLevelScale,
   MemberStatus,
@@ -39,6 +40,19 @@ export const avalancheTypes = {
 } as const
 
 export const avalancheProblemTypes = avalancheTypes
+
+export const avalancheTypesOrdered: (AvalancheType | 'unknown')[] = [
+  'unknown',
+  'cornice',
+  'deepSlab',
+  'glide',
+  'looseDry',
+  'looseWet',
+  'persistentSlab',
+  'stormSlab',
+  'wetSlab',
+  'windSlab',
+]
 
 export const avalancheSources: Record<AvalancheSource, AvalancheSource> = {
   external: 'external',
