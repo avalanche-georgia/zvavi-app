@@ -10,6 +10,7 @@ import DescriptionField from './DescriptionField'
 import FormSection from './FormSection'
 import HoneypotField from './HoneypotField'
 import LocationMapField from './LocationMapField'
+import PhotosField from './PhotosField'
 import SubmitterFields from './SubmitterFields'
 
 const FormFields = () => {
@@ -31,6 +32,7 @@ const FormFields = () => {
         <ClassificationFields />
         <AspectsField />
         <DescriptionField />
+        <PhotosField />
       </FormSection>
 
       <FormSection title={t('observations.submit.sections.aboutYou')}>

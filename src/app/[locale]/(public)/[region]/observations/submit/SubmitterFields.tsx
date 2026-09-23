@@ -4,16 +4,19 @@ import { InputBlock, Textarea, TextInput } from '@components/ui'
 import { useTranslations } from 'next-intl'
 import { Controller, useFormContext } from 'react-hook-form'
 
+import useFieldError from './hooks/useFieldError'
+
 import type { ObservationSubmitFormSchema } from './schema'
 
 const SubmitterFields = () => {
   const t = useTranslations()
   const form = useFormContext<ObservationSubmitFormSchema>()
+  const getFieldError = useFieldError()
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <InputBlock
-        error={form.formState.errors.submitterName?.message}
+        error={getFieldError('submitterName')}
         label={t('observations.submit.labels.submitterName')}
         required
       >
@@ -31,7 +34,7 @@ const SubmitterFields = () => {
       </InputBlock>
 
       <InputBlock
-        error={form.formState.errors.submitterEducation?.message}
+        error={getFieldError('submitterEducation')}
         label={t('observations.submit.labels.submitterEducation')}
         optional
       >
@@ -50,7 +53,7 @@ const SubmitterFields = () => {
 
       <div className="sm:col-span-2">
         <InputBlock
-          error={form.formState.errors.submitterContact?.message}
+          error={getFieldError('submitterContact')}
           label={t('observations.submit.labels.submitterContact')}
           optional
         >

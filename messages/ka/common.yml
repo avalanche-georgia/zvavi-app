@@ -40,14 +40,16 @@ common:
   validation:
     activeWithExpiredDate: 'სტატუსი ვერ იქნება აქტიური, თუ ვადის თარიღი უკვე გასულია'
     expiresAtBeforeJoined: 'ვადის თარიღი უნდა იყოს გაწევრიანების თარიღის შემდეგ'
+    invalid: 'არასწორი მნიშვნელობა'
     invalidCredentials: 'მიმდინარე პაროლი არასწორია'
     invalid_string: 'არასწორი ფორმატი'
     joinedAtFuture: 'არ შეიძლება იყოს მომავალში'
     passwordMismatch: 'პაროლები არ ემთხვევა'
     passwordTooShort: 'მინიმუმ 8 სიმბოლო'
     positive: '0-ზე მეტი უნდა იყოს'
-    required: 'სავალდებულო'
-    too_small: 'სავალდებულო'
+    required: 'სავალდებულო ველი'
+    tooLong: 'ძალიან გრძელია'
+    too_small: 'სავალდებულო ველი'
 
   notFound:
     title: 'Oops...'
