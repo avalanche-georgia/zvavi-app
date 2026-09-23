@@ -20,6 +20,7 @@
   --color-hazard-5: #1b1a1e;
 
   --color-primary: #ff6f00;
+  --color-brand-blue: #0c5aa6;
 
   @keyframes fadeIn {
     from {

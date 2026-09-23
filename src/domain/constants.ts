@@ -2,6 +2,8 @@ import type {
   Aspect,
   AvalancheSource,
   AvalancheStatus,
+  AvalancheTrigger,
+  AvalancheType,
   HazardLevel,
   HazardLevelScale,
   MemberStatus,
@@ -39,6 +41,19 @@ export const avalancheTypes = {
 
 export const avalancheProblemTypes = avalancheTypes
 
+export const avalancheTypesOrdered: (AvalancheType | 'unknown')[] = [
+  'unknown',
+  'cornice',
+  'deepSlab',
+  'glide',
+  'looseDry',
+  'looseWet',
+  'persistentSlab',
+  'stormSlab',
+  'wetSlab',
+  'windSlab',
+]
+
 export const avalancheSources: Record<AvalancheSource, AvalancheSource> = {
   external: 'external',
   team: 'team',
@@ -58,6 +73,15 @@ export const avalancheTriggers = {
   unknown: 'unknown',
   vehicle: 'vehicle',
 } as const
+
+export const avalancheTriggersOrdered: AvalancheTrigger[] = [
+  'unknown',
+  'explosives',
+  'natural',
+  'riderAccidental',
+  'riderCut',
+  'vehicle',
+]
 
 export const aspects = {
   e: 'E',

@@ -59,6 +59,10 @@ export const routes = {
     view: (id: number) => `/${regionId}/forecasts/${id}`,
   }),
   home: '/',
+  observationsByRegion: (regionId: string) => ({
+    root: `/${regionId}/observations`,
+    submit: `/${regionId}/observations/submit`,
+  }),
   partners: '/partners',
   privacy: '/privacy-policy',
   regionHome: (regionId: string) => `/${regionId}`,

@@ -1,7 +1,7 @@
 'use client'
 
 import { InputBlock, NumberInput, Select, toOptions } from '@components/ui'
-import { avalancheTriggers, avalancheTypes } from '@domain/constants'
+import { avalancheTriggersOrdered, avalancheTypesOrdered } from '@domain/constants'
 import { useTranslations } from 'next-intl'
 import { Controller, useFormContext } from 'react-hook-form'
 
@@ -11,17 +11,11 @@ const ClassificationFields = () => {
   const t = useTranslations()
   const form = useFormContext<AvalancheFormSchema>()
 
-  const typeOptions = [
-    ...toOptions(avalancheTypes, (key) => t(`common.avalancheTypes.${key}`)),
-    { label: t('common.avalancheTypes.unknown'), value: 'unknown' },
-  ]
+  const typeOptions = toOptions(avalancheTypesOrdered, (key) => t(`common.avalancheTypes.${key}`))
 
-  const triggerOptions = [
-    ...Object.keys(avalancheTriggers)
-      .filter((key) => key !== 'unknown')
-      .map((key) => ({ label: t(`common.avalancheTriggers.${key}`), value: key })),
-    { label: t('common.words.unknown'), value: 'unknown' },
-  ]
+  const triggerOptions = toOptions(avalancheTriggersOrdered, (key) =>
+    t(`common.avalancheTriggers.${key}`),
+  )
 
   return (
     <div className="grid grid-cols-2 gap-3">

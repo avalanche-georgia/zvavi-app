@@ -1,8 +1,9 @@
-import { convertCamelToSnake } from '@data/helpers'
+import { convertCamelToSnake, roundCoordinate } from '@data/helpers'
 import type { RegionId } from '@domain/types'
 import { NextResponse } from 'next/server'
 
 import fetchPublicObservations from './fetchPublicObservations'
+import notifyAdmin from './notifyAdmin'
 import { submitObservationSchema } from './schema'
 
 import { createServiceRoleClient } from '@/lib/supabase/serviceRole'
@@ -66,15 +67,20 @@ export const POST = async (request: Request) => {
     p_date: body.date ?? undefined,
     p_description: body.description ?? undefined,
     p_is_date_unknown: body.isDateUnknown,
-    p_latitude: body.latitude ?? undefined,
-    p_longitude: body.longitude ?? undefined,
+    p_latitude: body.latitude === null ? undefined : roundCoordinate(body.latitude),
+    p_longitude: body.longitude === null ? undefined : roundCoordinate(body.longitude),
+    // @ts-expect-error p_quantity added by 20260808102960_submit_observation_add_quantity.sql,
+    // not yet applied to staging — remove this once `pnpm typegen` picks it up.
+    p_quantity: body.quantity,
     p_region_id: body.regionId,
     p_size: body.size ?? undefined,
+    p_slab_depth: body.slabDepth ?? undefined,
     p_submitter_contact: body.submitterContact ?? undefined,
     p_submitter_education: body.submitterEducation ?? undefined,
-    p_submitter_name: body.submitterName ?? undefined,
-    p_trigger: body.trigger ?? undefined,
-    p_type: body.type ?? undefined,
+    p_submitter_name: body.submitterName,
+    p_trigger: body.trigger,
+    p_type: body.type,
+    p_width: body.width ?? undefined,
   })
 
   if (error) {
@@ -82,6 +88,8 @@ export const POST = async (request: Request) => {
 
     return NextResponse.json({ error: 'failed to submit observation', ok: false }, { status: 500 })
   }
+
+  await notifyAdmin(body)
 
   return NextResponse.json({ id: data, ok: true })
 }
