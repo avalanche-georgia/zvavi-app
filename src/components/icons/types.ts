@@ -33,6 +33,7 @@ export type IconName =
   | 'plus'
   | 'search'
   | 'snowflake'
+  | 'telescope'
   | 'thermometerSnowflake'
   | 'trash'
   | 'triangleAlert'

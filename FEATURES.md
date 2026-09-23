@@ -35,6 +35,10 @@ Each team member receives a unique QR code. Scanning it opens a verification pag
 
 A public application form for individuals interested in joining the avalanche forecasting team. Submitted applications are reviewed by administrators.
 
+## Public Observations
+
+Anyone can report an avalanche they've witnessed — no account needed. The submission form lets a person mark the location on a map, describe what they saw, and optionally share their name and background. Submitted observations appear immediately on a public feed for the region, and administrators can unpublish a report if needed.
+
 ## Partners
 
 A showcase of partner organizations supporting the Georgian avalanche forecasting program.
@@ -49,7 +53,7 @@ A password-protected back-office for the forecasting team.
 Forecasters can create, edit, duplicate, and publish forecasts through a structured form covering all hazard levels, problem types, and narrative fields. Drafts are invisible to the public until explicitly published.
 
 ### Recent Avalanche Catalog
-Administrators can browse all recorded avalanche observations in a paginated table, filter by occurrence or creation date, and edit or delete individual records directly — without going through a forecast.
+Administrators can browse all recorded avalanche observations in a paginated table, filter by occurrence or creation date, and edit or delete individual records directly — without going through a forecast. Each record shows whether it was logged by the forecasting team or submitted by the public, along with its publish status, and a dedicated Observations view filters the catalog down to public submissions for quick review.
 
 ### Member Management
 Administrators can manage the team roster: add members, update their status (active, inactive, pending, suspended, expired), set membership validity dates, and generate or view their verification QR codes.

@@ -1,0 +1,52 @@
+observations:
+  pageTitle: 'Observations — {regionName}'
+  empty: 'No observations reported yet.'
+  submitCta: 'Submit an Observation'
+
+  filters:
+    reset: 'Reset filters'
+
+  card:
+    dateUnknown: 'Date unknown'
+    submittedBy: 'Reported by {submitterName}'
+
+  submit:
+    title: 'Submit an Observation — {regionName}'
+    submit: 'Submit'
+    success: 'Thank you — your observation has been submitted.'
+    error: 'Something went wrong. Please try again.'
+    hints:
+      location: 'Tap or drag on the map to drop a pin at the location.'
+    avalancheDetailsInfo:
+      title: 'Avalanche details'
+      description: "We're building a full avalanche knowledge base for this site — it'll take some time to get there. In the meantime, this avalanche encyclopedia covers the key terms and definitions."
+      linkLabel: 'Avalanche Encyclopedia'
+    sections:
+      aboutYou: 'About you'
+      avalancheDetails: 'Avalanche details'
+      whenAndWhere: 'When & where'
+    labels:
+      date: 'Date'
+      dateUnknown: 'Date unknown'
+      description: 'Description'
+      latitude: 'Latitude'
+      location: 'Location'
+      longitude: 'Longitude'
+      quantity: 'Quantity'
+      size: 'Size'
+      slabDepth: 'Slab depth (cm)'
+      submitterContact: 'Contact'
+      submitterEducation: 'Avalanche education/training'
+      submitterName: 'Your name'
+      trigger: 'Trigger'
+      type: 'Avalanche type'
+      width: 'Width (m)'
+    placeholders:
+      description: 'Anything else worth noting — weather, snowpack, nearby activity…'
+      latitude: 'e.g. 42.6975'
+      longitude: 'e.g. 44.4547'
+      submitterContact: 'How can we reach you? Email, phone, Instagram…'
+      submitterEducation: 'e.g. AST 1, none, self-taught…'
+      submitterName: 'Jane Doe'
+      trigger: 'Select trigger'
+      type: 'Select type'
