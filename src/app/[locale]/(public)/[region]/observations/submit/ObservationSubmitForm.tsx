@@ -11,13 +11,14 @@ import useObservationSubmitFormSubmit from './hooks/useObservationSubmitFormSubm
 
 import FormFields from './FormFields'
 import getInitialFormData from './getInitialFormData'
-import { type ObservationSubmitFormSchema, observationSubmitSchema } from './schema'
+import type { ObservationSubmitFormData, ObservationSubmitFormSchema } from './schema'
+import { observationSubmitSchema } from './schema'
 
 const ObservationSubmitForm = () => {
   const t = useTranslations()
   const { region } = useRegionContext()
 
-  const form = useForm<ObservationSubmitFormSchema>({
+  const form = useForm<ObservationSubmitFormSchema, unknown, ObservationSubmitFormData>({
     defaultValues: getInitialFormData(),
     resolver: zodResolver(observationSubmitSchema),
   })

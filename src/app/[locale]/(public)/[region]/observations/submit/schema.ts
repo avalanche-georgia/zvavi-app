@@ -1,6 +1,10 @@
 import { sortedAspects } from '@domain/constants'
 import { z } from 'zod'
 
+import { Constants } from '@/lib/supabase/types'
+
+const { avalanche_trigger, avalanche_type } = Constants.public.Enums
+
 const aspectSchema = z.enum(sortedAspects)
 
 const aspectsSchema = z.object({
@@ -26,9 +30,21 @@ export const observationSubmitSchema = z.object({
     .string({ error: () => ({ message: 'required' }) })
     .min(1, { message: 'required' })
     .max(100),
-  trigger: z.string({ error: () => ({ message: 'required' }) }).min(1, { message: 'required' }),
-  type: z.string({ error: () => ({ message: 'required' }) }).min(1, { message: 'required' }),
+  // .pipe() gives trigger/type a string input type (so RHF/Select can hold an
+  // "unselected" '' before the user picks) and an enum output type (so the
+  // validated submit data is properly narrowed — no `as Enums<...>` cast
+  // needed in the submit handler). See ObservationSubmitForm.tsx's `useForm`
+  // generics for how the input/output split is wired to zodResolver.
+  trigger: z
+    .string({ error: () => ({ message: 'required' }) })
+    .min(1, { message: 'required' })
+    .pipe(z.enum(avalanche_trigger, { error: () => ({ message: 'required' }) })),
+  type: z
+    .string({ error: () => ({ message: 'required' }) })
+    .min(1, { message: 'required' })
+    .pipe(z.enum(avalanche_type, { error: () => ({ message: 'required' }) })),
   width: z.number().nullable(),
 })
 
-export type ObservationSubmitFormSchema = z.infer<typeof observationSubmitSchema>
+export type ObservationSubmitFormSchema = z.input<typeof observationSubmitSchema>
+export type ObservationSubmitFormData = z.output<typeof observationSubmitSchema>

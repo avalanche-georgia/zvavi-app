@@ -5,9 +5,8 @@ import type { RegionId } from '@domain/types'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'src/i18n/navigation'
 
-import type { ObservationSubmitFormSchema } from '../schema'
+import type { ObservationSubmitFormData } from '../schema'
 
-import type { Enums } from '@/lib/supabase/types'
 import { routes } from '@/routes'
 
 type UseObservationSubmitFormSubmitParams = {
@@ -21,7 +20,7 @@ const useObservationSubmitFormSubmit = ({ regionId }: UseObservationSubmitFormSu
   const { mutateAsync: createObservation } = useObservationCreate()
 
   const handleSubmit = useCallback(
-    async (formData: ObservationSubmitFormSchema) => {
+    async (formData: ObservationSubmitFormData) => {
       try {
         await createObservation({
           aspects: formData.aspects,
@@ -38,8 +37,8 @@ const useObservationSubmitFormSubmit = ({ regionId }: UseObservationSubmitFormSu
           submitterContact: formData.submitterContact,
           submitterEducation: formData.submitterEducation,
           submitterName: formData.submitterName,
-          trigger: formData.trigger as Enums<'avalanche_trigger'>,
-          type: formData.type as Enums<'avalanche_type'>,
+          trigger: formData.trigger,
+          type: formData.type,
           width: formData.width,
         })
 
