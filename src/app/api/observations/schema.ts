@@ -25,16 +25,16 @@ export const submitObservationSchema = z.object({
   isDateUnknown: z.boolean(),
   latitude: z.number().min(-90).max(90).nullable(),
   longitude: z.number().min(-180).max(180).nullable(),
-  quantity: z.number().int().min(1),
+  quantity: z.number().int().min(1).max(5),
   regionId: z.enum(region_id),
   size: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]).nullable(),
-  slabDepth: z.number().nullable(),
+  slabDepth: z.number().min(0).max(1000).nullable(),
   submitterContact: z.string().max(200).nullable(),
   submitterEducation: z.string().max(200).nullable(),
   submitterName: z.string().min(1).max(100),
   trigger: z.enum(avalanche_trigger),
   type: z.enum(avalanche_type),
-  width: z.number().nullable(),
+  width: z.number().min(0).max(500).nullable(),
 })
 
 export type SubmitObservationBody = z.infer<typeof submitObservationSchema>

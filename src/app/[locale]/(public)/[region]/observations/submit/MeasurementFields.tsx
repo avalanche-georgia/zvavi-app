@@ -22,6 +22,7 @@ const MeasurementFields = () => {
           render={({ field }) => (
             <NumberInput
               className="w-28"
+              max={5}
               min={1}
               onValueChange={field.onChange}
               value={field.value}
@@ -37,7 +38,8 @@ const MeasurementFields = () => {
           render={({ field }) => (
             <NumberInput
               className="w-28"
-              min={1}
+              max={1000}
+              min={0}
               onValueChange={field.onChange}
               value={field.value}
             />
@@ -52,7 +54,8 @@ const MeasurementFields = () => {
           render={({ field }) => (
             <NumberInput
               className="w-28"
-              min={1}
+              max={500}
+              min={0}
               onValueChange={field.onChange}
               value={field.value}
             />

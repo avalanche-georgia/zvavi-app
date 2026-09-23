@@ -21,9 +21,9 @@ export const observationSubmitSchema = z.object({
   isDateUnknown: z.boolean(),
   latitude: z.number().min(-90).max(90).nullable(),
   longitude: z.number().min(-180).max(180).nullable(),
-  quantity: z.number().int().min(1),
+  quantity: z.number().int().min(1).max(5),
   size: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]),
-  slabDepth: z.number().nullable(),
+  slabDepth: z.number().min(0).max(1000).nullable(),
   submitterContact: z.string().max(200).nullable(),
   submitterEducation: z.string().max(200).nullable(),
   submitterName: z
@@ -43,7 +43,7 @@ export const observationSubmitSchema = z.object({
     .string({ error: () => ({ message: 'required' }) })
     .min(1, { message: 'required' })
     .pipe(z.enum(avalanche_type, { error: () => ({ message: 'required' }) })),
-  width: z.number().nullable(),
+  width: z.number().min(0).max(500).nullable(),
 })
 
 export type ObservationSubmitFormSchema = z.input<typeof observationSubmitSchema>
