@@ -38,6 +38,7 @@ observations:
       type: 'ზვავის ტიპი'
       width: 'სიგანე (მ)'
     placeholders:
+      description: 'რა შეამჩნიეთ? მაგ. მსხვრევის ზომა, ნატანი, რელიეფის თავისებურებები…'
       submitterContact: 'როგორ დაგიკავშირდეთ? ელფოსტა, ტელეფონი, Instagram…'
       submitterEducation: 'მაგ. AST 1, არცერთი, თვითნასწავლი…'
       trigger: 'აირჩიეთ გამომწვევი'

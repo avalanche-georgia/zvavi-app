@@ -38,6 +38,7 @@ observations:
       type: 'Avalanche type'
       width: 'Width (m)'
     placeholders:
+      description: 'What did you see? e.g. crown size, debris, terrain features…'
       submitterContact: 'How can we reach you? Email, phone, Instagram…'
       submitterEducation: 'e.g. AST 1, none, self-taught…'
       trigger: 'Select trigger'

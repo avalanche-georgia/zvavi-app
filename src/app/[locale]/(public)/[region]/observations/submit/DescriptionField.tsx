@@ -19,7 +19,12 @@ const DescriptionField = () => {
         control={form.control}
         name="description"
         render={({ field }) => (
-          <Textarea onChange={field.onChange} rows={4} value={field.value ?? ''} />
+          <Textarea
+            onChange={field.onChange}
+            placeholder={t('observations.submit.placeholders.description')}
+            rows={4}
+            value={field.value ?? ''}
+          />
         )}
       />
     </InputBlock>
