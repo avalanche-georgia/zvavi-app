@@ -1,7 +1,8 @@
 'use client'
 
+import { CoordinateFields } from '@components/features/observations'
 import { useFieldError } from '@components/hooks'
-import { InputBlock, NumberInput, TextInput } from '@components/ui'
+import { InputBlock, TextInput } from '@components/ui'
 import { useTranslations } from 'next-intl'
 import { Controller, useFormContext } from 'react-hook-form'
 
@@ -10,14 +11,23 @@ import type { AvalancheFormSchema } from './schema'
 const LocationFields = ({ isLocationRequired }: { isLocationRequired: boolean }) => {
   const t = useTranslations()
   const form = useFormContext<AvalancheFormSchema>()
-  const { errors } = form.formState
-
   const getFieldError = useFieldError<AvalancheFormSchema>()
+  const [latitude, longitude] = form.watch(['latitude', 'longitude'])
+
+  const handleCoordinatesChange = (lat: number | null, lng: number | null) => {
+    form.setValue('latitude', lat, {
+      shouldDirty: true,
+      shouldValidate: form.formState.isSubmitted,
+    })
+    form.setValue('longitude', lng, {
+      shouldDirty: true,
+      shouldValidate: form.formState.isSubmitted,
+    })
+  }
 
   return (
-    <div className="grid grid-cols-2 gap-3">
+    <div className="flex flex-col gap-3">
       <InputBlock
-        className="col-span-2"
         error={getFieldError('location')}
         label={t('admin.recentAvalanches.form.labels.location')}
       >
@@ -28,41 +38,14 @@ const LocationFields = ({ isLocationRequired }: { isLocationRequired: boolean })
         />
       </InputBlock>
 
-      <InputBlock
-        error={getFieldError('latitude')}
-        label={t('admin.recentAvalanches.form.labels.latitude')}
-        required={isLocationRequired}
-      >
-        <Controller
-          control={form.control}
-          name="latitude"
-          render={({ field }) => (
-            <NumberInput
-              hasError={!!errors.latitude}
-              onValueChange={field.onChange}
-              value={field.value}
-            />
-          )}
-        />
-      </InputBlock>
-
-      <InputBlock
-        error={getFieldError('longitude')}
-        label={t('admin.recentAvalanches.form.labels.longitude')}
-        required={isLocationRequired}
-      >
-        <Controller
-          control={form.control}
-          name="longitude"
-          render={({ field }) => (
-            <NumberInput
-              hasError={!!errors.longitude}
-              onValueChange={field.onChange}
-              value={field.value}
-            />
-          )}
-        />
-      </InputBlock>
+      {/* Same inputs as the public submit form — same precision and parsing */}
+      <CoordinateFields
+        errors={{ latitude: getFieldError('latitude'), longitude: getFieldError('longitude') }}
+        isRequired={isLocationRequired}
+        latitude={latitude ?? null}
+        longitude={longitude ?? null}
+        onChange={handleCoordinatesChange}
+      />
     </div>
   )
 }

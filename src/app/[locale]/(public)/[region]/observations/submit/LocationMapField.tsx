@@ -1,5 +1,6 @@
 'use client'
 
+import { CoordinateFields } from '@components/features/observations'
 import { useFieldError } from '@components/hooks'
 import { InputBlock, Spinner } from '@components/ui'
 import { roundCoordinate } from '@data/helpers'
@@ -8,7 +9,6 @@ import dynamic from 'next/dynamic'
 import { useTranslations } from 'next-intl'
 import { useFormContext } from 'react-hook-form'
 
-import LocationCoordinateFields from './LocationCoordinateFields'
 import type { ObservationSubmitFormSchema } from './schema'
 
 const LocationMapFieldClient = dynamic(() => import('./LocationMapFieldClient'), {
@@ -55,7 +55,7 @@ const LocationMapField = () => {
           onChange={handlePick}
           region={region!}
         />
-        <LocationCoordinateFields
+        <CoordinateFields
           latitude={latitude}
           longitude={longitude}
           onChange={handleCoordinateChange}

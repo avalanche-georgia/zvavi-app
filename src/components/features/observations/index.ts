@@ -1,6 +1,7 @@
 export { default as AspectsOverview } from './AspectsOverview'
 export { getAllAspects, getZonesWithAspects } from './aspectSummary'
 export { default as BandCompass } from './BandCompass'
+export { default as CoordinateFields } from './CoordinateFields'
 export { default as DetailSection } from './DetailSection'
 export { type Fact, default as FactsGrid } from './FactsGrid'
 export { default as hasCoordinates } from './hasCoordinates'
