@@ -63,7 +63,7 @@ observations:
     reportedAgo: 'Reported {time}'
 
   photos:
-    processing: 'Photo is still processing'
+    unavailable: 'Photo not available yet'
 
   map:
     onMap: '{count} on map'
@@ -142,6 +142,7 @@ observations:
         uploading: 'Please wait until all photos finish uploading.'
         failed: 'Some photos failed to upload. Check your connection, then tap Retry or remove them.'
         notFound: "Some photos didn't reach our server. Remove them and add them again."
+        unprocessable: "One of the photos couldn't be processed. Remove any very large or unusual photos and submit again."
         unsupported: '{files}: not a supported format. Please use JPEG, PNG or HEIC photos.'
         tooLarge: '{files}: too large. Each photo must be under {maxSize} MB.'
         unreadable: "{file} couldn't be opened in this browser. Try a JPEG version of the photo."

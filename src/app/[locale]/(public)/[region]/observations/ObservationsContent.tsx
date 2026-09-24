@@ -30,7 +30,7 @@ const ObservationsContent = () => {
   // Matches the server render (no media queries there) on the first pass
   const isDesktop = useMediaQuery(desktopMediaQuery, { initializeWithValue: false })
   const { headingRef, mobileMapOffset, toolbarRef } = useMobileMapOffset()
-  const peekObservation = useObservationLookup({
+  const { observation: peekObservation } = useObservationLookup({
     id: peekId,
     isListReady: !list.isPending,
     observations: list.observations,

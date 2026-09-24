@@ -2,6 +2,7 @@ import { convertSnakeToCamel } from '@data/helpers'
 import type { ObservationPoint, ObservationPoints } from '@domain/types'
 
 import {
+  dateColumns,
   pointColumns,
   type PublicObservationFilters,
   queryPublicObservations,
@@ -19,6 +20,9 @@ const fetchObservationPoints = async (
     queryPublicObservations(filters, { columns: pointColumns })
       .not('latitude', 'is', null)
       .not('longitude', 'is', null)
+      // If the cap is ever hit, the oldest are the ones left off the map
+      .order(dateColumns[filters.dateBasis], { ascending: false, nullsFirst: false })
+      .order('created_at', { ascending: false })
       .limit(maxPoints),
     queryPublicObservations(
       { dateBasis: 'occurred', regionId: filters.regionId },

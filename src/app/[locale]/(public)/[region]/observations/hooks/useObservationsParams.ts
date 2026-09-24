@@ -16,8 +16,12 @@ const useObservationsParams = () => {
   const searchParams = useSearchParams()
   const params = parseObservationsParams(new URLSearchParams(searchParams.toString()))
 
+  // Reads the URL at call time, not the render-time params — so a change
+  // applied after an await (e.g. loading the next page) can't undo one the
+  // user made meanwhile
   const setParams = (changes: Partial<ObservationsParams>) => {
-    const query = serializeObservationsParams({ ...params, ...changes })
+    const current = parseObservationsParams(new URLSearchParams(window.location.search))
+    const query = serializeObservationsParams({ ...current, ...changes })
 
     window.history.replaceState(null, '', query ? `?${query}` : window.location.pathname)
   }

@@ -9,6 +9,21 @@ type LoadMoreTriggerProps = {
   onLoadMore: VoidFunction
 }
 
+const getScrollParent = (element: HTMLElement): HTMLElement | null => {
+  for (let parent = element.parentElement; parent; parent = parent.parentElement) {
+    const { overflowY } = getComputedStyle(parent)
+
+    if (
+      (overflowY === 'auto' || overflowY === 'scroll') &&
+      parent.scrollHeight > parent.clientHeight
+    ) {
+      return parent
+    }
+  }
+
+  return null
+}
+
 // Sits after the last card: loads the next page as it nears the viewport (or
 // the scrolling list column on desktop). On error, offers a manual retry.
 const LoadMoreTrigger = ({ isError, isLoading, onLoadMore }: LoadMoreTriggerProps) => {
@@ -25,7 +40,9 @@ const LoadMoreTrigger = ({ isError, isLoading, onLoadMore }: LoadMoreTriggerProp
       ([entry]) => {
         if (entry.isIntersecting) handleLoadMore()
       },
-      { rootMargin: '600px 0px' },
+      // The margin only extends the root — so the root must be the element that
+      // actually scrolls (the list column on desktop, the viewport on mobile)
+      { root: getScrollParent(sentinel), rootMargin: '600px 0px' },
     )
 
     observer.observe(sentinel)

@@ -3,14 +3,14 @@ import { useTranslations } from 'next-intl'
 
 import { cn } from '@/lib/utils'
 
-// Stands in for a photo whose resized copies aren't ready yet (generated a few
-// seconds after submit) — instead of a broken image
+// Stands in for a photo that can't be shown — usually one whose resized copies
+// aren't ready yet (generated a few seconds after submit) — instead of a broken image
 const PhotoPlaceholder = ({ className }: { className?: string }) => {
   const t = useTranslations()
 
   return (
     <div
-      aria-label={t('observations.photos.processing')}
+      aria-label={t('observations.photos.unavailable')}
       className={cn('bg-tile text-muted flex size-full items-center justify-center', className)}
       role="img"
     >

@@ -12,11 +12,18 @@ type FallbackImageProps = Omit<React.ImgHTMLAttributes<HTMLImageElement>, 'onErr
 }
 
 const FallbackImage = ({ alt = '', fallback, sources, ...props }: FallbackImageProps) => {
-  const [sourceIndex, setSourceIndex] = useState(0)
+  const sourcesKey = sources.join('|')
+  const [attempt, setAttempt] = useState({ index: 0, sourcesKey })
+
+  // New sources (e.g. freshly signed URLs after a refetch) get a fresh start,
+  // so a placeholder shown earlier can turn into the real photo
+  if (attempt.sourcesKey !== sourcesKey) setAttempt({ index: 0, sourcesKey })
+
+  const sourceIndex = attempt.sourcesKey === sourcesKey ? attempt.index : 0
 
   if (sourceIndex >= sources.length && fallback) return fallback
 
-  const handleError = () => setSourceIndex((index) => index + 1)
+  const handleError = () => setAttempt({ index: sourceIndex + 1, sourcesKey })
 
   return (
     <img

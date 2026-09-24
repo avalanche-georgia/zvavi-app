@@ -71,6 +71,13 @@ export const deletePhotos = async (keys: string[]): Promise<void> => {
   }
 }
 
+// The photo itself is the problem (not storage) — see photosUnprocessableError
+export class PhotoProcessingError extends Error {
+  constructor(key: string, cause: unknown) {
+    super(`failed to process ${key}`, { cause })
+  }
+}
+
 const contentTypesByExtension: Record<string, ObservationPhotoContentType> = {
   jpg: 'image/jpeg',
   png: 'image/png',
@@ -84,7 +91,14 @@ const promotePhoto = async (client: S3Client, pendingKey: string, permanentKey: 
     new GetObjectCommand({ Bucket: observationsBucket, Key: pendingKey }),
   )
   const contentType = contentTypesByExtension[pendingKey.split('.').pop() ?? ''] ?? 'image/jpeg'
-  const body = await stripMetadata(await pending.Body!.transformToByteArray(), contentType)
+  const bytes = await pending.Body!.transformToByteArray()
+  let body: Buffer
+
+  try {
+    body = await stripMetadata(bytes, contentType)
+  } catch (error) {
+    throw new PhotoProcessingError(pendingKey, error)
+  }
 
   await client.send(
     new PutObjectCommand({

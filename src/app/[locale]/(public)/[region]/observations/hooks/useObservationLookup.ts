@@ -18,15 +18,17 @@ const useObservationLookup = ({
   regionId,
 }: ObservationLookupParams) => {
   const loaded = observations.find((observation) => observation.id === id)
-  const { data: fetched } = usePublicObservationQuery({
+  const { data: fetched, isError } = usePublicObservationQuery({
     id,
     isEnabled: isListReady && !loaded,
     regionId,
   })
 
-  if (id === null) return null
-
-  return loaded ?? fetched ?? null
+  return {
+    // Unpublished, deleted, or a bad id in a link
+    isNotFound: id !== null && !loaded && isError,
+    observation: id === null ? null : (loaded ?? fetched ?? null),
+  }
 }
 
 export default useObservationLookup

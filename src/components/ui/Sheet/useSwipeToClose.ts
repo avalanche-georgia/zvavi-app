@@ -62,6 +62,9 @@ const useSwipeToClose = (onClose: VoidFunction) => {
       window.setTimeout(onClose, settleMs)
     } else {
       setPopupStyle('', transition)
+      // Hand the transition back to the stylesheet once settled, or the close
+      // animation would use this shorter one
+      window.setTimeout(() => setPopupStyle('', ''), settleMs)
     }
   }
 

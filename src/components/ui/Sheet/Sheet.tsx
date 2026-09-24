@@ -56,7 +56,6 @@ const Sheet = ({
           onKeyDown={onKeyDown}
         >
           {/* Drag area: handle + header (never the scrolling body) */}
-          {}
           <div className="shrink-0 touch-none lg:touch-auto" {...dragHandlers}>
             <div className="mx-auto mt-2 h-1.25 w-10 rounded-full bg-[#d8d8d4] lg:hidden" />
             <div className="border-rule flex items-center gap-2 border-b pt-2 pr-3 pb-2.5 pl-4 lg:pt-3">

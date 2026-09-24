@@ -4,8 +4,13 @@ import { after, NextResponse } from 'next/server'
 import createPhotoVariants from './createPhotoVariants'
 import fetchPublicObservations from './fetchPublicObservations'
 import notifyAdmin from './notifyAdmin'
-import { deletePhotos, promotePhotos, verifyPhotosExist } from './photoKeys'
-import { observationsPageQuerySchema, photosNotFoundError, submitObservationSchema } from './schema'
+import { deletePhotos, PhotoProcessingError, promotePhotos, verifyPhotosExist } from './photoKeys'
+import {
+  observationsPageQuerySchema,
+  photosNotFoundError,
+  photosUnprocessableError,
+  submitObservationSchema,
+} from './schema'
 
 import { createServiceRoleClient } from '@/lib/supabase/serviceRole'
 
@@ -66,6 +71,10 @@ export const POST = async (request: Request) => {
   } catch (error) {
     console.error('[POST /api/observations] promotePhotos failed:', error)
 
+    if (error instanceof PhotoProcessingError) {
+      return NextResponse.json({ error: photosUnprocessableError, ok: false }, { status: 400 })
+    }
+
     return NextResponse.json({ error: 'failed to submit observation', ok: false }, { status: 500 })
   }
 
@@ -73,7 +82,8 @@ export const POST = async (request: Request) => {
 
   const { data, error } = await supabase.rpc('submit_observation', {
     p_aspects: body.aspects ? convertCamelToSnake(body.aspects) : undefined,
-    p_date: body.date ?? undefined,
+    // "Unknown" wins over a date picked before the box was ticked
+    p_date: body.isDateUnknown ? undefined : (body.date ?? undefined),
     p_description: body.description ?? undefined,
     p_is_date_unknown: body.isDateUnknown,
     p_latitude: roundCoordinate(body.latitude),

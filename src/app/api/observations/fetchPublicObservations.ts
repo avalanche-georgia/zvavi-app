@@ -27,6 +27,9 @@ const fetchPublicObservations = async ({
   let query = queryPublicObservations(filters, { columns: publicColumns, isCounted: true })
 
   if (sort === 'largest') query = query.order('size', { ascending: false })
+  // "Date unknown" always after dated ones — also rows that still carry a date
+  // but were marked unknown, which the client groups as unknown too
+  if (filters.dateBasis === 'occurred') query = query.order('is_date_unknown', { ascending: true })
 
   const { count, data, error } = await query
     .order(dateColumn, { ascending: false, nullsFirst: false })

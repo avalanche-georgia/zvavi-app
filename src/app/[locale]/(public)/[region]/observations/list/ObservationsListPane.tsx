@@ -1,23 +1,11 @@
 import { Spinner } from '@components/ui'
-import type { ObservationDateBasis, ObservationsSort, PublicObservation } from '@domain/types'
+import type { ObservationDateBasis, ObservationsSort } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import LoadMoreTrigger from './LoadMoreTrigger'
 import ObservationsEmptyState from './ObservationsEmptyState'
 import ObservationsList from './ObservationsList'
-
-export type ObservationsListState = {
-  hasFilters: boolean
-  hasNextPage: boolean
-  isError: boolean
-  isFetchingNextPage: boolean
-  isNextPageError: boolean
-  isPending: boolean
-  // Loaded pages, in display order
-  observations: PublicObservation[]
-  onFetchNextPage: VoidFunction
-  onFiltersClear: VoidFunction
-}
+import type { ObservationsListState } from '../hooks/useObservationsPage'
 
 type ObservationsListPaneProps = {
   dateBasis: ObservationDateBasis

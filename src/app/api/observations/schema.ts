@@ -18,6 +18,10 @@ export const pendingPhotoKeyPattern =
 // behind it — the client maps it to a photo-specific message.
 export const photosNotFoundError = 'photos not found'
 
+// Returned when a photo exists but can't be decoded / re-written (corrupt, not
+// an image, or beyond the pixel limit) — retrying the same photo won't help
+export const photosUnprocessableError = 'photos unprocessable'
+
 const aspectSchema = z.enum(sortedAspects)
 
 const aspectsSchema = z.object({
@@ -68,7 +72,7 @@ export const observationsPageQuerySchema = observationFiltersSchema.extend({
 })
 
 export const observationQuerySchema = z.object({
-  id: z.coerce.number().int().positive(),
+  id: z.coerce.number().int().positive().max(Number.MAX_SAFE_INTEGER),
   regionId: z.enum(region_id),
 })
 

@@ -1,16 +1,42 @@
 'use client'
 
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import {
   useObservationPointsQuery,
   usePublicObservationsInfiniteQuery,
 } from '@data/hooks/observations'
-import type { RegionId } from '@domain/types'
+import type { PublicObservation, RegionId } from '@domain/types'
 
 import useDateRange from './useDateRange'
 import useObservationLookup from './useObservationLookup'
 import useObservationsParams from './useObservationsParams'
-import type { ObservationsListState } from '../list/ObservationsListPane'
+
+export type ObservationsListState = {
+  hasFilters: boolean
+  hasNextPage: boolean
+  isError: boolean
+  isFetchingNextPage: boolean
+  isNextPageError: boolean
+  isPending: boolean
+  // Loaded pages, in display order
+  observations: PublicObservation[]
+  onFetchNextPage: VoidFunction
+  onFiltersClear: VoidFunction
+}
+
+// Offset paging shifts by one when a report is published or removed between
+// page loads — the same observation can then arrive on two pages
+const uniqueById = (observations: PublicObservation[]) => {
+  const seen = new Set<number>()
+
+  return observations.filter(({ id }) => {
+    if (seen.has(id)) return false
+
+    seen.add(id)
+
+    return true
+  })
+}
 
 // Data + URL state for the page. The list is paged (sorted and filtered
 // server-side); the map gets every matching point in one lighter request,
@@ -24,12 +50,12 @@ const useObservationsPage = (regionId: RegionId) => {
   const { data: pointsData } = useObservationPointsQuery(filters)
 
   const observations = useMemo(
-    () => listQuery.data?.pages.flatMap((page) => page.observations) ?? [],
+    () => uniqueById(listQuery.data?.pages.flatMap((page) => page.observations) ?? []),
     [listQuery.data],
   )
   const total = listQuery.data?.pages[0]?.total ?? 0
   const selectedIndex = observations.findIndex((observation) => observation.id === selectedId)
-  const selectedObservation = useObservationLookup({
+  const { isNotFound, observation: selectedObservation } = useObservationLookup({
     id: selectedId,
     isListReady: !listQuery.isPending,
     observations,
@@ -43,13 +69,23 @@ const useObservationsPage = (regionId: RegionId) => {
     const loadedTarget = observations[targetIndex]
 
     if (loadedTarget) return setParams({ selectedId: loadedTarget.id })
-    if (offset < 0 || !listQuery.hasNextPage) return undefined
+    if (offset < 0 || !listQuery.hasNextPage || listQuery.isFetchingNextPage) return undefined
 
     const { data } = await listQuery.fetchNextPage()
-    const target = data?.pages.flatMap((page) => page.observations)[targetIndex]
+    const target = uniqueById(data?.pages.flatMap((page) => page.observations) ?? [])[targetIndex]
 
-    return target ? setParams({ selectedId: target.id }) : undefined
+    // Only if the user is still on the same observation — they may have closed
+    // the sheet or moved on while the page loaded
+    const isStillSelected =
+      new URLSearchParams(window.location.search).get('id') === String(selectedId)
+
+    return target && isStillSelected ? setParams({ selectedId: target.id }) : undefined
   }
+
+  // A link to an observation that doesn't exist (anymore) — drop it from the URL
+  useEffect(() => {
+    if (isNotFound) setParams({ selectedId: null })
+  }, [isNotFound]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const list: ObservationsListState = {
     hasFilters: period !== 'all',
