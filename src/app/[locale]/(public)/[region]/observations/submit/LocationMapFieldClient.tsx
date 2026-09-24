@@ -1,10 +1,9 @@
 'use client'
 
 import {
-  PisteTileLayer,
+  BaseMapLayers,
+  baseMapMaxZoom,
   RegionBoundary,
-  topoMaxZoom,
-  TopoTileLayer,
   useRegionBounds,
 } from '@components/shared/map'
 import type { Region } from '@domain/types'
@@ -67,11 +66,10 @@ const LocationMapFieldClient = ({
       className="z-30 h-116 w-full cursor-crosshair rounded-xl"
       maxBounds={bounds ?? undefined}
       maxBoundsViscosity={1}
-      maxZoom={topoMaxZoom}
+      maxZoom={baseMapMaxZoom}
       zoom={bounds ? undefined : (region.defaultZoom ?? fallbackZoom)}
     >
-      <TopoTileLayer />
-      <PisteTileLayer />
+      <BaseMapLayers />
 
       <RegionBoundary bounds={bounds} region={region} />
       <ClickHandler onPick={onChange} />

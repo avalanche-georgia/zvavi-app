@@ -1,6 +1,6 @@
 'use client'
 
-import { topoMaxZoom, TopoTileLayer } from '@components/shared/map'
+import { BaseMapLayers, baseMapMaxZoom } from '@components/shared/map'
 import type { AvalancheSize, ObservationPoint } from '@domain/types'
 import { CircleMarker, MapContainer, Marker } from 'react-leaflet'
 
@@ -22,8 +22,8 @@ const zoom = 14
 const noop = () => undefined
 
 const LocationMapClient = ({ center, points, selectedId, size }: LocationMapClientProps) => (
-  <MapContainer center={center} className="bg-map size-full" maxZoom={topoMaxZoom} zoom={zoom}>
-    <TopoTileLayer />
+  <MapContainer center={center} className="bg-map size-full" maxZoom={baseMapMaxZoom} zoom={zoom}>
+    <BaseMapLayers />
     <MapBehavior focus={center} onMapClick={noop} />
 
     {points

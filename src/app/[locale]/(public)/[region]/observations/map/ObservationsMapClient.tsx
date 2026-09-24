@@ -1,6 +1,11 @@
 'use client'
 
-import { RegionBoundary, topoMaxZoom, TopoTileLayer, useRegionBounds } from '@components/shared/map'
+import {
+  BaseMapLayers,
+  baseMapMaxZoom,
+  RegionBoundary,
+  useRegionBounds,
+} from '@components/shared/map'
 import type { ObservationPoint, Region } from '@domain/types'
 import { MapContainer, ZoomControl } from 'react-leaflet'
 
@@ -43,11 +48,11 @@ const ObservationsMapClient = ({
       className="bg-map size-full"
       maxBounds={bounds ?? undefined}
       maxBoundsViscosity={1}
-      maxZoom={topoMaxZoom}
+      maxZoom={baseMapMaxZoom}
       zoom={bounds ? undefined : (region.defaultZoom ?? fallbackZoom)}
       zoomControl={false}
     >
-      <TopoTileLayer />
+      <BaseMapLayers />
       <ZoomControl position="topright" />
       <RegionBoundary bounds={bounds} region={region} />
       {/* Keeps the focused marker clear of the detail panel (480px + 16px inset) */}

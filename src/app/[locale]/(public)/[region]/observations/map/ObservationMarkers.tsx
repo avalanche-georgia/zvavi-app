@@ -22,7 +22,7 @@ const ObservationMarkers = ({ onMarkerClick, points, selectedId }: ObservationMa
       <MarkerClusterGroup
         chunkedLoading
         iconCreateFunction={observationClusterIcon}
-        maxClusterRadius={44}
+        maxClusterRadius={32}
         showCoverageOnHover={false}
       >
         {points
