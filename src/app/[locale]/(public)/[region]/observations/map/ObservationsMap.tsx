@@ -42,7 +42,7 @@ const ObservationsMap = ({
       </div>
 
       {peekObservation && (
-        <div className="absolute inset-x-3 bottom-23 z-600 lg:hidden">
+        <div className="absolute inset-x-3 bottom-3 z-600 lg:hidden">
           <ObservationCard
             className="shadow-[0_8px_28px_rgba(0,0,0,.18)]"
             dateBasis={dateBasis}

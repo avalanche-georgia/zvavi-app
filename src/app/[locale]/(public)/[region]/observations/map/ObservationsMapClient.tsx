@@ -48,7 +48,7 @@ const ObservationsMapClient = ({
       zoomControl={false}
     >
       <TopoTileLayer />
-      <ZoomControl position="bottomleft" />
+      <ZoomControl position="topright" />
       <RegionBoundary bounds={bounds} region={region} />
       {/* Keeps the focused marker clear of the detail panel (480px + 16px inset) */}
       <MapBehavior focus={focus} focusOffsetX={detailPanelOffset} onMapClick={onMapClick} />
