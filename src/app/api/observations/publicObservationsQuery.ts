@@ -48,7 +48,8 @@ export const queryPublicObservations = (
     .eq('status', 'published')
     .eq('region_id', regionId)
 
-  if (isDateUnknown) query = query.eq('is_date_unknown', true)
+  // Same rule as the list's "Date unknown" group: flagged unknown, or no date at all
+  if (isDateUnknown) query = query.or('is_date_unknown.eq.true,date.is.null')
 
   // A date range can only match observations whose date is actually known
   if (dateBasis === 'occurred' && (dateFrom || dateTo)) query = query.eq('is_date_unknown', false)

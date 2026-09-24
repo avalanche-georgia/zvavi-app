@@ -3,7 +3,11 @@ import type { PublicObservation, RegionId } from '@domain/types'
 
 import { useQuery } from '@/tanstack-query/hooks'
 
-import { photoUrlsStaleTime, requestPublicObservations } from './requestPublicObservations'
+import {
+  isNotFoundError,
+  photoUrlsStaleTime,
+  requestPublicObservations,
+} from './requestPublicObservations'
 
 type QueryParams = {
   // null = nothing to fetch
@@ -26,7 +30,8 @@ const usePublicObservationQuery = ({ id, isEnabled, regionId }: QueryParams) =>
     },
     queryKey: observationsKeys.detail(regionId, id ?? 0),
     refetchInterval: photoUrlsStaleTime,
-    retry: false,
+    // A missing observation won't appear on retry; a flaky connection might
+    retry: (failureCount, error) => !isNotFoundError(error) && failureCount < 2,
     staleTime: photoUrlsStaleTime,
   })
 

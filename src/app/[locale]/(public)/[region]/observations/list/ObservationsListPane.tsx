@@ -45,7 +45,10 @@ const ObservationsListPane = ({
     }
 
     return (
-      <div className={cn('transition-opacity', list.isStale && 'opacity-50')}>
+      <div
+        aria-busy={list.isStale}
+        className={cn('transition-opacity', list.isStale && 'opacity-50')}
+      >
         <ObservationsList
           dateBasis={dateBasis}
           hasMore={hasNextPage}
@@ -54,7 +57,8 @@ const ObservationsListPane = ({
           selectedId={selectedId}
           sort={sort}
         />
-        {hasNextPage && (
+        {/* A stale list's "next page" belongs to the previous filter */}
+        {hasNextPage && !list.isStale && (
           <LoadMoreTrigger
             isError={list.isNextPageError}
             isLoading={list.isFetchingNextPage}

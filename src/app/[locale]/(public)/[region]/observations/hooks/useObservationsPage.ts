@@ -71,17 +71,18 @@ const useObservationsPage = (regionId: RegionId) => {
     const loadedTarget = observations[targetIndex]
 
     if (loadedTarget) return setParams({ selectedId: loadedTarget.id })
-    if (offset < 0 || !listQuery.hasNextPage || listQuery.isFetchingNextPage) return undefined
+    if (offset < 0 || !listQuery.hasNextPage) return undefined
 
-    const { data } = await listQuery.fetchNextPage()
+    // Only act if nothing changed meanwhile — the user may have closed the
+    // sheet, moved on, or changed a filter while the page loaded
+    const searchBefore = window.location.search
+    // Joins a load that's already running (e.g. from scrolling) instead of restarting it
+    const { data } = await listQuery.fetchNextPage({ cancelRefetch: false })
     const target = uniqueById(data?.pages.flatMap((page) => page.observations) ?? [])[targetIndex]
 
-    // Only if the user is still on the same observation — they may have closed
-    // the sheet or moved on while the page loaded
-    const isStillSelected =
-      new URLSearchParams(window.location.search).get('id') === String(selectedId)
-
-    return target && isStillSelected ? setParams({ selectedId: target.id }) : undefined
+    return target && window.location.search === searchBefore
+      ? setParams({ selectedId: target.id })
+      : undefined
   }
 
   // A link to an observation that doesn't exist (anymore) — drop it from the URL
@@ -98,7 +99,7 @@ const useObservationsPage = (regionId: RegionId) => {
     isPending: listQuery.isPending,
     isStale: listQuery.isPlaceholderData,
     observations,
-    onFetchNextPage: () => listQuery.fetchNextPage(),
+    onFetchNextPage: () => listQuery.fetchNextPage({ cancelRefetch: false }),
     onFiltersClear: clearFilters,
   }
 

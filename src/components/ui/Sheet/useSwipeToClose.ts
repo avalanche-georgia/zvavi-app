@@ -17,6 +17,7 @@ type DragState = { pointerId: number; startTime: number; startY: number }
 const useSwipeToClose = (onClose: VoidFunction) => {
   const popupRef = useRef<HTMLDivElement>(null)
   const dragRef = useRef<DragState | null>(null)
+  const settleTimeoutRef = useRef<number | undefined>(undefined)
 
   const setPopupStyle = (transform: string, transition: string) => {
     if (!popupRef.current) return
@@ -29,6 +30,8 @@ const useSwipeToClose = (onClose: VoidFunction) => {
     if (!window.matchMedia(mobileMediaQuery).matches) return
     if ((event.target as HTMLElement).closest(interactiveSelector)) return
 
+    // A new grab cancels the previous spring-back's cleanup
+    window.clearTimeout(settleTimeoutRef.current)
     event.currentTarget.setPointerCapture(event.pointerId)
     dragRef.current = {
       pointerId: event.pointerId,
@@ -64,7 +67,7 @@ const useSwipeToClose = (onClose: VoidFunction) => {
       setPopupStyle('', transition)
       // Hand the transition back to the stylesheet once settled, or the close
       // animation would use this shorter one
-      window.setTimeout(() => setPopupStyle('', ''), settleMs)
+      settleTimeoutRef.current = window.setTimeout(() => setPopupStyle('', ''), settleMs)
     }
   }
 

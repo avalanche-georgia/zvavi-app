@@ -117,15 +117,16 @@ export const promotePhotos = async (pendingKeys: string[]): Promise<string[]> =>
   const client = createR2Client()
   const permanentKeys = pendingKeys.map(toPermanentKey)
 
-  try {
-    await Promise.all(
-      pendingKeys.map((pendingKey, index) =>
-        promotePhoto(client, pendingKey, permanentKeys[index]),
-      ),
-    )
-  } catch (error) {
+  // allSettled, not all: every write must have finished before cleaning up, or
+  // a write still in flight would outlive the delete and leave an orphan
+  const results = await Promise.allSettled(
+    pendingKeys.map((pendingKey, index) => promotePhoto(client, pendingKey, permanentKeys[index])),
+  )
+  const failure = results.find((result) => result.status === 'rejected')
+
+  if (failure) {
     await deletePhotos(permanentKeys)
-    throw error
+    throw failure.reason
   }
 
   return permanentKeys

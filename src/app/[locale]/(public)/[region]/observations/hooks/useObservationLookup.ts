@@ -1,4 +1,4 @@
-import { usePublicObservationQuery } from '@data/hooks/observations'
+import { isNotFoundError, usePublicObservationQuery } from '@data/hooks/observations'
 import type { PublicObservation, RegionId } from '@domain/types'
 
 type ObservationLookupParams = {
@@ -18,15 +18,15 @@ const useObservationLookup = ({
   regionId,
 }: ObservationLookupParams) => {
   const loaded = observations.find((observation) => observation.id === id)
-  const { data: fetched, isError } = usePublicObservationQuery({
+  const { data: fetched, error } = usePublicObservationQuery({
     id,
     isEnabled: isListReady && !loaded,
     regionId,
   })
 
   return {
-    // Unpublished, deleted, or a bad id in a link
-    isNotFound: id !== null && !loaded && isError,
+    // Unpublished, deleted, or a bad id in a link — not a temporary failure
+    isNotFound: id !== null && !loaded && isNotFoundError(error),
     observation: id === null ? null : (loaded ?? fetched ?? null),
   }
 }
