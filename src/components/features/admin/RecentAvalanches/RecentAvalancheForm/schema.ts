@@ -28,3 +28,19 @@ export const avalancheFormSchema = z.object({
 })
 
 export type AvalancheFormSchema = z.infer<typeof avalancheFormSchema>
+
+// Coordinates are required for every new record. Legacy records saved without
+// them stay editable (enforced the same way by a DB trigger); a record that
+// already has coordinates can't lose them.
+export const getAvalancheFormSchema = (isLocationRequired: boolean) =>
+  avalancheFormSchema.superRefine((data, context) => {
+    if (!isLocationRequired) return
+
+    if (data.latitude === null) {
+      context.addIssue({ code: 'custom', message: 'required', path: ['latitude'] })
+    }
+
+    if (data.longitude === null) {
+      context.addIssue({ code: 'custom', message: 'required', path: ['longitude'] })
+    }
+  })

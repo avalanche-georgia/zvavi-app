@@ -1,27 +1,33 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { FallbackImage } from '@components/ui'
 import useEmblaCarousel from 'embla-carousel-react'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight, ImageOff } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
-import type { PhotoUpload } from '../schema'
+import type { ViewerPhoto } from './types'
 
 import { cn } from '@/lib/utils'
 
-type PhotoCarouselProps = {
+type PhotoViewerCarouselProps = {
   onIndexChange: (index: number) => void
-  photos: PhotoUpload[]
+  photos: ViewerPhoto[]
   selectedIndex: number
 }
 
 const navButtonClassName = cn(
-  'absolute top-1/2 hidden size-11 -translate-y-1/2 items-center justify-center rounded-full',
-  'bg-white/10 text-white backdrop-blur transition hover:bg-white/20 disabled:opacity-0 sm:flex',
+  'absolute top-1/2 hidden size-12 -translate-y-1/2 items-center justify-center rounded-full',
+  'bg-white/10 text-white backdrop-blur transition hover:bg-white/20 disabled:opacity-0',
+  '[@media(hover:hover)_and_(min-width:700px)]:flex',
 )
 
-// Swipe on touch, arrow buttons + keyboard on desktop.
-const PhotoCarousel = ({ onIndexChange, photos, selectedIndex }: PhotoCarouselProps) => {
+// Swipe on touch, arrow buttons (hover-capable screens) + ←/→ keys (see PhotoViewer).
+const PhotoViewerCarousel = ({
+  onIndexChange,
+  photos,
+  selectedIndex,
+}: PhotoViewerCarouselProps) => {
   const t = useTranslations()
   // Remounted on every open (the dialog unmounts its content when closed), so
   // this captures the tapped photo; later swipes must not re-init the carousel.
@@ -40,18 +46,12 @@ const PhotoCarousel = ({ onIndexChange, photos, selectedIndex }: PhotoCarouselPr
     }
   }, [emblaApi, onIndexChange])
 
+  // Keyboard navigation drives the index from outside — keep the track in sync
   useEffect(() => {
-    if (!emblaApi) return undefined
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'ArrowLeft') emblaApi.scrollPrev()
-      if (event.key === 'ArrowRight') emblaApi.scrollNext()
+    if (emblaApi && emblaApi.selectedScrollSnap() !== selectedIndex) {
+      emblaApi.scrollTo(selectedIndex)
     }
-
-    window.addEventListener('keydown', handleKeyDown)
-
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [emblaApi])
+  }, [emblaApi, selectedIndex])
 
   return (
     <div className="relative min-h-0 flex-1 pb-4 sm:pb-8">
@@ -62,12 +62,11 @@ const PhotoCarousel = ({ onIndexChange, photos, selectedIndex }: PhotoCarouselPr
               key={photo.id}
               className="flex h-full min-w-0 flex-[0_0_100%] items-center justify-center px-2 sm:px-20"
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                alt=""
+              <FallbackImage
                 className="max-h-full max-w-full rounded-lg object-contain select-none"
                 draggable={false}
-                src={photo.previewUrl}
+                fallback={<ImageOff aria-hidden="true" className="size-10 text-white/40" />}
+                sources={photo.sources}
               />
             </div>
           ))}
@@ -75,7 +74,7 @@ const PhotoCarousel = ({ onIndexChange, photos, selectedIndex }: PhotoCarouselPr
       </div>
 
       <button
-        aria-label={t('observations.submit.photos.previous')}
+        aria-label={t('common.photoViewer.previous')}
         className={cn(navButtonClassName, 'left-4')}
         disabled={selectedIndex === 0}
         onClick={() => emblaApi?.scrollPrev()}
@@ -84,7 +83,7 @@ const PhotoCarousel = ({ onIndexChange, photos, selectedIndex }: PhotoCarouselPr
         <ChevronLeft className="size-6" />
       </button>
       <button
-        aria-label={t('observations.submit.photos.next')}
+        aria-label={t('common.photoViewer.next')}
         className={cn(navButtonClassName, 'right-4')}
         disabled={selectedIndex === photos.length - 1}
         onClick={() => emblaApi?.scrollNext()}
@@ -96,4 +95,4 @@ const PhotoCarousel = ({ onIndexChange, photos, selectedIndex }: PhotoCarouselPr
   )
 }
 
-export default PhotoCarousel
+export default PhotoViewerCarousel

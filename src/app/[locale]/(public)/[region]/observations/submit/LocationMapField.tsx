@@ -7,6 +7,8 @@ import dynamic from 'next/dynamic'
 import { useTranslations } from 'next-intl'
 import { useFormContext } from 'react-hook-form'
 
+import useFieldError from './hooks/useFieldError'
+
 import LocationCoordinateFields from './LocationCoordinateFields'
 import type { ObservationSubmitFormSchema } from './schema'
 
@@ -23,23 +25,29 @@ const LocationMapField = () => {
   const t = useTranslations()
   const { region } = useRegionContext()
   const form = useFormContext<ObservationSubmitFormSchema>()
+  const getFieldError = useFieldError()
   const latitude = form.watch('latitude')
   const longitude = form.watch('longitude')
 
-  const handlePick = (lat: number, lng: number) => {
-    form.setValue('latitude', roundCoordinate(lat), { shouldDirty: true })
-    form.setValue('longitude', roundCoordinate(lng), { shouldDirty: true })
+  // Re-validates only once the user has tried to submit, so the error clears as
+  // soon as a pin is dropped — but doesn't show before the first attempt
+  const handleCoordinateChange = (lat: number | null, lng: number | null) => {
+    const options = { shouldDirty: true, shouldValidate: form.formState.isSubmitted }
+
+    form.setValue('latitude', lat, options)
+    form.setValue('longitude', lng, options)
   }
 
-  const handleCoordinateChange = (lat: number | null, lng: number | null) => {
-    form.setValue('latitude', lat, { shouldDirty: true })
-    form.setValue('longitude', lng, { shouldDirty: true })
+  const handlePick = (lat: number, lng: number) => {
+    handleCoordinateChange(roundCoordinate(lat), roundCoordinate(lng))
   }
 
   return (
     <InputBlock
+      error={getFieldError('latitude') ?? getFieldError('longitude')}
       hint={t('observations.submit.hints.location')}
       label={t('observations.submit.labels.location')}
+      required
     >
       <div className="flex flex-col gap-3">
         <LocationMapFieldClient

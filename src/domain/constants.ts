@@ -4,6 +4,7 @@ import type {
   AvalancheStatus,
   AvalancheTrigger,
   AvalancheType,
+  ElevationZone,
   HazardLevel,
   HazardLevelScale,
   MemberStatus,
@@ -106,6 +107,15 @@ export const aspects = {
 } as const
 
 export const sortedAspects: Aspect[] = ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw']
+
+// Avalanche season, 1 Nov – 31 May. Months are 0-based (Date convention).
+export const avalancheSeason = {
+  end: { day: 31, month: 4 },
+  start: { day: 1, month: 10 },
+}
+
+// Top → bottom
+export const sortedElevationZones: ElevationZone[] = ['highAlpine', 'alpine', 'subAlpine']
 
 export const sensitivityLevels = {
   reactive: 'reactive',
