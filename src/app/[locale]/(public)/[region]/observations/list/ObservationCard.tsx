@@ -1,9 +1,6 @@
-import {
-  getAllAspects,
-  getZonesWithAspects,
-  MiniCompass,
-  SizeTile,
-} from '@components/features/observations'
+import { SizeTile } from '@components/features/observations'
+import { MiniCompass } from '@components/ui'
+import { getAllAspects, getZonesWithAspects } from '@domain/aspects'
 import type { ObservationDateBasis, PublicObservation } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
