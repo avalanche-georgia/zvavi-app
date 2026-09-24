@@ -9,7 +9,11 @@ import { useTranslations } from 'next-intl'
 import CustomRangeFields from './CustomRangeFields'
 import SortSelect from './SortSelect'
 import useIsStuck from './useIsStuck'
-import type { ObservationsFilters, ObservationsPeriod } from '../helpers/searchParams'
+import {
+  type ObservationsFilters,
+  type ObservationsPeriod,
+  observationsPeriods,
+} from '../helpers/searchParams'
 
 import { cn } from '@/lib/utils'
 
@@ -22,8 +26,6 @@ type ObservationsToolbarProps = {
   ref?: React.Ref<HTMLDivElement>
   view: ObservationsView
 }
-
-const periods: ObservationsPeriod[] = ['all', '7d', '30d', 'custom']
 
 // Sticky under the app header on mobile, at the top of the scrolling list
 // column on desktop. Gets a rule and blur once pinned.
@@ -52,7 +54,7 @@ const ObservationsToolbar = ({
     { label: t('observations.filters.dateBasis.reported'), value: 'reported' },
   ]
 
-  const periodOptions: ToggleOption<ObservationsPeriod>[] = periods.map((period) => ({
+  const periodOptions: ToggleOption<ObservationsPeriod>[] = observationsPeriods.map((period) => ({
     label: t(`observations.filters.periods.${period}`),
     value: period,
   }))
@@ -87,6 +89,7 @@ const ObservationsToolbar = ({
 
         <ChipGroup
           ariaLabel={t('observations.filters.periods.label')}
+          // Bleeds to the screen edges so it can scroll sideways when chips overflow
           className="-mx-4 px-4"
           onChange={(period) => onFiltersChange({ period })}
           options={periodOptions}

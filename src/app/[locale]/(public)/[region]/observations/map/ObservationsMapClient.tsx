@@ -6,7 +6,7 @@ import { MapContainer, ZoomControl } from 'react-leaflet'
 
 import MapBehavior from './MapBehavior'
 import { fallbackCenter, fallbackZoom } from './mapConfig'
-import ObservationMarker from './ObservationMarker'
+import ObservationMarkers from './ObservationMarkers'
 
 import 'leaflet/dist/leaflet.css'
 
@@ -52,14 +52,7 @@ const ObservationsMapClient = ({
       <RegionBoundary bounds={bounds} region={region} />
       {/* Keeps the focused marker clear of the detail panel (480px + 16px inset) */}
       <MapBehavior focus={focus} focusOffsetX={detailPanelOffset} onMapClick={onMapClick} />
-      {points.map((point) => (
-        <ObservationMarker
-          key={point.id}
-          isSelected={point.id === selectedId}
-          onClick={onMarkerClick}
-          point={point}
-        />
-      ))}
+      <ObservationMarkers onMarkerClick={onMarkerClick} points={points} selectedId={selectedId} />
     </MapContainer>
   )
 }

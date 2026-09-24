@@ -21,6 +21,7 @@ observations:
     periods:
       label: 'Period'
       all: 'All time'
+      season: 'This season'
       '7d': '7 days'
       '30d': '30 days'
       custom: 'Custom'

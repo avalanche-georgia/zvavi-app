@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { endOfDay, format, parseISO, startOfDay, subDays } from 'date-fns'
 
+import getSeasonRange from '../helpers/getSeasonRange'
 import type { ObservationsFilters } from '../helpers/searchParams'
 
 // Calendar days including today — "7 days" is today and the 6 before it
@@ -16,6 +17,12 @@ const useDateRange = ({ from, period, to }: ObservationsFilters) => {
       return {
         dateFrom: startOfDay(subDays(parseISO(today), periodDays[period] - 1)).toISOString(),
       }
+    }
+
+    if (period === 'season') {
+      const { end, start } = getSeasonRange(parseISO(today))
+
+      return { dateFrom: start.toISOString(), dateTo: end.toISOString() }
     }
 
     if (period === 'custom') {

@@ -1,6 +1,6 @@
 import type { ObservationDateBasis, ObservationsSort } from '@domain/types'
 
-export type ObservationsPeriod = 'all' | '7d' | '30d' | 'custom'
+export type ObservationsPeriod = 'all' | 'season' | '7d' | '30d' | 'custom'
 
 export type ObservationsFilters = {
   dateBasis: ObservationDateBasis
@@ -20,7 +20,8 @@ export const defaultFilters: ObservationsFilters = {
   to: null,
 }
 
-const periods: ObservationsPeriod[] = ['all', '7d', '30d', 'custom']
+// In display order
+export const observationsPeriods: ObservationsPeriod[] = ['all', '7d', '30d', 'season', 'custom']
 const dayPattern = /^\d{4}-\d{2}-\d{2}$/
 
 const pick = <T extends string>(value: string | null, allowed: T[], fallback: T): T =>
@@ -31,7 +32,7 @@ const toDay = (value: string | null) => (value && dayPattern.test(value) ? value
 // URL ⇄ state. Defaults are left out of the URL so plain links stay clean:
 // ?by=reported&period=custom&from=2026-01-01&to=2026-01-31&sort=largest&id=42
 export const parseObservationsParams = (searchParams: URLSearchParams): ObservationsParams => {
-  const period = pick(searchParams.get('period'), periods, 'all')
+  const period = pick(searchParams.get('period'), observationsPeriods, 'all')
   const selectedId = Number(searchParams.get('id'))
 
   return {

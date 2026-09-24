@@ -21,6 +21,7 @@ observations:
     periods:
       label: 'პერიოდი'
       all: 'ყველა'
+      season: 'ეს სეზონი'
       '7d': '7 დღე'
       '30d': '30 დღე'
       custom: 'არჩეული'
