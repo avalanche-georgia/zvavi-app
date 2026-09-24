@@ -1,19 +1,19 @@
 'use client'
 
 import { useState } from 'react'
+import { hasCoordinates } from '@components/features/observations'
+import { desktopMediaQuery } from '@components/features/observations/map/mapConfig'
 import { SplitPageWrapper } from '@components/layout'
 import { useRegionContext } from '@domain/context/RegionContext'
 import { useTranslations } from 'next-intl'
 import { useMediaQuery } from 'usehooks-ts'
 
-import hasCoordinates from './helpers/hasCoordinates'
 import useMobileMapOffset from './hooks/useMobileMapOffset'
 import useObservationLookup from './hooks/useObservationLookup'
 import useObservationsPage from './hooks/useObservationsPage'
 
 import ObservationDetailSheet from './detail/ObservationDetailSheet'
 import ObservationsListPane from './list/ObservationsListPane'
-import { desktopMediaQuery } from './map/mapConfig'
 import ObservationsMap from './map/ObservationsMap'
 import ObservationsHeader from './ObservationsHeader'
 import ReportButton from './ReportButton'

@@ -6,6 +6,10 @@ export type ListFilterParams = {
   dateFrom?: string
   dateMode: DateMode
   dateTo?: string
+  // Catalog hides records still awaiting moderation
+  excludeStatus?: AvalancheStatus
+  // Moderation queue shows the longest-waiting submissions first
+  isOldestFirst?: boolean
   page: number
   pageSize: number
   source?: AvalancheSource

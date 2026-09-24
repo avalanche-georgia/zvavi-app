@@ -1,37 +1,42 @@
 import { useTranslations } from 'next-intl'
 
-const TableHeader = () => {
+import type { AvalancheTableVariant } from './types'
+
+import { cn } from '@/lib/utils'
+
+type Column = { className: string; label: string }
+
+const TableHeader = ({ variant }: { variant: AvalancheTableVariant }) => {
   const t = useTranslations()
+
+  const columns: Column[] =
+    variant === 'queue'
+      ? [
+          { className: 'w-36', label: t('admin.observations.queue.columns.submitted') },
+          { className: 'w-28', label: t('admin.recentAvalanches.list.columns.date') },
+          { className: 'w-36', label: t('admin.recentAvalanches.list.columns.type') },
+          { className: 'w-14 text-center', label: t('admin.recentAvalanches.list.columns.size') },
+          {
+            className: 'min-w-0 flex-1',
+            label: t('admin.recentAvalanches.list.columns.submitter'),
+          },
+        ]
+      : [
+          { className: 'w-28', label: t('admin.recentAvalanches.list.columns.date') },
+          { className: 'w-36', label: t('admin.recentAvalanches.list.columns.type') },
+          { className: 'w-14 text-center', label: t('admin.recentAvalanches.list.columns.size') },
+          { className: 'w-24', label: t('admin.recentAvalanches.list.columns.source') },
+          { className: 'w-40', label: t('admin.recentAvalanches.list.columns.submitter') },
+          { className: 'min-w-0 flex-1', label: t('admin.recentAvalanches.list.columns.status') },
+        ]
 
   return (
     <header className="flex w-full items-center gap-5 border-b bg-gray-100 px-4 py-1.5">
-      <div className="w-28 shrink-0 text-sm font-semibold">
-        {t('admin.recentAvalanches.list.columns.date')}
-      </div>
-      <div className="w-28 shrink-0 text-sm font-semibold">
-        {t('admin.recentAvalanches.list.columns.createdAt')}
-      </div>
-      <div className="w-28 shrink-0 text-sm font-semibold">
-        {t('admin.recentAvalanches.list.columns.type')}
-      </div>
-      <div className="w-14 shrink-0 text-center text-sm font-semibold">
-        {t('admin.recentAvalanches.list.columns.size')}
-      </div>
-      <div className="w-36 shrink-0 text-sm font-semibold">
-        {t('admin.recentAvalanches.list.columns.trigger')}
-      </div>
-      <div className="w-36 shrink-0 text-sm font-semibold">
-        {t('admin.recentAvalanches.list.columns.location')}
-      </div>
-      <div className="w-20 shrink-0 text-sm font-semibold">
-        {t('admin.recentAvalanches.list.columns.source')}
-      </div>
-      <div className="min-w-0 flex-1 text-sm font-semibold">
-        {t('admin.recentAvalanches.list.columns.description')}
-      </div>
-      <div className="w-24 shrink-0 text-sm font-semibold">
-        {t('admin.recentAvalanches.list.columns.status')}
-      </div>
+      {columns.map(({ className, label }) => (
+        <div key={label} className={cn('shrink-0 text-sm font-semibold', className)}>
+          {label}
+        </div>
+      ))}
       <div className="w-28 shrink-0 text-right text-sm font-semibold">
         {t('admin.recentAvalanches.list.columns.actions')}
       </div>

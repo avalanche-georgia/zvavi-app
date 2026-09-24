@@ -11,7 +11,7 @@ import { format } from 'date-fns'
 import { stripMetadata } from './imageProcessing'
 import { pendingPhotoKeyPrefix } from './schema'
 
-import { createR2Client, observationsBucket } from '@/lib/r2'
+import { createR2Client, getPhotoVariantKey, observationsBucket, photoVariants } from '@/lib/r2'
 
 const extensionsByContentType = {
   'image/jpeg': 'jpg',
@@ -70,6 +70,17 @@ export const deletePhotos = async (keys: string[]): Promise<void> => {
     console.error('[deletePhotos] DeleteObject failed:', error)
   }
 }
+
+// A stored photo is its original plus every resized variant
+export const deleteStoredPhotos = (keys: string[]): Promise<void> =>
+  deletePhotos(
+    keys.flatMap((key) => [
+      key,
+      ...Object.keys(photoVariants).map((variant) =>
+        getPhotoVariantKey(key, variant as keyof typeof photoVariants),
+      ),
+    ]),
+  )
 
 // The photo itself is the problem (not storage) — see photosUnprocessableError
 export class PhotoProcessingError extends Error {

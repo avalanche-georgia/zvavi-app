@@ -1,5 +1,7 @@
 'use client'
 
+import MapBehavior from '@components/features/observations/map/MapBehavior'
+import { fallbackCenter, fallbackZoom } from '@components/features/observations/map/mapConfig'
 import {
   BaseMapLayers,
   baseMapMaxZoom,
@@ -9,8 +11,6 @@ import {
 import type { ObservationPoint, Region } from '@domain/types'
 import { MapContainer, ZoomControl } from 'react-leaflet'
 
-import MapBehavior from './MapBehavior'
-import { fallbackCenter, fallbackZoom } from './mapConfig'
 import ObservationMarkers from './ObservationMarkers'
 
 import 'leaflet/dist/leaflet.css'

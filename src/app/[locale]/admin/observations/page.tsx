@@ -8,11 +8,7 @@ const ObservationsPage = async () => {
 
   return (
     <Suspense fallback={<Spinner size="lg" />}>
-      <RecentAvalanchesContainer
-        hideCreateAction
-        initialRegions={initialRegions}
-        source="external"
-      />
+      <RecentAvalanchesContainer initialRegions={initialRegions} variant="queue" />
     </Suspense>
   )
 }

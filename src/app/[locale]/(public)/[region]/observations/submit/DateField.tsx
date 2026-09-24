@@ -1,10 +1,9 @@
 'use client'
 
+import { useFieldError } from '@components/hooks'
 import { Checkbox, DatePicker, InputBlock } from '@components/ui'
 import { useTranslations } from 'next-intl'
 import { Controller, useFormContext } from 'react-hook-form'
-
-import useFieldError from './hooks/useFieldError'
 
 import type { ObservationSubmitFormSchema } from './schema'
 
@@ -13,7 +12,7 @@ const today = new Date()
 const DateField = () => {
   const t = useTranslations()
   const form = useFormContext<ObservationSubmitFormSchema>()
-  const getFieldError = useFieldError()
+  const getFieldError = useFieldError<ObservationSubmitFormSchema>()
   const isDateUnknown = form.watch('isDateUnknown')
 
   return (

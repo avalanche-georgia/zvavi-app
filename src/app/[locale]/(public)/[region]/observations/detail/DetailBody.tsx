@@ -1,10 +1,9 @@
+import { DetailSection, PhotoStrip } from '@components/features/observations'
 import type { PublicObservation } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import DetailFacts from './DetailFacts'
-import DetailPhotos from './DetailPhotos'
 import DetailReporter from './DetailReporter'
-import DetailSection from './DetailSection'
 import DetailTitle from './DetailTitle'
 import DetailWhere from './DetailWhere'
 
@@ -19,7 +18,7 @@ const DetailBody = ({ observation, onShowOnMap }: DetailBodyProps) => {
 
   return (
     <div className="pb-8">
-      {photos.length > 0 && <DetailPhotos photos={photos} />}
+      {photos.length > 0 && <PhotoStrip photos={photos} />}
       <DetailTitle observation={observation} />
       <DetailFacts observation={observation} />
       <DetailWhere observation={observation} onShowOnMap={onShowOnMap} />

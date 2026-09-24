@@ -239,6 +239,10 @@ Key v4 syntax differences from v3:
 ### UI Components
 Gradually migrating from Headless UI / Radix to **base-ui** (`@base-ui/react`). New components should use base-ui.
 
+### Modal / Sheet / Drawer Dismissal
+- **Data-loss risk** (dirty form, unsaved edits): never close on backdrop click or swipe. Only explicit actions close it (close button, Cancel, Esc) — and those ask for confirmation while there are unsaved changes.
+- **No data-loss risk** (read-only views, simple confirmations): closing on backdrop click/swipe is fine.
+
 ---
 
 ## Path Aliases (tsconfig)
@@ -288,5 +292,6 @@ Imperative subject; reference issues/PRs when applicable.
 ## Security
 
 - Secrets in `.env.local` only — never commit Supabase keys or service tokens
+- Public (anon/unauthenticated) reads must never return PII columns (e.g. `submitter_contact`, `submitter_education`). `*` is fine for tables without PII; for tables that have PII columns (e.g. `recent_avalanches`) use an explicit column list
 - Access env values via `process.env`
 - Regenerate locale bundles (`pnpm convert-messages`) and sync Supabase config before merging
