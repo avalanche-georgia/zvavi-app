@@ -1,14 +1,14 @@
+import { useAspectSummary } from '@components/hooks'
+import { getZonesWithAspects } from '@domain/aspects'
 import type { Aspects } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
-import { getZonesWithAspects } from './aspectSummary'
 import BandCompass from './BandCompass'
-import useAspectSummary from './useAspectSummary'
 
 // One compass per elevation band with aspects, plus a one-line summary
 const AspectsOverview = ({ aspects }: { aspects: Aspects }) => {
   const t = useTranslations()
-  const getAspectSummary = useAspectSummary()
+  const { getSummary: getAspectSummary } = useAspectSummary()
   const summary = getAspectSummary(aspects)
 
   if (!summary) {

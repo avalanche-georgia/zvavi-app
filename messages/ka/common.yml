@@ -3,6 +3,7 @@ common:
     add: 'დამატება'
     backToList: 'სიაში დაბრუნება'
     cancel: 'გაუქმება'
+    clear: 'გასუფთავება'
     close: 'დახურვა'
     confirm: 'დადასტურება'
     continue: 'გაგრძელება'
@@ -67,6 +68,27 @@ common:
     highAlpine: 'ზედა ალპური'
     alpine: 'ალპური'
     subAlpine: 'ქვედა ალპური'
+
+  aspects:
+    allAspects: 'ყველა ექსპოზიცია'
+    allElevations: 'ყველა სიმაღლე'
+    names:
+      n: 'ჩრდილოეთი'
+      ne: 'ჩრდილო-აღმოსავლეთი'
+      e: 'აღმოსავლეთი'
+      se: 'სამხრეთ-აღმოსავლეთი'
+      s: 'სამხრეთი'
+      sw: 'სამხრეთ-დასავლეთი'
+      w: 'დასავლეთი'
+      nw: 'ჩრდილო-დასავლეთი'
+
+  aspectElevationPicker:
+    all: 'ყველა'
+    allAria: 'ყველა ექსპოზიცია, {zone}'
+    cellAria: '{zone}, {aspect}'
+    emptyHint: 'შეეხეთ ან გადაატარეთ ექსპოზიციების ასარჩევად'
+    sameAspectsOn: 'იგივე ექსპოზიციები:'
+    zonesAria: 'სიმაღლის ზონა'
 
   avalancheSources:
     external: 'გარეშე პირი'
