@@ -34,7 +34,10 @@ const AspectElevationPicker = ({ className, onChange, value }: AspectElevationPi
 
   return (
     <Tabs.Root
-      className={cn('flex flex-col gap-3', className)}
+      className={cn(
+        'border-rule flex w-full max-w-sm flex-col gap-3 rounded-2xl border p-3',
+        className,
+      )}
       onValueChange={setActiveZone}
       value={activeZone}
     >

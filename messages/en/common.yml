@@ -85,7 +85,7 @@ common:
     all: 'All'
     allAria: 'All aspects, {zone}'
     cellAria: '{zone}, {aspect}'
-    clear: 'Clear'
+    clear: 'Clear all'
     emptyHint: 'Tap or drag to select aspects'
     sameAspectsOn: 'Same aspects on:'
     zonesAria: 'Elevation band'

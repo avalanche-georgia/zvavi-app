@@ -85,7 +85,7 @@ common:
     all: 'ყველა'
     allAria: 'ყველა ექსპოზიცია, {zone}'
     cellAria: '{zone}, {aspect}'
-    clear: 'გასუფთავება'
+    clear: 'ყველას გასუფთავება'
     emptyHint: 'შეეხეთ ან გადაატარეთ ექსპოზიციების ასარჩევად'
     sameAspectsOn: 'იგივე ექსპოზიციები:'
     zonesAria: 'სიმაღლის ზონა'
