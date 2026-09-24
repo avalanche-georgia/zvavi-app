@@ -23,6 +23,7 @@ export type PublicObservationFilters = {
   dateBasis: ObservationDateBasis
   dateFrom?: string
   dateTo?: string
+  isDateUnknown?: boolean
   regionId: RegionId
 }
 
@@ -35,7 +36,7 @@ type QueryOptions = {
 // Published public observations of a region, narrowed by the date filter.
 // Callers add ordering / paging.
 export const queryPublicObservations = (
-  { dateBasis, dateFrom, dateTo, regionId }: PublicObservationFilters,
+  { dateBasis, dateFrom, dateTo, isDateUnknown, regionId }: PublicObservationFilters,
   { columns, isCounted = false }: QueryOptions,
 ) => {
   const dateColumn = dateColumns[dateBasis]
@@ -46,6 +47,8 @@ export const queryPublicObservations = (
     .eq('source', 'external')
     .eq('status', 'published')
     .eq('region_id', regionId)
+
+  if (isDateUnknown) query = query.eq('is_date_unknown', true)
 
   // A date range can only match observations whose date is actually known
   if (dateBasis === 'occurred' && (dateFrom || dateTo)) query = query.eq('is_date_unknown', false)

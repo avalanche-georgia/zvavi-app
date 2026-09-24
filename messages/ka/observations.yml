@@ -25,6 +25,7 @@ observations:
       '7d': '7 დღე'
       '30d': '30 დღე'
       custom: 'არჩეული'
+      unknown: 'თარიღი უცნობია'
     sort:
       label: 'დალაგება'
       newest: 'უახლესი'
@@ -72,8 +73,6 @@ observations:
     position: '{current} / {total}'
     previous: 'წინა დაკვირვება'
     next: 'შემდეგი დაკვირვება'
-    occurredReported: 'მოხდა {occurred} · მოწოდებულია {reported}'
-    dateUnknownReported: 'თარიღი უცნობია · მოწოდებულია {reported}'
     facts:
       occurred: 'მოხდა'
       reported: 'მოწოდებულია'

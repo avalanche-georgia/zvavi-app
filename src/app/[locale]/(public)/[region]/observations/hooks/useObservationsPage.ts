@@ -18,6 +18,8 @@ export type ObservationsListState = {
   isFetchingNextPage: boolean
   isNextPageError: boolean
   isPending: boolean
+  // Previous filter's results, shown while the new ones load
+  isStale: boolean
   // Loaded pages, in display order
   observations: PublicObservation[]
   onFetchNextPage: VoidFunction
@@ -94,6 +96,7 @@ const useObservationsPage = (regionId: RegionId) => {
     isFetchingNextPage: listQuery.isFetchingNextPage,
     isNextPageError: listQuery.isFetchNextPageError,
     isPending: listQuery.isPending,
+    isStale: listQuery.isPlaceholderData,
     observations,
     onFetchNextPage: () => listQuery.fetchNextPage(),
     onFiltersClear: clearFilters,

@@ -7,6 +7,8 @@ import ObservationsEmptyState from './ObservationsEmptyState'
 import ObservationsList from './ObservationsList'
 import type { ObservationsListState } from '../hooks/useObservationsPage'
 
+import { cn } from '@/lib/utils'
+
 type ObservationsListPaneProps = {
   dateBasis: ObservationDateBasis
   list: ObservationsListState
@@ -43,7 +45,7 @@ const ObservationsListPane = ({
     }
 
     return (
-      <>
+      <div className={cn('transition-opacity', list.isStale && 'opacity-50')}>
         <ObservationsList
           dateBasis={dateBasis}
           hasMore={hasNextPage}
@@ -59,7 +61,7 @@ const ObservationsListPane = ({
             onLoadMore={list.onFetchNextPage}
           />
         )}
-      </>
+      </div>
     )
   }
 

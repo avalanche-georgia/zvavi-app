@@ -1,6 +1,11 @@
 import type { ObservationDateBasis, ObservationsSort, RegionId } from '@domain/types'
 
-type ObservationFilters = { dateBasis: ObservationDateBasis; dateFrom?: string; dateTo?: string }
+type ObservationFilters = {
+  dateBasis: ObservationDateBasis
+  dateFrom?: string
+  dateTo?: string
+  isDateUnknown?: boolean
+}
 
 const observationsKeys = {
   all: ['observationsKeys'] as const,

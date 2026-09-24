@@ -54,10 +54,16 @@ const ObservationsToolbar = ({
     { label: t('observations.filters.dateBasis.reported'), value: 'reported' },
   ]
 
-  const periodOptions: ToggleOption<ObservationsPeriod>[] = observationsPeriods.map((period) => ({
-    label: t(`observations.filters.periods.${period}`),
-    value: period,
-  }))
+  // "Date unknown" only makes sense for the occurrence date
+  const periodOptions: ToggleOption<ObservationsPeriod>[] = observationsPeriods
+    .filter((period) => period !== 'unknown' || filters.dateBasis === 'occurred')
+    .map((period) => ({ label: t(`observations.filters.periods.${period}`), value: period }))
+
+  const handleDateBasisChange = (dateBasis: ObservationDateBasis) =>
+    onFiltersChange({
+      dateBasis,
+      ...(dateBasis === 'reported' && filters.period === 'unknown' && { period: 'all' }),
+    })
 
   return (
     <>
@@ -80,7 +86,7 @@ const ObservationsToolbar = ({
           <SegmentedControl
             ariaLabel={t('observations.filters.dateBasis.label')}
             className="min-w-0 flex-1 [&>button]:px-2"
-            onChange={(dateBasis) => onFiltersChange({ dateBasis })}
+            onChange={handleDateBasisChange}
             options={dateBasisOptions}
             value={filters.dateBasis}
           />

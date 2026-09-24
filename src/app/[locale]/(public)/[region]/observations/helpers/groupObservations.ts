@@ -22,24 +22,31 @@ const getGroupKey = (date: Date | null, now: Date): ObservationGroupKey => {
   return `month:${format(date, 'yyyy-MM')}`
 }
 
-// Expects a list already sorted newest first (the API's order), so each group is contiguous and
-// "Date unknown" (sorted last) ends up last.
+// Groups in order of first appearance — the API returns newest first, so that's
+// Today → … → older months. Doesn't rely on the order being right, though: while
+// a new date basis loads, the list briefly still holds the previous order, and
+// each key must still map to exactly one group. "Date unknown" always goes last.
 const groupObservations = (
   observations: PublicObservation[],
   dateBasis: ObservationDateBasis,
   now: Date,
-): ObservationGroup[] =>
-  observations.reduce<ObservationGroup[]>((groups, observation) => {
+): ObservationGroup[] => {
+  const groups = new Map<ObservationGroupKey, PublicObservation[]>()
+
+  observations.forEach((observation) => {
     const key = getGroupKey(getObservationDate(observation, dateBasis), now)
-    const lastGroup = groups[groups.length - 1]
 
-    if (lastGroup?.key === key) {
-      lastGroup.observations.push(observation)
-    } else {
-      groups.push({ key, observations: [observation] })
-    }
+    groups.set(key, [...(groups.get(key) ?? []), observation])
+  })
 
-    return groups
-  }, [])
+  const unknown = groups.get('unknown')
+
+  groups.delete('unknown')
+
+  return [
+    ...Array.from(groups, ([key, groupObservations]) => ({ key, observations: groupObservations })),
+    ...(unknown ? [{ key: 'unknown' as const, observations: unknown }] : []),
+  ]
+}
 
 export default groupObservations

@@ -62,6 +62,11 @@ export const observationFiltersSchema = z.object({
   dateBasis: z.enum(['occurred', 'reported']).default('occurred'),
   dateFrom: z.iso.datetime({ offset: true }).optional(),
   dateTo: z.iso.datetime({ offset: true }).optional(),
+  // Only observations whose occurrence date is unknown
+  isDateUnknown: z
+    .enum(['true'])
+    .optional()
+    .transform((value) => value === 'true'),
   regionId: z.enum(region_id),
 })
 

@@ -25,6 +25,8 @@ const useDateRange = ({ from, period, to }: ObservationsFilters) => {
       return { dateFrom: start.toISOString(), dateTo: end.toISOString() }
     }
 
+    if (period === 'unknown') return { isDateUnknown: true }
+
     if (period === 'custom') {
       return {
         dateFrom: from ? startOfDay(parseISO(from)).toISOString() : undefined,

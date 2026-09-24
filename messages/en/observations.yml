@@ -25,6 +25,7 @@ observations:
       '7d': '7 days'
       '30d': '30 days'
       custom: 'Custom'
+      unknown: 'Date unknown'
     sort:
       label: 'Sort'
       newest: 'Newest'
@@ -72,8 +73,6 @@ observations:
     position: '{current} of {total}'
     previous: 'Previous observation'
     next: 'Next observation'
-    occurredReported: 'Occurred {occurred} · reported {reported}'
-    dateUnknownReported: 'Date unknown · reported {reported}'
     facts:
       occurred: 'Occurred'
       reported: 'Reported'
