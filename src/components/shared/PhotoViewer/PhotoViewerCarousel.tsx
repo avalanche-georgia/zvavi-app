@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { FallbackImage } from '@components/ui'
 import useEmblaCarousel from 'embla-carousel-react'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight, ImageOff } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 import type { ViewerPhoto } from './types'
@@ -65,6 +65,7 @@ const PhotoViewerCarousel = ({
               <FallbackImage
                 className="max-h-full max-w-full rounded-lg object-contain select-none"
                 draggable={false}
+                fallback={<ImageOff aria-hidden="true" className="size-10 text-white/40" />}
                 sources={photo.sources}
               />
             </div>

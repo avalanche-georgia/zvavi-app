@@ -54,10 +54,21 @@ export const submitObservationSchema = z.object({
   width: z.number().min(0).max(500).nullable(),
 })
 
-export const publicObservationsQuerySchema = z.object({
+export const observationFiltersSchema = z.object({
   dateBasis: z.enum(['occurred', 'reported']).default('occurred'),
   dateFrom: z.iso.datetime({ offset: true }).optional(),
   dateTo: z.iso.datetime({ offset: true }).optional(),
+  regionId: z.enum(region_id),
+})
+
+export const observationsPageQuerySchema = observationFiltersSchema.extend({
+  limit: z.coerce.number().int().min(1).max(50).default(20),
+  offset: z.coerce.number().int().min(0).max(10_000).default(0),
+  sort: z.enum(['newest', 'largest']).default('newest'),
+})
+
+export const observationQuerySchema = z.object({
+  id: z.coerce.number().int().positive(),
   regionId: z.enum(region_id),
 })
 

@@ -8,6 +8,7 @@ import { useMediaQuery } from 'usehooks-ts'
 
 import hasCoordinates from './helpers/hasCoordinates'
 import useMobileMapOffset from './hooks/useMobileMapOffset'
+import useObservationLookup from './hooks/useObservationLookup'
 import useObservationsPage from './hooks/useObservationsPage'
 
 import ObservationDetailSheet from './detail/ObservationDetailSheet'
@@ -22,16 +23,21 @@ const ObservationsContent = () => {
   const t = useTranslations()
   const region = useRegionContext().region!
   const page = useObservationsPage(region.id)
-  const { observations, params, selectedObservation, setParams } = page
+  const { list, params, points, selectedObservation, setParams } = page
 
   const [view, setView] = useState<ObservationsView>('list')
   const [peekId, setPeekId] = useState<number | null>(null)
   // Matches the server render (no media queries there) on the first pass
   const isDesktop = useMediaQuery(desktopMediaQuery, { initializeWithValue: false })
   const { headingRef, mobileMapOffset, toolbarRef } = useMobileMapOffset()
+  const peekObservation = useObservationLookup({
+    id: peekId,
+    isListReady: !list.isPending,
+    observations: list.observations,
+    regionId: region.id,
+  })
 
   const isMapView = view === 'map' && !isDesktop
-  const peekObservation = observations.find((observation) => observation.id === peekId) ?? null
   const mapFocus =
     isDesktop && selectedObservation && hasCoordinates(selectedObservation)
       ? ([selectedObservation.latitude, selectedObservation.longitude] as [number, number])
@@ -57,11 +63,11 @@ const ObservationsContent = () => {
           <ObservationsMap
             dateBasis={params.dateBasis}
             focus={mapFocus}
-            observations={observations}
             onMapClick={() => setPeekId(null)}
             onMarkerClick={handleMarkerClick}
             onOpen={handleOpen}
             peekObservation={peekObservation}
+            points={points}
             region={region}
             selectedId={selectedObservation?.id ?? peekId}
           />
@@ -73,7 +79,7 @@ const ObservationsContent = () => {
       <ObservationsHeader
         ref={headingRef}
         regionName={t(`regions.names.${region.id}`)}
-        total={page.total}
+        total={page.regionTotal}
         visibleCount={page.visibleCount}
       />
       <ObservationsToolbar
@@ -86,11 +92,7 @@ const ObservationsContent = () => {
       {!isMapView && (
         <ObservationsListPane
           dateBasis={params.dateBasis}
-          hasFilters={page.hasFilters}
-          isError={page.isError}
-          isPending={page.isPending}
-          observations={observations}
-          onFiltersClear={page.clearFilters}
+          list={list}
           onOpen={handleOpen}
           selectedId={selectedObservation?.id ?? null}
           sort={params.sort}
@@ -99,11 +101,12 @@ const ObservationsContent = () => {
       {!isMapView && <ReportButton regionId={region.id} />}
 
       <ObservationDetailSheet
+        contextPoints={points}
         index={page.selectedIndex}
         observation={selectedObservation}
-        observations={observations}
         onClose={handleClose}
-        onSelect={handleOpen}
+        onNavigate={page.onNavigate}
+        total={page.total}
       />
     </SplitPageWrapper>
   )

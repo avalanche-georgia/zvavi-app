@@ -5,11 +5,7 @@ import createPhotoVariants from './createPhotoVariants'
 import fetchPublicObservations from './fetchPublicObservations'
 import notifyAdmin from './notifyAdmin'
 import { deletePhotos, promotePhotos, verifyPhotosExist } from './photoKeys'
-import {
-  photosNotFoundError,
-  publicObservationsQuerySchema,
-  submitObservationSchema,
-} from './schema'
+import { observationsPageQuerySchema, photosNotFoundError, submitObservationSchema } from './schema'
 
 import { createServiceRoleClient } from '@/lib/supabase/serviceRole'
 
@@ -18,16 +14,16 @@ type HoneypotCheck = { honeypot?: unknown }
 
 export const GET = async (request: Request) => {
   const searchParams = new URL(request.url).searchParams
-  const parsed = publicObservationsQuerySchema.safeParse(Object.fromEntries(searchParams))
+  const parsed = observationsPageQuerySchema.safeParse(Object.fromEntries(searchParams))
 
   if (!parsed.success) {
     return NextResponse.json({ error: 'invalid query', ok: false }, { status: 400 })
   }
 
   try {
-    const observations = await fetchPublicObservations(parsed.data)
+    const page = await fetchPublicObservations(parsed.data)
 
-    return NextResponse.json({ observations, ok: true })
+    return NextResponse.json({ ...page, ok: true })
   } catch (error) {
     console.error('[GET /api/observations] fetchPublicObservations failed:', error)
 

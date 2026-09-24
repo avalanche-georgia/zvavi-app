@@ -1,7 +1,6 @@
-import type { ObservationDateBasis } from '@domain/types'
+import type { ObservationDateBasis, ObservationsSort } from '@domain/types'
 
 export type ObservationsPeriod = 'all' | '7d' | '30d' | 'custom'
-export type ObservationsSort = 'newest' | 'largest'
 
 export type ObservationsFilters = {
   dateBasis: ObservationDateBasis

@@ -1,3 +1,4 @@
+import { PhotoPlaceholder } from '@components/features/observations'
 import { FallbackImage } from '@components/ui'
 import type { PhotoUrls } from '@domain/types'
 
@@ -8,6 +9,7 @@ const CardThumbnail = ({ photos }: { photos: PhotoUrls[] }) => {
     <div className="bg-tile relative size-16 shrink-0 overflow-hidden rounded-[10px]">
       <FallbackImage
         className="size-full object-cover"
+        fallback={<PhotoPlaceholder />}
         loading="lazy"
         sources={[firstPhoto.thumbUrl, firstPhoto.previewUrl]}
       />

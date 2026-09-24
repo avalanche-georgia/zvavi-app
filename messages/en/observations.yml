@@ -41,6 +41,9 @@ observations:
     title: 'No observations match'
     description: 'Try a wider date range.'
 
+  list:
+    loadMoreFailed: "Couldn't load more — tap to retry"
+
   labels:
     dateUnknown: 'Date unknown'
     quantity: 'Quantity'
@@ -57,6 +60,9 @@ observations:
   card:
     quantity: '×{count}'
     reportedAgo: 'Reported {time}'
+
+  photos:
+    processing: 'Photo is still processing'
 
   map:
     onMap: '{count} on map'

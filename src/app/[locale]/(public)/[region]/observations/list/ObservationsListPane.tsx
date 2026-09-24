@@ -1,32 +1,41 @@
 import { Spinner } from '@components/ui'
-import type { ObservationDateBasis, PublicObservation } from '@domain/types'
+import type { ObservationDateBasis, ObservationsSort, PublicObservation } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
+import LoadMoreTrigger from './LoadMoreTrigger'
 import ObservationsEmptyState from './ObservationsEmptyState'
 import ObservationsList from './ObservationsList'
-import type { ObservationsSort } from '../helpers/searchParams'
+
+export type ObservationsListState = {
+  hasFilters: boolean
+  hasNextPage: boolean
+  isError: boolean
+  isFetchingNextPage: boolean
+  isNextPageError: boolean
+  isPending: boolean
+  // Loaded pages, in display order
+  observations: PublicObservation[]
+  onFetchNextPage: VoidFunction
+  onFiltersClear: VoidFunction
+}
 
 type ObservationsListPaneProps = {
   dateBasis: ObservationDateBasis
-  hasFilters: boolean
-  isError: boolean
-  isPending: boolean
-  observations: PublicObservation[]
-  onFiltersClear: VoidFunction
+  list: ObservationsListState
   onOpen: (id: number) => void
   selectedId: number | null
   sort: ObservationsSort
 }
 
 const ObservationsListPane = ({
-  hasFilters,
-  isError,
-  isPending,
-  observations,
-  onFiltersClear,
-  ...listProps
+  dateBasis,
+  list,
+  onOpen,
+  selectedId,
+  sort,
 }: ObservationsListPaneProps) => {
   const t = useTranslations()
+  const { hasNextPage, isError, isPending, observations } = list
 
   const renderContent = () => {
     if (isPending) {
@@ -40,11 +49,30 @@ const ObservationsListPane = ({
     if (isError) return <p className="text-muted py-12 text-center">{t('common.messages.error')}</p>
 
     if (observations.length === 0) {
-      return <ObservationsEmptyState hasFilters={hasFilters} onFiltersClear={onFiltersClear} />
+      return (
+        <ObservationsEmptyState hasFilters={list.hasFilters} onFiltersClear={list.onFiltersClear} />
+      )
     }
 
-    // eslint-disable-next-line react/jsx-props-no-spreading
-    return <ObservationsList {...listProps} observations={observations} />
+    return (
+      <>
+        <ObservationsList
+          dateBasis={dateBasis}
+          hasMore={hasNextPage}
+          observations={observations}
+          onOpen={onOpen}
+          selectedId={selectedId}
+          sort={sort}
+        />
+        {hasNextPage && (
+          <LoadMoreTrigger
+            isError={list.isNextPageError}
+            isLoading={list.isFetchingNextPage}
+            onLoadMore={list.onFetchNextPage}
+          />
+        )}
+      </>
+    )
   }
 
   // Bottom padding keeps the last card clear of the floating Report button

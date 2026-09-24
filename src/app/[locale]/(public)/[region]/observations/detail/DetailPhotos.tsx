@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { PhotoPlaceholder } from '@components/features/observations'
 import { PhotoViewer } from '@components/shared'
 import { FallbackImage } from '@components/ui'
 import type { PhotoUrls } from '@domain/types'
@@ -36,6 +37,7 @@ const DetailPhotos = ({ photos }: { photos: PhotoUrls[] }) => {
           >
             <FallbackImage
               className="size-full object-cover"
+              fallback={<PhotoPlaceholder />}
               sources={[photo.previewUrl, photo.largeUrl]}
             />
           </button>

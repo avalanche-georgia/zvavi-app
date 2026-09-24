@@ -1,56 +1,79 @@
 'use client'
 
 import { useMemo } from 'react'
-import { usePublicObservationsQuery } from '@data/hooks/observations'
+import {
+  useObservationPointsQuery,
+  usePublicObservationsInfiniteQuery,
+} from '@data/hooks/observations'
 import type { RegionId } from '@domain/types'
 
 import useDateRange from './useDateRange'
+import useObservationLookup from './useObservationLookup'
 import useObservationsParams from './useObservationsParams'
-import sortObservations from '../helpers/sortObservations'
+import type { ObservationsListState } from '../list/ObservationsListPane'
 
-// Data + URL state for the page. The filtered list is fetched with the date
-// filter applied server-side; the unfiltered list (same cache entry when no
-// filter is active) gives the "N of M" total and resolves linked observations
-// that fall outside the current filter.
+// Data + URL state for the page. The list is paged (sorted and filtered
+// server-side); the map gets every matching point in one lighter request,
+// which also carries the region's unfiltered total for "N of M".
 const useObservationsPage = (regionId: RegionId) => {
   const { clearFilters, params, setParams } = useObservationsParams()
   const { dateBasis, period, selectedId, sort } = params
-  const dateRange = useDateRange(params)
+  const filters = { dateBasis, ...useDateRange(params), regionId }
 
-  // Without a period filter both lists hold the same rows (only the client-side
-  // order differs) — share one request instead of fetching everything twice
-  const allQuery = usePublicObservationsQuery({ dateBasis: 'occurred', regionId })
-  const periodQuery = usePublicObservationsQuery({
-    dateBasis,
-    ...dateRange,
-    enabled: period !== 'all',
-    regionId,
-  })
-  const filteredQuery = period === 'all' ? allQuery : periodQuery
+  const listQuery = usePublicObservationsInfiniteQuery({ ...filters, sort })
+  const { data: pointsData } = useObservationPointsQuery(filters)
 
   const observations = useMemo(
-    () => sortObservations(filteredQuery.data ?? [], dateBasis, sort),
-    [filteredQuery.data, dateBasis, sort],
+    () => listQuery.data?.pages.flatMap((page) => page.observations) ?? [],
+    [listQuery.data],
   )
-
+  const total = listQuery.data?.pages[0]?.total ?? 0
   const selectedIndex = observations.findIndex((observation) => observation.id === selectedId)
-  const selectedObservation =
-    observations[selectedIndex] ??
-    allQuery.data?.find((observation) => observation.id === selectedId) ??
-    null
+  const selectedObservation = useObservationLookup({
+    id: selectedId,
+    isListReady: !listQuery.isPending,
+    observations,
+    regionId,
+  })
+
+  // Steps through the filtered list, loading the next page when stepping past
+  // the loaded ones
+  const handleNavigate = async (offset: number) => {
+    const targetIndex = selectedIndex + offset
+    const loadedTarget = observations[targetIndex]
+
+    if (loadedTarget) return setParams({ selectedId: loadedTarget.id })
+    if (offset < 0 || !listQuery.hasNextPage) return undefined
+
+    const { data } = await listQuery.fetchNextPage()
+    const target = data?.pages.flatMap((page) => page.observations)[targetIndex]
+
+    return target ? setParams({ selectedId: target.id }) : undefined
+  }
+
+  const list: ObservationsListState = {
+    hasFilters: period !== 'all',
+    hasNextPage: listQuery.hasNextPage,
+    isError: listQuery.isError,
+    isFetchingNextPage: listQuery.isFetchingNextPage,
+    isNextPageError: listQuery.isFetchNextPageError,
+    isPending: listQuery.isPending,
+    observations,
+    onFetchNextPage: () => listQuery.fetchNextPage(),
+    onFiltersClear: clearFilters,
+  }
 
   return {
-    clearFilters,
-    hasFilters: period !== 'all',
-    isError: filteredQuery.isError,
-    isPending: filteredQuery.isPending,
-    observations,
+    list,
+    onNavigate: handleNavigate,
     params,
+    points: pointsData?.points ?? [],
+    regionTotal: pointsData?.regionTotal,
     selectedIndex: selectedIndex === -1 ? null : selectedIndex,
     selectedObservation,
     setParams,
-    total: allQuery.data?.length,
-    visibleCount: filteredQuery.data?.length,
+    total,
+    visibleCount: listQuery.data ? total : undefined,
   }
 }
 

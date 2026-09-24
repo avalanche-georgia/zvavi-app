@@ -22,7 +22,7 @@ const getGroupKey = (date: Date | null, now: Date): ObservationGroupKey => {
   return `month:${format(date, 'yyyy-MM')}`
 }
 
-// Expects a list already sorted newest first, so each group is contiguous and
+// Expects a list already sorted newest first (the API's order), so each group is contiguous and
 // "Date unknown" (sorted last) ends up last.
 const groupObservations = (
   observations: PublicObservation[],

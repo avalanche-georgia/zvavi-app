@@ -1,13 +1,12 @@
 'use client'
 
-import { RegionBoundary, useRegionBounds } from '@components/shared/RegionBoundary'
-import type { PublicObservation, Region } from '@domain/types'
-import { MapContainer, TileLayer, ZoomControl } from 'react-leaflet'
+import { RegionBoundary, topoMaxZoom, TopoTileLayer, useRegionBounds } from '@components/shared/map'
+import type { ObservationPoint, Region } from '@domain/types'
+import { MapContainer, ZoomControl } from 'react-leaflet'
 
 import MapBehavior from './MapBehavior'
-import { fallbackCenter, fallbackZoom, maxZoom, topoTiles } from './mapConfig'
+import { fallbackCenter, fallbackZoom } from './mapConfig'
 import ObservationMarker from './ObservationMarker'
-import hasCoordinates from '../helpers/hasCoordinates'
 
 import 'leaflet/dist/leaflet.css'
 
@@ -15,7 +14,8 @@ const detailPanelOffset = (480 + 16) / 2
 
 export type ObservationsMapClientProps = {
   focus: [number, number] | null
-  observations: PublicObservation[]
+  // Every observation matching the filter, not just the loaded list pages
+  points: ObservationPoint[]
   onMapClick: VoidFunction
   onMarkerClick: (id: number) => void
   region: Region
@@ -24,9 +24,9 @@ export type ObservationsMapClientProps = {
 
 const ObservationsMapClient = ({
   focus,
-  observations,
   onMapClick,
   onMarkerClick,
+  points,
   region,
   selectedId,
 }: ObservationsMapClientProps) => {
@@ -36,8 +36,6 @@ const ObservationsMapClient = ({
     ? [region.mapCenter.lat, region.mapCenter.lng]
     : fallbackCenter
 
-  const markers = observations.filter(hasCoordinates)
-
   return (
     <MapContainer
       bounds={bounds ?? undefined}
@@ -45,21 +43,21 @@ const ObservationsMapClient = ({
       className="bg-map size-full"
       maxBounds={bounds ?? undefined}
       maxBoundsViscosity={1}
-      maxZoom={maxZoom}
+      maxZoom={topoMaxZoom}
       zoom={bounds ? undefined : (region.defaultZoom ?? fallbackZoom)}
       zoomControl={false}
     >
-      <TileLayer attribution={topoTiles.attribution} maxNativeZoom={maxZoom} url={topoTiles.url} />
+      <TopoTileLayer />
       <ZoomControl position="bottomleft" />
       <RegionBoundary bounds={bounds} region={region} />
       {/* Keeps the focused marker clear of the detail panel (480px + 16px inset) */}
       <MapBehavior focus={focus} focusOffsetX={detailPanelOffset} onMapClick={onMapClick} />
-      {markers.map((observation) => (
+      {points.map((point) => (
         <ObservationMarker
-          key={observation.id}
-          isSelected={observation.id === selectedId}
-          observation={observation}
+          key={point.id}
+          isSelected={point.id === selectedId}
           onClick={onMarkerClick}
+          point={point}
         />
       ))}
     </MapContainer>

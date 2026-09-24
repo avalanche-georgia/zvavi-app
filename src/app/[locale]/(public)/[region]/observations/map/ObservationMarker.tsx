@@ -1,4 +1,4 @@
-import type { PublicObservation } from '@domain/types'
+import type { ObservationPoint } from '@domain/types'
 import { useTranslations } from 'next-intl'
 import { Marker, Tooltip } from 'react-leaflet'
 
@@ -6,13 +6,13 @@ import observationPinIcon from './observationPinIcon'
 
 type ObservationMarkerProps = {
   isSelected: boolean
-  observation: PublicObservation & { latitude: number; longitude: number }
+  point: ObservationPoint
   onClick: (id: number) => void
 }
 
-const ObservationMarker = ({ isSelected, observation, onClick }: ObservationMarkerProps) => {
+const ObservationMarker = ({ isSelected, onClick, point }: ObservationMarkerProps) => {
   const t = useTranslations()
-  const { id, latitude, longitude, size, type } = observation
+  const { id, latitude, longitude, size, type } = point
 
   const eventHandlers = { click: () => onClick(id) }
   const label = t('observations.labels.typeAndSize', {

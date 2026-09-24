@@ -1,6 +1,7 @@
 export { getAllAspects, getZonesWithAspects } from './aspectSummary'
 export { default as BandCompass } from './BandCompass'
 export { default as MiniCompass } from './MiniCompass'
+export { default as PhotoPlaceholder } from './PhotoPlaceholder'
 export { default as SizeTile } from './SizeTile'
 export { default as useAspectSummary } from './useAspectSummary'
 export { default as useRelativeDate } from './useRelativeDate'

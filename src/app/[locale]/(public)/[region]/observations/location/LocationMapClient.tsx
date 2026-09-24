@@ -1,11 +1,11 @@
 'use client'
 
-import type { AvalancheSize, PublicObservation } from '@domain/types'
-import { CircleMarker, MapContainer, Marker, TileLayer } from 'react-leaflet'
+import { topoMaxZoom, TopoTileLayer } from '@components/shared/map'
+import type { AvalancheSize, ObservationPoint } from '@domain/types'
+import { CircleMarker, MapContainer, Marker } from 'react-leaflet'
 
-import hasCoordinates from '../helpers/hasCoordinates'
 import MapBehavior from '../map/MapBehavior'
-import { contextDotColor, maxZoom, topoTiles } from '../map/mapConfig'
+import { contextDotColor } from '../map/mapConfig'
 import observationPinIcon from '../map/observationPinIcon'
 
 import 'leaflet/dist/leaflet.css'
@@ -13,7 +13,7 @@ import 'leaflet/dist/leaflet.css'
 export type LocationMapClientProps = {
   center: [number, number]
   // Shown as faded dots for context
-  observations: PublicObservation[]
+  points: ObservationPoint[]
   selectedId: number
   size: AvalancheSize
 }
@@ -21,14 +21,13 @@ export type LocationMapClientProps = {
 const zoom = 14
 const noop = () => undefined
 
-const LocationMapClient = ({ center, observations, selectedId, size }: LocationMapClientProps) => (
-  <MapContainer center={center} className="bg-map size-full" maxZoom={maxZoom} zoom={zoom}>
-    <TileLayer attribution={topoTiles.attribution} maxNativeZoom={maxZoom} url={topoTiles.url} />
+const LocationMapClient = ({ center, points, selectedId, size }: LocationMapClientProps) => (
+  <MapContainer center={center} className="bg-map size-full" maxZoom={topoMaxZoom} zoom={zoom}>
+    <TopoTileLayer />
     <MapBehavior focus={center} onMapClick={noop} />
 
-    {observations
-      .filter((observation) => observation.id !== selectedId)
-      .filter(hasCoordinates)
+    {points
+      .filter((point) => point.id !== selectedId)
       .map(({ id, latitude, longitude }) => (
         <CircleMarker
           key={id}

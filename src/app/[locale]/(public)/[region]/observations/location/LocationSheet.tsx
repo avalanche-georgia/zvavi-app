@@ -2,12 +2,13 @@
 
 import { useAspectSummary } from '@components/features/observations'
 import { Sheet, SheetClose, SheetIconButton, SheetTitle, Spinner } from '@components/ui'
-import type { PublicObservation } from '@domain/types'
+import type { ObservationPoint, PublicObservation } from '@domain/types'
 import { X } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import { useTranslations } from 'next-intl'
 
 import CoordinatesRow from './CoordinatesRow'
+import getMapsLink from './getMapsLink'
 import useFormatDay from '../detail/useFormatDay'
 import hasCoordinates from '../helpers/hasCoordinates'
 
@@ -22,13 +23,14 @@ const LocationMapClient = dynamic(() => import('./LocationMapClient'), {
 
 type LocationSheetProps = {
   isOpen: boolean
+  // Other observations, shown as context dots
+  contextPoints: ObservationPoint[]
   observation: PublicObservation
-  observations: PublicObservation[]
   onClose: VoidFunction
 }
 
 // Stacks above the detail sheet: a close-up map of one observation
-const LocationSheet = ({ isOpen, observation, observations, onClose }: LocationSheetProps) => {
+const LocationSheet = ({ contextPoints, isOpen, observation, onClose }: LocationSheetProps) => {
   const t = useTranslations()
   const getAspectSummary = useAspectSummary()
   const formatDay = useFormatDay()
@@ -36,7 +38,7 @@ const LocationSheet = ({ isOpen, observation, observations, onClose }: LocationS
   if (!hasCoordinates(observation)) return null
 
   const { date, id, isDateUnknown, latitude, longitude, size, type } = observation
-  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`
+  const mapsLink = getMapsLink(latitude, longitude)
   const meta = [getAspectSummary(observation.aspects), !isDateUnknown && date && formatDay(date)]
     .filter(Boolean)
     .join(' · ')
@@ -50,9 +52,9 @@ const LocationSheet = ({ isOpen, observation, observations, onClose }: LocationS
       footer={
         <a
           className="bg-primary hover:bg-primary-hover flex h-12 flex-1 items-center justify-center rounded-xl text-[15px] font-semibold text-white transition-colors"
-          href={mapsUrl}
-          rel="noopener noreferrer"
-          target="_blank"
+          href={mapsLink.href}
+          rel={mapsLink.isExternalPage ? 'noopener noreferrer' : undefined}
+          target={mapsLink.isExternalPage ? '_blank' : undefined}
         >
           {t('observations.location.openInMaps')}
         </a>
@@ -76,7 +78,7 @@ const LocationSheet = ({ isOpen, observation, observations, onClose }: LocationS
       <div className="isolate h-[52dvh] min-h-75">
         <LocationMapClient
           center={[latitude, longitude]}
-          observations={observations}
+          points={contextPoints}
           selectedId={id}
           size={size}
         />

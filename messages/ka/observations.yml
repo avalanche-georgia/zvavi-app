@@ -41,6 +41,9 @@ observations:
     title: 'შესაბამისი დაკვირვებები ვერ მოიძებნა'
     description: 'სცადეთ უფრო ფართო პერიოდი.'
 
+  list:
+    loadMoreFailed: 'ვერ ჩაიტვირთა — სცადეთ ხელახლა'
+
   labels:
     dateUnknown: 'თარიღი უცნობია'
     quantity: 'რაოდენობა'
@@ -57,6 +60,9 @@ observations:
   card:
     quantity: '×{count}'
     reportedAgo: 'მოწოდებულია {time}'
+
+  photos:
+    processing: 'ფოტო ჯერ მუშავდება'
 
   map:
     onMap: 'რუკაზე: {count}'

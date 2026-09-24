@@ -6,7 +6,6 @@ import dynamic from 'next/dynamic'
 import { useTranslations } from 'next-intl'
 
 import type { ObservationsMapClientProps } from './ObservationsMapClient'
-import hasCoordinates from '../helpers/hasCoordinates'
 import ObservationCard from '../list/ObservationCard'
 
 const ObservationsMapClient = dynamic(() => import('./ObservationsMapClient'), {
@@ -32,7 +31,6 @@ const ObservationsMap = ({
   ...mapProps
 }: ObservationsMapProps) => {
   const t = useTranslations()
-  const locatedCount = mapProps.observations.filter(hasCoordinates).length
 
   return (
     <>
@@ -40,7 +38,7 @@ const ObservationsMap = ({
       <ObservationsMapClient {...mapProps} />
 
       <div className="border-rule text-body pointer-events-none absolute top-3 left-3 z-500 rounded-[9px] border bg-white px-2.5 py-1.5 text-[12.5px] shadow-[0_2px_8px_rgba(0,0,0,.06)]">
-        {t('observations.map.onMap', { count: locatedCount })}
+        {t('observations.map.onMap', { count: mapProps.points.length })}
       </div>
 
       {peekObservation && (

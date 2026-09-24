@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { Sheet } from '@components/ui'
-import type { PublicObservation } from '@domain/types'
+import type { ObservationPoint, PublicObservation } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import DetailBody from './DetailBody'
@@ -10,21 +10,25 @@ import DetailHeader from './DetailHeader'
 import LocationSheet from '../location/LocationSheet'
 
 type ObservationDetailSheetProps = {
+  // Filtered set, for the location map's context dots
+  contextPoints: ObservationPoint[]
   // Position within the filtered list; null if the observation isn't in it
   index: number | null
-  // Current filtered list — navigation targets and map context
-  observations: PublicObservation[]
   observation: PublicObservation | null
   onClose: VoidFunction
-  onSelect: (id: number) => void
+  // Step by ±1 through the filtered list (loads the next page when needed)
+  onNavigate: (offset: number) => void
+  // Size of the filtered list, loaded or not
+  total: number
 }
 
 const ObservationDetailSheet = ({
+  contextPoints,
   index,
   observation,
-  observations,
   onClose,
-  onSelect,
+  onNavigate,
+  total,
 }: ObservationDetailSheetProps) => {
   const t = useTranslations()
   const bodyRef = useRef<HTMLDivElement>(null)
@@ -45,18 +49,13 @@ const ObservationDetailSheet = ({
     bodyRef.current?.closest('[data-sheet-body]')?.scrollTo({ top: 0 })
   }, [shownId])
 
-  const handleNavigate = (offset: number) => {
-    const target = index === null ? undefined : observations[index + offset]
-
-    if (target) onSelect(target.id)
-  }
-
   // ←/→ step through the list. Keys from stacked sheets and the photo viewer
   // (portaled outside this popup) bubble here through React too — ignore them.
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (!event.currentTarget.contains(event.target as Node)) return
-    if (event.key === 'ArrowLeft') handleNavigate(-1)
-    if (event.key === 'ArrowRight') handleNavigate(1)
+    if (index === null) return
+    if (event.key === 'ArrowLeft' && index > 0) onNavigate(-1)
+    if (event.key === 'ArrowRight' && index < total - 1) onNavigate(1)
   }
 
   const handleOpenChange = (isOpen: boolean) => {
@@ -70,9 +69,9 @@ const ObservationDetailSheet = ({
       header={
         <DetailHeader
           index={index}
-          onNext={() => handleNavigate(1)}
-          onPrevious={() => handleNavigate(-1)}
-          total={observations.length}
+          onNext={() => onNavigate(1)}
+          onPrevious={() => onNavigate(-1)}
+          total={total}
           typeLabel={t(`common.avalancheTypes.${shownObservation.type}`)}
         />
       }
@@ -86,9 +85,9 @@ const ObservationDetailSheet = ({
       </div>
 
       <LocationSheet
+        contextPoints={contextPoints}
         isOpen={isLocationOpen && observation !== null}
         observation={shownObservation}
-        observations={observations}
         onClose={() => setIsLocationOpen(false)}
       />
     </Sheet>

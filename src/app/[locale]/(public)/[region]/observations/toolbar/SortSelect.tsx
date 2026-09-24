@@ -1,7 +1,6 @@
+import type { ObservationsSort } from '@domain/types'
 import { ChevronDown } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-
-import type { ObservationsSort } from '../helpers/searchParams'
 
 type SortSelectProps = {
   onChange: (sort: ObservationsSort) => void

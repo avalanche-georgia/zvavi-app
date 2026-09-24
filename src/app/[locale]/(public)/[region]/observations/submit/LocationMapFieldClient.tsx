@@ -1,9 +1,15 @@
 'use client'
 
-import { RegionBoundary, useRegionBounds } from '@components/shared/RegionBoundary'
+import {
+  PisteTileLayer,
+  RegionBoundary,
+  topoMaxZoom,
+  TopoTileLayer,
+  useRegionBounds,
+} from '@components/shared/map'
 import type { Region } from '@domain/types'
 import L from 'leaflet'
-import { MapContainer, Marker, TileLayer, useMapEvents } from 'react-leaflet'
+import { MapContainer, Marker, useMapEvents } from 'react-leaflet'
 
 import 'leaflet/dist/leaflet.css'
 
@@ -25,10 +31,6 @@ const pinIcon = L.divIcon({
 // center of Georgia, matching RegionPickerMapClient's own fallback.
 const fallbackCenter: [number, number] = [42.1, 43.5]
 const fallbackZoom = 7
-
-// OpenTopoMap only serves tiles up to zoom 17 — without this, zooming past it
-// shows blank "max zoom layer = 17" placeholder tiles instead of the map.
-const maxZoom = 17
 
 const ClickHandler = ({ onPick }: { onPick: (lat: number, lng: number) => void }) => {
   useMapEvents({
@@ -65,18 +67,11 @@ const LocationMapFieldClient = ({
       className="z-30 h-116 w-full cursor-crosshair rounded-xl"
       maxBounds={bounds ?? undefined}
       maxBoundsViscosity={1}
-      maxZoom={maxZoom}
+      maxZoom={topoMaxZoom}
       zoom={bounds ? undefined : (region.defaultZoom ?? fallbackZoom)}
     >
-      <TileLayer
-        attribution='&copy; <a href="https://opentopomap.org">OpenTopoMap</a>, <a href="https://www.openstreetmap.org/copyright">OSM</a>'
-        maxNativeZoom={maxZoom}
-        url="https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"
-      />
-      <TileLayer
-        attribution='<a href="https://www.opensnowmap.org/">OpenSnowMap</a>'
-        url="https://tiles.opensnowmap.org/pistes/{z}/{x}/{y}.png"
-      />
+      <TopoTileLayer />
+      <PisteTileLayer />
 
       <RegionBoundary bounds={bounds} region={region} />
       <ClickHandler onPick={onChange} />

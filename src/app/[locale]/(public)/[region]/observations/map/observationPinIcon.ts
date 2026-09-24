@@ -1,4 +1,4 @@
-import logoMark from '@assets/images/logo-mark.png'
+import logoMark from '@assets/images/logo-mark.svg'
 import type { AvalancheSize } from '@domain/types'
 import { type DivIcon, divIcon } from 'leaflet'
 

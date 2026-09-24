@@ -175,6 +175,25 @@ export type PublicObservation = Pick<
 }
 
 export type ObservationDateBasis = 'occurred' | 'reported'
+export type ObservationsSort = 'newest' | 'largest'
+
+// One page of the public list, plus the total matching the filter
+export type ObservationsPage = {
+  observations: PublicObservation[]
+  total: number
+}
+
+// Just enough to draw a map marker
+export type ObservationPoint = Pick<PublicObservation, 'id' | 'size' | 'type'> & {
+  latitude: number
+  longitude: number
+}
+
+export type ObservationPoints = {
+  points: ObservationPoint[]
+  // All published observations in the region, ignoring the filter
+  regionTotal: number
+}
 
 export type ForecastDetails = {
   avalancheProblems: Problem[]

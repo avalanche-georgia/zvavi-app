@@ -1,12 +1,3 @@
-// OpenTopoMap only serves tiles up to zoom 17
-export const maxZoom = 17
-
-export const topoTiles = {
-  attribution:
-    '&copy; <a href="https://opentopomap.org">OpenTopoMap</a>, <a href="https://www.openstreetmap.org/copyright">OSM</a>',
-  url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
-}
-
 // Faded dots for other observations around a close-up. Leaflet paints SVG
 // attributes directly, so theme CSS variables can't be used here.
 export const contextDotColor = '#6b707a'
