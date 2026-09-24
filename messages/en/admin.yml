@@ -328,14 +328,10 @@ admin:
     list:
       columns:
         actions: Actions
-        createdAt: Created at
         date: Date
-        description: Description
-        location: Location
         size: Size
         source: Source
         status: Status
-        trigger: Trigger
         type: Type
       empty: No avalanches found.
       total: 'Shown: {shown} of {total}'
@@ -351,6 +347,7 @@ admin:
       page: 'Page {current} of {total}'
 
     actions:
+      approve: Approve
       deleteDescription: This avalanche record will be permanently deleted.
       deleteTitle: Delete Avalanche
       publish: Publish
@@ -381,6 +378,30 @@ admin:
       messages:
         created: Avalanche created successfully.
         updated: Avalanche updated successfully.
+
+    view:
+      archivedHint: This record is archived. To restore it, open Edit and change the status.
+      coordinates: Coordinates
+      forecastLink: 'Forecast #{id}'
+      linkedForecasts: Linked forecasts
+      logged: Logged
+      occurred: Occurred
+      openFullPage: Open full page
+      photosError: Photos couldn't be loaded.
+      where: Where
+
+    sheet:
+      deleteConfirm: Delete this record permanently?
+      discard: Discard
+      discardConfirm: Discard unsaved changes?
+      keepEditing: Keep editing
+
+  observations:
+    queue:
+      columns:
+        submitted: Submitted
+        submitter: Submitter
+      empty: Nothing waiting for review — new submissions will show up here.
 
   weatherStations:
     title: 'Weather Stations'

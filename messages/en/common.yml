@@ -73,6 +73,7 @@ common:
   avalancheStatuses:
     archived: 'Archived'
     draft: 'Draft'
+    pending: 'Under review'
     published: 'Published'
 
   avalancheTypes:

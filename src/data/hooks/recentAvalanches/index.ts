@@ -1,5 +1,7 @@
 export * from './types'
+export { default as useAvalanchePhotosQuery } from './useAvalanchePhotosQuery'
 export { default as useAvalanchesPerRegion } from './useAvalanchesPerRegion'
+export { default as usePendingObservationsCounts } from './usePendingObservationsCounts'
 export { default as useRecentAvalancheCreate } from './useRecentAvalancheCreate'
 export { default as useRecentAvalancheDelete } from './useRecentAvalancheDelete'
 export { default as useRecentAvalancheQuery } from './useRecentAvalancheQuery'

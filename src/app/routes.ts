@@ -40,6 +40,7 @@ export const routes = {
       new: '/admin/recent-avalanches/new',
       newInRegion: (regionId: string) => `/admin/recent-avalanches/new?regionId=${regionId}`,
       root: '/admin/recent-avalanches',
+      view: (id: number) => `/admin/recent-avalanches/${id}`,
     },
     root: '/admin',
     weatherStations: {

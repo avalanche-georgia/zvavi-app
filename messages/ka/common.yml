@@ -73,6 +73,7 @@ common:
   avalancheStatuses:
     archived: 'დაარქივებული'
     draft: 'მონახაზი'
+    pending: 'განხილვის მოლოდინში'
     published: 'გამოქვეყნებული'
 
   avalancheTypes:

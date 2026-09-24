@@ -25,7 +25,8 @@ const TopSection = () => {
   const isDateUnknown = form.watch('isDateUnknown')
 
   return (
-    <div className="grid grid-cols-2 items-start gap-x-6">
+    // One column in the narrow side panel, two on the full page
+    <div className="grid grid-cols-1 items-start gap-x-6 gap-y-3 @4xl:grid-cols-2">
       <div className="flex flex-col gap-3">
         <InputBlock
           error={form.formState.errors.date?.message}

@@ -63,6 +63,7 @@ export const avalancheSources: Record<AvalancheSource, AvalancheSource> = {
 export const avalancheStatuses: Record<AvalancheStatus, AvalancheStatus> = {
   archived: 'archived',
   draft: 'draft',
+  pending: 'pending',
   published: 'published',
 }
 

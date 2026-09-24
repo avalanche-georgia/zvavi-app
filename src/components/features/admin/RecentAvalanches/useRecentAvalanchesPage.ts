@@ -1,21 +1,26 @@
 'use client'
 
 import { useCallback } from 'react'
-import type { DateMode } from '@data/hooks/recentAvalanches'
+import type { DateMode, ListFilterParams } from '@data/hooks/recentAvalanches'
 import { useRecentAvalanchesPaginatedQuery } from '@data/hooks/recentAvalanches'
 import { defaultRegionId } from '@domain/constants'
-import type { AvalancheSource, RegionId } from '@domain/types'
+import type { RegionId } from '@domain/types'
 import { endOfDay, startOfDay } from 'date-fns'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'src/i18n/navigation'
 
+import type { AvalancheTableVariant } from './RecentAvalanchesTable'
+
 const pageSize = 15
 
-type UseRecentAvalanchesPageParams = {
-  source?: AvalancheSource
-}
+// Catalog: everything past moderation. Queue: external submissions awaiting
+// review, longest-waiting first (local/observations/model.md).
+const variantFilters = {
+  catalog: { excludeStatus: 'pending' },
+  queue: { isOldestFirst: true, source: 'external', status: 'pending' },
+} satisfies Record<AvalancheTableVariant, Partial<ListFilterParams>>
 
-const useRecentAvalanchesPage = ({ source }: UseRecentAvalanchesPageParams = {}) => {
+const useRecentAvalanchesPage = (variant: AvalancheTableVariant) => {
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -35,7 +40,7 @@ const useRecentAvalanchesPage = ({ source }: UseRecentAvalanchesPageParams = {})
     page,
     pageSize: pageSize,
     regionId,
-    source,
+    ...variantFilters[variant],
   })
 
   const updateParams = useCallback(

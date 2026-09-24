@@ -328,14 +328,10 @@ admin:
     list:
       columns:
         actions: მოქმედებები
-        createdAt: შექმნილია
         date: თარიღი
-        description: აღწერა
-        location: ადგილმდებარეობა
         size: ზომა
         source: წყარო
         status: სტატუსი
-        trigger: გამომწვევი
         type: სახეობა
       empty: ზვავის ჩანაწერები არ მოიძებნა.
       total: "ნაჩვენებია: {shown} / {total}"
@@ -351,6 +347,7 @@ admin:
       page: "გვ. {current} / {total}"
 
     actions:
+      approve: დადასტურება
       deleteDescription: ეს ჩანაწერი სამუდამოდ წაიშლება.
       deleteTitle: ზვავის წაშლა
       publish: გამოქვეყნება
@@ -381,6 +378,30 @@ admin:
       messages:
         created: ზვავი წარმატებით დაემატა.
         updated: ზვავი წარმატებით განახლდა.
+
+    view:
+      archivedHint: ჩანაწერი დაარქივებულია. აღსადგენად გახსენით რედაქტირება და შეცვალეთ სტატუსი.
+      coordinates: კოორდინატები
+      forecastLink: 'პროგნოზი #{id}'
+      linkedForecasts: დაკავშირებული პროგნოზები
+      logged: დამატებულია
+      occurred: მოხდა
+      openFullPage: სრულ გვერდზე გახსნა
+      photosError: ფოტოების ჩატვირთვა ვერ მოხერხდა.
+      where: სად
+
+    sheet:
+      deleteConfirm: წავშალოთ ჩანაწერი სამუდამოდ?
+      discard: გაუქმება
+      discardConfirm: გავაუქმოთ შეუნახავი ცვლილებები?
+      keepEditing: რედაქტირების გაგრძელება
+
+  observations:
+    queue:
+      columns:
+        submitted: გამოგზავნილია
+        submitter: ავტორი
+      empty: განსახილველი არაფერია — ახალი დაკვირვებები აქ გამოჩნდება.
 
   weatherStations:
     title: 'ამინდის სადგურები'

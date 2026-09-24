@@ -8,7 +8,7 @@ const RecentAvalanchesPage = async () => {
 
   return (
     <Suspense fallback={<Spinner size="lg" />}>
-      <RecentAvalanchesContainer initialRegions={initialRegions} />
+      <RecentAvalanchesContainer initialRegions={initialRegions} variant="catalog" />
     </Suspense>
   )
 }

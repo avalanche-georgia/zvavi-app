@@ -30,7 +30,11 @@ const SubmitterSection = ({
   const t = useTranslations()
   const form = useFormContext<AvalancheFormSchema>()
 
-  const statusOptions = toOptions(avalancheStatuses, (key) => t(`common.avalancheStatuses.${key}`))
+  // "Under review" is the moderation state of public submissions only — a team
+  // record set to it would drop out of both the catalog and the queue
+  const statusOptions = toOptions(avalancheStatuses, (key) =>
+    t(`common.avalancheStatuses.${key}`),
+  ).filter(({ value }) => value !== 'pending' || source === 'external')
 
   const statusField = (
     <InputBlock label={t('admin.recentAvalanches.form.labels.status')}>
