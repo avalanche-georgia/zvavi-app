@@ -32,7 +32,7 @@ const PickerSummary = ({ onClear, value }: PickerSummaryProps) => {
         onClick={onClear}
         type="button"
       >
-        {t('common.aspectElevationPicker.clear')}
+        {t('common.actions.clear')}
       </button>
     </div>
   )
