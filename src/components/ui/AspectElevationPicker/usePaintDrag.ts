@@ -16,8 +16,8 @@ type UsePaintDragParams = {
   onChange: (aspects: Aspect[]) => void
 }
 
-const getAspectAt = (container: HTMLElement | null, x: number, y: number): Aspect | null => {
-  const cell = document.elementFromPoint(x, y)?.closest<HTMLElement>('[data-aspect]')
+const getCellAspect = (container: HTMLElement | null, element: Element | null): Aspect | null => {
+  const cell = element?.closest<HTMLElement>('[data-aspect]')
 
   if (!cell || !container?.contains(cell)) return null
 
@@ -44,7 +44,8 @@ const usePaintDrag = ({ aspects, onChange }: UsePaintDragParams) => {
   const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
     if (event.button !== 0) return
 
-    const aspect = getAspectAt(containerRef.current, event.clientX, event.clientY)
+    // The target, not the coordinates — screen reader virtual taps can report odd ones
+    const aspect = getCellAspect(containerRef.current, event.target as Element)
 
     if (!aspect) return
 
@@ -64,7 +65,11 @@ const usePaintDrag = ({ aspects, onChange }: UsePaintDragParams) => {
 
     if (!stroke) return
 
-    const aspect = getAspectAt(containerRef.current, event.clientX, event.clientY)
+    // Captured pointers keep targeting the first cell, so hit-test the position
+    const aspect = getCellAspect(
+      containerRef.current,
+      document.elementFromPoint(event.clientX, event.clientY),
+    )
 
     if (!aspect || (!stroke.hasMoved && aspect === stroke.startAspect)) return
 
