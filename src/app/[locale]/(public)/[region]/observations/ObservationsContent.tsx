@@ -1,66 +1,114 @@
 'use client'
 
 import { useState } from 'react'
-import { Icon } from '@components/icons'
-import { ButtonLink } from '@components/shared'
-import { Spinner } from '@components/ui'
-import { usePublicObservationsQuery } from '@data/hooks/observations'
+import { SplitPageWrapper } from '@components/layout'
 import { useRegionContext } from '@domain/context/RegionContext'
 import { useTranslations } from 'next-intl'
+import { useMediaQuery } from 'usehooks-ts'
 
-import ObservationCard from './ObservationCard'
-import ObservationsEmptyState from './ObservationsEmptyState'
-import ObservationsFilters from './ObservationsFilters'
+import hasCoordinates from './helpers/hasCoordinates'
+import useMobileMapOffset from './hooks/useMobileMapOffset'
+import useObservationLookup from './hooks/useObservationLookup'
+import useObservationsPage from './hooks/useObservationsPage'
 
-import { routes } from '@/routes'
+import ObservationDetailSheet from './detail/ObservationDetailSheet'
+import ObservationsListPane from './list/ObservationsListPane'
+import { desktopMediaQuery } from './map/mapConfig'
+import ObservationsMap from './map/ObservationsMap'
+import ObservationsHeader from './ObservationsHeader'
+import ReportButton from './ReportButton'
+import ObservationsToolbar, { type ObservationsView } from './toolbar/ObservationsToolbar'
 
 const ObservationsContent = () => {
   const t = useTranslations()
-  const { region } = useRegionContext()
-  const [dateFrom, setDateFrom] = useState<Date | null>(null)
-  const [dateTo, setDateTo] = useState<Date | null>(null)
+  const region = useRegionContext().region!
+  const page = useObservationsPage(region.id)
+  const { list, params, points, selectedObservation, setParams } = page
 
-  const { data: observations, isPending } = usePublicObservationsQuery({
-    dateFrom: dateFrom?.toISOString(),
-    dateTo: dateTo?.toISOString(),
-    regionId: region!.id,
+  const [view, setView] = useState<ObservationsView>('list')
+  const [peekId, setPeekId] = useState<number | null>(null)
+  // Matches the server render (no media queries there) on the first pass
+  const isDesktop = useMediaQuery(desktopMediaQuery, { initializeWithValue: false })
+  const { headingRef, mobileMapOffset, toolbarRef } = useMobileMapOffset()
+  const { observation: peekObservation } = useObservationLookup({
+    id: peekId,
+    isListReady: !list.isPending,
+    observations: list.observations,
+    regionId: region.id,
   })
 
-  const handleFiltersReset = () => {
-    setDateFrom(null)
-    setDateTo(null)
+  const isMapView = view === 'map' && !isDesktop
+  const mapFocus =
+    isDesktop && selectedObservation && hasCoordinates(selectedObservation)
+      ? ([selectedObservation.latitude, selectedObservation.longitude] as [number, number])
+      : null
+
+  const handleOpen = (id: number) => setParams({ selectedId: id })
+  const handleClose = () => setParams({ selectedId: null })
+
+  // Desktop opens the detail right away; mobile previews the card first
+  const handleMarkerClick = (id: number) => (isDesktop ? handleOpen(id) : setPeekId(id))
+
+  const handleViewChange = (nextView: ObservationsView) => {
+    setView(nextView)
+    setPeekId(null)
   }
 
   return (
-    <div className="flex flex-col gap-4">
-      <ButtonLink
-        className="max-w-none justify-center py-3"
-        href={routes.observationsByRegion(region!.id).submit}
-      >
-        <Icon icon="plus" size="sm" />
-        {t('observations.submitCta')}
-      </ButtonLink>
-
-      <ObservationsFilters
-        dateFrom={dateFrom}
-        dateTo={dateTo}
-        onDateFromChange={setDateFrom}
-        onDateToChange={setDateTo}
-        onReset={handleFiltersReset}
+    <SplitPageWrapper
+      aside={
+        // Mounted only when visible — Leaflet can't fit the region into a hidden,
+        // zero-size container
+        (isDesktop || isMapView) && (
+          <ObservationsMap
+            dateBasis={params.dateBasis}
+            focus={mapFocus}
+            onMapClick={() => setPeekId(null)}
+            onMarkerClick={handleMarkerClick}
+            onOpen={handleOpen}
+            peekObservation={peekObservation}
+            points={points}
+            region={region}
+            selectedId={selectedObservation?.id ?? peekId}
+          />
+        )
+      }
+      isAsideShownOnMobile={isMapView}
+      mobileAsideOffset={mobileMapOffset}
+    >
+      <ObservationsHeader
+        ref={headingRef}
+        regionName={t(`regions.names.${region.id}`)}
+        total={page.regionTotal}
+        visibleCount={page.visibleCount}
       />
-
-      {isPending ? (
-        <Spinner label={t('common.labels.wait')} size="lg" />
-      ) : !observations || observations.length === 0 ? (
-        <ObservationsEmptyState />
-      ) : (
-        <div className="flex flex-col gap-3">
-          {observations.map((observation) => (
-            <ObservationCard key={observation.id} observation={observation} />
-          ))}
-        </div>
+      <ObservationsToolbar
+        ref={toolbarRef}
+        filters={params}
+        onFiltersChange={setParams}
+        onViewChange={handleViewChange}
+        view={view}
+      />
+      {!isMapView && (
+        <ObservationsListPane
+          dateBasis={params.dateBasis}
+          list={list}
+          onOpen={handleOpen}
+          selectedId={selectedObservation?.id ?? null}
+          sort={params.sort}
+        />
       )}
-    </div>
+      {!isMapView && <ReportButton regionId={region.id} />}
+
+      <ObservationDetailSheet
+        contextPoints={points}
+        index={page.selectedIndex}
+        observation={selectedObservation}
+        onClose={handleClose}
+        onNavigate={page.onNavigate}
+        total={page.total}
+      />
+    </SplitPageWrapper>
   )
 }
 

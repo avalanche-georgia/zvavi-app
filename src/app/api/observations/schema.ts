@@ -18,6 +18,10 @@ export const pendingPhotoKeyPattern =
 // behind it — the client maps it to a photo-specific message.
 export const photosNotFoundError = 'photos not found'
 
+// Returned when a photo exists but can't be decoded / re-written (corrupt, not
+// an image, or beyond the pixel limit) — retrying the same photo won't help
+export const photosUnprocessableError = 'photos unprocessable'
+
 const aspectSchema = z.enum(sortedAspects)
 
 const aspectsSchema = z.object({
@@ -31,27 +35,55 @@ const aspectsSchema = z.object({
 // across the app (see its "(internal)" label on the forecast-nested avalanche
 // form); location (free text) is out of scope for the public form by product
 // decision.
-export const submitObservationSchema = z.object({
-  aspects: aspectsSchema.nullable(),
-  date: z.iso.datetime({ offset: true }).nullable(),
-  description: z.string().max(2000).nullable(),
-  isDateUnknown: z.boolean(),
-  latitude: z.number().min(-90).max(90).nullable(),
-  longitude: z.number().min(-180).max(180).nullable(),
-  photoKeys: z
-    .array(z.string().regex(pendingPhotoKeyPattern))
-    .max(observationPhotoLimits.maxCount)
-    .refine((keys) => new Set(keys).size === keys.length),
-  quantity: z.number().int().min(1).max(5),
+export const submitObservationSchema = z
+  .object({
+    aspects: aspectsSchema.nullable(),
+    date: z.iso.datetime({ offset: true }).nullable(),
+    description: z.string().max(2000).nullable(),
+    isDateUnknown: z.boolean(),
+    latitude: z.number().min(-90).max(90),
+    longitude: z.number().min(-180).max(180),
+    photoKeys: z
+      .array(z.string().regex(pendingPhotoKeyPattern))
+      .max(observationPhotoLimits.maxCount)
+      .refine((keys) => new Set(keys).size === keys.length),
+    quantity: z.number().int().min(1).max(5),
+    regionId: z.enum(region_id),
+    size: z
+      .union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)])
+      .nullable(),
+    slabDepth: z.number().min(0).max(1000).nullable(),
+    submitterContact: z.string().max(200).nullable(),
+    submitterEducation: z.string().max(200).nullable(),
+    submitterName: z.string().min(1).max(100),
+    trigger: z.enum(avalanche_trigger),
+    type: z.enum(avalanche_type),
+    width: z.number().min(0).max(500).nullable(),
+  })
+  // A date or "unknown" — never neither
+  .refine((body) => body.isDateUnknown || body.date !== null)
+
+export const observationFiltersSchema = z.object({
+  dateBasis: z.enum(['occurred', 'reported']).default('occurred'),
+  dateFrom: z.iso.datetime({ offset: true }).optional(),
+  dateTo: z.iso.datetime({ offset: true }).optional(),
+  // Only observations whose occurrence date is unknown
+  isDateUnknown: z
+    .enum(['true'])
+    .optional()
+    .transform((value) => value === 'true'),
   regionId: z.enum(region_id),
-  size: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]).nullable(),
-  slabDepth: z.number().min(0).max(1000).nullable(),
-  submitterContact: z.string().max(200).nullable(),
-  submitterEducation: z.string().max(200).nullable(),
-  submitterName: z.string().min(1).max(100),
-  trigger: z.enum(avalanche_trigger),
-  type: z.enum(avalanche_type),
-  width: z.number().min(0).max(500).nullable(),
+})
+
+export const observationsPageQuerySchema = observationFiltersSchema.extend({
+  limit: z.coerce.number().int().min(1).max(50).default(20),
+  offset: z.coerce.number().int().min(0).max(10_000).default(0),
+  sort: z.enum(['newest', 'largest']).default('newest'),
+})
+
+export const observationQuerySchema = z.object({
+  id: z.coerce.number().int().positive().max(Number.MAX_SAFE_INTEGER),
+  regionId: z.enum(region_id),
 })
 
 export type SubmitObservationBody = z.infer<typeof submitObservationSchema>

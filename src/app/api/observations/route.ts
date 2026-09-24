@@ -1,36 +1,34 @@
 import { convertCamelToSnake, roundCoordinate } from '@data/helpers'
-import type { RegionId } from '@domain/types'
-import { NextResponse } from 'next/server'
+import { after, NextResponse } from 'next/server'
 
+import createPhotoVariants from './createPhotoVariants'
 import fetchPublicObservations from './fetchPublicObservations'
 import notifyAdmin from './notifyAdmin'
-import { deletePhotos, promotePhotos, verifyPhotosExist } from './photoKeys'
-import { photosNotFoundError, submitObservationSchema } from './schema'
+import { deletePhotos, PhotoProcessingError, promotePhotos, verifyPhotosExist } from './photoKeys'
+import {
+  observationsPageQuerySchema,
+  photosNotFoundError,
+  photosUnprocessableError,
+  submitObservationSchema,
+} from './schema'
 
 import { createServiceRoleClient } from '@/lib/supabase/serviceRole'
-import { Constants } from '@/lib/supabase/types'
 
 // Hidden via CSS in the real form — a bot fills every field it sees, a human never sees this one.
 type HoneypotCheck = { honeypot?: unknown }
 
-const validRegionIds: readonly string[] = Constants.public.Enums.region_id
-
 export const GET = async (request: Request) => {
   const searchParams = new URL(request.url).searchParams
-  const regionId = searchParams.get('regionId')
+  const parsed = observationsPageQuerySchema.safeParse(Object.fromEntries(searchParams))
 
-  if (!regionId || !validRegionIds.includes(regionId)) {
-    return NextResponse.json({ error: 'a valid regionId is required', ok: false }, { status: 400 })
+  if (!parsed.success) {
+    return NextResponse.json({ error: 'invalid query', ok: false }, { status: 400 })
   }
 
   try {
-    const observations = await fetchPublicObservations({
-      dateFrom: searchParams.get('dateFrom') ?? undefined,
-      dateTo: searchParams.get('dateTo') ?? undefined,
-      regionId: regionId as RegionId,
-    })
+    const page = await fetchPublicObservations(parsed.data)
 
-    return NextResponse.json({ observations, ok: true })
+    return NextResponse.json({ ...page, ok: true })
   } catch (error) {
     console.error('[GET /api/observations] fetchPublicObservations failed:', error)
 
@@ -73,6 +71,10 @@ export const POST = async (request: Request) => {
   } catch (error) {
     console.error('[POST /api/observations] promotePhotos failed:', error)
 
+    if (error instanceof PhotoProcessingError) {
+      return NextResponse.json({ error: photosUnprocessableError, ok: false }, { status: 400 })
+    }
+
     return NextResponse.json({ error: 'failed to submit observation', ok: false }, { status: 500 })
   }
 
@@ -80,11 +82,12 @@ export const POST = async (request: Request) => {
 
   const { data, error } = await supabase.rpc('submit_observation', {
     p_aspects: body.aspects ? convertCamelToSnake(body.aspects) : undefined,
-    p_date: body.date ?? undefined,
+    // "Unknown" wins over a date picked before the box was ticked
+    p_date: body.isDateUnknown ? undefined : (body.date ?? undefined),
     p_description: body.description ?? undefined,
     p_is_date_unknown: body.isDateUnknown,
-    p_latitude: body.latitude === null ? undefined : roundCoordinate(body.latitude),
-    p_longitude: body.longitude === null ? undefined : roundCoordinate(body.longitude),
+    p_latitude: roundCoordinate(body.latitude),
+    p_longitude: roundCoordinate(body.longitude),
     p_photo_keys: photoKeys,
     p_quantity: body.quantity,
     p_region_id: body.regionId,
@@ -107,6 +110,9 @@ export const POST = async (request: Request) => {
   }
 
   await Promise.all([deletePhotos(body.photoKeys), notifyAdmin(body)])
+  // Resized variants are generated after the response is sent, so the submitter
+  // doesn't wait for image processing
+  after(() => createPhotoVariants(photoKeys))
 
   return NextResponse.json({ id: data, ok: true })
 }
