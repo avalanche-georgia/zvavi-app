@@ -19,6 +19,19 @@ export const photoUploadStatuses = ['preparing', 'uploading', 'uploaded', 'faile
 // it's added (not on submit), so the form only has to wait for stragglers —
 // the `superRefine` below blocks submit until every photo has a key, and the
 // output `transform` hands the submit handler just those keys.
+// Nullable while the form is being filled in (no pin yet), required on submit —
+// the pipe keeps `null` as a valid input type but narrows the output to number.
+const coordinateSchema = (min: number, max: number) =>
+  z
+    .number()
+    .nullable()
+    .pipe(
+      z
+        .number({ error: () => ({ message: 'required' }) })
+        .min(min)
+        .max(max),
+    )
+
 const photoUploadSchema = z.object({
   file: z.instanceof(File),
   id: z.string(),
@@ -46,8 +59,8 @@ export const observationSubmitSchema = z.object({
   description: z.string().max(2000, { message: 'tooLong' }).nullable(),
   honeypot: z.string(),
   isDateUnknown: z.boolean(),
-  latitude: z.number().min(-90).max(90).nullable(),
-  longitude: z.number().min(-180).max(180).nullable(),
+  latitude: coordinateSchema(-90, 90),
+  longitude: coordinateSchema(-180, 180),
   photos: photosSchema,
   quantity: z.number().int().min(1).max(5),
   size: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]),

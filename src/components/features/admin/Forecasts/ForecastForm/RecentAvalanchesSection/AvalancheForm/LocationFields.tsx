@@ -7,10 +7,18 @@ import { useAvalancheDetailsForm } from './useAvalancheDetailsForm'
 const coordinateInputClass =
   '[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none'
 
-const LocationFields = ({ data, setData }: AvalancheDetailsSectionProps) => {
+const LocationFields = ({
+  data,
+  errors,
+  isLocationRequired,
+  setData,
+}: AvalancheDetailsSectionProps) => {
   const t = useTranslations()
 
   const { handleInputChange } = useAvalancheDetailsForm(setData)
+
+  const getError = (message: string | undefined) =>
+    message ? t(`common.validation.${message}`) : undefined
 
   return (
     <>
@@ -25,7 +33,11 @@ const LocationFields = ({ data, setData }: AvalancheDetailsSectionProps) => {
         />
       </InputBlock>
 
-      <InputBlock label={t('admin.forecast.form.recentAvalanches.labels.latitude')}>
+      <InputBlock
+        error={getError(errors?.latitude)}
+        label={t('admin.forecast.form.recentAvalanches.labels.latitude')}
+        required={isLocationRequired}
+      >
         <TextInput
           className={coordinateInputClass}
           name="latitude"
@@ -35,7 +47,11 @@ const LocationFields = ({ data, setData }: AvalancheDetailsSectionProps) => {
         />
       </InputBlock>
 
-      <InputBlock label={t('admin.forecast.form.recentAvalanches.labels.longitude')}>
+      <InputBlock
+        error={getError(errors?.longitude)}
+        label={t('admin.forecast.form.recentAvalanches.labels.longitude')}
+        required={isLocationRequired}
+      >
         <TextInput
           className={coordinateInputClass}
           name="longitude"

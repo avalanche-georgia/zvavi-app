@@ -36,8 +36,8 @@ export const submitObservationSchema = z.object({
   date: z.iso.datetime({ offset: true }).nullable(),
   description: z.string().max(2000).nullable(),
   isDateUnknown: z.boolean(),
-  latitude: z.number().min(-90).max(90).nullable(),
-  longitude: z.number().min(-180).max(180).nullable(),
+  latitude: z.number().min(-90).max(90),
+  longitude: z.number().min(-180).max(180),
   photoKeys: z
     .array(z.string().regex(pendingPhotoKeyPattern))
     .max(observationPhotoLimits.maxCount)
@@ -52,6 +52,13 @@ export const submitObservationSchema = z.object({
   trigger: z.enum(avalanche_trigger),
   type: z.enum(avalanche_type),
   width: z.number().min(0).max(500).nullable(),
+})
+
+export const publicObservationsQuerySchema = z.object({
+  dateBasis: z.enum(['occurred', 'reported']).default('occurred'),
+  dateFrom: z.iso.datetime({ offset: true }).optional(),
+  dateTo: z.iso.datetime({ offset: true }).optional(),
+  regionId: z.enum(region_id),
 })
 
 export type SubmitObservationBody = z.infer<typeof submitObservationSchema>

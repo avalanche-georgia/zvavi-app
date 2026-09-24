@@ -27,7 +27,7 @@ const PhotoTile = ({ index, onOpen, onRemove, onRetry, photo }: PhotoTileProps) 
   return (
     <div className="group relative aspect-square overflow-hidden rounded-xl bg-gray-100 ring-1 ring-black/5">
       <button
-        aria-label={t('observations.submit.photos.open', { index: index + 1 })}
+        aria-label={t('common.photoViewer.open', { index: index + 1 })}
         className="flex size-full cursor-zoom-in items-center justify-center focus-visible:outline-2 focus-visible:outline-offset-2"
         onClick={() => onOpen(index)}
         type="button"

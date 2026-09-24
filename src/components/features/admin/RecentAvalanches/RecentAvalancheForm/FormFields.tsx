@@ -9,12 +9,13 @@ import TopSection from './TopSection'
 type FormFieldsProps = {
   // undefined when creating a new record
   avalanche: Avalanche | undefined
+  isLocationRequired: boolean
 }
 
-const FormFields = ({ avalanche }: FormFieldsProps) => (
+const FormFields = ({ avalanche, isLocationRequired }: FormFieldsProps) => (
   <div className="flex flex-col gap-6">
     <TopSection />
-    <DetailsSection />
+    <DetailsSection isLocationRequired={isLocationRequired} />
     <SubmitterSection
       createdByUserId={avalanche?.createdByUserId ?? null}
       source={avalanche?.source}

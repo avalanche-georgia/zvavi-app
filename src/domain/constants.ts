@@ -4,6 +4,7 @@ import type {
   AvalancheStatus,
   AvalancheTrigger,
   AvalancheType,
+  ElevationZone,
   HazardLevel,
   HazardLevelScale,
   MemberStatus,
@@ -106,6 +107,9 @@ export const aspects = {
 } as const
 
 export const sortedAspects: Aspect[] = ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw']
+
+// Top → bottom
+export const sortedElevationZones: ElevationZone[] = ['highAlpine', 'alpine', 'subAlpine']
 
 export const sensitivityLevels = {
   reactive: 'reactive',

@@ -1,0 +1,56 @@
+/* Observation map pins (see observationPinIcon.ts): the logo's avalanche mark
+   on a circle shaded by avalanche size, brand blue when selected. Colours are
+   literal — Tailwind only emits theme variables that utilities use. */
+.observation-pin > span {
+  --pin-color: #6b707a;
+
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--pin-color);
+  box-shadow:
+    0 0 0 2px #fff,
+    0 1px 3px rgb(0 0 0 / 0.3);
+}
+
+.observation-pin > span > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.observation-pin > [data-size='1'] {
+  --pin-color: #8a8f99;
+}
+
+.observation-pin > [data-size='2'] {
+  --pin-color: #6b707a;
+}
+
+.observation-pin > [data-size='3'] {
+  --pin-color: #4a4e57;
+}
+
+.observation-pin > [data-size='4'] {
+  --pin-color: #2c2e33;
+}
+
+.observation-pin > [data-size='5'] {
+  --pin-color: #111;
+}
+
+/* --color-brand-blue */
+.observation-pin > [data-selected] {
+  --pin-color: #0c5aa6;
+
+  box-shadow:
+    0 0 0 3px #fff,
+    0 2px 6px rgb(0 0 0 / 0.35);
+}
+
+/* Tapped pins get a square focus ring from the browser — the selected pin is
+   already highlighted; keyboard focus still shows one */
+.observation-pin:focus:not(:focus-visible) {
+  outline: none;
+}

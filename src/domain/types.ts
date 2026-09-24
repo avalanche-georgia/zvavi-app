@@ -141,6 +141,41 @@ export type AvalancheFormData = {
   width: number | null
 }
 
+// Signed, short-lived URLs for one photo's metadata-stripped variants
+export type PhotoUrls = {
+  // Stable per photo — for React keys
+  id: string
+  largeUrl: string
+  previewUrl: string
+  thumbUrl: string
+}
+
+// What the public observations endpoint exposes — never contact, education or
+// any other submitter data beyond the shortened name.
+export type PublicObservation = Pick<
+  Avalanche,
+  | 'aspects'
+  | 'date'
+  | 'description'
+  | 'isDateUnknown'
+  | 'latitude'
+  | 'longitude'
+  | 'quantity'
+  | 'regionId'
+  | 'size'
+  | 'slabDepth'
+  | 'trigger'
+  | 'type'
+  | 'width'
+> & {
+  createdAt: string
+  id: number
+  photos: PhotoUrls[]
+  submitterName: string
+}
+
+export type ObservationDateBasis = 'occurred' | 'reported'
+
 export type ForecastDetails = {
   avalancheProblems: Problem[]
   recentAvalanches: Avalanche[]

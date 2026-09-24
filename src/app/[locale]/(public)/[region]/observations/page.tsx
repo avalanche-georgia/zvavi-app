@@ -1,6 +1,6 @@
+import { Suspense } from 'react'
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
-import { PageWrapper } from 'src/components/layout'
 
 import ObservationsContent from './ObservationsContent'
 
@@ -18,17 +18,11 @@ export const generateMetadata = async ({ params }: ObservationsPageProps): Promi
   }
 }
 
-const ObservationsPage = async ({ params }: ObservationsPageProps) => {
-  const { region: regionId } = await params
-  const t = await getTranslations()
-
-  return (
-    <PageWrapper
-      title={t('observations.pageTitle', { regionName: t(`regions.names.${regionId}`) })}
-    >
-      <ObservationsContent />
-    </PageWrapper>
-  )
-}
+// Filters and the open observation are read from the URL on the client
+const ObservationsPage = () => (
+  <Suspense>
+    <ObservationsContent />
+  </Suspense>
+)
 
 export default ObservationsPage

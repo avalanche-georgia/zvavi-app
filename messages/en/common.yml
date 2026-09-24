@@ -3,8 +3,11 @@ common:
     add: 'Add'
     backToList: 'Back to List'
     cancel: 'Cancel'
+    close: 'Close'
     confirm: 'Confirm'
     continue: 'Continue'
+    copy: 'Copy'
+    copied: 'Copied'
     delete: 'Delete'
     edit: 'Edit'
     getInTouch: 'Get in Touch'
@@ -101,6 +104,16 @@ common:
     overall: 'Overall'
     to: 'To'
     unknown: 'Unknown'
+
+  photoViewer:
+    open: 'Open photo {index}'
+    previous: 'Previous photo'
+    next: 'Next photo'
+    counter: '{current} / {total}'
+
+  units:
+    centimeters: '{value} cm'
+    meters: '{value} m'
 
   disclaimer:
     title: '⚠️ Disclaimer ⚠️'

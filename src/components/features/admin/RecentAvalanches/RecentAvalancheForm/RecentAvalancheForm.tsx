@@ -12,7 +12,7 @@ import useRecentAvalancheFormSubmit from './hooks/useRecentAvalancheFormSubmit'
 
 import FormFields from './FormFields'
 import getInitialFormData from './getInitialFormData'
-import { type AvalancheFormSchema, avalancheFormSchema } from './schema'
+import { type AvalancheFormSchema, getAvalancheFormSchema } from './schema'
 
 type EditProps = {
   avalanche: Avalanche & { id: number }
@@ -39,9 +39,12 @@ const RecentAvalancheForm = ({
 }: RecentAvalancheFormProps) => {
   const t = useTranslations()
 
+  const isLocationRequired =
+    mode === 'create' || (avalanche.latitude !== null && avalanche.longitude !== null)
+
   const form = useForm<AvalancheFormSchema>({
     defaultValues: getInitialFormData(avalanche ?? {}),
-    resolver: zodResolver(avalancheFormSchema),
+    resolver: zodResolver(getAvalancheFormSchema(isLocationRequired)),
   })
 
   useUnsavedChangesWarning(form.formState.isDirty)
@@ -65,7 +68,7 @@ const RecentAvalancheForm = ({
       <div className="rounded-lg bg-white shadow-sm">
         <section className="flex w-full flex-col gap-6 p-4 md:p-6">
           <form className="flex w-full flex-col gap-6" onSubmit={form.handleSubmit(handleSubmit)}>
-            <FormFields avalanche={avalanche} />
+            <FormFields avalanche={avalanche} isLocationRequired={isLocationRequired} />
           </form>
         </section>
 

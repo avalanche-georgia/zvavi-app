@@ -1,34 +1,31 @@
 import { convertCamelToSnake, roundCoordinate } from '@data/helpers'
-import type { RegionId } from '@domain/types'
-import { NextResponse } from 'next/server'
+import { after, NextResponse } from 'next/server'
 
+import createPhotoVariants from './createPhotoVariants'
 import fetchPublicObservations from './fetchPublicObservations'
 import notifyAdmin from './notifyAdmin'
 import { deletePhotos, promotePhotos, verifyPhotosExist } from './photoKeys'
-import { photosNotFoundError, submitObservationSchema } from './schema'
+import {
+  photosNotFoundError,
+  publicObservationsQuerySchema,
+  submitObservationSchema,
+} from './schema'
 
 import { createServiceRoleClient } from '@/lib/supabase/serviceRole'
-import { Constants } from '@/lib/supabase/types'
 
 // Hidden via CSS in the real form — a bot fills every field it sees, a human never sees this one.
 type HoneypotCheck = { honeypot?: unknown }
 
-const validRegionIds: readonly string[] = Constants.public.Enums.region_id
-
 export const GET = async (request: Request) => {
   const searchParams = new URL(request.url).searchParams
-  const regionId = searchParams.get('regionId')
+  const parsed = publicObservationsQuerySchema.safeParse(Object.fromEntries(searchParams))
 
-  if (!regionId || !validRegionIds.includes(regionId)) {
-    return NextResponse.json({ error: 'a valid regionId is required', ok: false }, { status: 400 })
+  if (!parsed.success) {
+    return NextResponse.json({ error: 'invalid query', ok: false }, { status: 400 })
   }
 
   try {
-    const observations = await fetchPublicObservations({
-      dateFrom: searchParams.get('dateFrom') ?? undefined,
-      dateTo: searchParams.get('dateTo') ?? undefined,
-      regionId: regionId as RegionId,
-    })
+    const observations = await fetchPublicObservations(parsed.data)
 
     return NextResponse.json({ observations, ok: true })
   } catch (error) {
@@ -83,8 +80,8 @@ export const POST = async (request: Request) => {
     p_date: body.date ?? undefined,
     p_description: body.description ?? undefined,
     p_is_date_unknown: body.isDateUnknown,
-    p_latitude: body.latitude === null ? undefined : roundCoordinate(body.latitude),
-    p_longitude: body.longitude === null ? undefined : roundCoordinate(body.longitude),
+    p_latitude: roundCoordinate(body.latitude),
+    p_longitude: roundCoordinate(body.longitude),
     p_photo_keys: photoKeys,
     p_quantity: body.quantity,
     p_region_id: body.regionId,
@@ -107,6 +104,9 @@ export const POST = async (request: Request) => {
   }
 
   await Promise.all([deletePhotos(body.photoKeys), notifyAdmin(body)])
+  // Resized variants are generated after the response is sent, so the submitter
+  // doesn't wait for image processing
+  after(() => createPhotoVariants(photoKeys))
 
   return NextResponse.json({ id: data, ok: true })
 }

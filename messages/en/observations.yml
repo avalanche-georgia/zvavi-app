@@ -1,14 +1,84 @@
 observations:
-  pageTitle: 'Observations — {regionName}'
-  empty: 'No observations reported yet.'
-  submitCta: 'Submit an Observation'
+  pageTitle: 'Observations'
+  reportCta: 'Report'
+
+  summary:
+    total: '{regionName} · {total, plural, one {# report} other {# reports}}'
+    filtered: '{regionName} · {count} of {total, plural, one {# report} other {# reports}}'
+
+  view:
+    label: 'View'
+    list: 'List'
+    map: 'Map'
 
   filters:
-    reset: 'Reset filters'
+    clear: 'Clear filters'
+    anyDate: 'Any date'
+    dateBasis:
+      label: 'Date'
+      occurred: 'Occurred'
+      reported: 'Reported'
+    periods:
+      label: 'Period'
+      all: 'All time'
+      '7d': '7 days'
+      '30d': '30 days'
+      custom: 'Custom'
+    sort:
+      label: 'Sort'
+      newest: 'Newest'
+      largest: 'Largest'
+
+  groups:
+    today: 'Today'
+    yesterday: 'Yesterday'
+    thisWeek: 'This week'
+    unknown: 'Date unknown'
+    largestFirst: 'Largest first'
+
+  empty:
+    noReports: 'No observations reported yet.'
+    title: 'No observations match'
+    description: 'Try a wider date range.'
+
+  labels:
+    dateUnknown: 'Date unknown'
+    quantity: 'Quantity'
+    size: 'Size'
+    slabDepth: 'Slab depth'
+    trigger: 'Trigger'
+    typeAndSize: '{type} · size {size}'
+    width: 'Width'
+
+  aspects:
+    allAspects: 'all aspects'
+    allElevations: 'All elevations'
 
   card:
-    dateUnknown: 'Date unknown'
-    submittedBy: 'Reported by {submitterName}'
+    quantity: '×{count}'
+    reportedAgo: 'Reported {time}'
+
+  map:
+    onMap: '{count} on map'
+
+  detail:
+    position: '{current} of {total}'
+    previous: 'Previous observation'
+    next: 'Next observation'
+    occurredReported: 'Occurred {occurred} · reported {reported}'
+    dateUnknownReported: 'Date unknown · reported {reported}'
+    facts:
+      occurred: 'Occurred'
+      reported: 'Reported'
+    where: 'Where'
+    aspectsNotReported: 'Aspect and elevation not reported.'
+    showOnMap: 'Show on map'
+    description: 'Description'
+    reportedBy: 'Reported by'
+    privacyNote: 'Contact details are only visible to forecasters.'
+
+  location:
+    openInMaps: 'Open in Maps app'
 
   submit:
     title: 'Submit an Observation — {regionName}'
@@ -62,11 +132,6 @@ observations:
       failed: 'Upload failed'
       retry: 'Retry'
       remove: 'Remove photo'
-      open: 'Open photo {index}'
-      close: 'Close'
-      previous: 'Previous photo'
-      next: 'Next photo'
-      counter: '{current} / {total}'
       errors:
         uploading: 'Please wait until all photos finish uploading.'
         failed: 'Some photos failed to upload. Check your connection, then tap Retry or remove them.'

@@ -37,7 +37,9 @@ A public application form for individuals interested in joining the avalanche fo
 
 ## Public Observations
 
-Anyone can report an avalanche they've witnessed — no account needed. The submission form lets a person mark the location on a map, describe what they saw, attach up to three photos, and optionally share their name and background. Photos are shrunk automatically on the reporter's phone before sending, so even large camera shots upload quickly on a mountain connection, and each one can be previewed full-screen before submitting. Submitted observations appear immediately on a public feed for the region, and administrators can unpublish a report if needed.
+Anyone can report an avalanche they've witnessed — no account needed. The submission form asks the person to mark the location on a map (required, so every new report can be shown on a map), describe what they saw, attach up to three photos, and optionally share their name and background. Photos are shrunk automatically on the reporter's phone before sending, so even large camera shots upload quickly on a mountain connection, and each one can be previewed full-screen before submitting. Submitted observations appear immediately on the region's public observations page, and administrators can unpublish a report if needed.
+
+The observations page shows reports as a list and on a map of the region side by side (on phones, switch between the two). Reports are grouped by date — today, yesterday, this week, then by month — and can be filtered to the last 7 or 30 days or a custom date range, based either on when the avalanche happened or when it was reported, and sorted newest or largest first. Each report opens into a detail view with its photos (tap for full-screen), size, trigger, dimensions, the slopes affected, the description and the reporter's first name with last initial. From there, "Show on map" gives a close-up map with copyable coordinates and a link to open the spot in a maps app. Filtered views and individual reports have their own links that can be shared. Contact details and other personal information submitted with a report are only ever visible to forecasters.
 
 ## Partners
 
@@ -53,7 +55,7 @@ A password-protected back-office for the forecasting team.
 Forecasters can create, edit, duplicate, and publish forecasts through a structured form covering all hazard levels, problem types, and narrative fields. Drafts are invisible to the public until explicitly published.
 
 ### Recent Avalanche Catalog
-Administrators can browse all recorded avalanche observations in a paginated table, filter by occurrence or creation date, and edit or delete individual records directly — without going through a forecast. Each record shows whether it was logged by the forecasting team or submitted by the public, along with its publish status, and a dedicated Observations view filters the catalog down to public submissions for quick review.
+Administrators can browse all recorded avalanche observations in a paginated table, filter by occurrence or creation date, and edit or delete individual records directly — without going through a forecast. Each record shows whether it was logged by the forecasting team or submitted by the public, along with its publish status, and a dedicated Observations view filters the catalog down to public submissions for quick review. Coordinates are required for every new avalanche record; older records saved without them can still be edited.
 
 ### Member Management
 Administrators can manage the team roster: add members, update their status (active, inactive, pending, suspended, expired), set membership validity dates, and generate or view their verification QR codes.
