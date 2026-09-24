@@ -16,7 +16,6 @@ const DetailReporter = ({ name }: { name: string }) => {
         </div>
         <b className="text-[15px]">{name}</b>
       </div>
-      <p className="text-muted mt-2.5 text-[12.5px]">{t('observations.detail.privacyNote')}</p>
     </DetailSection>
   )
 }

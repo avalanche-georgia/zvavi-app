@@ -75,7 +75,6 @@ observations:
     showOnMap: 'Show on map'
     description: 'Description'
     reportedBy: 'Reported by'
-    privacyNote: 'Contact details are only visible to forecasters.'
 
   location:
     openInMaps: 'Open in Maps app'
@@ -113,7 +112,7 @@ observations:
       type: 'Avalanche type'
       width: 'Width (m)'
     placeholders:
-      description: 'Anything else worth noting — weather, snowpack, nearby activity…'
+      description: 'Was anyone caught, buried or injured? Anything else useful too — how far it ran, weather, snowpack…'
       latitude: 'e.g. 42.6975'
       longitude: 'e.g. 44.4547'
       submitterContact: 'How can we reach you? Email, phone, Instagram…'

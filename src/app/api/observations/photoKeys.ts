@@ -1,12 +1,14 @@
 import {
-  CopyObjectCommand,
   DeleteObjectCommand,
+  GetObjectCommand,
   HeadObjectCommand,
+  PutObjectCommand,
   type S3Client,
 } from '@aws-sdk/client-s3'
 import { observationPhotoLimits } from '@domain/constants'
 import { format } from 'date-fns'
 
+import { stripMetadata } from './imageProcessing'
 import { pendingPhotoKeyPrefix } from './schema'
 
 import { createR2Client, observationsBucket } from '@/lib/r2'
@@ -69,9 +71,34 @@ export const deletePhotos = async (keys: string[]): Promise<void> => {
   }
 }
 
-// Copies pending uploads to their permanent keys. Pending objects are left in
-// place — the caller deletes them once the observation is saved, so a failed
-// save can be retried with the same keys.
+const contentTypesByExtension: Record<string, ObservationPhotoContentType> = {
+  jpg: 'image/jpeg',
+  png: 'image/png',
+}
+
+// Stored photos never carry metadata: the client re-encode usually strips it
+// already, but a raw original can still arrive (fallback upload, direct API
+// call), so every photo is re-written without it on the way to its permanent key
+const promotePhoto = async (client: S3Client, pendingKey: string, permanentKey: string) => {
+  const pending = await client.send(
+    new GetObjectCommand({ Bucket: observationsBucket, Key: pendingKey }),
+  )
+  const contentType = contentTypesByExtension[pendingKey.split('.').pop() ?? ''] ?? 'image/jpeg'
+  const body = await stripMetadata(await pending.Body!.transformToByteArray(), contentType)
+
+  await client.send(
+    new PutObjectCommand({
+      Body: body,
+      Bucket: observationsBucket,
+      ContentType: contentType,
+      Key: permanentKey,
+    }),
+  )
+}
+
+// Writes metadata-free copies of pending uploads to their permanent keys.
+// Pending objects are left in place — the caller deletes them once the
+// observation is saved, so a failed save can be retried with the same keys.
 export const promotePhotos = async (pendingKeys: string[]): Promise<string[]> => {
   const client = createR2Client()
   const permanentKeys = pendingKeys.map(toPermanentKey)
@@ -79,13 +106,7 @@ export const promotePhotos = async (pendingKeys: string[]): Promise<string[]> =>
   try {
     await Promise.all(
       pendingKeys.map((pendingKey, index) =>
-        client.send(
-          new CopyObjectCommand({
-            Bucket: observationsBucket,
-            CopySource: `${observationsBucket}/${pendingKey}`,
-            Key: permanentKeys[index],
-          }),
-        ),
+        promotePhoto(client, pendingKey, permanentKeys[index]),
       ),
     )
   } catch (error) {

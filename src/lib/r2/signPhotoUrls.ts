@@ -24,8 +24,8 @@ const signKey = (client: S3Client, key: string, signingDate: Date) =>
     { expiresIn: signedUrlExpirySeconds, signingDate },
   )
 
-// Server-only. Signs the metadata-stripped variants only — never the original,
-// which still carries the submitter's EXIF (incl. GPS). Signing is a local
+// Server-only. Signs the resized variants only — originals are admin-only.
+// Signing is a local
 // computation (no request to R2), so it's cheap for a whole list. Variants are
 // generated right after submit, so for a few seconds they may not exist yet.
 //

@@ -1,5 +1,6 @@
 import { GetObjectCommand, PutObjectCommand, type S3Client } from '@aws-sdk/client-s3'
-import sharp from 'sharp'
+
+import { loadImage } from './imageProcessing'
 
 import {
   createR2Client,
@@ -11,10 +12,6 @@ import {
 
 const webpQuality = 78
 
-// Uploads are untrusted — refuse to decode anything bigger than ~50 MP (a phone
-// camera is 12–48 MP) so a decompression bomb can't exhaust memory
-const limitInputPixels = 50_000_000
-
 const createVariants = async (client: S3Client, key: string) => {
   const original = await client.send(new GetObjectCommand({ Bucket: observationsBucket, Key: key }))
   const originalBytes = await original.Body!.transformToByteArray()
@@ -23,10 +20,7 @@ const createVariants = async (client: S3Client, key: string) => {
     (Object.keys(photoVariants) as PhotoVariant[]).map(async (variant) => {
       const { maxSize } = photoVariants[variant]
 
-      // rotate() applies the EXIF orientation before metadata is dropped —
-      // sharp strips EXIF (incl. GPS) from its output by default.
-      const body = await sharp(originalBytes, { limitInputPixels })
-        .rotate()
+      const body = await loadImage(originalBytes)
         .resize({ fit: 'inside', height: maxSize, width: maxSize, withoutEnlargement: true })
         .webp({ quality: webpQuality })
         .toBuffer()

@@ -2,10 +2,10 @@
 // derived from the original key, so only originals are persisted in the DB:
 // `observations/2026-09/<uuid>.jpg` → `observations/2026-09/<uuid>_thumb.webp`.
 //
-// Variants have all metadata stripped. Originals keep the submitter's EXIF
-// (incl. GPS of where they stood) and must never be served publicly.
+// No stored photo carries metadata (EXIF/GPS is stripped on submit). The public
+// page is served variants only — smaller, and the originals stay admin-only.
 //
-// Keep in sync with scripts/backfill-photo-variants.mjs.
+// Keep in sync with scripts/backfill-observation-photos.mjs.
 export const photoVariants = {
   // Full-screen viewing
   large: { maxSize: 2048, suffix: '_large.webp' },

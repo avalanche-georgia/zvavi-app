@@ -141,7 +141,7 @@ export type AvalancheFormData = {
   width: number | null
 }
 
-// Signed, short-lived URLs for one photo's metadata-stripped variants
+// Signed, short-lived URLs for one photo's resized variants
 export type PhotoUrls = {
   // Stable per photo — for React keys
   id: string

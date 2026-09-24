@@ -1,6 +1,6 @@
 import { observationPhotoContentTypes, observationPhotoLimits } from '@domain/constants'
 
-import { convertHeicToJpeg, copyGpsFromHeic, isHeicFile } from './heicPhoto'
+import { convertHeicToJpeg, isHeicFile } from './heicPhoto'
 
 export type PhotoRejectionReason = 'tooLarge' | 'unsupported'
 
@@ -15,9 +15,7 @@ const compressionOptions = {
   initialQuality: 0.85,
   maxSizeMB: 2,
   maxWidthOrHeight: 2048,
-  // Keeps GPS/camera EXIF of JPEG sources (orientation excluded — pixels are
-  // already rotated). Mobile OSes may strip GPS before the browser sees it.
-  preserveExif: true,
+  // Re-encoding drops all EXIF (incl. GPS) — photos never carry metadata
   useWebWorker: true,
 }
 
@@ -41,18 +39,13 @@ const compressPhoto = async (source: File): Promise<Blob> => {
 
 // Always ends up as a JPEG — HEIC is never stored, since most browsers
 // (incl. the admin's) couldn't display it later.
-const prepareHeic = async (file: File): Promise<Blob> => {
-  // Native decode first (Safari) — only fetch libheif when that fails
-  const jpeg = await compressPhoto(file).catch(async () =>
-    compressPhoto(await convertHeicToJpeg(file)),
-  )
-
-  return copyGpsFromHeic(file, jpeg)
-}
+// Native decode first (Safari) — only fetch libheif when that fails
+const prepareHeic = (file: File): Promise<Blob> =>
+  compressPhoto(file).catch(async () => compressPhoto(await convertHeicToJpeg(file)))
 
 // Re-encodes to a ≤2 MB JPEG. If a JPEG/PNG can't be re-encoded (e.g. too
 // big for the device's canvas), the original is uploaded as long as the
-// server would accept it.
+// server would accept it — the server strips its metadata on submit.
 const preparePhoto = async (file: File): Promise<Blob> => {
   if (isHeicFile(file)) return prepareHeic(file)
 
