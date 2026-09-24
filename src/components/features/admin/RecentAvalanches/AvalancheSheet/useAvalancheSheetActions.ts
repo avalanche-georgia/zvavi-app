@@ -13,7 +13,7 @@ type UseAvalancheSheetActionsParams = {
   mode: AvalancheSheetMode
   navigation?: AvalancheSheetNavigation
   onClose: VoidFunction
-  onStatusChangeClose?: VoidFunction
+  onRecordLeave?: VoidFunction
   setConfirm: (confirm: AvalancheSheetConfirm) => void
   showView: VoidFunction
 }
@@ -28,20 +28,21 @@ const useAvalancheSheetActions = ({
   mode,
   navigation,
   onClose,
-  onStatusChangeClose,
+  onRecordLeave,
   setConfirm,
   showView,
 }: UseAvalancheSheetActionsParams) => {
   useCloseOnStatusChange(
     id,
     avalanche,
-    !!onStatusChangeClose && !hasUnsavedEdits,
-    onStatusChangeClose ?? onClose,
+    !!onRecordLeave && !hasUnsavedEdits,
+    onRecordLeave ?? onClose,
   )
 
   const { handleDelete, isDeleting } = useAvalancheDeleteDialog({
     id: avalanche?.id ?? 0,
-    onSuccess: onClose,
+    // Queue: move on like after approve / reject; catalog: close
+    onSuccess: onRecordLeave ?? onClose,
     regionId: avalanche?.regionId ?? defaultRegionId,
   })
 
@@ -63,7 +64,8 @@ const useAvalancheSheetActions = ({
   // ←/→ step through the list while viewing. Keys from stacked layers (map,
   // photo viewer) portal outside this popup but bubble here through React — ignore
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (mode !== 'view' || !navigation) return
+    // No stepping while a delete runs — its completion acts on the open panel
+    if (mode !== 'view' || !navigation || isDeleting) return
 
     // Alt+← is browser Back; a held key would step through the list
     if (event.altKey || event.metaKey || event.ctrlKey || event.repeat || event.defaultPrevented) {

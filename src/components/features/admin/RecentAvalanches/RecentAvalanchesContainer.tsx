@@ -70,9 +70,9 @@ const RecentAvalanchesContainer = ({ initialRegions, variant }: RecentAvalanches
         initialMode={selection.initialMode}
         navigation={sheetNavigation.navigation}
         onClose={selection.closeAvalanche}
+        // Queue: an approved / rejected / deleted record moves on to the next one
+        onRecordLeave={isQueue ? sheetNavigation.advance : undefined}
         onReopen={selection.reopenAvalanche}
-        // Queue: an approved / rejected record moves on to the next one
-        onStatusChangeClose={isQueue ? sheetNavigation.advance : undefined}
       />
     </>
   )

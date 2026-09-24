@@ -18,8 +18,9 @@ type AvalancheSheetProps = {
   // Prev / next through the list behind the panel
   navigation?: AvalancheSheetNavigation
   onClose: VoidFunction
-  // Moderation queue: closes through this once the record is approved / rejected
-  onStatusChangeClose?: VoidFunction
+  // Moderation queue: the record left it (approved / rejected / deleted) —
+  // moves on to a neighbour instead of closing
+  onRecordLeave?: VoidFunction
   onReopen: (id: number) => void
   regionId?: RegionId
 }
@@ -30,8 +31,8 @@ const AvalancheSheet = ({
   initialMode,
   navigation,
   onClose,
+  onRecordLeave,
   onReopen,
-  onStatusChangeClose,
   regionId,
 }: AvalancheSheetProps) => {
   const t = useTranslations()
@@ -40,7 +41,7 @@ const AvalancheSheet = ({
   const { avalanche, confirm, hasUnsavedEdits, mode, setConfirm, setMode, showView } = sheet
 
   const { handleConfirm, handleEditCancel, handleKeyDown, handleOpenChange, isDeleting } =
-    useAvalancheSheetActions({ ...sheet, id, navigation, onClose, onStatusChangeClose })
+    useAvalancheSheetActions({ ...sheet, id, navigation, onClose, onRecordLeave })
 
   return (
     <Sheet
@@ -65,7 +66,7 @@ const AvalancheSheet = ({
       header={
         <AvalancheSheetHeader
           fullPageId={mode === 'view' && avalanche ? avalanche.id : null}
-          navigation={mode === 'view' ? (navigation ?? null) : null}
+          navigation={mode === 'view' && !isDeleting ? (navigation ?? null) : null}
           title={avalanche ? t(`common.avalancheTypes.${avalanche.type}`) : ''}
         />
       }
