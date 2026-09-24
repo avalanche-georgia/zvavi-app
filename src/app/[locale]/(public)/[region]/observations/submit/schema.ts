@@ -1,4 +1,4 @@
-import { observationPhotoLimits, sortedAspects } from '@domain/constants'
+import { avalancheFieldLimits, observationPhotoLimits, sortedAspects } from '@domain/constants'
 import { z } from 'zod'
 
 import { Constants } from '@/lib/supabase/types'
@@ -21,16 +21,22 @@ export const photoUploadStatuses = ['preparing', 'uploading', 'uploaded', 'faile
 // output `transform` hands the submit handler just those keys.
 // Nullable while the form is being filled in (no pin yet), required on submit —
 // the pipe keeps `null` as a valid input type but narrows the output to number.
-const coordinateSchema = (min: number, max: number) =>
+const coordinateSchema = ({ max, min }: { max: number; min: number }) =>
   z
     .number()
     .nullable()
     .pipe(
       z
         .number({ error: () => ({ message: 'required' }) })
-        .min(min)
-        .max(max),
+        .min(min, { message: 'tooSmall' })
+        .max(max, { message: 'tooLarge' }),
     )
+
+const { descriptionMaxLength, latitude, longitude, quantity, slabDepth, width } =
+  avalancheFieldLimits
+
+const rangeSchema = ({ max, min }: { max: number; min: number }) =>
+  z.number().min(min, { message: 'tooSmall' }).max(max, { message: 'tooLarge' })
 
 const photoUploadSchema = z.object({
   file: z.instanceof(File),
@@ -57,15 +63,15 @@ export const observationSubmitSchema = z
   .object({
     aspects: aspectsSchema,
     date: z.date().nullable(),
-    description: z.string().max(2000, { message: 'tooLong' }).nullable(),
+    description: z.string().max(descriptionMaxLength, { message: 'tooLong' }).nullable(),
     honeypot: z.string(),
     isDateUnknown: z.boolean(),
-    latitude: coordinateSchema(-90, 90),
-    longitude: coordinateSchema(-180, 180),
+    latitude: coordinateSchema(latitude),
+    longitude: coordinateSchema(longitude),
     photos: photosSchema,
-    quantity: z.number().int().min(1).max(5),
+    quantity: rangeSchema(quantity).int(),
     size: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]),
-    slabDepth: z.number().min(0).max(1000).nullable(),
+    slabDepth: rangeSchema(slabDepth).nullable(),
     submitterContact: z.string().max(200, { message: 'tooLong' }).nullable(),
     submitterEducation: z.string().max(200, { message: 'tooLong' }).nullable(),
     submitterName: z
@@ -85,7 +91,7 @@ export const observationSubmitSchema = z
       .string({ error: () => ({ message: 'required' }) })
       .min(1, { message: 'required' })
       .pipe(z.enum(avalanche_type, { error: () => ({ message: 'required' }) })),
-    width: z.number().min(0).max(500).nullable(),
+    width: rangeSchema(width).nullable(),
   })
   .superRefine((data, context) => {
     // Either a date or "Date unknown" ticked — the API rejects neither

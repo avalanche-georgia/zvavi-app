@@ -1,7 +1,12 @@
 'use client'
 
+import { useFieldError } from '@components/hooks'
 import { InputBlock, NumberInput, Select, toOptions } from '@components/ui'
-import { avalancheTriggersOrdered, avalancheTypesOrdered } from '@domain/constants'
+import {
+  avalancheFieldLimits,
+  avalancheTriggersOrdered,
+  avalancheTypesOrdered,
+} from '@domain/constants'
 import { useTranslations } from 'next-intl'
 import { Controller, useFormContext } from 'react-hook-form'
 
@@ -10,6 +15,7 @@ import type { AvalancheFormSchema } from './schema'
 const ClassificationFields = () => {
   const t = useTranslations()
   const form = useFormContext<AvalancheFormSchema>()
+  const getFieldError = useFieldError<AvalancheFormSchema>()
 
   const typeOptions = toOptions(avalancheTypesOrdered, (key) => t(`common.avalancheTypes.${key}`))
 
@@ -20,7 +26,7 @@ const ClassificationFields = () => {
   return (
     <div className="grid grid-cols-2 gap-3">
       <InputBlock
-        error={form.formState.errors.type?.message}
+        error={getFieldError('type')}
         label={t('admin.recentAvalanches.form.labels.type')}
       >
         <Controller
@@ -39,7 +45,7 @@ const ClassificationFields = () => {
       </InputBlock>
 
       <InputBlock
-        error={form.formState.errors.trigger?.message}
+        error={getFieldError('trigger')}
         label={t('admin.recentAvalanches.form.labels.trigger')}
       >
         <Controller
@@ -57,22 +63,40 @@ const ClassificationFields = () => {
         />
       </InputBlock>
 
-      <InputBlock label={t('admin.recentAvalanches.form.labels.slabDepth')}>
+      <InputBlock
+        error={getFieldError('slabDepth')}
+        label={t('admin.recentAvalanches.form.labels.slabDepth')}
+      >
         <Controller
           control={form.control}
           name="slabDepth"
           render={({ field }) => (
-            <NumberInput min={1} onValueChange={field.onChange} value={field.value} />
+            <NumberInput
+              hasError={!!form.formState.errors.slabDepth}
+              max={avalancheFieldLimits.slabDepth.max}
+              min={avalancheFieldLimits.slabDepth.min}
+              onValueChange={field.onChange}
+              value={field.value}
+            />
           )}
         />
       </InputBlock>
 
-      <InputBlock label={t('admin.recentAvalanches.form.labels.width')}>
+      <InputBlock
+        error={getFieldError('width')}
+        label={t('admin.recentAvalanches.form.labels.width')}
+      >
         <Controller
           control={form.control}
           name="width"
           render={({ field }) => (
-            <NumberInput min={1} onValueChange={field.onChange} value={field.value} />
+            <NumberInput
+              hasError={!!form.formState.errors.width}
+              max={avalancheFieldLimits.width.max}
+              min={avalancheFieldLimits.width.min}
+              onValueChange={field.onChange}
+              value={field.value}
+            />
           )}
         />
       </InputBlock>

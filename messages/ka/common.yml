@@ -52,6 +52,8 @@ common:
     positive: '0-ზე მეტი უნდა იყოს'
     required: 'სავალდებულო ველი'
     tooLong: 'ძალიან გრძელია'
+    tooLarge: 'მნიშვნელობა ძალიან დიდია'
+    tooSmall: 'მნიშვნელობა ძალიან მცირეა'
     too_small: 'სავალდებულო ველი'
 
   notFound:
@@ -73,6 +75,7 @@ common:
   avalancheStatuses:
     archived: 'დაარქივებული'
     draft: 'მონახაზი'
+    pending: 'განხილვის მოლოდინში'
     published: 'გამოქვეყნებული'
 
   avalancheTypes:

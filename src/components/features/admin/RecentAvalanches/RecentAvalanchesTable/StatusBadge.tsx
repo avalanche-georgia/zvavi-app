@@ -9,7 +9,8 @@ type StatusBadgeProps = {
 
 const statusStyles: Record<AvalancheStatus, string> = {
   archived: 'bg-gray-100 text-gray-800',
-  draft: 'bg-amber-100 text-amber-800',
+  draft: 'bg-sky-100 text-sky-800',
+  pending: 'bg-amber-100 text-amber-800',
   published: 'bg-green-100 text-green-800',
 }
 

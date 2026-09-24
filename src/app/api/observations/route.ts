@@ -13,6 +13,7 @@ import {
 } from './schema'
 
 import { createServiceRoleClient } from '@/lib/supabase/serviceRole'
+import { routes } from '@/routes'
 
 // Hidden via CSS in the real form — a bot fills every field it sees, a human never sees this one.
 type HoneypotCheck = { honeypot?: unknown }
@@ -109,7 +110,10 @@ export const POST = async (request: Request) => {
     return NextResponse.json({ error: 'failed to submit observation', ok: false }, { status: 500 })
   }
 
-  await Promise.all([deletePhotos(body.photoKeys), notifyAdmin(body)])
+  // Same origin as this request, so staging links to staging
+  const reviewUrl = new URL(routes.admin.recentAvalanches.view(data), request.url).toString()
+
+  await Promise.all([deletePhotos(body.photoKeys), notifyAdmin(body, reviewUrl)])
   // Resized variants are generated after the response is sent, so the submitter
   // doesn't wait for image processing
   after(() => createPhotoVariants(photoKeys))

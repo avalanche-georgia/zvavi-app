@@ -21,7 +21,8 @@ const humanize = (value: string): string => capitalize(value.replace(/([a-z])([A
 // Called server-side right after submit_observation succeeds — there's already a
 // server hop here (client -> this route -> RPC), so a second client-triggered
 // fetch would just be a less reliable way to do the same thing.
-const notifyAdmin = async (body: SubmitObservationBody): Promise<void> => {
+// `reviewUrl` opens the record in admin, where it awaits moderation
+const notifyAdmin = async (body: SubmitObservationBody, reviewUrl: string): Promise<void> => {
   if (!TELEGRAM_BOT_ADMIN_TOKEN || !TELEGRAM_ADMIN_CHAT_ID) return
 
   const isProduction = process.env.VERCEL_ENV === 'production'
@@ -34,6 +35,11 @@ const notifyAdmin = async (body: SubmitObservationBody): Promise<void> => {
     `<b>Type:</b> ${humanize(body.type)}`,
     `<b>Date:</b> ${body.isDateUnknown || !body.date ? 'Unknown' : format(new Date(body.date), dateFormat)}`,
     `<b>Submitted by:</b> ${escapeHtml(body.submitterName)}`,
+    '',
+    `<a href="${escapeHtml(reviewUrl)}">Review</a>`,
+    // Telegram drops links without a public domain (localhost) — show the URL
+    // itself outside production so it can still be copied
+    ...(isProduction ? [] : [`<code>${escapeHtml(reviewUrl)}</code>`]),
   ].join('\n')
 
   try {

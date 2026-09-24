@@ -5,6 +5,7 @@ import type { RegionId } from '@domain/types'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'src/i18n/navigation'
 
+import { addPendingOwnReport } from '../../helpers/pendingOwnReports'
 import type { ObservationSubmitFormData } from '../schema'
 
 import { photosNotFoundError, photosUnprocessableError } from '@/api/observations/schema'
@@ -33,7 +34,7 @@ const useObservationSubmitFormSubmit = ({ regionId }: UseObservationSubmitFormSu
   const handleSubmit = useCallback(
     async (formData: ObservationSubmitFormData) => {
       try {
-        await createObservation({
+        const { id } = await createObservation({
           aspects: formData.aspects,
           date: formData.date && !formData.isDateUnknown ? formData.date.toISOString() : null,
           description: formData.description,
@@ -54,6 +55,14 @@ const useObservationSubmitFormSubmit = ({ regionId }: UseObservationSubmitFormSu
           width: formData.width,
         })
 
+        // Not public until reviewed — the submitter still sees it on the list
+        addPendingOwnReport({
+          createdAt: new Date().toISOString(),
+          id,
+          regionId,
+          size: formData.size,
+          type: formData.type,
+        })
         toastSuccess(t('observations.submit.success'))
         router.push(routes.observationsByRegion(regionId).root)
       } catch (error) {

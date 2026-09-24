@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl'
 import LoadMoreTrigger from './LoadMoreTrigger'
 import ObservationsEmptyState from './ObservationsEmptyState'
 import ObservationsList from './ObservationsList'
+import PendingOwnReports from './PendingOwnReports'
 import type { ObservationsListState } from '../hooks/useObservationsPage'
 
 import { cn } from '@/lib/utils'
@@ -70,7 +71,12 @@ const ObservationsListPane = ({
   }
 
   // Bottom padding keeps the last card clear of the floating Report button
-  return <div className="px-4 pt-1 pb-28 lg:pb-24">{renderContent()}</div>
+  return (
+    <div className="px-4 pt-1 pb-28 lg:pb-24">
+      <PendingOwnReports reports={list.pendingOwnReports} />
+      {renderContent()}
+    </div>
+  )
 }
 
 export default ObservationsListPane

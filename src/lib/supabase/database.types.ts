@@ -755,7 +755,7 @@ export type Database = {
     }
     Enums: {
       avalanche_source: 'team' | 'external'
-      avalanche_status: 'draft' | 'published' | 'archived'
+      avalanche_status: 'draft' | 'published' | 'archived' | 'pending'
       avalanche_trigger:
         | 'natural'
         | 'riderAccidental'
@@ -913,7 +913,7 @@ export const Constants = {
   public: {
     Enums: {
       avalanche_source: ['team', 'external'],
-      avalanche_status: ['draft', 'published', 'archived'],
+      avalanche_status: ['draft', 'published', 'archived', 'pending'],
       avalanche_trigger: [
         'natural',
         'riderAccidental',

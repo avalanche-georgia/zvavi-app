@@ -1,10 +1,10 @@
 import { useCallback } from 'react'
 import { useToast } from '@components/hooks'
 import { useRecentAvalancheUpdate } from '@data/hooks/recentAvalanches'
-import type { AvalancheStatus, AvalancheTrigger, AvalancheType, RegionId } from '@domain/types'
+import type { RegionId } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
-import type { AvalancheFormSchema } from '../schema'
+import type { AvalancheFormData } from '../schema'
 
 type UseRecentAvalancheFormSubmitParams = {
   avalancheId: number
@@ -22,15 +22,12 @@ const useRecentAvalancheFormSubmit = ({
   const { mutateAsync: updateAvalanche } = useRecentAvalancheUpdate()
 
   const handleSubmit = useCallback(
-    async (formData: AvalancheFormSchema) => {
+    async (formData: AvalancheFormData) => {
       try {
         await updateAvalanche({
           ...formData,
           id: avalancheId,
           regionId,
-          status: formData.status as AvalancheStatus,
-          trigger: formData.trigger as AvalancheTrigger,
-          type: formData.type as AvalancheType | 'unknown',
         })
         toastSuccess(t('admin.recentAvalanches.form.messages.updated'))
         onSuccess()

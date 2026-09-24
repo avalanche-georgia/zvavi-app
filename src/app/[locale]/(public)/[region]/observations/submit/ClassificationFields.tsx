@@ -1,11 +1,10 @@
 'use client'
 
+import { useFieldError } from '@components/hooks'
 import { InputBlock, RadioGroup, Select, toOptions } from '@components/ui'
 import { avalancheTriggersOrdered, avalancheTypesOrdered } from '@domain/constants'
 import { useTranslations } from 'next-intl'
 import { Controller, useFormContext } from 'react-hook-form'
-
-import useFieldError from './hooks/useFieldError'
 
 import MeasurementFields from './MeasurementFields'
 import type { ObservationSubmitFormSchema } from './schema'
@@ -15,7 +14,7 @@ const sizeOptions = [1, 2, 3, 4, 5].map((value) => ({ label: String(value), valu
 const ClassificationFields = () => {
   const t = useTranslations()
   const form = useFormContext<ObservationSubmitFormSchema>()
-  const getFieldError = useFieldError()
+  const getFieldError = useFieldError<ObservationSubmitFormSchema>()
 
   const typeOptions = toOptions(avalancheTypesOrdered, (key) => t(`common.avalancheTypes.${key}`))
   const triggerOptions = toOptions(avalancheTriggersOrdered, (key) =>

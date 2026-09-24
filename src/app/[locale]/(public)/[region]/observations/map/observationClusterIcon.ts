@@ -1,7 +1,6 @@
 /// <reference types="leaflet.markercluster" />
+import { markerClassName } from '@components/features/observations/map/observationPinIcon'
 import { divIcon, type MarkerCluster } from 'leaflet'
-
-import { markerClassName } from './observationPinIcon'
 
 // Bubble grows with the number of observations it groups
 const getDiameter = (count: number) => {
