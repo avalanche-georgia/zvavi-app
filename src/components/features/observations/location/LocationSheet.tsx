@@ -1,5 +1,6 @@
 'use client'
 
+import { useAspectSummary } from '@components/hooks'
 import { Sheet, SheetClose, SheetIconButton, SheetTitle, Spinner } from '@components/ui'
 import type { ObservationPoint, PublicObservation } from '@domain/types'
 import { X } from 'lucide-react'
@@ -9,7 +10,6 @@ import { useTranslations } from 'next-intl'
 import CoordinatesRow from './CoordinatesRow'
 import getMapsLink from './getMapsLink'
 import hasCoordinates from '../hasCoordinates'
-import useAspectSummary from '../useAspectSummary'
 import useFormatDay from '../useFormatDay'
 
 const LocationMapClient = dynamic(() => import('./LocationMapClient'), {
@@ -38,7 +38,7 @@ type LocationSheetProps = {
 // Stacks above the detail sheet: a close-up map of one observation
 const LocationSheet = ({ contextPoints, isOpen, observation, onClose }: LocationSheetProps) => {
   const t = useTranslations()
-  const getAspectSummary = useAspectSummary()
+  const { getSummary: getAspectSummary } = useAspectSummary()
   const formatDay = useFormatDay()
 
   if (!hasCoordinates(observation)) return null

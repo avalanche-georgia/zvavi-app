@@ -68,6 +68,28 @@ common:
     alpine: 'ალპური'
     subAlpine: 'ქვედა ალპური'
 
+  aspects:
+    allAspects: 'ყველა ექსპოზიცია'
+    allElevations: 'ყველა სიმაღლე'
+    names:
+      n: 'ჩრდილოეთი'
+      ne: 'ჩრდილო-აღმოსავლეთი'
+      e: 'აღმოსავლეთი'
+      se: 'სამხრეთ-აღმოსავლეთი'
+      s: 'სამხრეთი'
+      sw: 'სამხრეთ-დასავლეთი'
+      w: 'დასავლეთი'
+      nw: 'ჩრდილო-დასავლეთი'
+
+  aspectElevationPicker:
+    all: 'ყველა'
+    allAria: 'ყველა ექსპოზიცია, {zone}'
+    cellAria: '{zone}, {aspect}'
+    clear: 'გასუფთავება'
+    emptyHint: 'შეეხეთ ან გადაატარეთ ექსპოზიციების ასარჩევად'
+    sameAspectsOn: 'იგივე ექსპოზიციები:'
+    zonesAria: 'სიმაღლის ზონა'
+
   avalancheSources:
     external: 'გარეშე პირი'
     team: 'გუნდი'

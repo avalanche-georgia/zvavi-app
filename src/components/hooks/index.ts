@@ -1,3 +1,4 @@
+export { default as useAspectSummary } from './useAspectSummary'
 export { default as useAuth } from './useAuth'
 export { default as useBoolean } from './useBoolean'
 export { default as useCopyWithFeedback } from './useCopyWithFeedback'
