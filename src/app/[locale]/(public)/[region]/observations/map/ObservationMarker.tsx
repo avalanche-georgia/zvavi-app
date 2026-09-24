@@ -1,8 +1,7 @@
+import observationPinIcon from '@components/features/observations/map/observationPinIcon'
 import type { ObservationPoint } from '@domain/types'
 import { useTranslations } from 'next-intl'
 import { Marker, Tooltip } from 'react-leaflet'
-
-import observationPinIcon from './observationPinIcon'
 
 type ObservationMarkerProps = {
   isSelected: boolean

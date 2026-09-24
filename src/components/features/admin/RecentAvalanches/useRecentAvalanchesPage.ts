@@ -9,6 +9,7 @@ import { endOfDay, startOfDay } from 'date-fns'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'src/i18n/navigation'
 
+import { readCatalogFilters } from './catalogFilterParams'
 import type { AvalancheTableVariant } from './RecentAvalanchesTable'
 
 const pageSize = 15
@@ -32,6 +33,10 @@ const useRecentAvalanchesPage = (variant: AvalancheTableVariant) => {
 
   const dateFrom = dateFromParam ? new Date(dateFromParam) : null
   const dateTo = dateToParam ? new Date(dateToParam) : null
+  // Source / status are catalog-only — the queue's are fixed
+  const { source, status } = readCatalogFilters(searchParams)
+  const catalogFilters =
+    variant === 'catalog' ? { source: source ?? undefined, status: status ?? undefined } : {}
 
   const { data, isPending } = useRecentAvalanchesPaginatedQuery({
     dateFrom: dateFromParam ?? undefined,
@@ -41,6 +46,7 @@ const useRecentAvalanchesPage = (variant: AvalancheTableVariant) => {
     pageSize: pageSize,
     regionId,
     ...variantFilters[variant],
+    ...catalogFilters,
   })
 
   const updateParams = useCallback(
@@ -87,7 +93,17 @@ const useRecentAvalanchesPage = (variant: AvalancheTableVariant) => {
   )
 
   const handleFiltersReset = useCallback(
-    () => updateFilters({ dateFrom: null, dateTo: null }),
+    () => updateFilters({ dateFrom: null, dateTo: null, source: null, status: null }),
+    [updateFilters],
+  )
+
+  const handleSourceChange = useCallback(
+    (value: string | null) => updateFilters({ source: value }),
+    [updateFilters],
+  )
+
+  const handleStatusChange = useCallback(
+    (value: string | null) => updateFilters({ status: value }),
     [updateFilters],
   )
 
@@ -110,7 +126,11 @@ const useRecentAvalanchesPage = (variant: AvalancheTableVariant) => {
     onDateToChange: handleDateToChange,
     onFiltersReset: handleFiltersReset,
     onPageChange: handlePageChange,
+    onSourceChange: handleSourceChange,
+    onStatusChange: handleStatusChange,
     page: clampedPage,
+    source,
+    status,
     totalPages,
   }
 }

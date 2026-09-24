@@ -1,5 +1,6 @@
 'use client'
 
+import { useFieldError } from '@components/hooks'
 import { InputBlock, NumberInput, TextInput } from '@components/ui'
 import { useTranslations } from 'next-intl'
 import { Controller, useFormContext } from 'react-hook-form'
@@ -11,12 +12,15 @@ const LocationFields = ({ isLocationRequired }: { isLocationRequired: boolean })
   const form = useFormContext<AvalancheFormSchema>()
   const { errors } = form.formState
 
-  const getError = (message: string | undefined) =>
-    message ? t(`common.validation.${message}`) : undefined
+  const getFieldError = useFieldError<AvalancheFormSchema>()
 
   return (
     <div className="grid grid-cols-2 gap-3">
-      <InputBlock className="col-span-2" label={t('admin.recentAvalanches.form.labels.location')}>
+      <InputBlock
+        className="col-span-2"
+        error={getFieldError('location')}
+        label={t('admin.recentAvalanches.form.labels.location')}
+      >
         <Controller
           control={form.control}
           name="location"
@@ -25,7 +29,7 @@ const LocationFields = ({ isLocationRequired }: { isLocationRequired: boolean })
       </InputBlock>
 
       <InputBlock
-        error={getError(errors.latitude?.message)}
+        error={getFieldError('latitude')}
         label={t('admin.recentAvalanches.form.labels.latitude')}
         required={isLocationRequired}
       >
@@ -43,7 +47,7 @@ const LocationFields = ({ isLocationRequired }: { isLocationRequired: boolean })
       </InputBlock>
 
       <InputBlock
-        error={getError(errors.longitude?.message)}
+        error={getFieldError('longitude')}
         label={t('admin.recentAvalanches.form.labels.longitude')}
         required={isLocationRequired}
       >

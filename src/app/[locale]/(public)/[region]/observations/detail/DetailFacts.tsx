@@ -1,8 +1,7 @@
 import { type Fact, FactsGrid } from '@components/features/observations'
+import { useFormatDay } from '@components/features/observations'
 import type { PublicObservation } from '@domain/types'
 import { useTranslations } from 'next-intl'
-
-import useFormatDay from './useFormatDay'
 
 // Shown for facts the reporter left empty — the grid keeps its shape
 const emptyValue = '—'

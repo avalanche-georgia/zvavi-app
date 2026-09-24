@@ -16,13 +16,17 @@ const TableHeader = ({ variant }: { variant: AvalancheTableVariant }) => {
           { className: 'w-28', label: t('admin.recentAvalanches.list.columns.date') },
           { className: 'w-36', label: t('admin.recentAvalanches.list.columns.type') },
           { className: 'w-14 text-center', label: t('admin.recentAvalanches.list.columns.size') },
-          { className: 'min-w-0 flex-1', label: t('admin.observations.queue.columns.submitter') },
+          {
+            className: 'min-w-0 flex-1',
+            label: t('admin.recentAvalanches.list.columns.submitter'),
+          },
         ]
       : [
           { className: 'w-28', label: t('admin.recentAvalanches.list.columns.date') },
           { className: 'w-36', label: t('admin.recentAvalanches.list.columns.type') },
           { className: 'w-14 text-center', label: t('admin.recentAvalanches.list.columns.size') },
           { className: 'w-24', label: t('admin.recentAvalanches.list.columns.source') },
+          { className: 'w-40', label: t('admin.recentAvalanches.list.columns.submitter') },
           { className: 'min-w-0 flex-1', label: t('admin.recentAvalanches.list.columns.status') },
         ]
 

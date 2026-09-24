@@ -8,13 +8,14 @@ import ActionButtons from './ActionButtons'
 import OpenAvalancheLink from './OpenAvalancheLink'
 import RowDeleteDialog from './RowDeleteDialog'
 import SizeBadge from './SizeBadge'
+import SubmitterCell from './SubmitterCell'
 import type { AvalancheRowProps } from './types'
 import useAvalancheRow from './useAvalancheRow'
 
 // Moderation queue row — triage at a glance, review in the side panel
 const QueueItem = ({ avalanche, onOpen, regionId }: AvalancheRowProps) => {
   const t = useTranslations()
-  const { createdAt, id, size, submitterName, type } = avalanche
+  const { createdAt, id, size, type } = avalanche
   const { dateDisplay, deleteDialog, isTogglingStatus, status, toggleStatus } = useAvalancheRow(
     avalanche,
     regionId,
@@ -33,7 +34,9 @@ const QueueItem = ({ avalanche, onOpen, regionId }: AvalancheRowProps) => {
         <div className="flex w-14 shrink-0 justify-center">
           <SizeBadge size={size} />
         </div>
-        <div className="min-w-0 flex-1 truncate text-sm text-gray-600">{submitterName || '—'}</div>
+        <div className="min-w-0 flex-1">
+          <SubmitterCell avalanche={avalanche} />
+        </div>
         <div className="w-28 shrink-0">
           <ActionButtons
             isTogglingStatus={isTogglingStatus}

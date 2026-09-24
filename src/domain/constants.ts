@@ -67,6 +67,20 @@ export const avalancheStatuses: Record<AvalancheStatus, AvalancheStatus> = {
   published: 'published',
 }
 
+// One set of field rules for every avalanche form: the public submit form, the
+// admin form and the submit API (authoritative). Out-of-range numbers are
+// rejected, not clamped.
+export const avalancheFieldLimits = {
+  descriptionMaxLength: 2000,
+  involvementMaxLength: 2000,
+  latitude: { max: 90, min: -90 },
+  locationMaxLength: 200,
+  longitude: { max: 180, min: -180 },
+  quantity: { max: 5, min: 1 },
+  slabDepth: { max: 1000, min: 0 },
+  width: { max: 500, min: 0 },
+} as const
+
 // Shared by the public submit form (client-side checks) and the upload-url
 // route (authoritative server-side checks — client compression is bypassable).
 export const observationPhotoLimits = {

@@ -13,7 +13,7 @@ import useRecentAvalancheFormSubmit from './hooks/useRecentAvalancheFormSubmit'
 
 import FormFields from './FormFields'
 import getInitialFormData from './getInitialFormData'
-import { type AvalancheFormSchema, getAvalancheFormSchema } from './schema'
+import { type AvalancheFormData, type AvalancheFormSchema, getAvalancheFormSchema } from './schema'
 
 type EditProps = {
   avalanche: Avalanche & { id: number }
@@ -54,7 +54,7 @@ const RecentAvalancheForm = ({
   const isLocationRequired =
     mode === 'create' || (avalanche.latitude !== null && avalanche.longitude !== null)
 
-  const form = useForm<AvalancheFormSchema>({
+  const form = useForm<AvalancheFormSchema, unknown, AvalancheFormData>({
     defaultValues: getInitialFormData(avalanche ?? {}),
     resolver: zodResolver(getAvalancheFormSchema(isLocationRequired)),
   })

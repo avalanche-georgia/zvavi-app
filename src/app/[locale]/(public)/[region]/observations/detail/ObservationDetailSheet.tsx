@@ -1,13 +1,13 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { LocationSheet } from '@components/features/observations'
 import { Sheet } from '@components/ui'
 import type { ObservationPoint, PublicObservation } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import DetailBody from './DetailBody'
 import DetailHeader from './DetailHeader'
-import LocationSheet from '../location/LocationSheet'
 
 type ObservationDetailSheetProps = {
   // Filtered set, for the location map's context dots

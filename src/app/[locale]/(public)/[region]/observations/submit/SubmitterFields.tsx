@@ -1,17 +1,16 @@
 'use client'
 
+import { useFieldError } from '@components/hooks'
 import { InputBlock, Textarea, TextInput } from '@components/ui'
 import { useTranslations } from 'next-intl'
 import { Controller, useFormContext } from 'react-hook-form'
-
-import useFieldError from './hooks/useFieldError'
 
 import type { ObservationSubmitFormSchema } from './schema'
 
 const SubmitterFields = () => {
   const t = useTranslations()
   const form = useFormContext<ObservationSubmitFormSchema>()
-  const getFieldError = useFieldError()
+  const getFieldError = useFieldError<ObservationSubmitFormSchema>()
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">

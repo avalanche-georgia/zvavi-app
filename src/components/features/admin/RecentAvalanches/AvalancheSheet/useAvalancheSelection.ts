@@ -50,6 +50,16 @@ const useAvalancheSelection = () => {
   )
   const reopenAvalanche = useCallback((id: number) => setSelectedId(id), [setSelectedId])
 
+  // Step to another record inside the open panel (arrows, auto-advance):
+  // always its view face, and no history entry per step
+  const showAvalanche = useCallback(
+    (id: number) => {
+      setInitialMode('view')
+      setSelectedId(id, { isReplace: true })
+    },
+    [setSelectedId],
+  )
+
   return {
     closeAvalanche,
     dismissAvalanche,
@@ -58,6 +68,7 @@ const useAvalancheSelection = () => {
     // Back into the URL without touching the mode (the panel is still open)
     reopenAvalanche,
     selectedId,
+    showAvalanche,
   }
 }
 

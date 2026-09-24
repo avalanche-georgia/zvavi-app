@@ -52,6 +52,8 @@ common:
     positive: 'Must be greater than 0'
     required: 'Required field'
     tooLong: 'Too long'
+    tooLarge: 'Value is too large'
+    tooSmall: 'Value is too small'
     too_small: 'Required field'
 
   notFound:

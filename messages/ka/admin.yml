@@ -332,11 +332,14 @@ admin:
         size: ზომა
         source: წყარო
         status: სტატუსი
+        submitter: ავტორი
         type: სახეობა
       empty: ზვავის ჩანაწერები არ მოიძებნა.
       total: "ნაჩვენებია: {shown} / {total}"
 
     filters:
+      all: ყველა
+      allStatuses: ყველა სტატუსი
       reset: ფილტრების გადატვირთვა
       dateMode:
         created: შექმნის თარიღი
@@ -395,12 +398,14 @@ admin:
       discard: გაუქმება
       discardConfirm: გავაუქმოთ შეუნახავი ცვლილებები?
       keepEditing: რედაქტირების გაგრძელება
+      next: შემდეგი ჩანაწერი
+      position: '{current} / {total}'
+      previous: წინა ჩანაწერი
 
   observations:
     queue:
       columns:
         submitted: გამოგზავნილია
-        submitter: ავტორი
       empty: განსახილველი არაფერია — ახალი დაკვირვებები აქ გამოჩნდება.
 
   weatherStations:

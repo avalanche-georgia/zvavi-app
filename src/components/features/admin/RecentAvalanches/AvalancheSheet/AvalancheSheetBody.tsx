@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { Spinner } from '@components/ui'
 import type { AvalancheListItem } from '@data/hooks/recentAvalanches'
 import { useTranslations } from 'next-intl'
@@ -33,6 +34,13 @@ const AvalancheSheetBody = ({
   onSubmittingChange,
 }: AvalancheSheetBodyProps) => {
   const t = useTranslations()
+  const bodyRef = useRef<HTMLDivElement>(null)
+  const shownId = avalanche?.id
+
+  // Each record starts at the top (stepping with the arrows keeps the panel)
+  useEffect(() => {
+    bodyRef.current?.closest('[data-sheet-body]')?.scrollTo({ top: 0 })
+  }, [shownId])
 
   if (isPending) {
     return (
@@ -53,7 +61,13 @@ const AvalancheSheetBody = ({
     )
   }
 
-  if (mode === 'view') return <AvalancheView avalanche={avalanche} />
+  if (mode === 'view') {
+    return (
+      <div ref={bodyRef}>
+        <AvalancheView avalanche={avalanche} />
+      </div>
+    )
+  }
 
   return (
     <RecentAvalancheForm

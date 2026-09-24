@@ -8,14 +8,15 @@ import { useTranslations } from 'next-intl'
 import AvalancheSheetBody from './AvalancheSheetBody'
 import AvalancheSheetFooter from './AvalancheSheetFooter'
 import AvalancheSheetHeader from './AvalancheSheetHeader'
-import type { AvalancheSheetMode } from './types'
+import type { AvalancheSheetMode, AvalancheSheetNavigation } from './types'
 import useAvalancheSheet from './useAvalancheSheet'
 import useAvalancheSheetActions from './useAvalancheSheetActions'
-import useCloseOnStatusChange from './useCloseOnStatusChange'
 
 type AvalancheSheetProps = {
   id: number | null
   initialMode: AvalancheSheetMode
+  // Prev / next through the list behind the panel
+  navigation?: AvalancheSheetNavigation
   onClose: VoidFunction
   // Moderation queue: closes through this once the record is approved / rejected
   onStatusChangeClose?: VoidFunction
@@ -27,6 +28,7 @@ type AvalancheSheetProps = {
 const AvalancheSheet = ({
   id,
   initialMode,
+  navigation,
   onClose,
   onReopen,
   onStatusChangeClose,
@@ -37,15 +39,8 @@ const AvalancheSheet = ({
   const sheet = useAvalancheSheet({ id, initialMode, onReopen, regionId })
   const { avalanche, confirm, hasUnsavedEdits, mode, setConfirm, setMode, showView } = sheet
 
-  useCloseOnStatusChange(
-    id,
-    avalanche,
-    !!onStatusChangeClose && !hasUnsavedEdits,
-    onStatusChangeClose ?? onClose,
-  )
-
-  const { handleConfirm, handleEditCancel, handleOpenChange, isDeleting } =
-    useAvalancheSheetActions({ ...sheet, onClose })
+  const { handleConfirm, handleEditCancel, handleKeyDown, handleOpenChange, isDeleting } =
+    useAvalancheSheetActions({ ...sheet, id, navigation, onClose, onStatusChangeClose })
 
   return (
     <Sheet
@@ -70,6 +65,7 @@ const AvalancheSheet = ({
       header={
         <AvalancheSheetHeader
           fullPageId={mode === 'view' && avalanche ? avalanche.id : null}
+          navigation={mode === 'view' ? (navigation ?? null) : null}
           title={avalanche ? t(`common.avalancheTypes.${avalanche.type}`) : ''}
         />
       }
@@ -77,6 +73,7 @@ const AvalancheSheet = ({
       // Stays open while edits are unsaved, even if the URL lost the record
       isOpen={id !== null || hasUnsavedEdits}
       isTall
+      onKeyDown={handleKeyDown}
       onOpenChange={handleOpenChange}
     >
       <AvalancheSheetBody

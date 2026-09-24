@@ -1,9 +1,7 @@
-import { AspectsOverview, DetailSection } from '@components/features/observations'
+import { AspectsOverview, DetailSection, hasCoordinates } from '@components/features/observations'
 import type { PublicObservation } from '@domain/types'
 import { MapPin } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-
-import hasCoordinates from '../helpers/hasCoordinates'
 
 type DetailWhereProps = {
   observation: PublicObservation

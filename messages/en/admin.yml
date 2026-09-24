@@ -332,11 +332,14 @@ admin:
         size: Size
         source: Source
         status: Status
+        submitter: Submitter
         type: Type
       empty: No avalanches found.
       total: 'Shown: {shown} of {total}'
 
     filters:
+      all: All
+      allStatuses: All statuses
       reset: Reset filters
       dateMode:
         created: Created at
@@ -395,12 +398,14 @@ admin:
       discard: Discard
       discardConfirm: Discard unsaved changes?
       keepEditing: Keep editing
+      next: Next record
+      position: '{current} of {total}'
+      previous: Previous record
 
   observations:
     queue:
       columns:
         submitted: Submitted
-        submitter: Submitter
       empty: Nothing waiting for review — new submissions will show up here.
 
   weatherStations:

@@ -1,4 +1,4 @@
-import { observationPhotoLimits, sortedAspects } from '@domain/constants'
+import { avalancheFieldLimits, observationPhotoLimits, sortedAspects } from '@domain/constants'
 import { z } from 'zod'
 
 import { Constants } from '@/lib/supabase/types'
@@ -39,26 +39,44 @@ export const submitObservationSchema = z
   .object({
     aspects: aspectsSchema.nullable(),
     date: z.iso.datetime({ offset: true }).nullable(),
-    description: z.string().max(2000).nullable(),
+    description: z.string().max(avalancheFieldLimits.descriptionMaxLength).nullable(),
     isDateUnknown: z.boolean(),
-    latitude: z.number().min(-90).max(90),
-    longitude: z.number().min(-180).max(180),
+    latitude: z
+      .number()
+      .min(avalancheFieldLimits.latitude.min)
+      .max(avalancheFieldLimits.latitude.max),
+    longitude: z
+      .number()
+      .min(avalancheFieldLimits.longitude.min)
+      .max(avalancheFieldLimits.longitude.max),
     photoKeys: z
       .array(z.string().regex(pendingPhotoKeyPattern))
       .max(observationPhotoLimits.maxCount)
       .refine((keys) => new Set(keys).size === keys.length),
-    quantity: z.number().int().min(1).max(5),
+    quantity: z
+      .number()
+      .int()
+      .min(avalancheFieldLimits.quantity.min)
+      .max(avalancheFieldLimits.quantity.max),
     regionId: z.enum(region_id),
     size: z
       .union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)])
       .nullable(),
-    slabDepth: z.number().min(0).max(1000).nullable(),
+    slabDepth: z
+      .number()
+      .min(avalancheFieldLimits.slabDepth.min)
+      .max(avalancheFieldLimits.slabDepth.max)
+      .nullable(),
     submitterContact: z.string().max(200).nullable(),
     submitterEducation: z.string().max(200).nullable(),
     submitterName: z.string().min(1).max(100),
     trigger: z.enum(avalanche_trigger),
     type: z.enum(avalanche_type),
-    width: z.number().min(0).max(500).nullable(),
+    width: z
+      .number()
+      .min(avalancheFieldLimits.width.min)
+      .max(avalancheFieldLimits.width.max)
+      .nullable(),
   })
   // A date or "unknown" — never neither
   .refine((body) => body.isDateUnknown || body.date !== null)

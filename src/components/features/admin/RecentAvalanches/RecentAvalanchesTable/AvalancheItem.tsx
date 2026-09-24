@@ -8,6 +8,7 @@ import RowDeleteDialog from './RowDeleteDialog'
 import SizeBadge from './SizeBadge'
 import SourceBadge from './SourceBadge'
 import StatusBadge from './StatusBadge'
+import SubmitterCell from './SubmitterCell'
 import type { AvalancheRowProps } from './types'
 import useAvalancheRow from './useAvalancheRow'
 
@@ -34,6 +35,9 @@ const AvalancheItem = ({ avalanche, onOpen, regionId }: AvalancheRowProps) => {
         </div>
         <div className="w-24 shrink-0">
           <SourceBadge source={source} />
+        </div>
+        <div className="w-40 shrink-0">
+          <SubmitterCell avalanche={avalanche} />
         </div>
         <div className="min-w-0 flex-1">
           <StatusBadge status={status} />
