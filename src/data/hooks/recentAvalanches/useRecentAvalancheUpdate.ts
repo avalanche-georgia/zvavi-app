@@ -22,8 +22,10 @@ const useRecentAvalancheUpdate = () => {
   return useMutation<void, Error, UpdatePayload>({
     meta: { scope: 'useRecentAvalancheUpdate' },
     mutationFn: updateRecentAvalanche,
-    onSuccess: (_, { regionId }) => {
-      queryClient.invalidateQueries({ queryKey: recentAvalanchesKeys.byRegion(regionId) })
+    onSuccess: () => {
+      // `all`, not `byRegion`: single-record queries opened without a region
+      // (direct links) and the pending-review counters must refresh too
+      queryClient.invalidateQueries({ queryKey: recentAvalanchesKeys.all })
     },
   })
 }

@@ -1,17 +1,17 @@
 'use client'
 
+import { useFieldError } from '@components/hooks'
 import { InputBlock, NumberInput } from '@components/ui'
+import { avalancheFieldLimits } from '@domain/constants'
 import { useTranslations } from 'next-intl'
 import { Controller, useFormContext } from 'react-hook-form'
-
-import useFieldError from './hooks/useFieldError'
 
 import type { ObservationSubmitFormSchema } from './schema'
 
 const MeasurementFields = () => {
   const t = useTranslations()
   const form = useFormContext<ObservationSubmitFormSchema>()
-  const getFieldError = useFieldError()
+  const getFieldError = useFieldError<ObservationSubmitFormSchema>()
 
   return (
     <>
@@ -25,8 +25,8 @@ const MeasurementFields = () => {
           render={({ field }) => (
             <NumberInput
               className="w-28"
-              max={5}
-              min={1}
+              max={avalancheFieldLimits.quantity.max}
+              min={avalancheFieldLimits.quantity.min}
               onValueChange={field.onChange}
               value={field.value}
             />
@@ -42,8 +42,8 @@ const MeasurementFields = () => {
             render={({ field }) => (
               <NumberInput
                 className="w-28"
-                max={1000}
-                min={0}
+                max={avalancheFieldLimits.slabDepth.max}
+                min={avalancheFieldLimits.slabDepth.min}
                 onValueChange={field.onChange}
                 value={field.value}
               />
@@ -58,8 +58,8 @@ const MeasurementFields = () => {
             render={({ field }) => (
               <NumberInput
                 className="w-28"
-                max={500}
-                min={0}
+                max={avalancheFieldLimits.width.max}
+                min={avalancheFieldLimits.width.min}
                 onValueChange={field.onChange}
                 value={field.value}
               />

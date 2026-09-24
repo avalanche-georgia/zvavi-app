@@ -1,8 +1,10 @@
 'use client'
 
+import { useState } from 'react'
 import { Dialog } from '@base-ui/react/dialog'
 
 import useSwipeToClose from './useSwipeToClose'
+import { PortalContainerProvider } from '../PortalContainer'
 
 import { cn } from '@/lib/utils'
 
@@ -16,6 +18,9 @@ type SheetProps = {
   // panels are always full height)
   isTall?: boolean
   isOpen: boolean
+  // false while closing would lose data (e.g. a dirty form): backdrop click and
+  // swipe no longer close it — only explicit actions (close button, Esc) do
+  isDismissible?: boolean
   onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>
   onOpenChange: (isOpen: boolean) => void
 }
@@ -28,15 +33,17 @@ const Sheet = ({
   className,
   footer,
   header,
+  isDismissible = true,
   isOpen,
   isTall = false,
   onKeyDown,
   onOpenChange,
 }: SheetProps) => {
   const { dragHandlers, popupRef } = useSwipeToClose(() => onOpenChange(false))
+  const [portalContainer, setPortalContainer] = useState<HTMLDivElement | null>(null)
 
   return (
-    <Dialog.Root onOpenChange={onOpenChange} open={isOpen}>
+    <Dialog.Root disablePointerDismissal={!isDismissible} onOpenChange={onOpenChange} open={isOpen}>
       <Dialog.Portal>
         <Dialog.Backdrop className="fixed inset-0 z-50 bg-[rgba(20,20,24,.42)] transition-opacity duration-200 data-ending-style:opacity-0 data-starting-style:opacity-0" />
         <Dialog.Popup
@@ -55,21 +62,28 @@ const Sheet = ({
           )}
           onKeyDown={onKeyDown}
         >
-          {/* Drag area: handle + header (never the scrolling body) */}
-          <div className="shrink-0 touch-none lg:touch-auto" {...dragHandlers}>
-            <div className="mx-auto mt-2 h-1.25 w-10 rounded-full bg-[#d8d8d4] lg:hidden" />
-            <div className="border-rule flex items-center gap-2 border-b pt-2 pr-3 pb-2.5 pl-4 lg:pt-3">
-              {header}
+          <PortalContainerProvider value={portalContainer}>
+            {/* Drag area: handle + header (never the scrolling body) */}
+            <div
+              className="shrink-0 touch-none lg:touch-auto"
+              {...(isDismissible ? dragHandlers : {})}
+            >
+              <div className="mx-auto mt-2 h-1.25 w-10 rounded-full bg-[#d8d8d4] lg:hidden" />
+              <div className="border-rule flex items-center gap-2 border-b pt-2 pr-3 pb-2.5 pl-4 lg:pt-3">
+                {header}
+              </div>
             </div>
-          </div>
-          <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain" data-sheet-body>
-            {children}
-          </div>
-          {footer && (
-            <div className="border-rule flex shrink-0 gap-2.5 border-t px-4 pt-3 pb-[calc(12px+env(safe-area-inset-bottom))]">
-              {footer}
+            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain" data-sheet-body>
+              {children}
             </div>
-          )}
+            {footer && (
+              <div className="border-rule flex shrink-0 gap-2.5 border-t px-4 pt-3 pb-[calc(12px+env(safe-area-inset-bottom))]">
+                {footer}
+              </div>
+            )}
+          </PortalContainerProvider>
+          {/* Popups from the content (Select, date picker) portal here */}
+          <div ref={setPortalContainer} />
         </Dialog.Popup>
       </Dialog.Portal>
     </Dialog.Root>

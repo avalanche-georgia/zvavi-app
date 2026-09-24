@@ -63,8 +63,23 @@ export const avalancheSources: Record<AvalancheSource, AvalancheSource> = {
 export const avalancheStatuses: Record<AvalancheStatus, AvalancheStatus> = {
   archived: 'archived',
   draft: 'draft',
+  pending: 'pending',
   published: 'published',
 }
+
+// Field rules shared by the public submit form, the admin avalanche form and
+// the submit API (authoritative). Number inputs clamp to these ranges; the
+// schemas reject anything outside them.
+export const avalancheFieldLimits = {
+  descriptionMaxLength: 2000,
+  involvementMaxLength: 2000,
+  latitude: { max: 90, min: -90 },
+  locationMaxLength: 200,
+  longitude: { max: 180, min: -180 },
+  quantity: { max: 5, min: 1 },
+  slabDepth: { max: 1000, min: 0 },
+  width: { max: 500, min: 0 },
+} as const
 
 // Shared by the public submit form (client-side checks) and the upload-url
 // route (authoritative server-side checks — client compression is bypassable).

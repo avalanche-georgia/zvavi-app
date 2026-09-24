@@ -1,6 +1,5 @@
+import { DetailSection } from '@components/features/observations'
 import { useTranslations } from 'next-intl'
-
-import DetailSection from './DetailSection'
 
 // Name only (already shortened by the API) — contact and training are never public
 const DetailReporter = ({ name }: { name: string }) => {

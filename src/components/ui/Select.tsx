@@ -1,9 +1,11 @@
 'use client'
 
 import * as SelectPrimitive from '@radix-ui/react-select'
-import clsx from 'clsx'
 import { Check, ChevronDown } from 'lucide-react'
-import { twMerge } from 'tailwind-merge'
+
+import { stopEscapePropagation, usePortalContainer } from './PortalContainer'
+
+import { cn } from '@/lib/utils'
 
 export type SelectOption = {
   label: string
@@ -28,11 +30,13 @@ type SelectProps = {
   value: string | undefined
 }
 
-const Select = ({ className, hasError, onChange, options, placeholder, value }: SelectProps) => (
-  <SelectPrimitive.Root onValueChange={onChange} value={value}>
-    <SelectPrimitive.Trigger
-      className={twMerge(
-        clsx(
+const Select = ({ className, hasError, onChange, options, placeholder, value }: SelectProps) => {
+  const portalContainer = usePortalContainer()
+
+  return (
+    <SelectPrimitive.Root onValueChange={onChange} value={value}>
+      <SelectPrimitive.Trigger
+        className={cn(
           'flex h-8 w-full items-center justify-between rounded-sm border bg-gray-100',
           'px-3 text-sm transition-colors',
           hasError
@@ -47,51 +51,52 @@ const Select = ({ className, hasError, onChange, options, placeholder, value }: 
           'disabled:cursor-not-allowed disabled:opacity-50',
           'data-placeholder:text-gray-400 [&>span]:line-clamp-1',
           className,
-        ),
-      )}
-    >
-      <SelectPrimitive.Value placeholder={placeholder} />
-      <SelectPrimitive.Icon asChild>
-        <ChevronDown className="size-4 text-gray-500" />
-      </SelectPrimitive.Icon>
-    </SelectPrimitive.Trigger>
-
-    <SelectPrimitive.Portal>
-      <SelectPrimitive.Content
-        className={clsx(
-          'relative z-50 max-h-96 min-w-32 overflow-hidden rounded-md border bg-white shadow-md',
-          'data-[state=open]:animate-in data-[state=closed]:animate-out',
-          'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
-          'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
-          'data-[side=bottom]:slide-in-from-top-2 data-[side=top]:slide-in-from-bottom-2',
-          'data-[side=bottom]:translate-y-1 data-[side=top]:-translate-y-1',
         )}
-        position="popper"
       >
-        <SelectPrimitive.Viewport className="h-(--radix-select-trigger-height) w-full min-w-(--radix-select-trigger-width) p-1">
-          {options.map((option) => (
-            <SelectPrimitive.Item
-              key={option.value}
-              className={clsx(
-                'relative flex w-full cursor-default items-center rounded-xs select-none',
-                'py-1.5 pr-2 pl-8 text-sm outline-hidden',
-                'focus:bg-primary/10 focus:text-gray-900',
-                'data-disabled:pointer-events-none data-disabled:opacity-50',
-              )}
-              value={option.value}
-            >
-              <span className="absolute left-2 flex size-3.5 items-center justify-center">
-                <SelectPrimitive.ItemIndicator>
-                  <Check className="text-primary size-4" />
-                </SelectPrimitive.ItemIndicator>
-              </span>
-              <SelectPrimitive.ItemText>{option.label}</SelectPrimitive.ItemText>
-            </SelectPrimitive.Item>
-          ))}
-        </SelectPrimitive.Viewport>
-      </SelectPrimitive.Content>
-    </SelectPrimitive.Portal>
-  </SelectPrimitive.Root>
-)
+        <SelectPrimitive.Value placeholder={placeholder} />
+        <SelectPrimitive.Icon asChild>
+          <ChevronDown className="size-4 text-gray-500" />
+        </SelectPrimitive.Icon>
+      </SelectPrimitive.Trigger>
+
+      <SelectPrimitive.Portal container={portalContainer}>
+        <SelectPrimitive.Content
+          className={cn(
+            'relative z-50 max-h-96 min-w-32 overflow-hidden rounded-md border bg-white shadow-md',
+            'data-[state=open]:animate-in data-[state=closed]:animate-out',
+            'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
+            'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
+            'data-[side=bottom]:slide-in-from-top-2 data-[side=top]:slide-in-from-bottom-2',
+            'data-[side=bottom]:translate-y-1 data-[side=top]:-translate-y-1',
+          )}
+          onEscapeKeyDown={stopEscapePropagation}
+          position="popper"
+        >
+          <SelectPrimitive.Viewport className="h-(--radix-select-trigger-height) w-full min-w-(--radix-select-trigger-width) p-1">
+            {options.map((option) => (
+              <SelectPrimitive.Item
+                key={option.value}
+                className={cn(
+                  'relative flex w-full cursor-default items-center rounded-xs select-none',
+                  'py-1.5 pr-2 pl-8 text-sm outline-hidden',
+                  'focus:bg-primary/10 focus:text-gray-900',
+                  'data-disabled:pointer-events-none data-disabled:opacity-50',
+                )}
+                value={option.value}
+              >
+                <span className="absolute left-2 flex size-3.5 items-center justify-center">
+                  <SelectPrimitive.ItemIndicator>
+                    <Check className="text-primary size-4" />
+                  </SelectPrimitive.ItemIndicator>
+                </span>
+                <SelectPrimitive.ItemText>{option.label}</SelectPrimitive.ItemText>
+              </SelectPrimitive.Item>
+            ))}
+          </SelectPrimitive.Viewport>
+        </SelectPrimitive.Content>
+      </SelectPrimitive.Portal>
+    </SelectPrimitive.Root>
+  )
+}
 
 export default Select

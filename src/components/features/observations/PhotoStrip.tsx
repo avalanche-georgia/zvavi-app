@@ -1,17 +1,18 @@
 'use client'
 
 import { useState } from 'react'
-import { PhotoPlaceholder } from '@components/features/observations'
 import { PhotoViewer } from '@components/shared'
 import { FallbackImage } from '@components/ui'
 import type { PhotoUrls } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
+import PhotoPlaceholder from './PhotoPlaceholder'
+
 import { cn } from '@/lib/utils'
 
 // Scroll-snap strip of resized previews; tapping one opens the full-resolution
 // viewer on top of the detail sheet.
-const DetailPhotos = ({ photos }: { photos: PhotoUrls[] }) => {
+const PhotoStrip = ({ photos }: { photos: PhotoUrls[] }) => {
   const t = useTranslations()
   const [viewerIndex, setViewerIndex] = useState<number | null>(null)
 
@@ -49,4 +50,4 @@ const DetailPhotos = ({ photos }: { photos: PhotoUrls[] }) => {
   )
 }
 
-export default DetailPhotos
+export default PhotoStrip

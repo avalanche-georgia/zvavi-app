@@ -10,6 +10,8 @@ import type { PublicObservation, RegionId } from '@domain/types'
 import useDateRange from './useDateRange'
 import useObservationLookup from './useObservationLookup'
 import useObservationsParams from './useObservationsParams'
+import usePendingOwnReports from './usePendingOwnReports'
+import type { PendingOwnReport } from '../helpers/pendingOwnReports'
 
 export type ObservationsListState = {
   hasFilters: boolean
@@ -24,6 +26,8 @@ export type ObservationsListState = {
   observations: PublicObservation[]
   onFetchNextPage: VoidFunction
   onFiltersClear: VoidFunction
+  // This browser's own submissions still under review
+  pendingOwnReports: PendingOwnReport[]
 }
 
 // Offset paging shifts by one when a report is published or removed between
@@ -56,6 +60,10 @@ const useObservationsPage = (regionId: RegionId) => {
     [listQuery.data],
   )
   const total = listQuery.data?.pages[0]?.total ?? 0
+  const pendingOwnReports = usePendingOwnReports(regionId, [
+    ...observations.map(({ id }) => id),
+    ...(pointsData?.points.map(({ id }) => id) ?? []),
+  ])
   const selectedIndex = observations.findIndex((observation) => observation.id === selectedId)
   const { isNotFound, observation: selectedObservation } = useObservationLookup({
     id: selectedId,
@@ -101,6 +109,7 @@ const useObservationsPage = (regionId: RegionId) => {
     observations,
     onFetchNextPage: () => listQuery.fetchNextPage({ cancelRefetch: false }),
     onFiltersClear: clearFilters,
+    pendingOwnReports,
   }
 
   return {

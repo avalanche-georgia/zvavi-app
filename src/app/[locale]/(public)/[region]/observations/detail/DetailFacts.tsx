@@ -1,14 +1,12 @@
+import { type Fact, FactsGrid } from '@components/features/observations'
+import { useFormatDay } from '@components/features/observations'
 import type { PublicObservation } from '@domain/types'
 import { useTranslations } from 'next-intl'
-
-import useFormatDay from './useFormatDay'
-
-type Fact = { label: string; value: string }
 
 // Shown for facts the reporter left empty — the grid keeps its shape
 const emptyValue = '—'
 
-// Two-column grid with hairline dividers; every fact is always shown
+// Every fact is always shown
 const DetailFacts = ({ observation }: { observation: PublicObservation }) => {
   const t = useTranslations()
   const formatDay = useFormatDay()
@@ -32,16 +30,7 @@ const DetailFacts = ({ observation }: { observation: PublicObservation }) => {
     },
   ]
 
-  return (
-    <dl className="bg-rule border-rule mx-4 mt-3 grid grid-cols-2 gap-px overflow-hidden rounded-[14px] border">
-      {facts.map(({ label, value }) => (
-        <div key={label} className="bg-white px-3 py-2.5">
-          <dt className="text-muted text-xs">{label}</dt>
-          <dd className="mt-0.5 text-[15px] font-semibold">{value}</dd>
-        </div>
-      ))}
-    </dl>
-  )
+  return <FactsGrid facts={facts} />
 }
 
 export default DetailFacts

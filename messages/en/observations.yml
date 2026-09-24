@@ -82,13 +82,18 @@ observations:
     description: 'Description'
     reportedBy: 'Reported by'
 
+  pendingOwn:
+    title: 'Your reports under review'
+    note: 'Only you can see these. They become public once our team has reviewed them.'
+    submitted: 'Submitted {date}'
+
   location:
     openInMaps: 'Open in Maps app'
 
   submit:
     title: 'Submit an Observation — {regionName}'
     submit: 'Submit'
-    success: 'Thank you — your observation has been submitted.'
+    success: 'Thank you — your observation has been received. It will appear publicly once our team has reviewed it.'
     error: 'Something went wrong. Please try again.'
     waitingForPhotos: 'Will send once photos finish uploading…'
     hints:

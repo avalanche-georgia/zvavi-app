@@ -328,19 +328,18 @@ admin:
     list:
       columns:
         actions: მოქმედებები
-        createdAt: შექმნილია
         date: თარიღი
-        description: აღწერა
-        location: ადგილმდებარეობა
         size: ზომა
         source: წყარო
         status: სტატუსი
-        trigger: გამომწვევი
+        submitter: ავტორი
         type: სახეობა
       empty: ზვავის ჩანაწერები არ მოიძებნა.
       total: "ნაჩვენებია: {shown} / {total}"
 
     filters:
+      all: ყველა
+      allStatuses: ყველა სტატუსი
       reset: ფილტრების გადატვირთვა
       dateMode:
         created: შექმნის თარიღი
@@ -351,6 +350,7 @@ admin:
       page: "გვ. {current} / {total}"
 
     actions:
+      approve: დადასტურება
       deleteDescription: ეს ჩანაწერი სამუდამოდ წაიშლება.
       deleteTitle: ზვავის წაშლა
       publish: გამოქვეყნება
@@ -361,9 +361,7 @@ admin:
         description: აღწერა
         involvement: ჩართულობა
         isDateUnknown: თარიღი უცნობია
-        latitude: განედი
         location: ადგილი
-        longitude: გრძედი
         quantity: რაოდენობა
         size: ზომა
         slabDepth: ფილის სისქე (სმ)
@@ -381,6 +379,32 @@ admin:
       messages:
         created: ზვავი წარმატებით დაემატა.
         updated: ზვავი წარმატებით განახლდა.
+
+    view:
+      archivedHint: ჩანაწერი დაარქივებულია. აღსადგენად გახსენით რედაქტირება და შეცვალეთ სტატუსი.
+      coordinates: კოორდინატები
+      forecastLink: 'პროგნოზი #{id}'
+      linkedForecasts: დაკავშირებული პროგნოზები
+      logged: დამატებულია
+      occurred: მოხდა
+      openFullPage: სრულ გვერდზე გახსნა
+      photosError: ფოტოების ჩატვირთვა ვერ მოხერხდა.
+      where: სად
+
+    sheet:
+      deleteConfirm: წავშალოთ ჩანაწერი სამუდამოდ?
+      discard: გაუქმება
+      discardConfirm: გავაუქმოთ შეუნახავი ცვლილებები?
+      keepEditing: რედაქტირების გაგრძელება
+      next: შემდეგი ჩანაწერი
+      position: '{current} / {total}'
+      previous: წინა ჩანაწერი
+
+  observations:
+    queue:
+      columns:
+        submitted: გამოგზავნილია
+      empty: განსახილველი არაფერია — ახალი დაკვირვებები აქ გამოჩნდება.
 
   weatherStations:
     title: 'ამინდის სადგურები'

@@ -3,16 +3,19 @@
 import { Tabs } from '@base-ui/react/tabs'
 import { useRegionsQuery } from '@data/hooks/regions'
 import type { Region, RegionId } from '@domain/types'
-import clsx from 'clsx'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 
+import { cn } from '@/lib/utils'
+
 type RegionTabsProps = {
+  // Optional badge per tab (e.g. items awaiting review); zero shows nothing
+  counts?: Partial<Record<RegionId, number>>
   currentRegionId: RegionId
   initialRegions?: Region[]
 }
 
-const RegionTabs = ({ currentRegionId, initialRegions }: RegionTabsProps) => {
+const RegionTabs = ({ counts, currentRegionId, initialRegions }: RegionTabsProps) => {
   const t = useTranslations()
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -37,7 +40,7 @@ const RegionTabs = ({ currentRegionId, initialRegions }: RegionTabsProps) => {
         {regions.map((region) => (
           <Tabs.Tab
             key={region.id}
-            className={clsx(
+            className={cn(
               'relative rounded-t px-5 pt-1.5 pb-2 text-[15px] font-medium transition-colors',
               'text-gray-500 hover:text-gray-800',
               'data-active:border-primary data-active:text-primary data-active:bg-primary/7',
@@ -47,6 +50,11 @@ const RegionTabs = ({ currentRegionId, initialRegions }: RegionTabsProps) => {
             value={region.id}
           >
             {t(`regions.names.${region.id}`)}
+            {!!counts?.[region.id] && (
+              <span className="ml-2 inline-flex size-5 items-center justify-center rounded-full bg-blue-500 text-xs text-white">
+                {counts[region.id]}
+              </span>
+            )}
           </Tabs.Tab>
         ))}
       </Tabs.List>

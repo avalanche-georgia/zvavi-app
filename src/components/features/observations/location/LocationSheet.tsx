@@ -1,6 +1,5 @@
 'use client'
 
-import { useAspectSummary } from '@components/features/observations'
 import { Sheet, SheetClose, SheetIconButton, SheetTitle, Spinner } from '@components/ui'
 import type { ObservationPoint, PublicObservation } from '@domain/types'
 import { X } from 'lucide-react'
@@ -9,8 +8,9 @@ import { useTranslations } from 'next-intl'
 
 import CoordinatesRow from './CoordinatesRow'
 import getMapsLink from './getMapsLink'
-import useFormatDay from '../detail/useFormatDay'
-import hasCoordinates from '../helpers/hasCoordinates'
+import hasCoordinates from '../hasCoordinates'
+import useAspectSummary from '../useAspectSummary'
+import useFormatDay from '../useFormatDay'
 
 const LocationMapClient = dynamic(() => import('./LocationMapClient'), {
   loading: () => (
@@ -21,11 +21,17 @@ const LocationMapClient = dynamic(() => import('./LocationMapClient'), {
   ssr: false,
 })
 
+// Just what the close-up needs — public observations and admin records both fit
+export type LocationSheetRecord = Pick<
+  PublicObservation,
+  'aspects' | 'date' | 'id' | 'isDateUnknown' | 'latitude' | 'longitude' | 'size' | 'type'
+>
+
 type LocationSheetProps = {
   isOpen: boolean
   // Other observations, shown as context dots
   contextPoints: ObservationPoint[]
-  observation: PublicObservation
+  observation: LocationSheetRecord
   onClose: VoidFunction
 }
 

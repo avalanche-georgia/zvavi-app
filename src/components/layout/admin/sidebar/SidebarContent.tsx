@@ -2,14 +2,16 @@
 
 import { Icon } from '@components'
 import { usePendingMembersCount } from '@data/hooks/members'
-import clsx from 'clsx'
+import { usePendingObservationsCounts } from '@data/hooks/recentAvalanches'
 import { useTranslations } from 'next-intl'
 import { Link, usePathname } from 'src/i18n/navigation'
 
 import { navItems } from './constants'
 
 import NavLink from './NavLink'
+import type { NavItem } from './types'
 
+import { cn } from '@/lib/utils'
 import { routes } from '@/routes'
 
 type SidebarContentProps = {
@@ -19,7 +21,14 @@ type SidebarContentProps = {
 const SidebarContent = ({ onItemClick }: SidebarContentProps) => {
   const pathname = usePathname()
   const t = useTranslations()
-  const pendingCount = usePendingMembersCount()
+  const pendingMembersCount = usePendingMembersCount()
+  const { total: pendingObservationsCount } = usePendingObservationsCounts()
+
+  // Items waiting for an admin: member applications, observations to review
+  const badges: Partial<Record<NavItem['label'], number>> = {
+    members: pendingMembersCount,
+    observations: pendingObservationsCount,
+  }
 
   return (
     <div className="flex h-full flex-col">
@@ -32,7 +41,7 @@ const SidebarContent = ({ onItemClick }: SidebarContentProps) => {
         {navItems.map((item) => (
           <NavLink
             key={item.href}
-            badge={item.label === 'members' ? pendingCount : undefined}
+            badge={badges[item.label]}
             isActive={pathname.startsWith(item.href)}
             item={item}
             onClick={onItemClick}
@@ -42,7 +51,7 @@ const SidebarContent = ({ onItemClick }: SidebarContentProps) => {
 
       <div className="border-t p-3">
         <Link
-          className={clsx(
+          className={cn(
             'flex items-center gap-3 rounded-sm px-3 py-2 text-sm font-medium transition-colors',
             'text-gray-700 hover:bg-gray-100',
           )}
