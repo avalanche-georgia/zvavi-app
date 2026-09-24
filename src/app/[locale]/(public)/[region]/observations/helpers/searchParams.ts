@@ -27,8 +27,8 @@ export const observationsPeriods: ObservationsPeriod[] = [
   '7d',
   '30d',
   'season',
-  'custom',
   'unknown',
+  'custom',
 ]
 const dayPattern = /^\d{4}-\d{2}-\d{2}$/
 
