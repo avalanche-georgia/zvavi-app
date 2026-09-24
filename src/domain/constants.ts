@@ -67,9 +67,9 @@ export const avalancheStatuses: Record<AvalancheStatus, AvalancheStatus> = {
   published: 'published',
 }
 
-// One set of field rules for every avalanche form: the public submit form, the
-// admin form and the submit API (authoritative). Out-of-range numbers are
-// rejected, not clamped.
+// Field rules shared by the public submit form, the admin avalanche form and
+// the submit API (authoritative). Number inputs clamp to these ranges; the
+// schemas reject anything outside them.
 export const avalancheFieldLimits = {
   descriptionMaxLength: 2000,
   involvementMaxLength: 2000,

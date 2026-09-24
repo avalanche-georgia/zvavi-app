@@ -361,9 +361,7 @@ admin:
         description: Description
         involvement: Involvement
         isDateUnknown: Date unknown
-        latitude: Latitude
         location: Location
-        longitude: Longitude
         quantity: Quantity
         size: Size
         slabDepth: Slab depth (cm)

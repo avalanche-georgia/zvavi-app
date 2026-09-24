@@ -1,5 +1,6 @@
 'use client'
 
+import { useRef } from 'react'
 import { InputBlock, TextInput } from '@components/ui'
 import { roundCoordinate } from '@data/helpers'
 import { useTranslations } from 'next-intl'
@@ -31,15 +32,34 @@ const CoordinateFields = ({
   onChange,
 }: CoordinateFieldsProps) => {
   const t = useTranslations()
+  // Only what the user typed gets rounded — merely tabbing through a stored
+  // (possibly more precise) value must not change it
+  const editedRef = useRef({ latitude: false, longitude: false })
+
+  const handleLatitudeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    editedRef.current.latitude = true
+    onChange(parseCoordinate(event.target.value), longitude)
+  }
+
+  const handleLongitudeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    editedRef.current.longitude = true
+    onChange(latitude, parseCoordinate(event.target.value))
+  }
 
   // Rounded on blur, not on every keystroke — rounding while the user is
   // still typing would fight their cursor and cut off digits mid-entry.
   const handleLatitudeBlur = () => {
-    if (latitude !== null) onChange(roundCoordinate(latitude), longitude)
+    if (!editedRef.current.latitude || latitude === null) return
+
+    editedRef.current.latitude = false
+    onChange(roundCoordinate(latitude), longitude)
   }
 
   const handleLongitudeBlur = () => {
-    if (longitude !== null) onChange(latitude, roundCoordinate(longitude))
+    if (!editedRef.current.longitude || longitude === null) return
+
+    editedRef.current.longitude = false
+    onChange(latitude, roundCoordinate(longitude))
   }
 
   return (
@@ -52,7 +72,7 @@ const CoordinateFields = ({
         <TextInput
           hasError={!!errors?.latitude}
           onBlur={handleLatitudeBlur}
-          onChange={(event) => onChange(parseCoordinate(event.target.value), longitude)}
+          onChange={handleLatitudeChange}
           placeholder={t('observations.submit.placeholders.latitude')}
           step="any"
           type="number"
@@ -68,7 +88,7 @@ const CoordinateFields = ({
         <TextInput
           hasError={!!errors?.longitude}
           onBlur={handleLongitudeBlur}
-          onChange={(event) => onChange(latitude, parseCoordinate(event.target.value))}
+          onChange={handleLongitudeChange}
           placeholder={t('observations.submit.placeholders.longitude')}
           step="any"
           type="number"

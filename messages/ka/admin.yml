@@ -361,9 +361,7 @@ admin:
         description: აღწერა
         involvement: ჩართულობა
         isDateUnknown: თარიღი უცნობია
-        latitude: განედი
         location: ადგილი
-        longitude: გრძედი
         quantity: რაოდენობა
         size: ზომა
         slabDepth: ფილის სისქე (სმ)

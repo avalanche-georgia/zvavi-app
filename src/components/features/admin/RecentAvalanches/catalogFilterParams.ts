@@ -14,7 +14,7 @@ const isCatalogStatus = (value: string | null): value is CatalogStatus =>
   catalogStatuses.includes(value as CatalogStatus)
 
 const isAvalancheSource = (value: string | null): value is AvalancheSource =>
-  !!value && value in avalancheSources
+  !!value && Object.hasOwn(avalancheSources, value)
 
 // Source / status filters from the URL; anything unknown means "all"
 export const readCatalogFilters = (searchParams: Pick<URLSearchParams, 'get'>) => {

@@ -14,15 +14,16 @@ const LocationFields = ({ isLocationRequired }: { isLocationRequired: boolean })
   const getFieldError = useFieldError<AvalancheFormSchema>()
   const [latitude, longitude] = form.watch(['latitude', 'longitude'])
 
+  // Blur re-sends the (rounded) value — only a real change dirties the form
+  const setCoordinate = (name: 'latitude' | 'longitude', value: number | null) => {
+    if (form.getValues(name) === value) return
+
+    form.setValue(name, value, { shouldDirty: true, shouldValidate: form.formState.isSubmitted })
+  }
+
   const handleCoordinatesChange = (lat: number | null, lng: number | null) => {
-    form.setValue('latitude', lat, {
-      shouldDirty: true,
-      shouldValidate: form.formState.isSubmitted,
-    })
-    form.setValue('longitude', lng, {
-      shouldDirty: true,
-      shouldValidate: form.formState.isSubmitted,
-    })
+    setCoordinate('latitude', lat)
+    setCoordinate('longitude', lng)
   }
 
   return (

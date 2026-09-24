@@ -27,7 +27,7 @@ const AvalancheSheetHeader = ({ fullPageId, navigation, title }: AvalancheSheetH
         <X className="size-4.5" />
       </SheetClose>
       <SheetTitle className="m-0 flex-1 truncate text-[15px] font-semibold">{title}</SheetTitle>
-      {navigation && total > 1 && (
+      {navigation && (navigation.hasNext || navigation.hasPrevious) && (
         <>
           {index !== null && (
             <span className="text-muted text-[13px] tabular-nums">
@@ -36,14 +36,14 @@ const AvalancheSheetHeader = ({ fullPageId, navigation, title }: AvalancheSheetH
           )}
           <SheetIconButton
             aria-label={t('admin.recentAvalanches.sheet.previous')}
-            disabled={index === null || index <= 0}
+            disabled={!navigation.hasPrevious}
             onClick={navigation.onPrevious}
           >
             <ChevronLeft className="size-4.5" />
           </SheetIconButton>
           <SheetIconButton
             aria-label={t('admin.recentAvalanches.sheet.next')}
-            disabled={index === null || index >= total - 1}
+            disabled={!navigation.hasNext}
             onClick={navigation.onNext}
           >
             <ChevronRight className="size-4.5" />

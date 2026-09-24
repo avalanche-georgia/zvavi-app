@@ -53,6 +53,7 @@ const TopSection = () => {
             render={({ field }) => (
               <NumberInput
                 className="w-42"
+                hasError={!!form.formState.errors.quantity}
                 max={avalancheFieldLimits.quantity.max}
                 min={avalancheFieldLimits.quantity.min}
                 onValueChange={field.onChange}

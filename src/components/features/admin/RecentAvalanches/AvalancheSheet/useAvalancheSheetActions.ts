@@ -64,6 +64,12 @@ const useAvalancheSheetActions = ({
   // photo viewer) portal outside this popup but bubble here through React — ignore
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (mode !== 'view' || !navigation) return
+
+    // Alt+← is browser Back; a held key would step through the list
+    if (event.altKey || event.metaKey || event.ctrlKey || event.repeat || event.defaultPrevented) {
+      return
+    }
+
     if (!event.currentTarget.contains(event.target as Node)) return
     if (event.key === 'ArrowLeft') navigation.onPrevious()
     if (event.key === 'ArrowRight') navigation.onNext()

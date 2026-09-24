@@ -37,20 +37,28 @@ const useAvalancheSheetNavigation = ({
     setNeighbors({ id: selectedId, next, previous })
   }
 
+  // Once the record has left the list (status changed under a filter), its
+  // remembered neighbours still drive the arrows
+  const remembered = neighbors?.id === selectedId ? neighbors : null
+  const nextId = index === -1 ? (remembered?.next ?? null) : next
+  const previousId = index === -1 ? (remembered?.previous ?? null) : previous
+
   const advance = useCallback(() => {
-    const target = neighbors?.id === selectedId ? (neighbors.next ?? neighbors.previous) : null
+    const target = remembered ? (remembered.next ?? remembered.previous) : null
 
     if (target === null) {
       onDismiss()
     } else {
       onShow(target)
     }
-  }, [neighbors, onDismiss, onShow, selectedId])
+  }, [onDismiss, onShow, remembered])
 
   const navigation: AvalancheSheetNavigation = {
+    hasNext: nextId !== null,
+    hasPrevious: previousId !== null,
     index: index === -1 ? null : index,
-    onNext: () => next !== null && onShow(next),
-    onPrevious: () => previous !== null && onShow(previous),
+    onNext: () => nextId !== null && onShow(nextId),
+    onPrevious: () => previousId !== null && onShow(previousId),
     total: ids.length,
   }
 

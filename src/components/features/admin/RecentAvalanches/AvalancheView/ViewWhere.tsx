@@ -17,13 +17,14 @@ const noContextPoints: never[] = []
 const ViewWhere = ({ avalanche }: { avalanche: AvalancheListItem }) => {
   const t = useTranslations()
   const [isLocationOpen, setIsLocationOpen] = useState(false)
-  const { aspects, latitude, location, longitude } = avalanche
+  const { aspects, location } = avalanche
+  const coordinates = hasCoordinates(avalanche) ? avalanche : null
 
   return (
     <DetailSection title={t('admin.recentAvalanches.view.where')}>
       <AspectsOverview aspects={aspects} />
 
-      {(location || hasCoordinates(avalanche)) && (
+      {(location || coordinates) && (
         <dl className="mt-3 flex flex-col gap-2 text-sm">
           {location && (
             <div>
@@ -33,11 +34,11 @@ const ViewWhere = ({ avalanche }: { avalanche: AvalancheListItem }) => {
               <dd>{location}</dd>
             </div>
           )}
-          {hasCoordinates(avalanche) && (
+          {coordinates && (
             <div>
               <dt className="text-muted text-xs">{t('admin.recentAvalanches.view.coordinates')}</dt>
               <dd className="tabular-nums">
-                {latitude?.toFixed(5)}, {longitude?.toFixed(5)}
+                {coordinates.latitude.toFixed(5)}, {coordinates.longitude.toFixed(5)}
               </dd>
             </div>
           )}
@@ -45,7 +46,7 @@ const ViewWhere = ({ avalanche }: { avalanche: AvalancheListItem }) => {
       )}
 
       {/* Legacy records may have no coordinates */}
-      {hasCoordinates(avalanche) && (
+      {coordinates && (
         <>
           <Button className="mt-3" onClick={() => setIsLocationOpen(true)} variant="outline">
             <Icon icon="mapPin" size="sm" />
@@ -54,7 +55,7 @@ const ViewWhere = ({ avalanche }: { avalanche: AvalancheListItem }) => {
           <LocationSheet
             contextPoints={noContextPoints}
             isOpen={isLocationOpen}
-            observation={avalanche}
+            observation={coordinates}
             onClose={() => setIsLocationOpen(false)}
           />
         </>
