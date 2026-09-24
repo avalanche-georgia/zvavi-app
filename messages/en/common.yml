@@ -3,6 +3,7 @@ common:
     add: 'Add'
     backToList: 'Back to List'
     cancel: 'Cancel'
+    clear: 'Clear'
     close: 'Close'
     confirm: 'Confirm'
     continue: 'Continue'
@@ -67,6 +68,27 @@ common:
     highAlpine: 'High Alpine'
     alpine: 'Alpine'
     subAlpine: 'Sub Alpine'
+
+  aspects:
+    allAspects: 'all aspects'
+    allElevations: 'All elevations'
+    names:
+      n: 'North'
+      ne: 'North-east'
+      e: 'East'
+      se: 'South-east'
+      s: 'South'
+      sw: 'South-west'
+      w: 'West'
+      nw: 'North-west'
+
+  aspectElevationPicker:
+    all: 'All'
+    allAria: 'All aspects, {zone}'
+    cellAria: '{zone}, {aspect}'
+    emptyHint: 'Tap or drag to select aspects'
+    sameAspectsOn: 'Same aspects on:'
+    zonesAria: 'Elevation band'
 
   avalancheSources:
     external: 'External'

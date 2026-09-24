@@ -55,10 +55,6 @@ observations:
     typeAndSize: '{type} · ზომა {size}'
     width: 'სიგანე'
 
-  aspects:
-    allAspects: 'ყველა ექსპოზიცია'
-    allElevations: 'ყველა სიმაღლე'
-
   card:
     quantity: '×{count}'
     reportedAgo: 'მოწოდებულია {time}'
@@ -107,6 +103,7 @@ observations:
       avalancheDetails: 'ზვავის დეტალები'
       whenAndWhere: 'როდის და სად'
     labels:
+      aspects: 'ექსპოზიცია და სიმაღლე'
       date: 'თარიღი'
       dateUnknown: 'თარიღი უცნობია'
       description: 'აღწერა'

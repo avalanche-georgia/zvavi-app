@@ -1,7 +1,6 @@
+import { compassGrid } from '@domain/aspects'
 import { aspects as aspectLabels } from '@domain/constants'
 import type { Aspect } from '@domain/types'
-
-import { compassGrid } from './compassGrid'
 
 import { cn } from '@/lib/utils'
 

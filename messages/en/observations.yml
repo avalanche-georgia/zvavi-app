@@ -55,10 +55,6 @@ observations:
     typeAndSize: '{type} · size {size}'
     width: 'Width'
 
-  aspects:
-    allAspects: 'all aspects'
-    allElevations: 'All elevations'
-
   card:
     quantity: '×{count}'
     reportedAgo: 'Reported {time}'
@@ -107,6 +103,7 @@ observations:
       avalancheDetails: 'Avalanche details'
       whenAndWhere: 'When & where'
     labels:
+      aspects: 'Aspect & elevation'
       date: 'Date'
       dateUnknown: 'Date unknown'
       description: 'Description'
