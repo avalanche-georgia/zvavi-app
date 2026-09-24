@@ -12,7 +12,8 @@ type SheetProps = {
   footer?: React.ReactNode
   // Row above the scrolling body — include a SheetTitle for accessibility
   header: React.ReactNode
-  // Near-full height (mobile) / full-height panel (desktop) instead of sizing to content
+  // Fixed near-full height on mobile instead of sizing to content (desktop
+  // panels are always full height)
   isTall?: boolean
   isOpen: boolean
   onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>
@@ -45,12 +46,11 @@ const Sheet = ({
             'rounded-t-[20px] shadow-[0_-10px_40px_rgba(0,0,0,.12)]',
             'transition-transform duration-280 ease-[cubic-bezier(.2,.8,.2,1)]',
             'data-ending-style:translate-y-full data-starting-style:translate-y-full',
-            'lg:top-4 lg:right-4 lg:left-auto lg:max-h-[calc(100dvh-2rem)] lg:w-120 lg:rounded-[20px]',
+            'lg:inset-y-4 lg:right-4 lg:left-auto lg:max-h-none lg:w-120 lg:rounded-[20px]',
             'lg:shadow-[0_12px_40px_rgba(0,0,0,.2),0_0_0_1px_rgba(0,0,0,.04)]',
             'lg:data-ending-style:translate-x-[calc(100%+24px)] lg:data-ending-style:translate-y-0',
             'lg:data-starting-style:translate-x-[calc(100%+24px)] lg:data-starting-style:translate-y-0',
-            // Tall: full-height panel on desktop; otherwise sized to content
-            isTall ? 'h-[94dvh] lg:bottom-4 lg:h-auto' : 'lg:bottom-auto',
+            isTall && 'h-[94dvh] lg:h-auto',
             className,
           )}
           onKeyDown={onKeyDown}

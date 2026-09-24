@@ -75,16 +75,19 @@ const LocationSheet = ({ contextPoints, isOpen, observation, onClose }: Location
       isOpen={isOpen}
       onOpenChange={handleOpenChange}
     >
-      <div className="isolate h-[52dvh] min-h-75">
-        <LocationMapClient
-          center={[latitude, longitude]}
-          points={contextPoints}
-          selectedId={id}
-          size={size}
-        />
+      {/* Desktop panel is full height — the map takes whatever the text leaves */}
+      <div className="flex flex-col lg:h-full">
+        <div className="isolate h-[52dvh] min-h-75 lg:h-auto lg:flex-1">
+          <LocationMapClient
+            center={[latitude, longitude]}
+            points={contextPoints}
+            selectedId={id}
+            size={size}
+          />
+        </div>
+        <CoordinatesRow latitude={latitude} longitude={longitude} />
+        {meta && <p className="text-muted px-4 pt-1.5 pb-4 text-[13px]">{meta}</p>}
       </div>
-      <CoordinatesRow latitude={latitude} longitude={longitude} />
-      {meta && <p className="text-muted px-4 pt-1.5 pb-4 text-[13px]">{meta}</p>}
     </Sheet>
   )
 }
