@@ -1,12 +1,13 @@
 'use client'
 
+import { BaseMapLayers, baseMapMaxZoom } from '@components/shared/map'
 import { useRegionContext } from '@domain/context/RegionContext'
-import clsx from 'clsx'
 import type { FeatureCollection } from 'geojson'
 import type { PathOptions } from 'leaflet'
-import { GeoJSON, MapContainer, TileLayer } from 'react-leaflet'
+import { GeoJSON, MapContainer } from 'react-leaflet'
 
 import 'leaflet/dist/leaflet.css'
+import { cn } from '@/lib/utils'
 
 const zoneStyle: PathOptions = {
   color: '#dc2626',
@@ -31,18 +32,12 @@ const ForecastAreaMapClient = ({ className }: ForecastAreaMapClientProps) => {
     <div className="px-2">
       <MapContainer
         center={center}
-        className={clsx('z-30 h-[calc(100svh-112px)] rounded-xl', className)}
+        className={cn('z-30 h-[calc(100svh-112px)] rounded-xl', className)}
+        maxZoom={baseMapMaxZoom}
         scrollWheelZoom
         zoom={defaultZoom}
       >
-        <TileLayer
-          attribution='&copy; <a href="https://opentopomap.org">OpenTopoMap</a>, <a href="https://www.openstreetmap.org/copyright">OSM</a>'
-          url="https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"
-        />
-        <TileLayer
-          attribution='<a href="https://www.opensnowmap.org/">OpenSnowMap</a>'
-          url="https://tiles.opensnowmap.org/pistes/{z}/{x}/{y}.png"
-        />
+        <BaseMapLayers />
 
         {(forecastZone as FeatureCollection | null)?.features.length ? (
           <GeoJSON data={forecastZone as FeatureCollection} style={zoneStyle} />

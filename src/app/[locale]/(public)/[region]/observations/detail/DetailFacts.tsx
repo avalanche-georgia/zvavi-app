@@ -1,0 +1,47 @@
+import type { PublicObservation } from '@domain/types'
+import { useTranslations } from 'next-intl'
+
+import useFormatDay from './useFormatDay'
+
+type Fact = { label: string; value: string }
+
+// Shown for facts the reporter left empty — the grid keeps its shape
+const emptyValue = '—'
+
+// Two-column grid with hairline dividers; every fact is always shown
+const DetailFacts = ({ observation }: { observation: PublicObservation }) => {
+  const t = useTranslations()
+  const formatDay = useFormatDay()
+  const { createdAt, date, isDateUnknown, quantity, slabDepth, trigger, width } = observation
+
+  const facts: Fact[] = [
+    {
+      label: t('observations.detail.facts.occurred'),
+      value: isDateUnknown || !date ? t('common.words.unknown') : formatDay(date),
+    },
+    { label: t('observations.detail.facts.reported'), value: formatDay(createdAt) },
+    { label: t('observations.labels.trigger'), value: t(`common.avalancheTriggers.${trigger}`) },
+    { label: t('observations.labels.quantity'), value: String(quantity) },
+    {
+      label: t('observations.labels.slabDepth'),
+      value: slabDepth === null ? emptyValue : t('common.units.centimeters', { value: slabDepth }),
+    },
+    {
+      label: t('observations.labels.width'),
+      value: width === null ? emptyValue : t('common.units.meters', { value: width }),
+    },
+  ]
+
+  return (
+    <dl className="bg-rule border-rule mx-4 mt-3 grid grid-cols-2 gap-px overflow-hidden rounded-[14px] border">
+      {facts.map(({ label, value }) => (
+        <div key={label} className="bg-white px-3 py-2.5">
+          <dt className="text-muted text-xs">{label}</dt>
+          <dd className="mt-0.5 text-[15px] font-semibold">{value}</dd>
+        </div>
+      ))}
+    </dl>
+  )
+}
+
+export default DetailFacts

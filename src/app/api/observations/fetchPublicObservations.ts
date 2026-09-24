@@ -1,48 +1,45 @@
-import { convertSnakeToCamel } from '@data/helpers'
-import type { Avalanche, RegionId } from '@domain/types'
+import type { ObservationsPage, ObservationsSort } from '@domain/types'
 
-import { createServiceRoleClient } from '@/lib/supabase/serviceRole'
+import {
+  dateColumns,
+  publicColumns,
+  type PublicObservationFilters,
+  queryPublicObservations,
+} from './publicObservationsQuery'
+import toPublicObservations from './toPublicObservations'
 
-// Explicit column list — never `select('*')` here. submitter_contact,
-// submitter_education, created_by_user_id, and involvement (internal-only,
-// see its "(internal)" label on the admin form) must never reach this
-// public-facing endpoint (see recent_avalanches RLS: anon can't read
-// external rows directly, this route is the only path to them).
-const publicColumns =
-  'id, region_id, date, is_date_unknown, description, size, quantity, location, latitude, ' +
-  'longitude, type, trigger, aspects, width, slab_depth, photo_keys, ' +
-  'submitter_name, created_at'
-
-export type FetchPublicObservationsParams = {
-  dateFrom?: string
-  dateTo?: string
-  regionId: RegionId
+export type FetchPublicObservationsParams = PublicObservationFilters & {
+  limit: number
+  offset: number
+  sort: ObservationsSort
 }
 
+// One page of the list, in display order: newest first (unknown dates last),
+// or largest first then newest. created_at + id keep the order stable across pages.
 const fetchPublicObservations = async ({
-  dateFrom,
-  dateTo,
-  regionId,
-}: FetchPublicObservationsParams): Promise<Avalanche[]> => {
-  const supabase = createServiceRoleClient()
+  limit,
+  offset,
+  sort,
+  ...filters
+}: FetchPublicObservationsParams): Promise<ObservationsPage> => {
+  const dateColumn = dateColumns[filters.dateBasis]
 
-  let query = supabase
-    .from('recent_avalanches')
-    .select(publicColumns)
-    .eq('source', 'external')
-    .eq('status', 'published')
-    .eq('region_id', regionId)
-    .order('date', { ascending: false })
+  let query = queryPublicObservations(filters, { columns: publicColumns, isCounted: true })
 
-  if (dateFrom) query = query.gte('date', dateFrom)
-  if (dateTo) query = query.lte('date', dateTo)
+  if (sort === 'largest') query = query.order('size', { ascending: false })
+  // "Date unknown" always after dated ones — also rows that still carry a date
+  // but were marked unknown, which the client groups as unknown too
+  if (filters.dateBasis === 'occurred') query = query.order('is_date_unknown', { ascending: true })
 
-  const { data, error } = await query
+  const { count, data, error } = await query
+    .order(dateColumn, { ascending: false, nullsFirst: false })
+    .order('created_at', { ascending: false })
+    .order('id', { ascending: false })
+    .range(offset, offset + limit - 1)
 
   if (error) throw new Error(error.message)
 
-  // TODO: type-safe DB conversion — https://app.asana.com/1/1208747886147296/project/1208747689500826/task/1214630622531225
-  return convertSnakeToCamel(data ?? []) as Avalanche[]
+  return { observations: await toPublicObservations(data ?? []), total: count ?? 0 }
 }
 
 export default fetchPublicObservations

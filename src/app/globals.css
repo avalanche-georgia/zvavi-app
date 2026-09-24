@@ -20,7 +20,35 @@
   --color-hazard-5: #1b1a1e;
 
   --color-primary: #ff6f00;
+  --color-primary-hover: #e86200;
+  --color-primary-soft: #fff1e6;
+  --color-primary-ink: #9a3d00;
   --color-brand-blue: #0c5aa6;
+
+  /* Neutral scale (observations redesign — first step toward a fuller system) */
+  --color-ink: #1b1a1e;
+  --color-body: #4a4951;
+  --color-muted: #6c6b71;
+  --color-rule: #e6e6e2;
+  --color-rule-strong: #cfcfca;
+  --color-tile: #f1f2f4;
+  --color-tile-hover: #e4e6ea;
+  --color-canvas: #fafaf9;
+  --color-off: #d3d6db;
+  /* Behind map tiles while they load */
+  --color-map: #e8e6df;
+
+  /* Interactive accent — selected aspects, links, focus rings */
+  --color-accent: oklch(0.52 0.15 255);
+  --color-accent-hover: oklch(0.46 0.15 255);
+  --color-accent-soft: oklch(0.93 0.04 255);
+
+  /* Avalanche size shades, 1 (smallest) → 5 */
+  --color-size-1: #f1f2f4;
+  --color-size-2: #e1e3e7;
+  --color-size-3: #9ea3ad;
+  --color-size-4: #555a64;
+  --color-size-5: #1b1a1e;
 
   @keyframes fadeIn {
     from {

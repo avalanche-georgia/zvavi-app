@@ -1,14 +1,89 @@
 observations:
-  pageTitle: 'დაკვირვებები — {regionName}'
-  empty: 'დაკვირვებები ჯერ არ არის მოწოდებული.'
-  submitCta: 'დაკვირვების მოწოდება'
+  pageTitle: 'დაკვირვებები'
+  reportCta: 'მოწოდება'
+
+  summary:
+    total: '{regionName} · {total} დაკვირვება'
+    filtered: '{regionName} · {count} დაკვირვება {total}-დან'
+
+  view:
+    label: 'ხედი'
+    list: 'სია'
+    map: 'რუკა'
 
   filters:
-    reset: 'ფილტრების გადატვირთვა'
+    clear: 'ფილტრების გასუფთავება'
+    anyDate: 'ნებისმიერი'
+    dateBasis:
+      label: 'თარიღი'
+      occurred: 'მოხდა'
+      reported: 'მოწოდებულია'
+    periods:
+      label: 'პერიოდი'
+      all: 'ყველა'
+      season: 'ეს სეზონი'
+      '7d': '7 დღე'
+      '30d': '30 დღე'
+      custom: 'არჩეული'
+      unknown: 'თარიღი უცნობია'
+    sort:
+      label: 'დალაგება'
+      newest: 'უახლესი'
+      largest: 'უდიდესი'
+
+  groups:
+    today: 'დღეს'
+    yesterday: 'გუშინ'
+    thisWeek: 'ამ კვირაში'
+    unknown: 'თარიღი უცნობია'
+    largestFirst: 'ჯერ უდიდესი'
+
+  empty:
+    noReports: 'დაკვირვებები ჯერ არ არის მოწოდებული.'
+    title: 'შესაბამისი დაკვირვებები ვერ მოიძებნა'
+    description: 'სცადეთ უფრო ფართო პერიოდი.'
+
+  list:
+    loadMoreFailed: 'ვერ ჩაიტვირთა — სცადეთ ხელახლა'
+
+  labels:
+    dateUnknown: 'თარიღი უცნობია'
+    quantity: 'რაოდენობა'
+    size: 'ზომა'
+    slabDepth: 'ფილის სისქე'
+    trigger: 'გამომწვევი'
+    typeAndSize: '{type} · ზომა {size}'
+    width: 'სიგანე'
+
+  aspects:
+    allAspects: 'ყველა ექსპოზიცია'
+    allElevations: 'ყველა სიმაღლე'
 
   card:
-    dateUnknown: 'თარიღი უცნობია'
-    submittedBy: 'მოწოდებულია {submitterName}-ის მიერ'
+    quantity: '×{count}'
+    reportedAgo: 'მოწოდებულია {time}'
+
+  photos:
+    unavailable: 'ფოტო ჯერ მიუწვდომელია'
+
+  map:
+    onMap: 'რუკაზე: {count}'
+
+  detail:
+    position: '{current} / {total}'
+    previous: 'წინა დაკვირვება'
+    next: 'შემდეგი დაკვირვება'
+    facts:
+      occurred: 'მოხდა'
+      reported: 'მოწოდებულია'
+    where: 'სად'
+    aspectsNotReported: 'ექსპოზიცია და სიმაღლე მითითებული არ არის.'
+    showOnMap: 'რუკაზე ჩვენება'
+    description: 'აღწერა'
+    reportedBy: 'მოაწოდა'
+
+  location:
+    openInMaps: 'რუკების აპლიკაციაში გახსნა'
 
   submit:
     title: 'დაკვირვების მოწოდება — {regionName}'
@@ -43,7 +118,7 @@ observations:
       type: 'ზვავის ტიპი'
       width: 'სიგანე (მ)'
     placeholders:
-      description: 'სხვა რამე, რაც ღირს აღნიშვნა — ამინდი, თოვლის საფარი, ახლომახლო აქტივობა…'
+      description: 'ვინმე მოჰყვა ზვავს, ჩაიმარხა ან დაშავდა? ასევე სასარგებლოა — რა მანძილზე ჩამოვიდა, ამინდი, თოვლის საფარი…'
       latitude: 'მაგ. 42.6975'
       longitude: 'მაგ. 44.4547'
       submitterContact: 'როგორ დაგიკავშირდეთ? ელფოსტა, ტელეფონი, Instagram…'
@@ -62,15 +137,11 @@ observations:
       failed: 'ატვირთვა ვერ მოხერხდა'
       retry: 'ხელახლა'
       remove: 'ფოტოს წაშლა'
-      open: 'ფოტო {index}-ის გახსნა'
-      close: 'დახურვა'
-      previous: 'წინა ფოტო'
-      next: 'შემდეგი ფოტო'
-      counter: '{current} / {total}'
       errors:
         uploading: 'გთხოვთ, დაელოდოთ ყველა ფოტოს ატვირთვას.'
         failed: 'ზოგიერთი ფოტო ვერ აიტვირთა. შეამოწმეთ ინტერნეტი და დააჭირეთ „ხელახლა“, ან წაშალეთ ისინი.'
         notFound: 'ზოგიერთი ფოტო სერვერამდე ვერ მივიდა. წაშალეთ და თავიდან დაამატეთ.'
+        unprocessable: 'ერთ-ერთი ფოტო ვერ დამუშავდა. წაშალეთ ძალიან დიდი ან უჩვეულო ფოტოები და კვლავ გაგზავნეთ.'
         unsupported: '{files}: ფორმატი არ არის მხარდაჭერილი. გამოიყენეთ JPEG, PNG ან HEIC ფოტოები.'
         tooLarge: '{files}: ფაილი ძალიან დიდია. თითო ფოტო უნდა იყოს {maxSize} MB-ზე ნაკლები.'
         unreadable: '{file} ამ ბრაუზერში ვერ გაიხსნა. სცადეთ ფოტოს JPEG ვერსია.'

@@ -10,6 +10,7 @@ import { useTranslations } from 'next-intl'
 import AvalancheDetailsSection from './AvalancheDetailsSection'
 import DateSection from './DateSection'
 import Quantity from './Quantity'
+import { type FormErrors, getIsLocationRequired, validate } from './validateAvalancheForm'
 import { Aspects, AvalancheSize, Footer, type SetAspectsData } from '../../common'
 
 export type AvalancheFormProps = {
@@ -18,27 +19,12 @@ export type AvalancheFormProps = {
   onSave: (data: Omit<Avalanche, 'regionId'>) => void
 }
 
-type FormErrors = {
-  date?: string
-  trigger?: string
-  type?: string
-}
-
-const validate = (data: AvalancheFormData): FormErrors => {
-  const errors: FormErrors = {}
-
-  if (!data.isDateUnknown && !data.date) errors.date = 'required'
-  if (!data.type) errors.type = 'required'
-  if (!data.trigger) errors.trigger = 'required'
-
-  return errors
-}
-
 const AvalancheForm = ({ avalancheData, onClose, onSave }: AvalancheFormProps) => {
   const t = useTranslations()
 
   const [data, setData] = useState(avalancheData)
   const [errors, setErrors] = useState<FormErrors>({})
+  const [isLocationRequired] = useState(() => getIsLocationRequired(avalancheData))
 
   const handleSizeChange = useCallback((value: AvalancheSizeType) => {
     setData((prev) => ({ ...prev, size: value }))
@@ -52,7 +38,7 @@ const AvalancheForm = ({ avalancheData, onClose, onSave }: AvalancheFormProps) =
   )
 
   const handleSave = () => {
-    const formErrors = validate(data)
+    const formErrors = validate(data, isLocationRequired)
 
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors)
@@ -83,7 +69,13 @@ const AvalancheForm = ({ avalancheData, onClose, onSave }: AvalancheFormProps) =
 
       <AvalancheDetailsSection
         data={data}
-        errors={{ trigger: errors.trigger, type: errors.type }}
+        errors={{
+          latitude: errors.latitude,
+          longitude: errors.longitude,
+          trigger: errors.trigger,
+          type: errors.type,
+        }}
+        isLocationRequired={isLocationRequired}
         setData={setData}
       />
 

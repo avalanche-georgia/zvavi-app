@@ -7,11 +7,21 @@ import { useRouter } from 'src/i18n/navigation'
 
 import type { ObservationSubmitFormData } from '../schema'
 
-import { photosNotFoundError } from '@/api/observations/schema'
+import { photosNotFoundError, photosUnprocessableError } from '@/api/observations/schema'
 import { routes } from '@/routes'
 
 type UseObservationSubmitFormSubmitParams = {
   regionId: RegionId
+}
+
+// Photo-specific failures get messages that say which action fixes them
+const getSubmitErrorKey = (error: unknown) => {
+  const message = error instanceof Error ? error.message : undefined
+
+  if (message === photosNotFoundError) return 'observations.submit.photos.errors.notFound'
+  if (message === photosUnprocessableError) return 'observations.submit.photos.errors.unprocessable'
+
+  return 'observations.submit.error'
 }
 
 const useObservationSubmitFormSubmit = ({ regionId }: UseObservationSubmitFormSubmitParams) => {
@@ -25,7 +35,7 @@ const useObservationSubmitFormSubmit = ({ regionId }: UseObservationSubmitFormSu
       try {
         await createObservation({
           aspects: formData.aspects,
-          date: formData.date ? formData.date.toISOString() : null,
+          date: formData.date && !formData.isDateUnknown ? formData.date.toISOString() : null,
           description: formData.description,
           honeypot: formData.honeypot,
           isDateUnknown: formData.isDateUnknown,
@@ -47,13 +57,9 @@ const useObservationSubmitFormSubmit = ({ regionId }: UseObservationSubmitFormSu
         toastSuccess(t('observations.submit.success'))
         router.push(routes.observationsByRegion(regionId).root)
       } catch (error) {
-        const isPhotosNotFound = error instanceof Error && error.message === photosNotFoundError
-
         toastError('ObservationSubmitForm | handleSubmit', {
           error,
-          message: isPhotosNotFound
-            ? t('observations.submit.photos.errors.notFound')
-            : t('observations.submit.error'),
+          message: t(getSubmitErrorKey(error)),
         })
       }
     },

@@ -3,8 +3,11 @@ common:
     add: 'დამატება'
     backToList: 'სიაში დაბრუნება'
     cancel: 'გაუქმება'
+    close: 'დახურვა'
     confirm: 'დადასტურება'
     continue: 'გაგრძელება'
+    copy: 'კოპირება'
+    copied: 'დაკოპირდა'
     delete: 'წაშლა'
     edit: 'რედაქტირება'
     getInTouch: 'დაგვიკავშირდით'
@@ -101,6 +104,16 @@ common:
     overall: 'საერთო'
     to: 'მდე'
     unknown: 'უცნობი'
+
+  photoViewer:
+    open: 'ფოტო {index}-ის გახსნა'
+    previous: 'წინა ფოტო'
+    next: 'შემდეგი ფოტო'
+    counter: '{current} / {total}'
+
+  units:
+    centimeters: '{value} სმ'
+    meters: '{value} მ'
 
   disclaimer:
     title: '⚠️ უარყოფა ⚠️'

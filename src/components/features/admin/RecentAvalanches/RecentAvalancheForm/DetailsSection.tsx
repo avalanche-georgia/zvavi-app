@@ -8,7 +8,7 @@ import ClassificationFields from './ClassificationFields'
 import LocationFields from './LocationFields'
 import type { AvalancheFormSchema } from './schema'
 
-const DetailsSection = () => {
+const DetailsSection = ({ isLocationRequired }: { isLocationRequired: boolean }) => {
   const t = useTranslations()
   const form = useFormContext<AvalancheFormSchema>()
 
@@ -16,7 +16,7 @@ const DetailsSection = () => {
     <div className="flex flex-col gap-4">
       <div className="grid grid-cols-2 gap-3">
         <ClassificationFields />
-        <LocationFields />
+        <LocationFields isLocationRequired={isLocationRequired} />
       </div>
 
       {/* Used for internal purposes only — deliberately not exposed on the public

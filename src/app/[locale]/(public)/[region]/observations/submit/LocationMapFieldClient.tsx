@@ -1,18 +1,16 @@
 'use client'
 
-import { useEffect, useMemo } from 'react'
+import {
+  BaseMapLayers,
+  baseMapMaxZoom,
+  RegionBoundary,
+  useRegionBounds,
+} from '@components/shared/map'
 import type { Region } from '@domain/types'
-import type { FeatureCollection } from 'geojson'
-import L, { geoJSON, type LatLngBounds, type PathOptions } from 'leaflet'
-import { GeoJSON, MapContainer, Marker, TileLayer, useMap, useMapEvents } from 'react-leaflet'
+import L from 'leaflet'
+import { MapContainer, Marker, useMapEvents } from 'react-leaflet'
 
 import 'leaflet/dist/leaflet.css'
-
-const zoneStyle: PathOptions = {
-  color: '#dc2626',
-  fillOpacity: 0.05,
-  weight: 1.5,
-}
 
 // Brand-colored teardrop pin (matches --color-brand-blue) instead of Leaflet's
 // stock blue marker. className cleared — Leaflet's default div-icon class adds
@@ -33,27 +31,10 @@ const pinIcon = L.divIcon({
 const fallbackCenter: [number, number] = [42.1, 43.5]
 const fallbackZoom = 7
 
-// OpenTopoMap only serves tiles up to zoom 17 — without this, zooming past it
-// shows blank "max zoom layer = 17" placeholder tiles instead of the map.
-const maxZoom = 17
-
 const ClickHandler = ({ onPick }: { onPick: (lat: number, lng: number) => void }) => {
   useMapEvents({
     click: (event) => onPick(event.latlng.lat, event.latlng.lng),
   })
-
-  return null
-}
-
-// Caps how far out the user can zoom to roughly "region + 20%" — Leaflet's
-// maxBounds alone only restricts panning, not zoom level, so this needs the
-// map instance (only available once mounted, hence useMap + effect).
-const ZoomLimiter = ({ bounds }: { bounds: LatLngBounds }) => {
-  const map = useMap()
-
-  useEffect(() => {
-    map.setMinZoom(map.getBoundsZoom(bounds))
-  }, [map, bounds])
 
   return null
 }
@@ -71,15 +52,8 @@ const LocationMapFieldClient = ({
   onChange,
   region,
 }: LocationMapFieldClientProps) => {
-  const zoneBounds = useMemo<LatLngBounds | null>(() => {
-    if (!region.forecastZone) return null
-
-    return geoJSON(region.forecastZone as FeatureCollection).getBounds()
-  }, [region.forecastZone])
-
-  // One padding value drives the initial view, pan limit, and zoom-out limit —
-  // "region + 20%" for all three.
-  const bounds = zoneBounds?.pad(0.2)
+  // "Region + 20%" for the initial view, pan limit, and zoom-out limit
+  const bounds = useRegionBounds(region, 0.2)
 
   const regionCenter: [number, number] | undefined = region.mapCenter
     ? [region.mapCenter.lat, region.mapCenter.lng]
@@ -87,28 +61,17 @@ const LocationMapFieldClient = ({
 
   return (
     <MapContainer
-      bounds={bounds}
+      bounds={bounds ?? undefined}
       center={bounds ? undefined : (regionCenter ?? fallbackCenter)}
       className="z-30 h-116 w-full cursor-crosshair rounded-xl"
-      maxBounds={bounds}
+      maxBounds={bounds ?? undefined}
       maxBoundsViscosity={1}
-      maxZoom={maxZoom}
+      maxZoom={baseMapMaxZoom}
       zoom={bounds ? undefined : (region.defaultZoom ?? fallbackZoom)}
     >
-      <TileLayer
-        attribution='&copy; <a href="https://opentopomap.org">OpenTopoMap</a>, <a href="https://www.openstreetmap.org/copyright">OSM</a>'
-        maxNativeZoom={maxZoom}
-        url="https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"
-      />
-      <TileLayer
-        attribution='<a href="https://www.opensnowmap.org/">OpenSnowMap</a>'
-        url="https://tiles.opensnowmap.org/pistes/{z}/{x}/{y}.png"
-      />
+      <BaseMapLayers />
 
-      {(region.forecastZone as FeatureCollection | null)?.features.length ? (
-        <GeoJSON data={region.forecastZone as FeatureCollection} style={zoneStyle} />
-      ) : null}
-      {bounds && <ZoomLimiter bounds={bounds} />}
+      <RegionBoundary bounds={bounds} region={region} />
       <ClickHandler onPick={onChange} />
       {latitude != null && longitude != null && (
         <Marker icon={pinIcon} position={[latitude, longitude]} />
