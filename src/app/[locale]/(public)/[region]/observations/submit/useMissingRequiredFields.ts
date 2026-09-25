@@ -2,19 +2,30 @@ import { useFormContext, useWatch } from 'react-hook-form'
 
 import type { ObservationSubmitFormSchema } from './schema'
 
-export const requiredFields = ['location', 'type', 'trigger', 'size', 'submitterName'] as const
+const requiredFields = ['date', 'location', 'type', 'trigger', 'size', 'submitterName'] as const
 
-export type RequiredField = (typeof requiredFields)[number]
+type RequiredField = (typeof requiredFields)[number]
 
 // Live list of required fields still empty — drives the submit bar status
 const useMissingRequiredFields = (): RequiredField[] => {
   const { control } = useFormContext<ObservationSubmitFormSchema>()
-  const [latitude, longitude, type, trigger, size, submitterName] = useWatch({
+  const [date, isDateUnknown, latitude, longitude, type, trigger, size, submitterName] = useWatch({
     control,
-    name: ['latitude', 'longitude', 'type', 'trigger', 'size', 'submitterName'],
+    name: [
+      'date',
+      'isDateUnknown',
+      'latitude',
+      'longitude',
+      'type',
+      'trigger',
+      'size',
+      'submitterName',
+    ],
   })
 
   const isFilled: Record<RequiredField, boolean> = {
+    // "Pick a date" chosen but left empty
+    date: isDateUnknown || date !== null,
     location: latitude != null && longitude != null,
     size: size != null,
     submitterName: !!submitterName?.trim(),

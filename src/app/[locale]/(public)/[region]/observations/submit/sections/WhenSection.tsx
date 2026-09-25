@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useIsClient } from '@components/hooks'
 import { useFormFieldError } from '@ds/form'
 import { FormCard } from '@ds/patterns'
 import { ChipGroup, FieldGroup, TextField } from '@ds/primitives'
@@ -21,6 +22,8 @@ const WhenSection = () => {
   const t = useTranslations()
   const locale = useLocale()
   const form = useFormContext<ObservationSubmitFormSchema>()
+  // "Today" depends on the device's timezone — the server may be on another day
+  const isClient = useIsClient()
   const [date, isDateUnknown] = useWatch({ control: form.control, name: ['date', 'isDateUnknown'] })
   const [choice, setChoice] = useState<DateChoice>(isDateUnknown ? 'unknown' : 'today')
   const error = useFormFieldError<ObservationSubmitFormSchema>(
@@ -51,7 +54,7 @@ const WhenSection = () => {
   const hint =
     choice === 'unknown'
       ? t('observations.submit.date.unknownHint')
-      : date && format(date, 'EEE, d MMMM', { locale: getDateFnsLocale(locale) })
+      : isClient && date && format(date, 'EEE, d MMMM', { locale: getDateFnsLocale(locale) })
 
   return (
     <FormCard title={t('observations.submit.sections.when')}>

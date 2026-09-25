@@ -50,6 +50,7 @@ const WhatSection = () => {
         options={typeOptions}
         required
         requiredMessage={t('observations.submit.what.typeRequired')}
+        requiredText={t('common.validation.required')}
       />
       <FormChipGroup<ObservationSubmitFormSchema, (typeof triggerOptions)[number]['value']>
         emptyValue=""
@@ -59,6 +60,7 @@ const WhatSection = () => {
         options={triggerOptions}
         required
         requiredMessage={t('observations.submit.what.triggerRequired')}
+        requiredText={t('common.validation.required')}
       />
       <SizeField />
       <FormStepper<ObservationSubmitFormSchema>

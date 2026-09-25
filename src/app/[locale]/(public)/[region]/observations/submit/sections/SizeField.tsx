@@ -43,6 +43,7 @@ const SizeField = () => {
       hint={t('observations.submit.what.sizeHint')}
       label={t('observations.submit.labels.size')}
       required
+      requiredText={t('common.validation.required')}
     >
       <ToggleGrid onChange={handleChange} options={sizeOptions} value={value} />
     </FieldGroup>

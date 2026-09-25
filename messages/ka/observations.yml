@@ -105,6 +105,7 @@ observations:
       missing: 'დარჩა <b>{count} სავალდებულო</b> · {fields}'
       ready: 'მზადაა გასაგზავნად'
       fields:
+        date: 'თარიღი'
         location: 'მდებარეობა'
         type: 'ტიპი'
         trigger: 'გამომწვევი'
@@ -204,7 +205,6 @@ observations:
       submitterEducation: 'მაგ. AST 1, არცერთი, თვითნასწავლი…'
       submitterName: 'ნინო ბერიძე'
     photos:
-      label: 'ფოტოები'
       hint: 'ყველაზე სასარგებლოა მოწყვეტის ხაზისა და ნაშალის ფოტოები. JPEG, PNG ან HEIC · თითო მაქს. {maxSize} MB.'
       upTo: 'მაქსიმუმ {max}'
       add: 'ფოტოს დამატება'

@@ -35,10 +35,17 @@ const aspectsSchema = z.object({
 // across the app (see its "(internal)" label on the forecast-nested avalanche
 // form); location (free text) is out of scope for the public form by product
 // decision.
+const dayInMs = 24 * 60 * 60 * 1000
+
 export const submitObservationSchema = z
   .object({
     aspects: aspectsSchema.nullable(),
-    date: z.iso.datetime({ offset: true }).nullable(),
+    // Not in the future — a day of slack covers any client timezone (date-only
+    // values are sent at local noon)
+    date: z.iso
+      .datetime({ offset: true })
+      .refine((date) => Date.parse(date) <= Date.now() + dayInMs)
+      .nullable(),
     description: z.string().max(avalancheFieldLimits.descriptionMaxLength).nullable(),
     isDateUnknown: z.boolean(),
     latitude: z
@@ -67,7 +74,7 @@ export const submitObservationSchema = z
       .nullable(),
     submitterContact: z.string().max(200).nullable(),
     submitterEducation: z.string().max(200).nullable(),
-    submitterName: z.string().min(1).max(100),
+    submitterName: z.string().trim().min(1).max(100),
     trigger: z.enum(avalanche_trigger),
     type: z.enum(avalanche_type),
     width: z

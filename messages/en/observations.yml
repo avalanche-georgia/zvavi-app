@@ -105,6 +105,7 @@ observations:
       missing: '<b>{count} required</b> left · {fields}'
       ready: 'Ready to send'
       fields:
+        date: 'Date'
         location: 'Location'
         type: 'Type'
         trigger: 'Trigger'
@@ -204,7 +205,6 @@ observations:
       submitterEducation: 'e.g. AST 1, none, self-taught…'
       submitterName: 'Jane Doe'
     photos:
-      label: 'Photos'
       hint: 'Photos of the crown and debris help most. JPEG, PNG or HEIC · max {maxSize} MB each.'
       upTo: 'Up to {max}'
       add: 'Add photo'

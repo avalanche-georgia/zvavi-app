@@ -37,6 +37,7 @@ const SubmitBar = ({ isWaitingForPhotos }: { isWaitingForPhotos: boolean }) => {
           {t('observations.submit.submit')}
         </Button>
       }
+      announcement={isWaitingForPhotos ? t('observations.submit.waitingForPhotos') : undefined}
       className="-mx-4 mt-1 md:mx-0"
       status={getStatus()}
     />
