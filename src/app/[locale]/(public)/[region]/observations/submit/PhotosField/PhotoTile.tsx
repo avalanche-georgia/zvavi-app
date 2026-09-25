@@ -52,8 +52,8 @@ const PhotoTile = ({ index, onOpen, onRemove, onRetry, photo }: PhotoTileProps) 
         className={cn(
           'focus-ring absolute top-1.5 right-1.5 flex size-7.5 items-center justify-center rounded-full',
           'bg-ink/72 hover:bg-ink/90 text-white backdrop-blur-sm transition-colors',
-          // 44px touch target without a visually bigger button
-          'after:absolute after:-inset-1.75',
+          // 44px touch target without a visually bigger button (touch screens only)
+          'after:absolute pointer-coarse:after:-inset-1.75',
         )}
         onClick={() => onRemove(photo.id)}
         type="button"

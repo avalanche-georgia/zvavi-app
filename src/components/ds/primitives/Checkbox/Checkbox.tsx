@@ -18,7 +18,7 @@ type CheckboxProps = {
   onCheckedChange: (checked: boolean) => void
 }
 
-// The <label> wraps box + text, so the whole row (min 44px tall) toggles it
+// The <label> wraps box + text, so clicking either toggles it
 const Checkbox = ({
   checked,
   className,
@@ -31,8 +31,9 @@ const Checkbox = ({
 
   return (
     <div className={cn('flex flex-col', className)}>
-      <div className="flex min-h-11 items-center gap-2">
-        <label className="flex cursor-pointer items-center gap-3 self-stretch">
+      <div className="flex items-center gap-2">
+        {/* Hugs box + text for a mouse; grows to a 44px row on touch screens */}
+        <label className="flex cursor-pointer items-center gap-3 py-0.5 pointer-coarse:min-h-11">
           <BaseCheckbox.Root
             aria-describedby={description ? descriptionId : undefined}
             checked={checked}

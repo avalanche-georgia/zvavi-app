@@ -20,8 +20,9 @@ const InfoTip = ({ ariaLabel, children, className }: InfoTipProps) => (
       aria-label={ariaLabel}
       className={cn(
         'focus-ring text-muted hover:text-ink data-popup-open:text-ink relative inline-flex size-5 items-center justify-center rounded-full align-middle transition-colors',
-        // 44px touch target around the small icon
-        'after:absolute after:-inset-3',
+        // 44px target around the small icon on touch screens only — with a mouse
+        // an invisible margin makes the cursor flip to a pointer far from the icon
+        'after:absolute pointer-coarse:after:-inset-3',
         className,
       )}
       closeDelay={100}
