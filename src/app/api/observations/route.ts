@@ -92,7 +92,7 @@ export const POST = async (request: Request) => {
     p_photo_keys: photoKeys,
     p_quantity: body.quantity,
     p_region_id: body.regionId,
-    p_size: body.size ?? undefined,
+    p_size: body.size,
     p_slab_depth: body.slabDepth ?? undefined,
     p_submitter_contact: body.submitterContact ?? undefined,
     p_submitter_education: body.submitterEducation ?? undefined,

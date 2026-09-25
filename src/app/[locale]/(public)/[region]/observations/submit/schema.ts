@@ -70,7 +70,12 @@ export const observationSubmitSchema = z
     longitude: coordinateSchema(longitude),
     photos: photosSchema,
     quantity: rangeSchema(quantity).int(),
-    size: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]),
+    // No default on purpose: the submitter must pick one (the DB column is NOT NULL)
+    size: z
+      .number()
+      .nullable()
+      .refine((value) => value !== null, { message: 'required' })
+      .pipe(z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)])),
     slabDepth: rangeSchema(slabDepth).nullable(),
     submitterContact: z.string().max(200, { message: 'tooLong' }).nullable(),
     submitterEducation: z.string().max(200, { message: 'tooLong' }).nullable(),
@@ -94,7 +99,7 @@ export const observationSubmitSchema = z
     width: rangeSchema(width).nullable(),
   })
   .superRefine((data, context) => {
-    // Either a date or "Date unknown" ticked — the API rejects neither
+    // Either a date or "Not sure" — the API rejects neither
     if (!data.isDateUnknown && data.date === null) {
       context.addIssue({ code: 'custom', message: 'required', path: ['date'] })
     }

@@ -59,9 +59,7 @@ export const submitObservationSchema = z
       .min(avalancheFieldLimits.quantity.min)
       .max(avalancheFieldLimits.quantity.max),
     regionId: z.enum(region_id),
-    size: z
-      .union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)])
-      .nullable(),
+    size: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]),
     slabDepth: z
       .number()
       .min(avalancheFieldLimits.slabDepth.min)
