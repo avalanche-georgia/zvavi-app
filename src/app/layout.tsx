@@ -66,8 +66,8 @@ const Layout = async ({ children }: LayoutProps) => {
   const messages = await getMessages()
 
   return (
-    <html lang={locale}>
-      <body className={`${inter.className} flex min-h-dvh flex-col antialiased`}>
+    <html className={inter.variable} lang={locale}>
+      <body className="flex min-h-dvh flex-col font-sans antialiased">
         <ObservabilityProvider>
           <NextIntlClientProvider messages={messages}>
             <QueryClientProvider>

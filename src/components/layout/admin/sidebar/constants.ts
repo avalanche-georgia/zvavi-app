@@ -13,4 +13,8 @@ export const navItems: NavItem[] = [
     icon: 'thermometerSnowflake',
     label: 'weatherStations',
   },
+  // Developer tooling — the route stays reachable by URL on every environment
+  ...(process.env.NODE_ENV === 'development'
+    ? [{ href: routes.admin.designSystem, icon: 'palette', label: 'designSystem' } as const]
+    : []),
 ]
