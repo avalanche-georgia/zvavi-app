@@ -1,3 +1,4 @@
+export { default as FormCheckbox } from './FormCheckbox'
 export { default as FormChipGroup } from './FormChipGroup'
 export { default as FormNumberField } from './FormNumberField'
 export { default as FormStepper } from './FormStepper'

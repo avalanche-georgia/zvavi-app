@@ -1,6 +1,7 @@
 import { Icon } from '@components/icons'
 import { Checkbox as HeadlessUICheckbox, Field, Label } from '@headlessui/react'
-import clsx from 'clsx'
+
+import { cn } from '@/lib/utils'
 
 type LabelPosition = 'left' | 'right'
 
@@ -12,6 +13,7 @@ type CheckboxProps = {
   onChange: (checked: boolean) => void
 }
 
+/** @deprecated Use `Checkbox` from `@ds/primitives` — see DESIGN_SYSTEM.md */
 const Checkbox = ({
   className,
   isChecked,
@@ -24,7 +26,7 @@ const Checkbox = ({
 
     <HeadlessUICheckbox
       checked={isChecked}
-      className={clsx(
+      className={cn(
         'group flex size-5 cursor-pointer items-center justify-center rounded-md p-0.5 ring-1',
         'data-hover:ring-primary ring-white/15 ring-inset',
         'data-checked:bg-primary transition-[background-color,box-shadow]',
