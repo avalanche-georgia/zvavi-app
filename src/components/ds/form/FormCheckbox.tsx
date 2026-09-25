@@ -8,6 +8,7 @@ type FormCheckboxProps<TFieldValues extends FieldValues> = {
   className?: string
   description?: React.ReactNode
   label: React.ReactNode
+  labelAside?: React.ReactNode
   name: FieldPath<TFieldValues>
 }
 
@@ -15,6 +16,7 @@ const FormCheckbox = <TFieldValues extends FieldValues>({
   className,
   description,
   label,
+  labelAside,
   name,
 }: FormCheckboxProps<TFieldValues>) => {
   const { field } = useController<TFieldValues>({ name })
@@ -25,6 +27,7 @@ const FormCheckbox = <TFieldValues extends FieldValues>({
       className={className}
       description={description}
       label={label}
+      labelAside={labelAside}
       onCheckedChange={field.onChange}
     />
   )
