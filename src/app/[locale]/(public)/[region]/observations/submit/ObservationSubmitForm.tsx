@@ -8,13 +8,22 @@ import { FormProvider, useForm } from 'react-hook-form'
 import useObservationSubmitFormSubmit from './hooks/useObservationSubmitFormSubmit'
 import useSubmitAfterPhotoUploads from './hooks/useSubmitAfterPhotoUploads'
 
-import FormFields from './FormFields'
 import getInitialFormData from './getInitialFormData'
+import HoneypotField from './HoneypotField'
+import ObservationKindTabs from './ObservationKindTabs'
 import type { ObservationSubmitFormData, ObservationSubmitFormSchema } from './schema'
 import { observationSubmitSchema } from './schema'
-import SubmitButton from './SubmitButton'
+import AboutYouSection from './sections/AboutYouSection'
+import AspectsSection from './sections/AspectsSection'
+import DescriptionSection from './sections/DescriptionSection'
+import LocationSection from './sections/LocationSection'
+import PhotosSection from './sections/PhotosSection'
+import WhatSection from './sections/WhatSection'
+import WhenSection from './sections/WhenSection'
+import SubmitBar from './SubmitBar'
+import SubmitFinePrint from './SubmitFinePrint'
 
-const ObservationSubmitForm = () => {
+const ObservationSubmitForm = ({ onSubmitted }: { onSubmitted: () => void }) => {
   const { region } = useRegionContext()
 
   const form = useForm<ObservationSubmitFormSchema, unknown, ObservationSubmitFormData>({
@@ -26,7 +35,10 @@ const ObservationSubmitForm = () => {
 
   useUnsavedChangesWarning(form.formState.isDirty)
 
-  const { handleSubmit } = useObservationSubmitFormSubmit({ regionId: region!.id })
+  const { handleSubmit } = useObservationSubmitFormSubmit({
+    onSuccess: onSubmitted,
+    regionId: region!.id,
+  })
   const { formRef, handleFormSubmit, isWaitingForPhotos } = useSubmitAfterPhotoUploads({
     form,
     onValid: handleSubmit,
@@ -35,14 +47,18 @@ const ObservationSubmitForm = () => {
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <FormProvider {...form}>
-      <form
-        ref={formRef}
-        className="flex flex-col gap-6 rounded-lg bg-white p-4 shadow-sm md:p-6"
-        onSubmit={handleFormSubmit}
-      >
-        <FormFields />
-
-        <SubmitButton isWaitingForPhotos={isWaitingForPhotos} />
+      <form ref={formRef} className="flex flex-col gap-3" noValidate onSubmit={handleFormSubmit}>
+        <HoneypotField />
+        <ObservationKindTabs />
+        <WhenSection />
+        <LocationSection />
+        <WhatSection />
+        <AspectsSection />
+        <PhotosSection />
+        <DescriptionSection />
+        <AboutYouSection />
+        <SubmitBar isWaitingForPhotos={isWaitingForPhotos} />
+        <SubmitFinePrint />
       </form>
     </FormProvider>
   )

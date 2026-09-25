@@ -24,6 +24,18 @@ const PrivacyPolicyContent = () => {
       />
 
       <LegalSection
+        description={t('legal.privacy.observations.description')}
+        details={t('legal.privacy.observations.details')}
+        items={t.raw('legal.privacy.observations.items') as string[]}
+        title={t('legal.privacy.observations.title')}
+      />
+
+      <LegalSection
+        description={t('legal.privacy.deviceStorage.description')}
+        title={t('legal.privacy.deviceStorage.title')}
+      />
+
+      <LegalSection
         description={t('legal.privacy.storage.description')}
         title={t('legal.privacy.storage.title')}
       />

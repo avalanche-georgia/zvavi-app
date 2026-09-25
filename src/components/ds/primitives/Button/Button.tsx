@@ -15,8 +15,8 @@ const variantClasses: Record<ButtonVariant, string> = {
   overlay: 'rounded-control bg-surface text-ink shadow-overlay hover:bg-tile',
   primary: 'rounded-field bg-primary text-white hover:bg-primary-hover',
   secondary: 'rounded-field border border-rule bg-surface text-ink hover:bg-tile',
-  // Inline link-style action; the ::after keeps a 44px touch target around short text
-  text: 'relative text-accent after:absolute after:-inset-x-1 after:-inset-y-1.5 hover:text-accent-hover',
+  // Inline link-style action; on touch screens the ::after grows short text to a 44px target
+  text: 'relative text-accent after:absolute pointer-coarse:after:-inset-x-1 pointer-coarse:after:-inset-y-1.5 hover:text-accent-hover',
 }
 
 const boxSizeClasses: Record<ButtonSize, string> = {
