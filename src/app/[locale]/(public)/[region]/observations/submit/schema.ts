@@ -69,7 +69,10 @@ export const observationSubmitSchema = z
     latitude: coordinateSchema(latitude),
     longitude: coordinateSchema(longitude),
     photos: photosSchema,
+
     quantity: rangeSchema(quantity).int(),
+    // UI only — not sent to the API
+    rememberDetails: z.boolean(),
     // No default on purpose: the submitter must pick one (the DB column is NOT NULL)
     size: z
       .number()

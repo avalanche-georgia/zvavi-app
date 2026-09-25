@@ -1,28 +1,22 @@
 import { useEffect } from 'react'
-import type { UseFormReturn } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form'
 
-import type { ObservationSubmitFormData, ObservationSubmitFormSchema } from '../schema'
-import { loadSubmitterDetails } from '../submitterDetailsStorage'
+import type { ObservationSubmitFormSchema } from '../schema'
+import type { SubmitterDetails } from '../submitterDetailsStorage'
 
-type ObservationForm = UseFormReturn<
-  ObservationSubmitFormSchema,
-  unknown,
-  ObservationSubmitFormData
->
-
-// Fills "About you" from the last submission on this device. Runs after mount
-// (localStorage isn't available while rendering on the server) and resets the
-// defaults, so prefilled details don't count as unsaved changes.
-const usePrefillSubmitterDetails = (form: ObservationForm) => {
-  const { getValues, reset } = form
+// Fills "About you" from details remembered on this device. Updates the field
+// defaults too, so prefilled values don't count as unsaved changes.
+const usePrefillSubmitterDetails = (savedDetails: SubmitterDetails | null) => {
+  const { resetField } = useFormContext<ObservationSubmitFormSchema>()
 
   useEffect(() => {
-    const savedDetails = loadSubmitterDetails()
-
     if (!savedDetails) return
 
-    reset({ ...getValues(), ...savedDetails })
-  }, [getValues, reset])
+    resetField('submitterName', { defaultValue: savedDetails.submitterName })
+    resetField('submitterEducation', { defaultValue: savedDetails.submitterEducation })
+    resetField('submitterContact', { defaultValue: savedDetails.submitterContact })
+    resetField('rememberDetails', { defaultValue: true })
+  }, [resetField, savedDetails])
 }
 
 export default usePrefillSubmitterDetails

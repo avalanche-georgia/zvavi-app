@@ -169,6 +169,15 @@ observations:
       alpine: '2000–2600 m'
       subAlpine: 'below 2000 m'
     nameRequired: 'Add your name.'
+    aboutYou:
+      reportingAs: 'Reporting as'
+      edit: 'Edit'
+      remember: 'Remember my details on this device'
+      rememberInfo: 'How remembering works'
+      rememberHint: "Saved only in this browser, just to fill in this form next time — this copy never reaches our servers and isn't shown to anyone. Skip it on a shared device."
+      savedOnDevice: 'Your details are saved in this browser.'
+      forget: 'Forget me'
+      forgotten: 'Your details were removed from this device.'
     labels:
       description: 'Description'
       latitude: 'Latitude'

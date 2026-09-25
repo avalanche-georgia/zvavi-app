@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl'
 
 import { addPendingOwnReport } from '../../helpers/pendingOwnReports'
 import type { ObservationSubmitFormData } from '../schema'
-import { saveSubmitterDetails } from '../submitterDetailsStorage'
+import { forgetSubmitterDetails, saveSubmitterDetails } from '../submitterDetailsStorage'
 
 import { photosNotFoundError, photosUnprocessableError } from '@/api/observations/schema'
 
@@ -70,11 +70,18 @@ const useObservationSubmitFormSubmit = ({
           size: formData.size,
           type: formData.type,
         })
-        saveSubmitterDetails({
-          submitterContact: formData.submitterContact || null,
-          submitterEducation: formData.submitterEducation || null,
-          submitterName: formData.submitterName,
-        })
+
+        // Unticking "Remember me" and sending also forgets what was saved before
+        if (formData.rememberDetails) {
+          saveSubmitterDetails({
+            submitterContact: formData.submitterContact || null,
+            submitterEducation: formData.submitterEducation || null,
+            submitterName: formData.submitterName,
+          })
+        } else {
+          forgetSubmitterDetails()
+        }
+
         onSuccess()
       } catch (error) {
         toastError('ObservationSubmitForm | handleSubmit', {

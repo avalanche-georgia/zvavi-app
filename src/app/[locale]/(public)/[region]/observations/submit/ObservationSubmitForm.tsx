@@ -6,7 +6,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { FormProvider, useForm } from 'react-hook-form'
 
 import useObservationSubmitFormSubmit from './hooks/useObservationSubmitFormSubmit'
-import usePrefillSubmitterDetails from './hooks/usePrefillSubmitterDetails'
 import useSubmitAfterPhotoUploads from './hooks/useSubmitAfterPhotoUploads'
 
 import getInitialFormData from './getInitialFormData'
@@ -35,7 +34,6 @@ const ObservationSubmitForm = ({ onSubmitted }: { onSubmitted: () => void }) => 
   })
 
   useUnsavedChangesWarning(form.formState.isDirty)
-  usePrefillSubmitterDetails(form)
 
   const { handleSubmit } = useObservationSubmitFormSubmit({
     onSuccess: onSubmitted,

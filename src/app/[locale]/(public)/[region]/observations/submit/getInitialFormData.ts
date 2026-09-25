@@ -15,6 +15,7 @@ const getInitialFormData = (): ObservationSubmitFormSchema => ({
   longitude: null,
   photos: [],
   quantity: 1,
+  rememberDetails: false,
   size: null,
   slabDepth: null,
   submitterContact: null,
