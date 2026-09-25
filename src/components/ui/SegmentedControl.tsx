@@ -21,6 +21,7 @@ type SegmentedControlProps<T extends string> = {
 }
 
 // Single-select, always one option active — pressing the active one keeps it.
+/** @deprecated Use `SegmentedControl` from `@ds/primitives` — see DESIGN_SYSTEM.md */
 const SegmentedControl = <T extends string>({
   ariaLabel,
   className,

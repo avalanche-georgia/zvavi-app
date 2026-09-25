@@ -1,14 +1,16 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { Textarea as HeadlessUITextarea } from '@headlessui/react'
-import clsx from 'clsx'
 import type { TextareaHTMLAttributes } from 'react'
+
+import { cn } from '@/lib/utils'
 
 type TextareaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & { hasError?: boolean }
 
+/** @deprecated Use `Textarea` from `@ds/primitives` — see DESIGN_SYSTEM.md */
 const Textarea = ({ hasError, rows = 3, ...props }: TextareaProps) => (
   <HeadlessUITextarea
     {...props}
-    className={clsx(
+    className={cn(
       'resize-none rounded-sm bg-gray-100 px-3 py-1.5 text-sm dark:bg-white/5',
       'focus:outline-hidden data-focus:outline-2 data-focus:-outline-offset-2',
       'data-focus:outline-primary/40 transition-colors',
