@@ -7,6 +7,7 @@ import { useTranslations } from 'next-intl'
 
 import { addPendingOwnReport } from '../../helpers/pendingOwnReports'
 import type { ObservationSubmitFormData } from '../schema'
+import { saveSubmitterDetails } from '../submitterDetailsStorage'
 
 import { photosNotFoundError, photosUnprocessableError } from '@/api/observations/schema'
 
@@ -68,6 +69,11 @@ const useObservationSubmitFormSubmit = ({
           regionId,
           size: formData.size,
           type: formData.type,
+        })
+        saveSubmitterDetails({
+          submitterContact: formData.submitterContact || null,
+          submitterEducation: formData.submitterEducation || null,
+          submitterName: formData.submitterName,
         })
         onSuccess()
       } catch (error) {
