@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import type { UseFormReturn } from 'react-hook-form'
 
 import useScrollToFirstError from './useScrollToFirstError'
@@ -23,6 +23,9 @@ const isSettled = (photos: PhotoUpload[]) =>
 // queued and goes out by itself the moment the last photo finishes.
 const useSubmitAfterPhotoUploads = ({ form, onValid }: UseSubmitAfterPhotoUploadsParams) => {
   const [isWaitingForPhotos, setIsWaitingForPhotos] = useState(false)
+  // Set synchronously, unlike state: a double tap during the awaits below must
+  // not queue a second submission (a duplicate observation)
+  const isHandlingSubmitRef = useRef(false)
   const { formRef, scrollToFirstError } = useScrollToFirstError()
 
   const waitForPhotoUploads = () =>
@@ -41,11 +44,7 @@ const useSubmitAfterPhotoUploads = ({ form, onValid }: UseSubmitAfterPhotoUpload
       })
     })
 
-  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-
-    if (isWaitingForPhotos) return
-
+  const submitWhenPhotosSettle = async () => {
     if (!isSettled(form.getValues('photos'))) {
       const otherFields = (
         Object.keys(form.getValues()) as (keyof ObservationSubmitFormSchema)[]
@@ -64,6 +63,20 @@ const useSubmitAfterPhotoUploads = ({ form, onValid }: UseSubmitAfterPhotoUpload
     }
 
     await form.handleSubmit(onValid, scrollToFirstError)()
+  }
+
+  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+    if (isHandlingSubmitRef.current) return
+
+    isHandlingSubmitRef.current = true
+
+    try {
+      await submitWhenPhotosSettle()
+    } finally {
+      isHandlingSubmitRef.current = false
+    }
   }
 
   return { formRef, handleFormSubmit, isWaitingForPhotos }

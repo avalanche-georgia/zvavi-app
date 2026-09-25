@@ -1,4 +1,4 @@
-import { useMemo, useSyncExternalStore } from 'react'
+import { useEffect, useMemo, useSyncExternalStore } from 'react'
 
 import type { ObservationSubmitFormSchema } from './schema'
 
@@ -76,6 +76,13 @@ const subscribe = (listener: () => void) => {
 // Saved details, or null. Always null during server rendering and hydration.
 export const useSavedSubmitterDetails = () => {
   const raw = useSyncExternalStore(subscribe, readRaw, () => null)
+  const details = useMemo(() => parseDetails(raw), [raw])
 
-  return useMemo(() => parseDetails(raw), [raw])
+  // Expired (12 months, as the privacy policy promises) or unreadable — delete it
+  // rather than just ignoring it
+  useEffect(() => {
+    if (raw !== null && details === null) forgetSubmitterDetails()
+  }, [details, raw])
+
+  return details
 }

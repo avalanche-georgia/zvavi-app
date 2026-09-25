@@ -64,7 +64,9 @@ const useScrollToFirstError = () => {
     })
     const giveUpTimeout = setTimeout(() => observer.disconnect(), waitTimeoutMs)
 
-    observer.observe(form, { attributes: true, childList: true, subtree: true })
+    // class: red borders on invalid fields/cards. Not every attribute — photo
+    // progress bars update their style continuously during uploads.
+    observer.observe(form, { attributeFilter: ['class'], childList: true, subtree: true })
     // Errors already on screen (a repeated submit) — nothing more may change
     scrollWhenSettled()
 

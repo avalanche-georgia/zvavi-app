@@ -44,7 +44,7 @@ const PhotoTileStatus = ({ onRetry, photo }: PhotoTileStatusProps) => {
   if (status === 'preparing') {
     return (
       <div className="bg-ink/45 text-caption pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-1 text-white">
-        <UploadProgressRing progress={null} />
+        <UploadProgressRing />
         <span className="font-medium">{t('observations.submit.photos.preparing')}</span>
       </div>
     )
