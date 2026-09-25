@@ -26,6 +26,7 @@ admin:
       avalancheLogged: "Avalanche logged · {region}"
 
   sidebar:
+    designSystem: 'Design system'
     forecasts: 'Forecasts'
     home: 'Home'
     members: 'Members'

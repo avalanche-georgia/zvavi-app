@@ -26,6 +26,7 @@ admin:
       avalancheLogged: 'ზვავი დაფიქსირდა · {region}'
 
   sidebar:
+    designSystem: 'დიზაინ-სისტემა'
     forecasts: 'პროგნოზები'
     home: 'მთავარი'
     members: 'წევრები'
