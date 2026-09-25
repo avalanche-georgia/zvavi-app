@@ -19,29 +19,50 @@
   --color-hazard-4: #eb450b;
   --color-hazard-5: #1b1a1e;
 
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  /*
+    Semantic tokens — the design-system (ds) vocabulary. See DESIGN_SYSTEM.md.
+    Components use these, never raw Tailwind palette classes or hex values.
+  */
+
+  /* Brand */
   --color-primary: #ff6f00;
   --color-primary-hover: #e86200;
   --color-primary-soft: #fff1e6;
   --color-primary-ink: #9a3d00;
   --color-brand-blue: #0c5aa6;
 
-  /* Neutral scale (observations redesign — first step toward a fuller system) */
+  /* Text */
   --color-ink: #1b1a1e;
   --color-body: #4a4951;
   --color-muted: #6c6b71;
+  --color-placeholder: #9a9ca3;
+  --color-disabled: #b8b8bd;
+
+  /* Lines */
   --color-rule: #e6e6e2;
   --color-rule-strong: #cfcfca;
+
+  /* Surfaces */
+  --color-surface: #ffffff;
+  --color-canvas: #fafaf9;
   --color-tile: #f1f2f4;
   --color-tile-hover: #e4e6ea;
-  --color-canvas: #fafaf9;
   --color-off: #d3d6db;
   /* Behind map tiles while they load */
   --color-map: #e8e6df;
 
-  /* Interactive accent — selected aspects, links, focus rings */
-  --color-accent: oklch(0.52 0.15 255);
-  --color-accent-hover: oklch(0.46 0.15 255);
-  --color-accent-soft: oklch(0.93 0.04 255);
+  /* Interactive accent — every selected state, links, text buttons, focus rings */
+  --color-accent: #0c5aa6;
+  --color-accent-hover: #094a8a;
+  --color-accent-soft: #e1ebf6;
+
+  /* Status */
+  --color-danger: #c4321c;
+  --color-danger-border: #f0b8ad;
+  --color-success: #1f7a44;
+  --color-success-soft: #e5f4ea;
 
   /* Avalanche size shades, 1 (smallest) → 5 */
   --color-size-1: #f1f2f4;
@@ -49,6 +70,41 @@
   --color-size-3: #9ea3ad;
   --color-size-4: #555a64;
   --color-size-5: #1b1a1e;
+
+  /* Type scale — size, line-height and tracking travel together */
+  --text-title-lg: 28px;
+  --text-title-lg--line-height: 1.15;
+  --text-title-lg--letter-spacing: -0.02em;
+  --text-title: 24px;
+  --text-title--line-height: 1.15;
+  --text-title--letter-spacing: -0.02em;
+  --text-heading: 17px;
+  --text-heading--line-height: 1.3;
+  --text-heading--letter-spacing: -0.01em;
+  --text-copy-lg: 15px;
+  --text-copy-lg--line-height: 1.45;
+  --text-copy: 14px;
+  --text-copy--line-height: 1.45;
+  --text-copy-sm: 13px;
+  --text-copy-sm--line-height: 1.45;
+  --text-caption: 12.5px;
+  --text-caption--line-height: 1.4;
+  --text-micro: 10.5px;
+  --text-micro--line-height: 1;
+  --text-micro--letter-spacing: 0.04em;
+
+  /* Radii */
+  --radius-card: 16px;
+  --radius-media: 12px;
+  --radius-field: 11px;
+  --radius-control: 10px;
+  --radius-badge: 5px;
+
+  /* Elevation */
+  --shadow-raised: 0 1px 2px rgb(0 0 0 / 0.08), 0 0 0 1px rgb(0 0 0 / 0.04);
+  --shadow-overlay: 0 1px 4px rgb(0 0 0 / 0.18);
+  --shadow-float: 0 6px 24px -8px rgb(0 0 0 / 0.12);
+  --shadow-pin: 0 2px 6px rgb(0 0 0 / 0.35);
 
   @keyframes fadeIn {
     from {
@@ -129,7 +185,7 @@
   ::before,
   ::backdrop,
   ::file-selector-button {
-    border-color: var(--color-gray-200, currentcolor);
+    border-color: var(--color-rule, currentcolor);
   }
 }
 
@@ -150,9 +206,16 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
 }
 
 button {
   cursor: pointer;
+}
+
+/* ds focus ring — apply to every interactive element */
+@utility focus-ring {
+  &:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
 }

@@ -11,6 +11,12 @@ import { fileURLToPath } from 'node:url'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
+// Raw Tailwind palette classes (`bg-gray-100`, `text-red-500`, …) — banned in the design system
+const rawPaletteClass =
+  '/\\b(bg|text|border|ring|outline|fill|stroke|from|via|to|divide|placeholder|decoration|shadow|caret)-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-\\d/'
+// Arbitrary values that should be tokens: hex colours, font sizes, radii, shadows
+const arbitraryTokenValue = '/(\\[#[0-9a-fA-F]{3,8}\\]|\\b(text|rounded|shadow)-\\[)/'
+
 const compat = new FlatCompat({
   allConfig: js.configs.all,
   baseDirectory: __dirname,
@@ -127,6 +133,38 @@ export default [
           skipBlankLines: true,
           skipComments: true,
         },
+      ],
+    },
+  },
+  {
+    // Design-system guardrails — see DESIGN_SYSTEM.md
+    files: ['src/components/ds/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['@components/ui', '@components/ui/*', '@components/features/*', '**/ui/*'],
+              message: 'ds must not depend on the legacy kit or on features.',
+            },
+          ],
+        },
+      ],
+      'no-restricted-syntax': [
+        'error',
+        ...['Literal[value={regex}]', 'TemplateElement[value.raw={regex}]'].flatMap((selector) => [
+          {
+            message:
+              'Use semantic colour tokens (ink, muted, rule, accent, …) instead of the raw palette.',
+            selector: selector.replace('{regex}', rawPaletteClass),
+          },
+          {
+            message:
+              'Use a token (text-*, rounded-*, shadow-*, colour) instead of an arbitrary value.',
+            selector: selector.replace('{regex}', arbitraryTokenValue),
+          },
+        ]),
       ],
     },
   },
