@@ -1,8 +1,8 @@
 legal:
   privacy:
     title: 'Privacy Policy'
-    lastUpdated: 'Last updated: February 2026'
-    intro: 'Avalanche Georgia ("we", "us", "our") is committed to protecting your personal data. This Privacy Policy explains how we collect, use, and safeguard information when you apply for membership or use our services.'
+    lastUpdated: 'Last updated: September 2026'
+    intro: 'Avalanche Georgia ("we", "us", "our") is committed to protecting your personal data. This Privacy Policy explains how we collect, use, and safeguard information when you apply for membership, report an avalanche observation, or use our services.'
     dataCollected:
       title: 'What Data We Collect'
       description: 'When you submit a membership application, we collect the following personal information:'
@@ -24,6 +24,17 @@ legal:
         - 'Communicating with you about your membership status'
         - 'Contacting you about organisation activities and events'
         - 'Internal membership administration'
+    observations:
+      title: 'Avalanche Observation Reports'
+      description: 'When you report an avalanche observation, you can do so without an account. We collect what you enter in the form:'
+      items:
+        - 'The observation itself: date, location, avalanche details, description and photos'
+        - 'Your name (required)'
+        - 'Your avalanche training and contact details (both optional)'
+      details: 'Photos are stripped of hidden metadata, such as the place and device they were taken with, before they are stored. Every report is reviewed by our forecasters before it is published. A published report shows the observation, its photos and your first name with the initial of your last name. Your training and contact details are never published: only our team can see them, and we use them solely to ask follow-up questions about your report. You can ask us to remove your name or contact details from a report at any time.'
+    deviceStorage:
+      title: 'Details Remembered on Your Device'
+      description: 'If you tick “Remember my details on this device” when reporting an observation, your name, training and contact details are saved in your browser’s local storage, so the form is filled in for you next time. This copy never leaves your device on its own: it is sent to us only as part of a report you choose to submit, it is not used for tracking or analytics, and it is not visible to us or anyone else. It is kept for 12 months after your last report, until you press “Forget me” on the form or submit a report with the box unticked, or until you clear your browser’s site data — whichever comes first. We recommend not using this option on shared devices.'
     storage:
       title: 'How Your Data Is Stored'
       description: 'Your data is stored securely using Supabase, a cloud database platform with encryption at rest and in transit. We take reasonable measures to protect your information from unauthorized access, alteration, or destruction.'
