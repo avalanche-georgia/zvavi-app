@@ -7,6 +7,7 @@ type NumberInputProps = Omit<NumberField.Root.Props, 'allowWheelScrub' | 'render
   hasError?: boolean
 }
 
+/** @deprecated Use `Stepper / NumberField` from `@ds/primitives` — see DESIGN_SYSTEM.md */
 const NumberInput = ({ className, hasError, ...props }: NumberInputProps) => (
   <NumberField.Root {...props} allowWheelScrub={false} className={cn('flex h-8', className)}>
     <NumberField.Group
