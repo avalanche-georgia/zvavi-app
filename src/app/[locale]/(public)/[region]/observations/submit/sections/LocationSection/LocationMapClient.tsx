@@ -62,15 +62,19 @@ const LocationMapClient = ({
     : undefined
 
   return (
-    <div className="border-rule rounded-media relative isolate -mx-1 overflow-hidden border md:mx-0">
+    // The height lives on this wrapper: react-leaflet ignores className changes on
+    // MapContainer after it mounts, so the map just fills whatever height we animate
+    <div
+      className={cn(
+        'border-rule rounded-media relative isolate -mx-1 overflow-hidden border transition-[height] duration-250 md:mx-0',
+        isExpanded ? 'h-[62vh]' : 'h-65 md:h-80',
+      )}
+    >
       <MapContainer
         ref={setMap}
         bounds={bounds ?? undefined}
         center={bounds ? undefined : (regionCenter ?? fallbackCenter)}
-        className={cn(
-          'bg-map w-full cursor-crosshair transition-[height] duration-250',
-          isExpanded ? 'h-[62vh]' : 'h-65 md:h-80',
-        )}
+        className="bg-map size-full cursor-crosshair"
         maxBounds={bounds ?? undefined}
         maxBoundsViscosity={1}
         maxZoom={baseMapMaxZoom}
