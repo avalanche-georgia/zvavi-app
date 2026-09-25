@@ -27,10 +27,11 @@ next to it and migrate screen by screen.
 ```
 src/components/
 ├── ds/                  # new kit — the only place new generic UI goes
-│   ├── primitives/      # Button, TextField, Textarea, Field, ChipGroup, SegmentedControl,
-│   │                    # Stepper, ToggleGrid, Badge, …
-│   ├── patterns/        # FormCard, StickyActionBar, SuccessState, UnitInput, OverlayButton, …
-│   └── form/            # react-hook-form bindings: FormChipGroup, FormStepper, FormTextField, …
+│   ├── primitives/      # Button, Badge, Checkbox, Field, FieldGroup, TextField, NumberField,
+│   │                    # Textarea, ChipGroup, ToggleGrid, SegmentedControl, Stepper, InfoTip
+│   ├── patterns/        # FormCard, StickyActionBar, SuccessState
+│   └── form/            # react-hook-form bindings: FormTextField, FormTextarea, FormNumberField,
+│                        # FormStepper, FormChipGroup, FormCheckbox, useFormFieldError
 ├── ui/                  # legacy kit — frozen, deleted piece by piece
 └── features/            # domain components, built from ds
 ```
@@ -51,7 +52,7 @@ src/components/
 
 | Tier | What it is | May know about |
 |---|---|---|
-| **Primitive** (`ds/primitives`) | A single generic control. Controlled (`value` / `onChange`). base-ui provides the behaviour. | Tokens only |
+| **Primitive** (`ds/primitives`) | A single generic control, always controlled: `value` + `onValueChange` for inputs (`onChange` for choice groups, `onCheckedChange` for Checkbox). base-ui provides the behaviour. | Tokens only |
 | **Pattern** (`ds/patterns`) | A generic arrangement of primitives (a card with header, a sticky action bar) | Primitives |
 | **Form binding** (`ds/form`) | A thin `useController` wrapper around a primitive + its `Field`: wires `value`/`onChange` and the translated error (via `useFieldError`) | react-hook-form, app hooks |
 | **Domain component** (`features/*`) | Anything that knows about avalanches, regions or observations (SizePicker, aspect/elevation picker, LocationMap, PhotoGrid) | Everything above |
@@ -138,13 +139,18 @@ Rules:
 - **Focus ring:** a 2px accent outline with a 2px offset on every interactive element, using
   `focus-visible` rather than `focus`.
 - **Labels:**
-  - Every input gets a real `<label>`, via base-ui `Field.Label`.
-  - Hints and errors are linked through `aria-describedby`, and errors set `aria-invalid`.
+  - Every input gets a real `<label>` via base-ui `Field.Label`; groups get a `<fieldset>` + legend.
+  - Hints, descriptions and errors are linked through `aria-describedby`. Inputs inside `Field` also
+    get `aria-invalid`.
+  - Required: text inputs carry `required` themselves. Groups (`FieldGroup`) and cards (`FormCard`)
+    can't, so they announce it through `requiredText` (visually hidden, after the label).
+  - A flow that replaces itself (e.g. `SuccessState`) moves focus to its new heading.
 - **Errors:** form bindings render `data-field-error`, so `useScrollToFirstError` keeps working.
 - **i18n:** components take their strings as props, and callers translate them with the project rules.
   `ds/` primitives never call `useTranslations()` themselves.
 - **Keep files under ~100 lines.** Split sub-parts into their own files.
-- **Gallery:** every ds component gets a `<Name>.gallery.tsx` demo next to it, covering all variants
+- **Gallery:** every ds component is covered by a `<Name>.gallery.tsx` demo next to it (the text-like
+  inputs share `Field.gallery.tsx`), covering all variants
   and states (default, hover, focus, selected, disabled, error). Register it in
   `src/components/features/admin/DesignSystemGallery/entries.ts`. The gallery is at `/admin/ds`, linked
   from the admin sidebar in local dev. Demo copy is English-only fixture text; it's developer tooling.

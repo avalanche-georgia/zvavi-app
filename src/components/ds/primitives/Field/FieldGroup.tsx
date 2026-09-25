@@ -23,21 +23,25 @@ const FieldGroup = ({
   isLabelHidden,
   label,
   required,
+  requiredText,
 }: FieldGroupProps) => {
   const id = useId()
+  const hintId = `${id}-hint`
   const descriptionId = `${id}-description`
   const errorId = `${id}-error`
-  const describedBy = [description && descriptionId, error && errorId].filter(Boolean).join(' ')
+  const describedBy = [hint && hintId, description && descriptionId, error && errorId]
+    .filter(Boolean)
+    .join(' ')
 
   return (
     <Fieldset.Root
       aria-describedby={describedBy || undefined}
       className={cn('flex min-w-0 flex-col gap-2', className)}
     >
-      <FieldLabelRow hint={hint}>
+      <FieldLabelRow hint={hint} hintId={hintId}>
         <Fieldset.Legend className={cn(fieldLabelClasses, isLabelHidden && 'sr-only')}>
           {label}
-          {required && <RequiredMark />}
+          {required && <RequiredMark srText={requiredText} />}
         </Fieldset.Legend>
       </FieldLabelRow>
       {children}

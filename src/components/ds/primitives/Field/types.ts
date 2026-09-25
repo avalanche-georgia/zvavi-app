@@ -8,6 +8,9 @@ export type FieldChromeProps = {
   isLabelHidden?: boolean
   label: React.ReactNode
   required?: boolean
+  // Announced after the label when `required` — for groups, whose controls can't
+  // carry the `required` attribute themselves (a translated "Required")
+  requiredText?: string
 }
 
 export const fieldLabelClasses = 'text-copy text-ink font-semibold'

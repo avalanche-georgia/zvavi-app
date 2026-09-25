@@ -14,7 +14,8 @@ type FieldProps = FieldChromeProps & {
 }
 
 // One labelled control. base-ui wires the <label>, description and error to the control
-// (Input, NumberField, Field.Control) for us — including aria-describedby / aria-invalid.
+// (Input, NumberField, Field.Control) for us — including aria-describedby (hint,
+// description, error) and aria-invalid.
 const Field = ({
   children,
   className,
@@ -33,7 +34,12 @@ const Field = ({
         orientation === 'horizontal' ? 'items-center justify-between' : 'flex-col',
       )}
     >
-      <FieldLabelRow hint={orientation === 'vertical' ? hint : undefined}>
+      <FieldLabelRow
+        hint={
+          orientation === 'vertical' &&
+          hint && <BaseField.Description render={<span />}>{hint}</BaseField.Description>
+        }
+      >
         <BaseField.Label className={cn(fieldLabelClasses, isLabelHidden && 'sr-only')}>
           {label}
           {required && <RequiredMark />}

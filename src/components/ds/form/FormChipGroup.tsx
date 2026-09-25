@@ -28,6 +28,7 @@ const FormChipGroup = <TFieldValues extends FieldValues, T extends string>({
   options,
   required,
   requiredMessage,
+  requiredText,
 }: FormChipGroupProps<TFieldValues, T>) => {
   const { field } = useController<TFieldValues>({ name })
   const error = useFormFieldError<TFieldValues>(name, requiredMessage)
@@ -45,6 +46,7 @@ const FormChipGroup = <TFieldValues extends FieldValues, T extends string>({
       isLabelHidden={isLabelHidden}
       label={label}
       required={required}
+      requiredText={requiredText}
     >
       <ChipGroup
         isDeselectable={isDeselectable}
