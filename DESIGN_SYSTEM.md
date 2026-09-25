@@ -53,7 +53,7 @@ src/components/
 |---|---|---|
 | **Primitive** (`ds/primitives`) | A single generic control. Controlled (`value` / `onChange`). base-ui provides the behaviour. | Tokens only |
 | **Pattern** (`ds/patterns`) | A generic arrangement of primitives (a card with header, a sticky action bar) | Primitives |
-| **Form binding** (`ds/form`) | A thin `Controller` wrapper around a primitive: wires `value`/`onChange`, `aria-invalid`, `data-field-error`, and the error message | react-hook-form |
+| **Form binding** (`ds/form`) | A thin `useController` wrapper around a primitive + its `Field`: wires `value`/`onChange` and the translated error (via `useFieldError`) | react-hook-form, app hooks |
 | **Domain component** (`features/*`) | Anything that knows about avalanches, regions or observations (SizePicker, aspect/elevation picker, LocationMap, PhotoGrid) | Everything above |
 
 Rule of thumb: if a component would make sense in an unrelated app, it goes in `ds`. Otherwise it goes
@@ -165,7 +165,7 @@ Rules:
 | Phase | Scope | Status |
 |---|---|---|
 | **1. Foundation** | Tokens, Inter 700 as `font-sans`, `globals.css` cleanup (dead Arial rule, border default → `rule`), accent → `#0c5aa6`, `@ds/*` alias, `cn()` aware of custom tokens, lint rules, gallery page with tokens | ☐ |
-| **2. Primitives for submit** | Button, Field, TextField (+ unit suffix), Textarea, ChipGroup, SegmentedControl (disabled option and badge), Stepper, ToggleGrid, Badge. Patterns FormCard, StickyActionBar, SuccessState. Form bindings | ☐ |
+| **2. Primitives for submit** | Button, Badge, Field / FieldGroup, TextField, NumberField, Textarea, ChipGroup, ToggleGrid, SegmentedControl, Stepper. Patterns FormCard, StickyActionBar, SuccessState. Form bindings. Gallery demos | ☐ |
 | **3. Submit page redesign** | `local/observations/design_handoff_submit_observation/` built on ds | ☐ |
 | **4. Rest of observations** | List toolbar, detail views, aspect/elevation picker moved to `features/` with a bare variant | ☐ |
 | **5. Legacy, by screen area** | Public pages (auth, forecasts, about) → admin forms → admin tables, modals and drawers | ☐ |

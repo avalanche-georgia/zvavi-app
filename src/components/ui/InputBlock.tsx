@@ -17,6 +17,7 @@ type BaseProps = {
 type InputBlockProps = BaseProps &
   ({ optional?: boolean; required?: never } | { optional?: never; required?: boolean })
 
+/** @deprecated Use `Field / FieldGroup` from `@ds/primitives` — see DESIGN_SYSTEM.md */
 const InputBlock = ({
   children,
   className,

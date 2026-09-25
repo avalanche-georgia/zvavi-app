@@ -16,6 +16,7 @@ type ChipGroupProps<T extends string> = {
 }
 
 // Single-select pill chips in a row that scrolls sideways when it overflows.
+/** @deprecated Use `ChipGroup` from `@ds/primitives` — see DESIGN_SYSTEM.md */
 const ChipGroup = <T extends string>({
   ariaLabel,
   className,
