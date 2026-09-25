@@ -1,18 +1,21 @@
+import { startOfToday } from 'date-fns'
+
 import type { ObservationSubmitFormSchema } from './schema'
 
 const emptyAspects = { alpine: [], highAlpine: [], subAlpine: [] }
 
+// Most reports are about today — "Today" is preselected
 const getInitialFormData = (): ObservationSubmitFormSchema => ({
   aspects: emptyAspects,
-  date: null,
+  date: startOfToday(),
   description: null,
   honeypot: '',
-  isDateUnknown: true,
+  isDateUnknown: false,
   latitude: null,
   longitude: null,
   photos: [],
   quantity: 1,
-  size: 1,
+  size: null,
   slabDepth: null,
   submitterContact: null,
   submitterEducation: null,

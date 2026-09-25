@@ -25,15 +25,15 @@ const PhotoTile = ({ index, onOpen, onRemove, onRetry, photo }: PhotoTileProps) 
   const hasPreviewError = failedPreviewUrl === photo.previewUrl
 
   return (
-    <div className="group relative aspect-square overflow-hidden rounded-xl bg-gray-100 ring-1 ring-black/5">
+    <div className="group rounded-media bg-tile relative aspect-square overflow-hidden">
       <button
         aria-label={t('common.photoViewer.open', { index: index + 1 })}
-        className="flex size-full cursor-zoom-in items-center justify-center focus-visible:outline-2 focus-visible:outline-offset-2"
+        className="focus-ring flex size-full cursor-zoom-in items-center justify-center"
         onClick={() => onOpen(index)}
         type="button"
       >
         {hasPreviewError ? (
-          <ImageOff className="size-6 text-gray-400" />
+          <ImageOff className="text-muted size-6" />
         ) : (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -50,15 +50,15 @@ const PhotoTile = ({ index, onOpen, onRemove, onRetry, photo }: PhotoTileProps) 
       <button
         aria-label={t('observations.submit.photos.remove')}
         className={cn(
-          'absolute top-1.5 right-1.5 flex size-7 items-center justify-center rounded-full',
-          'bg-black/60 text-white backdrop-blur-sm transition-colors hover:bg-black/80',
-          // 40px touch target without a visually bigger button
-          'after:absolute after:-inset-1.5',
+          'focus-ring absolute top-1.5 right-1.5 flex size-7.5 items-center justify-center rounded-full',
+          'bg-ink/72 hover:bg-ink/90 text-white backdrop-blur-sm transition-colors',
+          // 44px touch target without a visually bigger button
+          'after:absolute after:-inset-1.75',
         )}
         onClick={() => onRemove(photo.id)}
         type="button"
       >
-        <X className="size-4" strokeWidth={2.5} />
+        <X className="size-3.5" strokeWidth={2.5} />
       </button>
     </div>
   )

@@ -2,18 +2,22 @@ import { useCallback } from 'react'
 import { useToast } from '@components/hooks'
 import { useObservationCreate } from '@data/hooks/observations'
 import type { RegionId } from '@domain/types'
+import { setHours, startOfDay } from 'date-fns'
 import { useTranslations } from 'next-intl'
-import { useRouter } from 'src/i18n/navigation'
 
 import { addPendingOwnReport } from '../../helpers/pendingOwnReports'
 import type { ObservationSubmitFormData } from '../schema'
 
 import { photosNotFoundError, photosUnprocessableError } from '@/api/observations/schema'
-import { routes } from '@/routes'
 
 type UseObservationSubmitFormSubmitParams = {
+  onSuccess: () => void
   regionId: RegionId
 }
+
+// A date-only choice is stored at local noon, so the calendar day survives any
+// viewer's timezone offset (local midnight in UTC+4 is the previous day in UTC)
+const toDateOnlyIso = (date: Date) => setHours(startOfDay(date), 12).toISOString()
 
 // Photo-specific failures get messages that say which action fixes them
 const getSubmitErrorKey = (error: unknown) => {
@@ -25,10 +29,12 @@ const getSubmitErrorKey = (error: unknown) => {
   return 'observations.submit.error'
 }
 
-const useObservationSubmitFormSubmit = ({ regionId }: UseObservationSubmitFormSubmitParams) => {
+const useObservationSubmitFormSubmit = ({
+  onSuccess,
+  regionId,
+}: UseObservationSubmitFormSubmitParams) => {
   const t = useTranslations()
-  const router = useRouter()
-  const { toastError, toastSuccess } = useToast()
+  const { toastError } = useToast()
   const { mutateAsync: createObservation } = useObservationCreate()
 
   const handleSubmit = useCallback(
@@ -36,7 +42,7 @@ const useObservationSubmitFormSubmit = ({ regionId }: UseObservationSubmitFormSu
       try {
         const { id } = await createObservation({
           aspects: formData.aspects,
-          date: formData.date && !formData.isDateUnknown ? formData.date.toISOString() : null,
+          date: formData.date && !formData.isDateUnknown ? toDateOnlyIso(formData.date) : null,
           description: formData.description,
           honeypot: formData.honeypot,
           isDateUnknown: formData.isDateUnknown,
@@ -63,8 +69,7 @@ const useObservationSubmitFormSubmit = ({ regionId }: UseObservationSubmitFormSu
           size: formData.size,
           type: formData.type,
         })
-        toastSuccess(t('observations.submit.success'))
-        router.push(routes.observationsByRegion(regionId).root)
+        onSuccess()
       } catch (error) {
         toastError('ObservationSubmitForm | handleSubmit', {
           error,
@@ -72,7 +77,7 @@ const useObservationSubmitFormSubmit = ({ regionId }: UseObservationSubmitFormSu
         })
       }
     },
-    [createObservation, regionId, router, t, toastError, toastSuccess],
+    [createObservation, onSuccess, regionId, t, toastError],
   )
 
   return { handleSubmit }
