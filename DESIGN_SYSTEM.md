@@ -27,10 +27,11 @@ next to it and migrate screen by screen.
 ```
 src/components/
 ├── ds/                  # new kit — the only place new generic UI goes
-│   ├── primitives/      # Button, TextField, Textarea, Field, ChipGroup, SegmentedControl,
-│   │                    # Stepper, ToggleGrid, Badge, …
-│   ├── patterns/        # FormCard, StickyActionBar, SuccessState, UnitInput, OverlayButton, …
-│   └── form/            # react-hook-form bindings: FormChipGroup, FormStepper, FormTextField, …
+│   ├── primitives/      # Button, Badge, Checkbox, Field, FieldGroup, TextField, NumberField,
+│   │                    # Textarea, ChipGroup, ToggleGrid, SegmentedControl, Stepper, InfoTip
+│   ├── patterns/        # FormCard, StickyActionBar, SuccessState
+│   └── form/            # react-hook-form bindings: FormTextField, FormTextarea, FormNumberField,
+│                        # FormStepper, FormChipGroup, FormCheckbox, useFormFieldError
 ├── ui/                  # legacy kit — frozen, deleted piece by piece
 └── features/            # domain components, built from ds
 ```
@@ -51,7 +52,7 @@ src/components/
 
 | Tier | What it is | May know about |
 |---|---|---|
-| **Primitive** (`ds/primitives`) | A single generic control. Controlled (`value` / `onChange`). base-ui provides the behaviour. | Tokens only |
+| **Primitive** (`ds/primitives`) | A single generic control, always controlled: `value` + `onValueChange` for inputs (`onChange` for choice groups, `onCheckedChange` for Checkbox). base-ui provides the behaviour. | Tokens only |
 | **Pattern** (`ds/patterns`) | A generic arrangement of primitives (a card with header, a sticky action bar) | Primitives |
 | **Form binding** (`ds/form`) | A thin `useController` wrapper around a primitive + its `Field`: wires `value`/`onChange` and the translated error (via `useFieldError`) | react-hook-form, app hooks |
 | **Domain component** (`features/*`) | Anything that knows about avalanches, regions or observations (SizePicker, aspect/elevation picker, LocationMap, PhotoGrid) | Everything above |
@@ -131,17 +132,25 @@ Rules:
 - **Hit targets are at least 44×44px** on touch.
   - This matches Apple HIG and WCAG 2.5.5 (AAA). WCAG 2.5.8 (AA) sets 24px as the floor.
   - Our users often report from the field with gloves or cold hands.
-  - Visually smaller controls must extend their hit area, for example with an invisible `::before`.
+  - Visually smaller controls extend their hit area **on touch screens only**, with the
+    `pointer-coarse:` variant (e.g. `after:absolute pointer-coarse:after:-inset-3`). With a mouse the
+    hit area hugs the visible control; an invisible margin there makes the cursor flip to a pointer
+    far away from it.
 - **Focus ring:** a 2px accent outline with a 2px offset on every interactive element, using
   `focus-visible` rather than `focus`.
 - **Labels:**
-  - Every input gets a real `<label>`, via base-ui `Field.Label`.
-  - Hints and errors are linked through `aria-describedby`, and errors set `aria-invalid`.
+  - Every input gets a real `<label>` via base-ui `Field.Label`; groups get a `<fieldset>` + legend.
+  - Hints, descriptions and errors are linked through `aria-describedby`. Inputs inside `Field` also
+    get `aria-invalid`.
+  - Required: text inputs carry `required` themselves. Groups (`FieldGroup`) and cards (`FormCard`)
+    can't, so they announce it through `requiredText` (visually hidden, after the label).
+  - A flow that replaces itself (e.g. `SuccessState`) moves focus to its new heading.
 - **Errors:** form bindings render `data-field-error`, so `useScrollToFirstError` keeps working.
 - **i18n:** components take their strings as props, and callers translate them with the project rules.
   `ds/` primitives never call `useTranslations()` themselves.
 - **Keep files under ~100 lines.** Split sub-parts into their own files.
-- **Gallery:** every ds component gets a `<Name>.gallery.tsx` demo next to it, covering all variants
+- **Gallery:** every ds component is covered by a `<Name>.gallery.tsx` demo next to it (the text-like
+  inputs share `Field.gallery.tsx`), covering all variants
   and states (default, hover, focus, selected, disabled, error). Register it in
   `src/components/features/admin/DesignSystemGallery/entries.ts`. The gallery is at `/admin/ds`, linked
   from the admin sidebar in local dev. Demo copy is English-only fixture text; it's developer tooling.
@@ -164,9 +173,9 @@ Rules:
 
 | Phase | Scope | Status |
 |---|---|---|
-| **1. Foundation** | Tokens, Inter 700 as `font-sans`, `globals.css` cleanup (dead Arial rule, border default → `rule`), accent → `#0c5aa6`, `@ds/*` alias, `cn()` aware of custom tokens, lint rules, gallery page with tokens | ☐ |
-| **2. Primitives for submit** | Button, Badge, Field / FieldGroup, TextField, NumberField, Textarea, ChipGroup, ToggleGrid, SegmentedControl, Stepper. Patterns FormCard, StickyActionBar, SuccessState. Form bindings. Gallery demos | ☐ |
-| **3. Submit page redesign** | `local/observations/design_handoff_submit_observation/` built on ds | ☐ |
+| **1. Foundation** | Tokens, Inter 700 as `font-sans`, `globals.css` cleanup (dead Arial rule, border default → `rule`), accent → `#0c5aa6`, `@ds/*` alias, `cn()` aware of custom tokens, lint rules, gallery page with tokens | ✅ |
+| **2. Primitives for submit** | Button, Badge, Field / FieldGroup, TextField, NumberField, Textarea, ChipGroup, ToggleGrid, SegmentedControl, Stepper. Patterns FormCard, StickyActionBar, SuccessState. Form bindings. Gallery demos | ✅ |
+| **3. Submit page redesign** | `local/observations/design_handoff_submit_observation/` built on ds | ✅ |
 | **4. Rest of observations** | List toolbar, detail views, aspect/elevation picker moved to `features/` with a bare variant | ☐ |
 | **5. Legacy, by screen area** | Public pages (auth, forecasts, about) → admin forms → admin tables, modals and drawers | ☐ |
 | **6. Cleanup** | Delete `ui/`. Remove `@headlessui/react`, `@radix-ui/*` and `clsx` | ☐ |
@@ -191,7 +200,7 @@ Update this table when a legacy component's last consumer is migrated.
 | DatePicker, Calendar, TimeInput, TimePicker, DatePickerTimeInput | Headless UI + react-day-picker | `primitives/DateField` (TBD) | ☐ |
 | Modal | Headless UI | `primitives/Dialog` (base-ui) | ☐ |
 | Popover | Radix | `primitives/Popover` (base-ui) | ☐ |
-| Tooltip, InfoIcon | Radix | `primitives/Tooltip` (base-ui) | ☐ |
+| Tooltip, InfoIcon | Radix | `primitives/InfoTip` (base-ui Popover); a plain Tooltip TBD | ☐ |
 | DropdownMenu | base-ui | `primitives/Menu` | ☐ |
 | Drawer, Sheet | vaul / base-ui | `patterns/Sheet` (TBD) | ☐ |
 | IconButton | custom | `primitives/IconButton` | ☐ |

@@ -1,4 +1,5 @@
 import { avalancheFieldLimits, observationPhotoLimits, sortedAspects } from '@domain/constants'
+import { endOfToday } from 'date-fns'
 import { z } from 'zod'
 
 import { Constants } from '@/lib/supabase/types'
@@ -62,7 +63,11 @@ const photosSchema = z
 export const observationSubmitSchema = z
   .object({
     aspects: aspectsSchema,
-    date: z.date().nullable(),
+    // Date-only: anything up to the end of today is fine (never in the future)
+    date: z
+      .date()
+      .refine((date) => date <= endOfToday(), { message: 'futureDate' })
+      .nullable(),
     description: z.string().max(descriptionMaxLength, { message: 'tooLong' }).nullable(),
     honeypot: z.string(),
     isDateUnknown: z.boolean(),
@@ -70,12 +75,20 @@ export const observationSubmitSchema = z
     longitude: coordinateSchema(longitude),
     photos: photosSchema,
     quantity: rangeSchema(quantity).int(),
-    size: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]),
+    // UI only — not sent to the API
+    rememberDetails: z.boolean(),
+    // No default on purpose: the submitter must pick one (the DB column is NOT NULL)
+    size: z
+      .number()
+      .nullable()
+      .refine((value) => value !== null, { message: 'required' })
+      .pipe(z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)])),
     slabDepth: rangeSchema(slabDepth).nullable(),
     submitterContact: z.string().max(200, { message: 'tooLong' }).nullable(),
     submitterEducation: z.string().max(200, { message: 'tooLong' }).nullable(),
     submitterName: z
       .string({ error: () => ({ message: 'required' }) })
+      .trim()
       .min(1, { message: 'required' })
       .max(100, { message: 'tooLong' }),
     // .pipe() gives trigger/type a string input type (so RHF/Select can hold an
@@ -93,11 +106,13 @@ export const observationSubmitSchema = z
       .pipe(z.enum(avalanche_type, { error: () => ({ message: 'required' }) })),
     width: rangeSchema(width).nullable(),
   })
-  .superRefine((data, context) => {
-    // Either a date or "Date unknown" ticked — the API rejects neither
-    if (!data.isDateUnknown && data.date === null) {
-      context.addIssue({ code: 'custom', message: 'required', path: ['date'] })
-    }
+  // Either a date or "Not sure". `when` runs this even when other fields already
+  // failed (e.g. no pin yet) — otherwise the date error would only show up on a
+  // later submit.
+  .refine((data) => data.isDateUnknown || data.date !== null, {
+    message: 'required',
+    path: ['date'],
+    when: () => true,
   })
 
 export type ObservationSubmitFormSchema = z.input<typeof observationSubmitSchema>

@@ -5,8 +5,13 @@ const FormCardGallery = () => (
     <FormCard headerAside="Optional" title="Anything else?">
       <p className="text-copy text-body">Card content.</p>
     </FormCard>
-    <FormCard isInvalid required title="Where?">
-      <p className="text-copy-sm text-danger">Drop a pin or enter coordinates.</p>
+    <FormCard
+      error="Drop a pin or enter coordinates."
+      required
+      requiredText="Required"
+      title="Where?"
+    >
+      <p className="text-copy text-body">Card content.</p>
     </FormCard>
   </div>
 )

@@ -44,6 +44,7 @@ common:
   validation:
     activeWithExpiredDate: 'Status cannot be active when expiration date is in the past'
     expiresAtBeforeJoined: 'Expiration date must be after joined date'
+    futureDate: 'Cannot be in the future'
     invalid: 'Invalid value'
     invalidCredentials: 'Incorrect current password'
     invalid_string: 'Invalid format'

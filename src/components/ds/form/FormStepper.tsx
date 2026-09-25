@@ -1,9 +1,9 @@
 'use client'
 
-import { useFieldError } from '@components/hooks'
 import { type FieldValues, useController } from 'react-hook-form'
 
 import type { FormFieldProps } from './types'
+import useFormFieldError from './useFormFieldError'
 import { Field, Stepper } from '../primitives'
 
 type FormStepperProps<TFieldValues extends FieldValues> = FormFieldProps<TFieldValues> & {
@@ -24,15 +24,16 @@ const FormStepper = <TFieldValues extends FieldValues>({
   min,
   name,
   required,
+  requiredMessage,
 }: FormStepperProps<TFieldValues>) => {
   const { field } = useController<TFieldValues>({ name })
-  const getFieldError = useFieldError<TFieldValues>()
+  const error = useFormFieldError<TFieldValues>(name, requiredMessage)
 
   return (
     <Field
       className={className}
       description={description}
-      error={getFieldError(name)}
+      error={error}
       label={label}
       orientation="horizontal"
       required={required}

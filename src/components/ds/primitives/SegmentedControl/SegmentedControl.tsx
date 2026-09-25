@@ -42,7 +42,7 @@ const SegmentedControl = <T extends string>({
           key={option.value}
           aria-label={option.ariaLabel}
           className={cn(
-            'focus-ring text-copy text-body flex h-10 flex-1 items-center justify-center gap-1.5 rounded-lg px-3',
+            'focus-ring text-copy text-body flex h-10 flex-1 items-center justify-center gap-1.5 rounded-lg px-2 whitespace-nowrap',
             'font-semibold transition-colors',
             'data-pressed:bg-surface data-pressed:text-ink data-pressed:shadow-raised',
             'data-disabled:text-placeholder data-disabled:cursor-default',
