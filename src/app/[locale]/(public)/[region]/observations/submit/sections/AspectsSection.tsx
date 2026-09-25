@@ -5,6 +5,7 @@ import { FormCard } from '@ds/patterns'
 import { useTranslations } from 'next-intl'
 import { Controller, useFormContext } from 'react-hook-form'
 
+import ElevationZonesInfo from './ElevationZonesInfo'
 import type { ObservationSubmitFormSchema } from '../schema'
 
 const AspectsSection = () => {
@@ -14,7 +15,11 @@ const AspectsSection = () => {
   return (
     <FormCard
       headerAside={t('observations.submit.aspectsHint')}
-      title={t('observations.submit.sections.aspects')}
+      title={
+        <>
+          {t('observations.submit.sections.aspects')} <ElevationZonesInfo />
+        </>
+      }
     >
       <Controller
         control={form.control}

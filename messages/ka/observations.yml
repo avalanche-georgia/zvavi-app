@@ -160,9 +160,14 @@ observations:
         '5': 'კატასტროფული — შეიძლება შეცვალოს ლანდშაფტი'
       fewer: 'ნაკლები'
       more: 'მეტი'
-      dimensions: 'ზომები'
+      dimensions: 'ფილის ზომები'
       dimensionsHint: 'მიახლოებითი შეფასებაც კარგია'
     aspectsHint: 'დააჭირეთ ან გადაათრიეთ'
+    elevationZones:
+      label: 'სიმაღლის ზონების შესახებ'
+      highAlpine: '2600 მ-ზე მაღლა'
+      alpine: '2000–2600 მ'
+      subAlpine: '2000 მ-ზე დაბლა'
     nameRequired: 'მიუთითეთ თქვენი სახელი.'
     labels:
       description: 'აღწერა'
@@ -170,7 +175,7 @@ observations:
       longitude: 'გრძედი'
       quantity: 'რამდენი?'
       size: 'ზომა'
-      slabDepth: 'ფილის სისქე'
+      slabDepth: 'სისქე'
       submitterContact: 'კონტაქტი'
       submitterEducation: 'ზვავის უსაფრთხოების ტრენინგი'
       submitterName: 'თქვენი სახელი'
@@ -186,7 +191,7 @@ observations:
       description: 'ვინმე მოჰყვა ზვავს, ჩაიმარხა ან დაშავდა? რა მანძილზე ჩამოვიდა, ამინდი, თოვლის საფარი…'
       latitude: 'მაგ. 42.6975'
       longitude: 'მაგ. 44.4547'
-      submitterContact: 'ელფოსტა, ტელეფონი, Instagram…'
+      submitterContact: 'ელფოსტა, ტელეფონი, Telegram, Instagram…'
       submitterEducation: 'მაგ. AST 1, არცერთი, თვითნასწავლი…'
       submitterName: 'ნინო ბერიძე'
     photos:
