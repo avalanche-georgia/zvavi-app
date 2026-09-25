@@ -6,6 +6,8 @@ import { cn } from '@/lib/utils'
 
 type NumberFieldProps = {
   className?: string
+  // e.g. { maximumFractionDigits: 5, useGrouping: false } for coordinates
+  format?: Intl.NumberFormatOptions
   max?: number
   min?: number
   onValueChange: (value: number | null) => void
@@ -17,6 +19,7 @@ type NumberFieldProps = {
 // Free-typed number without steppers (e.g. dimensions). Empty input → null.
 const NumberField = ({
   className,
+  format,
   max,
   min,
   onValueChange,
@@ -26,6 +29,7 @@ const NumberField = ({
 }: NumberFieldProps) => (
   <BaseNumberField.Root
     className={cn('relative', className)}
+    format={format}
     max={max}
     min={min}
     onValueChange={onValueChange}

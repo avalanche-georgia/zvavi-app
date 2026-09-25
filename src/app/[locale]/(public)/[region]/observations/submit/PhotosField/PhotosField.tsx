@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { InputBlock } from '@components/ui'
 import { observationPhotoLimits } from '@domain/constants'
 import { useTranslations } from 'next-intl'
 import { useFormContext } from 'react-hook-form'
@@ -9,6 +8,7 @@ import { useFormContext } from 'react-hook-form'
 import AddPhotoTile from './AddPhotoTile'
 import PhotoLightbox from './PhotoLightbox'
 import PhotoTile from './PhotoTile'
+import { maxSourceSizeMb } from './preparePhoto'
 import usePhotoSelectionFeedback from './usePhotoSelectionFeedback'
 import usePhotoUploads from './usePhotoUploads'
 import type { ObservationSubmitFormSchema } from '../schema'
@@ -40,11 +40,8 @@ const PhotosField = () => {
   }
 
   return (
-    <InputBlock
-      error={errorMessage && t(`observations.submit.photos.errors.${errorMessage}`)}
-      label={t('observations.submit.photos.label')}
-    >
-      <div className="grid grid-cols-3 gap-2 sm:grid-cols-[repeat(3,9rem)] sm:gap-3">
+    <div className="flex flex-col gap-2.5">
+      <div className="grid grid-cols-3 gap-2">
         {photos.map((photo, index) => (
           <PhotoTile
             key={photo.id}
@@ -61,13 +58,23 @@ const PhotosField = () => {
         )}
       </div>
 
+      <p className="text-copy-sm text-muted">
+        {t('observations.submit.photos.hint', { maxSize: maxSourceSizeMb })}
+      </p>
+
+      {errorMessage && (
+        <p className="text-copy-sm text-danger" data-field-error>
+          {t(`observations.submit.photos.errors.${errorMessage}`)}
+        </p>
+      )}
+
       <PhotoLightbox
         index={lightboxIndex}
         onIndexChange={setLightboxIndex}
         onRemove={handleLightboxRemove}
         photos={photos}
       />
-    </InputBlock>
+    </div>
   )
 }
 

@@ -3,8 +3,10 @@ import StickyActionBarGallery from '@ds/patterns/StickyActionBar/StickyActionBar
 import SuccessStateGallery from '@ds/patterns/SuccessState/SuccessState.gallery'
 import BadgeGallery from '@ds/primitives/Badge/Badge.gallery'
 import ButtonGallery from '@ds/primitives/Button/Button.gallery'
+import CheckboxGallery from '@ds/primitives/Checkbox/Checkbox.gallery'
 import ChipGroupGallery from '@ds/primitives/ChipGroup/ChipGroup.gallery'
 import FieldGallery from '@ds/primitives/Field/Field.gallery'
+import InfoTipGallery from '@ds/primitives/InfoTip/InfoTip.gallery'
 import SegmentedControlGallery from '@ds/primitives/SegmentedControl/SegmentedControl.gallery'
 import StepperGallery from '@ds/primitives/Stepper/Stepper.gallery'
 import ToggleGridGallery from '@ds/primitives/ToggleGrid/ToggleGrid.gallery'
@@ -28,8 +30,10 @@ export const galleryEntries: GalleryEntry[] = [
   { Demo: ShadowTokens, id: 'shadows', title: 'Shadows' },
   { Demo: ButtonGallery, id: 'button', title: 'Button' },
   { Demo: BadgeGallery, id: 'badge', title: 'Badge' },
+  { Demo: InfoTipGallery, id: 'info-tip', title: 'InfoTip' },
   { Demo: FieldGallery, id: 'field', title: 'Field & inputs' },
   { Demo: StepperGallery, id: 'stepper', title: 'Stepper' },
+  { Demo: CheckboxGallery, id: 'checkbox', title: 'Checkbox' },
   { Demo: ChipGroupGallery, id: 'chip-group', title: 'ChipGroup' },
   { Demo: ToggleGridGallery, id: 'toggle-grid', title: 'ToggleGrid' },
   { Demo: SegmentedControlGallery, id: 'segmented-control', title: 'SegmentedControl' },
