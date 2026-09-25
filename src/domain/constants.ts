@@ -1,4 +1,14 @@
-import type { Aspect, HazardLevel, HazardLevelScale, MemberStatus } from './types'
+import type {
+  Aspect,
+  AvalancheSource,
+  AvalancheStatus,
+  AvalancheTrigger,
+  AvalancheType,
+  ElevationZone,
+  HazardLevel,
+  HazardLevelScale,
+  MemberStatus,
+} from './types'
 
 export const hazardLevelNames: Record<HazardLevel, string> = {
   considerable: 'forecast.hazardLevels.considerable',
@@ -32,6 +42,56 @@ export const avalancheTypes = {
 
 export const avalancheProblemTypes = avalancheTypes
 
+export const avalancheTypesOrdered: (AvalancheType | 'unknown')[] = [
+  'unknown',
+  'cornice',
+  'deepSlab',
+  'glide',
+  'looseDry',
+  'looseWet',
+  'persistentSlab',
+  'stormSlab',
+  'wetSlab',
+  'windSlab',
+]
+
+export const avalancheSources: Record<AvalancheSource, AvalancheSource> = {
+  external: 'external',
+  team: 'team',
+}
+
+export const avalancheStatuses: Record<AvalancheStatus, AvalancheStatus> = {
+  archived: 'archived',
+  draft: 'draft',
+  pending: 'pending',
+  published: 'published',
+}
+
+// Field rules shared by the public submit form, the admin avalanche form and
+// the submit API (authoritative). Number inputs clamp to these ranges; the
+// schemas reject anything outside them.
+export const avalancheFieldLimits = {
+  descriptionMaxLength: 2000,
+  involvementMaxLength: 2000,
+  latitude: { max: 90, min: -90 },
+  locationMaxLength: 200,
+  longitude: { max: 180, min: -180 },
+  quantity: { max: 5, min: 1 },
+  slabDepth: { max: 1000, min: 0 },
+  width: { max: 500, min: 0 },
+} as const
+
+// Shared by the public submit form (client-side checks) and the upload-url
+// route (authoritative server-side checks — client compression is bypassable).
+export const observationPhotoLimits = {
+  maxCount: 3,
+  maxSizeBytes: 15 * 1024 * 1024,
+}
+
+// What may be uploaded — HEIC is accepted from the picker but always converted
+// to JPEG client-side first, so it's never stored.
+export const observationPhotoContentTypes = ['image/jpeg', 'image/png'] as const
+
 export const avalancheTriggers = {
   explosives: 'explosives',
   natural: 'natural',
@@ -40,6 +100,15 @@ export const avalancheTriggers = {
   unknown: 'unknown',
   vehicle: 'vehicle',
 } as const
+
+export const avalancheTriggersOrdered: AvalancheTrigger[] = [
+  'unknown',
+  'explosives',
+  'natural',
+  'riderAccidental',
+  'riderCut',
+  'vehicle',
+]
 
 export const aspects = {
   e: 'E',
@@ -53,6 +122,15 @@ export const aspects = {
 } as const
 
 export const sortedAspects: Aspect[] = ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw']
+
+// Avalanche season, 1 Nov – 31 May. Months are 0-based (Date convention).
+export const avalancheSeason = {
+  end: { day: 31, month: 4 },
+  start: { day: 1, month: 10 },
+}
+
+// Top → bottom
+export const sortedElevationZones: ElevationZone[] = ['highAlpine', 'alpine', 'subAlpine']
 
 export const sensitivityLevels = {
   reactive: 'reactive',

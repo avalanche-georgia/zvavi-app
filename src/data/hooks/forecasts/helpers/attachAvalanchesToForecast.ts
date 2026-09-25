@@ -6,6 +6,10 @@ const attachAvalanchesToForecast = async (
   forecastId: number,
   avalanches: Omit<Avalanche, 'createdAt'>[],
 ): Promise<void> => {
+  const { data: sessionData, error: sessionError } = await supabase.auth.getSession()
+
+  handleSupabaseError(sessionError)
+
   for (const avalanche of avalanches) {
     const { id, ...rest } = avalanche
 
@@ -27,7 +31,9 @@ const attachAvalanchesToForecast = async (
       // New avalanche — insert row then link
       const { data: inserted, error: insertError } = await supabase
         .from('recent_avalanches')
-        .insert(convertCamelToSnake(rest))
+        .insert(
+          convertCamelToSnake({ ...rest, createdByUserId: sessionData.session?.user.id ?? null }),
+        )
         .select('id')
         .single()
 

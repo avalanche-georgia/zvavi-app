@@ -1,0 +1,226 @@
+observations:
+  pageTitle: 'Observations'
+  reportCta: 'Report'
+
+  summary:
+    total: '{regionName} · {total, plural, one {# report} other {# reports}}'
+    filtered: '{regionName} · {count} of {total, plural, one {# report} other {# reports}}'
+
+  view:
+    label: 'View'
+    list: 'List'
+    map: 'Map'
+
+  filters:
+    clear: 'Clear filters'
+    anyDate: 'Any date'
+    dateBasis:
+      label: 'Date'
+      occurred: 'Occurred'
+      reported: 'Reported'
+    periods:
+      label: 'Period'
+      all: 'All time'
+      season: 'This season'
+      '7d': '7 days'
+      '30d': '30 days'
+      custom: 'Custom'
+      unknown: 'Date unknown'
+    sort:
+      label: 'Sort'
+      newest: 'Newest'
+      largest: 'Largest'
+
+  groups:
+    today: 'Today'
+    yesterday: 'Yesterday'
+    thisWeek: 'This week'
+    unknown: 'Date unknown'
+    largestFirst: 'Largest first'
+
+  empty:
+    noReports: 'No observations reported yet.'
+    title: 'No observations match'
+    description: 'Try a wider date range.'
+
+  list:
+    loadMoreFailed: "Couldn't load more — tap to retry"
+
+  labels:
+    dateUnknown: 'Date unknown'
+    quantity: 'Quantity'
+    size: 'Size'
+    slabDepth: 'Slab depth'
+    trigger: 'Trigger'
+    typeAndSize: '{type} · size {size}'
+    width: 'Width'
+
+  card:
+    quantity: '×{count}'
+    reportedAgo: 'Reported {time}'
+
+  photos:
+    unavailable: 'Photo not available yet'
+
+  map:
+    onMap: '{count} on map'
+
+  detail:
+    position: '{current} of {total}'
+    previous: 'Previous observation'
+    next: 'Next observation'
+    facts:
+      occurred: 'Occurred'
+      reported: 'Reported'
+    where: 'Where'
+    aspectsNotReported: 'Aspect and elevation not reported.'
+    showOnMap: 'Show on map'
+    description: 'Description'
+    reportedBy: 'Reported by'
+
+  pendingOwn:
+    title: 'Your reports under review'
+    note: 'Only you can see these. They become public once our team has reviewed them.'
+    submitted: 'Submitted {date}'
+
+  location:
+    openInMaps: 'Open in Maps app'
+
+  submit:
+    title: 'Submit an Observation — {regionName}'
+    heading: 'Submit an observation'
+    subline: '{regionName} · Reviewed by our forecasters before it appears publicly.'
+    submit: 'Submit'
+    error: 'Something went wrong. Please try again.'
+    waitingForPhotos: 'Will send once photos finish uploading…'
+    finePrint: 'By submitting you agree to our <terms>Terms</terms> and <privacy>Privacy Policy</privacy>. Your contact details are never published.'
+    optional: 'Optional'
+    kinds:
+      label: 'Observation type'
+      avalanche: 'Avalanche'
+      snowpackTest: 'Snowpack test'
+      snowpackTestSoon: 'Snowpack test — coming soon'
+      soon: 'Soon'
+    status:
+      missing: '<b>{count} required</b> left · {fields}'
+      ready: 'Ready to send'
+      fields:
+        date: 'Date'
+        location: 'Location'
+        type: 'Type'
+        trigger: 'Trigger'
+        size: 'Size'
+        submitterName: 'Your name'
+    success:
+      title: 'Thanks — observation received'
+      description: 'It will appear publicly once our team has reviewed it.'
+      submitAnother: 'Submit another'
+      viewObservations: 'View observations'
+    sections:
+      when: 'When did it happen?'
+      where: 'Where?'
+      what: 'What did you see?'
+      aspects: 'Aspect & Elevation'
+      photos: 'Photos'
+      anythingElse: 'Anything else?'
+      aboutYou: 'About you'
+    date:
+      label: 'Date'
+      today: 'Today'
+      yesterday: 'Yesterday'
+      pick: 'Pick a date'
+      unknown: 'Not sure'
+      unknownHint: "That's fine — describe roughly when below if you can."
+      pickRequired: 'Pick a date.'
+    location:
+      myLocation: 'My location'
+      expand: 'Expand map'
+      collapse: 'Collapse map'
+      tapHint: 'Tap where the avalanche is'
+      dragHint: 'Drag the pin to adjust'
+      noPin: 'No pin yet'
+      enterCoordinates: 'Enter coordinates'
+      edit: 'Edit'
+      required: 'Drop a pin or enter coordinates.'
+      geolocation:
+        denied: 'Location access is blocked. Allow it in your browser settings, or tap the map instead.'
+        unavailable: "Couldn't get your location. Tap the map instead."
+        outsideRegion: "You're outside {regionName}. Tap the map where the avalanche is."
+    what:
+      encyclopedia: 'Encyclopedia'
+      typeRequired: 'Pick a type — “Unknown” is fine.'
+      triggerRequired: 'Pick a trigger — “Unknown” is fine.'
+      sizeHint: 'Destructive size'
+      sizePrompt: 'Pick the closest — a rough guess is fine.'
+      sizeRequired: 'Pick a size.'
+      sizeDescriptors:
+        '1': 'Unlikely to bury a person'
+        '2': 'Could bury, injure or kill a person'
+        '3': 'Could bury a car or destroy a small building'
+        '4': 'Could destroy a truck or several buildings'
+        '5': 'Disastrous — could gouge the landscape'
+      fewer: 'Fewer'
+      more: 'More'
+      dimensions: 'Slab dimensions'
+      dimensionsHint: 'Rough estimates are fine'
+    aspectsHint: 'Tap or drag'
+    elevationZones:
+      label: 'About elevation zones'
+      highAlpine: 'above 2600 m'
+      alpine: '2000–2600 m'
+      subAlpine: 'below 2000 m'
+    nameRequired: 'Add your name.'
+    aboutYou:
+      reportingAs: 'Reporting as'
+      edit: 'Edit'
+      remember: 'Remember my details on this device'
+      rememberInfo: 'How remembering works'
+      rememberHint: "Saved only in this browser, just to fill in this form next time — this copy never reaches our servers and isn't shown to anyone. Skip it on a shared device."
+      savedOnDevice: 'Your details are saved in this browser.'
+      forget: 'Forget me'
+      forgotten: 'Your details were removed from this device.'
+    labels:
+      description: 'Description'
+      latitude: 'Latitude'
+      longitude: 'Longitude'
+      quantity: 'How many?'
+      size: 'Size'
+      slabDepth: 'Depth'
+      submitterContact: 'Contact'
+      submitterEducation: 'Avalanche training'
+      submitterName: 'Your name'
+      trigger: 'Trigger'
+      type: 'Avalanche type'
+      width: 'Width'
+    units:
+      cm: 'cm'
+      m: 'm'
+    hints:
+      submitterContact: 'Optional · only our team sees it'
+    placeholders:
+      description: 'Was anyone caught, buried or injured? How far it ran, weather, snowpack…'
+      latitude: 'e.g. 42.6975'
+      longitude: 'e.g. 44.4547'
+      submitterContact: 'Email, phone, Telegram, Instagram…'
+      submitterEducation: 'e.g. AST 1, none, self-taught…'
+      submitterName: 'Jane Doe'
+    photos:
+      hint: 'Photos of the crown and debris help most. JPEG, PNG or HEIC · max {maxSize} MB each.'
+      upTo: 'Up to {max}'
+      add: 'Add photo'
+      addMore: 'Add more'
+      count: '{count} of {max}'
+      preparing: 'Preparing…'
+      uploading: 'Uploading…'
+      failed: 'Upload failed'
+      retry: 'Retry'
+      remove: 'Remove photo'
+      errors:
+        uploading: 'Please wait until all photos finish uploading.'
+        failed: 'Some photos failed to upload. Check your connection, then tap Retry or remove them.'
+        notFound: "Some photos didn't reach our server. Remove them and add them again."
+        unprocessable: "One of the photos couldn't be processed. Remove any very large or unusual photos and submit again."
+        unsupported: '{files}: not a supported format. Please use JPEG, PNG or HEIC photos.'
+        tooLarge: '{files}: too large. Each photo must be under {maxSize} MB.'
+        unreadable: "{file} couldn't be opened in this browser. Try a JPEG version of the photo."
+        tooMany: 'You can add up to {max} photos — {skipped, plural, one {# photo was} other {# photos were}} not added.'

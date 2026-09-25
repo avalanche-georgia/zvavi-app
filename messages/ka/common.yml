@@ -3,8 +3,12 @@ common:
     add: 'დამატება'
     backToList: 'სიაში დაბრუნება'
     cancel: 'გაუქმება'
+    clear: 'გასუფთავება'
+    close: 'დახურვა'
     confirm: 'დადასტურება'
     continue: 'გაგრძელება'
+    copy: 'კოპირება'
+    copied: 'დაკოპირდა'
     delete: 'წაშლა'
     edit: 'რედაქტირება'
     getInTouch: 'დაგვიკავშირდით'
@@ -40,14 +44,19 @@ common:
   validation:
     activeWithExpiredDate: 'სტატუსი ვერ იქნება აქტიური, თუ ვადის თარიღი უკვე გასულია'
     expiresAtBeforeJoined: 'ვადის თარიღი უნდა იყოს გაწევრიანების თარიღის შემდეგ'
+    futureDate: 'არ შეიძლება იყოს მომავალში'
+    invalid: 'არასწორი მნიშვნელობა'
     invalidCredentials: 'მიმდინარე პაროლი არასწორია'
     invalid_string: 'არასწორი ფორმატი'
     joinedAtFuture: 'არ შეიძლება იყოს მომავალში'
     passwordMismatch: 'პაროლები არ ემთხვევა'
     passwordTooShort: 'მინიმუმ 8 სიმბოლო'
     positive: '0-ზე მეტი უნდა იყოს'
-    required: 'სავალდებულო'
-    too_small: 'სავალდებულო'
+    required: 'სავალდებულო ველი'
+    tooLong: 'ძალიან გრძელია'
+    tooLarge: 'მნიშვნელობა ძალიან დიდია'
+    tooSmall: 'მნიშვნელობა ძალიან მცირეა'
+    too_small: 'სავალდებულო ველი'
 
   notFound:
     title: 'Oops...'
@@ -60,6 +69,37 @@ common:
     highAlpine: 'ზედა ალპური'
     alpine: 'ალპური'
     subAlpine: 'ქვედა ალპური'
+
+  aspects:
+    allAspects: 'ყველა ექსპოზიცია'
+    allElevations: 'ყველა სიმაღლე'
+    names:
+      n: 'ჩრდილოეთი'
+      ne: 'ჩრდილო-აღმოსავლეთი'
+      e: 'აღმოსავლეთი'
+      se: 'სამხრეთ-აღმოსავლეთი'
+      s: 'სამხრეთი'
+      sw: 'სამხრეთ-დასავლეთი'
+      w: 'დასავლეთი'
+      nw: 'ჩრდილო-დასავლეთი'
+
+  aspectElevationPicker:
+    all: 'ყველა'
+    allAria: 'ყველა ექსპოზიცია, {zone}'
+    cellAria: '{zone}, {aspect}'
+    emptyHint: 'შეეხეთ ან გადაატარეთ ექსპოზიციების ასარჩევად'
+    sameAspectsOn: 'იგივე ექსპოზიციები:'
+    zonesAria: 'სიმაღლის ზონა'
+
+  avalancheSources:
+    external: 'გარეშე პირი'
+    team: 'გუნდი'
+
+  avalancheStatuses:
+    archived: 'დაარქივებული'
+    draft: 'მონახაზი'
+    pending: 'განხილვის მოლოდინში'
+    published: 'გამოქვეყნებული'
 
   avalancheTypes:
     cornice: 'ყინულის ქორნისი'
@@ -86,9 +126,20 @@ common:
 
   words:
     from: 'დან'
+    optional: 'არასავალდებულო'
     overall: 'საერთო'
     to: 'მდე'
     unknown: 'უცნობი'
+
+  photoViewer:
+    open: 'ფოტო {index}-ის გახსნა'
+    previous: 'წინა ფოტო'
+    next: 'შემდეგი ფოტო'
+    counter: '{current} / {total}'
+
+  units:
+    centimeters: '{value} სმ'
+    meters: '{value} მ'
 
   disclaimer:
     title: '⚠️ უარყოფა ⚠️'

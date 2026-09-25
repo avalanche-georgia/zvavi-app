@@ -31,6 +31,9 @@ const fetchAllAvalanches = async (regionId: RegionId): Promise<Response> => {
     .from('recent_avalanches')
     .select('*, forecast_avalanche(forecast_id, forecasts(created_at))')
     .eq('region_id', regionId)
+    // Only team-authored avalanches can be attached to a forecast — external
+    // observations still awaiting moderation must never end up here.
+    .eq('source', 'team')
     .order('created_at', { ascending: false })
 
   if (error) throw new Error(error.message)

@@ -1,0 +1,226 @@
+observations:
+  pageTitle: 'დაკვირვებები'
+  reportCta: 'მოწოდება'
+
+  summary:
+    total: '{regionName} · {total} დაკვირვება'
+    filtered: '{regionName} · {count} დაკვირვება {total}-დან'
+
+  view:
+    label: 'ხედი'
+    list: 'სია'
+    map: 'რუკა'
+
+  filters:
+    clear: 'ფილტრების გასუფთავება'
+    anyDate: 'ნებისმიერი'
+    dateBasis:
+      label: 'თარიღი'
+      occurred: 'მოხდა'
+      reported: 'მოწოდებულია'
+    periods:
+      label: 'პერიოდი'
+      all: 'ყველა'
+      season: 'ეს სეზონი'
+      '7d': '7 დღე'
+      '30d': '30 დღე'
+      custom: 'არჩეული'
+      unknown: 'თარიღი უცნობია'
+    sort:
+      label: 'დალაგება'
+      newest: 'უახლესი'
+      largest: 'უდიდესი'
+
+  groups:
+    today: 'დღეს'
+    yesterday: 'გუშინ'
+    thisWeek: 'ამ კვირაში'
+    unknown: 'თარიღი უცნობია'
+    largestFirst: 'ჯერ უდიდესი'
+
+  empty:
+    noReports: 'დაკვირვებები ჯერ არ არის მოწოდებული.'
+    title: 'შესაბამისი დაკვირვებები ვერ მოიძებნა'
+    description: 'სცადეთ უფრო ფართო პერიოდი.'
+
+  list:
+    loadMoreFailed: 'ვერ ჩაიტვირთა — სცადეთ ხელახლა'
+
+  labels:
+    dateUnknown: 'თარიღი უცნობია'
+    quantity: 'რაოდენობა'
+    size: 'ზომა'
+    slabDepth: 'ფილის სისქე'
+    trigger: 'გამომწვევი'
+    typeAndSize: '{type} · ზომა {size}'
+    width: 'სიგანე'
+
+  card:
+    quantity: '×{count}'
+    reportedAgo: 'მოწოდებულია {time}'
+
+  photos:
+    unavailable: 'ფოტო ჯერ მიუწვდომელია'
+
+  map:
+    onMap: 'რუკაზე: {count}'
+
+  detail:
+    position: '{current} / {total}'
+    previous: 'წინა დაკვირვება'
+    next: 'შემდეგი დაკვირვება'
+    facts:
+      occurred: 'მოხდა'
+      reported: 'მოწოდებულია'
+    where: 'სად'
+    aspectsNotReported: 'ექსპოზიცია და სიმაღლე მითითებული არ არის.'
+    showOnMap: 'რუკაზე ჩვენება'
+    description: 'აღწერა'
+    reportedBy: 'მოაწოდა'
+
+  pendingOwn:
+    title: 'თქვენი დაკვირვებები განხილვის მოლოდინში'
+    note: 'მათ მხოლოდ თქვენ ხედავთ. საჯარო გახდება ჩვენი გუნდის მიერ განხილვის შემდეგ.'
+    submitted: 'გაიგზავნა {date}'
+
+  location:
+    openInMaps: 'რუკების აპლიკაციაში გახსნა'
+
+  submit:
+    title: 'დაკვირვების მოწოდება — {regionName}'
+    heading: 'დაკვირვების მოწოდება'
+    subline: '{regionName} · საჯაროდ გამოჩნდება ჩვენი პროგნოზისტების მიერ განხილვის შემდეგ.'
+    submit: 'გაგზავნა'
+    error: 'დაფიქსირდა შეცდომა. გთხოვთ სცადოთ ხელახლა.'
+    waitingForPhotos: 'გაიგზავნება ფოტოების ატვირთვისთანავე…'
+    finePrint: 'გაგზავნით თქვენ ეთანხმებით ჩვენს <terms>წესებს</terms> და <privacy>კონფიდენციალურობის პოლიტიკას</privacy>. თქვენი საკონტაქტო მონაცემები არასდროს ქვეყნდება.'
+    optional: 'არასავალდებულო'
+    kinds:
+      label: 'დაკვირვების ტიპი'
+      avalanche: 'ზვავი'
+      snowpackTest: 'თოვლის საფარის ტესტი'
+      snowpackTestSoon: 'თოვლის საფარის ტესტი — მალე'
+      soon: 'მალე'
+    status:
+      missing: 'დარჩა <b>{count} სავალდებულო</b> · {fields}'
+      ready: 'მზადაა გასაგზავნად'
+      fields:
+        date: 'თარიღი'
+        location: 'მდებარეობა'
+        type: 'ტიპი'
+        trigger: 'გამომწვევი'
+        size: 'ზომა'
+        submitterName: 'თქვენი სახელი'
+    success:
+      title: 'გმადლობთ — დაკვირვება მიღებულია'
+      description: 'ის საჯაროდ გამოჩნდება ჩვენი გუნდის მიერ განხილვის შემდეგ.'
+      submitAnother: 'კიდევ ერთის გაგზავნა'
+      viewObservations: 'დაკვირვებების ნახვა'
+    sections:
+      when: 'როდის მოხდა?'
+      where: 'სად?'
+      what: 'რა ნახეთ?'
+      aspects: 'ექსპოზიცია და სიმაღლე'
+      photos: 'ფოტოები'
+      anythingElse: 'კიდევ რამე?'
+      aboutYou: 'თქვენ შესახებ'
+    date:
+      label: 'თარიღი'
+      today: 'დღეს'
+      yesterday: 'გუშინ'
+      pick: 'თარიღის არჩევა'
+      unknown: 'არ ვიცი'
+      unknownHint: 'არაუშავს — თუ შეგიძლიათ, ქვემოთ მიახლოებით აღწერეთ, როდის.'
+      pickRequired: 'აირჩიეთ თარიღი.'
+    location:
+      myLocation: 'ჩემი მდებარეობა'
+      expand: 'რუკის გადიდება'
+      collapse: 'რუკის შემცირება'
+      tapHint: 'დააჭირეთ იქ, სადაც ზვავია'
+      dragHint: 'გადაათრიეთ ნიშნული დასაზუსტებლად'
+      noPin: 'ნიშნული ჯერ არ არის'
+      enterCoordinates: 'კოორდინატების შეყვანა'
+      edit: 'შეცვლა'
+      required: 'მონიშნეთ რუკაზე ან შეიყვანეთ კოორდინატები.'
+      geolocation:
+        denied: 'მდებარეობაზე წვდომა დაბლოკილია. ჩართეთ ბრაუზერის პარამეტრებში ან დააჭირეთ რუკას.'
+        unavailable: 'მდებარეობის დადგენა ვერ მოხერხდა. დააჭირეთ რუკას.'
+        outsideRegion: 'თქვენ იმყოფებით {regionName}-ის გარეთ. დააჭირეთ რუკაზე ზვავის ადგილს.'
+    what:
+      encyclopedia: 'ენციკლოპედია'
+      typeRequired: 'აირჩიეთ ტიპი — „უცნობი“ მისაღებია.'
+      triggerRequired: 'აირჩიეთ გამომწვევი — „უცნობი“ მისაღებია.'
+      sizeHint: 'დესტრუქციული ზომა'
+      sizePrompt: 'აირჩიეთ ყველაზე ახლოს მყოფი — მიახლოებითიც კარგია.'
+      sizeRequired: 'აირჩიეთ ზომა.'
+      sizeDescriptors:
+        '1': 'ადამიანის დამარხვა ნაკლებად სავარაუდოა'
+        '2': 'შეიძლება დამარხოს, დააზარალოს ან მოკლას ადამიანი'
+        '3': 'შეიძლება დამარხოს ავტომობილი ან გაანადგუროს მცირე შენობა'
+        '4': 'შეიძლება გაანადგუროს სატვირთო ან რამდენიმე შენობა'
+        '5': 'კატასტროფული — შეიძლება შეცვალოს ლანდშაფტი'
+      fewer: 'ნაკლები'
+      more: 'მეტი'
+      dimensions: 'ფილის ზომები'
+      dimensionsHint: 'მიახლოებითი შეფასებაც კარგია'
+    aspectsHint: 'დააჭირეთ ან გადაათრიეთ'
+    elevationZones:
+      label: 'სიმაღლის ზონების შესახებ'
+      highAlpine: '2600 მ-ზე მაღლა'
+      alpine: '2000–2600 მ'
+      subAlpine: '2000 მ-ზე დაბლა'
+    nameRequired: 'მიუთითეთ თქვენი სახელი.'
+    aboutYou:
+      reportingAs: 'აგზავნით როგორც'
+      edit: 'შეცვლა'
+      remember: 'დაიმახსოვრე ჩემი მონაცემები ამ მოწყობილობაზე'
+      rememberInfo: 'როგორ მუშაობს დამახსოვრება'
+      rememberHint: 'ინახება მხოლოდ ამ ბრაუზერში, რომ შემდეგ ჯერზე ფორმა თავად შეივსოს — ეს ასლი ჩვენს სერვერებზე არ იგზავნება და არავისთვის ჩანს. ნუ მონიშნავთ საერთო მოწყობილობაზე.'
+      savedOnDevice: 'თქვენი მონაცემები შენახულია ამ ბრაუზერში.'
+      forget: 'დამივიწყე'
+      forgotten: 'თქვენი მონაცემები წაიშალა ამ მოწყობილობიდან.'
+    labels:
+      description: 'აღწერა'
+      latitude: 'განედი'
+      longitude: 'გრძედი'
+      quantity: 'რამდენი?'
+      size: 'ზომა'
+      slabDepth: 'სისქე'
+      submitterContact: 'კონტაქტი'
+      submitterEducation: 'ზვავის უსაფრთხოების ტრენინგი'
+      submitterName: 'თქვენი სახელი'
+      trigger: 'გამომწვევი'
+      type: 'ზვავის ტიპი'
+      width: 'სიგანე'
+    units:
+      cm: 'სმ'
+      m: 'მ'
+    hints:
+      submitterContact: 'არასავალდებულო · ხედავს მხოლოდ ჩვენი გუნდი'
+    placeholders:
+      description: 'ვინმე მოჰყვა ზვავს, ჩაიმარხა ან დაშავდა? რა მანძილზე ჩამოვიდა, ამინდი, თოვლის საფარი…'
+      latitude: 'მაგ. 42.6975'
+      longitude: 'მაგ. 44.4547'
+      submitterContact: 'ელფოსტა, ტელეფონი, Telegram, Instagram…'
+      submitterEducation: 'მაგ. AST 1, არცერთი, თვითნასწავლი…'
+      submitterName: 'ნინო ბერიძე'
+    photos:
+      hint: 'ყველაზე სასარგებლოა მოწყვეტის ხაზისა და ნაშალის ფოტოები. JPEG, PNG ან HEIC · თითო მაქს. {maxSize} MB.'
+      upTo: 'მაქსიმუმ {max}'
+      add: 'ფოტოს დამატება'
+      addMore: 'კიდევ დამატება'
+      count: '{count} / {max}'
+      preparing: 'მზადდება…'
+      uploading: 'იტვირთება…'
+      failed: 'ატვირთვა ვერ მოხერხდა'
+      retry: 'ხელახლა'
+      remove: 'ფოტოს წაშლა'
+      errors:
+        uploading: 'გთხოვთ, დაელოდოთ ყველა ფოტოს ატვირთვას.'
+        failed: 'ზოგიერთი ფოტო ვერ აიტვირთა. შეამოწმეთ ინტერნეტი და დააჭირეთ „ხელახლა“, ან წაშალეთ ისინი.'
+        notFound: 'ზოგიერთი ფოტო სერვერამდე ვერ მივიდა. წაშალეთ და თავიდან დაამატეთ.'
+        unprocessable: 'ერთ-ერთი ფოტო ვერ დამუშავდა. წაშალეთ ძალიან დიდი ან უჩვეულო ფოტოები და კვლავ გაგზავნეთ.'
+        unsupported: '{files}: ფორმატი არ არის მხარდაჭერილი. გამოიყენეთ JPEG, PNG ან HEIC ფოტოები.'
+        tooLarge: '{files}: ფაილი ძალიან დიდია. თითო ფოტო უნდა იყოს {maxSize} MB-ზე ნაკლები.'
+        unreadable: '{file} ამ ბრაუზერში ვერ გაიხსნა. სცადეთ ფოტოს JPEG ვერსია.'
+        tooMany: 'შეგიძლიათ დაამატოთ მაქსიმუმ {max} ფოტო — {skipped} ფოტო არ დაემატა.'

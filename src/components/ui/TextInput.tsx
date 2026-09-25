@@ -11,6 +11,7 @@ type TextInputProps = InputHTMLAttributes<HTMLInputElement> & {
   rightIcon?: IconName
 }
 
+/** @deprecated Use `TextField` from `@ds/primitives` — see DESIGN_SYSTEM.md */
 const TextInput = ({ hasError, leftIcon, rightIcon, ...props }: TextInputProps) => {
   const input = (
     <Input

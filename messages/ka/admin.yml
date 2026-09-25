@@ -26,10 +26,12 @@ admin:
       avalancheLogged: 'ზვავი დაფიქსირდა · {region}'
 
   sidebar:
+    designSystem: 'დიზაინ-სისტემა'
     forecasts: 'პროგნოზები'
     home: 'მთავარი'
     members: 'წევრები'
     menu: 'ადმინ მენიუ'
+    observations: 'დაკვირვებები'
     partners: 'პარტნიორები'
     recentAvalanches: 'ბოლო ზვავები'
     weatherStations: 'ამინდის სადგურები'
@@ -327,17 +329,18 @@ admin:
     list:
       columns:
         actions: მოქმედებები
-        createdAt: შექმნილია
         date: თარიღი
-        description: აღწერა
-        location: ადგილმდებარეობა
         size: ზომა
-        trigger: გამომწვევი
+        source: წყარო
+        status: სტატუსი
+        submitter: ავტორი
         type: სახეობა
       empty: ზვავის ჩანაწერები არ მოიძებნა.
       total: "ნაჩვენებია: {shown} / {total}"
 
     filters:
+      all: ყველა
+      allStatuses: ყველა სტატუსი
       reset: ფილტრების გადატვირთვა
       dateMode:
         created: შექმნის თარიღი
@@ -348,20 +351,26 @@ admin:
       page: "გვ. {current} / {total}"
 
     actions:
+      approve: დადასტურება
       deleteDescription: ეს ჩანაწერი სამუდამოდ წაიშლება.
       deleteTitle: ზვავის წაშლა
+      publish: გამოქვეყნება
+      unpublish: გამოქვეყნების გაუქმება
 
     form:
       labels:
         description: აღწერა
         involvement: ჩართულობა
         isDateUnknown: თარიღი უცნობია
-        latitude: განედი
         location: ადგილი
-        longitude: გრძედი
         quantity: რაოდენობა
         size: ზომა
         slabDepth: ფილის სისქე (სმ)
+        status: სტატუსი
+        submitterContact: კონტაქტი
+        submitterEducation: განათლება
+        submitterName: სახელი
+        submitterSection: წარმდგენი
         trigger: გამომწვევი
         type: სახეობა
         width: სიგანე (მ)
@@ -371,6 +380,32 @@ admin:
       messages:
         created: ზვავი წარმატებით დაემატა.
         updated: ზვავი წარმატებით განახლდა.
+
+    view:
+      archivedHint: ჩანაწერი დაარქივებულია. აღსადგენად გახსენით რედაქტირება და შეცვალეთ სტატუსი.
+      coordinates: კოორდინატები
+      forecastLink: 'პროგნოზი #{id}'
+      linkedForecasts: დაკავშირებული პროგნოზები
+      logged: დამატებულია
+      occurred: მოხდა
+      openFullPage: სრულ გვერდზე გახსნა
+      photosError: ფოტოების ჩატვირთვა ვერ მოხერხდა.
+      where: სად
+
+    sheet:
+      deleteConfirm: წავშალოთ ჩანაწერი სამუდამოდ?
+      discard: გაუქმება
+      discardConfirm: გავაუქმოთ შეუნახავი ცვლილებები?
+      keepEditing: რედაქტირების გაგრძელება
+      next: შემდეგი ჩანაწერი
+      position: '{current} / {total}'
+      previous: წინა ჩანაწერი
+
+  observations:
+    queue:
+      columns:
+        submitted: გამოგზავნილია
+      empty: განსახილველი არაფერია — ახალი დაკვირვებები აქ გამოჩნდება.
 
   weatherStations:
     title: 'ამინდის სადგურები'

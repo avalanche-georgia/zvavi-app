@@ -16,7 +16,18 @@ type PaginatedResult = {
 type QueryParams = ListFilterParams & { regionId: RegionId }
 
 export const fetchPaginatedAvalanches = async (params: QueryParams): Promise<PaginatedResult> => {
-  const { dateFrom, dateMode, dateTo, page, pageSize, regionId } = params
+  const {
+    dateFrom,
+    dateMode,
+    dateTo,
+    excludeStatus,
+    isOldestFirst = false,
+    page,
+    pageSize,
+    regionId,
+    source,
+    status,
+  } = params
   const offset = (page - 1) * pageSize
   const dateField = dateMode === 'created' ? 'created_at' : 'date'
 
@@ -24,19 +35,28 @@ export const fetchPaginatedAvalanches = async (params: QueryParams): Promise<Pag
     .from('recent_avalanches')
     .select('*, forecast_avalanche(forecast_id)', { count: 'exact' })
     .eq('region_id', regionId)
-    .order('created_at', { ascending: false })
+    .order('created_at', { ascending: isOldestFirst })
 
   if (dateFrom) avalanchesQuery = avalanchesQuery.gte(dateField, dateFrom)
   if (dateTo) avalanchesQuery = avalanchesQuery.lte(dateField, dateTo)
+  if (source) avalanchesQuery = avalanchesQuery.eq('source', source)
+  if (status) avalanchesQuery = avalanchesQuery.eq('status', status)
+  if (excludeStatus) avalanchesQuery = avalanchesQuery.neq('status', excludeStatus)
 
   avalanchesQuery = avalanchesQuery.range(offset, offset + pageSize - 1)
 
+  let grandTotalQuery = supabase
+    .from('recent_avalanches')
+    .select('*', { count: 'exact', head: true })
+    .eq('region_id', regionId)
+
+  if (source) grandTotalQuery = grandTotalQuery.eq('source', source)
+  if (status) grandTotalQuery = grandTotalQuery.eq('status', status)
+  if (excludeStatus) grandTotalQuery = grandTotalQuery.neq('status', excludeStatus)
+
   const [{ count, data, error }, { count: grandTotal, error: totalError }] = await Promise.all([
     avalanchesQuery,
-    supabase
-      .from('recent_avalanches')
-      .select('*', { count: 'exact', head: true })
-      .eq('region_id', regionId),
+    grandTotalQuery,
   ])
 
   if (error) throw new Error(error.message)

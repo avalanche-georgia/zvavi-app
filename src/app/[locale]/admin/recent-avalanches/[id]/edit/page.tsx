@@ -41,14 +41,16 @@ const EditRecentAvalanchePage = () => {
     )
   }
 
+  // Full-page fallback only (the lists edit in the side panel): it's reached
+  // from the full-page view, so that's where Cancel / Save return
   const handleBack = () => {
-    router.push(routes.admin.recentAvalanches.listByRegion(avalanche.regionId))
+    router.push(routes.admin.recentAvalanches.view(avalanche.id))
   }
 
   return (
     <div className="p-4 md:p-6">
       <RecentAvalancheForm
-        avalanche={avalanche as typeof avalanche & { id: number }}
+        avalanche={avalanche}
         mode="edit"
         onCancel={handleBack}
         onSuccess={handleBack}
