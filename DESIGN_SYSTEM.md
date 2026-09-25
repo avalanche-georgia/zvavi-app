@@ -191,7 +191,7 @@ Update this table when a legacy component's last consumer is migrated.
 | DatePicker, Calendar, TimeInput, TimePicker, DatePickerTimeInput | Headless UI + react-day-picker | `primitives/DateField` (TBD) | ☐ |
 | Modal | Headless UI | `primitives/Dialog` (base-ui) | ☐ |
 | Popover | Radix | `primitives/Popover` (base-ui) | ☐ |
-| Tooltip, InfoIcon | Radix | `primitives/Tooltip` (base-ui) | ☐ |
+| Tooltip, InfoIcon | Radix | `primitives/InfoTip` (base-ui Popover); a plain Tooltip TBD | ☐ |
 | DropdownMenu | base-ui | `primitives/Menu` | ☐ |
 | Drawer, Sheet | vaul / base-ui | `patterns/Sheet` (TBD) | ☐ |
 | IconButton | custom | `primitives/IconButton` | ☐ |
