@@ -21,6 +21,7 @@ const LocationSection = () => {
   const [latitude, longitude] = useWatch({ control: form.control, name: ['latitude', 'longitude'] })
   const [isExpanded, { toggle: toggleExpanded }] = useBoolean(false)
   const [isEditingCoordinates, setIsEditingCoordinates] = useState(false)
+  const [panTarget, setPanTarget] = useState<[number, number] | null>(null)
 
   const requiredMessage = t('observations.submit.location.required')
   const latitudeError = useFormFieldError<ObservationSubmitFormSchema>('latitude', requiredMessage)
@@ -32,33 +33,46 @@ const LocationSection = () => {
 
   // Re-validates only after a submit attempt, so the error clears as soon as a
   // pin is dropped — but doesn't show before the first attempt
-  const handleCoordinateChange = useCallback(
-    (lat: number | null, lng: number | null) => {
+  const setCoordinates = useCallback(
+    (nextLatitude: number | null, nextLongitude: number | null) => {
       const options = { shouldDirty: true, shouldValidate: form.formState.isSubmitted }
 
-      form.setValue('latitude', lat, options)
-      form.setValue('longitude', lng, options)
+      form.setValue('latitude', nextLatitude, options)
+      form.setValue('longitude', nextLongitude, options)
     },
     [form],
   )
 
-  const handlePick = useCallback(
-    (lat: number, lng: number) =>
-      handleCoordinateChange(roundCoordinate(lat), roundCoordinate(lng)),
-    [handleCoordinateChange],
+  const handleLocationPick = useCallback(
+    (pickedLatitude: number, pickedLongitude: number) =>
+      setCoordinates(roundCoordinate(pickedLatitude), roundCoordinate(pickedLongitude)),
+    [setCoordinates],
   )
+
+  const handleCoordinatesChange = (typedLatitude: number | null, typedLongitude: number | null) => {
+    setCoordinates(typedLatitude, typedLongitude)
+    setPanTarget(
+      typedLatitude != null && typedLongitude != null ? [typedLatitude, typedLongitude] : null,
+    )
+  }
 
   const handleEditingToggle = () => setIsEditingCoordinates((isEditing) => !isEditing)
 
   return (
-    <FormCard isInvalid={!!error} required title={t('observations.submit.sections.where')}>
+    <FormCard
+      error={error}
+      required
+      requiredText={t('common.validation.required')}
+      title={t('observations.submit.sections.where')}
+    >
       <div className="flex flex-col gap-3">
         <LocationMap
           isExpanded={isExpanded}
           latitude={latitude}
           longitude={longitude}
           onExpandedToggle={toggleExpanded}
-          onPick={handlePick}
+          onLocationPick={handleLocationPick}
+          panTarget={panTarget}
           region={region!}
           regionName={t(`regions.names.${region!.id}`)}
         />
@@ -72,15 +86,10 @@ const LocationSection = () => {
           <CoordinateInputs
             latitude={latitude}
             longitude={longitude}
-            onChange={handleCoordinateChange}
+            onCoordinatesChange={handleCoordinatesChange}
           />
         )}
       </div>
-      {error && (
-        <p className="text-copy-sm text-danger" data-field-error>
-          {error}
-        </p>
-      )}
     </FormCard>
   )
 }

@@ -24,8 +24,12 @@ import { cn } from '@/lib/utils'
 const fallbackCenter: [number, number] = [42.1, 43.5]
 const fallbackZoom = 7
 
-const ClickHandler = ({ onPick }: { onPick: (lat: number, lng: number) => void }) => {
-  useMapEvents({ click: (event) => onPick(event.latlng.lat, event.latlng.lng) })
+const ClickHandler = ({
+  onLocationPick,
+}: {
+  onLocationPick: (latitude: number, longitude: number) => void
+}) => {
+  useMapEvents({ click: (event) => onLocationPick(event.latlng.lat, event.latlng.lng) })
 
   return null
 }
@@ -35,7 +39,10 @@ export type LocationMapClientProps = {
   latitude: number | null
   longitude: number | null
   onExpandedToggle: () => void
-  onPick: (lat: number, lng: number) => void
+  onLocationPick: (latitude: number, longitude: number) => void
+  // Set only for typed coordinates: the map pans there. Picks on the map (tap,
+  // drag, My location) move the view themselves.
+  panTarget: [number, number] | null
   region: Region
   regionName: string
 }
@@ -45,17 +52,18 @@ const LocationMapClient = ({
   latitude,
   longitude,
   onExpandedToggle,
-  onPick,
+  onLocationPick,
+  panTarget,
   region,
   regionName,
 }: LocationMapClientProps) => {
   const [map, setMap] = useState<LeafletMap | null>(null)
   // "Region + 20%" for the initial view, pan limit, and zoom-out limit
   const bounds = useRegionBounds(region, 0.2)
-  const { isLocating, locate } = useGeolocatePin({ bounds, map, onPick, regionName })
+  const { isLocating, locate } = useGeolocatePin({ bounds, map, onLocationPick, regionName })
   const hasPin = latitude != null && longitude != null
 
-  useMapSync({ isExpanded, latitude, longitude, map })
+  useMapSync({ isExpanded, map, panTarget })
 
   const regionCenter: [number, number] | undefined = region.mapCenter
     ? [region.mapCenter.lat, region.mapCenter.lng]
@@ -84,8 +92,10 @@ const LocationMapClient = ({
         <BaseMapLayers />
         <RegionBoundary bounds={bounds} region={region} />
         <ZoomControl position="bottomleft" />
-        <ClickHandler onPick={onPick} />
-        {hasPin && <DraggablePin latitude={latitude} longitude={longitude} onPick={onPick} />}
+        <ClickHandler onLocationPick={onLocationPick} />
+        {hasPin && (
+          <DraggablePin latitude={latitude} longitude={longitude} onLocationPick={onLocationPick} />
+        )}
       </MapContainer>
       <MapOverlayControls
         isExpanded={isExpanded}

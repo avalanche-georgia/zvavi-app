@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl'
 type UseGeolocatePinParams = {
   bounds: LatLngBounds | null
   map: LeafletMap | null
-  onPick: (lat: number, lng: number) => void
+  onLocationPick: (latitude: number, longitude: number) => void
   regionName: string
 }
 
@@ -15,7 +15,7 @@ const locatedZoom = 14
 
 // "My location": drop the pin at the device position — only if it's inside the
 // region the map is limited to, otherwise the pin would land off-map.
-const useGeolocatePin = ({ bounds, map, onPick, regionName }: UseGeolocatePinParams) => {
+const useGeolocatePin = ({ bounds, map, onLocationPick, regionName }: UseGeolocatePinParams) => {
   const t = useTranslations()
   const { toastInfo } = useToast()
   const [isLocating, setIsLocating] = useState(false)
@@ -31,7 +31,7 @@ const useGeolocatePin = ({ bounds, map, onPick, regionName }: UseGeolocatePinPar
       return
     }
 
-    onPick(position.lat, position.lng)
+    onLocationPick(position.lat, position.lng)
     map?.flyTo(position, locatedZoom)
   }
 

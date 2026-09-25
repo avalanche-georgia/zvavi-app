@@ -5,16 +5,16 @@ import { useTranslations } from 'next-intl'
 type CoordinateInputsProps = {
   latitude: number | null
   longitude: number | null
-  onChange: (lat: number | null, lng: number | null) => void
+  onCoordinatesChange: (latitude: number | null, longitude: number | null) => void
 }
 
 const coordinateFormat: Intl.NumberFormatOptions = { maximumFractionDigits: 6, useGrouping: false }
 
-const CoordinateInputs = ({ latitude, longitude, onChange }: CoordinateInputsProps) => {
+const CoordinateInputs = ({ latitude, longitude, onCoordinatesChange }: CoordinateInputsProps) => {
   const t = useTranslations()
 
-  const handleLatitudeChange = (value: number | null) => onChange(value, longitude)
-  const handleLongitudeChange = (value: number | null) => onChange(latitude, value)
+  const handleLatitudeChange = (value: number | null) => onCoordinatesChange(value, longitude)
+  const handleLongitudeChange = (value: number | null) => onCoordinatesChange(latitude, value)
 
   return (
     <div className="grid grid-cols-2 gap-2.5">

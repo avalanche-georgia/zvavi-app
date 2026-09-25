@@ -7,19 +7,19 @@ import { pinIcon } from './pinIcon'
 type DraggablePinProps = {
   latitude: number
   longitude: number
-  onPick: (lat: number, lng: number) => void
+  onLocationPick: (latitude: number, longitude: number) => void
 }
 
-const DraggablePin = ({ latitude, longitude, onPick }: DraggablePinProps) => {
+const DraggablePin = ({ latitude, longitude, onLocationPick }: DraggablePinProps) => {
   const eventHandlers = useMemo<LeafletEventHandlerFnMap>(
     () => ({
       dragend: (event) => {
-        const { lat, lng } = (event.target as LeafletMarker).getLatLng()
+        const position = (event.target as LeafletMarker).getLatLng()
 
-        onPick(lat, lng)
+        onLocationPick(position.lat, position.lng)
       },
     }),
-    [onPick],
+    [onLocationPick],
   )
 
   return (
