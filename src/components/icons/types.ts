@@ -29,6 +29,7 @@ export type IconName =
   | 'mapPinned'
   | 'menu'
   | 'mountainSnow'
+  | 'palette'
   | 'pencil'
   | 'plus'
   | 'search'

@@ -237,7 +237,7 @@ Key v4 syntax differences from v3:
 - Class ordering enforced by `prettier-plugin-tailwindcss` — auto-sorted on format, do not reorder manually
 
 ### UI Components
-Gradually migrating from Headless UI / Radix to **base-ui** (`@base-ui/react`). New components should use base-ui.
+**Read [`DESIGN_SYSTEM.md`](DESIGN_SYSTEM.md) before any UI task.** New generic UI goes in `src/components/ds/` (base-ui + tokens); legacy `src/components/ui/` is frozen and migrated screen by screen. The doc holds the architecture, token rules, legacy policy and the migration tracker — update the tracker when a legacy component is removed.
 
 ### Modal / Sheet / Drawer Dismissal
 - **Data-loss risk** (dirty form, unsaved edits): never close on backdrop click or swipe. Only explicit actions close it (close button, Cancel, Esc) — and those ask for confirmation while there are unsaved changes.
@@ -253,6 +253,7 @@ Gradually migrating from Headless UI / Radix to **base-ui** (`@base-ui/react`). 
 | `@components/*` | `./src/components/*` |
 | `@data/*` | `./src/data/*` |
 | `@domain/*` | `./src/domain/*` |
+| `@ds/*` | `./src/components/ds/*` |
 | `@/lib/*` | `./src/lib/*` |
 | `src/*` | `./src/*` |
 

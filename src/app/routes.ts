@@ -8,6 +8,7 @@ export const routes = {
     joinUs: '/about/join-us',
   },
   admin: {
+    designSystem: '/admin/ds',
     forecasts: {
       edit: (id: number) => `/admin/forecasts/${id}/edit`,
       editInRegion: (id: number, regionId: string) =>
