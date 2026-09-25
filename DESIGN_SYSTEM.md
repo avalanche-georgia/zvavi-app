@@ -164,9 +164,9 @@ Rules:
 
 | Phase | Scope | Status |
 |---|---|---|
-| **1. Foundation** | Tokens, Inter 700 as `font-sans`, `globals.css` cleanup (dead Arial rule, border default → `rule`), accent → `#0c5aa6`, `@ds/*` alias, `cn()` aware of custom tokens, lint rules, gallery page with tokens | ☐ |
-| **2. Primitives for submit** | Button, Badge, Field / FieldGroup, TextField, NumberField, Textarea, ChipGroup, ToggleGrid, SegmentedControl, Stepper. Patterns FormCard, StickyActionBar, SuccessState. Form bindings. Gallery demos | ☐ |
-| **3. Submit page redesign** | `local/observations/design_handoff_submit_observation/` built on ds | ☐ |
+| **1. Foundation** | Tokens, Inter 700 as `font-sans`, `globals.css` cleanup (dead Arial rule, border default → `rule`), accent → `#0c5aa6`, `@ds/*` alias, `cn()` aware of custom tokens, lint rules, gallery page with tokens | ✅ |
+| **2. Primitives for submit** | Button, Badge, Field / FieldGroup, TextField, NumberField, Textarea, ChipGroup, ToggleGrid, SegmentedControl, Stepper. Patterns FormCard, StickyActionBar, SuccessState. Form bindings. Gallery demos | ✅ |
+| **3. Submit page redesign** | `local/observations/design_handoff_submit_observation/` built on ds | ✅ |
 | **4. Rest of observations** | List toolbar, detail views, aspect/elevation picker moved to `features/` with a bare variant | ☐ |
 | **5. Legacy, by screen area** | Public pages (auth, forecasts, about) → admin forms → admin tables, modals and drawers | ☐ |
 | **6. Cleanup** | Delete `ui/`. Remove `@headlessui/react`, `@radix-ui/*` and `clsx` | ☐ |
