@@ -20,6 +20,7 @@ const FieldGroup = ({
   description,
   error,
   hint,
+  isLabelHidden,
   label,
   required,
 }: FieldGroupProps) => {
@@ -34,7 +35,7 @@ const FieldGroup = ({
       className={cn('flex min-w-0 flex-col gap-2', className)}
     >
       <FieldLabelRow hint={hint}>
-        <Fieldset.Legend className={fieldLabelClasses}>
+        <Fieldset.Legend className={cn(fieldLabelClasses, isLabelHidden && 'sr-only')}>
           {label}
           {required && <RequiredMark />}
         </Fieldset.Legend>

@@ -1,9 +1,9 @@
 'use client'
 
-import { useFieldError } from '@components/hooks'
 import { type FieldValues, useController } from 'react-hook-form'
 
 import type { FormFieldProps } from './types'
+import useFormFieldError from './useFormFieldError'
 import { ChipGroup, FieldGroup, type ToggleOption } from '../primitives'
 
 type FormChipGroupProps<
@@ -22,13 +22,15 @@ const FormChipGroup = <TFieldValues extends FieldValues, T extends string>({
   emptyValue = null,
   hint,
   isDeselectable,
+  isLabelHidden,
   label,
   name,
   options,
   required,
+  requiredMessage,
 }: FormChipGroupProps<TFieldValues, T>) => {
   const { field } = useController<TFieldValues>({ name })
-  const getFieldError = useFieldError<TFieldValues>()
+  const error = useFormFieldError<TFieldValues>(name, requiredMessage)
 
   const value: T | null = field.value || null
 
@@ -38,8 +40,9 @@ const FormChipGroup = <TFieldValues extends FieldValues, T extends string>({
     <FieldGroup
       className={className}
       description={description}
-      error={getFieldError(name)}
+      error={error}
       hint={hint}
+      isLabelHidden={isLabelHidden}
       label={label}
       required={required}
     >

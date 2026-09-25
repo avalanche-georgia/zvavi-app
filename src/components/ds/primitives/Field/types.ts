@@ -4,6 +4,8 @@ export type FieldChromeProps = {
   description?: React.ReactNode
   error?: string
   hint?: React.ReactNode
+  // Keeps the label for assistive tech only, e.g. when a card title already names the field
+  isLabelHidden?: boolean
   label: React.ReactNode
   required?: boolean
 }

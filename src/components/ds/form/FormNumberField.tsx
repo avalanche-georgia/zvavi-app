@@ -1,9 +1,9 @@
 'use client'
 
-import { useFieldError } from '@components/hooks'
 import { type FieldValues, useController } from 'react-hook-form'
 
 import type { FormFieldProps } from './types'
+import useFormFieldError from './useFormFieldError'
 import { Field, NumberField } from '../primitives'
 
 type FormNumberFieldProps<TFieldValues extends FieldValues> = FormFieldProps<TFieldValues> & {
@@ -17,23 +17,26 @@ const FormNumberField = <TFieldValues extends FieldValues>({
   className,
   description,
   hint,
+  isLabelHidden,
   label,
   max,
   min,
   name,
   placeholder,
   required,
+  requiredMessage,
   unit,
 }: FormNumberFieldProps<TFieldValues>) => {
   const { field } = useController<TFieldValues>({ name })
-  const getFieldError = useFieldError<TFieldValues>()
+  const error = useFormFieldError<TFieldValues>(name, requiredMessage)
 
   return (
     <Field
       className={className}
       description={description}
-      error={getFieldError(name)}
+      error={error}
       hint={hint}
+      isLabelHidden={isLabelHidden}
       label={label}
       required={required}
     >

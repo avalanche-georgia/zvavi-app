@@ -21,6 +21,7 @@ const Field = ({
   description,
   error,
   hint,
+  isLabelHidden,
   label,
   orientation = 'vertical',
   required,
@@ -33,7 +34,7 @@ const Field = ({
       )}
     >
       <FieldLabelRow hint={orientation === 'vertical' ? hint : undefined}>
-        <BaseField.Label className={fieldLabelClasses}>
+        <BaseField.Label className={cn(fieldLabelClasses, isLabelHidden && 'sr-only')}>
           {label}
           {required && <RequiredMark />}
         </BaseField.Label>
