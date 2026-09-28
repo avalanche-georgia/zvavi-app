@@ -28,7 +28,8 @@ next to it and migrate screen by screen.
 src/components/
 ├── ds/                  # new kit — the only place new generic UI goes
 │   ├── primitives/      # Button, Badge, Checkbox, Field, FieldGroup, TextField, NumberField,
-│   │                    # Textarea, ChipGroup, ToggleGrid, SegmentedControl, Select, Stepper, InfoTip
+│   │                    # Textarea, ChipGroup, ToggleGrid, SegmentedControl, Select, Stepper, InfoTip,
+│   │                    # IconButton, RatingScale, DateField
 │   ├── patterns/        # FormCard, StickyActionBar, SuccessState
 │   └── form/            # react-hook-form bindings: FormTextField, FormTextarea, FormNumberField,
 │                        # FormStepper, FormChipGroup, FormCheckbox, FormSelect, useFormFieldError
@@ -100,7 +101,7 @@ them.
 
 | Layer | Tokens | Utilities |
 |---|---|---|
-| **Semantic colour** | text `ink`, `body`, `muted`, `placeholder`, `disabled` · lines `rule`, `rule-strong` · surfaces `surface`, `canvas`, `tile`, `tile-hover`, `off`, `map` · brand `primary(-hover/-soft/-ink)`, `brand-blue` · `accent(-hover/-soft)` · status `danger`, `danger-border`, `success`, `success-soft` · domain `hazard-*`, `size-*` | `text-ink`, `bg-surface`, `border-rule`, … |
+| **Semantic colour** | text `ink`, `body`, `muted`, `placeholder`, `disabled` · lines `rule`, `rule-strong` · surfaces `surface`, `canvas`, `tile`, `tile-hover`, `off`, `map` · brand `primary(-hover/-soft/-ink)`, `brand-blue` · `accent(-hover/-soft)` · status `danger`, `danger-border`, `success`, `success-soft`, `warning`, `warning-soft` · domain `hazard-*`, `size-*` | `text-ink`, `bg-surface`, `border-rule`, … |
 | **Type scale** | `title-lg` 28, `title` 24, `heading` 17, `copy-lg` 15, `copy` 14, `copy-sm` 13, `caption` 12.5, `micro` 10.5. Line-height and tracking are part of the token | `text-heading`, … |
 | **Radii** | `card` 16, `media` 12, `field` 11, `control` 10, `badge` 5 (pills use `rounded-full`) | `rounded-card`, … |
 | **Shadows** | `raised` (segmented thumb), `overlay` (map buttons), `float` (sticky bar), `pin` | `shadow-float`, … |
@@ -197,7 +198,7 @@ Update this table when a legacy component's last consumer is migrated.
 | Checkbox | Headless UI | `primitives/Checkbox` | ☐ |
 | Switch | base-ui | `primitives/Switch` | ☐ |
 | Select | Radix | `primitives/Select` (base-ui) | ☐ |
-| DatePicker, Calendar, TimeInput, TimePicker, DatePickerTimeInput | Headless UI + react-day-picker | `primitives/DateField` (TBD) | ☐ |
+| DatePicker, Calendar, TimeInput, TimePicker, DatePickerTimeInput | Headless UI + react-day-picker | `primitives/DateField` | ☐ |
 | Modal | Headless UI | `primitives/Dialog` (base-ui) | ☐ |
 | Popover | Radix | `primitives/Popover` (base-ui) | ☐ |
 | Tooltip, InfoIcon | Radix | `primitives/InfoTip` (base-ui Popover); a plain Tooltip TBD | ☐ |
