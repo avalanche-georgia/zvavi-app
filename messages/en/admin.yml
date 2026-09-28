@@ -240,6 +240,15 @@ admin:
 
   forecast:
     notFound: 'Forecast not found.'
+    editor:
+      hazard:
+        title: 'Hazard levels'
+        description: 'Rate the overall danger, then each elevation zone. Arrow keys or 0–5 work too.'
+        byElevation: 'By elevation'
+        matchesHighest: 'Matches the highest elevation zone'
+        highestIs: 'Highest elevation zone is <strong>{level} · {label}</strong>'
+        setOverall: 'Set overall to {level}'
+        previewCaption: 'Live preview of the public forecast graphic'
     title:
       create: 'Create Forecast'
       edit: 'Edit Forecast'
