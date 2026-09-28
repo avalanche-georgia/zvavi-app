@@ -372,6 +372,9 @@ admin:
       hints:
         involvement: Optional · team only
         location: Optional · a short name for the spot
+      placeholders:
+        description: Any notes — how far it ran, weather, snowpack…
+        involvement: Was anyone caught, buried or injured?
       messages:
         created: Avalanche created successfully.
         updated: Avalanche updated successfully.

@@ -47,12 +47,13 @@ const FormFields = ({ avalanche, region }: FormFieldsProps) => {
       <div className="flex min-w-0 flex-col gap-3">
         <WhatSection />
         <PhotosSection storedPhotoUrls={storedPhotoUrls} />
-        <DescriptionSection>
+        <DescriptionSection placeholder={t('admin.recentAvalanches.form.placeholders.description')}>
           <FormTextarea<AvalancheFormSchema>
             hint={t('admin.recentAvalanches.form.hints.involvement')}
             label={t('admin.recentAvalanches.form.labels.involvement')}
             maxLength={avalancheFieldLimits.involvementMaxLength}
             name="involvement"
+            placeholder={t('admin.recentAvalanches.form.placeholders.involvement')}
           />
         </DescriptionSection>
         <SubmitterSection

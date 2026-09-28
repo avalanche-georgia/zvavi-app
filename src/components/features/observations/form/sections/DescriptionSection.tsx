@@ -7,8 +7,14 @@ import { useTranslations } from 'next-intl'
 
 import type { ObservationFormFields } from '../schema'
 
-// `children`: extra fields at the end of the card (the admin form's involvement)
-const DescriptionSection = ({ children }: { children?: React.ReactNode }) => {
+type DescriptionSectionProps = {
+  // Extra fields at the end of the card (the admin form's involvement)
+  children?: React.ReactNode
+  // Replaces the public prompt (the admin form asks for any notes)
+  placeholder?: string
+}
+
+const DescriptionSection = ({ children, placeholder }: DescriptionSectionProps) => {
   const t = useTranslations()
 
   return (
@@ -21,7 +27,7 @@ const DescriptionSection = ({ children }: { children?: React.ReactNode }) => {
         label={t('observations.form.labels.description')}
         maxLength={avalancheFieldLimits.descriptionMaxLength}
         name="description"
-        placeholder={t('observations.form.placeholders.description')}
+        placeholder={placeholder ?? t('observations.form.placeholders.description')}
       />
       {children}
     </FormCard>
