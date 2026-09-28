@@ -1,5 +1,5 @@
 import { supabase } from '@data'
-import type { FullForecast, RegionId } from '@domain/types'
+import type { AdminFullForecast, RegionId } from '@domain/types'
 import type { UseQueryOptions } from '@tanstack/react-query'
 
 import { useQuery } from '@/tanstack-query/hooks'
@@ -8,13 +8,13 @@ import { convertSnakeToCamel } from '../../helpers'
 import { forecastsKeys } from '../../query-keys'
 
 type QueryKey = ReturnType<typeof forecastsKeys.item>
-type Response = FullForecast | undefined
+type Response = AdminFullForecast | undefined
 
 type QueryOptions = Omit<
   UseQueryOptions<Response, unknown, Response, QueryKey>,
   'queryKey' | 'queryFn'
 > & {
-  forecastId: FullForecast['id']
+  forecastId: AdminFullForecast['id']
   regionId?: RegionId
 }
 

@@ -4,6 +4,7 @@ import type { QueryFunctionContext, UseQueryOptions } from '@tanstack/react-quer
 
 import { useQuery } from '@/tanstack-query/hooks'
 
+import requestForecastAvalanches from './requestForecastAvalanches'
 import { convertSnakeToCamel } from '../../helpers'
 import { forecastsKeys } from '../../query-keys'
 
@@ -36,15 +37,7 @@ export const fetchCurrentForecast = async ({
     return convertSnakeToCamel(currentForecast) as Forecast
   }
 
-  const { data: recentAvalanches, error: avalanchesError } = await supabase
-    .from('recent_avalanches')
-    .select('*, forecast_avalanche!inner(forecast_id)')
-    .eq('forecast_avalanche.forecast_id', currentForecast.id)
-    .order('created_at', { ascending: false })
-
-  if (avalanchesError) {
-    throw new Error(avalanchesError.message)
-  }
+  const recentAvalanches = await requestForecastAvalanches(currentForecast.id)
 
   const { data: problems, error: problemsError } = await supabase
     .from('avalanche_problems')
@@ -60,7 +53,7 @@ export const fetchCurrentForecast = async ({
   return convertSnakeToCamel({
     ...currentForecast,
     avalancheProblems: problems ?? [],
-    recentAvalanches: recentAvalanches ?? [],
+    recentAvalanches,
   }) as Response
 }
 

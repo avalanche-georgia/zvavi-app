@@ -1,14 +1,14 @@
 import { problemIcons } from '@components'
 import { Icon } from '@components/icons'
 import { dateFormat } from '@domain/constants'
-import type { Avalanche } from '@domain/types'
+import type { PublicAvalanche } from '@domain/types'
 import { format } from 'date-fns'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 
 import AvalancheSizePip from './AvalancheSizePip'
 
-const AvalancheHero = ({ avalanche }: { avalanche: Avalanche }) => {
+const AvalancheHero = ({ avalanche }: { avalanche: PublicAvalanche }) => {
   const t = useTranslations()
 
   const { date, isDateUnknown, location, quantity, size, slabDepth, type, width } = avalanche

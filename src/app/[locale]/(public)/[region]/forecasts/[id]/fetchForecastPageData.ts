@@ -1,4 +1,5 @@
 import { convertSnakeToCamel } from '@data/helpers'
+import fetchPublicForecastAvalanches from '@data/queries/fetchPublicForecastAvalanches'
 import type { FullForecast } from '@domain/types'
 
 import { createClient } from '@/lib/supabase/server'
@@ -13,14 +14,10 @@ export const fetchForecastPageData = async (
 ): Promise<ForecastPageData | null> => {
   const supabase = await createClient()
 
-  const [forecastResult, recentAvalanchesResult, avalancheProblemsResult, currentForecastResult] =
+  const [forecastResult, recentAvalanches, avalancheProblemsResult, currentForecastResult] =
     await Promise.all([
       supabase.from('forecasts').select().match({ id: forecastId, status: 'published' }).single(),
-      supabase
-        .from('recent_avalanches')
-        .select('*, forecast_avalanche!inner(forecast_id)')
-        .eq('forecast_avalanche.forecast_id', forecastId)
-        .order('created_at', { ascending: false }),
+      fetchPublicForecastAvalanches(forecastId),
       supabase.from('avalanche_problems').select().eq('forecast_id', forecastId).order('order'),
       supabase
         .from('forecasts')
@@ -33,14 +30,6 @@ export const fetchForecastPageData = async (
 
   if (!forecastResult.data) return null
 
-  if (recentAvalanchesResult.error) {
-    console.error('fetchForecastPageData | recent_avalanches query failed', {
-      error: recentAvalanchesResult.error,
-      forecastId,
-    })
-    throw new Error(recentAvalanchesResult.error.message)
-  }
-
   if (avalancheProblemsResult.error) {
     console.error('fetchForecastPageData | avalanche_problems query failed', {
       error: avalancheProblemsResult.error,
@@ -50,11 +39,12 @@ export const fetchForecastPageData = async (
   }
 
   // TODO: type-safe DB conversion — https://app.asana.com/1/1208747886147296/project/1208747689500826/task/1214630622531225
-  const initialForecast = convertSnakeToCamel({
+  const forecastWithProblems = convertSnakeToCamel({
     ...forecastResult.data,
     avalancheProblems: avalancheProblemsResult.data,
-    recentAvalanches: recentAvalanchesResult.data,
-  }) as FullForecast
+  }) as Omit<FullForecast, 'recentAvalanches'>
+
+  const initialForecast: FullForecast = { ...forecastWithProblems, recentAvalanches }
 
   const isCurrentForecast = forecastResult.data.id === currentForecastResult.data?.id
 

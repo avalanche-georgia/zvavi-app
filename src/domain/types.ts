@@ -217,7 +217,26 @@ export type ForecastFormData = {
   forecastDetails: ForecastDetails
 }
 
-export type FullForecast = Forecast & ForecastDetails
+// A linked record as the public sees it: no internal or submitter fields
+export type PublicAvalanche = Omit<
+  Avalanche,
+  | 'createdByUserId'
+  | 'involvement'
+  | 'source'
+  | 'status'
+  | 'submitterContact'
+  | 'submitterEducation'
+  | 'submitterName'
+>
+
+// Public forecast: only published linked records, public fields only
+export type FullForecast = Forecast & {
+  avalancheProblems: Problem[]
+  recentAvalanches: PublicAvalanche[]
+}
+
+// Admin forecast: every linked record, all fields
+export type AdminFullForecast = Forecast & ForecastDetails
 
 export type MemberStatus = Enums<'member_status'>
 

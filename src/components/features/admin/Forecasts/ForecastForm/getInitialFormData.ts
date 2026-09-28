@@ -1,8 +1,8 @@
-import type { ForecastFormData, FullForecast } from '@domain/types'
+import type { AdminFullForecast, ForecastFormData } from '@domain/types'
 
 import { defaultFormData } from './constants'
 
-const getInitialFormData = (forecast: FullForecast | null): ForecastFormData => {
+const getInitialFormData = (forecast: AdminFullForecast | null): ForecastFormData => {
   if (!forecast) return defaultFormData
 
   return {
