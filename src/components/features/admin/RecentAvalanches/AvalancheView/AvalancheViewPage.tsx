@@ -31,7 +31,8 @@ const AvalancheViewPage = ({ avalanche }: { avalanche: AvalancheListItem }) => {
     regionId: avalanche.regionId,
   })
 
-  const handleEdit = () => router.push(routes.admin.recentAvalanches.edit(avalanche.id))
+  // Editing happens in the list's side panel
+  const handleEdit = () => router.push(`${listHref}&selectedId=${avalanche.id}&mode=edit`)
 
   return (
     <div className="mx-auto flex max-w-2xl flex-col gap-4">

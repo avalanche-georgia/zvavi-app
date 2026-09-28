@@ -1,33 +1,17 @@
 import { useCallback } from 'react'
+import { getPhotoSubmitErrorKey, toDateOnlyIso } from '@components/features/observations/form'
 import { useToast } from '@components/hooks'
 import { useObservationCreate } from '@data/hooks/observations'
 import type { RegionId } from '@domain/types'
-import { setHours, startOfDay } from 'date-fns'
 import { useTranslations } from 'next-intl'
 
 import { addPendingOwnReport } from '../../helpers/pendingOwnReports'
 import type { ObservationSubmitFormData } from '../schema'
 import { forgetSubmitterDetails, saveSubmitterDetails } from '../submitterDetailsStorage'
 
-import { photosNotFoundError, photosUnprocessableError } from '@/api/observations/schema'
-
 type UseObservationSubmitFormSubmitParams = {
   onSuccess: () => void
   regionId: RegionId
-}
-
-// A date-only choice is stored at local noon, so the calendar day survives any
-// viewer's timezone offset (local midnight in UTC+4 is the previous day in UTC)
-const toDateOnlyIso = (date: Date) => setHours(startOfDay(date), 12).toISOString()
-
-// Photo-specific failures get messages that say which action fixes them
-const getSubmitErrorKey = (error: unknown) => {
-  const message = error instanceof Error ? error.message : undefined
-
-  if (message === photosNotFoundError) return 'observations.submit.photos.errors.notFound'
-  if (message === photosUnprocessableError) return 'observations.submit.photos.errors.unprocessable'
-
-  return 'observations.submit.error'
 }
 
 const useObservationSubmitFormSubmit = ({
@@ -86,7 +70,7 @@ const useObservationSubmitFormSubmit = ({
       } catch (error) {
         toastError('ObservationSubmitForm | handleSubmit', {
           error,
-          message: t(getSubmitErrorKey(error)),
+          message: t(getPhotoSubmitErrorKey(error, 'observations.submit.error')),
         })
       }
     },

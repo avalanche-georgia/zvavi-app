@@ -1,20 +1,15 @@
-import { supabase } from '@data'
 import { recentAvalanchesKeys } from '@data/query-keys'
-import type { AvalancheFormData, RegionId } from '@domain/types'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { convertCamelToSnake, handleSupabaseError } from '../../helpers'
+import requestAdminAvalanche from './requestAdminAvalanche'
 
-type UpdatePayload = Partial<AvalancheFormData> & { id: number; regionId: RegionId }
+import type { UpdateAvalancheBody } from '@/api/admin/recent-avalanches/schema'
 
-const updateRecentAvalanche = async ({ id, ...formData }: UpdatePayload): Promise<void> => {
-  const { error } = await supabase
-    .from('recent_avalanches')
-    .update(convertCamelToSnake(formData))
-    .eq('id', id)
+// Any subset of fields; `photos` only when the photo set changed
+type UpdatePayload = UpdateAvalancheBody & { id: number }
 
-  handleSupabaseError(error)
-}
+const updateRecentAvalanche = ({ id, ...body }: UpdatePayload) =>
+  requestAdminAvalanche(`/api/admin/recent-avalanches/${id}`, 'PATCH', body)
 
 const useRecentAvalancheUpdate = () => {
   const queryClient = useQueryClient()
