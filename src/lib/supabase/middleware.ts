@@ -27,11 +27,13 @@ export async function updateSession(request: NextRequest, response: NextResponse
   )
 
   const { pathname } = request.nextUrl
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  // getClaims, not getUser: the project signs tokens with an asymmetric key, so
+  // the JWT is verified locally against the cached public keys (and refreshed
+  // when expired) — getUser asked the Auth server on every request, which
+  // delayed every page by a full round trip to Supabase
+  const { data } = await supabase.auth.getClaims()
 
-  if (!user && pathname.includes('/admin')) {
+  if (!data?.claims && pathname.includes('/admin')) {
     const loginUrl = new URL(`/${defaultLocale}${routes.auth.login}`, request.url)
 
     return NextResponse.redirect(loginUrl)
