@@ -37,54 +37,64 @@ const aspectsSchema = z.object({
 // decision.
 const dayInMs = 24 * 60 * 60 * 1000
 
-export const submitObservationSchema = z
-  .object({
-    aspects: aspectsSchema.nullable(),
-    // Not in the future — a day of slack covers any client timezone (date-only
-    // values are sent at local noon)
-    date: z.iso
-      .datetime({ offset: true })
-      .refine((date) => Date.parse(date) <= Date.now() + dayInMs)
-      .nullable(),
-    description: z.string().max(avalancheFieldLimits.descriptionMaxLength).nullable(),
-    isDateUnknown: z.boolean(),
-    latitude: z
-      .number()
-      .min(avalancheFieldLimits.latitude.min)
-      .max(avalancheFieldLimits.latitude.max),
-    longitude: z
-      .number()
-      .min(avalancheFieldLimits.longitude.min)
-      .max(avalancheFieldLimits.longitude.max),
-    photoKeys: z
-      .array(z.string().regex(pendingPhotoKeyPattern))
-      .max(observationPhotoLimits.maxCount)
-      .refine((keys) => new Set(keys).size === keys.length),
-    quantity: z
-      .number()
-      .int()
-      .min(avalancheFieldLimits.quantity.min)
-      .max(avalancheFieldLimits.quantity.max),
+// Avalanche fields every write path accepts (public submit, admin create/edit)
+export const observationBodyFieldsSchema = z.object({
+  aspects: aspectsSchema.nullable(),
+  // Not in the future — a day of slack covers any client timezone (date-only
+  // values are sent at local noon)
+  date: z.iso
+    .datetime({ offset: true })
+    .refine((date) => Date.parse(date) <= Date.now() + dayInMs)
+    .nullable(),
+  description: z.string().max(avalancheFieldLimits.descriptionMaxLength).nullable(),
+  isDateUnknown: z.boolean(),
+  latitude: z
+    .number()
+    .min(avalancheFieldLimits.latitude.min)
+    .max(avalancheFieldLimits.latitude.max),
+  longitude: z
+    .number()
+    .min(avalancheFieldLimits.longitude.min)
+    .max(avalancheFieldLimits.longitude.max),
+  quantity: z
+    .number()
+    .int()
+    .min(avalancheFieldLimits.quantity.min)
+    .max(avalancheFieldLimits.quantity.max),
+  size: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]),
+  slabDepth: z
+    .number()
+    .min(avalancheFieldLimits.slabDepth.min)
+    .max(avalancheFieldLimits.slabDepth.max)
+    .nullable(),
+  trigger: z.enum(avalanche_trigger),
+  type: z.enum(avalanche_type),
+  width: z
+    .number()
+    .min(avalancheFieldLimits.width.min)
+    .max(avalancheFieldLimits.width.max)
+    .nullable(),
+})
+
+// New uploads only — each key must point at a pending object
+export const pendingPhotoKeysSchema = z
+  .array(z.string().regex(pendingPhotoKeyPattern))
+  .max(observationPhotoLimits.maxCount)
+  .refine((keys) => new Set(keys).size === keys.length)
+
+// A date or "unknown" — never neither
+export const hasDateOrUnknown = (body: { date?: string | null; isDateUnknown?: boolean }) =>
+  !!body.isDateUnknown || !!body.date
+
+export const submitObservationSchema = observationBodyFieldsSchema
+  .extend({
+    photoKeys: pendingPhotoKeysSchema,
     regionId: z.enum(region_id),
-    size: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]),
-    slabDepth: z
-      .number()
-      .min(avalancheFieldLimits.slabDepth.min)
-      .max(avalancheFieldLimits.slabDepth.max)
-      .nullable(),
     submitterContact: z.string().max(200).nullable(),
     submitterEducation: z.string().max(200).nullable(),
     submitterName: z.string().trim().min(1).max(100),
-    trigger: z.enum(avalanche_trigger),
-    type: z.enum(avalanche_type),
-    width: z
-      .number()
-      .min(avalancheFieldLimits.width.min)
-      .max(avalancheFieldLimits.width.max)
-      .nullable(),
   })
-  // A date or "unknown" — never neither
-  .refine((body) => body.isDateUnknown || body.date !== null)
+  .refine(hasDateOrUnknown)
 
 export const observationFiltersSchema = z.object({
   dateBasis: z.enum(['occurred', 'reported']).default('occurred'),
