@@ -5,11 +5,11 @@ import { useIsClient } from '@components/hooks'
 import { useFormFieldError } from '@ds/form'
 import { FormCard } from '@ds/patterns'
 import { ChipGroup, FieldGroup, TextField } from '@ds/primitives'
-import { format, parse, startOfToday, startOfYesterday } from 'date-fns'
+import { format, isToday, isYesterday, parse, startOfToday, startOfYesterday } from 'date-fns'
 import { useLocale, useTranslations } from 'next-intl'
 import { useFormContext, useWatch } from 'react-hook-form'
 
-import type { ObservationSubmitFormSchema } from '../schema'
+import type { ObservationFormFields } from '../schema'
 
 import { getDateFnsLocale } from '@/lib/dateFnsLocale'
 
@@ -18,17 +18,27 @@ type DateChoice = 'pick' | 'today' | 'unknown' | 'yesterday'
 const dateChoices: DateChoice[] = ['today', 'yesterday', 'pick', 'unknown']
 const inputDateFormat = 'yyyy-MM-dd'
 
+// Which chip matches the value the form opens with — an existing record's older
+// date opens on "Pick a date" showing it, not on "Today"
+const getInitialChoice = (date: Date | null, isDateUnknown: boolean): DateChoice => {
+  if (isDateUnknown) return 'unknown'
+  if (date && isToday(date)) return 'today'
+  if (date && isYesterday(date)) return 'yesterday'
+
+  return 'pick'
+}
+
 const WhenSection = () => {
   const t = useTranslations()
   const locale = useLocale()
-  const form = useFormContext<ObservationSubmitFormSchema>()
+  const form = useFormContext<ObservationFormFields>()
   // "Today" depends on the device's timezone — the server may be on another day
   const isClient = useIsClient()
   const [date, isDateUnknown] = useWatch({ control: form.control, name: ['date', 'isDateUnknown'] })
-  const [choice, setChoice] = useState<DateChoice>(isDateUnknown ? 'unknown' : 'today')
-  const error = useFormFieldError<ObservationSubmitFormSchema>(
+  const [choice, setChoice] = useState<DateChoice>(() => getInitialChoice(date, isDateUnknown))
+  const error = useFormFieldError<ObservationFormFields>(
     'date',
-    t('observations.submit.date.pickRequired'),
+    t('observations.form.date.pickRequired'),
   )
 
   const setDate = (nextDate: Date | null, isUnknown: boolean) => {
@@ -53,28 +63,28 @@ const WhenSection = () => {
 
   const hint =
     choice === 'unknown'
-      ? t('observations.submit.date.unknownHint')
+      ? t('observations.form.date.unknownHint')
       : isClient && date && format(date, 'EEE, d MMMM', { locale: getDateFnsLocale(locale) })
 
   return (
-    <FormCard title={t('observations.submit.sections.when')}>
+    <FormCard title={t('observations.form.sections.when')}>
       <FieldGroup
         description={hint}
         error={error}
         isLabelHidden
-        label={t('observations.submit.date.label')}
+        label={t('observations.form.date.label')}
       >
         <ChipGroup
           onChange={handleChoiceChange}
           options={dateChoices.map((value) => ({
-            label: t(`observations.submit.date.${value}`),
+            label: t(`observations.form.date.${value}`),
             value,
           }))}
           value={choice}
         />
         {choice === 'pick' && (
           <TextField
-            aria-label={t('observations.submit.date.label')}
+            aria-label={t('observations.form.date.label')}
             className="max-w-60"
             max={format(new Date(), inputDateFormat)}
             onValueChange={handleDateInputChange}

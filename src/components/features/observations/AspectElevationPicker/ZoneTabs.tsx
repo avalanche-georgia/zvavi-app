@@ -1,9 +1,8 @@
 import { Tabs } from '@base-ui/react/tabs'
+import { MiniCompass } from '@components/ui'
 import { sortedElevationZones } from '@domain/constants'
 import type { Aspects } from '@domain/types'
 import { useTranslations } from 'next-intl'
-
-import MiniCompass from '../MiniCompass'
 
 // Zone switcher; each tab previews that zone's selection
 const ZoneTabs = ({ value }: { value: Aspects }) => {

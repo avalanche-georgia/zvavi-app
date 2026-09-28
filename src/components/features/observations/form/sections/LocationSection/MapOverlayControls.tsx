@@ -17,14 +17,14 @@ const MapOverlayControls = ({
 }: MapOverlayControlsProps) => {
   const t = useTranslations()
   const expandLabel = t(
-    isExpanded ? 'observations.submit.location.collapse' : 'observations.submit.location.expand',
+    isExpanded ? 'observations.form.location.collapse' : 'observations.form.location.expand',
   )
 
   return (
     <div className="absolute top-2.5 right-2.5 z-1000 flex flex-col items-end gap-1.5">
       <Button isBusy={isLocating} onClick={onLocate} size="sm" variant="overlay">
         {!isLocating && <LocateFixed aria-hidden className="size-4" />}
-        {t('observations.submit.location.myLocation')}
+        {t('observations.form.location.myLocation')}
       </Button>
       <Button
         aria-label={expandLabel}

@@ -12,7 +12,7 @@ import { useTranslations } from 'next-intl'
 
 import DimensionsFields from './DimensionsFields'
 import SizeField from './SizeField'
-import type { ObservationSubmitFormSchema } from '../schema'
+import type { ObservationFormFields } from '../schema'
 
 const { quantity } = avalancheFieldLimits
 
@@ -37,36 +37,36 @@ const WhatSection = () => {
           rel="noreferrer"
           target="_blank"
         >
-          {t('observations.submit.what.encyclopedia')} ↗
+          {t('observations.form.what.encyclopedia')} ↗
         </a>
       }
-      title={t('observations.submit.sections.what')}
+      title={t('observations.form.sections.what')}
     >
-      <FormChipGroup<ObservationSubmitFormSchema, (typeof typeOptions)[number]['value']>
+      <FormChipGroup<ObservationFormFields, (typeof typeOptions)[number]['value']>
         emptyValue=""
         isDeselectable
-        label={t('observations.submit.labels.type')}
+        label={t('observations.form.labels.type')}
         name="type"
         options={typeOptions}
         required
-        requiredMessage={t('observations.submit.what.typeRequired')}
+        requiredMessage={t('observations.form.what.typeRequired')}
         requiredText={t('common.validation.required')}
       />
-      <FormChipGroup<ObservationSubmitFormSchema, (typeof triggerOptions)[number]['value']>
+      <FormChipGroup<ObservationFormFields, (typeof triggerOptions)[number]['value']>
         emptyValue=""
         isDeselectable
-        label={t('observations.submit.labels.trigger')}
+        label={t('observations.form.labels.trigger')}
         name="trigger"
         options={triggerOptions}
         required
-        requiredMessage={t('observations.submit.what.triggerRequired')}
+        requiredMessage={t('observations.form.what.triggerRequired')}
         requiredText={t('common.validation.required')}
       />
       <SizeField />
-      <FormStepper<ObservationSubmitFormSchema>
-        decrementLabel={t('observations.submit.what.fewer')}
-        incrementLabel={t('observations.submit.what.more')}
-        label={t('observations.submit.labels.quantity')}
+      <FormStepper<ObservationFormFields>
+        decrementLabel={t('observations.form.what.fewer')}
+        incrementLabel={t('observations.form.what.more')}
+        label={t('observations.form.labels.quantity')}
         max={quantity.max}
         min={quantity.min}
         name="quantity"

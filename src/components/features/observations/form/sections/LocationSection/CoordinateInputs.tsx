@@ -18,23 +18,23 @@ const CoordinateInputs = ({ latitude, longitude, onCoordinatesChange }: Coordina
 
   return (
     <div className="grid grid-cols-2 gap-2.5">
-      <Field label={t('observations.submit.labels.latitude')}>
+      <Field label={t('observations.form.labels.latitude')}>
         <NumberField
           format={coordinateFormat}
           max={avalancheFieldLimits.latitude.max}
           min={avalancheFieldLimits.latitude.min}
           onValueChange={handleLatitudeChange}
-          placeholder={t('observations.submit.placeholders.latitude')}
+          placeholder={t('observations.form.placeholders.latitude')}
           value={latitude}
         />
       </Field>
-      <Field label={t('observations.submit.labels.longitude')}>
+      <Field label={t('observations.form.labels.longitude')}>
         <NumberField
           format={coordinateFormat}
           max={avalancheFieldLimits.longitude.max}
           min={avalancheFieldLimits.longitude.min}
           onValueChange={handleLongitudeChange}
-          placeholder={t('observations.submit.placeholders.longitude')}
+          placeholder={t('observations.form.placeholders.longitude')}
           value={longitude}
         />
       </Field>

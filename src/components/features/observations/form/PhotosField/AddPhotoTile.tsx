@@ -55,7 +55,7 @@ const AddPhotoTile = ({ count, onFilesSelect }: AddPhotoTileProps) => {
         type="file"
       />
       <Camera aria-hidden className="size-5.5" />
-      {t(count === 0 ? 'observations.submit.photos.add' : 'observations.submit.photos.addMore')}
+      {t(count === 0 ? 'observations.form.photos.add' : 'observations.form.photos.addMore')}
     </label>
   )
 }

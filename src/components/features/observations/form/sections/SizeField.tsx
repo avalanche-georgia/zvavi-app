@@ -5,7 +5,7 @@ import { FieldGroup, ToggleGrid } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 import { useController } from 'react-hook-form'
 
-import type { ObservationSubmitFormSchema } from '../schema'
+import type { ObservationFormFields } from '../schema'
 
 const sizeValues = ['1', '2', '3', '4', '5'] as const
 
@@ -16,10 +16,10 @@ const sizeOptions = sizeValues.map((value) => ({ label: value, value }))
 // Destructive size 1–5 (EAWS). Required and deliberately without a default.
 const SizeField = () => {
   const t = useTranslations()
-  const { field } = useController<ObservationSubmitFormSchema, 'size'>({ name: 'size' })
-  const error = useFormFieldError<ObservationSubmitFormSchema>(
+  const { field } = useController<ObservationFormFields, 'size'>({ name: 'size' })
+  const error = useFormFieldError<ObservationFormFields>(
     'size',
-    t('observations.submit.what.sizeRequired'),
+    t('observations.form.what.sizeRequired'),
   )
 
   const value = field.value == null ? null : (String(field.value) as SizeValue)
@@ -30,18 +30,18 @@ const SizeField = () => {
   const description = value ? (
     <span className="text-body">
       <b className="font-semibold">D{value}</b> ·{' '}
-      {t(`observations.submit.what.sizeDescriptors.${value}`)}
+      {t(`observations.form.what.sizeDescriptors.${value}`)}
     </span>
   ) : (
-    t('observations.submit.what.sizePrompt')
+    t('observations.form.what.sizePrompt')
   )
 
   return (
     <FieldGroup
       description={description}
       error={error}
-      hint={t('observations.submit.what.sizeHint')}
-      label={t('observations.submit.labels.size')}
+      hint={t('observations.form.what.sizeHint')}
+      label={t('observations.form.labels.size')}
       required
       requiredText={t('common.validation.required')}
     >

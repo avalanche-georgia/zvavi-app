@@ -25,14 +25,14 @@ const CoordinatesRow = ({
         {hasPin ? (
           `${latitude.toFixed(5)}, ${longitude.toFixed(5)}`
         ) : (
-          <span className="text-muted">{t('observations.submit.location.noPin')}</span>
+          <span className="text-muted">{t('observations.form.location.noPin')}</span>
         )}
       </span>
       <Button aria-expanded={isEditing} onClick={onEditingToggle} variant="text">
         {t(
           hasPin
-            ? 'observations.submit.location.edit'
-            : 'observations.submit.location.enterCoordinates',
+            ? 'observations.form.location.edit'
+            : 'observations.form.location.enterCoordinates',
         )}
       </Button>
     </div>

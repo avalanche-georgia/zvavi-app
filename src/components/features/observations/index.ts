@@ -1,3 +1,4 @@
+export { default as AspectElevationPicker } from './AspectElevationPicker'
 export { default as AspectsOverview } from './AspectsOverview'
 export { default as BandCompass } from './BandCompass'
 export { default as CoordinateFields } from './CoordinateFields'

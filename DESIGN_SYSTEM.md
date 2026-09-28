@@ -207,7 +207,7 @@ Update this table when a legacy component's last consumer is migrated.
 | Alert | custom | `patterns/Alert` | ☐ |
 | Spinner, Skeleton | custom | `primitives/Spinner`, `Skeleton` | ☐ |
 | Pagination, DataTable | custom | `patterns/…` | ☐ |
-| AspectElevationPicker | base-ui | moves to `features/observations/` | ☐ |
+| AspectElevationPicker | base-ui | moved to `features/observations/` | ✅ |
 | MiniCompass | custom | moves to `features/` | ☐ |
 | AutoScrollList, BrandedQRCode, FallbackImage, SortableItem | custom | reviewed individually (may stay generic in ds) | ☐ |
 

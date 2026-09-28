@@ -26,7 +26,7 @@ const useGeolocatePin = ({ bounds, map, onLocationPick, regionName }: UseGeoloca
     const position = latLng(coords.latitude, coords.longitude)
 
     if (bounds && !bounds.contains(position)) {
-      toastInfo(t('observations.submit.location.geolocation.outsideRegion', { regionName }))
+      toastInfo(t('observations.form.location.geolocation.outsideRegion', { regionName }))
 
       return
     }
@@ -40,15 +40,15 @@ const useGeolocatePin = ({ bounds, map, onLocationPick, regionName }: UseGeoloca
     toastInfo(
       t(
         error.code === error.PERMISSION_DENIED
-          ? 'observations.submit.location.geolocation.denied'
-          : 'observations.submit.location.geolocation.unavailable',
+          ? 'observations.form.location.geolocation.denied'
+          : 'observations.form.location.geolocation.unavailable',
       ),
     )
   }
 
   const locate = () => {
     if (!navigator.geolocation) {
-      toastInfo(t('observations.submit.location.geolocation.unavailable'))
+      toastInfo(t('observations.form.location.geolocation.unavailable'))
 
       return
     }

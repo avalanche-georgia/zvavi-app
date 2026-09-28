@@ -5,7 +5,7 @@ import { FormNumberField } from '@ds/form'
 import { FieldGroup } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 
-import type { ObservationSubmitFormSchema } from '../schema'
+import type { ObservationFormFields } from '../schema'
 
 const { slabDepth, width } = avalancheFieldLimits
 
@@ -14,25 +14,25 @@ const DimensionsFields = () => {
 
   return (
     <FieldGroup
-      hint={t('observations.submit.what.dimensionsHint')}
-      label={t('observations.submit.what.dimensions')}
+      hint={t('observations.form.what.dimensionsHint')}
+      label={t('observations.form.what.dimensions')}
     >
       <div className="grid grid-cols-2 gap-2.5">
-        <FormNumberField<ObservationSubmitFormSchema>
-          label={t('observations.submit.labels.slabDepth')}
+        <FormNumberField<ObservationFormFields>
+          label={t('observations.form.labels.slabDepth')}
           max={slabDepth.max}
           min={slabDepth.min}
           name="slabDepth"
           placeholder="—"
-          unit={t('observations.submit.units.cm')}
+          unit={t('observations.form.units.cm')}
         />
-        <FormNumberField<ObservationSubmitFormSchema>
-          label={t('observations.submit.labels.width')}
+        <FormNumberField<ObservationFormFields>
+          label={t('observations.form.labels.width')}
           max={width.max}
           min={width.min}
           name="width"
           placeholder="—"
-          unit={t('observations.submit.units.m')}
+          unit={t('observations.form.units.m')}
         />
       </div>
     </FieldGroup>

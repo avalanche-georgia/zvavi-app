@@ -48,7 +48,7 @@ const PhotoTile = ({ index, onOpen, onRemove, onRetry, photo }: PhotoTileProps) 
       <PhotoTileStatus onRetry={() => onRetry(photo.id)} photo={photo} />
 
       <button
-        aria-label={t('observations.submit.photos.remove')}
+        aria-label={t('observations.form.photos.remove')}
         className={cn(
           'focus-ring absolute top-1.5 right-1.5 flex size-7.5 items-center justify-center rounded-full',
           'bg-ink/72 hover:bg-ink/90 text-white backdrop-blur-sm transition-colors',

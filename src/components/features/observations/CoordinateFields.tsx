@@ -66,14 +66,14 @@ const CoordinateFields = ({
     <div className="grid grid-cols-2 gap-3">
       <InputBlock
         error={errors?.latitude}
-        label={t('observations.submit.labels.latitude')}
+        label={t('observations.form.labels.latitude')}
         required={isRequired}
       >
         <TextInput
           hasError={!!errors?.latitude}
           onBlur={handleLatitudeBlur}
           onChange={handleLatitudeChange}
-          placeholder={t('observations.submit.placeholders.latitude')}
+          placeholder={t('observations.form.placeholders.latitude')}
           step="any"
           type="number"
           value={latitude ?? ''}
@@ -82,14 +82,14 @@ const CoordinateFields = ({
 
       <InputBlock
         error={errors?.longitude}
-        label={t('observations.submit.labels.longitude')}
+        label={t('observations.form.labels.longitude')}
         required={isRequired}
       >
         <TextInput
           hasError={!!errors?.longitude}
           onBlur={handleLongitudeBlur}
           onChange={handleLongitudeChange}
-          placeholder={t('observations.submit.placeholders.longitude')}
+          placeholder={t('observations.form.placeholders.longitude')}
           step="any"
           type="number"
           value={longitude ?? ''}

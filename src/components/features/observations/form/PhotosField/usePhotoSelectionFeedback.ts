@@ -32,7 +32,7 @@ const usePhotoSelectionFeedback = () => {
       if (names.length === 0) return
 
       showError(
-        t(`observations.submit.photos.errors.${reason}`, {
+        t(`observations.form.photos.errors.${reason}`, {
           files: names.join(', '),
           maxSize: maxSourceSizeMb,
         }),
@@ -43,7 +43,7 @@ const usePhotoSelectionFeedback = () => {
 
     if (skippedCount > 0) {
       showError(
-        t('observations.submit.photos.errors.tooMany', { max: maxCount, skipped: skippedCount }),
+        t('observations.form.photos.errors.tooMany', { max: maxCount, skipped: skippedCount }),
       )
     }
 
@@ -52,7 +52,7 @@ const usePhotoSelectionFeedback = () => {
 
   const handlePhotoUnreadable = useCallback(
     (fileName: string) =>
-      showError(t('observations.submit.photos.errors.unreadable', { file: fileName })),
+      showError(t('observations.form.photos.errors.unreadable', { file: fileName })),
     [showError, t],
   )
 

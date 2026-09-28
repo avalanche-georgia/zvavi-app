@@ -8,12 +8,12 @@ const ElevationZonesInfo = () => {
   const t = useTranslations()
 
   return (
-    <InfoTip ariaLabel={t('observations.submit.elevationZones.label')}>
+    <InfoTip ariaLabel={t('observations.form.elevationZones.label')}>
       <dl className="grid grid-cols-[auto_auto] gap-x-3 gap-y-1">
         {sortedElevationZones.map((zone) => (
           <div key={zone} className="contents">
             <dt className="font-semibold">{t(`common.elevationZones.${zone}`)}</dt>
-            <dd>{t(`observations.submit.elevationZones.${zone}`)}</dd>
+            <dd>{t(`observations.form.elevationZones.${zone}`)}</dd>
           </div>
         ))}
       </dl>

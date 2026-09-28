@@ -3,7 +3,7 @@
 import { useCallback, useState } from 'react'
 import { useBoolean } from '@components/hooks'
 import { roundCoordinate } from '@data/helpers'
-import { useRegionContext } from '@domain/context/RegionContext'
+import type { Region } from '@domain/types'
 import { useFormFieldError } from '@ds/form'
 import { FormCard } from '@ds/patterns'
 import { useTranslations } from 'next-intl'
@@ -12,23 +12,21 @@ import { useFormContext, useWatch } from 'react-hook-form'
 import CoordinateInputs from './CoordinateInputs'
 import CoordinatesRow from './CoordinatesRow'
 import LocationMap from './LocationMap'
-import type { ObservationSubmitFormSchema } from '../../schema'
+import type { ObservationFormFields } from '../../schema'
 
-const LocationSection = () => {
+// The region frames the map (bounds, boundary) — passed in, since the admin
+// form has no region context
+const LocationSection = ({ region }: { region: Region }) => {
   const t = useTranslations()
-  const { region } = useRegionContext()
-  const form = useFormContext<ObservationSubmitFormSchema>()
+  const form = useFormContext<ObservationFormFields>()
   const [latitude, longitude] = useWatch({ control: form.control, name: ['latitude', 'longitude'] })
   const [isExpanded, { toggle: toggleExpanded }] = useBoolean(false)
   const [isEditingCoordinates, setIsEditingCoordinates] = useState(false)
   const [panTarget, setPanTarget] = useState<[number, number] | null>(null)
 
-  const requiredMessage = t('observations.submit.location.required')
-  const latitudeError = useFormFieldError<ObservationSubmitFormSchema>('latitude', requiredMessage)
-  const longitudeError = useFormFieldError<ObservationSubmitFormSchema>(
-    'longitude',
-    requiredMessage,
-  )
+  const requiredMessage = t('observations.form.location.required')
+  const latitudeError = useFormFieldError<ObservationFormFields>('latitude', requiredMessage)
+  const longitudeError = useFormFieldError<ObservationFormFields>('longitude', requiredMessage)
   const error = latitudeError ?? longitudeError
 
   // Re-validates only after a submit attempt, so the error clears as soon as a
@@ -63,7 +61,7 @@ const LocationSection = () => {
       error={error}
       required
       requiredText={t('common.validation.required')}
-      title={t('observations.submit.sections.where')}
+      title={t('observations.form.sections.where')}
     >
       <div className="flex flex-col gap-3">
         <LocationMap
@@ -73,8 +71,8 @@ const LocationSection = () => {
           onExpandedToggle={toggleExpanded}
           onLocationPick={handleLocationPick}
           panTarget={panTarget}
-          region={region!}
-          regionName={t(`regions.names.${region!.id}`)}
+          region={region}
+          regionName={t(`regions.names.${region.id}`)}
         />
         <CoordinatesRow
           isEditing={isEditingCoordinates}

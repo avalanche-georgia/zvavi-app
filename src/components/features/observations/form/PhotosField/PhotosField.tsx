@@ -11,13 +11,13 @@ import PhotoTile from './PhotoTile'
 import { maxSourceSizeMb } from './preparePhoto'
 import usePhotoSelectionFeedback from './usePhotoSelectionFeedback'
 import usePhotoUploads from './usePhotoUploads'
-import type { ObservationSubmitFormSchema } from '../schema'
+import type { ObservationFormFields } from '../schema'
 
 const { maxCount } = observationPhotoLimits
 
 const PhotosField = () => {
   const t = useTranslations()
-  const form = useFormContext<ObservationSubmitFormSchema>()
+  const form = useFormContext<ObservationFormFields>()
   const { filterSelectedFiles, handlePhotoUnreadable } = usePhotoSelectionFeedback()
   const { addPhotos, photos, removePhoto, retryPhoto } = usePhotoUploads({
     onPhotoUnreadable: handlePhotoUnreadable,
@@ -59,12 +59,12 @@ const PhotosField = () => {
       </div>
 
       <p className="text-copy-sm text-muted">
-        {t('observations.submit.photos.hint', { maxSize: maxSourceSizeMb })}
+        {t('observations.form.photos.hint', { maxSize: maxSourceSizeMb })}
       </p>
 
       {errorMessage && (
         <p className="text-copy-sm text-danger" data-field-error>
-          {t(`observations.submit.photos.errors.${errorMessage}`)}
+          {t(`observations.form.photos.errors.${errorMessage}`)}
         </p>
       )}
 

@@ -1,12 +1,20 @@
 'use client'
 
+import {
+  AspectsSection,
+  DescriptionSection,
+  LocationSection,
+  PhotosSection,
+  useSubmitAfterPhotoUploads,
+  WhatSection,
+  WhenSection,
+} from '@components/features/observations/form'
 import { useUnsavedChangesWarning } from '@components/hooks'
 import { useRegionContext } from '@domain/context/RegionContext'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormProvider, useForm } from 'react-hook-form'
 
 import useObservationSubmitFormSubmit from './hooks/useObservationSubmitFormSubmit'
-import useSubmitAfterPhotoUploads from './hooks/useSubmitAfterPhotoUploads'
 
 import getInitialFormData from './getInitialFormData'
 import HoneypotField from './HoneypotField'
@@ -14,12 +22,6 @@ import ObservationKindTabs from './ObservationKindTabs'
 import type { ObservationSubmitFormData, ObservationSubmitFormSchema } from './schema'
 import { observationSubmitSchema } from './schema'
 import AboutYouSection from './sections/AboutYouSection'
-import AspectsSection from './sections/AspectsSection'
-import DescriptionSection from './sections/DescriptionSection'
-import LocationSection from './sections/LocationSection'
-import PhotosSection from './sections/PhotosSection'
-import WhatSection from './sections/WhatSection'
-import WhenSection from './sections/WhenSection'
 import SubmitBar from './SubmitBar'
 import SubmitFinePrint from './SubmitFinePrint'
 
@@ -51,7 +53,7 @@ const ObservationSubmitForm = ({ onSubmitted }: { onSubmitted: () => void }) => 
         <HoneypotField />
         <ObservationKindTabs />
         <WhenSection />
-        <LocationSection />
+        <LocationSection region={region!} />
         <WhatSection />
         <AspectsSection />
         <PhotosSection />

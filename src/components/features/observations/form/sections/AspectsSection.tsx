@@ -1,23 +1,23 @@
 'use client'
 
-import { AspectElevationPicker } from '@components/ui'
 import { FormCard } from '@ds/patterns'
 import { useTranslations } from 'next-intl'
 import { Controller, useFormContext } from 'react-hook-form'
 
 import ElevationZonesInfo from './ElevationZonesInfo'
-import type { ObservationSubmitFormSchema } from '../schema'
+import AspectElevationPicker from '../../AspectElevationPicker'
+import type { ObservationFormFields } from '../schema'
 
 const AspectsSection = () => {
   const t = useTranslations()
-  const form = useFormContext<ObservationSubmitFormSchema>()
+  const form = useFormContext<ObservationFormFields>()
 
   return (
     <FormCard
-      headerAside={t('observations.submit.aspectsHint')}
+      headerAside={t('observations.form.aspectsHint')}
       title={
         <>
-          {t('observations.submit.sections.aspects')} <ElevationZonesInfo />
+          {t('observations.form.sections.aspects')} <ElevationZonesInfo />
         </>
       }
     >

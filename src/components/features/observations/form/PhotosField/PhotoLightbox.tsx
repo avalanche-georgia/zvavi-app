@@ -28,7 +28,7 @@ const PhotoLightbox = ({ index, onIndexChange, onRemove, photos }: PhotoLightbox
     <PhotoViewer
       actions={
         <button
-          aria-label={t('observations.submit.photos.remove')}
+          aria-label={t('observations.form.photos.remove')}
           className={photoViewerToolbarButtonClassName}
           onClick={handleRemove}
           type="button"

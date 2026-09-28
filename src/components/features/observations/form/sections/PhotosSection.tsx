@@ -6,24 +6,24 @@ import { useTranslations } from 'next-intl'
 import { useWatch } from 'react-hook-form'
 
 import PhotosField from '../PhotosField'
-import type { ObservationSubmitFormSchema } from '../schema'
+import type { ObservationFormFields } from '../schema'
 
 const { maxCount } = observationPhotoLimits
 
 const PhotosSection = () => {
   const t = useTranslations()
-  const photos = useWatch<ObservationSubmitFormSchema, 'photos'>({ name: 'photos' })
+  const photos = useWatch<ObservationFormFields, 'photos'>({ name: 'photos' })
 
   return (
     <FormCard
       headerAside={
         <span className="tabular-nums">
           {photos.length > 0
-            ? t('observations.submit.photos.count', { count: photos.length, max: maxCount })
-            : t('observations.submit.photos.upTo', { max: maxCount })}
+            ? t('observations.form.photos.count', { count: photos.length, max: maxCount })
+            : t('observations.form.photos.upTo', { max: maxCount })}
         </span>
       }
-      title={t('observations.submit.sections.photos')}
+      title={t('observations.form.sections.photos')}
     >
       <PhotosField />
     </FormCard>

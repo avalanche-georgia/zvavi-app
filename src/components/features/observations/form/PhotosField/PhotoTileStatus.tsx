@@ -27,14 +27,14 @@ const PhotoTileStatus = ({ onRetry, photo }: PhotoTileStatusProps) => {
   if (status === 'failed') {
     return (
       <div className="bg-ink/72 text-caption absolute inset-0 flex flex-col items-center justify-center gap-2 px-2 pt-6 text-center text-white">
-        <span className="leading-tight font-medium">{t('observations.submit.photos.failed')}</span>
+        <span className="leading-tight font-medium">{t('observations.form.photos.failed')}</span>
         <button
           className="focus-ring bg-surface text-ink flex items-center gap-1 rounded-full px-3 py-1.5 font-semibold active:scale-95"
           onClick={onRetry}
           type="button"
         >
           <RotateCw className="size-3.5" />
-          {t('observations.submit.photos.retry')}
+          {t('observations.form.photos.retry')}
         </button>
       </div>
     )
@@ -45,14 +45,14 @@ const PhotoTileStatus = ({ onRetry, photo }: PhotoTileStatusProps) => {
     return (
       <div className="bg-ink/45 text-caption pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-1 text-white">
         <UploadProgressRing />
-        <span className="font-medium">{t('observations.submit.photos.preparing')}</span>
+        <span className="font-medium">{t('observations.form.photos.preparing')}</span>
       </div>
     )
   }
 
   return (
     <div
-      aria-label={t('observations.submit.photos.uploading')}
+      aria-label={t('observations.form.photos.uploading')}
       aria-valuemax={100}
       aria-valuemin={0}
       aria-valuenow={Math.round(progress * 100)}

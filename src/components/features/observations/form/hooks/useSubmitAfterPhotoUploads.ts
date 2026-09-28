@@ -1,19 +1,15 @@
 import { useRef, useState } from 'react'
-import type { UseFormReturn } from 'react-hook-form'
+import type { FieldPath, UseFormReturn } from 'react-hook-form'
 
 import useScrollToFirstError from './useScrollToFirstError'
-import type { ObservationSubmitFormData, ObservationSubmitFormSchema, PhotoUpload } from '../schema'
+import type { ObservationFormFields, PhotoUpload } from '../schema'
 
-type ObservationForm = UseFormReturn<
-  ObservationSubmitFormSchema,
-  unknown,
-  ObservationSubmitFormData
->
-
-type UseSubmitAfterPhotoUploadsParams = {
-  form: ObservationForm
-  onValid: (formData: ObservationSubmitFormData) => Promise<void>
+type UseSubmitAfterPhotoUploadsParams<TFieldValues extends ObservationFormFields, TFormData> = {
+  form: UseFormReturn<TFieldValues, unknown, TFormData>
+  onValid: (formData: TFormData) => Promise<void>
 }
+
+const photosField = 'photos' as FieldPath<ObservationFormFields>
 
 const isSettled = (photos: PhotoUpload[]) =>
   photos.every((photo) => photo.status === 'uploaded' || photo.status === 'failed')
@@ -21,7 +17,12 @@ const isSettled = (photos: PhotoUpload[]) =>
 // Pressing Submit while photos are still uploading shouldn't be a dead end: the
 // rest of the form is validated right away, and if it's fine the submission is
 // queued and goes out by itself the moment the last photo finishes.
-const useSubmitAfterPhotoUploads = ({ form, onValid }: UseSubmitAfterPhotoUploadsParams) => {
+const useSubmitAfterPhotoUploads = <TFieldValues extends ObservationFormFields, TFormData>({
+  form,
+  onValid,
+}: UseSubmitAfterPhotoUploadsParams<TFieldValues, TFormData>) => {
+  const getPhotos = () => form.getValues(photosField as FieldPath<TFieldValues>) as PhotoUpload[]
+
   const [isWaitingForPhotos, setIsWaitingForPhotos] = useState(false)
   // Set synchronously, unlike state: a double tap during the awaits below must
   // not queue a second submission (a duplicate observation)
@@ -30,14 +31,14 @@ const useSubmitAfterPhotoUploads = ({ form, onValid }: UseSubmitAfterPhotoUpload
 
   const waitForPhotoUploads = () =>
     new Promise<void>((resolve) => {
-      if (isSettled(form.getValues('photos'))) {
+      if (isSettled(getPhotos())) {
         resolve()
 
         return
       }
 
       const subscription = form.watch(() => {
-        if (!isSettled(form.getValues('photos'))) return
+        if (!isSettled(getPhotos())) return
 
         subscription.unsubscribe()
         resolve()
@@ -45,10 +46,10 @@ const useSubmitAfterPhotoUploads = ({ form, onValid }: UseSubmitAfterPhotoUpload
     })
 
   const submitWhenPhotosSettle = async () => {
-    if (!isSettled(form.getValues('photos'))) {
-      const otherFields = (
-        Object.keys(form.getValues()) as (keyof ObservationSubmitFormSchema)[]
-      ).filter((name) => name !== 'photos')
+    if (!isSettled(getPhotos())) {
+      const otherFields = (Object.keys(form.getValues()) as FieldPath<TFieldValues>[]).filter(
+        (name) => name !== photosField,
+      )
       const areOtherFieldsValid = await form.trigger(otherFields)
 
       if (!areOtherFieldsValid) {

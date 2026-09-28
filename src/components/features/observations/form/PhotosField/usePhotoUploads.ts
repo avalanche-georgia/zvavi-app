@@ -3,9 +3,14 @@ import { useFormContext, useWatch } from 'react-hook-form'
 
 import preparePhoto from './preparePhoto'
 import uploadPhoto, { discardUploadedPhoto } from './uploadPhoto'
-import type { ObservationSubmitFormSchema, PhotoUpload } from '../schema'
+import type { ObservationFormFields, PhotoUpload } from '../schema'
 
 const createPhotoId = () => `${Date.now()}-${Math.random().toString(36).slice(2)}`
+
+// Photos already saved on the record show a signed URL, not a local blob
+const revokePreviewUrl = (previewUrl: string) => {
+  if (previewUrl.startsWith('blob:')) URL.revokeObjectURL(previewUrl)
+}
 
 // Photo state lives in the form's `photos` field (so the schema can block
 // submit until every upload finishes), while in-flight requests are tracked
@@ -18,8 +23,7 @@ const usePhotoUploads = ({
   // Only the stable methods — the context object itself is a new reference on
   // every form render (FormProvider is fed a spread), which would otherwise
   // re-run the unmount cleanup below and kill in-flight uploads.
-  const { control, getFieldState, getValues, setValue } =
-    useFormContext<ObservationSubmitFormSchema>()
+  const { control, getFieldState, getValues, setValue } = useFormContext<ObservationFormFields>()
   const photos = useWatch({ control, name: 'photos' })
   const abortControllers = useRef(new Map<string, AbortController>())
 
@@ -50,8 +54,10 @@ const usePhotoUploads = ({
 
       if (!removed) return
 
-      URL.revokeObjectURL(removed.previewUrl)
-      if (removed.key) discardUploadedPhoto(removed.key)
+      revokePreviewUrl(removed.previewUrl)
+      // A saved photo is only dropped from the form here — the record's files
+      // are deleted server-side once the edit is saved (Cancel keeps them)
+      if (removed.file && removed.key) discardUploadedPhoto(removed.key)
 
       setPhotos((current) => current.filter((photo) => photo.id !== id))
     },
@@ -60,6 +66,8 @@ const usePhotoUploads = ({
 
   const startUpload = useCallback(
     async ({ file, id }: PhotoUpload) => {
+      if (!file) return
+
       const controller = new AbortController()
 
       abortControllers.current.set(id, controller)
@@ -87,7 +95,7 @@ const usePhotoUploads = ({
 
         updatePhoto(id, { previewUrl: URL.createObjectURL(blob), status: 'uploading' })
 
-        if (previousPreviewUrl) URL.revokeObjectURL(previousPreviewUrl)
+        if (previousPreviewUrl) revokePreviewUrl(previousPreviewUrl)
 
         const key = await uploadPhoto(blob, {
           onProgress: (progress) => updatePhoto(id, { progress }),
@@ -138,7 +146,7 @@ const usePhotoUploads = ({
 
     return () => {
       controllers.forEach((controller) => controller.abort())
-      getValues('photos')?.forEach((photo) => URL.revokeObjectURL(photo.previewUrl))
+      getValues('photos')?.forEach((photo) => revokePreviewUrl(photo.previewUrl))
     }
   }, [getValues])
 

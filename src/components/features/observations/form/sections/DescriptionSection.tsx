@@ -5,22 +5,22 @@ import { FormTextarea } from '@ds/form'
 import { FormCard } from '@ds/patterns'
 import { useTranslations } from 'next-intl'
 
-import type { ObservationSubmitFormSchema } from '../schema'
+import type { ObservationFormFields } from '../schema'
 
 const DescriptionSection = () => {
   const t = useTranslations()
 
   return (
     <FormCard
-      headerAside={t('observations.submit.optional')}
-      title={t('observations.submit.sections.anythingElse')}
+      headerAside={t('observations.form.optional')}
+      title={t('observations.form.sections.anythingElse')}
     >
-      <FormTextarea<ObservationSubmitFormSchema>
+      <FormTextarea<ObservationFormFields>
         isLabelHidden
-        label={t('observations.submit.labels.description')}
+        label={t('observations.form.labels.description')}
         maxLength={avalancheFieldLimits.descriptionMaxLength}
         name="description"
-        placeholder={t('observations.submit.placeholders.description')}
+        placeholder={t('observations.form.placeholders.description')}
       />
     </FormCard>
   )
