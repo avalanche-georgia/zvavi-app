@@ -1,7 +1,7 @@
 'use client'
 
 import { RegionTabs } from '@components/shared'
-import { usePendingObservationsCounts } from '@data/hooks/recentAvalanches'
+import { usePendingObservationsSummary } from '@data/hooks/recentAvalanches'
 import { defaultRegionId } from '@domain/constants'
 import type { Region, RegionId } from '@domain/types'
 import { useSearchParams } from 'next/navigation'
@@ -37,13 +37,13 @@ const RecentAvalanchesContainer = ({ initialRegions, variant }: RecentAvalanches
     onShow: selection.showAvalanche,
     selectedId: selection.selectedId,
   })
-  const pendingCounts = usePendingObservationsCounts()
+  const pendingSummary = usePendingObservationsSummary()
 
   return (
     <>
       <div className="flex items-center border-b bg-white px-4 md:px-6">
         <RegionTabs
-          counts={isQueue ? pendingCounts.byRegion : undefined}
+          counts={isQueue ? pendingSummary.byRegion : undefined}
           currentRegionId={regionId}
           initialRegions={initialRegions}
         />
