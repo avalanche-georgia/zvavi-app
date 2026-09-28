@@ -30,6 +30,7 @@ type SelectProps = {
   value: string | undefined
 }
 
+/** @deprecated Use `Select` from `@ds/primitives` — see DESIGN_SYSTEM.md */
 const Select = ({ className, hasError, onChange, options, placeholder, value }: SelectProps) => {
   const portalContainer = usePortalContainer()
 

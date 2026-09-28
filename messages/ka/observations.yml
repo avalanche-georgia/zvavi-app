@@ -94,7 +94,6 @@ observations:
     error: 'დაფიქსირდა შეცდომა. გთხოვთ სცადოთ ხელახლა.'
     waitingForPhotos: 'გაიგზავნება ფოტოების ატვირთვისთანავე…'
     finePrint: 'გაგზავნით თქვენ ეთანხმებით ჩვენს <terms>წესებს</terms> და <privacy>კონფიდენციალურობის პოლიტიკას</privacy>. თქვენი საკონტაქტო მონაცემები არასდროს ქვეყნდება.'
-    optional: 'არასავალდებულო'
     kinds:
       label: 'დაკვირვების ტიპი'
       avalanche: 'ზვავი'
@@ -117,13 +116,37 @@ observations:
       submitAnother: 'კიდევ ერთის გაგზავნა'
       viewObservations: 'დაკვირვებების ნახვა'
     sections:
+      aboutYou: 'თქვენ შესახებ'
+    nameRequired: 'მიუთითეთ თქვენი სახელი.'
+    aboutYou:
+      reportingAs: 'აგზავნით როგორც'
+      edit: 'შეცვლა'
+      remember: 'დაიმახსოვრე ჩემი მონაცემები ამ მოწყობილობაზე'
+      rememberInfo: 'როგორ მუშაობს დამახსოვრება'
+      rememberHint: 'ინახება მხოლოდ ამ ბრაუზერში, რომ შემდეგ ჯერზე ფორმა თავად შეივსოს — ეს ასლი ჩვენს სერვერებზე არ იგზავნება და არავისთვის ჩანს. ნუ მონიშნავთ საერთო მოწყობილობაზე.'
+      savedOnDevice: 'თქვენი მონაცემები შენახულია ამ ბრაუზერში.'
+      forget: 'დამივიწყე'
+      forgotten: 'თქვენი მონაცემები წაიშალა ამ მოწყობილობიდან.'
+    labels:
+      submitterContact: 'კონტაქტი'
+      submitterEducation: 'ზვავის უსაფრთხოების ტრენინგი'
+      submitterName: 'თქვენი სახელი'
+    hints:
+      submitterContact: 'არასავალდებულო · ხედავს მხოლოდ ჩვენი გუნდი'
+    placeholders:
+      submitterContact: 'ელფოსტა, ტელეფონი, Telegram, Instagram…'
+      submitterEducation: 'მაგ. AST 1, არცერთი, თვითნასწავლი…'
+      submitterName: 'ნინო ბერიძე'
+
+  form:
+    optional: 'არასავალდებულო'
+    sections:
       when: 'როდის მოხდა?'
       where: 'სად?'
       what: 'რა ნახეთ?'
       aspects: 'ექსპოზიცია და სიმაღლე'
       photos: 'ფოტოები'
       anythingElse: 'კიდევ რამე?'
-      aboutYou: 'თქვენ შესახებ'
     date:
       label: 'თარიღი'
       today: 'დღეს'
@@ -169,16 +192,6 @@ observations:
       highAlpine: '2600 მ-ზე მაღლა'
       alpine: '2000–2600 მ'
       subAlpine: '2000 მ-ზე დაბლა'
-    nameRequired: 'მიუთითეთ თქვენი სახელი.'
-    aboutYou:
-      reportingAs: 'აგზავნით როგორც'
-      edit: 'შეცვლა'
-      remember: 'დაიმახსოვრე ჩემი მონაცემები ამ მოწყობილობაზე'
-      rememberInfo: 'როგორ მუშაობს დამახსოვრება'
-      rememberHint: 'ინახება მხოლოდ ამ ბრაუზერში, რომ შემდეგ ჯერზე ფორმა თავად შეივსოს — ეს ასლი ჩვენს სერვერებზე არ იგზავნება და არავისთვის ჩანს. ნუ მონიშნავთ საერთო მოწყობილობაზე.'
-      savedOnDevice: 'თქვენი მონაცემები შენახულია ამ ბრაუზერში.'
-      forget: 'დამივიწყე'
-      forgotten: 'თქვენი მონაცემები წაიშალა ამ მოწყობილობიდან.'
     labels:
       description: 'აღწერა'
       latitude: 'განედი'
@@ -186,24 +199,16 @@ observations:
       quantity: 'რამდენი?'
       size: 'ზომა'
       slabDepth: 'სისქე'
-      submitterContact: 'კონტაქტი'
-      submitterEducation: 'ზვავის უსაფრთხოების ტრენინგი'
-      submitterName: 'თქვენი სახელი'
       trigger: 'გამომწვევი'
       type: 'ზვავის ტიპი'
       width: 'სიგანე'
     units:
       cm: 'სმ'
       m: 'მ'
-    hints:
-      submitterContact: 'არასავალდებულო · ხედავს მხოლოდ ჩვენი გუნდი'
     placeholders:
       description: 'ვინმე მოჰყვა ზვავს, ჩაიმარხა ან დაშავდა? რა მანძილზე ჩამოვიდა, ამინდი, თოვლის საფარი…'
       latitude: 'მაგ. 42.6975'
       longitude: 'მაგ. 44.4547'
-      submitterContact: 'ელფოსტა, ტელეფონი, Telegram, Instagram…'
-      submitterEducation: 'მაგ. AST 1, არცერთი, თვითნასწავლი…'
-      submitterName: 'ნინო ბერიძე'
     photos:
       hint: 'ყველაზე სასარგებლოა მოწყვეტის ხაზისა და ნაშალის ფოტოები. JPEG, PNG ან HEIC · თითო მაქს. {maxSize} MB.'
       upTo: 'მაქსიმუმ {max}'

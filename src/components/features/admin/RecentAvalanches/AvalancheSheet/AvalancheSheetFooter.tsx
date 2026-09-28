@@ -69,6 +69,7 @@ const AvalancheSheetFooter = ({
       <Button onClick={onEditCancel} variant="secondary">
         {t('common.actions.cancel')}
       </Button>
+      {/* Also disabled while a save waits for photo uploads to finish */}
       <Button disabled={isSaving} form={formId} type="submit">
         {t('common.actions.save')}
       </Button>

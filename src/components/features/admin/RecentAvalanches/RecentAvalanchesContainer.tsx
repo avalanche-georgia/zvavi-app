@@ -6,6 +6,7 @@ import { defaultRegionId } from '@domain/constants'
 import type { Region, RegionId } from '@domain/types'
 import { useSearchParams } from 'next/navigation'
 
+import { AvalancheCreateSheet, useCreateSheetParam } from './AvalancheCreateSheet'
 import {
   AvalancheSheet,
   useAvalancheSelection,
@@ -29,6 +30,7 @@ const RecentAvalanchesContainer = ({ initialRegions, variant }: RecentAvalanches
 
   const page = useRecentAvalanchesPage(variant)
   const selection = useAvalancheSelection()
+  const createSheet = useCreateSheetParam()
   const sheetNavigation = useAvalancheSheetNavigation({
     ids: page.avalanches.map(({ id }) => id),
     onDismiss: selection.dismissAvalanche,
@@ -47,7 +49,7 @@ const RecentAvalanchesContainer = ({ initialRegions, variant }: RecentAvalanches
         />
       </div>
 
-      <ListToolbar page={page} regionId={regionId} variant={variant} />
+      <ListToolbar onCreate={createSheet.openCreate} page={page} variant={variant} />
 
       <div className="p-4 md:p-6">
         <RecentAvalanchesTable
@@ -74,6 +76,14 @@ const RecentAvalanchesContainer = ({ initialRegions, variant }: RecentAvalanches
         onRecordLeave={isQueue ? sheetNavigation.advance : undefined}
         onReopen={selection.reopenAvalanche}
       />
+
+      {!isQueue && (
+        <AvalancheCreateSheet
+          isRequested={createSheet.isCreateOpen}
+          onClose={createSheet.closeCreate}
+          regionId={regionId}
+        />
+      )}
     </>
   )
 }

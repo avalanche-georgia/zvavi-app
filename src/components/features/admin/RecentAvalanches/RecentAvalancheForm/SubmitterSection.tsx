@@ -1,10 +1,10 @@
 'use client'
 
-import { InputBlock, Select, toOptions } from '@components/ui'
 import { avalancheStatuses } from '@domain/constants'
-import type { AvalancheSource } from '@domain/types'
+import type { AvalancheSource, AvalancheStatus } from '@domain/types'
+import { FormSelect } from '@ds/form'
+import { FormCard } from '@ds/patterns'
 import { useTranslations } from 'next-intl'
-import { Controller, useFormContext } from 'react-hook-form'
 
 import type { AvalancheFormSchema } from './schema'
 import SubmitterInfo from './SubmitterInfo'
@@ -28,38 +28,20 @@ const SubmitterSection = ({
   submitterName,
 }: SubmitterSectionProps) => {
   const t = useTranslations()
-  const form = useFormContext<AvalancheFormSchema>()
+  const statusLabel = t('admin.recentAvalanches.form.labels.status')
 
   // "Under review" is the moderation state of public submissions only — a team
   // record set to it would drop out of both the catalog and the queue
-  const statusOptions = toOptions(avalancheStatuses, (key) =>
-    t(`common.avalancheStatuses.${key}`),
-  ).filter(({ value }) => value !== 'pending' || source === 'external')
-
-  const statusField = (
-    <InputBlock label={t('admin.recentAvalanches.form.labels.status')}>
-      <Controller
-        control={form.control}
-        name="status"
-        render={({ field }) => (
-          <Select onChange={field.onChange} options={statusOptions} value={field.value} />
-        )}
-      />
-    </InputBlock>
-  )
-
-  if (!source) return <div className="grid grid-cols-2 gap-3">{statusField}</div>
+  const statusOptions = Object.values(avalancheStatuses)
+    .filter((status) => status !== 'pending' || source === 'external')
+    .map((status) => ({ label: t(`common.avalancheStatuses.${status}`), value: status }))
 
   return (
-    <div className="grid grid-cols-2 items-start gap-3">
-      <div className="flex flex-col gap-3 rounded-lg border border-gray-200 p-3">
-        <div className="flex items-center gap-2">
-          <span className="text-sm font-semibold text-gray-700">
-            {t('admin.recentAvalanches.form.labels.submitterSection')}
-          </span>
-          <SourceBadge source={source} />
-        </div>
-
+    <FormCard
+      headerAside={source && <SourceBadge source={source} />}
+      title={source ? t('admin.recentAvalanches.form.labels.submitterSection') : statusLabel}
+    >
+      {source && (
         <SubmitterInfo
           createdByUserId={createdByUserId}
           isExternal={source === 'external'}
@@ -67,10 +49,15 @@ const SubmitterSection = ({
           submitterEducation={submitterEducation}
           submitterName={submitterName}
         />
-      </div>
-
-      {statusField}
-    </div>
+      )}
+      <FormSelect<AvalancheFormSchema, AvalancheStatus>
+        className="max-w-80"
+        isLabelHidden={!source}
+        label={statusLabel}
+        name="status"
+        options={statusOptions}
+      />
+    </FormCard>
   )
 }
 
