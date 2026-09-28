@@ -30,6 +30,12 @@ export const getNavMenuItems = (regionId: string | null): NavMenuItem[] => [
         path: routes.forecastsByRegion(regionId ?? '').history,
         titleId: 'navigation.history',
       },
+      {
+        icon: 'telescope',
+        id: 'observations',
+        path: routes.observationsByRegion(regionId ?? '').root,
+        titleId: 'navigation.observations',
+      },
     ],
     icon: 'snowflake',
     id: 'forecasts',

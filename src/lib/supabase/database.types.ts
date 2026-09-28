@@ -4,7 +4,7 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: '14.1'
+    PostgrestVersion: '14.5'
   }
   graphql_public: {
     Tables: {
@@ -486,6 +486,7 @@ export type Database = {
         Row: {
           aspects: Json | null
           created_at: string
+          created_by_user_id: string | null
           date: string | null
           description: string | null
           id: number
@@ -494,10 +495,16 @@ export type Database = {
           latitude: number | null
           location: string | null
           longitude: number | null
+          photo_keys: string[] | null
           quantity: number
           region_id: Database['public']['Enums']['region_id'] | null
           size: number
           slab_depth: number | null
+          source: Database['public']['Enums']['avalanche_source']
+          status: Database['public']['Enums']['avalanche_status']
+          submitter_contact: string | null
+          submitter_education: string | null
+          submitter_name: string | null
           trigger: Database['public']['Enums']['avalanche_trigger']
           type: Database['public']['Enums']['avalanche_type']
           width: number | null
@@ -505,6 +512,7 @@ export type Database = {
         Insert: {
           aspects?: Json | null
           created_at?: string
+          created_by_user_id?: string | null
           date?: string | null
           description?: string | null
           id?: number
@@ -513,10 +521,16 @@ export type Database = {
           latitude?: number | null
           location?: string | null
           longitude?: number | null
+          photo_keys?: string[] | null
           quantity: number
           region_id?: Database['public']['Enums']['region_id'] | null
           size: number
           slab_depth?: number | null
+          source?: Database['public']['Enums']['avalanche_source']
+          status?: Database['public']['Enums']['avalanche_status']
+          submitter_contact?: string | null
+          submitter_education?: string | null
+          submitter_name?: string | null
           trigger: Database['public']['Enums']['avalanche_trigger']
           type: Database['public']['Enums']['avalanche_type']
           width?: number | null
@@ -524,6 +538,7 @@ export type Database = {
         Update: {
           aspects?: Json | null
           created_at?: string
+          created_by_user_id?: string | null
           date?: string | null
           description?: string | null
           id?: number
@@ -532,10 +547,16 @@ export type Database = {
           latitude?: number | null
           location?: string | null
           longitude?: number | null
+          photo_keys?: string[] | null
           quantity?: number
           region_id?: Database['public']['Enums']['region_id'] | null
           size?: number
           slab_depth?: number | null
+          source?: Database['public']['Enums']['avalanche_source']
+          status?: Database['public']['Enums']['avalanche_status']
+          submitter_contact?: string | null
+          submitter_education?: string | null
+          submitter_name?: string | null
           trigger?: Database['public']['Enums']['avalanche_trigger']
           type?: Database['public']['Enums']['avalanche_type']
           width?: number | null
@@ -705,12 +726,36 @@ export type Database = {
         }
         Returns: Json
       }
+      submit_observation: {
+        Args: {
+          p_aspects?: Json
+          p_date?: string
+          p_description?: string
+          p_is_date_unknown?: boolean
+          p_latitude?: number
+          p_longitude?: number
+          p_photo_keys?: string[]
+          p_quantity?: number
+          p_region_id: Database['public']['Enums']['region_id']
+          p_size?: number
+          p_slab_depth?: number
+          p_submitter_contact?: string
+          p_submitter_education?: string
+          p_submitter_name?: string
+          p_trigger?: Database['public']['Enums']['avalanche_trigger']
+          p_type?: Database['public']['Enums']['avalanche_type']
+          p_width?: number
+        }
+        Returns: number
+      }
       verify_member: {
         Args: { client_ip?: unknown; client_user_agent?: string; code: string }
         Returns: Json
       }
     }
     Enums: {
+      avalanche_source: 'team' | 'external'
+      avalanche_status: 'draft' | 'published' | 'archived' | 'pending'
       avalanche_trigger:
         | 'natural'
         | 'riderAccidental'
@@ -867,6 +912,8 @@ export const Constants = {
   },
   public: {
     Enums: {
+      avalanche_source: ['team', 'external'],
+      avalanche_status: ['draft', 'published', 'archived', 'pending'],
       avalanche_trigger: [
         'natural',
         'riderAccidental',

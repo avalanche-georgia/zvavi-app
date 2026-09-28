@@ -5,9 +5,13 @@ import type { DateMode } from '@data/hooks/recentAvalanches'
 import { useTranslations } from 'next-intl'
 
 type RecentAvalanchesFiltersProps = {
+  // Extra filters rendered in the same row (catalog: source / status)
+  children?: React.ReactNode
   dateFrom: Date | null
   dateMode: DateMode
   dateTo: Date | null
+  // Filters outside this component (children) that the reset also clears
+  hasOtherFilters?: boolean
   onDateFromChange: (date: Date | null) => void
   onDateModeChange: (mode: DateMode) => void
   onDateToChange: (date: Date | null) => void
@@ -17,9 +21,11 @@ type RecentAvalanchesFiltersProps = {
 const today = new Date()
 
 const RecentAvalanchesFilters = ({
+  children,
   dateFrom,
   dateMode,
   dateTo,
+  hasOtherFilters = false,
   onDateFromChange,
   onDateModeChange,
   onDateToChange,
@@ -27,7 +33,7 @@ const RecentAvalanchesFilters = ({
 }: RecentAvalanchesFiltersProps) => {
   const t = useTranslations()
 
-  const hasFilters = dateFrom !== null || dateTo !== null
+  const hasFilters = dateFrom !== null || dateTo !== null || hasOtherFilters
 
   const dateModeOptions = [
     { label: t('admin.recentAvalanches.filters.dateMode.occurred'), value: 'occurred' },
@@ -60,6 +66,8 @@ const RecentAvalanchesFilters = ({
         placeholder={t('common.words.to')}
         value={dateTo}
       />
+
+      {children}
 
       {hasFilters && (
         <Button onClick={onReset} variant="outline">

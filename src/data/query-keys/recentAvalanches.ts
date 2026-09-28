@@ -9,6 +9,8 @@ const recentAvalanchesKeys = {
     [...recentAvalanchesKeys.all, regionId, 'item', id] as const,
   list: (regionId: RegionId, params: ListFilterParams) =>
     [...recentAvalanchesKeys.byRegion(regionId), 'list', params] as const,
+  pendingSummary: () => [...recentAvalanchesKeys.all, 'pendingSummary'] as const,
+  photos: (id: number) => [...recentAvalanchesKeys.all, 'photos', id] as const,
 }
 
 export default recentAvalanchesKeys

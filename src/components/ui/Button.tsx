@@ -31,6 +31,7 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: ButtonVariant
 }
 
+/** @deprecated Use `Button` from `@ds/primitives` — see DESIGN_SYSTEM.md */
 const Button = ({ variant = 'primary', ...props }: ButtonProps) => (
   <HeadlessUIButton
     {...props}

@@ -8,6 +8,7 @@ export const routes = {
     joinUs: '/about/join-us',
   },
   admin: {
+    designSystem: '/admin/ds',
     forecasts: {
       edit: (id: number) => `/admin/forecasts/${id}/edit`,
       editInRegion: (id: number, regionId: string) =>
@@ -23,6 +24,9 @@ export const routes = {
       root: '/admin/members',
       view: (id: string) => `/admin/members/${id}`,
     },
+    observations: {
+      root: '/admin/observations',
+    },
     partners: {
       edit: (id: string) => `/admin/partners/${id}/edit`,
       new: '/admin/partners/new',
@@ -30,13 +34,13 @@ export const routes = {
     },
     profile: '/admin/profile',
     recentAvalanches: {
-      edit: (id: number) => `/admin/recent-avalanches/${id}/edit`,
-      editInRegion: (id: number, regionId: string) =>
-        `/admin/recent-avalanches/${id}/edit?regionId=${regionId}`,
+      // The list with its create panel open
+      create: '/admin/recent-avalanches?create=1',
       listByRegion: (regionId: string) => `/admin/recent-avalanches?regionId=${regionId}`,
-      new: '/admin/recent-avalanches/new',
+      // Full-page create — kept for direct links; the list uses its panel
       newInRegion: (regionId: string) => `/admin/recent-avalanches/new?regionId=${regionId}`,
       root: '/admin/recent-avalanches',
+      view: (id: number) => `/admin/recent-avalanches/${id}`,
     },
     root: '/admin',
     weatherStations: {
@@ -56,6 +60,10 @@ export const routes = {
     view: (id: number) => `/${regionId}/forecasts/${id}`,
   }),
   home: '/',
+  observationsByRegion: (regionId: string) => ({
+    root: `/${regionId}/observations`,
+    submit: `/${regionId}/observations/submit`,
+  }),
   partners: '/partners',
   privacy: '/privacy-policy',
   regionHome: (regionId: string) => `/${regionId}`,

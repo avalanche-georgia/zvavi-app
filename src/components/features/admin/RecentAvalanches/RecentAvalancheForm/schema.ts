@@ -1,29 +1,32 @@
-import { sortedAspects } from '@domain/constants'
+import {
+  observationFieldsSchema,
+  photosSchema,
+  requiredEnum,
+  withDateOrUnknown,
+} from '@components/features/observations/form'
+import { avalancheFieldLimits } from '@domain/constants'
 import { z } from 'zod'
 
-const aspectSchema = z.enum(sortedAspects)
+import { Constants } from '@/lib/supabase/types'
 
-const aspectsSchema = z.object({
-  alpine: z.array(aspectSchema),
-  highAlpine: z.array(aspectSchema),
-  subAlpine: z.array(aspectSchema),
-})
+const { avalanche_status } = Constants.public.Enums
 
-export const avalancheFormSchema = z.object({
-  aspects: aspectsSchema,
-  date: z.date().nullable(),
-  description: z.string(),
-  involvement: z.string().nullable(),
-  isDateUnknown: z.boolean(),
-  latitude: z.number().nullable(),
-  location: z.string().nullable(),
-  longitude: z.number().nullable(),
-  quantity: z.number().int().min(1),
-  size: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]),
-  slabDepth: z.number().nullable(),
-  trigger: z.string({ error: () => ({ message: 'required' }) }).min(1, { message: 'required' }),
-  type: z.string({ error: () => ({ message: 'required' }) }).min(1, { message: 'required' }),
-  width: z.number().nullable(),
-})
+const optionalText = (maxLength: number) =>
+  z.string().max(maxLength, { message: 'tooLong' }).nullable()
 
-export type AvalancheFormSchema = z.infer<typeof avalancheFormSchema>
+// The public form's fields (same rules) plus the team-only ones
+export const avalancheFormSchema = withDateOrUnknown(
+  observationFieldsSchema.extend({
+    involvement: optionalText(avalancheFieldLimits.involvementMaxLength),
+    location: optionalText(avalancheFieldLimits.locationMaxLength),
+    // Saved photos the form opened with stay unless removed; new uploads are added
+    photos: photosSchema.transform((photos) => ({
+      add: photos.flatMap((photo) => (photo.file && photo.key ? [photo.key] : [])),
+      keep: photos.flatMap((photo) => (!photo.file && photo.key ? [photo.key] : [])),
+    })),
+    status: requiredEnum(avalanche_status),
+  }),
+)
+
+export type AvalancheFormSchema = z.input<typeof avalancheFormSchema>
+export type AvalancheFormData = z.output<typeof avalancheFormSchema>

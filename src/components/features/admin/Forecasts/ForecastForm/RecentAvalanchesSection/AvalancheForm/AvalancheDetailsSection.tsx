@@ -8,11 +8,17 @@ import { useAvalancheDetailsForm } from './useAvalancheDetailsForm'
 
 export type AvalancheDetailsSectionProps = {
   data: AvalancheFormData
-  errors?: { trigger?: string; type?: string }
+  errors?: { latitude?: string; longitude?: string; trigger?: string; type?: string }
+  isLocationRequired?: boolean
   setData: Dispatch<SetStateAction<AvalancheFormData>>
 }
 
-const AvalancheDetailsSection = ({ data, errors, setData }: AvalancheDetailsSectionProps) => {
+const AvalancheDetailsSection = ({
+  data,
+  errors,
+  isLocationRequired,
+  setData,
+}: AvalancheDetailsSectionProps) => {
   const t = useTranslations()
   const { handleChange, handleInputChange, triggerOptions, typeOptions } =
     useAvalancheDetailsForm(setData)
@@ -65,7 +71,12 @@ const AvalancheDetailsSection = ({ data, errors, setData }: AvalancheDetailsSect
         </div>
 
         <div className="grid grid-cols-2 gap-3">
-          <LocationFields data={data} setData={setData} />
+          <LocationFields
+            data={data}
+            errors={errors}
+            isLocationRequired={isLocationRequired}
+            setData={setData}
+          />
         </div>
       </div>
 
