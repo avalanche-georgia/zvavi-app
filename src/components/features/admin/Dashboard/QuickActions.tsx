@@ -41,7 +41,7 @@ const QuickActions = ({ regions }: { regions: Region[] }) => {
           )}
         </Link>
 
-        <Link className={actionLinkClass} href={routes.admin.recentAvalanches.new}>
+        <Link className={actionLinkClass} href={routes.admin.recentAvalanches.create}>
           <Icon icon="triangleAlert" size="sm" />
           {t('admin.dashboard.actions.logAvalanche')}
         </Link>
