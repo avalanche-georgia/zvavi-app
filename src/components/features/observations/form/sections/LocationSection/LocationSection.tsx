@@ -14,9 +14,15 @@ import CoordinatesRow from './CoordinatesRow'
 import LocationMap from './LocationMap'
 import type { ObservationFormFields } from '../../schema'
 
-// The region frames the map (bounds, boundary) — passed in, since the admin
-// form has no region context
-const LocationSection = ({ region }: { region: Region }) => {
+type LocationSectionProps = {
+  // Extra fields at the end of the card (the admin form's place name)
+  children?: React.ReactNode
+  // Frames the map (bounds, boundary) — passed in, since the admin form has no
+  // region context
+  region: Region
+}
+
+const LocationSection = ({ children, region }: LocationSectionProps) => {
   const t = useTranslations()
   const form = useFormContext<ObservationFormFields>()
   const [latitude, longitude] = useWatch({ control: form.control, name: ['latitude', 'longitude'] })
@@ -87,6 +93,7 @@ const LocationSection = ({ region }: { region: Region }) => {
             onCoordinatesChange={handleCoordinatesChange}
           />
         )}
+        {children}
       </div>
     </FormCard>
   )

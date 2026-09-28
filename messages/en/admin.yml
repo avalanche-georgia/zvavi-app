@@ -361,22 +361,17 @@ admin:
       labels:
         description: Description
         involvement: Involvement
-        isDateUnknown: Date unknown
         location: Location
         quantity: Quantity
-        size: Size
-        slabDepth: Slab depth (cm)
         status: Status
         submitterContact: Contact
         submitterEducation: Education
         submitterName: Name
         submitterSection: Submitter
         trigger: Trigger
-        type: Type
-        width: Width (m)
-      placeholders:
-        trigger: Select trigger
-        type: Select type
+      hints:
+        involvement: Optional · team only
+        location: Optional · a short name for the spot
       messages:
         created: Avalanche created successfully.
         updated: Avalanche updated successfully.

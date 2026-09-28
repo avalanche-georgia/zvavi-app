@@ -10,7 +10,7 @@ import type { ObservationFormFields } from '../schema'
 
 const { maxCount } = observationPhotoLimits
 
-const PhotosSection = () => {
+const PhotosSection = ({ storedPhotoUrls }: { storedPhotoUrls?: Record<string, string> }) => {
   const t = useTranslations()
   const photos = useWatch<ObservationFormFields, 'photos'>({ name: 'photos' })
 
@@ -25,7 +25,7 @@ const PhotosSection = () => {
       }
       title={t('observations.form.sections.photos')}
     >
-      <PhotosField />
+      <PhotosField storedPhotoUrls={storedPhotoUrls} />
     </FormCard>
   )
 }

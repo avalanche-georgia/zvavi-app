@@ -17,9 +17,9 @@ type ViewActionsProps = {
 // the edit form's status field (local/observations/model.md).
 const ViewActions = ({ avalanche, onDelete, onEdit }: ViewActionsProps) => {
   const t = useTranslations()
-  const { id, regionId, status = 'published' } = avalanche
+  const { id, status = 'published' } = avalanche
   const statusToggle = getStatusToggle(status)
-  const { isPending, toggleStatus } = useAvalancheStatusToggle({ id, regionId, status })
+  const { isPending, toggleStatus } = useAvalancheStatusToggle({ id, status })
 
   return (
     <div className="flex w-full flex-wrap items-center gap-2">

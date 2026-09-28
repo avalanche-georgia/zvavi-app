@@ -16,6 +16,9 @@ const PhotoTileStatus = ({ onRetry, photo }: PhotoTileStatusProps) => {
 
   const { progress, status } = photo
 
+  // Already saved on the record — nothing to report
+  if (!photo.file) return null
+
   if (status === 'uploaded') {
     return (
       <span className="animate-copy-pop bg-success pointer-events-none absolute bottom-1.5 left-1.5 flex size-5 items-center justify-center rounded-full text-white">

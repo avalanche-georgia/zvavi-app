@@ -32,9 +32,9 @@ const PhotoTile = ({ index, onOpen, onRemove, onRetry, photo }: PhotoTileProps) 
         onClick={() => onOpen(index)}
         type="button"
       >
-        {hasPreviewError ? (
-          <ImageOff className="text-muted size-6" />
-        ) : (
+        {hasPreviewError && <ImageOff className="text-muted size-6" />}
+        {/* No URL yet: a saved photo whose signed URL is still loading */}
+        {!hasPreviewError && photo.previewUrl && (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             alt=""

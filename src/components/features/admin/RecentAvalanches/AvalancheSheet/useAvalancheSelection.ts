@@ -7,17 +7,23 @@ import { useRouter } from 'src/i18n/navigation'
 import type { AvalancheSheetMode } from './types'
 
 // The open record lives in the URL (`?selectedId=`) so it survives reloads and
-// can be shared; the mode it opens in (view / edit) is local.
+// can be shared; the mode it opens in (view / edit) is local. A link can ask
+// for edit mode once with `&mode=edit` (the full-page view's Edit).
 const useAvalancheSelection = () => {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const [initialMode, setInitialMode] = useState<AvalancheSheetMode>('view')
+  const [initialMode, setInitialMode] = useState<AvalancheSheetMode>(() =>
+    searchParams.get('mode') === 'edit' ? 'edit' : 'view',
+  )
 
   const selectedId = Number(searchParams.get('selectedId')) || null
 
   const setSelectedId = useCallback(
     (id: number | null, { isReplace = false }: { isReplace?: boolean } = {}) => {
       const params = new URLSearchParams(searchParams.toString())
+
+      // Only meant for the record the page was opened with
+      params.delete('mode')
 
       if (id === null) {
         params.delete('selectedId')

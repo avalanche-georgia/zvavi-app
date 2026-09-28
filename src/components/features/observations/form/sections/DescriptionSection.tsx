@@ -7,7 +7,8 @@ import { useTranslations } from 'next-intl'
 
 import type { ObservationFormFields } from '../schema'
 
-const DescriptionSection = () => {
+// `children`: extra fields at the end of the card (the admin form's involvement)
+const DescriptionSection = ({ children }: { children?: React.ReactNode }) => {
   const t = useTranslations()
 
   return (
@@ -22,6 +23,7 @@ const DescriptionSection = () => {
         name="description"
         placeholder={t('observations.form.placeholders.description')}
       />
+      {children}
     </FormCard>
   )
 }

@@ -15,7 +15,13 @@ import type { ObservationFormFields } from '../schema'
 
 const { maxCount } = observationPhotoLimits
 
-const PhotosField = () => {
+type PhotosFieldProps = {
+  // Signed preview URLs of photos already saved on the record, by key — they
+  // arrive after the form opens, so they're kept out of the form state
+  storedPhotoUrls?: Record<string, string>
+}
+
+const PhotosField = ({ storedPhotoUrls }: PhotosFieldProps) => {
   const t = useTranslations()
   const form = useFormContext<ObservationFormFields>()
   const { filterSelectedFiles, handlePhotoUnreadable } = usePhotoSelectionFeedback()
@@ -23,6 +29,10 @@ const PhotosField = () => {
     onPhotoUnreadable: handlePhotoUnreadable,
   })
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+
+  const displayedPhotos = photos.map((photo) =>
+    photo.file ? photo : { ...photo, previewUrl: storedPhotoUrls?.[photo.key ?? ''] ?? '' },
+  )
 
   const errorMessage = form.formState.errors.photos?.message
 
@@ -42,7 +52,7 @@ const PhotosField = () => {
   return (
     <div className="flex flex-col gap-2.5">
       <div className="grid grid-cols-3 gap-2">
-        {photos.map((photo, index) => (
+        {displayedPhotos.map((photo, index) => (
           <PhotoTile
             key={photo.id}
             index={index}
@@ -72,7 +82,7 @@ const PhotosField = () => {
         index={lightboxIndex}
         onIndexChange={setLightboxIndex}
         onRemove={handleLightboxRemove}
-        photos={photos}
+        photos={displayedPhotos}
       />
     </div>
   )

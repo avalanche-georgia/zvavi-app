@@ -11,11 +11,7 @@ const useAvalancheRow = (avalanche: AvalancheListItem, regionId: RegionId) => {
   const t = useTranslations()
   const { date, id, isDateUnknown, status = 'published' } = avalanche
 
-  const { isPending: isTogglingStatus, toggleStatus } = useAvalancheStatusToggle({
-    id,
-    regionId,
-    status,
-  })
+  const { isPending: isTogglingStatus, toggleStatus } = useAvalancheStatusToggle({ id, status })
   const deleteDialog = useAvalancheDeleteDialog({ id, regionId })
 
   const dateDisplay =

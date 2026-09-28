@@ -361,22 +361,17 @@ admin:
       labels:
         description: აღწერა
         involvement: ჩართულობა
-        isDateUnknown: თარიღი უცნობია
         location: ადგილი
         quantity: რაოდენობა
-        size: ზომა
-        slabDepth: ფილის სისქე (სმ)
         status: სტატუსი
         submitterContact: კონტაქტი
         submitterEducation: განათლება
         submitterName: სახელი
         submitterSection: წარმდგენი
         trigger: გამომწვევი
-        type: სახეობა
-        width: სიგანე (მ)
-      placeholders:
-        trigger: აირჩიეთ გამომწვევი
-        type: აირჩიეთ სახეობა
+      hints:
+        involvement: არასავალდებულო · მხოლოდ გუნდისთვის
+        location: არასავალდებულო · ადგილის მოკლე სახელი
       messages:
         created: ზვავი წარმატებით დაემატა.
         updated: ზვავი წარმატებით განახლდა.

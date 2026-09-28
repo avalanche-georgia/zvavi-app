@@ -73,7 +73,6 @@ const AvalancheSheetBody = ({
     <RecentAvalancheForm
       avalanche={avalanche}
       formId={formId}
-      mode="edit"
       onCancel={onEditCancel}
       onDirtyChange={onDirtyChange}
       onSubmittingChange={onSubmittingChange}
