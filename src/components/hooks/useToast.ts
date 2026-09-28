@@ -32,7 +32,12 @@ const useToast = () => {
       className: 'bg-blue-100! border border-blue-300! text-blue-700!',
     })
 
+  // Neutral message with an action, e.g. Undo after a removal
+  const toastAction = (message: string, action: { label: string; onClick: VoidFunction }) =>
+    toast(message, { action, duration: 5200 })
+
   return {
+    toastAction,
     toastError,
     toastInfo,
     toastSuccess,

@@ -1,4 +1,5 @@
 export { default as AspectElevationPicker } from './AspectElevationPicker'
+export { default as AspectMiniGrid } from './AspectMiniGrid'
 export { default as AspectsOverview } from './AspectsOverview'
 export { default as BandCompass } from './BandCompass'
 export { default as DetailSection } from './DetailSection'

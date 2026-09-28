@@ -1,12 +1,5 @@
-import {
-  aspects,
-  avalancheTriggers,
-  avalancheTypes,
-  confidenceLevels,
-  distributionTypes,
-  sensitivityLevels,
-  trends,
-} from '@domain/constants'
+import { problemSchema } from '@components/features/forecasts/Problems/problemSchema'
+import { aspects, avalancheTriggers, avalancheTypes } from '@domain/constants'
 import type { Aspect, AvalancheSize } from '@domain/types'
 import { z } from 'zod'
 
@@ -26,25 +19,6 @@ const aspectsSchema = z.object({
   alpine: z.array(aspect),
   highAlpine: z.array(aspect),
   subAlpine: z.array(aspect),
-})
-
-const problemSchema = z.object({
-  aspects: aspectsSchema,
-  avalancheSize,
-  confidence: z.enum(confidenceLevels),
-  createdAt: z.string().optional(),
-  description: z.string(),
-  distribution: z.enum(distributionTypes),
-  id: z.string().optional(),
-  isAllDay: z.boolean(),
-  order: z.number(),
-  sensitivity: z.enum(sensitivityLevels),
-  timeOfDay: z.object({
-    end: nullableDate,
-    start: nullableDate,
-  }),
-  trend: z.enum(trends),
-  type: z.enum(avalancheTypes),
 })
 
 const avalancheTypeEnum = z.union([z.enum(avalancheTypes), z.literal('unknown')])
