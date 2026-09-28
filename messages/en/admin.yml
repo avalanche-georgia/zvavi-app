@@ -8,6 +8,7 @@ admin:
       forecastsPublished: Forecasts published
       forecastsOf: of {total} regions
       pendingMembers: Pending members
+      pendingObservations: Observations to review
       avalanchesWeek: Avalanches · 7 days
     regions:
       title: Forecast status by region
@@ -18,12 +19,15 @@ admin:
       title: Quick actions
       newForecast: New forecast
       memberRequests: Member requests
+      observationsReview: Observations to review
       logAvalanche: Log avalanche
     activity:
       title: Recent activity
       forecastPublished: "{region} forecast published"
       newMemberRequest: New request from {name}
       avalancheLogged: "Avalanche logged · {region}"
+      observationSubmitted: 'New observation · {region}'
+      observationSubmittedNoRegion: New observation
 
   sidebar:
     designSystem: 'Design system'

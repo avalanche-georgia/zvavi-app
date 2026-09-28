@@ -4,7 +4,7 @@ import { useMemo } from 'react'
 import { Skeleton } from '@components/ui'
 import { useCurrentForecastsPerRegion } from '@data/hooks/forecasts'
 import { useMembersQuery } from '@data/hooks/members'
-import { useAvalanchesPerRegion } from '@data/hooks/recentAvalanches'
+import { useAvalanchesPerRegion, usePendingObservationsCounts } from '@data/hooks/recentAvalanches'
 import type { Region } from '@domain/types'
 import { subDays } from 'date-fns'
 import { useTranslations } from 'next-intl'
@@ -33,6 +33,9 @@ const MetricCards = ({ regions }: { regions: Region[] }) => {
   const { data: members, isPending: isMembersPending } = useMembersQuery()
   const pendingCount = members?.filter((member) => member.status === 'pending').length ?? 0
 
+  const { isPending: isObservationsPending, total: pendingObservationsCount } =
+    usePendingObservationsCounts()
+
   const avalancheQueries = useAvalanchesPerRegion(regions, { dateFrom, dateMode: 'created' })
   const isAvalanchePending = avalancheQueries.some((query) => query.isPending)
   const avalancheCount = avalancheQueries.reduce(
@@ -41,7 +44,7 @@ const MetricCards = ({ regions }: { regions: Region[] }) => {
   )
 
   return (
-    <div className="mb-3.5 grid grid-cols-3 gap-3">
+    <div className="mb-3.5 grid grid-cols-2 gap-3 lg:grid-cols-4">
       <MetricCard
         isPending={isForecastPending}
         label={t('admin.dashboard.metrics.forecastsPublished')}
@@ -56,6 +59,13 @@ const MetricCards = ({ regions }: { regions: Region[] }) => {
 
       <MetricCard isPending={isMembersPending} label={t('admin.dashboard.metrics.pendingMembers')}>
         <span className="text-2xl font-semibold text-gray-900">{pendingCount}</span>
+      </MetricCard>
+
+      <MetricCard
+        isPending={isObservationsPending}
+        label={t('admin.dashboard.metrics.pendingObservations')}
+      >
+        <span className="text-2xl font-semibold text-gray-900">{pendingObservationsCount}</span>
       </MetricCard>
 
       <MetricCard

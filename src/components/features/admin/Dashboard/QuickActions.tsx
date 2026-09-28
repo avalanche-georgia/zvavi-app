@@ -2,6 +2,7 @@
 
 import { Icon } from '@components/icons'
 import { usePendingMembersCount } from '@data/hooks/members'
+import { usePendingObservationsCounts } from '@data/hooks/recentAvalanches'
 import type { Region } from '@domain/types'
 import { useTranslations } from 'next-intl'
 import { Link } from 'src/i18n/navigation'
@@ -18,9 +19,20 @@ const actionLinkClass = cn(
   'border-gray-200 bg-white text-gray-700 hover:bg-gray-50',
 )
 
+const CountBadge = ({ count }: { count: number }) => {
+  if (count === 0) return null
+
+  return (
+    <span className="ml-auto rounded-full bg-blue-500 px-1.5 py-px text-[10px] font-semibold text-white">
+      {count}
+    </span>
+  )
+}
+
 const QuickActions = ({ regions }: { regions: Region[] }) => {
   const t = useTranslations()
-  const pendingCount = usePendingMembersCount()
+  const pendingMembersCount = usePendingMembersCount()
+  const { total: pendingObservationsCount } = usePendingObservationsCounts()
 
   return (
     <div className="rounded-xl border border-gray-200 bg-white px-4 py-4">
@@ -34,11 +46,13 @@ const QuickActions = ({ regions }: { regions: Region[] }) => {
         <Link className={actionLinkClass} href={routes.admin.members.root}>
           <Icon icon="users" size="sm" />
           {t('admin.dashboard.actions.memberRequests')}
-          {pendingCount > 0 && (
-            <span className="ml-auto rounded-full bg-blue-500 px-1.5 py-px text-[10px] font-semibold text-white">
-              {pendingCount}
-            </span>
-          )}
+          <CountBadge count={pendingMembersCount} />
+        </Link>
+
+        <Link className={actionLinkClass} href={routes.admin.observations.root}>
+          <Icon icon="telescope" size="sm" />
+          {t('admin.dashboard.actions.observationsReview')}
+          <CountBadge count={pendingObservationsCount} />
         </Link>
 
         <Link className={actionLinkClass} href={routes.admin.recentAvalanches.create}>

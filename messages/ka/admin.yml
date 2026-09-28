@@ -8,6 +8,7 @@ admin:
       forecastsPublished: გამოქვეყნებული პროგნოზები
       forecastsOf: '{total} რეგიონიდან'
       pendingMembers: მომლოდინე წევრები
+      pendingObservations: განსახილველი დაკვირვებები
       avalanchesWeek: 'ზვავები · 7 დღე'
     regions:
       title: პროგნოზის სტატუსი რეგიონების მიხედვით
@@ -18,12 +19,15 @@ admin:
       title: სწრაფი მოქმედებები
       newForecast: ახალი პროგნოზი
       memberRequests: წევრების მოთხოვნები
+      observationsReview: განსახილველი დაკვირვებები
       logAvalanche: ზვავის ჩაწერა
     activity:
       title: ბოლო აქტივობა
       forecastPublished: '{region} პროგნოზი გამოქვეყნდა'
       newMemberRequest: 'ახალი მოთხოვნა {name}-სგან'
       avalancheLogged: 'ზვავი დაფიქსირდა · {region}'
+      observationSubmitted: 'ახალი დაკვირვება · {region}'
+      observationSubmittedNoRegion: ახალი დაკვირვება
 
   sidebar:
     designSystem: 'დიზაინ-სისტემა'

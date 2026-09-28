@@ -8,17 +8,20 @@ import { handleSupabaseError } from '../../helpers'
 
 type PendingObservationsCounts = {
   byRegion: Partial<Record<RegionId, number>>
+  // Most recent submission still waiting, for the dashboard activity feed
+  latest: { createdAt: string; regionId: RegionId | null } | null
   total: number
 }
 
 // External submissions awaiting moderation. The queue is expected to stay near
-// empty, so fetching one column per row and counting here is cheap.
+// empty, so fetching two columns per row and counting here is cheap.
 const fetchPendingObservationsCounts = async (): Promise<PendingObservationsCounts> => {
   const { data, error } = await supabase
     .from('recent_avalanches')
-    .select('region_id')
+    .select('region_id, created_at')
     .eq('source', 'external')
     .eq('status', 'pending')
+    .order('created_at', { ascending: false })
 
   handleSupabaseError(error)
 
@@ -28,23 +31,28 @@ const fetchPendingObservationsCounts = async (): Promise<PendingObservationsCoun
     if (regionId) byRegion[regionId] = (byRegion[regionId] ?? 0) + 1
   })
 
-  return { byRegion, total: data?.length ?? 0 }
+  const latestRow = data?.[0]
+  const latest = latestRow
+    ? { createdAt: latestRow.created_at, regionId: latestRow.region_id }
+    : null
+
+  return { byRegion, latest, total: data?.length ?? 0 }
 }
 
 // New public submissions don't trigger any admin-side mutation — poll so the
 // badges notice them without a reload
 const refetchIntervalMs = 60 * 1000
 
-const emptyCounts: PendingObservationsCounts = { byRegion: {}, total: 0 }
+const emptyCounts: PendingObservationsCounts = { byRegion: {}, latest: null, total: 0 }
 
 const usePendingObservationsCounts = () => {
-  const { data = emptyCounts } = useQuery({
+  const { data = emptyCounts, isPending } = useQuery({
     queryFn: fetchPendingObservationsCounts,
     queryKey: recentAvalanchesKeys.pendingCounts(),
     refetchInterval: refetchIntervalMs,
   })
 
-  return data
+  return { ...data, isPending }
 }
 
 export default usePendingObservationsCounts
