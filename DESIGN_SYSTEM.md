@@ -28,10 +28,10 @@ next to it and migrate screen by screen.
 src/components/
 ├── ds/                  # new kit — the only place new generic UI goes
 │   ├── primitives/      # Button, Badge, Checkbox, Field, FieldGroup, TextField, NumberField,
-│   │                    # Textarea, ChipGroup, ToggleGrid, SegmentedControl, Stepper, InfoTip
+│   │                    # Textarea, ChipGroup, ToggleGrid, SegmentedControl, Select, Stepper, InfoTip
 │   ├── patterns/        # FormCard, StickyActionBar, SuccessState
 │   └── form/            # react-hook-form bindings: FormTextField, FormTextarea, FormNumberField,
-│                        # FormStepper, FormChipGroup, FormCheckbox, useFormFieldError
+│                        # FormStepper, FormChipGroup, FormCheckbox, FormSelect, useFormFieldError
 ├── ui/                  # legacy kit — frozen, deleted piece by piece
 └── features/            # domain components, built from ds
 ```
@@ -207,7 +207,7 @@ Update this table when a legacy component's last consumer is migrated.
 | Alert | custom | `patterns/Alert` | ☐ |
 | Spinner, Skeleton | custom | `primitives/Spinner`, `Skeleton` | ☐ |
 | Pagination, DataTable | custom | `patterns/…` | ☐ |
-| AspectElevationPicker | base-ui | moves to `features/observations/` | ☐ |
+| AspectElevationPicker | base-ui | moved to `features/observations/` | ✅ |
 | MiniCompass | custom | moves to `features/` | ☐ |
 | AutoScrollList, BrandedQRCode, FallbackImage, SortableItem | custom | reviewed individually (may stay generic in ds) | ☐ |
 

@@ -4,9 +4,9 @@ type InfoRowProps = {
 }
 
 const InfoRow = ({ label, value }: InfoRowProps) => (
-  <div className="flex flex-col gap-0.5">
-    <span className="text-xs font-medium text-gray-500">{label}</span>
-    <span className="text-sm text-gray-800">{value}</span>
+  <div className="flex min-w-0 flex-col gap-0.5">
+    <span className="text-caption text-muted font-medium">{label}</span>
+    <span className="text-copy text-ink break-words">{value}</span>
   </div>
 )
 

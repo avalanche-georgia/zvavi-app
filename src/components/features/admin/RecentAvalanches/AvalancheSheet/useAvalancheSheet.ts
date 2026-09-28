@@ -19,6 +19,8 @@ const useAvalancheSheet = ({ id, initialMode, onReopen, regionId }: UseAvalanche
   const query = useRecentAvalancheQuery({ enabled: id !== null, id: id ?? 0, regionId })
   const [previousId, setPreviousId] = useState(id)
   const [mode, setMode] = useState(initialMode)
+  // The mode the record was opened in: finishing an edit returns there
+  const [entryMode, setEntryMode] = useState(initialMode)
   const [isDirty, setIsDirty] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
   const [confirm, setConfirm] = useState<AvalancheSheetConfirm>(null)
@@ -37,6 +39,7 @@ const useAvalancheSheet = ({ id, initialMode, onReopen, regionId }: UseAvalanche
       setConfirm('close')
     } else if (id !== null && !(hasUnsavedEdits && id === shownAvalanche?.id)) {
       setMode(initialMode)
+      setEntryMode(initialMode)
       setIsDirty(false)
       setConfirm(null)
     }
@@ -61,6 +64,7 @@ const useAvalancheSheet = ({ id, initialMode, onReopen, regionId }: UseAvalanche
   return {
     avalanche: id === null ? shownAvalanche : avalanche,
     confirm,
+    entryMode,
     hasUnsavedEdits,
     isError: id !== null && query.isError,
     isPending: id !== null && query.isPending,

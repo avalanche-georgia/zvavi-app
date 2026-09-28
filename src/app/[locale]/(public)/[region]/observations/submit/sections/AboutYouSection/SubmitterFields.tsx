@@ -20,7 +20,7 @@ const SubmitterFields = ({ onForget }: { onForget?: () => void }) => {
         requiredMessage={t('observations.submit.nameRequired')}
       />
       <FormTextField<ObservationSubmitFormSchema>
-        hint={t('observations.submit.optional')}
+        hint={t('observations.form.optional')}
         label={t('observations.submit.labels.submitterEducation')}
         name="submitterEducation"
         placeholder={t('observations.submit.placeholders.submitterEducation')}

@@ -1,5 +1,4 @@
 export { default as Alert } from './Alert'
-export { default as AspectElevationPicker } from './AspectElevationPicker'
 export { AutoScrollList } from './AutoScrollList'
 export { default as BrandedQRCode } from './BrandedQRCode'
 export { default as Button } from './Button'

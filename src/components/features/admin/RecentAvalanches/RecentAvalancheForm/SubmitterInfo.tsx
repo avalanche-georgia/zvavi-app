@@ -30,7 +30,7 @@ const SubmitterInfo = ({
   const fullName = submitterName || creatorProfile?.fullName || '—'
 
   return (
-    <div className="grid grid-cols-2 gap-3">
+    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
       <InfoRow label={t('admin.recentAvalanches.form.labels.submitterName')} value={fullName} />
 
       {isExternal && (
@@ -39,7 +39,7 @@ const SubmitterInfo = ({
             label={t('admin.recentAvalanches.form.labels.submitterEducation')}
             value={submitterEducation || '—'}
           />
-          <div className="col-span-2">
+          <div className="sm:col-span-2">
             <InfoRow
               label={t('admin.recentAvalanches.form.labels.submitterContact')}
               value={submitterContact || '—'}

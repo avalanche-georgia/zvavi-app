@@ -8,6 +8,7 @@ import { useAvalancheDeleteDialog } from '../hooks'
 type UseAvalancheSheetActionsParams = {
   avalanche: AvalancheListItem | null
   confirm: AvalancheSheetConfirm
+  entryMode: AvalancheSheetMode
   hasUnsavedEdits: boolean
   id: number | null
   mode: AvalancheSheetMode
@@ -15,6 +16,7 @@ type UseAvalancheSheetActionsParams = {
   onClose: VoidFunction
   onRecordLeave?: VoidFunction
   setConfirm: (confirm: AvalancheSheetConfirm) => void
+  setIsDirty: (isDirty: boolean) => void
   showView: VoidFunction
 }
 
@@ -23,6 +25,7 @@ type UseAvalancheSheetActionsParams = {
 const useAvalancheSheetActions = ({
   avalanche,
   confirm,
+  entryMode,
   hasUnsavedEdits,
   id,
   mode,
@@ -30,6 +33,7 @@ const useAvalancheSheetActions = ({
   onClose,
   onRecordLeave,
   setConfirm,
+  setIsDirty,
   showView,
 }: UseAvalancheSheetActionsParams) => {
   useCloseOnStatusChange(
@@ -51,11 +55,23 @@ const useAvalancheSheetActions = ({
     onClose()
   }
 
+  // Stays in edit mode while sliding out — flipping to the view first would
+  // flash it on the way out
+  const closeFromEdit = () => {
+    setIsDirty(false)
+    setConfirm(null)
+    onClose()
+  }
+
+  // Saved or cancelled: back to the view if the edit started there, otherwise
+  // (opened straight into edit, e.g. the row's edit button) the panel closes
+  const finishEdit = () => (entryMode === 'edit' ? closeFromEdit() : showView())
+
   const handleCloseRequest = () => (hasUnsavedEdits ? setConfirm('close') : onClose())
-  const handleEditCancel = () => (hasUnsavedEdits ? setConfirm('view') : showView())
+  const handleEditCancel = () => (hasUnsavedEdits ? setConfirm('view') : finishEdit())
   const handleOpenChange = (isOpen: boolean) => !isOpen && handleCloseRequest()
 
-  const confirmActions = { close: closeWithoutSaving, delete: handleDelete, view: showView }
+  const confirmActions = { close: closeWithoutSaving, delete: handleDelete, view: finishEdit }
 
   const handleConfirm = () => {
     if (confirm) confirmActions[confirm]()
@@ -77,7 +93,14 @@ const useAvalancheSheetActions = ({
     if (event.key === 'ArrowRight') navigation.onNext()
   }
 
-  return { handleConfirm, handleEditCancel, handleKeyDown, handleOpenChange, isDeleting }
+  return {
+    handleConfirm,
+    handleEditCancel,
+    handleKeyDown,
+    handleOpenChange,
+    handleSaved: finishEdit,
+    isDeleting,
+  }
 }
 
 export default useAvalancheSheetActions

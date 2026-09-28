@@ -361,22 +361,20 @@ admin:
       labels:
         description: აღწერა
         involvement: ჩართულობა
-        isDateUnknown: თარიღი უცნობია
         location: ადგილი
         quantity: რაოდენობა
-        size: ზომა
-        slabDepth: ფილის სისქე (სმ)
         status: სტატუსი
         submitterContact: კონტაქტი
         submitterEducation: განათლება
         submitterName: სახელი
         submitterSection: წარმდგენი
         trigger: გამომწვევი
-        type: სახეობა
-        width: სიგანე (მ)
+      hints:
+        involvement: არასავალდებულო · მხოლოდ გუნდისთვის
+        location: არასავალდებულო · ადგილის მოკლე სახელი
       placeholders:
-        trigger: აირჩიეთ გამომწვევი
-        type: აირჩიეთ სახეობა
+        description: ნებისმიერი შენიშვნა — რა მანძილზე ჩამოვიდა, ამინდი, თოვლის საფარი…
+        involvement: ვინმე მოჰყვა ზვავს, ჩაიმარხა ან დაშავდა?
       messages:
         created: ზვავი წარმატებით დაემატა.
         updated: ზვავი წარმატებით განახლდა.

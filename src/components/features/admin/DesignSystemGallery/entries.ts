@@ -8,6 +8,7 @@ import ChipGroupGallery from '@ds/primitives/ChipGroup/ChipGroup.gallery'
 import FieldGallery from '@ds/primitives/Field/Field.gallery'
 import InfoTipGallery from '@ds/primitives/InfoTip/InfoTip.gallery'
 import SegmentedControlGallery from '@ds/primitives/SegmentedControl/SegmentedControl.gallery'
+import SelectGallery from '@ds/primitives/Select/Select.gallery'
 import StepperGallery from '@ds/primitives/Stepper/Stepper.gallery'
 import ToggleGridGallery from '@ds/primitives/ToggleGrid/ToggleGrid.gallery'
 
@@ -37,6 +38,7 @@ export const galleryEntries: GalleryEntry[] = [
   { Demo: ChipGroupGallery, id: 'chip-group', title: 'ChipGroup' },
   { Demo: ToggleGridGallery, id: 'toggle-grid', title: 'ToggleGrid' },
   { Demo: SegmentedControlGallery, id: 'segmented-control', title: 'SegmentedControl' },
+  { Demo: SelectGallery, id: 'select', title: 'Select' },
   { Demo: FormCardGallery, id: 'form-card', title: 'FormCard' },
   { Demo: StickyActionBarGallery, id: 'sticky-action-bar', title: 'StickyActionBar' },
   { Demo: SuccessStateGallery, id: 'success-state', title: 'SuccessState' },

@@ -16,12 +16,7 @@ const NewRecentAvalancheContent = ({ regionId }: { regionId: RegionId }) => {
 
   return (
     <div className="p-4 md:p-6">
-      <RecentAvalancheForm
-        mode="create"
-        onCancel={handleBack}
-        onSuccess={handleBack}
-        regionId={regionId}
-      />
+      <RecentAvalancheForm onCancel={handleBack} onSuccess={handleBack} regionId={regionId} />
     </div>
   )
 }
