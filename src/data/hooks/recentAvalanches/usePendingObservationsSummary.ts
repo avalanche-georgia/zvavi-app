@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { supabase } from '@data'
 import { recentAvalanchesKeys } from '@data/query-keys'
 import type { RegionId } from '@domain/types'
@@ -6,16 +7,16 @@ import { useQuery } from '@/tanstack-query/hooks'
 
 import { handleSupabaseError } from '../../helpers'
 
-type PendingObservationsCounts = {
+type PendingObservationsSummary = {
   byRegion: Partial<Record<RegionId, number>>
-  // Most recent submission still waiting, for the dashboard activity feed
+  // Most recent submission still waiting
   latest: { createdAt: string; regionId: RegionId | null } | null
   total: number
 }
 
 // External submissions awaiting moderation. The queue is expected to stay near
 // empty, so fetching two columns per row and counting here is cheap.
-const fetchPendingObservationsCounts = async (): Promise<PendingObservationsCounts> => {
+const fetchPendingObservationsSummary = async (): Promise<PendingObservationsSummary> => {
   const { data, error } = await supabase
     .from('recent_avalanches')
     .select('region_id, created_at')
@@ -43,16 +44,22 @@ const fetchPendingObservationsCounts = async (): Promise<PendingObservationsCoun
 // badges notice them without a reload
 const refetchIntervalMs = 60 * 1000
 
-const emptyCounts: PendingObservationsCounts = { byRegion: {}, latest: null, total: 0 }
+const emptySummary: PendingObservationsSummary = { byRegion: {}, latest: null, total: 0 }
 
-const usePendingObservationsCounts = () => {
-  const { data = emptyCounts, isPending } = useQuery({
-    queryFn: fetchPendingObservationsCounts,
-    queryKey: recentAvalanchesKeys.pendingCounts(),
+const usePendingObservationsSummary = () => {
+  const {
+    data = emptySummary,
+    isError,
+    isPending,
+  } = useQuery({
+    queryFn: fetchPendingObservationsSummary,
+    queryKey: recentAvalanchesKeys.pendingSummary(),
     refetchInterval: refetchIntervalMs,
   })
 
-  return { ...data, isPending }
+  // A failed fetch falls back to empty data — `isError` lets callers avoid
+  // presenting that as "nothing waiting"
+  return useMemo(() => ({ ...data, isError, isPending }), [data, isError, isPending])
 }
 
-export default usePendingObservationsCounts
+export default usePendingObservationsSummary

@@ -1,7 +1,7 @@
 import type { IconName } from '@components/icons/types'
 import { useCurrentForecastsPerRegion } from '@data/hooks/forecasts'
 import { useMembersQuery } from '@data/hooks/members'
-import { useAvalanchesPerRegion, usePendingObservationsCounts } from '@data/hooks/recentAvalanches'
+import { useAvalanchesPerRegion, usePendingObservationsSummary } from '@data/hooks/recentAvalanches'
 import type { Region } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
@@ -22,7 +22,7 @@ const useActivityEvents = (regions: Region[]): ActivityEventsResult => {
   const forecastQueries = useCurrentForecastsPerRegion(regions)
   const avalancheQueries = useAvalanchesPerRegion(regions)
   const { isPending: isObservationsPending, latest: latestObservation } =
-    usePendingObservationsCounts()
+    usePendingObservationsSummary()
 
   const isPending =
     isMembersPending ||

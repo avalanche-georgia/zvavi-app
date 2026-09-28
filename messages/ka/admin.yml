@@ -9,6 +9,7 @@ admin:
       forecastsOf: '{total} რეგიონიდან'
       pendingMembers: მომლოდინე წევრები
       pendingObservations: განსახილველი დაკვირვებები
+      loadError: "ვერ ჩაიტვირთა"
       avalanchesWeek: 'ზვავები · 7 დღე'
     regions:
       title: პროგნოზის სტატუსი რეგიონების მიხედვით

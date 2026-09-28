@@ -9,6 +9,7 @@ admin:
       forecastsOf: of {total} regions
       pendingMembers: Pending members
       pendingObservations: Observations to review
+      loadError: "Couldn't load"
       avalanchesWeek: Avalanches · 7 days
     regions:
       title: Forecast status by region

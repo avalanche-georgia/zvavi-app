@@ -2,7 +2,7 @@
 
 import { Icon } from '@components/icons'
 import { usePendingMembersCount } from '@data/hooks/members'
-import { usePendingObservationsCounts } from '@data/hooks/recentAvalanches'
+import { usePendingObservationsSummary } from '@data/hooks/recentAvalanches'
 import type { Region } from '@domain/types'
 import { useTranslations } from 'next-intl'
 import { Link } from 'src/i18n/navigation'
@@ -32,7 +32,7 @@ const CountBadge = ({ count }: { count: number }) => {
 const QuickActions = ({ regions }: { regions: Region[] }) => {
   const t = useTranslations()
   const pendingMembersCount = usePendingMembersCount()
-  const { total: pendingObservationsCount } = usePendingObservationsCounts()
+  const { total: pendingObservationsCount } = usePendingObservationsSummary()
 
   return (
     <div className="rounded-xl border border-gray-200 bg-white px-4 py-4">

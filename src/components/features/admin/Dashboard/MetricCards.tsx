@@ -1,26 +1,14 @@
 'use client'
 
 import { useMemo } from 'react'
-import { Skeleton } from '@components/ui'
 import { useCurrentForecastsPerRegion } from '@data/hooks/forecasts'
 import { useMembersQuery } from '@data/hooks/members'
-import { useAvalanchesPerRegion, usePendingObservationsCounts } from '@data/hooks/recentAvalanches'
+import { useAvalanchesPerRegion, usePendingObservationsSummary } from '@data/hooks/recentAvalanches'
 import type { Region } from '@domain/types'
 import { subDays } from 'date-fns'
 import { useTranslations } from 'next-intl'
 
-type MetricCardProps = {
-  children: React.ReactNode
-  isPending: boolean
-  label: string
-}
-
-const MetricCard = ({ children, isPending, label }: MetricCardProps) => (
-  <div className="rounded-lg border bg-gray-100 px-4 py-3.5">
-    <p className="mb-1.5 text-xs tracking-wide text-gray-500 uppercase">{label}</p>
-    {isPending ? <Skeleton className="h-8 w-10" /> : children}
-  </div>
-)
+import MetricCard from './MetricCard'
 
 const MetricCards = ({ regions }: { regions: Region[] }) => {
   const t = useTranslations()
@@ -28,16 +16,21 @@ const MetricCards = ({ regions }: { regions: Region[] }) => {
 
   const forecastQueries = useCurrentForecastsPerRegion(regions)
   const isForecastPending = forecastQueries.some((query) => query.isPending)
+  const isForecastError = forecastQueries.some((query) => query.isError)
   const publishedCount = forecastQueries.filter((query) => query.data != null).length
 
-  const { data: members, isPending: isMembersPending } = useMembersQuery()
+  const { data: members, isError: isMembersError, isPending: isMembersPending } = useMembersQuery()
   const pendingCount = members?.filter((member) => member.status === 'pending').length ?? 0
 
-  const { isPending: isObservationsPending, total: pendingObservationsCount } =
-    usePendingObservationsCounts()
+  const {
+    isError: isObservationsError,
+    isPending: isObservationsPending,
+    total: pendingObservationsCount,
+  } = usePendingObservationsSummary()
 
   const avalancheQueries = useAvalanchesPerRegion(regions, { dateFrom, dateMode: 'created' })
   const isAvalanchePending = avalancheQueries.some((query) => query.isPending)
+  const isAvalancheError = avalancheQueries.some((query) => query.isError)
   const avalancheCount = avalancheQueries.reduce(
     (sum, query) => sum + (query.data?.totalCount ?? 0),
     0,
@@ -46,6 +39,7 @@ const MetricCards = ({ regions }: { regions: Region[] }) => {
   return (
     <div className="mb-3.5 grid grid-cols-2 gap-3 lg:grid-cols-4">
       <MetricCard
+        isError={isForecastError}
         isPending={isForecastPending}
         label={t('admin.dashboard.metrics.forecastsPublished')}
       >
@@ -57,11 +51,16 @@ const MetricCards = ({ regions }: { regions: Region[] }) => {
         </div>
       </MetricCard>
 
-      <MetricCard isPending={isMembersPending} label={t('admin.dashboard.metrics.pendingMembers')}>
+      <MetricCard
+        isError={isMembersError}
+        isPending={isMembersPending}
+        label={t('admin.dashboard.metrics.pendingMembers')}
+      >
         <span className="text-2xl font-semibold text-gray-900">{pendingCount}</span>
       </MetricCard>
 
       <MetricCard
+        isError={isObservationsError}
         isPending={isObservationsPending}
         label={t('admin.dashboard.metrics.pendingObservations')}
       >
@@ -69,6 +68,7 @@ const MetricCards = ({ regions }: { regions: Region[] }) => {
       </MetricCard>
 
       <MetricCard
+        isError={isAvalancheError}
         isPending={isAvalanchePending}
         label={t('admin.dashboard.metrics.avalanchesWeek')}
       >
