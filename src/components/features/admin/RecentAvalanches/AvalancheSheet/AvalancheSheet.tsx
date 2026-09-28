@@ -38,10 +38,16 @@ const AvalancheSheet = ({
   const t = useTranslations()
   const formId = useId()
   const sheet = useAvalancheSheet({ id, initialMode, onReopen, regionId })
-  const { avalanche, confirm, hasUnsavedEdits, mode, setConfirm, setMode, showView } = sheet
+  const { avalanche, confirm, hasUnsavedEdits, mode, setConfirm, setMode } = sheet
 
-  const { handleConfirm, handleEditCancel, handleKeyDown, handleOpenChange, isDeleting } =
-    useAvalancheSheetActions({ ...sheet, id, navigation, onClose, onRecordLeave })
+  const {
+    handleConfirm,
+    handleEditCancel,
+    handleKeyDown,
+    handleOpenChange,
+    handleSaved,
+    isDeleting,
+  } = useAvalancheSheetActions({ ...sheet, id, navigation, onClose, onRecordLeave })
 
   return (
     <Sheet
@@ -86,7 +92,7 @@ const AvalancheSheet = ({
         onDirtyChange={sheet.setIsDirty}
         onEditCancel={handleEditCancel}
         onRetry={sheet.onRetry}
-        onSaved={showView}
+        onSaved={handleSaved}
         onSubmittingChange={sheet.setIsSaving}
       />
     </Sheet>
