@@ -10,6 +10,6 @@ const useCurrentForecastsPerRegion = (regions: Region[]) =>
       queryFn: fetchCurrentForecast,
       queryKey: forecastsKeys.current(region.id, { isShort: true }),
     })),
-  }) as { data: Forecast | null | undefined; isPending: boolean }[]
+  }) as { data: Forecast | null | undefined; isError: boolean; isPending: boolean }[]
 
 export default useCurrentForecastsPerRegion
