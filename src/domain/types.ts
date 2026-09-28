@@ -195,28 +195,6 @@ export type ObservationPoints = {
   regionTotal: number
 }
 
-export type ForecastDetails = {
-  avalancheProblems: Problem[]
-  recentAvalanches: Avalanche[]
-}
-
-export type BaseFormData = {
-  id?: number
-  additionalHazards: string
-  forecaster: string
-  hazardLevels: HazardLevels
-  regionId?: RegionId
-  snowpack: string
-  summary: string
-  validUntil: Date | null
-  weather: string
-}
-
-export type ForecastFormData = {
-  baseFormData: BaseFormData
-  forecastDetails: ForecastDetails
-}
-
 // A linked record as the public sees it: no internal or submitter fields
 export type PublicAvalanche = Omit<
   Avalanche,
@@ -235,8 +213,11 @@ export type FullForecast = Forecast & {
   recentAvalanches: PublicAvalanche[]
 }
 
-// Admin forecast: every linked record, all fields
-export type AdminFullForecast = Forecast & ForecastDetails
+// Admin forecast (edit form): problems + the IDs of the linked records
+export type AdminForecast = Forecast & {
+  avalancheProblems: Problem[]
+  recentAvalancheIds: number[]
+}
 
 export type MemberStatus = Enums<'member_status'>
 

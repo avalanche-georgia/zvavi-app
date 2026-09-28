@@ -17,6 +17,9 @@ type AvalancheSheetProps = {
   initialMode: AvalancheSheetMode
   // Prev / next through the list behind the panel
   navigation?: AvalancheSheetNavigation
+  // Edit mode: shown above the form, e.g. who else sees the changes
+  editNote?: React.ReactNode
+  editSaveLabel?: string
   onClose: VoidFunction
   // Moderation queue: the record left it (approved / rejected / deleted) —
   // moves on to a neighbour instead of closing
@@ -27,6 +30,8 @@ type AvalancheSheetProps = {
 
 // One record of the catalog or the moderation queue, viewed and edited in place
 const AvalancheSheet = ({
+  editNote,
+  editSaveLabel,
   id,
   initialMode,
   navigation,
@@ -66,6 +71,7 @@ const AvalancheSheet = ({
             onDelete={() => setConfirm('delete')}
             onEdit={() => setMode('edit')}
             onEditCancel={handleEditCancel}
+            saveLabel={editSaveLabel}
           />
         )
       }
@@ -85,6 +91,7 @@ const AvalancheSheet = ({
     >
       <AvalancheSheetBody
         avalanche={avalanche}
+        editNote={editNote}
         formId={formId}
         isError={sheet.isError}
         isPending={sheet.isPending}

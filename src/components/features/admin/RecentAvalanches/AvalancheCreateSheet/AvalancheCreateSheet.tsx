@@ -12,18 +12,37 @@ import { RecentAvalancheForm } from '../RecentAvalancheForm'
 
 type AvalancheCreateSheetProps = {
   isRequested: boolean
+  // Shown above the form, e.g. what creating means in the caller's context
+  note?: React.ReactNode
   onClose: VoidFunction
+  // After the record is saved, before the panel closes
+  onCreated?: (id: number) => void
   regionId: RegionId
+  submitLabel?: string
+  title?: string
 }
 
 // A new catalog record, added in a side panel next to the list — same panel and
 // form as editing a record
-const AvalancheCreateSheet = ({ isRequested, onClose, regionId }: AvalancheCreateSheetProps) => {
+const AvalancheCreateSheet = ({
+  isRequested,
+  note,
+  onClose,
+  onCreated,
+  regionId,
+  submitLabel,
+  title,
+}: AvalancheCreateSheetProps) => {
   const t = useTranslations()
   const formId = useId()
   const sheet = useCreateSheet({ isRequested, onClose })
 
   const handleOpenChange = (isOpen: boolean) => !isOpen && sheet.requestClose()
+
+  const handleSuccess = (createdId?: number) => {
+    if (createdId !== undefined) onCreated?.(createdId)
+    sheet.close()
+  }
 
   const footer = sheet.isConfirmingClose ? (
     <FooterConfirm
@@ -40,7 +59,7 @@ const AvalancheCreateSheet = ({ isRequested, onClose, regionId }: AvalancheCreat
       </Button>
       {/* Also disabled while a save waits for photo uploads to finish */}
       <Button disabled={sheet.isSaving} form={formId} type="submit">
-        {t('common.actions.save')}
+        {submitLabel ?? t('common.actions.save')}
       </Button>
     </div>
   )
@@ -55,7 +74,7 @@ const AvalancheCreateSheet = ({ isRequested, onClose, regionId }: AvalancheCreat
             <X className="size-4.5" />
           </SheetClose>
           <SheetTitle className="m-0 flex-1 truncate text-[15px] font-semibold">
-            {t('admin.recentAvalanches.title.create')}
+            {title ?? t('admin.recentAvalanches.title.create')}
           </SheetTitle>
         </>
       }
@@ -64,13 +83,14 @@ const AvalancheCreateSheet = ({ isRequested, onClose, regionId }: AvalancheCreat
       isTall
       onOpenChange={handleOpenChange}
     >
+      {note}
       <RecentAvalancheForm
         key={sheet.formKey}
         formId={formId}
         onCancel={sheet.requestClose}
         onDirtyChange={sheet.setIsDirty}
         onSubmittingChange={sheet.setIsSaving}
-        onSuccess={sheet.close}
+        onSuccess={handleSuccess}
         regionId={regionId}
         variant="panel"
       />

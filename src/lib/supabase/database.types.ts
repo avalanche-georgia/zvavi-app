@@ -36,7 +36,7 @@ export type Database = {
       avalanche_problems: {
         Row: {
           aspects: Json | null
-          avalanche_size: number | null
+          avalanche_size: number
           confidence: Database['public']['Enums']['confidence'] | null
           created_at: string
           description: string | null
@@ -52,7 +52,7 @@ export type Database = {
         }
         Insert: {
           aspects?: Json | null
-          avalanche_size?: number | null
+          avalanche_size: number
           confidence?: Database['public']['Enums']['confidence'] | null
           created_at?: string
           description?: string | null
@@ -68,7 +68,7 @@ export type Database = {
         }
         Update: {
           aspects?: Json | null
-          avalanche_size?: number | null
+          avalanche_size?: number
           confidence?: Database['public']['Enums']['confidence'] | null
           created_at?: string
           description?: string | null
@@ -711,6 +711,10 @@ export type Database = {
       fetch_combined_forecast_data: { Args: never; Returns: Json }
       get_latest_published_forecast_with_related: { Args: never; Returns: Json }
       reorder_weather_stations: { Args: { updates: Json }; Returns: undefined }
+      save_forecast: {
+        Args: { p_avalanche_ids: number[]; p_forecast: Json; p_problems: Json }
+        Returns: number
+      }
       submit_member_application: {
         Args: {
           p_address?: string

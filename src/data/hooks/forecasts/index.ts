@@ -1,13 +1,8 @@
 export { default as useAdminGetForecast } from './useAdminGetForecast'
-export {
-  type AvalancheWithForecasts,
-  default as useAllRecentAvalanchesQuery,
-} from './useAllRecentAvalanchesQuery'
 export { default as useCurrentForecastsPerRegion } from './useCurrentForecastsPerRegion'
-export { default as useForecastCreate } from './useForecastCreate'
 export { default as useForecastDelete } from './useForecastDelete'
+export { default as useForecastSave } from './useForecastSave'
 export { default as useForecastStatusToggle } from './useForecastStatusToggle'
-export { default as useForecastUpdate } from './useForecastUpdate'
 export { default as useGetCurrentForecast } from './useGetCurrentForecast'
 export { default as useGetForecast } from './useGetForecast'
 export { default as useHistoryListQuery } from './useHistoryListQuery'

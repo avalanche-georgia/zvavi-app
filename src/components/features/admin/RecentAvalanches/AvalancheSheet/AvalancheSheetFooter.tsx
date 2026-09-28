@@ -18,6 +18,7 @@ type AvalancheSheetFooterProps = {
   onDelete: VoidFunction
   onEdit: VoidFunction
   onEditCancel: VoidFunction
+  saveLabel?: string
 }
 
 const AvalancheSheetFooter = ({
@@ -32,6 +33,7 @@ const AvalancheSheetFooter = ({
   onDelete,
   onEdit,
   onEditCancel,
+  saveLabel,
 }: AvalancheSheetFooterProps) => {
   const t = useTranslations()
 
@@ -71,7 +73,7 @@ const AvalancheSheetFooter = ({
       </Button>
       {/* Also disabled while a save waits for photo uploads to finish */}
       <Button disabled={isSaving} form={formId} type="submit">
-        {t('common.actions.save')}
+        {saveLabel ?? t('common.actions.save')}
       </Button>
     </div>
   )

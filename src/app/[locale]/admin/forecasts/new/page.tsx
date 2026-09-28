@@ -1,7 +1,10 @@
 'use client'
 
 import { useEffect } from 'react'
-import { ForecastForm, getInitialFormData } from '@components/features/admin/Forecasts/ForecastForm'
+import {
+  ForecastForm,
+  getInitialFormValues,
+} from '@components/features/admin/Forecasts/ForecastForm'
 import { RequireRegionId } from '@components/shared'
 import { Spinner } from '@components/ui'
 import { useAdminGetForecast } from '@data/hooks/forecasts'
@@ -48,39 +51,19 @@ const NewForecastContent = ({ regionId }: { regionId: RegionId }) => {
     return <Spinner />
   }
 
-  const handleCancel = () => {
+  const handleClose = () => {
     router.push(routes.admin.forecasts.listByRegion(regionId))
   }
 
-  const handleSuccess = () => {
-    router.push(routes.admin.forecasts.listByRegion(regionId))
+  // A duplicate copies everything but when it expires; the forecaster is whoever
+  // writes this one
+  const initialValues = {
+    ...getInitialFormValues(sourceForecast ?? null),
+    forecaster: currentProfile?.fullName ?? '',
+    validUntil: null,
   }
 
-  const forecasterName = currentProfile?.fullName ?? ''
-
-  const initialBaseFormData = getInitialFormData(sourceForecast ?? null)
-  const initialFormData = sourceForecast
-    ? {
-        ...initialBaseFormData,
-        baseFormData: { ...initialBaseFormData.baseFormData, id: undefined, validUntil: null },
-      }
-    : initialBaseFormData
-
-  const initialFormDataPrefilled = {
-    ...initialFormData,
-    baseFormData: { ...initialFormData.baseFormData, forecaster: forecasterName },
-  }
-
-  return (
-    <div className="mx-auto max-w-7xl p-4 md:p-6">
-      <ForecastForm
-        initialFormData={initialFormDataPrefilled}
-        onCancel={handleCancel}
-        onSuccess={handleSuccess}
-        regionId={regionId}
-      />
-    </div>
-  )
+  return <ForecastForm initialValues={initialValues} onClose={handleClose} regionId={regionId} />
 }
 
 const NewForecastPage = () => (
