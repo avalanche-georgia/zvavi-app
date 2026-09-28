@@ -2,7 +2,7 @@
 
 import { Icon } from '@components'
 import { usePendingMembersCount } from '@data/hooks/members'
-import { usePendingObservationsCounts } from '@data/hooks/recentAvalanches'
+import { usePendingObservationsSummary } from '@data/hooks/recentAvalanches'
 import { useTranslations } from 'next-intl'
 import { Link, usePathname } from 'src/i18n/navigation'
 
@@ -22,7 +22,7 @@ const SidebarContent = ({ onItemClick }: SidebarContentProps) => {
   const pathname = usePathname()
   const t = useTranslations()
   const pendingMembersCount = usePendingMembersCount()
-  const { total: pendingObservationsCount } = usePendingObservationsCounts()
+  const { total: pendingObservationsCount } = usePendingObservationsSummary()
 
   // Items waiting for an admin: member applications, observations to review
   const badges: Partial<Record<NavItem['label'], number>> = {
