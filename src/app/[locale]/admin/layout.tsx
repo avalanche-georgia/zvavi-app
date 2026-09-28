@@ -18,7 +18,9 @@ const AdminLayout = ({ children }: Readonly<LayoutProps>) => {
 
       <div className="flex h-full flex-1 flex-col">
         <AdminPageHeader onOpenMenu={open} />
-        <main className="flex-1 overflow-y-auto bg-gray-50">{children}</main>
+        {/* relative: the containing block for absolutely positioned content
+            (e.g. sr-only labels), so it can't overflow the page itself */}
+        <main className="relative flex-1 overflow-y-auto bg-gray-50">{children}</main>
       </div>
 
       <MobileDrawer isOpen={isOpen} onClose={close} />
