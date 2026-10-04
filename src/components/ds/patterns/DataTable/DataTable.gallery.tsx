@@ -51,6 +51,7 @@ const renderCard = ({ level, name }: DemoRow) => (
     <span>{level}</span>
   </div>
 )
+const noRows: DemoRow[] = []
 const emptyState = <p className="text-muted p-8 text-center">Nothing here</p>
 
 const DataTableGallery = () => {
@@ -79,7 +80,7 @@ const DataTableGallery = () => {
       <DataTable
         ariaLabel="Empty"
         columns={columns}
-        data={[]}
+        data={noRows}
         empty={emptyState}
         getRowId={getRowId}
         labels={labels}
@@ -91,7 +92,7 @@ const DataTableGallery = () => {
       <DataTable
         ariaLabel="Loading"
         columns={columns}
-        data={[]}
+        data={noRows}
         empty={emptyState}
         getRowId={getRowId}
         isLoading

@@ -49,6 +49,9 @@ const useDataTable = <TData extends RowData>({
   // TODO: Revise 'use no memo' when upgrading Tanstack Table to v9.
   // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
+    // Page is controlled by the caller. TanStack's auto-reset would set state whenever `data`
+    // changes identity — with a fresh array per render that's an endless render loop.
+    autoResetPageIndex: false,
     columns,
     data,
     defaultColumn: { enableSorting: false },
