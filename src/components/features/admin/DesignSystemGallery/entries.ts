@@ -11,6 +11,7 @@ import DateFieldGallery from '@ds/primitives/DateField/DateField.gallery'
 import FieldGallery from '@ds/primitives/Field/Field.gallery'
 import IconButtonGallery from '@ds/primitives/IconButton/IconButton.gallery'
 import InfoTipGallery from '@ds/primitives/InfoTip/InfoTip.gallery'
+import MenuGallery from '@ds/primitives/Menu/Menu.gallery'
 import RatingScaleGallery from '@ds/primitives/RatingScale/RatingScale.gallery'
 import SegmentedControlGallery from '@ds/primitives/SegmentedControl/SegmentedControl.gallery'
 import SelectGallery from '@ds/primitives/Select/Select.gallery'
@@ -38,6 +39,7 @@ export const galleryEntries: GalleryEntry[] = [
   { Demo: ButtonGallery, id: 'button', title: 'Button' },
   { Demo: BadgeGallery, id: 'badge', title: 'Badge' },
   { Demo: ConfirmPopoverGallery, id: 'confirm-popover', title: 'ConfirmPopover' },
+  { Demo: MenuGallery, id: 'menu', title: 'Menu' },
   { Demo: IconButtonGallery, id: 'icon-button', title: 'IconButton' },
   { Demo: InfoTipGallery, id: 'info-tip', title: 'InfoTip' },
   { Demo: TooltipGallery, id: 'tooltip', title: 'Tooltip' },

@@ -29,8 +29,8 @@ src/components/
 ├── ds/                  # new kit — the only place new generic UI goes
 │   ├── primitives/      # Button, Badge, Checkbox, Field, FieldGroup, TextField, NumberField,
 │   │                    # Textarea, ChipGroup, ToggleGrid, SegmentedControl, Select, Stepper, InfoTip,
-│   │                    # IconButton, RatingScale, DateField
-│   ├── patterns/        # FormCard, StickyActionBar, SuccessState
+│   │                    # IconButton, RatingScale, DateField, Menu, Pagination, SearchField
+│   ├── patterns/        # FormCard, StickyActionBar, SuccessState, DataTable
 │   └── form/            # react-hook-form bindings: FormTextField, FormTextarea, FormNumberField,
 │                        # FormStepper, FormChipGroup, FormCheckbox, FormSelect, useFormFieldError
 ├── ui/                  # legacy kit — frozen, deleted piece by piece
