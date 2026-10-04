@@ -33,7 +33,8 @@ const SegmentedControl = <T extends string>({
   return (
     <ToggleGroup
       aria-label={ariaLabel}
-      className={cn('rounded-field bg-tile flex gap-0.75 p-0.75', className)}
+      // The track sets the height (override via className); segments fill it
+      className={cn('rounded-field bg-tile flex h-11.5 gap-0.75 p-0.75', className)}
       onValueChange={handleValueChange}
       value={groupValue}
     >
@@ -42,7 +43,7 @@ const SegmentedControl = <T extends string>({
           key={option.value}
           aria-label={option.ariaLabel}
           className={cn(
-            'focus-ring text-copy text-body flex h-10 flex-1 items-center justify-center gap-1.5 rounded-lg px-2 whitespace-nowrap',
+            'focus-ring text-copy text-body flex h-full flex-1 items-center justify-center gap-1.5 rounded-lg px-2 whitespace-nowrap',
             'font-semibold transition-colors',
             'data-pressed:bg-surface data-pressed:text-ink data-pressed:shadow-raised',
             'data-disabled:text-placeholder data-disabled:cursor-default',

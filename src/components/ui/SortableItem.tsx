@@ -15,13 +15,16 @@ const SortableItem = ({ children, className, disabled, id, index }: SortableItem
   const { handleRef, isDragSource, isDropTarget, ref } = useSortable({ disabled, id, index })
 
   return (
+    // data-dragging lets the item style its lifted state (e.g. a shadow); the
+    // dragged item stays fully opaque
     <li
       ref={ref}
       className={cn(
-        isDragSource && 'opacity-80',
+        isDragSource && 'relative z-10',
         isDropTarget && 'ring-primary/40 rounded-sm ring-2',
         className,
       )}
+      data-dragging={isDragSource || undefined}
     >
       {children(handleRef)}
     </li>

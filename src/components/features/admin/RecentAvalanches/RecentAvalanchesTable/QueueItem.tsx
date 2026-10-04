@@ -1,5 +1,6 @@
 'use client'
 
+import { formatAvalancheId } from '@components/features/observations'
 import { dateTimeFormat } from '@domain/constants'
 import { format } from 'date-fns'
 import { useTranslations } from 'next-intl'
@@ -30,7 +31,10 @@ const QueueItem = ({ avalanche, onOpen, regionId }: AvalancheRowProps) => {
           </OpenAvalancheLink>
         </div>
         <div className="w-28 shrink-0 text-sm">{dateDisplay}</div>
-        <div className="w-36 shrink-0 text-sm">{t(`common.avalancheTypes.${type}`)}</div>
+        <div className="flex w-36 shrink-0 flex-col text-sm">
+          {t(`common.avalancheTypes.${type}`)}
+          <span className="text-muted font-mono text-xs">{formatAvalancheId(id)}</span>
+        </div>
         <div className="flex w-14 shrink-0 justify-center">
           <SizeBadge size={size} />
         </div>

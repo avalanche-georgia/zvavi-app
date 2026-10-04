@@ -20,6 +20,7 @@ common:
     submit: 'Submit'
     tryAgain: 'Try again'
     visitWebsite: 'Visit Website'
+    undo: 'Undo'
 
   labels:
     confirmPassword: 'Confirm Password'
@@ -69,6 +70,10 @@ common:
     highAlpine: 'High Alpine'
     alpine: 'Alpine'
     subAlpine: 'Sub Alpine'
+  elevationZonesShort:
+    highAlpine: 'HA'
+    alpine: 'A'
+    subAlpine: 'SA'
 
   aspects:
     allAspects: 'all aspects'

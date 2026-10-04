@@ -1,12 +1,12 @@
 'use client'
 
 import Spoiler from '@components/shared/Spoiler'
-import type { Avalanche } from '@domain/types'
+import type { PublicAvalanche } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import AvalancheItem from './AvalancheItem'
 
-const RecentAvalanches = ({ avalanches }: { avalanches: Avalanche[] }) => {
+const RecentAvalanches = ({ avalanches }: { avalanches: PublicAvalanche[] }) => {
   const t = useTranslations()
 
   if (avalanches.length === 0) {

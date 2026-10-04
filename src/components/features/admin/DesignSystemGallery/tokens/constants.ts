@@ -32,6 +32,8 @@ export const colorSwatchClasses: Record<string, string> = {
   surface: 'bg-surface',
   tile: 'bg-tile',
   'tile-hover': 'bg-tile-hover',
+  warning: 'bg-warning',
+  'warning-soft': 'bg-warning-soft',
 }
 
 export const colorGroups: ColorGroup[] = [
@@ -43,7 +45,10 @@ export const colorGroups: ColorGroup[] = [
     tokens: ['primary', 'primary-hover', 'primary-soft', 'primary-ink', 'brand-blue'],
   },
   { title: 'Accent', tokens: ['accent', 'accent-hover', 'accent-soft'] },
-  { title: 'Status', tokens: ['danger', 'danger-border', 'success', 'success-soft'] },
+  {
+    title: 'Status',
+    tokens: ['danger', 'danger-border', 'success', 'success-soft', 'warning', 'warning-soft'],
+  },
 ]
 
 export const fontSizeClasses: Record<FontSizeToken, string> = {

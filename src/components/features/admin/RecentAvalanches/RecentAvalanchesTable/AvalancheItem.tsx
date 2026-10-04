@@ -1,5 +1,6 @@
 'use client'
 
+import { formatAvalancheId } from '@components/features/observations'
 import { useTranslations } from 'next-intl'
 
 import ActionButtons from './ActionButtons'
@@ -29,7 +30,10 @@ const AvalancheItem = ({ avalanche, onOpen, regionId }: AvalancheRowProps) => {
             {dateDisplay}
           </OpenAvalancheLink>
         </div>
-        <div className="w-36 shrink-0 text-sm">{t(`common.avalancheTypes.${type}`)}</div>
+        <div className="flex w-36 shrink-0 flex-col text-sm">
+          {t(`common.avalancheTypes.${type}`)}
+          <span className="text-muted font-mono text-xs">{formatAvalancheId(id)}</span>
+        </div>
         <div className="flex w-14 shrink-0 justify-center">
           <SizeBadge size={size} />
         </div>

@@ -1,6 +1,9 @@
 'use client'
 
-import { ForecastForm, getInitialFormData } from '@components/features/admin/Forecasts/ForecastForm'
+import {
+  ForecastForm,
+  getInitialFormValues,
+} from '@components/features/admin/Forecasts/ForecastForm'
 import { Spinner } from '@components/ui'
 import { useAdminGetForecast } from '@data/hooks/forecasts'
 import { useParams } from 'next/navigation'
@@ -42,23 +45,17 @@ const EditForecastPage = () => {
     return <NotFound />
   }
 
-  const handleCancel = () => {
-    router.push(routes.admin.forecasts.listByRegion(forecast.regionId))
-  }
-
-  const handleSuccess = () => {
+  const handleClose = () => {
     router.push(routes.admin.forecasts.listByRegion(forecast.regionId))
   }
 
   return (
-    <div className="mx-auto max-w-7xl p-4 md:p-6">
-      <ForecastForm
-        initialFormData={getInitialFormData(forecast)}
-        onCancel={handleCancel}
-        onSuccess={handleSuccess}
-        regionId={forecast.regionId}
-      />
-    </div>
+    <ForecastForm
+      forecastId={forecast.id}
+      initialValues={getInitialFormValues(forecast)}
+      onClose={handleClose}
+      regionId={forecast.regionId}
+    />
   )
 }
 

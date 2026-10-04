@@ -1,5 +1,6 @@
-import { Button } from '@components/ui'
 import type { AvalancheListItem } from '@data/hooks/recentAvalanches'
+import { FooterActions } from '@ds/patterns'
+import { Button } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 
 import FooterConfirm from './FooterConfirm'
@@ -18,6 +19,7 @@ type AvalancheSheetFooterProps = {
   onDelete: VoidFunction
   onEdit: VoidFunction
   onEditCancel: VoidFunction
+  saveLabel?: string
 }
 
 const AvalancheSheetFooter = ({
@@ -32,6 +34,7 @@ const AvalancheSheetFooter = ({
   onDelete,
   onEdit,
   onEditCancel,
+  saveLabel,
 }: AvalancheSheetFooterProps) => {
   const t = useTranslations()
 
@@ -65,15 +68,15 @@ const AvalancheSheetFooter = ({
   }
 
   return (
-    <div className="flex w-full justify-end gap-2">
+    <FooterActions>
       <Button onClick={onEditCancel} variant="secondary">
         {t('common.actions.cancel')}
       </Button>
       {/* Also disabled while a save waits for photo uploads to finish */}
       <Button disabled={isSaving} form={formId} type="submit">
-        {t('common.actions.save')}
+        {saveLabel ?? t('common.actions.save')}
       </Button>
-    </div>
+    </FooterActions>
   )
 }
 
