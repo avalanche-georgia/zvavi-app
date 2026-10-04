@@ -23,10 +23,32 @@ type ProblemEditorProps = {
 const ProblemEditor = ({ initialDraft, isNew, number, onCancel, onDone }: ProblemEditorProps) => {
   const t = useTranslations()
   const rootRef = useRef<HTMLDivElement>(null)
+  // The button that opened the editor, read at first render — before the effect
+  // below moves focus (a dev StrictMode re-run would otherwise see the editor)
+  const openerRef = useRef(
+    typeof document !== 'undefined' && document.activeElement instanceof HTMLElement
+      ? document.activeElement
+      : null,
+  )
   const { draft, errors, setField, validate } = useProblemDraft(initialDraft)
 
   useEffect(() => {
-    rootRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    const root = rootRef.current
+    const opener = openerRef.current
+
+    root?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    // Keyboard users land in the editor, not on the (now disabled) button that opened it
+    root?.querySelector<HTMLElement>('button, input, textarea')?.focus({ preventScroll: true })
+
+    return () => {
+      // …and go back to that button once the editor closes — a tick later, when
+      // it's no longer disabled
+      setTimeout(() => {
+        if (opener?.isConnected && document.activeElement === document.body) {
+          opener.focus({ preventScroll: true })
+        }
+      })
+    }
   }, [])
 
   const handleDone = () => {

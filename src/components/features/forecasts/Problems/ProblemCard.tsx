@@ -38,12 +38,13 @@ const ProblemCard = ({ dragHandleRef, number, onDelete, onEdit, problem }: Probl
           <Icon icon="grip" size="sm" />
         </button>
         <ProblemNumber number={number} />
-        <h3 className="text-ink min-w-0 truncate text-base font-semibold">
-          {t(`common.avalancheTypes.${type}`)}
-        </h3>
-        <span className="bg-tile text-ink rounded-badge px-1.5 py-0.5 text-xs font-semibold">
-          {t('admin.forecast.editor.problems.size', { size: avalancheSize })}
-        </span>
+        {/* Narrow cards: the size badge wraps below the type instead of squeezing it */}
+        <div className="flex min-w-0 flex-wrap items-center gap-x-2.5 gap-y-1">
+          <h3 className="text-ink text-base font-semibold">{t(`common.avalancheTypes.${type}`)}</h3>
+          <span className="bg-tile text-ink rounded-badge px-1.5 py-0.5 text-xs font-semibold whitespace-nowrap">
+            {t('admin.forecast.editor.problems.size', { size: avalancheSize })}
+          </span>
+        </div>
         <div className="ml-auto flex gap-1">
           <IconButton aria-label={t('common.actions.edit')} onClick={onEdit}>
             <Pencil className="size-4" />
