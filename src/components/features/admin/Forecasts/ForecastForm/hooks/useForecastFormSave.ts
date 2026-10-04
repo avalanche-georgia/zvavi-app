@@ -64,6 +64,7 @@ const useForecastFormSave = ({
           'recentAvalancheIds',
           linkedIds.filter((id) => !dropped.includes(id)),
         )
+        toastInfo(t('admin.forecast.editor.save.unlinkedUnavailable', { count: dropped.length }))
       }
 
       resetToSaved(form, saved)

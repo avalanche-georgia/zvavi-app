@@ -326,6 +326,7 @@ admin:
         saved: 'Forecast saved'
         fieldsRequired: 'Add the required fields to save'
         finishProblem: 'Finish or cancel the problem you''re editing'
+        unlinkedUnavailable: '{count, plural, one {# archived or deleted avalanche was unlinked} other {# archived or deleted avalanches were unlinked}}'
       hazard:
         title: 'Hazard levels'
         description: 'Rate the overall danger, then each elevation zone. Arrow keys or 0–5 work too.'
