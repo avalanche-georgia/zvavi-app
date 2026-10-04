@@ -19,7 +19,8 @@ export const forecastFormSchema = z
     // Links to catalog records; the records themselves are saved separately
     recentAvalancheIds: z.array(z.number()),
     snowpack: z.string(),
-    summary: z.string(),
+    // Shown first on the public forecast — a forecast without one isn't publishable
+    summary: z.string().trim().min(1, required),
     validUntil: z.date().nullable(),
     weather: z.string(),
   })

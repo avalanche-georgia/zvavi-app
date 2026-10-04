@@ -83,8 +83,11 @@ const ProblemEditor = ({ initialDraft, isNew, number, onCancel, onDone }: Proble
         <ProblemEditorFields draft={draft} errors={errors} setField={setField} />
         <div className="flex flex-col gap-5">
           <FieldGroup
+            error={errors.aspects ? t('admin.forecast.editor.problems.errors.aspects') : undefined}
             hint={t('admin.forecast.editor.problems.aspectsHint')}
             label={t('admin.forecast.editor.problems.aspects')}
+            required
+            requiredText={t('common.validation.required')}
           >
             <AspectElevationPicker
               onChange={(aspects) => setField('aspects', aspects)}

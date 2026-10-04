@@ -19,10 +19,16 @@ export const aspectsSchema = z.object({
   subAlpine: z.array(aspect),
 })
 
-// A problem as stored in the forecast form. Type and size are required: the
-// editor keeps a draft with them empty and only hands over a valid problem.
+// At least one aspect in any elevation band
+const requiredAspectsSchema = aspectsSchema.refine(
+  ({ alpine, highAlpine, subAlpine }) => alpine.length + highAlpine.length + subAlpine.length > 0,
+  { error: 'required' },
+)
+
+// A problem as stored in the forecast form. Type, size and aspects are required:
+// the editor keeps a draft with them empty and only hands over a valid problem.
 export const problemSchema = z.object({
-  aspects: aspectsSchema,
+  aspects: requiredAspectsSchema,
   avalancheSize: z.union(
     [z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)],
     required,

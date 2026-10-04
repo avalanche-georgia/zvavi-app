@@ -8,6 +8,8 @@ const SummaryCard = ({ sectionId }: { sectionId: string }) => {
   return (
     <FormCard
       headerAside={t('admin.forecast.editor.summary.hint')}
+      required
+      requiredText={t('common.validation.required')}
       sectionId={sectionId}
       title={t('admin.forecast.form.general.labels.summary')}
     >
@@ -16,6 +18,8 @@ const SummaryCard = ({ sectionId }: { sectionId: string }) => {
         isLabelHidden
         label={t('admin.forecast.form.general.labels.summary')}
         name="summary"
+        required
+        requiredMessage={t('admin.forecast.editor.summary.required')}
       />
     </FormCard>
   )

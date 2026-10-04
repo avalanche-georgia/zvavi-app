@@ -253,6 +253,7 @@ admin:
           '3': 'In 3 days'
       summary:
         hint: 'Shown first on the public forecast'
+        required: 'Add a short summary of the conditions.'
       conditions:
         title: 'Conditions'
       avalanches:
@@ -355,6 +356,7 @@ admin:
         removed: 'Removed "{type}"'
         finishFirst: 'Finish the problem you''re editing first'
         errors:
+          aspects: 'Pick at least one aspect.'
           type: 'Pick a problem type.'
           size: 'Pick an avalanche size.'
     title:

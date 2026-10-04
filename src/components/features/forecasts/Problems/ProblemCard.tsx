@@ -14,13 +14,22 @@ import type { ProblemValues } from './problemSchema'
 type ProblemCardProps = {
   // Drag grip — attached by the sortable list; null while dragging is off
   dragHandleRef: ((element: Element | null) => void) | null
+  // Saved without aspects (allowed before they were required): blocks saving
+  hasAspectsError: boolean
   number: number
   onDelete: VoidFunction
   onEdit: VoidFunction
   problem: ProblemValues
 }
 
-const ProblemCard = ({ dragHandleRef, number, onDelete, onEdit, problem }: ProblemCardProps) => {
+const ProblemCard = ({
+  dragHandleRef,
+  hasAspectsError,
+  number,
+  onDelete,
+  onEdit,
+  problem,
+}: ProblemCardProps) => {
   const t = useTranslations()
   const { getSummary } = useAspectSummary()
   const { aspects, avalancheSize, description, type } = problem
@@ -61,9 +70,15 @@ const ProblemCard = ({ dragHandleRef, number, onDelete, onEdit, problem }: Probl
           </div>
           <div className="flex max-w-60 flex-col gap-1.5">
             <AspectMiniGrid aspects={aspects} />
-            <p className="text-caption text-body">
-              {getSummary(aspects) ?? t('admin.forecast.editor.problems.noAspects')}
-            </p>
+            {hasAspectsError ? (
+              <p className="text-caption text-danger" data-field-error>
+                {t('admin.forecast.editor.problems.errors.aspects')}
+              </p>
+            ) : (
+              <p className="text-caption text-body">
+                {getSummary(aspects) ?? t('admin.forecast.editor.problems.noAspects')}
+              </p>
+            )}
           </div>
         </div>
         {description && <p className="text-copy-sm text-body whitespace-pre-line">{description}</p>}
