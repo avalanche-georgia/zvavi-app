@@ -22,14 +22,17 @@ const ProblemEditorFooter = ({
 
   if (isConfirmingDiscard) {
     return (
-      <div className="flex w-full flex-wrap items-center gap-2" role="alert">
+      <div
+        className="flex w-full flex-wrap items-center gap-2 transition-[opacity,translate] duration-200 ease-out motion-reduce:transition-none starting:-translate-y-1 starting:opacity-0"
+        role="alert"
+      >
         <span className="text-copy-sm text-ink mr-auto font-semibold">
           {t(`${key}.actionBar.discardConfirm`)}
         </span>
-        <Button onClick={onKeepEditing} size="sm" variant="secondary">
+        <Button onClick={onKeepEditing} variant="secondary">
           {t(`${key}.actionBar.keepEditing`)}
         </Button>
-        <Button className="bg-danger hover:bg-danger/90" onClick={onDiscard} size="sm">
+        <Button onClick={onDiscard} variant="danger">
           {t(`${key}.actionBar.discard`)}
         </Button>
       </div>
@@ -39,12 +42,10 @@ const ProblemEditorFooter = ({
   return (
     <div className="flex w-full flex-wrap items-center gap-2">
       <p className="text-caption text-muted mr-auto">{t(`${key}.problems.keptNote`)}</p>
-      <Button onClick={onCancel} size="sm" variant="secondary">
+      <Button onClick={onCancel} variant="secondary">
         {t('common.actions.cancel')}
       </Button>
-      <Button className="bg-ink hover:bg-ink/90" onClick={onDone} size="sm">
-        {t(`${key}.problems.done`)}
-      </Button>
+      <Button onClick={onDone}>{t(`${key}.problems.done`)}</Button>
     </div>
   )
 }

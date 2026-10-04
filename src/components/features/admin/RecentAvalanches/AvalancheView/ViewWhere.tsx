@@ -8,8 +8,8 @@ import {
   LocationSheet,
 } from '@components/features/observations'
 import { Icon } from '@components/icons'
-import { Button } from '@components/ui'
 import type { AvalancheListItem } from '@data/hooks/recentAvalanches'
+import { Button } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 
 const noContextPoints: never[] = []
@@ -48,7 +48,12 @@ const ViewWhere = ({ avalanche }: { avalanche: AvalancheListItem }) => {
       {/* Legacy records may have no coordinates */}
       {coordinates && (
         <>
-          <Button className="mt-3" onClick={() => setIsLocationOpen(true)} variant="outline">
+          <Button
+            className="mt-3"
+            onClick={() => setIsLocationOpen(true)}
+            size="sm"
+            variant="secondary"
+          >
             <Icon icon="mapPin" size="sm" />
             {t('observations.detail.showOnMap')}
           </Button>

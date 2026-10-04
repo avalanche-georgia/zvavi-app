@@ -1,5 +1,5 @@
-import { Button } from '@components/ui'
 import type { AvalancheListItem } from '@data/hooks/recentAvalanches'
+import { Button } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 
 import FooterConfirm from './FooterConfirm'

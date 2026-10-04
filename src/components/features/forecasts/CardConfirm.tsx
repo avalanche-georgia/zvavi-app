@@ -37,6 +37,8 @@ const CardConfirm = ({
       ref={rootRef}
       className={cn(
         'border-danger-border bg-surface flex flex-wrap items-center gap-2 rounded-[10px] border px-3 py-2',
+        // Slides in slightly on appear
+        'transition-[opacity,translate] duration-200 ease-out motion-reduce:transition-none starting:-translate-y-1 starting:opacity-0',
         className,
       )}
       onKeyDown={handleKeyDown}
@@ -46,7 +48,7 @@ const CardConfirm = ({
       <Button onClick={onCancel} size="sm" variant="secondary">
         {t('common.actions.cancel')}
       </Button>
-      <Button className="bg-danger hover:bg-danger/90" onClick={onConfirm} size="sm">
+      <Button onClick={onConfirm} size="sm" variant="danger">
         {confirmLabel}
       </Button>
     </div>

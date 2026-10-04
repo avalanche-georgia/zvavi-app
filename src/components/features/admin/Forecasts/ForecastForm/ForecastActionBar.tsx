@@ -43,18 +43,18 @@ const ForecastActionBar = (props: ForecastActionBarProps) => {
   })()
 
   const actions = isConfirmingCancel ? (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2 transition-[opacity,translate] duration-200 ease-out motion-reduce:transition-none starting:-translate-y-1 starting:opacity-0">
       <span className="text-copy-sm text-ink font-semibold">{t(`${key}.discardConfirm`)}</span>
       <Button onClick={props.onCancelDismiss} variant="secondary">
         {t(`${key}.keepEditing`)}
       </Button>
-      <Button className="bg-danger hover:bg-danger/90" onClick={props.onCancelConfirm}>
+      <Button onClick={props.onCancelConfirm} variant="danger">
         {t(`${key}.discard`)}
       </Button>
     </div>
   ) : (
     <div className="flex w-full items-center gap-2 min-[560px]:w-auto">
-      <Button onClick={props.onCancel} variant="text">
+      <Button onClick={props.onCancel} variant="secondary">
         {t('common.actions.cancel')}
       </Button>
       <Button

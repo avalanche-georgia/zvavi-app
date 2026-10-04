@@ -43,15 +43,10 @@ const AvalanchePickerSheet = (props: AvalanchePickerSheetProps) => {
   const footer = (
     <div className="flex w-full flex-wrap items-center gap-2.5">
       <p className="text-caption text-muted mr-auto">{t(`${key}.footerHint`)}</p>
-      <Button onClick={() => handleOpenChange(false)} size="sm" variant="secondary">
+      <Button onClick={() => handleOpenChange(false)} variant="secondary">
         {t('common.actions.cancel')}
       </Button>
-      <Button
-        className="bg-ink hover:bg-ink/90"
-        disabled={!selectedIds.length}
-        onClick={handleLink}
-        size="sm"
-      >
+      <Button disabled={!selectedIds.length} onClick={handleLink}>
         {selectedIds.length
           ? t(`${key}.linkCount`, { count: selectedIds.length })
           : t(`${key}.link`)}

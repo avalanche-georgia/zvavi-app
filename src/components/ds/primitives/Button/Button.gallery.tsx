@@ -2,7 +2,7 @@ import { MapPin } from 'lucide-react'
 
 import Button, { type ButtonSize, type ButtonVariant } from './Button'
 
-const variants: ButtonVariant[] = ['primary', 'secondary', 'overlay', 'text']
+const variants: ButtonVariant[] = ['primary', 'secondary', 'danger', 'overlay', 'text']
 const sizes: ButtonSize[] = ['lg', 'md', 'sm']
 
 const ButtonGallery = () => (

@@ -1,8 +1,9 @@
 'use client'
 
 import { useId } from 'react'
-import { Button, Sheet, SheetClose, SheetIconButton, SheetTitle } from '@components/ui'
+import { Sheet, SheetClose, SheetIconButton, SheetTitle } from '@components/ui'
 import type { RegionId } from '@domain/types'
+import { Button } from '@ds/primitives'
 import { X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 

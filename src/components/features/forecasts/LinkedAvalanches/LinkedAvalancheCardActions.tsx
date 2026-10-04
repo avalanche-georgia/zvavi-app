@@ -15,7 +15,7 @@ const LinkedAvalancheCardActions = ({ id, onEdit, onRemove }: LinkedAvalancheCar
 
   return (
     <div className="@max-[620px]:border-rule flex items-start gap-1.5 @max-[620px]:col-span-full @max-[620px]:justify-between @max-[620px]:border-t @max-[620px]:pt-2.5">
-      <Button className="h-9" onClick={onEdit} size="sm" variant="secondary">
+      <Button onClick={onEdit} size="sm" variant="secondary">
         <PanelRight aria-hidden className="size-4" />
         {t('admin.forecast.editor.avalanches.editRecord')}
       </Button>

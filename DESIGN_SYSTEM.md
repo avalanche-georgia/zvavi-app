@@ -147,6 +147,20 @@ Rules:
     can't, so they announce it through `requiredText` (visually hidden, after the label).
   - A flow that replaces itself (e.g. `SuccessState`) moves focus to its new heading.
 - **Errors:** form bindings render `data-field-error`, so `useScrollToFirstError` keeps working.
+- **Buttons** (`primitives/Button`) — pick the variant by role and the size by placement, never by look:
+  - `primary`: the one main action of a footer or bar (Save, Done, Create & link, Link avalanches).
+    At most one per footer.
+  - `secondary`: every other boxed action (Cancel, Keep editing, Edit, Add …).
+  - `danger`: confirming a destructive action (Remove, Unlink, Discard, Delete). The button that only
+    *asks* (a trash / unlink icon, a "Delete" that opens a confirmation) stays quiet: `IconButton
+    tone="danger"` or `secondary`.
+  - `text`: an inline link-style action inside content (e.g. "Set overall to 1").
+  - Size `md` in sheet footers and sticky action bars; `sm` inside content (section headers, cards,
+    empty states, inline confirmations).
+  - Dismiss before confirm, right-aligned: `[Cancel] [Primary]`.
+  - No colour or height overrides through `className` — add a variant instead.
+- **Inline confirmations** (a row that asks before a destructive action) focus Cancel, close on Esc
+  and slide in with `starting:` (`@starting-style`), respecting `motion-reduce`.
 - **i18n:** components take their strings as props, and callers translate them with the project rules.
   `ds/` primitives never call `useTranslations()` themselves.
 - **Keep files under ~100 lines.** Split sub-parts into their own files.
