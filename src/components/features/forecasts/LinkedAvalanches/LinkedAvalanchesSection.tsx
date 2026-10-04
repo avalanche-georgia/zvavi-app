@@ -29,7 +29,7 @@ const LinkedAvalanchesSection = ({
   const key = 'admin.forecast.editor.avalanches'
   const catalogName = t(`${key}.catalog`, { region: t(`regions.names.${regionId}`) })
   const { data: avalanches = [], isPending } = useLinkableAvalanchesQuery({ regionId })
-  const { isSaved, link, linkedIds, unlink } = useLinkedAvalanches(forecastId !== undefined)
+  const { drop, isSaved, link, linkedIds, unlink } = useLinkedAvalanches(forecastId !== undefined)
   const sheets = useAvalancheSheets()
   const isEmpty = linkedIds.length === 0
 
@@ -65,6 +65,7 @@ const LinkedAvalanchesSection = ({
                 isSaved={isSaved(id)}
                 listed={avalanches.find((avalanche) => avalanche.id === id)}
                 onEdit={() => sheets.openEdit(id)}
+                onMissing={() => drop(id)}
                 onRemove={() => unlink(id)}
                 onView={() => sheets.openView(id)}
               />
@@ -78,6 +79,7 @@ const LinkedAvalanchesSection = ({
         isPending={isPending}
         linkedIds={linkedIds}
         onClose={sheets.close}
+        onDeleted={drop}
         onLink={link}
         onReopen={sheets.openEdit}
         regionId={regionId}

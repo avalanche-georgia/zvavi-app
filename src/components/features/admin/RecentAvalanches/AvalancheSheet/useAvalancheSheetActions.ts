@@ -14,6 +14,7 @@ type UseAvalancheSheetActionsParams = {
   mode: AvalancheSheetMode
   navigation?: AvalancheSheetNavigation
   onClose: VoidFunction
+  onDeleted?: (id: number) => void
   onRecordLeave?: VoidFunction
   setConfirm: (confirm: AvalancheSheetConfirm) => void
   setIsDirty: (isDirty: boolean) => void
@@ -31,6 +32,7 @@ const useAvalancheSheetActions = ({
   mode,
   navigation,
   onClose,
+  onDeleted,
   onRecordLeave,
   setConfirm,
   setIsDirty,
@@ -43,10 +45,17 @@ const useAvalancheSheetActions = ({
     onRecordLeave ?? onClose,
   )
 
+  // Queue: move on like after approve / reject; catalog: close
+  const leave = onRecordLeave ?? onClose
+
+  const handleDeleted = () => {
+    if (avalanche) onDeleted?.(avalanche.id)
+    leave()
+  }
+
   const { handleDelete, isDeleting } = useAvalancheDeleteDialog({
     id: avalanche?.id ?? 0,
-    // Queue: move on like after approve / reject; catalog: close
-    onSuccess: onRecordLeave ?? onClose,
+    onSuccess: handleDeleted,
     regionId: avalanche?.regionId ?? defaultRegionId,
   })
 

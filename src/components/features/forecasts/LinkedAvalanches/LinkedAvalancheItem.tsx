@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Skeleton } from '@components/ui'
 import type { LinkableAvalanche } from '@data/hooks/recentAvalanches'
 
@@ -10,17 +11,23 @@ type LinkedAvalancheItemProps = {
   isSaved: boolean
   listed: LinkableAvalanche | undefined
   onEdit: VoidFunction
+  // The record no longer exists
+  onMissing: VoidFunction
   onRemove: VoidFunction
   onView: VoidFunction
 }
 
 // Resolves a linked id to its record, then shows its card
-const LinkedAvalancheItem = ({ id, listed, ...cardProps }: LinkedAvalancheItemProps) => {
-  const { avalanche, isPending } = useLinkedRecord(id, listed)
+const LinkedAvalancheItem = ({ id, listed, onMissing, ...cardProps }: LinkedAvalancheItemProps) => {
+  const { avalanche, isMissing, isPending } = useLinkedRecord(id, listed)
+
+  // Deleted elsewhere since it was linked: drop the id, or the save would fail
+  useEffect(() => {
+    if (isMissing) onMissing()
+  }, [isMissing, onMissing])
 
   if (isPending) return <Skeleton className="h-28 rounded-[14px]" />
 
-  // Deleted since it was linked: saving the forecast drops the link
   if (!avalanche) return null
 
   // eslint-disable-next-line react/jsx-props-no-spreading

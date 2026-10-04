@@ -5,9 +5,10 @@ import { type LinkableAvalanche, useRecentAvalancheQuery } from '@data/hooks/rec
 const useLinkedRecord = (id: number, listed: LinkableAvalanche | undefined) => {
   const { data: loaded, isPending } = useRecentAvalancheQuery({ enabled: !listed, id })
 
-  if (listed) return { avalanche: listed, isPending: false }
+  if (listed) return { avalanche: listed, isMissing: false, isPending: false }
 
-  if (!loaded) return { avalanche: null, isPending }
+  // null = the record is gone; undefined = still loading or failed to load
+  if (!loaded) return { avalanche: null, isMissing: loaded === null, isPending }
 
   const avalanche: LinkableAvalanche = {
     ...loaded,
@@ -15,7 +16,7 @@ const useLinkedRecord = (id: number, listed: LinkableAvalanche | undefined) => {
     status: loaded.status ?? 'published',
   }
 
-  return { avalanche, isPending: false }
+  return { avalanche, isMissing: false, isPending: false }
 }
 
 export default useLinkedRecord

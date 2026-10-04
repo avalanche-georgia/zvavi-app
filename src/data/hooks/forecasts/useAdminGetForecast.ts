@@ -27,9 +27,7 @@ const fetchForecast = async (forecastId: number, regionId?: RegionId): Promise<R
 
   const { data: forecastData, error: forecastError } = await query.single()
 
-  if (forecastError) {
-    throw new Error(forecastError.message)
-  }
+  handleSupabaseError(forecastError)
 
   if (!forecastData) return undefined
 
@@ -46,9 +44,7 @@ const fetchForecast = async (forecastId: number, regionId?: RegionId): Promise<R
     .eq('forecast_id', forecastId)
     .order('order')
 
-  if (problemsError) {
-    throw new Error(problemsError.message)
-  }
+  handleSupabaseError(problemsError)
 
   // TODO: type-safe DB conversion — https://app.asana.com/1/1208747886147296/project/1208747689500826/task/1214630622531225
   return convertSnakeToCamel({

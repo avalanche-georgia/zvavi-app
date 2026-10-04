@@ -16,6 +16,7 @@ type AvalancheSheetsProps = {
   isPending: boolean
   linkedIds: number[]
   onClose: VoidFunction
+  onDeleted: (id: number) => void
   onLink: (ids: number[]) => void
   onReopen: (id: number) => void
   regionId: RegionId
@@ -31,6 +32,7 @@ const AvalancheSheets = (props: AvalancheSheetsProps) => {
     isPending,
     linkedIds,
     onClose,
+    onDeleted,
     onLink,
     onReopen,
     regionId,
@@ -76,6 +78,7 @@ const AvalancheSheets = (props: AvalancheSheetsProps) => {
         id={recordId}
         initialMode={sheet?.mode === 'edit' ? 'edit' : 'view'}
         onClose={onClose}
+        onDeleted={onDeleted}
         onReopen={onReopen}
         regionId={regionId}
       />

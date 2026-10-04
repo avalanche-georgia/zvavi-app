@@ -28,7 +28,12 @@ const useForecastSavedNavigation = (regionId: RegionId) => {
     toastSuccess(t(isCreated ? `${key}.createdKeepEditing` : `${key}.saved`))
 
     if (isCreated) {
-      window.history.replaceState(null, '', `/${locale}${routes.admin.forecasts.edit(forecastId)}`)
+      // Keeps ?regionId — without it the edit page redirects to the list
+      window.history.replaceState(
+        null,
+        '',
+        `/${locale}${routes.admin.forecasts.editInRegion(forecastId, regionId)}`,
+      )
     }
   }
 }

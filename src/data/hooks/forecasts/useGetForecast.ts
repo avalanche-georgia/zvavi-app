@@ -5,7 +5,7 @@ import type { QueryFunctionContext, UseQueryOptions } from '@tanstack/react-quer
 import { useQuery } from '@/tanstack-query/hooks'
 
 import requestForecastAvalanches from './requestForecastAvalanches'
-import { convertSnakeToCamel } from '../../helpers'
+import { convertSnakeToCamel, handleSupabaseError } from '../../helpers'
 import { forecastsKeys } from '../../query-keys'
 
 type QueryKey = ReturnType<typeof forecastsKeys.item>
@@ -25,9 +25,7 @@ const fetchForecast = async ({ queryKey }: QueryFunctionContext<QueryKey>): Prom
     .match({ id: variables.forecastId, region_id: regionId, status: 'published' })
     .single()
 
-  if (forecastError) {
-    throw new Error(forecastError.message)
-  }
+  handleSupabaseError(forecastError)
 
   if (!forecastData) return undefined
 
@@ -39,9 +37,7 @@ const fetchForecast = async ({ queryKey }: QueryFunctionContext<QueryKey>): Prom
     .match({ forecast_id: variables.forecastId })
     .order('order')
 
-  if (problemsError) {
-    throw new Error(problemsError.message)
-  }
+  handleSupabaseError(problemsError)
 
   // TODO: type-safe DB conversion — https://app.asana.com/1/1208747886147296/project/1208747689500826/task/1214630622531225
   return convertSnakeToCamel({

@@ -21,6 +21,7 @@ type AvalancheSheetProps = {
   editNote?: React.ReactNode
   editSaveLabel?: string
   onClose: VoidFunction
+  onDeleted?: (id: number) => void
   // Moderation queue: the record left it (approved / rejected / deleted) —
   // moves on to a neighbour instead of closing
   onRecordLeave?: VoidFunction
@@ -32,14 +33,13 @@ type AvalancheSheetProps = {
 const AvalancheSheet = ({
   editNote,
   editSaveLabel,
-  id,
   initialMode,
-  navigation,
-  onClose,
-  onRecordLeave,
   onReopen,
   regionId,
+  // id, navigation, onClose, onDeleted, onRecordLeave
+  ...actionProps
 }: AvalancheSheetProps) => {
+  const { id } = actionProps
   const t = useTranslations()
   const formId = useId()
   const sheet = useAvalancheSheet({ id, initialMode, onReopen, regionId })
@@ -52,7 +52,7 @@ const AvalancheSheet = ({
     handleOpenChange,
     handleSaved,
     isDeleting,
-  } = useAvalancheSheetActions({ ...sheet, id, navigation, onClose, onRecordLeave })
+  } = useAvalancheSheetActions({ ...sheet, ...actionProps })
 
   return (
     <Sheet
@@ -78,7 +78,7 @@ const AvalancheSheet = ({
       header={
         <AvalancheSheetHeader
           fullPageId={mode === 'view' && avalanche ? avalanche.id : null}
-          navigation={mode === 'view' && !isDeleting ? (navigation ?? null) : null}
+          navigation={mode === 'view' && !isDeleting ? (actionProps.navigation ?? null) : null}
           title={avalanche ? t(`common.avalancheTypes.${avalanche.type}`) : ''}
         />
       }
