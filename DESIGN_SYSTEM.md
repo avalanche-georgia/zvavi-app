@@ -159,9 +159,9 @@ Rules:
     empty states, inline confirmations).
   - Dismiss before confirm, right-aligned: `[Cancel] [Primary]`.
   - No colour or height overrides through `className` — add a variant instead.
-- **Inline confirmations** (a row that asks before a destructive action) focus Cancel and slide in
-  with `starting:` (`@starting-style`), respecting `motion-reduce`. Esc, a click outside or Tab-ing
-  out cancels them, so at most one is open.
+- **Confirming a destructive action** (remove, unlink): wrap the control that asks in
+  `primitives/ConfirmPopover`. It floats next to that control (no layout shift), starts focus on
+  Cancel, and base-ui closes it on Esc, an outside click or when another one opens.
 - **Icon-only buttons** (`primitives/IconButton`) always show their label as a `Tooltip` on hover and
   keyboard focus (pass `tooltip` for a shorter label than the accessible name). Tooltips don't show
   on touch, so the icon must be clear without it.

@@ -7,6 +7,7 @@ export type ButtonSize = 'lg' | 'md' | 'sm'
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   isBusy?: boolean
+  ref?: React.Ref<HTMLButtonElement>
   size?: ButtonSize
   variant?: ButtonVariant
 }

@@ -1,17 +1,15 @@
 'use client'
 
-import { useState } from 'react'
 import { AspectMiniGrid } from '@components/features/observations'
 import { useAspectSummary } from '@components/hooks'
 import { Icon } from '@components/icons'
-import { IconButton, Tooltip } from '@ds/primitives'
+import { ConfirmPopover, IconButton, Tooltip } from '@ds/primitives'
 import { Pencil, Trash2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 import ProblemFacts from './ProblemFacts'
 import ProblemNumber from './ProblemNumber'
 import type { ProblemValues } from './problemSchema'
-import CardConfirm from '../CardConfirm'
 
 type ProblemCardProps = {
   // Drag grip — attached by the sortable list; null while dragging is off
@@ -35,7 +33,6 @@ const ProblemCard = ({
   const t = useTranslations()
   const { getSummary } = useAspectSummary()
   const { aspects, avalancheSize, description, type } = problem
-  const [isConfirmingDelete, setIsConfirmingDelete] = useState(false)
   const typeLabel = t(`common.avalancheTypes.${type}`)
 
   return (
@@ -64,23 +61,18 @@ const ProblemCard = ({
           <IconButton aria-label={t('common.actions.edit')} onClick={onEdit}>
             <Pencil className="size-4" />
           </IconButton>
-          <IconButton
-            aria-label={t('admin.forecast.editor.problems.removeAction')}
-            onClick={() => setIsConfirmingDelete(true)}
-            tone="danger"
+          <ConfirmPopover
+            cancelLabel={t('common.actions.cancel')}
+            confirmLabel={t('admin.forecast.editor.problems.removeAction')}
+            message={t('admin.forecast.editor.problems.removeConfirm', { type: typeLabel })}
+            onConfirm={onDelete}
           >
-            <Trash2 className="size-4" />
-          </IconButton>
+            <IconButton aria-label={t('admin.forecast.editor.problems.removeAction')} tone="danger">
+              <Trash2 className="size-4" />
+            </IconButton>
+          </ConfirmPopover>
         </div>
       </div>
-      {isConfirmingDelete && (
-        <CardConfirm
-          confirmLabel={t('admin.forecast.editor.problems.removeAction')}
-          message={t('admin.forecast.editor.problems.removeConfirm', { type: typeLabel })}
-          onCancel={() => setIsConfirmingDelete(false)}
-          onConfirm={onDelete}
-        />
-      )}
       <div className="flex flex-col gap-3 pl-14.5 @max-[480px]:pl-0">
         <div className="flex gap-6 @max-[700px]:flex-col">
           <div className="flex-1">

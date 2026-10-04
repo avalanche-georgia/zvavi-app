@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import { AspectMiniGrid, formatAvalancheId, SizeTile } from '@components/features/observations'
 import { useAspectSummary } from '@components/hooks'
 import type { LinkableAvalanche } from '@data/hooks/recentAvalanches'
@@ -10,7 +9,6 @@ import { useTranslations } from 'next-intl'
 import AvalancheBadge from './AvalancheBadge'
 import LinkedAvalancheCardActions from './LinkedAvalancheCardActions'
 import useAvalancheLabels from './useAvalancheLabels'
-import CardConfirm from '../CardConfirm'
 
 type LinkedAvalancheCardProps = {
   avalanche: LinkableAvalanche
@@ -31,7 +29,6 @@ const LinkedAvalancheCard = (props: LinkedAvalancheCardProps) => {
   const otherForecasts = forecastAvalanche.filter((link) => link.forecastId !== forecastId).length
   const aspectSummary = aspects && getSummary(aspects)
   const meta = [getDate(avalanche), location, quantity > 1 && `×${quantity}`].filter(Boolean)
-  const [isConfirmingUnlink, setIsConfirmingUnlink] = useState(false)
   const key = 'admin.forecast.editor.avalanches'
 
   return (
@@ -70,20 +67,7 @@ const LinkedAvalancheCard = (props: LinkedAvalancheCardProps) => {
           </p>
         )}
       </div>
-      <LinkedAvalancheCardActions
-        id={id}
-        onEdit={onEdit}
-        onRemove={() => setIsConfirmingUnlink(true)}
-      />
-      {isConfirmingUnlink && (
-        <CardConfirm
-          className="col-span-full"
-          confirmLabel={t(`${key}.unlinkAction`)}
-          message={t(`${key}.unlinkConfirm`, { id: formatAvalancheId(id) })}
-          onCancel={() => setIsConfirmingUnlink(false)}
-          onConfirm={onRemove}
-        />
-      )}
+      <LinkedAvalancheCardActions id={id} onEdit={onEdit} onRemove={onRemove} />
     </div>
   )
 }
