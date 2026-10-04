@@ -1,10 +1,10 @@
-import type { FullForecast, RegionId } from '@domain/types'
+import type { ForecastListItem, RegionId } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import ForecastItem from './ForecastItem'
 
 type ForecastsListProps = {
-  forecasts: FullForecast[]
+  forecasts: ForecastListItem[]
   regionId: RegionId
 }
 

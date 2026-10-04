@@ -73,6 +73,19 @@ export type Forecast = {
   weather: string
 }
 
+// One row of the admin forecasts list
+export type ForecastListItem = Pick<
+  Forecast,
+  | 'createdAt'
+  | 'forecaster'
+  | 'hazardLevels'
+  | 'id'
+  | 'publishedAt'
+  | 'status'
+  | 'summary'
+  | 'validUntil'
+>
+
 export type Problem = {
   id?: string | number
   aspects: Aspects

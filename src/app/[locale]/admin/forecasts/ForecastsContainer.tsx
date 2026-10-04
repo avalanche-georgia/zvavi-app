@@ -4,7 +4,7 @@ import { ForecastsList } from '@components/features/admin/Forecasts/ForecastsLis
 import { Icon } from '@components/icons'
 import { ButtonLink, RegionTabs } from '@components/shared'
 import { Spinner } from '@components/ui'
-import { useForecastsQuery } from '@data/hooks'
+import { useAdminForecastsQuery } from '@data/hooks/forecasts'
 import { defaultRegionId } from '@domain/constants'
 import type { Region, RegionId } from '@domain/types'
 import { useSearchParams } from 'next/navigation'
@@ -22,7 +22,7 @@ const ForecastsContainer = ({ initialRegions }: ForecastsContainerProps) => {
   const regionId = (searchParams.get('regionId') as RegionId) ?? defaultRegionId
 
   // TODO(PR 3): replace with regionId from admin route/context
-  const { data: forecasts, isPending } = useForecastsQuery(regionId)
+  const { data: forecasts, isPending } = useAdminForecastsQuery(regionId)
 
   return (
     <>

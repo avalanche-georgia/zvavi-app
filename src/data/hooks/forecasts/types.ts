@@ -25,6 +25,7 @@ export type ForecastQueryVariables = { forecastId: Forecast['id'] }
 
 export type ForecastStatusToggleVariables = {
   forecastId: Forecast['id']
+  regionId: RegionId
   status: Forecast['status']
 }
 

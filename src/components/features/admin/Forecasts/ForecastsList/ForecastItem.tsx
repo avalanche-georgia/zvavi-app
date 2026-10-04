@@ -2,7 +2,7 @@ import { useBoolean, useToast } from '@components/hooks'
 import { ConfirmationDialog } from '@components/shared'
 import { useForecastDelete, useForecastStatusToggle } from '@data/hooks/forecasts'
 import { dateFormat } from '@domain/constants'
-import type { FullForecast, RegionId } from '@domain/types'
+import type { ForecastListItem, RegionId } from '@domain/types'
 import { format } from 'date-fns'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'src/i18n/navigation'
@@ -12,7 +12,7 @@ import ActionButtons from './ActionButtons'
 import { routes } from '@/routes'
 
 type ForecastItemProps = {
-  forecast: FullForecast
+  forecast: ForecastListItem
   regionId: RegionId
 }
 
@@ -53,7 +53,7 @@ const ForecastItem = ({ forecast, regionId }: ForecastItemProps) => {
 
   const handleStatusToggle = async () => {
     try {
-      await toggleStatus({ forecastId: id, status: isPublished ? 'draft' : 'published' })
+      await toggleStatus({ forecastId: id, regionId, status: isPublished ? 'draft' : 'published' })
 
       toastSuccess(t(`admin.forecasts.messages.${isPublished ? 'unpublished' : 'published'}`))
     } catch (error) {
