@@ -28,7 +28,8 @@ next to it and migrate screen by screen.
 src/components/
 ├── ds/                  # new kit — the only place new generic UI goes
 │   ├── primitives/      # Button, Badge, Checkbox, Field, FieldGroup, TextField, NumberField,
-│   │                    # Textarea, ChipGroup, ToggleGrid, SegmentedControl, Select, Stepper, InfoTip
+│   │                    # Textarea, ChipGroup, ToggleGrid, SegmentedControl, Select, Stepper, InfoTip,
+│   │                    # IconButton, RatingScale, DateField
 │   ├── patterns/        # FormCard, StickyActionBar, SuccessState
 │   └── form/            # react-hook-form bindings: FormTextField, FormTextarea, FormNumberField,
 │                        # FormStepper, FormChipGroup, FormCheckbox, FormSelect, useFormFieldError
@@ -100,7 +101,7 @@ them.
 
 | Layer | Tokens | Utilities |
 |---|---|---|
-| **Semantic colour** | text `ink`, `body`, `muted`, `placeholder`, `disabled` · lines `rule`, `rule-strong` · surfaces `surface`, `canvas`, `tile`, `tile-hover`, `off`, `map` · brand `primary(-hover/-soft/-ink)`, `brand-blue` · `accent(-hover/-soft)` · status `danger`, `danger-border`, `success`, `success-soft` · domain `hazard-*`, `size-*` | `text-ink`, `bg-surface`, `border-rule`, … |
+| **Semantic colour** | text `ink`, `body`, `muted`, `placeholder`, `disabled` · lines `rule`, `rule-strong` · surfaces `surface`, `canvas`, `tile`, `tile-hover`, `off`, `map` · brand `primary(-hover/-soft/-ink)`, `brand-blue` · `accent(-hover/-soft)` · status `danger`, `danger-border`, `success`, `success-soft`, `warning`, `warning-soft` · domain `hazard-*`, `size-*` | `text-ink`, `bg-surface`, `border-rule`, … |
 | **Type scale** | `title-lg` 28, `title` 24, `heading` 17, `copy-lg` 15, `copy` 14, `copy-sm` 13, `caption` 12.5, `micro` 10.5. Line-height and tracking are part of the token | `text-heading`, … |
 | **Radii** | `card` 16, `media` 12, `field` 11, `control` 10, `badge` 5 (pills use `rounded-full`) | `rounded-card`, … |
 | **Shadows** | `raised` (segmented thumb), `overlay` (map buttons), `float` (sticky bar), `pin` | `shadow-float`, … |
@@ -146,6 +147,26 @@ Rules:
     can't, so they announce it through `requiredText` (visually hidden, after the label).
   - A flow that replaces itself (e.g. `SuccessState`) moves focus to its new heading.
 - **Errors:** form bindings render `data-field-error`, so `useScrollToFirstError` keeps working.
+- **Buttons** (`primitives/Button`) — pick the variant by role and the size by placement, never by look:
+  - `primary`: the one main action of a footer or bar (Save, Done, Create & link, Link avalanches).
+    At most one per footer.
+  - `secondary`: every other boxed action (Cancel, Keep editing, Edit, Add …).
+  - `danger`: confirming a destructive action (Remove, Unlink, Discard, Delete). The button that only
+    *asks* (a trash / unlink icon, a "Delete" that opens a confirmation) stays quiet: `IconButton
+    tone="danger"` or `secondary`.
+  - `text`: an inline link-style action inside content (e.g. "Set overall to 1").
+  - Size `md` in sheet footers and sticky action bars; `sm` inside content (section headers, cards,
+    empty states, inline confirmations).
+  - Dismiss before confirm, right-aligned: `[Cancel] [Primary]`. Sheet / panel footers use
+    `patterns/FooterActions`: buttons always on the right, an optional note (hint or confirmation
+    question) on the left — on its own line above the buttons when the footer is narrow.
+  - No colour or height overrides through `className` — add a variant instead.
+- **Confirming a destructive action** (remove, unlink): wrap the control that asks in
+  `primitives/ConfirmPopover`. It floats next to that control (no layout shift), starts focus on
+  Cancel, and base-ui closes it on Esc, an outside click or when another one opens.
+- **Icon-only buttons** (`primitives/IconButton`) always show their label as a `Tooltip` on hover and
+  keyboard focus (pass `tooltip` for a shorter label than the accessible name). Tooltips don't show
+  on touch, so the icon must be clear without it.
 - **i18n:** components take their strings as props, and callers translate them with the project rules.
   `ds/` primitives never call `useTranslations()` themselves.
 - **Keep files under ~100 lines.** Split sub-parts into their own files.
@@ -197,10 +218,10 @@ Update this table when a legacy component's last consumer is migrated.
 | Checkbox | Headless UI | `primitives/Checkbox` | ☐ |
 | Switch | base-ui | `primitives/Switch` | ☐ |
 | Select | Radix | `primitives/Select` (base-ui) | ☐ |
-| DatePicker, Calendar, TimeInput, TimePicker, DatePickerTimeInput | Headless UI + react-day-picker | `primitives/DateField` (TBD) | ☐ |
+| DatePicker, Calendar, TimeInput, TimePicker, DatePickerTimeInput | Headless UI + react-day-picker | `primitives/DateField` | ☐ |
 | Modal | Headless UI | `primitives/Dialog` (base-ui) | ☐ |
 | Popover | Radix | `primitives/Popover` (base-ui) | ☐ |
-| Tooltip, InfoIcon | Radix | `primitives/InfoTip` (base-ui Popover); a plain Tooltip TBD | ☐ |
+| Tooltip, InfoIcon | Radix | `primitives/Tooltip` (base-ui Tooltip; hover/focus labels), `primitives/InfoTip` (base-ui Popover; explanations) | ☐ |
 | DropdownMenu | base-ui | `primitives/Menu` | ☐ |
 | Drawer, Sheet | vaul / base-ui | `patterns/Sheet` (TBD) | ☐ |
 | IconButton | custom | `primitives/IconButton` | ☐ |

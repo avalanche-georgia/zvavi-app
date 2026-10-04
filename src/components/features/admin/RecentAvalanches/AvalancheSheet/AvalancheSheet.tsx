@@ -17,7 +17,11 @@ type AvalancheSheetProps = {
   initialMode: AvalancheSheetMode
   // Prev / next through the list behind the panel
   navigation?: AvalancheSheetNavigation
+  // Edit mode: shown above the form, e.g. who else sees the changes
+  editNote?: React.ReactNode
+  editSaveLabel?: string
   onClose: VoidFunction
+  onDeleted?: (id: number) => void
   // Moderation queue: the record left it (approved / rejected / deleted) —
   // moves on to a neighbour instead of closing
   onRecordLeave?: VoidFunction
@@ -27,14 +31,15 @@ type AvalancheSheetProps = {
 
 // One record of the catalog or the moderation queue, viewed and edited in place
 const AvalancheSheet = ({
-  id,
+  editNote,
+  editSaveLabel,
   initialMode,
-  navigation,
-  onClose,
-  onRecordLeave,
   onReopen,
   regionId,
+  // id, navigation, onClose, onDeleted, onRecordLeave
+  ...actionProps
 }: AvalancheSheetProps) => {
+  const { id } = actionProps
   const t = useTranslations()
   const formId = useId()
   const sheet = useAvalancheSheet({ id, initialMode, onReopen, regionId })
@@ -47,7 +52,7 @@ const AvalancheSheet = ({
     handleOpenChange,
     handleSaved,
     isDeleting,
-  } = useAvalancheSheetActions({ ...sheet, id, navigation, onClose, onRecordLeave })
+  } = useAvalancheSheetActions({ ...sheet, ...actionProps })
 
   return (
     <Sheet
@@ -66,13 +71,14 @@ const AvalancheSheet = ({
             onDelete={() => setConfirm('delete')}
             onEdit={() => setMode('edit')}
             onEditCancel={handleEditCancel}
+            saveLabel={editSaveLabel}
           />
         )
       }
       header={
         <AvalancheSheetHeader
           fullPageId={mode === 'view' && avalanche ? avalanche.id : null}
-          navigation={mode === 'view' && !isDeleting ? (navigation ?? null) : null}
+          navigation={mode === 'view' && !isDeleting ? (actionProps.navigation ?? null) : null}
           title={avalanche ? t(`common.avalancheTypes.${avalanche.type}`) : ''}
         />
       }
@@ -85,6 +91,7 @@ const AvalancheSheet = ({
     >
       <AvalancheSheetBody
         avalanche={avalanche}
+        editNote={editNote}
         formId={formId}
         isError={sheet.isError}
         isPending={sheet.isPending}

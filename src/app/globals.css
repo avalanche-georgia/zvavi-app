@@ -63,6 +63,8 @@
   --color-danger-border: #f0b8ad;
   --color-success: #1f7a44;
   --color-success-soft: #e5f4ea;
+  --color-warning: #7a5600;
+  --color-warning-soft: #fdf3d8;
 
   /* Avalanche size shades, 1 (smallest) → 5 */
   --color-size-1: #f1f2f4;

@@ -24,10 +24,10 @@ const getCellAspect = (container: HTMLElement | null, element: Element | null): 
   return cell.dataset.aspect as Aspect
 }
 
-// Tap toggles a cell; press and drag paints every cell passed over with the first
-// cell's new state. The first cell only commits on release or once the pointer
-// reaches another cell, so a vertical swipe that the browser turns into a page
-// scroll (pointercancel) changes nothing.
+// Tap toggles a cell; press and drag (any direction) paints every cell passed over
+// with the first cell's new state. The first cell only commits on release or once
+// the pointer reaches another cell, so a cancelled gesture (pointercancel) changes
+// nothing.
 const usePaintDrag = ({ aspects, onChange }: UsePaintDragParams) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const strokeRef = useRef<PaintStroke | null>(null)

@@ -5,13 +5,19 @@ import requestAdminAvalanche from './requestAdminAvalanche'
 
 import type { CreateAvalancheBody } from '@/api/admin/recent-avalanches/schema'
 
-const createRecentAvalanche = (body: CreateAvalancheBody) =>
-  requestAdminAvalanche('/api/admin/recent-avalanches', 'POST', body)
+// Resolves to the new record's id
+const createRecentAvalanche = async (body: CreateAvalancheBody) => {
+  const { id } = await requestAdminAvalanche('/api/admin/recent-avalanches', 'POST', body)
+
+  if (id === undefined) throw new Error('failed to save avalanche')
+
+  return id
+}
 
 const useRecentAvalancheCreate = () => {
   const queryClient = useQueryClient()
 
-  return useMutation<void, Error, CreateAvalancheBody>({
+  return useMutation<number, Error, CreateAvalancheBody>({
     mutationFn: createRecentAvalanche,
     onSuccess: (_, { regionId }) => {
       queryClient.invalidateQueries({ queryKey: recentAvalanchesKeys.byRegion(regionId) })

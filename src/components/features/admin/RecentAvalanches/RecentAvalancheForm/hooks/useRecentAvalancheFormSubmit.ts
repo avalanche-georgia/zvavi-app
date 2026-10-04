@@ -11,7 +11,8 @@ import toAvalancheBody from '../toAvalancheBody'
 type UseRecentAvalancheFormSubmitParams = {
   // undefined when creating a new record
   avalancheId: number | undefined
-  onSuccess: VoidFunction
+  // Gets the new record's id after a create
+  onSuccess: (createdId?: number) => void
   regionId: RegionId
 }
 
@@ -32,14 +33,15 @@ const useRecentAvalancheFormSubmit = ({
 
       try {
         if (avalancheId === undefined) {
-          await createAvalanche({ ...body, photoKeys: photos.add, regionId })
+          const createdId = await createAvalanche({ ...body, photoKeys: photos.add, regionId })
+
           toastSuccess(t('admin.recentAvalanches.form.messages.created'))
+          onSuccess(createdId)
         } else {
           await updateAvalanche({ ...body, id: avalancheId, photos })
           toastSuccess(t('admin.recentAvalanches.form.messages.updated'))
+          onSuccess()
         }
-
-        onSuccess()
       } catch (error) {
         toastError('RecentAvalancheForm | handleSubmit', {
           error,

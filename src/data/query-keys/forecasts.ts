@@ -8,8 +8,6 @@ import type {
 const forecastsKeys = {
   all: ['forecastsKeys'] as const,
 
-  allAvalanches: (regionId: RegionId) =>
-    [...forecastsKeys.byRegion(regionId), 'allAvalanches'] as const,
   byRegion: (regionId: RegionId) => [...forecastsKeys.all, regionId] as const,
   current: (regionId: RegionId, variables: CurrentForecastQueryVariables) =>
     [...forecastsKeys.byRegion(regionId), 'current', variables] as const,

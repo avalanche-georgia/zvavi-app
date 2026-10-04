@@ -1,8 +1,8 @@
 'use client'
 
 import { Icon } from '@components/icons'
-import { Button } from '@components/ui'
 import type { AvalancheListItem } from '@data/hooks/recentAvalanches'
+import { Button } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 
 import { getStatusToggle, useAvalancheStatusToggle } from '../hooks'
@@ -27,17 +27,17 @@ const ViewActions = ({ avalanche, onDelete, onEdit }: ViewActionsProps) => {
         <Button
           disabled={isPending}
           onClick={toggleStatus}
-          variant={status === 'published' ? 'outline' : 'primary'}
+          variant={status === 'published' ? 'secondary' : 'primary'}
         >
           <Icon icon={statusToggle.icon} size="sm" />
           {t(statusToggle.labelKey)}
         </Button>
       )}
-      <Button onClick={onEdit} variant="outline">
+      <Button onClick={onEdit} variant="secondary">
         <Icon icon="pencil" size="sm" />
         {t('common.actions.edit')}
       </Button>
-      <Button className="ml-auto hover:text-red-600" onClick={onDelete} variant="outline">
+      <Button className="ml-auto" onClick={onDelete} variant="secondary">
         <Icon icon="trash" size="sm" />
         {t('common.actions.delete')}
       </Button>

@@ -8,8 +8,9 @@ import type { UpdateAvalancheBody } from '@/api/admin/recent-avalanches/schema'
 // Any subset of fields; `photos` only when the photo set changed
 type UpdatePayload = UpdateAvalancheBody & { id: number }
 
-const updateRecentAvalanche = ({ id, ...body }: UpdatePayload) =>
-  requestAdminAvalanche(`/api/admin/recent-avalanches/${id}`, 'PATCH', body)
+const updateRecentAvalanche = async ({ id, ...body }: UpdatePayload) => {
+  await requestAdminAvalanche(`/api/admin/recent-avalanches/${id}`, 'PATCH', body)
+}
 
 const useRecentAvalancheUpdate = () => {
   const queryClient = useQueryClient()
