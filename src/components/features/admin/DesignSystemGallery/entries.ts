@@ -1,3 +1,4 @@
+import FooterActionsGallery from '@ds/patterns/FooterActions/FooterActions.gallery'
 import FormCardGallery from '@ds/patterns/FormCard/FormCard.gallery'
 import StickyActionBarGallery from '@ds/patterns/StickyActionBar/StickyActionBar.gallery'
 import SuccessStateGallery from '@ds/patterns/SuccessState/SuccessState.gallery'
@@ -49,6 +50,7 @@ export const galleryEntries: GalleryEntry[] = [
   { Demo: SegmentedControlGallery, id: 'segmented-control', title: 'SegmentedControl' },
   { Demo: RatingScaleGallery, id: 'rating-scale', title: 'RatingScale' },
   { Demo: SelectGallery, id: 'select', title: 'Select' },
+  { Demo: FooterActionsGallery, id: 'footer-actions', title: 'FooterActions' },
   { Demo: FormCardGallery, id: 'form-card', title: 'FormCard' },
   { Demo: StickyActionBarGallery, id: 'sticky-action-bar', title: 'StickyActionBar' },
   { Demo: SuccessStateGallery, id: 'success-state', title: 'SuccessState' },

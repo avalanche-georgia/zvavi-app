@@ -157,7 +157,9 @@ Rules:
   - `text`: an inline link-style action inside content (e.g. "Set overall to 1").
   - Size `md` in sheet footers and sticky action bars; `sm` inside content (section headers, cards,
     empty states, inline confirmations).
-  - Dismiss before confirm, right-aligned: `[Cancel] [Primary]`.
+  - Dismiss before confirm, right-aligned: `[Cancel] [Primary]`. Sheet / panel footers use
+    `patterns/FooterActions`: buttons always on the right, an optional note (hint or confirmation
+    question) on the left — on its own line above the buttons when the footer is narrow.
   - No colour or height overrides through `className` — add a variant instead.
 - **Confirming a destructive action** (remove, unlink): wrap the control that asks in
   `primitives/ConfirmPopover`. It floats next to that control (no layout shift), starts focus on

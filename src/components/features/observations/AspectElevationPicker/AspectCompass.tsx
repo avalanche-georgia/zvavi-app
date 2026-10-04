@@ -41,11 +41,11 @@ const AspectCompass = ({ aspects, onChange, zone }: AspectCompassProps) => {
 
   return (
     // touch-none: a press on the compass always paints — vertical drags included —
-    // instead of the browser turning it into a page scroll (the page still
-    // scrolls from anywhere outside this small grid)
+    // instead of the browser turning it into a page scroll. w-fit keeps that to
+    // the 3×3 cells; the page scrolls from anywhere beside them
     <div
       ref={containerRef}
-      className="grid touch-none grid-cols-[repeat(3,3.5rem)] justify-center gap-1.5 select-none sm:grid-cols-[repeat(3,3rem)]"
+      className="mx-auto grid w-fit touch-none grid-cols-[repeat(3,3.5rem)] gap-1.5 select-none sm:grid-cols-[repeat(3,3rem)]"
       onLostPointerCapture={pointerHandlers.onLostPointerCapture}
       onPointerCancel={pointerHandlers.onPointerCancel}
       onPointerDown={pointerHandlers.onPointerDown}

@@ -3,6 +3,7 @@
 import { useId } from 'react'
 import { Sheet, SheetClose, SheetIconButton, SheetTitle } from '@components/ui'
 import type { RegionId } from '@domain/types'
+import { FooterActions } from '@ds/patterns'
 import { Button } from '@ds/primitives'
 import { X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
@@ -54,7 +55,7 @@ const AvalancheCreateSheet = ({
       onConfirm={sheet.close}
     />
   ) : (
-    <div className="flex w-full justify-end gap-2">
+    <FooterActions>
       <Button onClick={sheet.requestClose} variant="secondary">
         {t('common.actions.cancel')}
       </Button>
@@ -62,7 +63,7 @@ const AvalancheCreateSheet = ({
       <Button disabled={sheet.isSaving} form={formId} type="submit">
         {submitLabel ?? t('common.actions.save')}
       </Button>
-    </div>
+    </FooterActions>
   )
 
   return (

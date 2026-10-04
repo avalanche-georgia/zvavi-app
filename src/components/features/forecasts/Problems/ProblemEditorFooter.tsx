@@ -1,3 +1,4 @@
+import { FooterActions } from '@ds/patterns'
 import { Button } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 
@@ -22,31 +23,24 @@ const ProblemEditorFooter = ({
 
   if (isConfirmingDiscard) {
     return (
-      <div
-        className="flex w-full flex-wrap items-center gap-2 transition-[opacity,translate] duration-200 ease-out motion-reduce:transition-none starting:-translate-y-1 starting:opacity-0"
-        role="alert"
-      >
-        <span className="text-copy-sm text-ink mr-auto font-semibold">
-          {t(`${key}.actionBar.discardConfirm`)}
-        </span>
+      <FooterActions isConfirmation note={t(`${key}.actionBar.discardConfirm`)}>
         <Button onClick={onKeepEditing} variant="secondary">
           {t(`${key}.actionBar.keepEditing`)}
         </Button>
         <Button onClick={onDiscard} variant="danger">
           {t(`${key}.actionBar.discard`)}
         </Button>
-      </div>
+      </FooterActions>
     )
   }
 
   return (
-    <div className="flex w-full flex-wrap items-center gap-2">
-      <p className="text-caption text-muted mr-auto">{t(`${key}.problems.keptNote`)}</p>
+    <FooterActions note={t(`${key}.problems.keptNote`)}>
       <Button onClick={onCancel} variant="secondary">
         {t('common.actions.cancel')}
       </Button>
       <Button onClick={onDone}>{t(`${key}.problems.done`)}</Button>
-    </div>
+    </FooterActions>
   )
 }
 

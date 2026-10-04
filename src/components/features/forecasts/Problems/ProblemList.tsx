@@ -45,7 +45,7 @@ const ProblemList = ({ onDelete, onEdit, onReorder, problems }: ProblemListProps
     <DragDropProvider onDragEnd={handleDragEnd}>
       <ul className="flex flex-col gap-3">
         {problems.map(({ fieldKey, ...problem }, index) => (
-          <SortableItem key={fieldKey} id={fieldKey} index={index}>
+          <SortableItem key={fieldKey} className="group" id={fieldKey} index={index}>
             {(handleRef) => (
               <ProblemCard
                 dragHandleRef={handleRef}

@@ -13,7 +13,7 @@ type TooltipProps = {
 // explanations people need to read).
 const Tooltip = ({ children, label }: TooltipProps) => (
   <BaseTooltip.Root>
-    <BaseTooltip.Trigger closeDelay={0} delay={400} render={children} />
+    <BaseTooltip.Trigger closeDelay={0} delay={0} render={children} />
     <BaseTooltip.Portal>
       <BaseTooltip.Positioner className="z-60" collisionPadding={8} sideOffset={6}>
         <BaseTooltip.Popup className="rounded-control bg-ink text-caption shadow-float px-2 py-1 font-medium text-white transition-opacity duration-120 data-ending-style:opacity-0 data-starting-style:opacity-0">

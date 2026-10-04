@@ -1,4 +1,5 @@
 import type { AvalancheListItem } from '@data/hooks/recentAvalanches'
+import { FooterActions } from '@ds/patterns'
 import { Button } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 
@@ -67,7 +68,7 @@ const AvalancheSheetFooter = ({
   }
 
   return (
-    <div className="flex w-full justify-end gap-2">
+    <FooterActions>
       <Button onClick={onEditCancel} variant="secondary">
         {t('common.actions.cancel')}
       </Button>
@@ -75,7 +76,7 @@ const AvalancheSheetFooter = ({
       <Button disabled={isSaving} form={formId} type="submit">
         {saveLabel ?? t('common.actions.save')}
       </Button>
-    </div>
+    </FooterActions>
   )
 }
 
