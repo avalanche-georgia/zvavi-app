@@ -159,8 +159,12 @@ Rules:
     empty states, inline confirmations).
   - Dismiss before confirm, right-aligned: `[Cancel] [Primary]`.
   - No colour or height overrides through `className` — add a variant instead.
-- **Inline confirmations** (a row that asks before a destructive action) focus Cancel, close on Esc
-  and slide in with `starting:` (`@starting-style`), respecting `motion-reduce`.
+- **Inline confirmations** (a row that asks before a destructive action) focus Cancel and slide in
+  with `starting:` (`@starting-style`), respecting `motion-reduce`. Esc, a click outside or Tab-ing
+  out cancels them, so at most one is open.
+- **Icon-only buttons** (`primitives/IconButton`) always show their label as a `Tooltip` on hover and
+  keyboard focus (pass `tooltip` for a shorter label than the accessible name). Tooltips don't show
+  on touch, so the icon must be clear without it.
 - **i18n:** components take their strings as props, and callers translate them with the project rules.
   `ds/` primitives never call `useTranslations()` themselves.
 - **Keep files under ~100 lines.** Split sub-parts into their own files.
@@ -215,7 +219,7 @@ Update this table when a legacy component's last consumer is migrated.
 | DatePicker, Calendar, TimeInput, TimePicker, DatePickerTimeInput | Headless UI + react-day-picker | `primitives/DateField` | ☐ |
 | Modal | Headless UI | `primitives/Dialog` (base-ui) | ☐ |
 | Popover | Radix | `primitives/Popover` (base-ui) | ☐ |
-| Tooltip, InfoIcon | Radix | `primitives/InfoTip` (base-ui Popover); a plain Tooltip TBD | ☐ |
+| Tooltip, InfoIcon | Radix | `primitives/Tooltip` (base-ui Tooltip; hover/focus labels), `primitives/InfoTip` (base-ui Popover; explanations) | ☐ |
 | DropdownMenu | base-ui | `primitives/Menu` | ☐ |
 | Drawer, Sheet | vaul / base-ui | `patterns/Sheet` (TBD) | ☐ |
 | IconButton | custom | `primitives/IconButton` | ☐ |
