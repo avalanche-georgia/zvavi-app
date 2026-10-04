@@ -32,7 +32,14 @@ const ProblemEditor = ({ initialDraft, isNew, number, onCancel, onDone }: Proble
   const handleDone = () => {
     const problem = validate()
 
-    if (problem) onDone(problem)
+    if (problem) return onDone(problem)
+
+    // Errors render on the next commit — then bring the first one into view
+    requestAnimationFrame(() =>
+      rootRef.current
+        ?.querySelector('[data-field-error]')
+        ?.parentElement?.scrollIntoView({ behavior: 'smooth', block: 'center' }),
+    )
   }
 
   return (

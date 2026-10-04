@@ -3,7 +3,7 @@
 import { useFormFieldError } from '@ds/form'
 import { ChipGroup, DateField, Field } from '@ds/primitives'
 import { addDays, format, isSameDay, startOfDay } from 'date-fns'
-import { useFormatter, useTranslations } from 'next-intl'
+import { useFormatter, useNow, useTranslations } from 'next-intl'
 import { useController } from 'react-hook-form'
 
 import type { ForecastFormSchema } from '../schema'
@@ -14,6 +14,8 @@ const quickDays = ['1', '2', '3'] as const
 const ValidUntilField = () => {
   const t = useTranslations()
   const formatter = useFormatter()
+  // Re-renders every minute so "in 22 hours" stays current
+  const now = useNow({ updateInterval: 60_000 })
   const { field } = useController<ForecastFormSchema, 'validUntil'>({ name: 'validUntil' })
   const error = useFormFieldError<ForecastFormSchema>(
     'validUntil',
@@ -58,7 +60,7 @@ const ValidUntilField = () => {
       {value && (
         <p className="text-caption text-muted">
           {formatter.dateTime(value, { day: 'numeric', month: 'short', weekday: 'short' })} · {time}{' '}
-          · {formatter.relativeTime(value)}
+          · {formatter.relativeTime(value, now)}
         </p>
       )}
     </Field>

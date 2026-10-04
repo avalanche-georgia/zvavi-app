@@ -65,7 +65,7 @@ const DateField = ({
       {withTime && (
         <Input
           aria-label={timeLabel}
-          className={cn(fieldControlClasses, 'focus-ring h-11.5 w-28 shrink-0 px-3')}
+          className={cn(fieldControlClasses, 'focus-ring h-11.5 w-34 shrink-0 px-3')}
           disabled={!value}
           onValueChange={handleTimeChange}
           type="time"

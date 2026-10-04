@@ -48,43 +48,47 @@ const ForecastForm = ({ forecastId, initialValues, onClose, regionId }: Forecast
 
   const handleCancel = () => (isDirty ? setIsConfirmingCancel(true) : onClose())
 
+  // Layout breakpoints are container queries: the admin sidebar takes part of the screen
+
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <FormProvider {...form}>
-      <div className="mx-auto grid max-w-280 grid-cols-1 gap-10 px-3 pt-4 pb-8 min-[700px]:px-8 min-[700px]:pt-7 min-[1320px]:grid-cols-[minmax(0,880px)_200px]">
-        <form
-          ref={formRef}
-          className="flex min-w-0 flex-col gap-4"
-          noValidate
-          onSubmit={(event) => event.preventDefault()}
-        >
-          <GeneralCard sectionId={sectionIds.general} />
-          <HazardLevels sectionId={sectionIds.hazard} />
-          <SummaryCard sectionId={sectionIds.summary} />
-          <ProblemsSection
-            onEditingChange={saver.setProblemEditorOpen}
-            sectionId={sectionIds.problems}
-          />
-          <LinkedAvalanchesSection
-            forecastId={saver.forecastId}
-            regionId={regionId}
-            sectionId={sectionIds.avalanches}
-          />
-          <ConditionsCard sectionId={sectionIds.conditions} />
-          <ForecastActionBar
-            isConfirmingCancel={isConfirmingCancel}
-            isDirty={isDirty}
-            isNew={saver.forecastId === undefined}
-            isSaving={saver.isSaving}
-            lastSavedAt={saver.lastSavedAt}
-            onCancel={handleCancel}
-            onCancelConfirm={onClose}
-            onCancelDismiss={() => setIsConfirmingCancel(false)}
-            onSave={() => saver.save(false)}
-            onSaveAndClose={() => saver.save(true)}
-          />
-        </form>
-        <SectionRail />
+      <div className="@container">
+        <div className="mx-auto grid max-w-280 grid-cols-1 gap-10 px-3 pt-4 pb-8 @min-[700px]:px-8 @min-[700px]:pt-7 @min-[1180px]:grid-cols-[minmax(0,880px)_200px]">
+          <form
+            ref={formRef}
+            className="flex min-w-0 flex-col gap-4"
+            noValidate
+            onSubmit={(event) => event.preventDefault()}
+          >
+            <GeneralCard sectionId={sectionIds.general} />
+            <HazardLevels sectionId={sectionIds.hazard} />
+            <SummaryCard sectionId={sectionIds.summary} />
+            <ProblemsSection
+              onEditingChange={saver.setProblemEditorOpen}
+              sectionId={sectionIds.problems}
+            />
+            <LinkedAvalanchesSection
+              forecastId={saver.forecastId}
+              regionId={regionId}
+              sectionId={sectionIds.avalanches}
+            />
+            <ConditionsCard sectionId={sectionIds.conditions} />
+            <ForecastActionBar
+              isConfirmingCancel={isConfirmingCancel}
+              isDirty={isDirty}
+              isNew={saver.forecastId === undefined}
+              isSaving={saver.isSaving}
+              lastSavedAt={saver.lastSavedAt}
+              onCancel={handleCancel}
+              onCancelConfirm={onClose}
+              onCancelDismiss={() => setIsConfirmingCancel(false)}
+              onSave={() => saver.save(false)}
+              onSaveAndClose={() => saver.save(true)}
+            />
+          </form>
+          <SectionRail />
+        </div>
       </div>
     </FormProvider>
   )

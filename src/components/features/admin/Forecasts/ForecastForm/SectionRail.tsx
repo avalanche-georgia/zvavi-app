@@ -19,7 +19,7 @@ const SectionRail = () => {
   return (
     <nav
       aria-label={t('admin.forecast.editor.rail.title')}
-      className="sticky top-25 hidden self-start min-[1320px]:block"
+      className="sticky top-25 hidden self-start @min-[1180px]:block"
     >
       <p className="text-caption text-muted mb-2 font-semibold tracking-wide uppercase">
         {t('admin.forecast.editor.rail.title')}
