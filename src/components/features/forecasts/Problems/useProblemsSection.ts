@@ -7,8 +7,8 @@ import { useFieldArray } from 'react-hook-form'
 import type { ProblemValues } from './problemSchema'
 
 // The problem being edited in the panel — a list key, or 'new'. `session` gives
-// each opening a fresh draft; the entry stays after closing so the panel can
-// slide out with its content.
+// each opening a fresh draft; the entry stays after closing so the panel keeps
+// its content while it slides out.
 export type ProblemEditing = { isOpen: boolean; key: string; session: number } | null
 
 // The forecast's problem list: edited in a panel, deleted with Undo

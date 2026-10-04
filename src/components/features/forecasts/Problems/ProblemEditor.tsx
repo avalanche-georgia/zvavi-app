@@ -13,11 +13,14 @@ import useProblemDraft from './useProblemDraft'
 type ProblemEditorProps = {
   initialDraft: ProblemDraft
   isNew: boolean
-  // Kept mounted while closing so the panel slides out with its content
+  // The panel stays mounted (open / closed) so it slides in and out like other
+  // sheets — base-ui only animates an open change, not a dialog mounted open
   isOpen: boolean
   number: number
   onCancel: VoidFunction
   onDone: (problem: ProblemValues) => void
+  // Changes each time the editor opens: the draft starts over
+  session: number
 }
 
 // Edits one problem in a side panel (bottom sheet on mobile), like the avalanche
@@ -30,15 +33,21 @@ const ProblemEditor = ({
   number,
   onCancel,
   onDone,
+  session,
 }: ProblemEditorProps) => {
   const bodyRef = useRef<HTMLDivElement>(null)
-  const { draft, errors, setField, validate } = useProblemDraft(initialDraft)
+  const { draft, errors, setField, validate } = useProblemDraft(initialDraft, session)
   const [isConfirmingDiscard, setIsConfirmingDiscard] = useState(false)
   const isDirty = !isEqual(draft, initialDraft)
 
   // Close button, Esc, backdrop: unsaved edits are never dropped without asking
   const requestClose = () => (isDirty ? setIsConfirmingDiscard(true) : onCancel())
   const handleOpenChange = (nextIsOpen: boolean) => !nextIsOpen && requestClose()
+
+  const handleDiscard = () => {
+    setIsConfirmingDiscard(false)
+    onCancel()
+  }
 
   const handleDone = () => {
     const problem = validate()
@@ -60,7 +69,7 @@ const ProblemEditor = ({
         <ProblemEditorFooter
           isConfirmingDiscard={isConfirmingDiscard}
           onCancel={requestClose}
-          onDiscard={onCancel}
+          onDiscard={handleDiscard}
           onDone={handleDone}
           onKeepEditing={() => setIsConfirmingDiscard(false)}
         />

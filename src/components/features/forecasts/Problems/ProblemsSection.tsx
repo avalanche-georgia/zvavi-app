@@ -57,17 +57,15 @@ const ProblemsSection = ({ onEditingChange, sectionId }: ProblemsSectionProps) =
       ) : (
         <ProblemList onDelete={handleDelete} onEdit={open} onReorder={move} problems={fields} />
       )}
-      {editing && (
-        <ProblemEditor
-          key={editing.session}
-          initialDraft={initialDraft}
-          isNew={isNew}
-          isOpen={editing.isOpen}
-          number={isNew ? fields.length + 1 : editedIndex + 1}
-          onCancel={close}
-          onDone={handleDone}
-        />
-      )}
+      <ProblemEditor
+        initialDraft={initialDraft}
+        isNew={isNew}
+        isOpen={!!editing?.isOpen}
+        number={isNew ? fields.length + 1 : editedIndex + 1}
+        onCancel={close}
+        onDone={handleDone}
+        session={editing?.session ?? 0}
+      />
     </FormCard>
   )
 }
