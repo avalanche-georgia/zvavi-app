@@ -4,6 +4,7 @@ import type { ForecastFormSchema } from '@components/features/admin/Forecasts/Fo
 import { SortableItem } from '@components/ui'
 import { DragDropProvider, type DragEndEvent } from '@dnd-kit/react'
 import { isSortableOperation } from '@dnd-kit/react/sortable'
+import { useTranslations } from 'next-intl'
 import { useFormState } from 'react-hook-form'
 
 import ProblemCard from './ProblemCard'
@@ -20,6 +21,17 @@ type ProblemListProps = {
 const ProblemList = ({ onDelete, onEdit, onReorder, problems }: ProblemListProps) => {
   // Saved problems from before aspects were required can fail the forecast's validation
   const { errors } = useFormState<ForecastFormSchema>({ name: 'avalancheProblems' })
+  const t = useTranslations()
+  const key = 'admin.forecast.editor.problems.errors'
+
+  const getErrorMessage = (index: number) => {
+    const problemErrors = errors.avalancheProblems?.[index]
+
+    if (problemErrors?.type) return t(`${key}.duplicateType`)
+    if (problemErrors?.aspects) return t(`${key}.aspects`)
+
+    return undefined
+  }
 
   const handleDragEnd: DragEndEvent = (event) => {
     if (event.canceled || !isSortableOperation(event.operation)) return
@@ -37,7 +49,7 @@ const ProblemList = ({ onDelete, onEdit, onReorder, problems }: ProblemListProps
             {(handleRef) => (
               <ProblemCard
                 dragHandleRef={handleRef}
-                hasAspectsError={!!errors.avalancheProblems?.[index]?.aspects}
+                errorMessage={getErrorMessage(index)}
                 number={index + 1}
                 onDelete={() => onDelete(index)}
                 onEdit={() => onEdit(fieldKey)}

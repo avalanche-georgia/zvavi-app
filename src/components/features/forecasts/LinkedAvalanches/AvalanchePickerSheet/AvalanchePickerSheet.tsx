@@ -40,17 +40,26 @@ const AvalanchePickerSheet = (props: AvalanchePickerSheetProps) => {
     filters.reset()
   }
 
+  // Narrow screens: hint on its own line, both buttons share one row
   const footer = (
-    <div className="flex w-full flex-wrap items-center gap-2.5">
-      <p className="text-caption text-muted mr-auto">{t(`${key}.footerHint`)}</p>
-      <Button onClick={() => handleOpenChange(false)} variant="secondary">
-        {t('common.actions.cancel')}
-      </Button>
-      <Button disabled={!selectedIds.length} onClick={handleLink}>
-        {selectedIds.length
-          ? t(`${key}.linkCount`, { count: selectedIds.length })
-          : t(`${key}.link`)}
-      </Button>
+    <div className="flex w-full flex-wrap items-center gap-x-2.5 gap-y-2">
+      <p className="text-caption text-muted mr-auto max-[560px]:basis-full">
+        {t(`${key}.footerHint`)}
+      </p>
+      <div className="flex gap-2.5 max-[560px]:w-full">
+        <Button
+          className="max-[560px]:flex-1"
+          onClick={() => handleOpenChange(false)}
+          variant="secondary"
+        >
+          {t('common.actions.cancel')}
+        </Button>
+        <Button className="max-[560px]:flex-1" disabled={!selectedIds.length} onClick={handleLink}>
+          {selectedIds.length
+            ? t(`${key}.linkCount`, { count: selectedIds.length })
+            : t(`${key}.link`)}
+        </Button>
+      </div>
     </div>
   )
 

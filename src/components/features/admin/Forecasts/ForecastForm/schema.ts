@@ -24,10 +24,21 @@ export const forecastFormSchema = z
     validUntil: z.date().nullable(),
     weather: z.string(),
   })
-  .superRefine(({ validUntil }, context) => {
+  .superRefine(({ avalancheProblems, validUntil }, context) => {
     if (validUntil === null) {
       context.addIssue({ code: 'custom', message: 'required', path: ['validUntil'] })
     }
+
+    // Each problem type once per forecast — flags every repeat after the first
+    avalancheProblems.forEach(({ type }, index) => {
+      if (avalancheProblems.findIndex((problem) => problem.type === type) === index) return
+
+      context.addIssue({
+        code: 'custom',
+        message: 'duplicate',
+        path: ['avalancheProblems', index, 'type'],
+      })
+    })
   })
 
 export type ForecastFormSchema = z.infer<typeof forecastFormSchema>

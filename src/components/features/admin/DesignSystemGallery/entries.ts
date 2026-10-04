@@ -14,6 +14,7 @@ import SegmentedControlGallery from '@ds/primitives/SegmentedControl/SegmentedCo
 import SelectGallery from '@ds/primitives/Select/Select.gallery'
 import StepperGallery from '@ds/primitives/Stepper/Stepper.gallery'
 import ToggleGridGallery from '@ds/primitives/ToggleGrid/ToggleGrid.gallery'
+import TooltipGallery from '@ds/primitives/Tooltip/Tooltip.gallery'
 
 import ColorTokens from './tokens/ColorTokens'
 import RadiusTokens from './tokens/RadiusTokens'
@@ -36,6 +37,7 @@ export const galleryEntries: GalleryEntry[] = [
   { Demo: BadgeGallery, id: 'badge', title: 'Badge' },
   { Demo: IconButtonGallery, id: 'icon-button', title: 'IconButton' },
   { Demo: InfoTipGallery, id: 'info-tip', title: 'InfoTip' },
+  { Demo: TooltipGallery, id: 'tooltip', title: 'Tooltip' },
   { Demo: FieldGallery, id: 'field', title: 'Field & inputs' },
   { Demo: StepperGallery, id: 'stepper', title: 'Stepper' },
   { Demo: DateFieldGallery, id: 'date-field', title: 'DateField' },

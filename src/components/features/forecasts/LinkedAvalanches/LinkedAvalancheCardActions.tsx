@@ -22,8 +22,8 @@ const LinkedAvalancheCardActions = ({ id, onEdit, onRemove }: LinkedAvalancheCar
       <IconButton
         aria-label={t('admin.forecast.editor.avalanches.remove', { id: formatAvalancheId(id) })}
         onClick={onRemove}
-        title={t('admin.forecast.editor.avalanches.removeHint')}
         tone="danger"
+        tooltip={t('admin.forecast.editor.avalanches.unlinkAction')}
       >
         <Unlink className="size-4" />
       </IconButton>

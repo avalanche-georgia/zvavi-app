@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { AspectMiniGrid } from '@components/features/observations'
 import { useAspectSummary } from '@components/hooks'
 import { Icon } from '@components/icons'
-import { IconButton } from '@ds/primitives'
+import { IconButton, Tooltip } from '@ds/primitives'
 import { Pencil, Trash2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
@@ -16,8 +16,8 @@ import CardConfirm from '../CardConfirm'
 type ProblemCardProps = {
   // Drag grip — attached by the sortable list; null while dragging is off
   dragHandleRef: ((element: Element | null) => void) | null
-  // Saved without aspects (allowed before they were required): blocks saving
-  hasAspectsError: boolean
+  // Saved before a rule existed (no aspects, repeated type): blocks saving
+  errorMessage?: string
   number: number
   onDelete: VoidFunction
   onEdit: VoidFunction
@@ -26,7 +26,7 @@ type ProblemCardProps = {
 
 const ProblemCard = ({
   dragHandleRef,
-  hasAspectsError,
+  errorMessage,
   number,
   onDelete,
   onEdit,
@@ -39,17 +39,19 @@ const ProblemCard = ({
   const typeLabel = t(`common.avalancheTypes.${type}`)
 
   return (
-    <div className="border-rule hover:border-rule-strong @container flex flex-col gap-2 rounded-[14px] border px-3.5 pt-3 pb-3.5 transition-colors">
+    <div className="border-rule hover:border-rule-strong bg-surface @container flex flex-col gap-2 rounded-[14px] border px-3.5 pt-3 pb-3.5 transition-colors">
       <div className="flex items-center gap-2.5">
-        <button
-          ref={dragHandleRef}
-          aria-label={t('admin.forecast.editor.problems.reorder')}
-          className="text-muted cursor-grab touch-none disabled:cursor-not-allowed disabled:opacity-40"
-          disabled={!dragHandleRef}
-          type="button"
-        >
-          <Icon icon="grip" size="sm" />
-        </button>
+        <Tooltip label={t('admin.forecast.editor.problems.reorder')}>
+          <button
+            ref={dragHandleRef}
+            aria-label={t('admin.forecast.editor.problems.reorder')}
+            className="text-muted cursor-grab touch-none disabled:cursor-not-allowed disabled:opacity-40"
+            disabled={!dragHandleRef}
+            type="button"
+          >
+            <Icon icon="grip" size="sm" />
+          </button>
+        </Tooltip>
         <ProblemNumber number={number} />
         {/* Narrow cards: the size badge wraps below the type instead of squeezing it */}
         <div className="flex min-w-0 flex-wrap items-center gap-x-2.5 gap-y-1">
@@ -63,7 +65,7 @@ const ProblemCard = ({
             <Pencil className="size-4" />
           </IconButton>
           <IconButton
-            aria-label={t('common.actions.delete')}
+            aria-label={t('admin.forecast.editor.problems.removeAction')}
             onClick={() => setIsConfirmingDelete(true)}
             tone="danger"
           >
@@ -86,18 +88,17 @@ const ProblemCard = ({
           </div>
           <div className="flex max-w-60 flex-col gap-1.5">
             <AspectMiniGrid aspects={aspects} />
-            {hasAspectsError ? (
-              <p className="text-caption text-danger" data-field-error>
-                {t('admin.forecast.editor.problems.errors.aspects')}
-              </p>
-            ) : (
-              <p className="text-caption text-body">
-                {getSummary(aspects) ?? t('admin.forecast.editor.problems.noAspects')}
-              </p>
-            )}
+            <p className="text-caption text-body">
+              {getSummary(aspects) ?? t('admin.forecast.editor.problems.noAspects')}
+            </p>
           </div>
         </div>
         {description && <p className="text-copy-sm text-body whitespace-pre-line">{description}</p>}
+        {errorMessage && (
+          <p className="text-copy-sm text-danger" data-field-error>
+            {errorMessage}
+          </p>
+        )}
       </div>
     </div>
   )

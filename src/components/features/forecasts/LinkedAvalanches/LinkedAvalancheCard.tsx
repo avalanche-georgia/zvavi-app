@@ -35,7 +35,7 @@ const LinkedAvalancheCard = (props: LinkedAvalancheCardProps) => {
   const key = 'admin.forecast.editor.avalanches'
 
   return (
-    <div className="border-rule @container grid grid-cols-[52px_minmax(0,1fr)_auto] gap-3.5 rounded-[14px] border p-3.5">
+    <div className="border-rule bg-surface @container grid grid-cols-[52px_minmax(0,1fr)_auto] gap-3.5 rounded-[14px] border p-3.5">
       <SizeTile className="size-13 rounded-[11px]" size={size} />
       <div className="flex min-w-0 flex-col gap-1.5">
         <div className="flex flex-wrap items-center gap-1.5">

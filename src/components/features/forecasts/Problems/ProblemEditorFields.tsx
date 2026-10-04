@@ -1,6 +1,6 @@
 'use client'
 
-import type { AvalancheSize } from '@domain/types'
+import type { AvalancheProblemType, AvalancheSize } from '@domain/types'
 import { ChipGroup, FieldGroup, SegmentedControl, ToggleGrid } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 
@@ -13,18 +13,20 @@ type ProblemEditorFieldsProps = {
   draft: ProblemDraft
   errors: ProblemDraftErrors
   setField: SetProblemDraftField
+  takenTypes: AvalancheProblemType[]
 }
 
 // Left column: what kind of problem and how it behaves
-const ProblemEditorFields = ({ draft, errors, setField }: ProblemEditorFieldsProps) => {
+const ProblemEditorFields = ({ draft, errors, setField, takenTypes }: ProblemEditorFieldsProps) => {
   const t = useTranslations()
-  const options = useProblemOptions()
+  const options = useProblemOptions(takenTypes)
   const labelKey = 'admin.forecast.form.problems.labels'
   const segmentClassName = 'h-9.5'
 
   return (
     <div className="flex flex-col gap-5">
       <FieldGroup
+        description={takenTypes.length > 0 && t('admin.forecast.editor.problems.typeTakenHint')}
         error={errors.type ? t('admin.forecast.editor.problems.errors.type') : undefined}
         label={t(`${labelKey}.problemType`)}
         required

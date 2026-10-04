@@ -267,7 +267,6 @@ admin:
         emptyCreateText: 'Opens the avalanche form. Saving publishes it to the catalog and links it here.'
         editRecord: 'Edit record'
         remove: 'Remove {id} from this forecast'
-        removeHint: 'Remove from this forecast'
         unlinked: '{id} removed from this forecast · the record is unchanged'
         unlinkConfirm: 'Unlink {id} from this forecast? The record stays in the catalog.'
         unlinkAction: 'Unlink'
@@ -356,10 +355,12 @@ admin:
         noAspects: 'No aspects selected'
         reorder: 'Drag to reorder'
         removed: 'Removed "{type}"'
+        typeTakenHint: 'Each type can be added once — types already on this forecast are greyed out.'
         removeConfirm: 'Remove "{type}" from this forecast?'
         removeAction: 'Remove'
         errors:
           aspects: 'Pick at least one aspect.'
+          duplicateType: 'This type is already on the forecast — edit or remove one of them.'
           type: 'Pick a problem type.'
           size: 'Pick an avalanche size.'
     title:

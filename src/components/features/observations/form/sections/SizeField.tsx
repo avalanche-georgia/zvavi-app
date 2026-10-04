@@ -29,7 +29,7 @@ const SizeField = () => {
 
   const description = value ? (
     <span className="text-body">
-      <b className="font-semibold">D{value}</b> ·{' '}
+      <b className="font-semibold">{value}</b> ·{' '}
       {t(`observations.form.what.sizeDescriptors.${value}`)}
     </span>
   ) : (

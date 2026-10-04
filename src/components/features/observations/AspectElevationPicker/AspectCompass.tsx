@@ -40,9 +40,12 @@ const AspectCompass = ({ aspects, onChange, zone }: AspectCompassProps) => {
   }
 
   return (
+    // touch-none: a press on the compass always paints — vertical drags included —
+    // instead of the browser turning it into a page scroll (the page still
+    // scrolls from anywhere outside this small grid)
     <div
       ref={containerRef}
-      className="grid touch-pan-y grid-cols-[repeat(3,3.5rem)] justify-center gap-1.5 select-none sm:grid-cols-[repeat(3,3rem)]"
+      className="grid touch-none grid-cols-[repeat(3,3.5rem)] justify-center gap-1.5 select-none sm:grid-cols-[repeat(3,3rem)]"
       onLostPointerCapture={pointerHandlers.onLostPointerCapture}
       onPointerCancel={pointerHandlers.onPointerCancel}
       onPointerDown={pointerHandlers.onPointerDown}
@@ -79,7 +82,7 @@ const AspectCompass = ({ aspects, onChange, zone }: AspectCompassProps) => {
             })}
             aria-pressed={isSelected}
             className={cn(
-              'aspect-square touch-pan-y rounded-xl text-[15px] font-medium transition-colors duration-120',
+              'aspect-square touch-none rounded-xl text-[15px] font-medium transition-colors duration-120',
               isSelected
                 ? 'bg-accent hover:bg-accent-hover text-white'
                 : 'bg-tile text-ink hover:bg-tile-hover',

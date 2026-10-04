@@ -19,7 +19,8 @@ const distributionOrder = [
 
 export const avalancheSizes: AvalancheSize[] = [1, 2, 3, 4, 5]
 
-const useProblemOptions = () => {
+// takenTypes: already on the forecast — each type can appear once
+const useProblemOptions = (takenTypes: AvalancheProblemType[] = []) => {
   const t = useTranslations()
 
   const toOptions = <T extends string>(values: readonly T[], getLabel: (value: T) => string) =>
@@ -40,6 +41,7 @@ const useProblemOptions = () => {
       t(`admin.forecast.form.problems.options.trend.${value}`),
     ),
     type: Object.values(avalancheProblemTypes).map((type: AvalancheProblemType) => ({
+      disabled: takenTypes.includes(type),
       label: t(`common.avalancheTypes.${type}`),
       value: type,
     })),

@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react'
 import { Sheet } from '@components/ui'
+import type { AvalancheProblemType } from '@domain/types'
 import isEqual from 'lodash/isEqual'
 
 import ProblemEditorBody from './ProblemEditorBody'
@@ -21,6 +22,8 @@ type ProblemEditorProps = {
   onDone: (problem: ProblemValues) => void
   // Changes each time the editor opens: the draft starts over
   session: number
+  // Types of the forecast's other problems — each type appears once
+  takenTypes: AvalancheProblemType[]
 }
 
 // Edits one problem in a side panel (bottom sheet on mobile), like the avalanche
@@ -34,6 +37,7 @@ const ProblemEditor = ({
   onCancel,
   onDone,
   session,
+  takenTypes,
 }: ProblemEditorProps) => {
   const bodyRef = useRef<HTMLDivElement>(null)
   const { draft, errors, setField, validate } = useProblemDraft(initialDraft, session)
@@ -81,7 +85,12 @@ const ProblemEditor = ({
       onOpenChange={handleOpenChange}
     >
       <div ref={bodyRef}>
-        <ProblemEditorBody draft={draft} errors={errors} setField={setField} />
+        <ProblemEditorBody
+          draft={draft}
+          errors={errors}
+          setField={setField}
+          takenTypes={takenTypes}
+        />
       </div>
     </Sheet>
   )

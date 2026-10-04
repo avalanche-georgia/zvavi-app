@@ -1,3 +1,5 @@
+import { Tooltip } from '../Tooltip'
+
 import { cn } from '@/lib/utils'
 
 export type IconButtonSize = 'md' | 'sm'
@@ -8,6 +10,8 @@ type IconButtonProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'aria
   'aria-label': string
   size?: IconButtonSize
   tone?: IconButtonTone
+  // Shorter hover label when the accessible name is long (defaults to aria-label)
+  tooltip?: string
 }
 
 const sizeClasses: Record<IconButtonSize, string> = {
@@ -22,28 +26,32 @@ const toneClasses: Record<IconButtonTone, string> = {
 }
 
 // Square icon-only button. On touch screens the ::after grows it to a 44px target.
+// Its accessible name doubles as a tooltip (hover / keyboard focus).
 const IconButton = ({
   children,
   className,
   size = 'sm',
   tone = 'default',
+  tooltip,
   type = 'button',
   ...props
 }: IconButtonProps) => (
-  <button
-    {...props}
-    className={cn(
-      'focus-ring rounded-control relative inline-grid shrink-0 place-items-center transition-colors',
-      'after:absolute pointer-coarse:after:-inset-1',
-      'disabled:cursor-not-allowed disabled:opacity-50',
-      sizeClasses[size],
-      toneClasses[tone],
-      className,
-    )}
-    type={type}
-  >
-    {children}
-  </button>
+  <Tooltip label={tooltip ?? props['aria-label']}>
+    <button
+      {...props}
+      className={cn(
+        'focus-ring rounded-control relative inline-grid shrink-0 place-items-center transition-colors',
+        'after:absolute pointer-coarse:after:-inset-1',
+        'disabled:cursor-not-allowed disabled:opacity-50',
+        sizeClasses[size],
+        toneClasses[tone],
+        className,
+      )}
+      type={type}
+    >
+      {children}
+    </button>
+  </Tooltip>
 )
 
 export default IconButton

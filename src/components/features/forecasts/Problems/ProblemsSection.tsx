@@ -1,5 +1,6 @@
 'use client'
 
+import { avalancheProblemTypes } from '@domain/constants'
 import { FormCard } from '@ds/patterns'
 import { Button } from '@ds/primitives'
 import { Plus } from 'lucide-react'
@@ -29,6 +30,11 @@ const ProblemsSection = ({ onEditingChange, sectionId }: ProblemsSectionProps) =
   const isEmpty = fields.length === 0
   const editedIndex = fields.findIndex((field) => field.fieldKey === editing?.key)
   const isNew = editedIndex === -1
+  // Each type once per forecast: the edited problem keeps its own
+  const takenTypes = fields
+    .filter((_field, index) => index !== editedIndex)
+    .map((field) => field.type)
+  const isEveryTypeTaken = fields.length >= Object.keys(avalancheProblemTypes).length
   const initialDraft: ProblemDraft = isNew
     ? { ...emptyProblemDraft, order: fields.length }
     : toDraft(fields[editedIndex])
@@ -37,7 +43,12 @@ const ProblemsSection = ({ onEditingChange, sectionId }: ProblemsSectionProps) =
     <FormCard
       actions={
         !isEmpty && (
-          <Button onClick={() => open('new')} size="sm" variant="secondary">
+          <Button
+            disabled={isEveryTypeTaken}
+            onClick={() => open('new')}
+            size="sm"
+            variant="secondary"
+          >
             <Plus aria-hidden className="size-4" />
             {t('admin.forecast.editor.problems.add')}
           </Button>
@@ -65,6 +76,7 @@ const ProblemsSection = ({ onEditingChange, sectionId }: ProblemsSectionProps) =
         onCancel={close}
         onDone={handleDone}
         session={editing?.session ?? 0}
+        takenTypes={takenTypes}
       />
     </FormCard>
   )
