@@ -1,5 +1,5 @@
 export { AvalancheCreateSheet } from './AvalancheCreateSheet'
-export { AvalancheSheet, LoadError } from './AvalancheSheet'
+export { AvalancheSheet } from './AvalancheSheet'
 export { AvalancheViewPage } from './AvalancheView'
 export { RecentAvalancheForm } from './RecentAvalancheForm'
 export { default as RecentAvalanchesContainer } from './RecentAvalanchesContainer'

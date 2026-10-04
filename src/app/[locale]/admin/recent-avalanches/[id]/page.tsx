@@ -1,6 +1,7 @@
 'use client'
 
-import { AvalancheViewPage, LoadError } from '@components/features/admin/RecentAvalanches'
+import { AvalancheViewPage } from '@components/features/admin/RecentAvalanches'
+import { LoadError } from '@components/shared'
 import { ButtonLink } from '@components/shared'
 import { Spinner } from '@components/ui'
 import { useRecentAvalancheQuery } from '@data/hooks/recentAvalanches'

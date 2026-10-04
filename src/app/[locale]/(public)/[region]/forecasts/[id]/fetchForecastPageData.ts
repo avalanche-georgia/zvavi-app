@@ -1,6 +1,6 @@
 import { convertSnakeToCamel } from '@data/helpers'
 import fetchPublicForecastAvalanches from '@data/queries/fetchPublicForecastAvalanches'
-import type { FullForecast } from '@domain/types'
+import type { FullForecast, RegionId } from '@domain/types'
 
 import { createClient } from '@/lib/supabase/server'
 
@@ -11,6 +11,7 @@ type ForecastPageData = {
 
 export const fetchForecastPageData = async (
   forecastId: number,
+  regionId: RegionId,
 ): Promise<ForecastPageData | null> => {
   const supabase = await createClient()
 
@@ -23,6 +24,8 @@ export const fetchForecastPageData = async (
         .from('forecasts')
         .select('id')
         .eq('status', 'published')
+        // Current in *this* region — same rule as fetchCurrentForecast
+        .eq('region_id', regionId)
         .order('created_at', { ascending: false })
         .limit(1)
         .single(),
