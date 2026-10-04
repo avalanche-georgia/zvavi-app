@@ -72,7 +72,7 @@ const ProblemsSection = ({ onEditingChange, sectionId }: ProblemsSectionProps) =
         initialDraft={initialDraft}
         isNew={isNew}
         isOpen={!!editing?.isOpen}
-        number={isNew ? fields.length + 1 : editedIndex + 1}
+        number={editing?.number ?? fields.length + 1}
         onCancel={close}
         onDone={handleDone}
         session={editing?.session ?? 0}

@@ -32,6 +32,9 @@ const NewForecastContent = ({ regionId }: { regionId: RegionId }) => {
     enabled: isValidDuplicateId,
     forecastId: parsedDuplicateId ?? 0,
     regionId,
+    // A wrong or foreign duplicateId won't start working on a retry — redirect
+    // straight away instead of after the default backoff
+    retry: false,
   })
 
   const { data: currentProfile, isPending: isProfilePending } = useCurrentUserProfileQuery()

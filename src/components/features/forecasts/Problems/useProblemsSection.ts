@@ -8,8 +8,14 @@ import type { ProblemValues } from './problemSchema'
 
 // The problem being edited in the panel — a list key, or 'new'. `session` gives
 // each opening a fresh draft; the entry stays after closing so the panel keeps
-// its content while it slides out.
-export type ProblemEditing = { isOpen: boolean; key: string; session: number } | null
+// its content while it slides out. `number` is fixed when it opens, so the
+// header doesn't change while the list updates behind it.
+export type ProblemEditing = {
+  isOpen: boolean
+  key: string
+  number: number
+  session: number
+} | null
 
 // The forecast's problem list: edited in a panel, deleted with Undo
 const useProblemsSection = (onEditingChange: (isEditing: boolean) => void) => {
@@ -34,8 +40,12 @@ const useProblemsSection = (onEditingChange: (isEditing: boolean) => void) => {
     onEditingChange(isEditing)
   }, [isEditing, onEditingChange])
 
-  const open = (key: string) =>
-    setEditing((previous) => ({ isOpen: true, key, session: (previous?.session ?? 0) + 1 }))
+  const open = (key: string) => {
+    const index = fields.findIndex((field) => field.fieldKey === key)
+    const number = index === -1 ? fields.length + 1 : index + 1
+
+    setEditing((previous) => ({ isOpen: true, key, number, session: (previous?.session ?? 0) + 1 }))
+  }
 
   const close = () => setEditing((previous) => previous && { ...previous, isOpen: false })
 

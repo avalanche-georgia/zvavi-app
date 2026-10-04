@@ -1,6 +1,6 @@
 'use client'
 
-import { useUserProfileQuery } from '@data/hooks/userProfiles'
+import { useStaffNameQuery } from '@data/hooks/userProfiles'
 import { useTranslations } from 'next-intl'
 
 import InfoRow from './InfoRow'
@@ -22,12 +22,12 @@ const SubmitterInfo = ({
 }: SubmitterInfoProps) => {
   const t = useTranslations()
 
-  const { data: creatorProfile } = useUserProfileQuery({
+  const { data: creatorName } = useStaffNameQuery({
     enabled: !submitterName && !!createdByUserId,
     id: createdByUserId ?? '',
   })
 
-  const fullName = submitterName || creatorProfile?.fullName || '—'
+  const fullName = submitterName || creatorName || '—'
 
   return (
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
