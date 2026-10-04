@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import { useToast } from '@components/hooks'
 import { useForecastSave } from '@data/hooks/forecasts'
 import type { RegionId } from '@domain/types'
+import cloneDeep from 'lodash/cloneDeep'
 import { useTranslations } from 'next-intl'
 import type { UseFormReturn } from 'react-hook-form'
 
@@ -43,7 +44,14 @@ const useForecastFormSave = ({
   // Set by the problems section; an open editor holds unsaved problem edits
   const isProblemEditorOpen = useRef(false)
 
-  const persist = async (values: ForecastFormSchema, andClose: boolean) => {
+  // values: zod's parsed output, sent to the RPC. submitted: the raw form state
+  // at submit time (zod strips extra keys such as problem ids), which becomes
+  // the new clean state
+  const persist = async (
+    values: ForecastFormSchema,
+    submitted: ForecastFormSchema,
+    andClose: boolean,
+  ) => {
     const previousId = forecastIdRef.current
     const savedIds =
       previousId === undefined ? [] : (form.formState.defaultValues?.recentAvalancheIds ?? [])
@@ -51,10 +59,11 @@ const useForecastFormSave = ({
       values.recentAvalancheIds,
       savedIds.filter((id) => id !== undefined),
     )
-    const saved = { ...values, recentAvalancheIds }
 
     try {
-      const savedId = await saveForecast(buildSavePayload(saved, previousId, regionId))
+      const savedId = await saveForecast(
+        buildSavePayload({ ...values, recentAvalancheIds }, previousId, regionId),
+      )
       const dropped = values.recentAvalancheIds.filter((id) => !recentAvalancheIds.includes(id))
 
       if (dropped.length > 0) {
@@ -67,7 +76,7 @@ const useForecastFormSave = ({
         toastInfo(t('admin.forecast.editor.save.unlinkedUnavailable', { count: dropped.length }))
       }
 
-      resetToSaved(form, saved)
+      resetToSaved(form, { ...submitted, recentAvalancheIds })
       forecastIdRef.current = savedId
       setForecastId(savedId)
       setLastSavedAt(new Date())
@@ -89,8 +98,11 @@ const useForecastFormSave = ({
     }
 
     isSavingRef.current = true
+
+    const submitted = cloneDeep(form.getValues())
+
     form.handleSubmit(
-      (values) => persist(values, andClose),
+      (values) => persist(values, submitted, andClose),
       () => {
         isSavingRef.current = false
         onInvalid()

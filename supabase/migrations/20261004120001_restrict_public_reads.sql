@@ -51,3 +51,9 @@ DROP FUNCTION IF EXISTS public.get_latest_published_forecast_with_related();
 --    could reorder the station list. Staff only.
 REVOKE ALL ON FUNCTION public.reorder_weather_stations(jsonb) FROM public, anon;
 GRANT EXECUTE ON FUNCTION public.reorder_weather_stations(jsonb) TO authenticated;
+
+-- 6. Advisor hardening: handle_new_auth_user is a trigger function (fires on
+--    auth.users insert) and needn't be callable over the API; verify_member is
+--    SECURITY DEFINER and public by design, so pin its search_path.
+REVOKE ALL ON FUNCTION public.handle_new_auth_user() FROM public, anon, authenticated;
+ALTER FUNCTION public.verify_member(text, inet, text) SET search_path = public;

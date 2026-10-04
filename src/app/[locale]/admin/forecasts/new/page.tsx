@@ -27,6 +27,7 @@ const NewForecastContent = ({ regionId }: { regionId: RegionId }) => {
     data: sourceForecast,
     isError,
     isLoading,
+    isSuccess,
   } = useAdminGetForecast({
     enabled: isValidDuplicateId,
     forecastId: parsedDuplicateId ?? 0,
@@ -35,7 +36,9 @@ const NewForecastContent = ({ regionId }: { regionId: RegionId }) => {
 
   const { data: currentProfile, isPending: isProfilePending } = useCurrentUserProfileQuery()
 
-  const shouldRedirectOnInvalidDuplicate = isValidDuplicateId && (isError || !sourceForecast)
+  // Only once the source has loaded (or failed) — not while it's still on its way
+  const shouldRedirectOnInvalidDuplicate =
+    isValidDuplicateId && (isError || (isSuccess && !sourceForecast))
 
   useEffect(() => {
     if (!shouldRedirectOnInvalidDuplicate) return

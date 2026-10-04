@@ -708,8 +708,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      fetch_combined_forecast_data: { Args: never; Returns: Json }
-      get_latest_published_forecast_with_related: { Args: never; Returns: Json }
+      can_edit_forecasts: { Args: never; Returns: boolean }
       reorder_weather_stations: { Args: { updates: Json }; Returns: undefined }
       save_forecast: {
         Args: { p_avalanche_ids: number[]; p_forecast: Json; p_problems: Json }
