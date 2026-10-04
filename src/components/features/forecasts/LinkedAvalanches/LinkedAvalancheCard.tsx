@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { AspectMiniGrid, formatAvalancheId, SizeTile } from '@components/features/observations'
 import { useAspectSummary } from '@components/hooks'
 import type { LinkableAvalanche } from '@data/hooks/recentAvalanches'
@@ -9,6 +10,7 @@ import { useTranslations } from 'next-intl'
 import AvalancheBadge from './AvalancheBadge'
 import LinkedAvalancheCardActions from './LinkedAvalancheCardActions'
 import useAvalancheLabels from './useAvalancheLabels'
+import CardConfirm from '../CardConfirm'
 
 type LinkedAvalancheCardProps = {
   avalanche: LinkableAvalanche
@@ -29,6 +31,8 @@ const LinkedAvalancheCard = (props: LinkedAvalancheCardProps) => {
   const otherForecasts = forecastAvalanche.filter((link) => link.forecastId !== forecastId).length
   const aspectSummary = aspects && getSummary(aspects)
   const meta = [getDate(avalanche), location, quantity > 1 && `×${quantity}`].filter(Boolean)
+  const [isConfirmingUnlink, setIsConfirmingUnlink] = useState(false)
+  const key = 'admin.forecast.editor.avalanches'
 
   return (
     <div className="border-rule @container grid grid-cols-[52px_minmax(0,1fr)_auto] gap-3.5 rounded-[14px] border p-3.5">
@@ -57,18 +61,29 @@ const LinkedAvalancheCard = (props: LinkedAvalancheCardProps) => {
             <span className="text-caption text-body">{aspectSummary}</span>
           </div>
         ) : (
-          <p className="text-caption text-muted">
-            {t('admin.forecast.editor.avalanches.noAspects')}
-          </p>
+          <p className="text-caption text-muted">{t(`${key}.noAspects`)}</p>
         )}
         {otherForecasts > 0 && (
           <p className="text-accent-hover flex items-center gap-1 text-[12.5px] font-medium">
             <Link2 aria-hidden className="size-3.5" />
-            {t('admin.forecast.editor.avalanches.alsoOn', { count: otherForecasts })}
+            {t(`${key}.alsoOn`, { count: otherForecasts })}
           </p>
         )}
       </div>
-      <LinkedAvalancheCardActions id={id} onEdit={onEdit} onRemove={onRemove} />
+      <LinkedAvalancheCardActions
+        id={id}
+        onEdit={onEdit}
+        onRemove={() => setIsConfirmingUnlink(true)}
+      />
+      {isConfirmingUnlink && (
+        <CardConfirm
+          className="col-span-full"
+          confirmLabel={t(`${key}.unlinkAction`)}
+          message={t(`${key}.unlinkConfirm`, { id: formatAvalancheId(id) })}
+          onCancel={() => setIsConfirmingUnlink(false)}
+          onConfirm={onRemove}
+        />
+      )}
     </div>
   )
 }

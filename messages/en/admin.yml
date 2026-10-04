@@ -269,6 +269,8 @@ admin:
         remove: 'Remove {id} from this forecast'
         removeHint: 'Remove from this forecast'
         unlinked: '{id} removed from this forecast · the record is unchanged'
+        unlinkConfirm: 'Unlink {id} from this forecast? The record stays in the catalog.'
+        unlinkAction: 'Unlink'
         noAspects: 'No aspect recorded'
         alsoOn: 'Also on {count, plural, one {# other forecast} other {# other forecasts}}'
         dateUnknown: 'Date unknown · reported {reported}'
@@ -354,6 +356,8 @@ admin:
         noAspects: 'No aspects selected'
         reorder: 'Drag to reorder'
         removed: 'Removed "{type}"'
+        removeConfirm: 'Remove "{type}" from this forecast?'
+        removeAction: 'Remove'
         errors:
           aspects: 'Pick at least one aspect.'
           type: 'Pick a problem type.'
