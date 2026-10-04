@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { ForecastFormSchema } from '@components/features/admin/Forecasts/ForecastForm/schema'
 import { useToast } from '@components/hooks'
 import { useTranslations } from 'next-intl'
@@ -19,6 +19,13 @@ const useProblemsSection = (onEditingChange: (isEditing: boolean) => void) => {
     'avalancheProblems',
     'fieldKey'
   >({ keyName: 'fieldKey', name: 'avalancheProblems' })
+
+  // Undo runs later, against the list as it is then
+  const fieldsRef = useRef(fields)
+
+  useEffect(() => {
+    fieldsRef.current = fields
+  }, [fields])
 
   useEffect(() => {
     onEditingChange(editing !== null)
@@ -51,13 +58,24 @@ const useProblemsSection = (onEditingChange: (isEditing: boolean) => void) => {
   const handleDelete = (index: number) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { fieldKey, ...problem } = fields[index]
+    const previousKey = fields[index - 1]?.fieldKey
+
+    // Back after the problem it followed, even if the list was reordered since
+    const restore = () => {
+      const current = fieldsRef.current
+      const previousIndex = current.findIndex((field) => field.fieldKey === previousKey)
+
+      if (previousIndex !== -1) return insert(previousIndex + 1, problem)
+
+      insert(Math.min(index, current.length), problem)
+    }
 
     remove(index)
     toastAction(
       t('admin.forecast.editor.problems.removed', {
         type: t(`common.avalancheTypes.${problem.type}`),
       }),
-      { label: t('common.actions.undo'), onClick: () => insert(index, problem) },
+      { label: t('common.actions.undo'), onClick: restore },
     )
   }
 
