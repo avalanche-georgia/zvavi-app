@@ -18,7 +18,8 @@ export type RecentAvalancheFormProps = {
   // Panel variant: its Save button lives outside the form. True while saving
   // or while a save waits for photo uploads to finish.
   onSubmittingChange?: (isSubmitting: boolean) => void
-  onSuccess: VoidFunction
+  // Gets the new record's id after a create
+  onSuccess: (createdId?: number) => void
   regionId: RegionId
   variant?: 'page' | 'panel'
 }

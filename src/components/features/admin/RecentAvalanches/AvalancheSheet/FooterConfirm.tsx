@@ -1,4 +1,5 @@
-import { Button } from '@components/ui'
+import { FooterActions } from '@ds/patterns'
+import { Button } from '@ds/primitives'
 
 type FooterConfirmProps = {
   cancelLabel: string
@@ -20,15 +21,14 @@ const FooterConfirm = ({
   onCancel,
   onConfirm,
 }: FooterConfirmProps) => (
-  <div className="flex w-full flex-wrap items-center gap-2" role="alert">
-    <span className="mr-auto text-sm font-medium">{message}</span>
+  <FooterActions isConfirmation note={message}>
     <Button onClick={onCancel} variant="secondary">
       {cancelLabel}
     </Button>
-    <Button className="bg-red-600 hover:bg-red-700" disabled={isBusy} onClick={onConfirm}>
+    <Button isBusy={isBusy} onClick={onConfirm} variant="danger">
       {confirmLabel}
     </Button>
-  </div>
+  </FooterActions>
 )
 
 export default FooterConfirm

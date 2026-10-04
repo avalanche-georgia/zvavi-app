@@ -2,16 +2,21 @@ import { LoaderIcon } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 
-export type ButtonVariant = 'overlay' | 'primary' | 'secondary' | 'text'
+export type ButtonVariant = 'danger' | 'overlay' | 'primary' | 'secondary' | 'text'
 export type ButtonSize = 'lg' | 'md' | 'sm'
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   isBusy?: boolean
+  ref?: React.Ref<HTMLButtonElement>
   size?: ButtonSize
   variant?: ButtonVariant
 }
 
+// primary: the one main action of a footer / bar. secondary: every other boxed
+// action. danger: confirms a destructive action (Remove, Discard, Delete).
+// text: inline link-style action inside content.
 const variantClasses: Record<ButtonVariant, string> = {
+  danger: 'rounded-field bg-danger text-white hover:bg-danger/90',
   overlay: 'rounded-control bg-surface text-ink shadow-overlay hover:bg-tile',
   primary: 'rounded-field bg-primary text-white hover:bg-primary-hover',
   secondary: 'rounded-field border border-rule bg-surface text-ink hover:bg-tile',

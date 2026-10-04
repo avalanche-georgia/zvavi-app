@@ -10,6 +10,7 @@ import { RecentAvalancheForm } from '../RecentAvalancheForm'
 
 type AvalancheSheetBodyProps = {
   avalanche: AvalancheListItem | null
+  editNote?: React.ReactNode
   formId: string
   isError: boolean
   isPending: boolean
@@ -23,6 +24,7 @@ type AvalancheSheetBodyProps = {
 
 const AvalancheSheetBody = ({
   avalanche,
+  editNote,
   formId,
   isError,
   isPending,
@@ -70,16 +72,19 @@ const AvalancheSheetBody = ({
   }
 
   return (
-    <RecentAvalancheForm
-      avalanche={avalanche}
-      formId={formId}
-      onCancel={onEditCancel}
-      onDirtyChange={onDirtyChange}
-      onSubmittingChange={onSubmittingChange}
-      onSuccess={onSaved}
-      regionId={avalanche.regionId}
-      variant="panel"
-    />
+    <>
+      {editNote}
+      <RecentAvalancheForm
+        avalanche={avalanche}
+        formId={formId}
+        onCancel={onEditCancel}
+        onDirtyChange={onDirtyChange}
+        onSubmittingChange={onSubmittingChange}
+        onSuccess={onSaved}
+        regionId={avalanche.regionId}
+        variant="panel"
+      />
+    </>
   )
 }
 

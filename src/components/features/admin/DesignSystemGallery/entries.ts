@@ -1,3 +1,4 @@
+import FooterActionsGallery from '@ds/patterns/FooterActions/FooterActions.gallery'
 import FormCardGallery from '@ds/patterns/FormCard/FormCard.gallery'
 import StickyActionBarGallery from '@ds/patterns/StickyActionBar/StickyActionBar.gallery'
 import SuccessStateGallery from '@ds/patterns/SuccessState/SuccessState.gallery'
@@ -5,12 +6,17 @@ import BadgeGallery from '@ds/primitives/Badge/Badge.gallery'
 import ButtonGallery from '@ds/primitives/Button/Button.gallery'
 import CheckboxGallery from '@ds/primitives/Checkbox/Checkbox.gallery'
 import ChipGroupGallery from '@ds/primitives/ChipGroup/ChipGroup.gallery'
+import ConfirmPopoverGallery from '@ds/primitives/ConfirmPopover/ConfirmPopover.gallery'
+import DateFieldGallery from '@ds/primitives/DateField/DateField.gallery'
 import FieldGallery from '@ds/primitives/Field/Field.gallery'
+import IconButtonGallery from '@ds/primitives/IconButton/IconButton.gallery'
 import InfoTipGallery from '@ds/primitives/InfoTip/InfoTip.gallery'
+import RatingScaleGallery from '@ds/primitives/RatingScale/RatingScale.gallery'
 import SegmentedControlGallery from '@ds/primitives/SegmentedControl/SegmentedControl.gallery'
 import SelectGallery from '@ds/primitives/Select/Select.gallery'
 import StepperGallery from '@ds/primitives/Stepper/Stepper.gallery'
 import ToggleGridGallery from '@ds/primitives/ToggleGrid/ToggleGrid.gallery'
+import TooltipGallery from '@ds/primitives/Tooltip/Tooltip.gallery'
 
 import ColorTokens from './tokens/ColorTokens'
 import RadiusTokens from './tokens/RadiusTokens'
@@ -31,14 +37,20 @@ export const galleryEntries: GalleryEntry[] = [
   { Demo: ShadowTokens, id: 'shadows', title: 'Shadows' },
   { Demo: ButtonGallery, id: 'button', title: 'Button' },
   { Demo: BadgeGallery, id: 'badge', title: 'Badge' },
+  { Demo: ConfirmPopoverGallery, id: 'confirm-popover', title: 'ConfirmPopover' },
+  { Demo: IconButtonGallery, id: 'icon-button', title: 'IconButton' },
   { Demo: InfoTipGallery, id: 'info-tip', title: 'InfoTip' },
+  { Demo: TooltipGallery, id: 'tooltip', title: 'Tooltip' },
   { Demo: FieldGallery, id: 'field', title: 'Field & inputs' },
   { Demo: StepperGallery, id: 'stepper', title: 'Stepper' },
+  { Demo: DateFieldGallery, id: 'date-field', title: 'DateField' },
   { Demo: CheckboxGallery, id: 'checkbox', title: 'Checkbox' },
   { Demo: ChipGroupGallery, id: 'chip-group', title: 'ChipGroup' },
   { Demo: ToggleGridGallery, id: 'toggle-grid', title: 'ToggleGrid' },
   { Demo: SegmentedControlGallery, id: 'segmented-control', title: 'SegmentedControl' },
+  { Demo: RatingScaleGallery, id: 'rating-scale', title: 'RatingScale' },
   { Demo: SelectGallery, id: 'select', title: 'Select' },
+  { Demo: FooterActionsGallery, id: 'footer-actions', title: 'FooterActions' },
   { Demo: FormCardGallery, id: 'form-card', title: 'FormCard' },
   { Demo: StickyActionBarGallery, id: 'sticky-action-bar', title: 'StickyActionBar' },
   { Demo: SuccessStateGallery, id: 'success-state', title: 'SuccessState' },

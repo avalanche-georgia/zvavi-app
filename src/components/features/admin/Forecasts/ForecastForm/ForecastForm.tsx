@@ -1,103 +1,94 @@
 'use client'
 
-import { useToast, useUnsavedChangesWarning } from '@components/hooks'
-import { Button, TextInput } from '@components/ui'
-import type { ForecastFormData, RegionId } from '@domain/types'
+import { useState } from 'react'
+import { HazardLevels } from '@components/features/forecasts/HazardLevels'
+import { LinkedAvalanchesSection } from '@components/features/forecasts/LinkedAvalanches'
+import { ProblemsSection } from '@components/features/forecasts/Problems'
+import { useScrollToFirstError } from '@components/features/observations/form'
+import { useUnsavedChangesWarning } from '@components/hooks'
+import type { RegionId } from '@domain/types'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useTranslations } from 'next-intl'
 import { FormProvider, useForm } from 'react-hook-form'
 
-import { useForecastFormSubmit } from './hooks'
+import { useForecastFormSave, useForecastSavedNavigation, useSaveShortcut } from './hooks'
 
-import { InputBlock } from './common'
-import AdditionalTextFields from './AdditionalTextFields'
-import convertToFormSchema from './convertToFormSchema'
-import { HazardLevels } from './HazardLevels'
-import { ProblemsSection } from './ProblemsSection'
-import { RecentAvalanchesSection } from './RecentAvalanchesSection'
+import ForecastActionBar from './ForecastActionBar'
 import { type ForecastFormSchema, forecastFormSchema } from './schema'
-import TextAreaField from './TextAreaField'
-import ValidUntil from './ValidUntil'
+import SectionRail from './SectionRail'
+import { ConditionsCard, GeneralCard, SummaryCard } from './sections'
+import { sectionIds } from './useSectionStatus'
 
 type ForecastFormProps = {
-  initialFormData: ForecastFormData
-  onCancel: VoidFunction
-  onSuccess: VoidFunction
+  // undefined for a new forecast (including a duplicate)
+  forecastId?: number
+  initialValues: ForecastFormSchema
+  onClose: VoidFunction
   regionId: RegionId
 }
 
-const ForecastForm = ({ initialFormData, onCancel, onSuccess, regionId }: ForecastFormProps) => {
-  const t = useTranslations()
-  const tForecast = useTranslations('admin.forecast')
-  const { toastError } = useToast()
-
+const ForecastForm = ({ forecastId, initialValues, onClose, regionId }: ForecastFormProps) => {
+  const [isConfirmingCancel, setIsConfirmingCancel] = useState(false)
   const form = useForm<ForecastFormSchema>({
-    defaultValues: convertToFormSchema(initialFormData),
+    defaultValues: initialValues,
     resolver: zodResolver(forecastFormSchema),
   })
-
-  const {
-    formState: { errors, isDirty },
-    register,
-  } = form
-
-  useUnsavedChangesWarning(isDirty)
-
-  const { handleSubmit } = useForecastFormSubmit({
-    initialForecastId: initialFormData.baseFormData.id,
-    onSuccess,
+  const { isDirty } = form.formState
+  const { formRef, scrollToFirstError } = useScrollToFirstError()
+  const handleSaved = useForecastSavedNavigation(regionId)
+  const saver = useForecastFormSave({
+    form,
+    initialForecastId: forecastId,
+    onInvalid: scrollToFirstError,
+    onSaved: handleSaved,
     regionId,
   })
 
-  const onSubmit = () => {
-    form.handleSubmit(handleSubmit, (validationErrors) => {
-      toastError('ForecastForm validation', { error: validationErrors })
-    })()
-  }
+  useUnsavedChangesWarning(isDirty)
+  useSaveShortcut(() => saver.save(false))
 
-  const getError = (field: keyof ForecastFormSchema) =>
-    errors[field] ? t(`common.validation.${errors[field]?.message}`) : undefined
+  const handleCancel = () => (isDirty ? setIsConfirmingCancel(true) : onClose())
+
+  // Layout breakpoints are container queries: the admin sidebar takes part of the screen
 
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <FormProvider {...form}>
-      <div className="rounded-lg bg-white shadow-sm">
-        <section className="flex w-full flex-col gap-3 p-4 md:p-6">
-          <form className="flex w-full flex-col gap-6">
-            <div className="flex flex-col gap-4">
-              <h3 className="text-xl font-semibold">{tForecast('form.general.title')}</h3>
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-x-6">
-                <InputBlock
-                  error={getError('forecaster')}
-                  label={tForecast('form.general.labels.forecaster')}
-                  required
-                >
-                  {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-                  <TextInput className="flex-1" {...register('forecaster')} />
-                </InputBlock>
-
-                <ValidUntil error={getError('validUntil')} />
-              </div>
-            </div>
-
-            <TextAreaField type="summary" />
-            <hr />
-            <HazardLevels />
-            <hr />
-            <ProblemsSection />
-            <hr />
-            <RecentAvalanchesSection regionId={regionId} />
-            <hr />
-            <AdditionalTextFields />
+      <div className="@container">
+        <div className="mx-auto grid max-w-280 grid-cols-1 gap-10 px-3 pt-4 pb-8 @min-[700px]:px-8 @min-[700px]:pt-7 @min-[1180px]:grid-cols-[minmax(0,880px)_200px]">
+          <form
+            ref={formRef}
+            className="flex min-w-0 flex-col gap-4"
+            noValidate
+            onSubmit={(event) => event.preventDefault()}
+          >
+            <GeneralCard sectionId={sectionIds.general} />
+            <HazardLevels sectionId={sectionIds.hazard} />
+            <SummaryCard sectionId={sectionIds.summary} />
+            <ProblemsSection
+              onEditingChange={saver.setProblemEditorOpen}
+              sectionId={sectionIds.problems}
+            />
+            <LinkedAvalanchesSection
+              forecastId={saver.forecastId}
+              regionId={regionId}
+              sectionId={sectionIds.avalanches}
+            />
+            <ConditionsCard sectionId={sectionIds.conditions} />
+            <ForecastActionBar
+              isConfirmingCancel={isConfirmingCancel}
+              isDirty={isDirty}
+              isNew={saver.forecastId === undefined}
+              isSaving={saver.isSaving}
+              lastSavedAt={saver.lastSavedAt}
+              onCancel={handleCancel}
+              onCancelConfirm={onClose}
+              onCancelDismiss={() => setIsConfirmingCancel(false)}
+              onSave={() => saver.save(false)}
+              onSaveAndClose={() => saver.save(true)}
+            />
           </form>
-        </section>
-
-        <footer className="flex h-16 items-center justify-end gap-4 border-t px-4 md:px-6">
-          <Button onClick={onCancel} variant="secondary">
-            {t('common.actions.cancel')}
-          </Button>
-          <Button onClick={onSubmit}>{t('common.actions.submit')}</Button>
-        </footer>
+          <SectionRail />
+        </div>
       </div>
     </FormProvider>
   )

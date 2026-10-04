@@ -1,11 +1,11 @@
 import MarkdownContent from '@components/shared/MarkdownContent'
-import type { Avalanche } from '@domain/types'
+import type { PublicAvalanche } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import AvalancheAspects from './AvalancheAspects'
 import AvalancheHero from './AvalancheHero'
 
-const AvalancheItem = ({ avalanche }: { avalanche: Avalanche }) => {
+const AvalancheItem = ({ avalanche }: { avalanche: PublicAvalanche }) => {
   const t = useTranslations()
   const { aspects, description, trigger } = avalanche
 

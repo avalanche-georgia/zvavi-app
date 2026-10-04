@@ -4,14 +4,21 @@ import { useState } from 'react'
 import { backgroundColorByHazardLevel } from '@components/constants'
 import { hazardLevelNamesByScale } from '@domain/constants'
 import type { HazardLevels as HazardLevelsType, HazardLevelScale } from '@domain/types'
-import clsx from 'clsx'
 import { useTranslations } from 'next-intl'
 
 import HazardLevelInfoDrawer from './HazardLevelInfoDrawer'
 
+import { cn } from '@/lib/utils'
+
 type SelectedZone = { level: HazardLevelScale; zoneLabel: string }
 
-const Pyramid = ({ hazardLevels }: { hazardLevels: HazardLevelsType }) => {
+type PyramidProps = {
+  hazardLevels: HazardLevelsType
+  // false: a static picture (admin preview) — no zone info drawer
+  isInteractive?: boolean
+}
+
+const Pyramid = ({ hazardLevels, isInteractive = true }: PyramidProps) => {
   const { alpine, highAlpine, subAlpine } = hazardLevels
   const t = useTranslations()
   const [selected, setSelected] = useState<SelectedZone | null>(null)
@@ -52,23 +59,25 @@ const Pyramid = ({ hazardLevels }: { hazardLevels: HazardLevelsType }) => {
         {elevationZones.map(({ height, id, leftClip, leftWidth, rightClip, zone, zoneLabel }) => (
           <div
             key={id}
-            className={clsx('flex cursor-pointer', height)}
-            onClick={() => setSelected({ level: zone, zoneLabel })}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault()
-                setSelected({ level: zone, zoneLabel })
-              }
-            }}
-            role="button"
-            tabIndex={0}
+            className={cn('flex', isInteractive && 'cursor-pointer', height)}
+            {...(isInteractive && {
+              onClick: () => setSelected({ level: zone, zoneLabel }),
+              onKeyDown: (event: React.KeyboardEvent) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault()
+                  setSelected({ level: zone, zoneLabel })
+                }
+              },
+              role: 'button',
+              tabIndex: 0,
+            })}
           >
             <div
-              className={clsx(leftWidth, backgroundColorByHazardLevel[zone])}
+              className={cn(leftWidth, backgroundColorByHazardLevel[zone])}
               style={{ clipPath: leftClip }}
             />
             <div
-              className={clsx(
+              className={cn(
                 '-mx-px flex w-[97px] items-end justify-center pb-4',
                 backgroundColorByHazardLevel[zone],
               )}
@@ -78,19 +87,21 @@ const Pyramid = ({ hazardLevels }: { hazardLevels: HazardLevelsType }) => {
               </p>
             </div>
             <div
-              className={clsx('w-4', backgroundColorByHazardLevel[zone])}
+              className={cn('w-4', backgroundColorByHazardLevel[zone])}
               style={{ clipPath: rightClip }}
             />
           </div>
         ))}
       </div>
 
-      <HazardLevelInfoDrawer
-        isOpen={selected !== null}
-        level={selected?.level ?? highAlpine}
-        onClose={() => setSelected(null)}
-        zone={selected?.zoneLabel}
-      />
+      {isInteractive && (
+        <HazardLevelInfoDrawer
+          isOpen={selected !== null}
+          level={selected?.level ?? highAlpine}
+          onClose={() => setSelected(null)}
+          zone={selected?.zoneLabel}
+        />
+      )}
     </>
   )
 }

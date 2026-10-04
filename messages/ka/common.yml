@@ -20,6 +20,7 @@ common:
     submit: 'გაგზავნა'
     tryAgain: 'სცადეთ ხელახლა'
     visitWebsite: 'ვიზიტი ვებგვერდზე'
+    undo: 'დაბრუნება'
 
   labels:
     confirmPassword: 'დაადასტურე პაროლი'
@@ -69,6 +70,10 @@ common:
     highAlpine: 'ზედა ალპური'
     alpine: 'ალპური'
     subAlpine: 'ქვედა ალპური'
+  elevationZonesShort:
+    highAlpine: 'ზა'
+    alpine: 'ა'
+    subAlpine: 'ქა'
 
   aspects:
     allAspects: 'ყველა ექსპოზიცია'

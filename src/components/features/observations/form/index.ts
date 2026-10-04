@@ -1,4 +1,5 @@
 export { default as getPhotoSubmitErrorKey } from './getPhotoSubmitErrorKey'
+export { default as useScrollToFirstError } from './hooks/useScrollToFirstError'
 export { default as useSubmitAfterPhotoUploads } from './hooks/useSubmitAfterPhotoUploads'
 export {
   observationFieldsSchema,
