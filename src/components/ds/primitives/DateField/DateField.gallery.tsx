@@ -17,6 +17,7 @@ const DateFieldGallery = () => {
       <Field label="Valid until" required>
         <DateField onValueChange={setDateTime} timeLabel="Time" value={dateTime} withTime />
       </Field>
+      <DateField ariaLabel="Created from" className="w-37.5" onValueChange={setDate} value={date} />
       <Field error="Pick when this forecast expires." label="With error">
         <DateField onValueChange={() => undefined} value={null} withTime />
       </Field>

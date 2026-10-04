@@ -12,6 +12,7 @@ import FieldGallery from '@ds/primitives/Field/Field.gallery'
 import IconButtonGallery from '@ds/primitives/IconButton/IconButton.gallery'
 import InfoTipGallery from '@ds/primitives/InfoTip/InfoTip.gallery'
 import MenuGallery from '@ds/primitives/Menu/Menu.gallery'
+import PaginationGallery from '@ds/primitives/Pagination/Pagination.gallery'
 import RatingScaleGallery from '@ds/primitives/RatingScale/RatingScale.gallery'
 import SegmentedControlGallery from '@ds/primitives/SegmentedControl/SegmentedControl.gallery'
 import SelectGallery from '@ds/primitives/Select/Select.gallery'
@@ -52,6 +53,7 @@ export const galleryEntries: GalleryEntry[] = [
   { Demo: SegmentedControlGallery, id: 'segmented-control', title: 'SegmentedControl' },
   { Demo: RatingScaleGallery, id: 'rating-scale', title: 'RatingScale' },
   { Demo: SelectGallery, id: 'select', title: 'Select' },
+  { Demo: PaginationGallery, id: 'pagination', title: 'Pagination' },
   { Demo: FooterActionsGallery, id: 'footer-actions', title: 'FooterActions' },
   { Demo: FormCardGallery, id: 'form-card', title: 'FormCard' },
   { Demo: StickyActionBarGallery, id: 'sticky-action-bar', title: 'StickyActionBar' },

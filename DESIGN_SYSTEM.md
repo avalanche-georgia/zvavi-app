@@ -209,7 +209,7 @@ Update this table when a legacy component's last consumer is migrated.
 |---|---|---|---|
 | Button (+ `shared/ButtonLink`) | Headless UI | `primitives/Button` | ☐ |
 | InputBlock | — | `primitives/Field` | ☐ |
-| TextInput, SearchInput | Headless UI | `primitives/TextField` | ☐ |
+| TextInput, SearchInput | Headless UI | `primitives/TextField`, `primitives/SearchField` | ☐ |
 | Textarea | Headless UI | `primitives/Textarea` | ☐ |
 | NumberInput | base-ui | `primitives/Stepper` / `TextField` | ☐ |
 | ChipGroup | base-ui | `primitives/ChipGroup` | ☐ |
@@ -227,7 +227,7 @@ Update this table when a legacy component's last consumer is migrated.
 | IconButton | custom | `primitives/IconButton` | ☐ |
 | Alert | custom | `patterns/Alert` | ☐ |
 | Spinner, Skeleton | custom | `primitives/Spinner`, `Skeleton` | ☐ |
-| Pagination, DataTable | custom | `patterns/…` | ☐ |
+| Pagination, DataTable | custom | `primitives/Pagination`, `patterns/DataTable` | ☐ |
 | AspectElevationPicker | base-ui | moved to `features/observations/` | ✅ |
 | MiniCompass | custom | moves to `features/` | ☐ |
 | AutoScrollList, BrandedQRCode, FallbackImage, SortableItem | custom | reviewed individually (may stay generic in ds) | ☐ |
