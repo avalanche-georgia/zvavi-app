@@ -1,3 +1,4 @@
+import DataTableGallery from '@ds/patterns/DataTable/DataTable.gallery'
 import FooterActionsGallery from '@ds/patterns/FooterActions/FooterActions.gallery'
 import FormCardGallery from '@ds/patterns/FormCard/FormCard.gallery'
 import StickyActionBarGallery from '@ds/patterns/StickyActionBar/StickyActionBar.gallery'
@@ -58,4 +59,5 @@ export const galleryEntries: GalleryEntry[] = [
   { Demo: FormCardGallery, id: 'form-card', title: 'FormCard' },
   { Demo: StickyActionBarGallery, id: 'sticky-action-bar', title: 'StickyActionBar' },
   { Demo: SuccessStateGallery, id: 'success-state', title: 'SuccessState' },
+  { Demo: DataTableGallery, id: 'data-table', title: 'DataTable' },
 ]
