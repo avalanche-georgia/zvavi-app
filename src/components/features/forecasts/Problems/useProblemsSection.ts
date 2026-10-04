@@ -6,19 +6,22 @@ import { useFieldArray } from 'react-hook-form'
 
 import type { ProblemValues } from './problemSchema'
 
-// Which problem the inline editor is open for: a list key, or a new one
-export type ProblemEditing = { key: string } | { key: 'new' } | null
+// The problem being edited in the panel — a list key, or 'new'. `session` gives
+// each opening a fresh draft; the entry stays after closing so the panel can
+// slide out with its content.
+export type ProblemEditing = { isOpen: boolean; key: string; session: number } | null
 
-// The forecast's problem list: one editor open at a time, delete with Undo
+// The forecast's problem list: edited in a panel, deleted with Undo
 const useProblemsSection = (onEditingChange: (isEditing: boolean) => void) => {
   const t = useTranslations()
-  const { toastAction, toastInfo } = useToast()
+  const { toastAction } = useToast()
   const [editing, setEditing] = useState<ProblemEditing>(null)
   const { append, fields, insert, move, remove, update } = useFieldArray<
     ForecastFormSchema,
     'avalancheProblems',
     'fieldKey'
   >({ keyName: 'fieldKey', name: 'avalancheProblems' })
+  const isEditing = !!editing?.isOpen
 
   // Undo runs later, against the list as it is then
   const fieldsRef = useRef(fields)
@@ -28,20 +31,13 @@ const useProblemsSection = (onEditingChange: (isEditing: boolean) => void) => {
   }, [fields])
 
   useEffect(() => {
-    onEditingChange(editing !== null)
-  }, [editing, onEditingChange])
+    onEditingChange(isEditing)
+  }, [isEditing, onEditingChange])
 
-  const open = (key: string) => {
-    if (editing) {
-      toastInfo(t('admin.forecast.editor.problems.finishFirst'))
+  const open = (key: string) =>
+    setEditing((previous) => ({ isOpen: true, key, session: (previous?.session ?? 0) + 1 }))
 
-      return
-    }
-
-    setEditing({ key })
-  }
-
-  const close = () => setEditing(null)
+  const close = () => setEditing((previous) => previous && { ...previous, isOpen: false })
 
   const handleDone = (problem: ProblemValues) => {
     const index = fields.findIndex((field) => field.fieldKey === editing?.key)

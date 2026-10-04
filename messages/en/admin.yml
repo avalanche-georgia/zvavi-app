@@ -354,7 +354,6 @@ admin:
         noAspects: 'No aspects selected'
         reorder: 'Drag to reorder'
         removed: 'Removed "{type}"'
-        finishFirst: 'Finish the problem you''re editing first'
         errors:
           aspects: 'Pick at least one aspect.'
           type: 'Pick a problem type.'

@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl'
 
 import ProblemEditor from './ProblemEditor'
 import ProblemList from './ProblemList'
-import { emptyProblemDraft } from './problemSchema'
+import { emptyProblemDraft, type ProblemDraft, type ProblemValues } from './problemSchema'
 import ProblemsEmpty from './ProblemsEmpty'
 import useProblemsSection from './useProblemsSection'
 
@@ -17,23 +17,27 @@ type ProblemsSectionProps = {
   sectionId: string
 }
 
-// Problems belong to this forecast: edited in place, saved with the forecast
+// A list entry without its field-array key
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const toDraft = ({ fieldKey, ...problem }: ProblemValues & { fieldKey: string }) => problem
+
+// Problems belong to this forecast: edited in a panel, saved with the forecast
 const ProblemsSection = ({ onEditingChange, sectionId }: ProblemsSectionProps) => {
   const t = useTranslations()
   const { close, editing, fields, handleDelete, handleDone, move, open } =
     useProblemsSection(onEditingChange)
-  const isEmpty = fields.length === 0 && editing === null
+  const isEmpty = fields.length === 0
+  const editedIndex = fields.findIndex((field) => field.fieldKey === editing?.key)
+  const isNew = editedIndex === -1
+  const initialDraft: ProblemDraft = isNew
+    ? { ...emptyProblemDraft, order: fields.length }
+    : toDraft(fields[editedIndex])
 
   return (
     <FormCard
       actions={
         !isEmpty && (
-          <Button
-            disabled={editing !== null}
-            onClick={() => open('new')}
-            size="sm"
-            variant="secondary"
-          >
+          <Button onClick={() => open('new')} size="sm" variant="secondary">
             <Plus aria-hidden className="size-4" />
             {t('admin.forecast.editor.problems.add')}
           </Button>
@@ -51,26 +55,18 @@ const ProblemsSection = ({ onEditingChange, sectionId }: ProblemsSectionProps) =
       {isEmpty ? (
         <ProblemsEmpty onAdd={() => open('new')} />
       ) : (
-        <div className="flex flex-col gap-3">
-          <ProblemList
-            editing={editing}
-            onCancel={close}
-            onDelete={handleDelete}
-            onDone={handleDone}
-            onEdit={open}
-            onReorder={move}
-            problems={fields}
-          />
-          {editing?.key === 'new' && (
-            <ProblemEditor
-              initialDraft={{ ...emptyProblemDraft, order: fields.length }}
-              isNew
-              number={fields.length + 1}
-              onCancel={close}
-              onDone={handleDone}
-            />
-          )}
-        </div>
+        <ProblemList onDelete={handleDelete} onEdit={open} onReorder={move} problems={fields} />
+      )}
+      {editing && (
+        <ProblemEditor
+          key={editing.session}
+          initialDraft={initialDraft}
+          isNew={isNew}
+          isOpen={editing.isOpen}
+          number={isNew ? fields.length + 1 : editedIndex + 1}
+          onCancel={close}
+          onDone={handleDone}
+        />
       )}
     </FormCard>
   )
