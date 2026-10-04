@@ -45,7 +45,13 @@ const ProblemList = ({ onDelete, onEdit, onReorder, problems }: ProblemListProps
     <DragDropProvider onDragEnd={handleDragEnd}>
       <ul className="flex flex-col gap-3">
         {problems.map(({ fieldKey, ...problem }, index) => (
-          <SortableItem key={fieldKey} className="group" id={fieldKey} index={index}>
+          <SortableItem
+            key={fieldKey}
+            // Card radius, so the drop-target ring follows the card's corners
+            className="group rounded-[14px]"
+            id={fieldKey}
+            index={index}
+          >
             {(handleRef) => (
               <ProblemCard
                 dragHandleRef={handleRef}
