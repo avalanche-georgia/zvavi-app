@@ -1,5 +1,6 @@
 'use client'
 
+import { LoadError } from '@components/shared'
 import { useGetCurrentForecast } from '@data/hooks/forecasts'
 import type { AdminForecast } from '@domain/types'
 import { useNow } from 'next-intl'
@@ -28,12 +29,20 @@ type ForecastViewContentProps = {
 const ForecastViewContent = ({ forecast, onLeave }: ForecastViewContentProps) => {
   const now = useNow({ updateInterval: 60_000 })
   const actions = useForecastViewActions(forecast, onLeave)
-  const { data: currentForecast = null, isPending } = useGetCurrentForecast({
+  const {
+    data: currentForecast = null,
+    isError,
+    isPending,
+    refetch,
+  } = useGetCurrentForecast({
     isShort: true,
     regionId: forecast.regionId,
   })
 
+  const handleRetry = () => void refetch()
+
   if (isPending) return <CenteredSpinner />
+  if (isError) return <LoadError onRetry={handleRetry} />
 
   const status = getViewStatus(forecast, currentForecast, now)
   const { avalancheProblems } = getInitialFormValues(forecast)
@@ -54,6 +63,8 @@ const ForecastViewContent = ({ forecast, onLeave }: ForecastViewContentProps) =>
           <StatusBanner
             currentForecast={currentForecast}
             forecast={forecast}
+            isDuplicating={actions.isDuplicateNavigating}
+            now={now}
             onDuplicate={actions.onDuplicate}
             status={status}
           />

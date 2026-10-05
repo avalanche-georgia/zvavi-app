@@ -30,13 +30,23 @@ const ViewActions = ({ actions, forecast }: ViewActionsProps) => {
           {t('admin.forecasts.actions.publish')}
         </Button>
       )}
-      <Button isBusy={actions.isNavigating} onClick={actions.onEdit} size="sm" variant="secondary">
+      <Button
+        isBusy={actions.isEditNavigating}
+        onClick={actions.onEdit}
+        size="sm"
+        variant="secondary"
+      >
         <Pencil aria-hidden className="size-4" />
         {t('common.actions.edit')}
       </Button>
       {isPublished && (
         <>
-          <Button onClick={actions.onDuplicate} size="sm" variant="secondary">
+          <Button
+            isBusy={actions.isDuplicateNavigating}
+            onClick={actions.onDuplicate}
+            size="sm"
+            variant="secondary"
+          >
             <Copy aria-hidden className="size-4" />
             {t('admin.forecasts.actions.duplicate')}
           </Button>

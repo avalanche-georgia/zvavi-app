@@ -1,14 +1,14 @@
 'use client'
 
 import type { AdminForecast, Forecast } from '@domain/types'
-import { useNow, useTranslations } from 'next-intl'
+import { useTranslations } from 'next-intl'
 
 import type { ForecastViewStatus } from './model'
 import { useListDates, useTimeLeft } from '../shared'
 
 type CurrentForecast = Pick<Forecast, 'createdAt' | 'id'> | null
 
-export type BannerContent = {
+type BannerContent = {
   className: string
   hasClock?: boolean
   lead: string
@@ -21,9 +21,9 @@ const useBannerContent = (
   forecast: AdminForecast,
   status: ForecastViewStatus,
   currentForecast: CurrentForecast,
+  now: Date,
 ): BannerContent => {
   const t = useTranslations()
-  const now = useNow({ updateInterval: 60_000 })
   const { formatDate, formatTime } = useListDates()
   const { formatAgo, formatLeft } = useTimeLeft()
   const { createdAt, regionId, validUntil } = forecast

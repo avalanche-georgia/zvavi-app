@@ -8,6 +8,7 @@ import { Link } from 'src/i18n/navigation'
 
 import type { ForecastViewStatus } from './model'
 import useBannerContent from './useBannerContent'
+import { LinkPendingIndicator } from '../shared'
 
 import { cn } from '@/lib/utils'
 import { routes } from '@/routes'
@@ -15,13 +16,27 @@ import { routes } from '@/routes'
 type StatusBannerProps = {
   currentForecast: Pick<Forecast, 'createdAt' | 'id'> | null
   forecast: AdminForecast
+  isDuplicating: boolean
+  now: Date
   onDuplicate: VoidFunction
   status: ForecastViewStatus
 }
 
-const StatusBanner = ({ currentForecast, forecast, onDuplicate, status }: StatusBannerProps) => {
+const StatusBanner = ({
+  currentForecast,
+  forecast,
+  isDuplicating,
+  now,
+  onDuplicate,
+  status,
+}: StatusBannerProps) => {
   const t = useTranslations()
-  const { className, hasClock, lead, rest } = useBannerContent(forecast, status, currentForecast)
+  const { className, hasClock, lead, rest } = useBannerContent(
+    forecast,
+    status,
+    currentForecast,
+    now,
+  )
 
   return (
     <div
@@ -36,7 +51,7 @@ const StatusBanner = ({ currentForecast, forecast, onDuplicate, status }: Status
         <strong className="font-semibold">{lead}</strong> {rest}
       </p>
       {status === 'expired' && (
-        <Button onClick={onDuplicate} size="sm" variant="secondary">
+        <Button isBusy={isDuplicating} onClick={onDuplicate} size="sm" variant="secondary">
           {t('admin.forecasts.actions.duplicate')}
         </Button>
       )}
@@ -46,6 +61,7 @@ const StatusBanner = ({ currentForecast, forecast, onDuplicate, status }: Status
           href={routes.admin.forecasts.view(currentForecast.id)}
         >
           {t('admin.forecasts.view.banner.superseded.open', { id: currentForecast.id })}
+          <LinkPendingIndicator />
         </Link>
       )}
     </div>

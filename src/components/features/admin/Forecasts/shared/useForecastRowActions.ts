@@ -26,12 +26,13 @@ const useForecastRowActions = (
 ) => {
   const t = useTranslations()
   const router = useRouter()
-  const [isNavigating, startNavigation] = useTransition()
+  const [isEditNavigating, startEditNavigation] = useTransition()
+  const [isDuplicateNavigating, startDuplicateNavigation] = useTransition()
   const { toastAction, toastError, toastSuccess } = useToast()
   const toastWriteError = useWriteErrorToast()
   const [, copyToClipboard] = useCopyToClipboard()
   const { isPending: isStatusChanging, mutateAsync: toggleStatus } = useForecastStatusToggle()
-  const { mutateAsync: deleteForecast } = useForecastDelete()
+  const { isPending: isDeleting, mutateAsync: deleteForecast } = useForecastDelete()
   const publicPath = routes.forecastsByRegion(regionId).view(id)
 
   const setStatus = async (status: Forecast['status']) => {
@@ -76,14 +77,25 @@ const useForecastRowActions = (
     toastSuccess(t('admin.forecasts.messages.linkCopied'))
   }
 
-  const navigate = (href: string) => startNavigation(() => router.push(href))
+  const handleEdit = () =>
+    startEditNavigation(() =>
+      router.push(routes.admin.forecasts.editInRegion(id, regionId, editFrom)),
+    )
+
+  const handleDuplicate = () =>
+    startDuplicateNavigation(() =>
+      router.push(routes.admin.forecasts.duplicateInRegion(id, regionId)),
+    )
 
   return {
-    isNavigating,
+    isDeleting,
+    isDuplicateNavigating,
+    isEditNavigating,
+    isNavigating: isEditNavigating || isDuplicateNavigating,
     isStatusChanging,
     onDelete: handleDelete,
-    onDuplicate: () => navigate(routes.admin.forecasts.duplicateInRegion(id, regionId)),
-    onEdit: () => navigate(routes.admin.forecasts.editInRegion(id, regionId, editFrom)),
+    onDuplicate: handleDuplicate,
+    onEdit: handleEdit,
     onLinkCopy: handleLinkCopy,
     onPublicPageOpen: () => void window.open(publicPath, '_blank', 'noopener'),
     onPublish: () => changeStatus('published'),

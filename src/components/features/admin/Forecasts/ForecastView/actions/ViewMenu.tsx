@@ -2,7 +2,7 @@
 
 import { useRef } from 'react'
 import { ConfirmPopover, IconButton, Menu, MenuItem, MenuSeparator } from '@ds/primitives'
-import { Copy, Ellipsis, EyeOff, Link2, Trash2 } from 'lucide-react'
+import { Copy, Ellipsis, EyeOff, Link2, LoaderIcon, Trash2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 import type { ForecastViewActions } from './useForecastViewActions'
@@ -19,9 +19,15 @@ const ViewMenu = ({ actions, forecastId, isPublished }: ViewMenuProps) => {
   const triggerRef = useRef<HTMLButtonElement>(null)
   const deleteConfirm = useDeleteAfterMenuClose()
 
+  const isWorking = actions.isDeleting || actions.isNavigating
+
   const trigger = (
     <IconButton ref={triggerRef} aria-label={t('admin.forecasts.actions.more')}>
-      <Ellipsis className="size-4.5" />
+      {isWorking ? (
+        <LoaderIcon className="size-4.5 animate-spin" />
+      ) : (
+        <Ellipsis className="size-4.5" />
+      )}
     </IconButton>
   )
 

@@ -1,6 +1,8 @@
 import { useTranslations } from 'next-intl'
 import { Link } from 'src/i18n/navigation'
 
+import { LinkPendingIndicator } from '../shared'
+
 import { routes } from '@/routes'
 
 const ViewNotFound = () => {
@@ -14,6 +16,7 @@ const ViewNotFound = () => {
         href={routes.admin.forecasts.root}
       >
         {t('common.actions.backToList')}
+        <LinkPendingIndicator />
       </Link>
     </div>
   )
