@@ -1,13 +1,21 @@
 import { supabase } from '@data'
 import { handleSupabaseError } from '@data/helpers'
 import { forecastsKeys } from '@data/query-keys'
-import type { ForecastListItem } from '@domain/types'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import type { AdminForecast, ForecastListItem } from '@domain/types'
+import { type Query, useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { ForecastWriteDeniedError } from './errors'
 import type { ForecastStatusToggleVariables } from './types'
 
-type ToggleContext = { previousRow?: Pick<ForecastListItem, 'publishedAt' | 'status'> }
+type ToggleContext = {
+  previousItems: [readonly unknown[], AdminForecast | undefined][]
+  previousRow?: Pick<ForecastListItem, 'publishedAt' | 'status'>
+}
+
+// Any cached single-forecast query for this id: [all, regionId?, 'item', { forecastId }]
+const isItemOf = (forecastId: number) => (query: Query) =>
+  query.queryKey[2] === 'item' &&
+  (query.queryKey[3] as { forecastId?: number } | undefined)?.forecastId === forecastId
 
 const toggleStatus = async ({ forecastId, status }: ForecastStatusToggleVariables) => {
   const { data, error } = await supabase
@@ -39,8 +47,11 @@ const useForecastStatusToggle = () => {
 
     // Only this row goes back — other rows may have their own changes in flight
     onError: (_error, variables, context) => {
-      if (!context?.previousRow) return
-      patchRow(variables, context.previousRow)
+      if (context?.previousRow) patchRow(variables, context.previousRow)
+
+      context?.previousItems.forEach(([queryKey, data]) =>
+        queryClient.setQueryData<AdminForecast>(queryKey, data),
+      )
     },
 
     // The row changes at once; the DB trigger sets the real published_at
@@ -56,7 +67,23 @@ const useForecastStatusToggle = () => {
 
       patchRow(variables, { publishedAt, status: variables.status })
 
-      return { previousRow: row && { publishedAt: row.publishedAt, status: row.status } }
+      const itemFilter = {
+        predicate: isItemOf(variables.forecastId),
+        queryKey: forecastsKeys.all,
+      }
+
+      await queryClient.cancelQueries(itemFilter)
+
+      const previousItems = queryClient.getQueriesData<AdminForecast>(itemFilter)
+
+      queryClient.setQueriesData<AdminForecast>(itemFilter, (forecast) =>
+        forecast ? { ...forecast, publishedAt, status: variables.status } : forecast,
+      )
+
+      return {
+        previousItems,
+        previousRow: row && { publishedAt: row.publishedAt, status: row.status },
+      }
     },
     // Refreshes `current` (public rule), history and the dashboard. Not awaited, so
     // mutateAsync (and the Undo toast) don't wait for every refetch.
