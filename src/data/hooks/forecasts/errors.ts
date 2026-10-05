@@ -14,3 +14,12 @@ export class ForecastPublishRejectedError extends Error {
     this.name = 'ForecastPublishRejectedError'
   }
 }
+
+// The DB refused a save of a published forecast: valid_until would no longer
+// be after its publication time (handle_published_at raises check_violation)
+export class ForecastSaveRejectedError extends Error {
+  constructor() {
+    super('Forecast save was rejected')
+    this.name = 'ForecastSaveRejectedError'
+  }
+}

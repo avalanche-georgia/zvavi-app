@@ -22,17 +22,16 @@ const ConfirmationDialog = ({
   title,
   variant = 'confirm',
 }: ConfirmationDialogProps) => {
-  const tActions = useTranslations('common.actions')
-  const tModal = useTranslations(`modal.${variant}`)
+  const t = useTranslations()
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title={title || tModal(`title`)}>
-      <ModalBody>{description || tModal('description')}</ModalBody>
+    <Modal isOpen={isOpen} onClose={onClose} title={title || t(`modal.${variant}.title`)}>
+      <ModalBody>{description || t(`modal.${variant}.description`)}</ModalBody>
       <ModalFooter>
         <Button className="ml-auto" onClick={onCancel || onClose} variant="secondary">
-          {tActions('cancel')}
+          {t('common.actions.cancel')}
         </Button>
-        <Button onClick={onConfirm}>{confirmLabel || tActions(variant)}</Button>
+        <Button onClick={onConfirm}>{confirmLabel || t(`common.actions.${variant}`)}</Button>
       </ModalFooter>
     </Modal>
   )

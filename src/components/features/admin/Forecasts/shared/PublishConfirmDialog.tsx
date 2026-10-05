@@ -2,13 +2,13 @@
 
 import { ConfirmationDialog } from '@components/shared'
 import { hazardLevelNamesByScale, sortedElevationZones } from '@domain/constants'
-import type { HazardLevels, HazardLevelScale, RegionId } from '@domain/types'
+import type { ForecastListItem, HazardLevelScale, RegionId } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import useListDates from './useListDates'
 
 type PublishConfirmDialogProps = {
-  forecast: { hazardLevels: HazardLevels; id: number; validUntil: string | null }
+  forecast: Pick<ForecastListItem, 'hazardLevels' | 'id' | 'validUntil'>
   isOpen: boolean
   onConfirm: VoidFunction
   onOpenChange: (isOpen: boolean) => void

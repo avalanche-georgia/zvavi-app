@@ -3,7 +3,7 @@
 import { useState, useTransition } from 'react'
 import { useToast } from '@components/hooks'
 import { useForecastDelete, useForecastStatusToggle } from '@data/hooks/forecasts'
-import type { Forecast, RegionId } from '@domain/types'
+import type { Forecast, ForecastListItem, RegionId } from '@domain/types'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'src/i18n/navigation'
 import { useCopyToClipboard } from 'usehooks-ts'
@@ -20,7 +20,7 @@ type ForecastRowActionsOptions = {
 }
 
 const useForecastRowActions = (
-  { id, validUntil }: { id: number; validUntil: string | null },
+  { id, validUntil }: Pick<ForecastListItem, 'id' | 'validUntil'>,
   regionId: RegionId,
   { editFrom, onDeleted }: ForecastRowActionsOptions = {},
 ) => {
@@ -37,8 +37,7 @@ const useForecastRowActions = (
   const publicPath = routes.forecastsByRegion(regionId).view(id)
 
   // Pre-check: the DB rejects publishing without a future valid_until — say why up front
-  const hasFutureValidity = () =>
-    Boolean(validUntil) && new Date(validUntil!).getTime() > Date.now()
+  const hasFutureValidity = () => (validUntil ? new Date(validUntil).getTime() > Date.now() : false)
 
   const rejectPublish = () =>
     toastError('useForecastRowActions | publish', {

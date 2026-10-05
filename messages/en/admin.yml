@@ -240,6 +240,7 @@ admin:
       unpublished: 'Unpublished — now a draft'
       writeDenied: 'Not saved — you may not have permission, or the forecast no longer exists.'
       publishRejected: 'Not published — set a valid-until date in the future first.'
+      saveRejected: 'Not saved — a published forecast must stay valid until after its publication time.'
     publishConfirm:
       title: 'Publish forecast #{id}?'
       region: 'Region'

@@ -10,6 +10,9 @@ import keepFocusInTable from './keepFocusInTable'
 import RowMenu from './RowMenu'
 import { PublishConfirmDialog, useForecastRowActions } from '../../shared'
 
+// Headless UI dialog close transition (300 ms) plus a margin
+const dialogCloseMs = 320
+
 type RowActionsProps = {
   forecast: ForecastListItem
   // Card layout: ⋯ only
@@ -26,9 +29,10 @@ const RowActions = ({ forecast, isCompact = false, regionId }: RowActionsProps) 
 
   // The Publish button goes away with the draft status — carry on from ⋯ (or the table,
   // if the row leaves the current filter)
+  // The dialog keeps focus until its close transition ends, so move it to ⋯ afterwards
   const handlePublishConfirm = () => {
-    menuTriggerRef.current?.focus()
     keepFocusInTable(menuTriggerRef.current)
+    setTimeout(() => menuTriggerRef.current?.focus(), dialogCloseMs)
     void actions.publishConfirm.onConfirm()
   }
 
