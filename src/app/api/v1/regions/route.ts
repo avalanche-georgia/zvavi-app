@@ -1,7 +1,6 @@
 import fetchPublicRegionZones from '@data/queries/fetchPublicRegionZones'
 
-import { cachedResponse, optionsResponse, problemResponse } from '../responseHeaders'
-
+import { cachedResponse, optionsResponse, problemResponse } from '@/api/v1/responseHeaders'
 import buildRegionsGeoJson from '@/lib/caaml/geojson'
 
 export const dynamic = 'force-dynamic'
