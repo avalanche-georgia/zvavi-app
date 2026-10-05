@@ -240,6 +240,9 @@ admin:
       unpublished: 'გამოქვეყნება გაუქმდა — ახლა მონახაზია'
       writeDenied: 'არ შეინახა — შესაძლოა არ გაქვთ უფლება, ან პროგნოზი აღარ არსებობს.'
     view:
+      breadcrumb: 'ნავიგაცია'
+      byForecaster: 'ავტორი: {name}'
+      untilTime: '{time}-მდე'
       daysAgo: '{count} დღის წინ'
       hoursAgo: '{count} სთ-ის წინ'
       statuses:
