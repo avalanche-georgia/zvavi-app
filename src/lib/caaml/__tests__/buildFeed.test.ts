@@ -73,3 +73,19 @@ describe('buildFeed with an unexpected error', () => {
     })
   })
 })
+
+describe('buildFeed without fallback (spec §5.4)', () => {
+  it('omits the region when its newest published forecast is invalid', () => {
+    const newest = candidateOf('typical')
+
+    newest.forecast.validUntil = newest.forecast.publishedAt
+
+    const { collection, failures } = buildFeed([newest], now)
+
+    expect(collection).toBeNull()
+    expect(failures[0]).toMatchObject({
+      forecastId: 412,
+      reason: 'validUntil is not after publishedAt',
+    })
+  })
+})

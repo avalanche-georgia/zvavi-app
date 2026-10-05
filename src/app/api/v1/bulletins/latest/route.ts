@@ -16,8 +16,14 @@ export const GET = async (request: Request) => {
   try {
     const { collection, failures } = buildFeed(await fetchPublicBulletinSources(), new Date())
 
-    // Ids and field names only, never forecast content
-    failures.forEach((failure) => console.error(`${logPrefix} bulletin omitted:`, failure))
+    // Ids and field names only, never forecast content. The region is omitted —
+    // never replaced by an older published forecast.
+    failures.forEach(({ forecastId, reason, regionId, stack }) =>
+      console.error(
+        `${logPrefix} invalid forecast ${forecastId}: ${reason}`,
+        ...(stack ? [{ regionId, stack }] : [{ regionId }]),
+      ),
+    )
 
     if (!collection) return problemResponse(request, errorTitle)
 

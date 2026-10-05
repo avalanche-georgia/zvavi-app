@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { GET, HEAD, OPTIONS } from '../bulletins/latest/route'
 
@@ -30,7 +30,14 @@ const expectedHeaders = {
 const headersOf = (response: Response) => Object.fromEntries(response.headers.entries())
 
 describe('GET /api/v1/bulletins/latest', () => {
+  afterEach(() => {
+    vi.useRealTimers()
+  })
+
+  // The fixtures are dated December 2026: run the route at the fixtures' time
   beforeEach(() => {
+    vi.useFakeTimers({ toFake: ['Date'] })
+    vi.setSystemTime(new Date(typical.now))
     fetchSources.mockReset()
     fetchSources.mockResolvedValue([candidate()])
     vi.spyOn(console, 'error').mockImplementation(() => {})
@@ -142,8 +149,35 @@ describe('GET /api/v1/bulletins/latest', () => {
     expect(response.status).toBe(200)
     expect((await response.json()).bulletins).toHaveLength(1)
     expect(console.error).toHaveBeenCalledWith(
-      '[GET /api/v1/bulletins/latest] bulletin omitted:',
-      expect.objectContaining({ forecastId: 9, regionId: 'svaneti' }),
+      expect.stringMatching(
+        /^\[GET \/api\/v1\/bulletins\/latest\] invalid forecast 9: .*publishedAt/,
+      ),
+      expect.objectContaining({ regionId: 'svaneti' }),
     )
+  })
+
+  // Spec §5.4: publish → undo → re-publish, seen by the API as two candidate sets
+  it('keeps the bulletinID but changes publicationTime and ETag after undo and re-publish', async () => {
+    const firstResponse = await GET(request())
+    const first = await firstResponse.json()
+
+    // Undo: the row is a draft, so no candidate at all
+    fetchSources.mockResolvedValue([])
+
+    expect((await (await GET(request())).json()).bulletins).toEqual([])
+
+    // Re-publish: same forecast id, new published_at
+    fetchSources.mockResolvedValue([
+      candidate({ ...typical.forecast, publishedAt: '2026-12-10T14:30:00Z' }),
+    ])
+
+    const secondResponse = await GET(request())
+    const second = await secondResponse.json()
+
+    expect(second.bulletins[0].bulletinID).toBe(first.bulletins[0].bulletinID)
+    expect(first.bulletins[0].publicationTime).toBe('2026-12-10T14:05:11Z')
+    expect(second.bulletins[0].publicationTime).toBe('2026-12-10T14:30:00Z')
+    expect(second.bulletins[0].validTime.startTime).toBe('2026-12-10T14:30:00Z')
+    expect(secondResponse.headers.get('etag')).not.toBe(firstResponse.headers.get('etag'))
   })
 })

@@ -21,13 +21,19 @@ const textBlock = (markdown: string | null) => {
   return comment ? { comment } : undefined
 }
 
-// Fail closed: never repair a forecast, never extend or invent a validity window
-const assertUsable = ({ hazardLevels, publishedAt, validUntil }: BulletinForecast) => {
+// Clock-skew allowance between the DB (sets published_at) and this server
+const maxPublishedAtLeadMs = 60_000
+
+// Fail closed: never repair a forecast, never extend or invent a validity window,
+// never fall back to created_at
+const assertUsable = ({ hazardLevels, publishedAt, validUntil }: BulletinForecast, now: Date) => {
   const publishedTime = new Date(publishedAt ?? '').getTime()
   const validUntilTime = new Date(validUntil ?? '').getTime()
 
   if (Number.isNaN(publishedTime))
     throw new InvalidForecastError('publishedAt is missing or invalid')
+  if (publishedTime - now.getTime() > maxPublishedAtLeadMs)
+    throw new InvalidForecastError('publishedAt is in the future')
   if (Number.isNaN(validUntilTime))
     throw new InvalidForecastError('validUntil is missing or invalid')
   if (validUntilTime <= publishedTime)
@@ -42,7 +48,7 @@ const assertUsable = ({ hazardLevels, publishedAt, validUntil }: BulletinForecas
 
 // Pure: same input → same bulletin. Throws InvalidForecastError.
 const buildBulletin = ({ forecast, now, region }: BuildBulletinParams): CaamlBulletin => {
-  assertUsable(forecast)
+  assertUsable(forecast, now)
 
   const thresholds = { high: region.elevationHighM, low: region.elevationLowM }
 
