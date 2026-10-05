@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { GET } from '../regions/route'
+import { GET, HEAD } from '../regions/route'
 
 const fetchZones = vi.hoisted(() => vi.fn())
 
@@ -19,7 +19,7 @@ const zone = {
   type: 'FeatureCollection',
 }
 const region = { caamlRegionId: 'GE-MM-01', forecastZone: zone, id: 'gudauri', nameEn: 'Gudauri' }
-const request = () => new Request('https://avalanche.ge/api/v1/regions')
+const request = (init?: RequestInit) => new Request('https://avalanche.ge/api/v1/regions', init)
 
 describe('GET /api/v1/regions', () => {
   beforeEach(() => {
@@ -61,5 +61,18 @@ describe('GET /api/v1/regions', () => {
     fetchZones.mockRejectedValue(new Error('down'))
 
     expect((await GET(request())).status).toBe(500)
+  })
+
+  it('answers If-None-Match with 304 and HEAD without a body', async () => {
+    fetchZones.mockResolvedValue([region])
+
+    const etag = (await GET(request())).headers.get('etag')!
+    const notModified = await GET(request({ headers: { 'If-None-Match': etag } }))
+    const head = await HEAD(request({ method: 'HEAD' }))
+
+    expect(notModified.status).toBe(304)
+    expect(await notModified.text()).toBe('')
+    expect(head.headers.get('etag')).toBe(etag)
+    expect(await head.text()).toBe('')
   })
 })
