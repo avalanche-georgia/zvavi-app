@@ -8,7 +8,7 @@ import { convertSnakeToCamel, handleSupabaseError } from '../../helpers'
 import { forecastsKeys } from '../../query-keys'
 
 type QueryKey = ReturnType<typeof forecastsKeys.item>
-type Response = AdminForecast | undefined
+type Response = AdminForecast | null
 
 type QueryOptions = Omit<
   UseQueryOptions<Response, unknown, Response, QueryKey>,
@@ -27,11 +27,11 @@ const fetchForecast = async (forecastId: number, regionId?: RegionId): Promise<R
 
   const { data: forecastData, error: forecastError } = await query.single()
 
-  if (forecastError?.code === 'PGRST116') return undefined
+  if (forecastError?.code === 'PGRST116') return null
 
   handleSupabaseError(forecastError)
 
-  if (!forecastData) return undefined
+  if (!forecastData) return null
 
   const { data: links, error: linksError } = await supabase
     .from('forecast_avalanche')
