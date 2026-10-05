@@ -21,7 +21,7 @@ Interactive map showing the forecast area boundary for each region, giving users
 
 ## Forecasts for Partner Apps
 
-Forecasts are available to partner apps in the European standard format used by avalanche warning services across the Alps. Mountain and navigation apps can show each region's current danger levels, avalanche problems and forecast texts, together with the forecast area outline and a link back to the full forecast on our website. Access is open and free, and updates reach partner apps within minutes of publishing.
+Forecasts are available to partner apps in the European standard format used by avalanche warning services across the Alps. Mountain and navigation apps can show each region's current danger levels, avalanche problems and forecast texts, together with the forecast area outline and a link back to the full forecast on our website. Updates reach partner apps within minutes of publishing.
 
 ## Forecast Archive
 
