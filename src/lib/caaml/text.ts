@@ -10,6 +10,7 @@ type MarkdownNode = {
   alt?: string | null
   children?: MarkdownNode[]
   type: string
+  url?: string
   value?: string
 }
 
@@ -51,6 +52,9 @@ const blockToParagraphs = (node: MarkdownNode, format: TextFormat): string[] => 
   }
 
   if (node.children) return node.children.flatMap((child) => blockToParagraphs(child, format))
+
+  // Link reference definitions (`[label]: url`) keep their URL
+  if (node.type === 'definition') return [toText(node.url ?? '', format)]
 
   if (node.value) return [toText(node.value, format)]
 

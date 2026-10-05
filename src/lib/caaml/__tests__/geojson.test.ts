@@ -38,6 +38,7 @@ describe('buildRegionsGeoJson', () => {
       { coordinates: square(), type: 'Polygon' },
       { coordinates: [square(1)], type: 'MultiPolygon' },
       { coordinates: [44, 42], type: 'Point' },
+      { geometries: [], type: 'GeometryCollection' },
     )
     const { featureCollection } = buildRegionsGeoJson([{ ...region, forecastZone: zone }])
     const [feature] = featureCollection.features
