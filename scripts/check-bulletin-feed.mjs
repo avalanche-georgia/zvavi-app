@@ -40,14 +40,29 @@ const request = (path, headers = {}, method = 'GET') =>
     redirect: 'manual',
   })
 
-const checkHeaders = (response, expected, label) => {
-  for (const [name, value] of Object.entries(expected)) {
-    const actual = response.headers.get(name)
+// Behind Vercel's CDN (x-vercel-cache present) the CDN consumes s-maxage and
+// stale-while-revalidate and sends clients only `public, max-age=0`, and it
+// weakens the ETag when it compresses the body. Both are checked explicitly.
+const vercelClientCacheControl = 'public, max-age=0'
 
-    check(actual === value, `${label} ${name}: ${JSON.stringify(actual)} (expected ${JSON.stringify(value)})`)
+const checkHeaders = (response, expected, label) => {
+  const vercelCache = response.headers.get('x-vercel-cache')
+  const isCompressed = Boolean(response.headers.get('content-encoding'))
+
+  if (vercelCache) {
+    console.log(`INFO  ${label} served by Vercel CDN (x-vercel-cache: ${vercelCache}, age: ${response.headers.get('age')})`)
   }
 
-  check(/^"[0-9a-f]{32}"$/.test(response.headers.get('etag') ?? ''), `${label} has a strong 32-hex ETag`)
+  for (const [name, value] of Object.entries(expected)) {
+    const actual = response.headers.get(name)
+    const expectedValue = name === 'cache-control' && vercelCache ? vercelClientCacheControl : value
+
+    check(actual === expectedValue, `${label} ${name}: ${JSON.stringify(actual)} (expected ${JSON.stringify(expectedValue)})`)
+  }
+
+  const etagPattern = vercelCache && isCompressed ? /^(W\/)?"[0-9a-f]{32}"$/ : /^"[0-9a-f]{32}"$/
+
+  check(etagPattern.test(response.headers.get('etag') ?? ''), `${label} has a 32-hex ETag`)
 }
 
 const commonHeaders = {
