@@ -254,6 +254,7 @@ admin:
       noAvalanches: 'No avalanches linked'
       overall: 'Overall'
       pendingCount: '{count} pending'
+      publicPage: 'Public page'
 
   profile:
     title: 'My Profile'

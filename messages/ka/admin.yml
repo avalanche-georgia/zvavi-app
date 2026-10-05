@@ -254,6 +254,7 @@ admin:
       noAvalanches: 'ზვავები არ არის მიბმული'
       overall: 'საერთო'
       pendingCount: '{count} მოლოდინში'
+      publicPage: 'საჯარო გვერდი'
 
   profile:
     title: 'ჩემი პროფილი'
