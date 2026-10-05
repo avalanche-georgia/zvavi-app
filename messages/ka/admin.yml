@@ -246,6 +246,11 @@ admin:
         expired: 'მიმდინარე · ვადაგასული'
       openRecord: 'ჩანაწერის გახსნა'
       recordLoadFailed: 'ჩანაწერი {id} ვერ ჩაიტვირთა'
+      notWritten: 'არ არის დაწერილი'
+      noProblems: 'ამ პროგნოზში პრობლემები არ არის'
+      noAvalanches: 'ზვავები არ არის მიბმული'
+      overall: 'საერთო'
+      pendingCount: '{count} მოლოდინში'
 
   profile:
     title: 'ჩემი პროფილი'

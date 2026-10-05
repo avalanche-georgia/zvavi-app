@@ -246,6 +246,11 @@ admin:
         expired: 'Current · expired'
       openRecord: 'Open record'
       recordLoadFailed: 'Couldn’t load record {id}'
+      notWritten: 'Not written'
+      noProblems: 'No problems on this forecast'
+      noAvalanches: 'No avalanches linked'
+      overall: 'Overall'
+      pendingCount: '{count} pending'
 
   profile:
     title: 'My Profile'
