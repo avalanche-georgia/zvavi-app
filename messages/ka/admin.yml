@@ -244,6 +244,8 @@ admin:
       hoursAgo: '{count} სთ-ის წინ'
       statuses:
         expired: 'მიმდინარე · ვადაგასული'
+      openRecord: 'ჩანაწერის გახსნა'
+      recordLoadFailed: 'ჩანაწერი {id} ვერ ჩაიტვირთა'
 
   profile:
     title: 'ჩემი პროფილი'
@@ -317,6 +319,10 @@ admin:
         unlinkAction: 'მოხსნა'
         noAspects: 'ექსპოზიცია მითითებული არ არის'
         alsoOn: 'ასევე {count, plural, one {# სხვა პროგნოზში} other {# სხვა პროგნოზში}}'
+        hiddenOnPublic:
+          pending: 'საჯარო პროგნოზში არ ჩანს დადასტურებამდე'
+          draft: 'მონახაზი — საჯარო პროგნოზში არ ჩანს'
+          archived: 'დაარქივებული — საჯარო პროგნოზში არ ჩანს'
         dateUnknown: 'თარიღი უცნობია · მოხსენებულია {reported}'
         badges:
           notSaved: 'დაკავშირებულია · არ არის შენახული'

@@ -244,6 +244,8 @@ admin:
       hoursAgo: '{count}h ago'
       statuses:
         expired: 'Current · expired'
+      openRecord: 'Open record'
+      recordLoadFailed: 'Couldn’t load record {id}'
 
   profile:
     title: 'My Profile'
@@ -317,6 +319,10 @@ admin:
         unlinkAction: 'Unlink'
         noAspects: 'No aspect recorded'
         alsoOn: 'Also on {count, plural, one {# other forecast} other {# other forecasts}}'
+        hiddenOnPublic:
+          pending: 'Not on the public forecast until approved'
+          draft: 'Draft — not on the public forecast'
+          archived: 'Archived — not on the public forecast'
         dateUnknown: 'Date unknown · reported {reported}'
         badges:
           notSaved: 'Linked · not saved'
