@@ -8,6 +8,7 @@ import DataTableCards from './DataTableCards'
 import DataTableFooter from './DataTableFooter'
 import DataTableHead from './DataTableHead'
 import type { DataTableLabels, DataTableSort } from './types'
+import useCardMode from './useCardMode'
 import useDataTable from './useDataTable'
 import useElementWidth from './useElementWidth'
 
@@ -35,8 +36,6 @@ type DataTableProps<TData extends RowData> = {
   sort: DataTableSort
 }
 
-const cardModeMaxWidth = 640
-
 // Sortable, paginated table on the table's own width: columns hide by container query,
 // and narrow tables switch to cards. overflow-clip keeps the corners and the sticky header.
 const DataTable = <TData extends RowData>(props: DataTableProps<TData>) => {
@@ -45,7 +44,7 @@ const DataTable = <TData extends RowData>(props: DataTableProps<TData>) => {
   const { pageSize = 15, renderCard } = props
   const { ref, width } = useElementWidth<HTMLDivElement>()
   const { rows, safePageIndex, table } = useDataTable({ ...props, pageSize })
-  const isCardMode = !!renderCard && width !== null && width <= cardModeMaxWidth
+  const isCardMode = useCardMode(width, !!renderCard)
 
   return (
     <div

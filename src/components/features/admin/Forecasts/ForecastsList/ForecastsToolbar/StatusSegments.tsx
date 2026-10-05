@@ -30,6 +30,7 @@ const StatusSegments = ({ counts, onChange, value }: StatusSegmentsProps) => {
   return (
     <SegmentedControl
       ariaLabel={t('admin.forecasts.filters.status.label')}
+      className="max-w-full overflow-x-auto"
       onChange={onChange}
       options={options}
       value={value}

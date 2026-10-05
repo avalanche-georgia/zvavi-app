@@ -34,9 +34,10 @@ const DateRangeFilter = ({ list, now }: DateRangeFilterProps) => {
   const handleToChange = (date: Date | null) => list.onDateToChange(toIsoDay(date))
 
   return (
-    <div className="flex flex-wrap items-center gap-2">
+    <div className="flex max-w-full min-w-0 flex-wrap items-center gap-2">
       <SegmentedControl
         ariaLabel={t('admin.forecasts.filters.range.label')}
+        className="max-w-full overflow-x-auto"
         onChange={list.onRangeChange}
         options={options}
         value={range}

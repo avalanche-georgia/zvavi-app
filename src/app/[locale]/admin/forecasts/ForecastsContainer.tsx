@@ -20,6 +20,10 @@ const ForecastsContainer = ({ initialRegions }: ForecastsContainerProps) => {
   const page = useForecastsListPage(regionId)
   const { currentQuery, forecastsQuery, list, now } = page
 
+  // A failed background refetch keeps the data on screen; the error block is for first loads
+  const isListLoadFailed = forecastsQuery.isError && !forecastsQuery.data
+  const isCurrentLoadFailed = currentQuery.isError && currentQuery.data === undefined
+
   const handleCurrentRetry = () => void currentQuery.refetch()
   const handleListRetry = () => void forecastsQuery.refetch()
 
@@ -30,7 +34,7 @@ const ForecastsContainer = ({ initialRegions }: ForecastsContainerProps) => {
         <CurrentCard
           currentForecast={currentQuery.data}
           forecasts={page.forecasts}
-          isError={currentQuery.isError}
+          isError={isCurrentLoadFailed}
           isPending={currentQuery.isPending || forecastsQuery.isPending}
           now={now}
           onRetry={handleCurrentRetry}
@@ -42,7 +46,7 @@ const ForecastsContainer = ({ initialRegions }: ForecastsContainerProps) => {
           now={now}
           searchResetKey={page.searchResetKey}
         />
-        {forecastsQuery.isError ? (
+        {isListLoadFailed ? (
           <ListLoadError onRetry={handleListRetry} />
         ) : (
           <ForecastsTable
