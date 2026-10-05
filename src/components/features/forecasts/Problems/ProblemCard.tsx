@@ -1,13 +1,11 @@
 'use client'
 
-import { AspectMiniGrid } from '@components/features/observations'
-import { useAspectSummary } from '@components/hooks'
 import { Icon } from '@components/icons'
 import { ConfirmPopover, IconButton, Tooltip } from '@ds/primitives'
 import { Pencil, Trash2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
-import ProblemFacts from './ProblemFacts'
+import ProblemCardBody from './ProblemCardBody'
 import ProblemNumber from './ProblemNumber'
 import type { ProblemValues } from './problemSchema'
 
@@ -31,8 +29,7 @@ const ProblemCard = ({
   problem,
 }: ProblemCardProps) => {
   const t = useTranslations()
-  const { getSummary } = useAspectSummary()
-  const { aspects, avalancheSize, description, type } = problem
+  const { avalancheSize, type } = problem
   const typeLabel = t(`common.avalancheTypes.${type}`)
 
   return (
@@ -73,25 +70,13 @@ const ProblemCard = ({
           </ConfirmPopover>
         </div>
       </div>
-      <div className="flex flex-col gap-3 pl-14.5 @max-[480px]:pl-0">
-        <div className="flex gap-6 @max-[700px]:flex-col">
-          <div className="flex-1">
-            <ProblemFacts problem={problem} />
-          </div>
-          <div className="flex max-w-60 flex-col gap-1.5">
-            <AspectMiniGrid aspects={aspects} />
-            <p className="text-caption text-body">
-              {getSummary(aspects) ?? t('admin.forecast.editor.problems.noAspects')}
-            </p>
-          </div>
-        </div>
-        {description && <p className="text-copy-sm text-body whitespace-pre-line">{description}</p>}
+      <ProblemCardBody problem={problem}>
         {errorMessage && (
           <p className="text-copy-sm text-danger" data-field-error>
             {errorMessage}
           </p>
         )}
-      </div>
+      </ProblemCardBody>
     </div>
   )
 }
