@@ -21,7 +21,7 @@ const AvalanchesCard = ({ avalancheIds, regionId }: AvalanchesCardProps) => {
   const t = useTranslations()
   const queryClient = useQueryClient()
   const [openId, setOpenId] = useState<number | null>(null)
-  const { data: avalanches = [] } = useLinkableAvalanchesQuery({ regionId })
+  const { data: avalanches = [], isPending } = useLinkableAvalanchesQuery({ regionId })
 
   const openRecord = avalanches.find((avalanche) => avalanche.id === openId)
   // Linked but still under review (hidden on the public forecast)
@@ -47,6 +47,7 @@ const AvalanchesCard = ({ avalancheIds, regionId }: AvalanchesCardProps) => {
             <li key={id}>
               <ViewAvalancheItem
                 id={id}
+                isListPending={isPending}
                 listed={avalanches.find((avalanche) => avalanche.id === id)}
                 onView={() => setOpenId(id)}
               />

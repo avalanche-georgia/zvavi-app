@@ -8,6 +8,8 @@ import useLinkedRecord from './useLinkedRecord'
 type LinkedAvalancheItemProps = {
   forecastId: number | undefined
   id: number
+  // The region list is still loading: wait before fetching the record on its own
+  isListPending: boolean
   isSaved: boolean
   listed: LinkableAvalanche | undefined
   onEdit: VoidFunction
@@ -18,8 +20,14 @@ type LinkedAvalancheItemProps = {
 }
 
 // Resolves a linked id to its record, then shows its card
-const LinkedAvalancheItem = ({ id, listed, onMissing, ...cardProps }: LinkedAvalancheItemProps) => {
-  const { avalanche, isMissing, isPending } = useLinkedRecord(id, listed)
+const LinkedAvalancheItem = ({
+  id,
+  isListPending,
+  listed,
+  onMissing,
+  ...cardProps
+}: LinkedAvalancheItemProps) => {
+  const { avalanche, isMissing, isPending } = useLinkedRecord(id, listed, isListPending)
 
   // Deleted elsewhere since it was linked: drop the id, or the save would fail
   useEffect(() => {

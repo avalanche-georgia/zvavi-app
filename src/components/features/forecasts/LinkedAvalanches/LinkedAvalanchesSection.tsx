@@ -62,6 +62,7 @@ const LinkedAvalanchesSection = ({
               <LinkedAvalancheItem
                 forecastId={forecastId}
                 id={id}
+                isListPending={isPending}
                 isSaved={isSaved(id)}
                 listed={avalanches.find((avalanche) => avalanche.id === id)}
                 onEdit={() => sheets.openEdit(id)}

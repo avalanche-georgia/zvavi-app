@@ -30,7 +30,7 @@ const ForecastViewContent = ({ forecast, onLeave }: ForecastViewContentProps) =>
   const now = useNow({ updateInterval: 60_000 })
   const actions = useForecastViewActions(forecast, onLeave)
   const {
-    data: currentForecast = null,
+    data: currentForecastData,
     isError,
     isPending,
     refetch,
@@ -39,10 +39,13 @@ const ForecastViewContent = ({ forecast, onLeave }: ForecastViewContentProps) =>
     regionId: forecast.regionId,
   })
 
+  // null: the region has no published forecast
+  const currentForecast = currentForecastData ?? null
   const handleRetry = () => void refetch()
 
   if (isPending) return <CenteredSpinner />
-  if (isError) return <LoadError onRetry={handleRetry} />
+  // Only when there's nothing to show: a failed background refetch keeps the page
+  if (isError && currentForecastData === undefined) return <LoadError onRetry={handleRetry} />
 
   const status = getViewStatus(forecast, currentForecast, now)
   const { avalancheProblems } = getInitialFormValues(forecast)

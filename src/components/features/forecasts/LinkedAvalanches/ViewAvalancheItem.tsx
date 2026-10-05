@@ -12,14 +12,16 @@ import useLinkedRecord from './useLinkedRecord'
 
 type ViewAvalancheItemProps = {
   id: number
+  // The region list is still loading: wait before fetching the record on its own
+  isListPending: boolean
   listed: LinkableAvalanche | undefined
   onView: VoidFunction
 }
 
 // A linked record on the read-only forecast view
-const ViewAvalancheItem = ({ id, listed, onView }: ViewAvalancheItemProps) => {
+const ViewAvalancheItem = ({ id, isListPending, listed, onView }: ViewAvalancheItemProps) => {
   const t = useTranslations()
-  const { avalanche, isMissing, isPending } = useLinkedRecord(id, listed)
+  const { avalanche, isMissing, isPending } = useLinkedRecord(id, listed, isListPending)
 
   if (isPending) return <Skeleton className="h-28 rounded-[14px]" />
 

@@ -274,7 +274,7 @@ admin:
           lead: 'Draft — not visible to the public.'
           rest: 'Publishing makes it the current {region} forecast until {date}, {time}.'
           restOlder: 'Publishing won’t make it current: #{id} is newer.'
-          restNoValidity: 'Set a future valid-until date before publishing.'
+          restNoValidity: 'It has no future valid-until date — published now, it would show as expired right away.'
       openRecord: 'Open record'
       recordLoadFailed: 'Couldn’t load record {id}'
       notWritten: 'Not written'

@@ -8,7 +8,8 @@ import { ForecastWriteDeniedError } from './errors'
 import type { ForecastStatusToggleVariables } from './types'
 
 type ToggleContext = {
-  previousItems: [readonly unknown[], AdminForecast | undefined][]
+  // Cached items are null for a forecast that doesn't exist
+  previousItems: [readonly unknown[], AdminForecast | null | undefined][]
   previousRow?: Pick<ForecastListItem, 'publishedAt' | 'status'>
 }
 
@@ -50,7 +51,7 @@ const useForecastStatusToggle = () => {
       if (context?.previousRow) patchRow(variables, context.previousRow)
 
       context?.previousItems.forEach(([queryKey, data]) =>
-        queryClient.setQueryData<AdminForecast>(queryKey, data),
+        queryClient.setQueryData<AdminForecast | null>(queryKey, data),
       )
     },
 
@@ -74,9 +75,9 @@ const useForecastStatusToggle = () => {
 
       await queryClient.cancelQueries(itemFilter)
 
-      const previousItems = queryClient.getQueriesData<AdminForecast>(itemFilter)
+      const previousItems = queryClient.getQueriesData<AdminForecast | null>(itemFilter)
 
-      queryClient.setQueriesData<AdminForecast>(itemFilter, (forecast) =>
+      queryClient.setQueriesData<AdminForecast | null>(itemFilter, (forecast) =>
         forecast ? { ...forecast, publishedAt, status: variables.status } : forecast,
       )
 
