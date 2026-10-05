@@ -162,6 +162,33 @@ describe('fail closed', () => {
   })
 })
 
+describe('publication time guard (spec §5.4)', () => {
+  const buildAt = (offsetMs: number) => {
+    const fixture = loadFixture('typical')
+    const publishedAt = new Date(fixture.forecast.publishedAt).getTime()
+
+    return () => buildBulletin({ ...fixture, now: new Date(publishedAt + offsetMs) })
+  }
+
+  it('accepts published_at up to 60 s in the future (clock skew)', () => {
+    expect(buildAt(-59_000)).not.toThrow()
+    expect(buildAt(-60_000)).not.toThrow()
+  })
+
+  it('rejects published_at more than 60 s in the future', () => {
+    expect(buildAt(-61_000)).toThrow(/publishedAt is in the future/)
+  })
+
+  it('never falls back to created_at when published_at is missing', () => {
+    const raw = mutated(({ forecast }) => {
+      forecast.createdAt = '2026-12-10T13:00:00Z'
+      forecast.publishedAt = null
+    })
+
+    expect(() => buildFromRaw(raw)).toThrow(InvalidForecastError)
+  })
+})
+
 describe('validity', () => {
   it('serves an expired forecast with its true validity and expired: true', () => {
     const fixture = loadFixture('typical')
