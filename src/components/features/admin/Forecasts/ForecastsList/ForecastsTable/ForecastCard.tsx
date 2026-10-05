@@ -3,8 +3,8 @@ import type { ForecastListItem } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import { useForecastsTable } from './ForecastsTableContext'
-import { ForecastCell, HazardTile, StatusBadge, ValidUntilCell } from '../cells'
-import { getForecastListStatus } from '../model'
+import { getForecastListStatus, HazardTile, StatusBadge } from '../../shared'
+import { ForecastCell, ValidUntilCell } from '../cells'
 import { RowActions } from '../RowActions'
 
 // ≤640px: tile spanning two rows | forecast + status | "Valid until … · ends in …" + ⋯

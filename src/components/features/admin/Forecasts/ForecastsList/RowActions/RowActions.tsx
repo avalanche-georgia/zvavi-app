@@ -8,7 +8,7 @@ import { useTranslations } from 'next-intl'
 
 import keepFocusInTable from './keepFocusInTable'
 import RowMenu from './RowMenu'
-import useForecastRowActions from './useForecastRowActions'
+import { useForecastRowActions } from '../../shared'
 
 type RowActionsProps = {
   forecast: ForecastListItem

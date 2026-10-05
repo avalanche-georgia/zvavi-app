@@ -1,4 +1,4 @@
-import { useListDates } from '../hooks'
+import { useListDates } from '../../shared'
 
 const PublishedCell = ({ publishedAt }: { publishedAt: string | null }) => {
   const { formatDate, formatTime } = useListDates()

@@ -1,7 +1,6 @@
-import { differenceInMinutes } from 'date-fns'
 import { useTranslations } from 'next-intl'
 
-import { useListDates } from '../hooks'
+import { getHoursLeft, useListDates, useTimeLeft } from '../../shared'
 
 import { cn } from '@/lib/utils'
 
@@ -15,20 +14,17 @@ type ValidUntilCellProps = {
 const ValidUntilCell = ({ isInline = false, now, validUntil }: ValidUntilCellProps) => {
   const t = useTranslations()
   const { formatDate, formatTime } = useListDates()
+  const { formatLeft } = useTimeLeft()
 
   if (!validUntil) return <span className="text-placeholder">—</span>
 
-  const hoursLeft = differenceInMinutes(validUntil, now) / 60
+  const hoursLeft = getHoursLeft(validUntil, now)
   const isEndingSoon = hoursLeft > 0 && hoursLeft < 24
 
   const getRemaining = () => {
     if (hoursLeft <= 0) return formatTime(validUntil)
 
-    if (isEndingSoon) {
-      return t('admin.forecasts.list.endsInHours', { count: Math.max(1, Math.round(hoursLeft)) })
-    }
-
-    return t('admin.forecasts.list.endsInDays', { count: Math.round(hoursLeft / 24) })
+    return formatLeft(validUntil, now)
   }
 
   const date = formatDate(validUntil)

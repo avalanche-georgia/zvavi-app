@@ -2,7 +2,7 @@ import { sortedElevationZones } from '@domain/constants'
 import type { HazardLevels } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
-import { HazardTile } from '../cells'
+import { HazardTile } from '../../shared'
 
 import { cn } from '@/lib/utils'
 
