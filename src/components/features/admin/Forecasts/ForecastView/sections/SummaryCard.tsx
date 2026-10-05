@@ -9,7 +9,7 @@ const SummaryCard = ({ summary }: { summary: string | null }) => {
   return (
     <FormCard title={t('admin.forecast.form.general.labels.summary')}>
       <ProseText
-        className="text-copy-lg max-w-[68ch] leading-[1.6]"
+        className="text-copy-lg leading-[1.6]"
         placeholder={t('admin.forecasts.view.notWritten')}
         text={summary}
       />
