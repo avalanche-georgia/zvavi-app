@@ -7,7 +7,6 @@ import BadgeGallery from '@ds/primitives/Badge/Badge.gallery'
 import ButtonGallery from '@ds/primitives/Button/Button.gallery'
 import CheckboxGallery from '@ds/primitives/Checkbox/Checkbox.gallery'
 import ChipGroupGallery from '@ds/primitives/ChipGroup/ChipGroup.gallery'
-import ConfirmDialogGallery from '@ds/primitives/ConfirmDialog/ConfirmDialog.gallery'
 import ConfirmPopoverGallery from '@ds/primitives/ConfirmPopover/ConfirmPopover.gallery'
 import DateFieldGallery from '@ds/primitives/DateField/DateField.gallery'
 import FieldGallery from '@ds/primitives/Field/Field.gallery'
@@ -41,7 +40,6 @@ export const galleryEntries: GalleryEntry[] = [
   { Demo: ShadowTokens, id: 'shadows', title: 'Shadows' },
   { Demo: ButtonGallery, id: 'button', title: 'Button' },
   { Demo: BadgeGallery, id: 'badge', title: 'Badge' },
-  { Demo: ConfirmDialogGallery, id: 'confirm-dialog', title: 'ConfirmDialog' },
   { Demo: ConfirmPopoverGallery, id: 'confirm-popover', title: 'ConfirmPopover' },
   { Demo: MenuGallery, id: 'menu', title: 'Menu' },
   { Demo: IconButtonGallery, id: 'icon-button', title: 'IconButton' },
