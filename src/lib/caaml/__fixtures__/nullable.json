@@ -1,0 +1,39 @@
+{
+  "now": "2026-12-10T15:00:00Z",
+  "region": {
+    "id": "gudauri",
+    "caamlRegionId": "GE-MM-01",
+    "nameEn": "Gudauri",
+    "elevationLowM": 2000,
+    "elevationHighM": 2600
+  },
+  "forecast": {
+    "id": 414,
+    "publishedAt": "2026-12-10T14:05:11.482913Z",
+    "validUntil": "2026-12-11T14:00:00Z",
+    "hazardLevels": {
+      "highAlpine": "4",
+      "alpine": "3",
+      "subAlpine": "1"
+    },
+    "summary": null,
+    "snowpack": null,
+    "weather": null,
+    "additionalHazards": null,
+    "avalancheProblems": [
+      {
+        "order": 0,
+        "type": "looseDry",
+        "avalancheSize": 1,
+        "sensitivity": null,
+        "distribution": null,
+        "confidence": null,
+        "trend": null,
+        "isAllDay": true,
+        "timeOfDay": null,
+        "description": null,
+        "aspects": null
+      }
+    ]
+  }
+}
