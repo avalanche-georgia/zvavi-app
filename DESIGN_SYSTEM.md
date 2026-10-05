@@ -164,6 +164,9 @@ Rules:
 - **Confirming a destructive action** (remove, unlink): wrap the control that asks in
   `primitives/ConfirmPopover`. It floats next to that control (no layout shift), starts focus on
   Cancel, and base-ui closes it on Esc, an outside click or when another one opens.
+- **Confirming a weighty, non-destructive action** that needs more than one line of context (e.g.
+  publishing a forecast): `primitives/ConfirmDialog`, a centred base-ui dialog with `[Cancel] [Primary]`.
+  Focus starts on Cancel.
 - **Icon-only buttons** (`primitives/IconButton`) always show their label as a `Tooltip` on hover and
   keyboard focus (pass `tooltip` for a shorter label than the accessible name). Tooltips don't show
   on touch, so the icon must be clear without it.
