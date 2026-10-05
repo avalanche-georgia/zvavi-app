@@ -239,6 +239,11 @@ admin:
       published: 'Forecast published'
       unpublished: 'Unpublished — now a draft'
       writeDenied: 'Not saved — you may not have permission, or the forecast no longer exists.'
+    view:
+      daysAgo: '{count}d ago'
+      hoursAgo: '{count}h ago'
+      statuses:
+        expired: 'Current · expired'
 
   profile:
     title: 'My Profile'

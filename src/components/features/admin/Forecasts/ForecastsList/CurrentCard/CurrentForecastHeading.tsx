@@ -2,7 +2,7 @@ import { hazardLevelNamesByScale } from '@domain/constants'
 import type { Forecast } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
-import { useListDates } from '../hooks'
+import { useListDates } from '../../shared'
 
 import { cn } from '@/lib/utils'
 

@@ -3,7 +3,7 @@ import type { HazardLevels } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import HazardBars from './HazardBars'
-import HazardTile from './HazardTile'
+import { HazardTile } from '../../shared'
 
 const HazardCell = ({ hazardLevels }: { hazardLevels: HazardLevels }) => {
   const t = useTranslations()

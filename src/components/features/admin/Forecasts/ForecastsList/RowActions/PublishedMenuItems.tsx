@@ -2,7 +2,7 @@ import { MenuItem } from '@ds/primitives'
 import { ExternalLink, EyeOff, Link2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
-import type { ForecastRowActions } from './useForecastRowActions'
+import type { ForecastRowActions } from '../../shared'
 
 type PublishedMenuItemsProps = {
   actions: ForecastRowActions

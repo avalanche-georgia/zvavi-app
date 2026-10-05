@@ -3,7 +3,7 @@
 import { useTransition } from 'react'
 import { useToast } from '@components/hooks'
 import { useForecastDelete, useForecastStatusToggle } from '@data/hooks/forecasts'
-import type { Forecast, ForecastListItem, RegionId } from '@domain/types'
+import type { Forecast, RegionId } from '@domain/types'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'src/i18n/navigation'
 import { useCopyToClipboard } from 'usehooks-ts'
@@ -12,14 +12,23 @@ import useWriteErrorToast from './useWriteErrorToast'
 
 import { routes } from '@/routes'
 
-const useForecastRowActions = ({ id }: ForecastListItem, regionId: RegionId) => {
+type ForecastRowActionsOptions = {
+  // The view page leaves for the list; the list needs nothing
+  onDeleted?: VoidFunction
+}
+
+const useForecastRowActions = (
+  { id }: Pick<Forecast, 'id'>,
+  regionId: RegionId,
+  { onDeleted }: ForecastRowActionsOptions = {},
+) => {
   const t = useTranslations()
   const router = useRouter()
   const [isNavigating, startNavigation] = useTransition()
   const { toastAction, toastError, toastSuccess } = useToast()
   const toastWriteError = useWriteErrorToast()
   const [, copyToClipboard] = useCopyToClipboard()
-  const { mutateAsync: toggleStatus } = useForecastStatusToggle()
+  const { isPending: isStatusChanging, mutateAsync: toggleStatus } = useForecastStatusToggle()
   const { mutateAsync: deleteForecast } = useForecastDelete()
   const publicPath = routes.forecastsByRegion(regionId).view(id)
 
@@ -51,6 +60,7 @@ const useForecastRowActions = ({ id }: ForecastListItem, regionId: RegionId) => 
     try {
       await deleteForecast({ forecastId: id, regionId })
       toastSuccess(t('admin.forecasts.messages.deleted'))
+      onDeleted?.()
     } catch (error) {
       toastWriteError('useForecastRowActions | handleDelete', error)
     }
@@ -68,6 +78,7 @@ const useForecastRowActions = ({ id }: ForecastListItem, regionId: RegionId) => 
 
   return {
     isNavigating,
+    isStatusChanging,
     onDelete: handleDelete,
     onDuplicate: () => navigate(routes.admin.forecasts.duplicateInRegion(id, regionId)),
     onEdit: () => navigate(routes.admin.forecasts.editInRegion(id, regionId)),

@@ -1,13 +1,12 @@
 'use client'
 
-import { useState } from 'react'
 import { ConfirmPopover, IconButton, Menu, MenuItem, MenuSeparator } from '@ds/primitives'
 import { ArrowUp, Copy, Ellipsis, LoaderIcon, Pencil, Trash2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 import keepFocusInTable from './keepFocusInTable'
 import PublishedMenuItems from './PublishedMenuItems'
-import type { ForecastRowActions } from './useForecastRowActions'
+import { type ForecastRowActions, useDeleteAfterMenuClose } from '../../shared'
 
 type RowMenuProps = {
   actions: ForecastRowActions
@@ -21,18 +20,7 @@ type RowMenuProps = {
 
 const RowMenu = ({ actions, forecastId, isPublished, triggerRef, withPublish }: RowMenuProps) => {
   const t = useTranslations()
-  const [isDeleteRequested, setIsDeleteRequested] = useState(false)
-  const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false)
-
-  const handleDeleteRequest = () => setIsDeleteRequested(true)
-
-  // Open the confirmation only once the menu has fully closed and handed focus back
-  // to ⋯ — otherwise the closing menu's focus return closes the popover again
-  const handleMenuOpenChangeComplete = (isOpen: boolean) => {
-    if (isOpen || !isDeleteRequested) return
-    setIsDeleteRequested(false)
-    setIsDeleteConfirmOpen(true)
-  }
+  const deleteConfirm = useDeleteAfterMenuClose()
 
   // These can take the row (and ⋯ with it) out of the list — keep focus in the table
   const keepingFocus = (action: () => Promise<void>) => () => {
@@ -60,7 +48,7 @@ const RowMenu = ({ actions, forecastId, isPublished, triggerRef, withPublish }: 
 
   return (
     <>
-      <Menu onOpenChangeComplete={handleMenuOpenChangeComplete} trigger={trigger}>
+      <Menu onOpenChangeComplete={deleteConfirm.onMenuOpenChangeComplete} trigger={trigger}>
         <MenuItem icon={<Pencil />} onClick={actions.onEdit}>
           {t('common.actions.edit')}
         </MenuItem>
@@ -74,7 +62,7 @@ const RowMenu = ({ actions, forecastId, isPublished, triggerRef, withPublish }: 
         )}
         {isPublished && <PublishedMenuItems actions={actions} onUnpublish={handleUnpublish} />}
         <MenuSeparator />
-        <MenuItem icon={<Trash2 />} onClick={handleDeleteRequest} tone="danger">
+        <MenuItem icon={<Trash2 />} onClick={deleteConfirm.onDeleteRequest} tone="danger">
           {t('common.actions.delete')}
         </MenuItem>
       </Menu>
@@ -83,10 +71,10 @@ const RowMenu = ({ actions, forecastId, isPublished, triggerRef, withPublish }: 
         anchor={triggerRef}
         cancelLabel={t('common.actions.cancel')}
         confirmLabel={t('common.actions.delete')}
-        isOpen={isDeleteConfirmOpen}
+        isOpen={deleteConfirm.isConfirmOpen}
         message={t('admin.forecasts.deleteConfirm', { id: forecastId })}
         onConfirm={handleDeleteConfirm}
-        onOpenChange={setIsDeleteConfirmOpen}
+        onOpenChange={deleteConfirm.onConfirmOpenChange}
       />
     </>
   )
