@@ -214,6 +214,7 @@ admin:
     current:
       eyebrow: 'მიმდინარე პროგნოზი'
       eyebrowExpired: 'მიმდინარე პროგნოზი · ვადაგასული'
+      endsSoon: 'სრულდება {count} სთ-ში'
       subline: 'გამოქვეყნდა {publishedAt} · მოქმედებს {validUntil}-მდე'
       expiredHint: 'საჯარო საიტი მას კვლავ აჩვენებს — გამოაქვეყნეთ ახალი პროგნოზი.'
       openPublicPageHint: '{url} გაიხსნება ახალ ჩანართში'

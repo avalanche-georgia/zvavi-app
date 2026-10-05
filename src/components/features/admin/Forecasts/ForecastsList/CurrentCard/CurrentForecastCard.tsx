@@ -3,7 +3,7 @@
 import { useTransition } from 'react'
 import type { Forecast, RegionId } from '@domain/types'
 import { Button, Tooltip } from '@ds/primitives'
-import { isAfter } from 'date-fns'
+import { differenceInMinutes } from 'date-fns'
 import { Copy, ExternalLink } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'src/i18n/navigation'
@@ -23,7 +23,9 @@ const CurrentForecastCard = ({ forecast, now, regionId }: CurrentForecastCardPro
   const router = useRouter()
   const [isNavigating, startNavigation] = useTransition()
   const { hazardLevels, id, validUntil } = forecast
-  const isExpired = !validUntil || !isAfter(validUntil, now)
+  const hoursLeft = validUntil ? differenceInMinutes(validUntil, now) / 60 : 0
+  const isExpired = hoursLeft <= 0
+  const endsInHours = hoursLeft > 0 && hoursLeft < 24 ? Math.max(1, Math.round(hoursLeft)) : null
   // The page opens on this site (staging opens staging); rendered client-side only
   const publicUrl = `${window.location.host}${routes.regionHome(regionId)}`
 
@@ -40,7 +42,11 @@ const CurrentForecastCard = ({ forecast, now, regionId }: CurrentForecastCardPro
     >
       <HazardTile level={hazardLevels.overall} size="lg" />
       <div className="flex min-w-0 items-center gap-6">
-        <CurrentForecastHeading forecast={forecast} isExpired={isExpired} />
+        <CurrentForecastHeading
+          endsInHours={endsInHours}
+          forecast={forecast}
+          isExpired={isExpired}
+        />
         <ZoneTiles className="@max-[62.5rem]:hidden" hazardLevels={hazardLevels} />
       </div>
       <div className="flex flex-wrap gap-2 @max-[47.5rem]:col-span-2">

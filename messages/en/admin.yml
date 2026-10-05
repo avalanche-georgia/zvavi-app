@@ -214,6 +214,7 @@ admin:
     current:
       eyebrow: 'Current forecast'
       eyebrowExpired: 'Current forecast · expired'
+      endsSoon: 'Ends in {count}h'
       subline: 'Published {publishedAt} · valid until {validUntil}'
       expiredHint: 'The public site still shows it — publish a new forecast.'
       openPublicPageHint: 'Opens {url} in a new tab'

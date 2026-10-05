@@ -6,9 +6,18 @@ import { useListDates } from '../hooks'
 
 import { cn } from '@/lib/utils'
 
-type CurrentForecastHeadingProps = { forecast: Forecast; isExpired: boolean }
+type CurrentForecastHeadingProps = {
+  // Hours left when under a day — the next forecast is due soon
+  endsInHours: number | null
+  forecast: Forecast
+  isExpired: boolean
+}
 
-const CurrentForecastHeading = ({ forecast, isExpired }: CurrentForecastHeadingProps) => {
+const CurrentForecastHeading = ({
+  endsInHours,
+  forecast,
+  isExpired,
+}: CurrentForecastHeadingProps) => {
   const t = useTranslations()
   const { formatDate, formatTime } = useListDates()
   const { forecaster, hazardLevels, id, publishedAt, validUntil } = forecast
@@ -30,6 +39,11 @@ const CurrentForecastHeading = ({ forecast, isExpired }: CurrentForecastHeadingP
         />
         {t(
           isExpired ? 'admin.forecasts.current.eyebrowExpired' : 'admin.forecasts.current.eyebrow',
+        )}
+        {endsInHours !== null && (
+          <span className="bg-primary-soft text-primary-ink ml-1 rounded-md px-1.5 py-0.5 tracking-normal normal-case">
+            {t('admin.forecasts.current.endsSoon', { count: endsInHours })}
+          </span>
         )}
       </p>
       <h2 className="text-heading text-ink truncate font-semibold">
