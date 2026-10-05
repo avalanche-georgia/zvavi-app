@@ -52,3 +52,24 @@ describe('buildFeed', () => {
     expect(failures).toHaveLength(1)
   })
 })
+
+describe('buildFeed with an unexpected error', () => {
+  it('reports the error type and stack, not its data', () => {
+    const candidate = candidateOf('typical')
+
+    // A getter that throws simulates a code bug while reading the input
+    Object.defineProperty(candidate, 'forecast', {
+      get: () => {
+        throw new TypeError('boom')
+      },
+    })
+
+    const { collection, failures } = buildFeed([candidate], now)
+
+    expect(collection).toBeNull()
+    expect(failures[0]).toMatchObject({
+      reason: 'unexpected TypeError',
+      stack: expect.stringContaining('boom'),
+    })
+  })
+})

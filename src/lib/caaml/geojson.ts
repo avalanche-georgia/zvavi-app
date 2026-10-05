@@ -13,11 +13,11 @@ type Polygon = Position[][]
 
 const position = z.array(z.number().finite()).min(2)
 const ring = z.array(position).min(4)
-const geometry = z.discriminatedUnion('type', [
+const geometry = z.union([
   z.object({ coordinates: z.array(ring), type: z.literal('Polygon') }),
   z.object({ coordinates: z.array(z.array(ring)), type: z.literal('MultiPolygon') }),
-  // Other geometry types are ignored
-  z.object({ type: z.enum(['Point', 'MultiPoint', 'LineString', 'MultiLineString']) }),
+  // Any other geometry type is ignored, not treated as an invalid zone
+  z.object({ type: z.string().refine((type) => type !== 'Polygon' && type !== 'MultiPolygon') }),
 ])
 const zoneSchema = z.object({
   features: z.array(z.object({ geometry: geometry.nullable(), type: z.literal('Feature') })),
@@ -49,10 +49,9 @@ const toMultiPolygon = (forecastZone: unknown): MultiPolygon | null => {
   if (!zone.success) return null
 
   const polygons = zone.data.features.flatMap(({ geometry: shape }) => {
-    if (shape?.type === 'Polygon') return [shape.coordinates]
-    if (shape?.type === 'MultiPolygon') return shape.coordinates
+    if (!shape || !('coordinates' in shape)) return []
 
-    return []
+    return shape.type === 'Polygon' ? [shape.coordinates] : shape.coordinates
   })
 
   if (!polygons.length) return null

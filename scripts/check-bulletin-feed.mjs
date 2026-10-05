@@ -87,7 +87,12 @@ const checkEndpoint = async ({ cacheControl, contentType, path }) => {
 
   const head = await request(path, {}, 'HEAD')
 
-  check(head.status === 200 && head.headers.get('etag') === etag, `${path} HEAD → 200 with the same ETag`)
+  const withoutWeakPrefix = (tag) => (tag ?? '').replace(/^W\//, '')
+
+  check(
+    head.status === 200 && withoutWeakPrefix(head.headers.get('etag')) === withoutWeakPrefix(etag),
+    `${path} HEAD → 200 with the same ETag`,
+  )
 
   const options = await request(path, {}, 'OPTIONS')
 

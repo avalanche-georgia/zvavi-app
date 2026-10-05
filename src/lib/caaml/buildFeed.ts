@@ -13,7 +13,12 @@ export type BulletinCandidate = {
   regionId: string
 }
 
-export type BulletinFailure = { forecastId: number; reason: string; regionId: string }
+export type BulletinFailure = {
+  forecastId: number
+  reason: string
+  regionId: string
+  stack?: string
+}
 
 export type BulletinFeed = {
   // null → respond 5xx: forecasts existed but none could be published safely
@@ -43,13 +48,16 @@ const buildFeed = (candidates: BulletinCandidate[], now: Date): BulletinFeed => 
     try {
       bulletins.push(toBulletin(candidate, now))
     } catch (error) {
-      // Only our own errors are expected; their messages carry no user data
-      const reason =
-        error instanceof InvalidForecastError
-          ? error.message
-          : `unexpected ${(error as Error)?.name ?? 'error'}`
+      // Our own errors carry field names only. Anything else is a code bug:
+      // keep its stack (code locations, no forecast content) for the logs.
+      if (error instanceof InvalidForecastError) {
+        failures.push({ forecastId, reason: error.message, regionId })
+      } else {
+        const name = error instanceof Error ? error.name : 'error'
+        const stack = error instanceof Error ? error.stack : undefined
 
-      failures.push({ forecastId, reason, regionId })
+        failures.push({ forecastId, reason: `unexpected ${name}`, regionId, stack })
+      }
     }
   }
 

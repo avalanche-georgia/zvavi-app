@@ -1,5 +1,6 @@
 import { handleSupabaseError } from '@data/helpers'
 
+import type { BulletinRows } from './toBulletinCandidate'
 import toBulletinCandidate from './toBulletinCandidate'
 
 import type { BulletinCandidate } from '@/lib/caaml/buildFeed'
@@ -13,10 +14,11 @@ const problemColumns =
   'order, type, avalanche_size, sensitivity, distribution, confidence, trend, aspects, description, time_of_day, is_all_day'
 
 type Supabase = ReturnType<typeof createAnonymousClient>
-type RegionRow = Parameters<typeof toBulletinCandidate>[0]['region']
+type RegionRow = BulletinRows['region']
 
 // Current forecast = latest created_at among published forecasts of the region.
-// Keep in sync with useGetCurrentForecast. `status` is filtered explicitly:
+// Keep in sync with useGetCurrentForecast, fetchRegionsWithHazard and
+// fetchForecastPageData. `status` is filtered explicitly:
 // RLS may let anon read drafts on some environments.
 const fetchRegionCandidate = async (supabase: Supabase, region: RegionRow) => {
   const { data: forecasts, error: forecastError } = await supabase
@@ -39,6 +41,7 @@ const fetchRegionCandidate = async (supabase: Supabase, region: RegionRow) => {
     .select(problemColumns)
     .eq('forecast_id', forecast.id)
     .order('order')
+    .order('id')
 
   handleSupabaseError(problemsError)
 
@@ -56,6 +59,7 @@ const fetchPublicBulletinSources = async (): Promise<BulletinCandidate[]> => {
     .eq('is_active', true)
     .not('caaml_region_id', 'is', null)
     .order('display_order')
+    .order('id')
 
   handleSupabaseError(error)
 

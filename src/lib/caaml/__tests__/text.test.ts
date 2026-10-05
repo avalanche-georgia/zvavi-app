@@ -21,6 +21,11 @@ describe('markdownToCaamlText (html)', () => {
     ['keeps heading text as a paragraph', '# Title\n\nBody', 'Title<br/><br/>Body'],
     ['keeps code text', '`a<b`', 'a&lt;b'],
     ['keeps image alt text', '![wind slab](x.png)', 'wind slab'],
+    [
+      'keeps link reference definitions',
+      'See [map].\n\n[map]: https://example.org/map',
+      'See map.<br/><br/>https://example.org/map',
+    ],
   ])('%s', (_label, markdown, expected) => {
     expect(markdownToCaamlText(markdown, 'html')).toBe(expected)
   })

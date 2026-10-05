@@ -13,6 +13,7 @@ const fetchPublicRegionZones = async (): Promise<RegionZoneSource[]> => {
     .not('caaml_region_id', 'is', null)
     .not('name_en', 'is', null)
     .order('display_order')
+    .order('id')
 
   handleSupabaseError(error)
 

@@ -1,7 +1,6 @@
 import fetchPublicBulletinSources from '@data/queries/fetchPublicBulletinSources'
 
-import { cachedResponse, optionsResponse, problemResponse } from '../../responseHeaders'
-
+import { cachedResponse, optionsResponse, problemResponse } from '@/api/v1/responseHeaders'
 import buildFeed from '@/lib/caaml/buildFeed'
 
 // Never prerendered: data must not be frozen into the deployment. The CDN
