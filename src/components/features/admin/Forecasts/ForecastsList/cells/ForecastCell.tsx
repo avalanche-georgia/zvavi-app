@@ -23,8 +23,6 @@ const ForecastCell = ({ forecast }: { forecast: ForecastListItem }) => {
         <Link
           className="focus-ring text-ink hover:text-accent truncate rounded-sm font-semibold hover:underline"
           href={routes.admin.forecasts.view(id)}
-          // The view page doesn't exist yet — don't prefetch a 404
-          prefetch={false}
         >
           {forecaster || '—'}
           <LinkPendingIndicator />

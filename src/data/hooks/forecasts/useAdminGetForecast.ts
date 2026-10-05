@@ -27,6 +27,8 @@ const fetchForecast = async (forecastId: number, regionId?: RegionId): Promise<R
 
   const { data: forecastData, error: forecastError } = await query.single()
 
+  if (forecastError?.code === 'PGRST116') return undefined
+
   handleSupabaseError(forecastError)
 
   if (!forecastData) return undefined

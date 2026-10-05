@@ -1,10 +1,12 @@
 import { hazardLevelNamesByScale } from '@domain/constants'
 import type { Forecast } from '@domain/types'
 import { useTranslations } from 'next-intl'
+import { Link } from 'src/i18n/navigation'
 
-import { useListDates } from '../../shared'
+import { LinkPendingIndicator, useListDates } from '../../shared'
 
 import { cn } from '@/lib/utils'
+import { routes } from '@/routes'
 
 type CurrentForecastHeadingProps = {
   // Hours left when under a day — the next forecast is due soon
@@ -47,7 +49,13 @@ const CurrentForecastHeading = ({
         )}
       </p>
       <h2 className="text-heading text-ink truncate font-semibold">
-        {t(hazardLevelNamesByScale[hazardLevels.overall])} · #{id} {forecaster}
+        <Link
+          className="focus-ring hover:text-accent rounded-sm hover:underline"
+          href={routes.admin.forecasts.view(id)}
+        >
+          {t(hazardLevelNamesByScale[hazardLevels.overall])} · #{id} {forecaster}
+          <LinkPendingIndicator />
+        </Link>
       </h2>
       <p className="text-copy-sm text-muted">
         {t('admin.forecasts.current.subline', {

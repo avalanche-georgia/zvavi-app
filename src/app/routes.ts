@@ -20,7 +20,6 @@ export const routes = {
       new: '/admin/forecasts/new',
       newInRegion: (regionId: string) => `/admin/forecasts/new?regionId=${regionId}`,
       root: '/admin/forecasts',
-      // Read-only admin view (built in a follow-up)
       view: (id: number) => `/admin/forecasts/${id}`,
     },
     members: {
