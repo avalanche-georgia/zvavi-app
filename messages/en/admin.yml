@@ -246,7 +246,35 @@ admin:
       daysAgo: '{count}d ago'
       hoursAgo: '{count}h ago'
       statuses:
+        live: 'Current'
         expired: 'Current · expired'
+        superseded: 'Published'
+        draft: 'Draft'
+      meta:
+        status: 'Status'
+        validUntil: 'Valid until'
+        expired: 'expired'
+        published: 'Published'
+        forecaster: 'Forecaster'
+        created: 'Created'
+      banner:
+        live:
+          lead: 'Current on the public {region} page'
+          rest: '· {timeLeft}. Edits go public as soon as you save.'
+        expired:
+          lead: 'Expired {ago} — the public {region} page still shows it.'
+          leadNoDate: 'No validity date — the public {region} page still shows it.'
+          rest: 'Ended {date}, {time}. Publish a new forecast to replace it.'
+          restNoDate: 'Publish a new forecast to replace it.'
+        superseded:
+          lead: 'Published, not current.'
+          rest: 'The public {region} page shows #{id}, a newer forecast.'
+          open: 'Open #{id}'
+        draft:
+          lead: 'Draft — not visible to the public.'
+          rest: 'Publishing makes it the current {region} forecast until {date}, {time}.'
+          restOlder: 'Publishing won’t make it current: #{id} is newer.'
+          restNoValidity: 'Set a future valid-until date before publishing.'
       openRecord: 'Open record'
       recordLoadFailed: 'Couldn’t load record {id}'
       notWritten: 'Not written'
