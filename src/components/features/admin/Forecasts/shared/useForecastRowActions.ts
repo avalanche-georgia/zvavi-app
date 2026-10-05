@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useTransition } from 'react'
 import { useToast } from '@components/hooks'
 import { useForecastDelete, useForecastStatusToggle } from '@data/hooks/forecasts'
 import type { Forecast, RegionId } from '@domain/types'
@@ -33,7 +33,6 @@ const useForecastRowActions = (
   const [, copyToClipboard] = useCopyToClipboard()
   const { isPending: isStatusChanging, mutateAsync: toggleStatus } = useForecastStatusToggle()
   const { isPending: isDeleting, mutateAsync: deleteForecast } = useForecastDelete()
-  const [isPublishConfirmOpen, setIsPublishConfirmOpen] = useState(false)
   const publicPath = routes.forecastsByRegion(regionId).view(id)
 
   const setStatus = async (status: Forecast['status']) => {
@@ -99,14 +98,8 @@ const useForecastRowActions = (
     onEdit: handleEdit,
     onLinkCopy: handleLinkCopy,
     onPublicPageOpen: () => void window.open(publicPath, '_blank', 'noopener'),
-    // Publishing is public at once, so it asks first; unpublishing doesn't
-    onPublish: () => setIsPublishConfirmOpen(true),
+    onPublish: () => changeStatus('published'),
     onUnpublish: () => changeStatus('draft'),
-    publishConfirm: {
-      isOpen: isPublishConfirmOpen,
-      onConfirm: () => changeStatus('published'),
-      onOpenChange: setIsPublishConfirmOpen,
-    },
   }
 }
 
