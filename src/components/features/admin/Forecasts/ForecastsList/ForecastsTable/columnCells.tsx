@@ -3,9 +3,8 @@ import type { CellContext } from '@ds/patterns'
 import { useTranslations } from 'next-intl'
 
 import { useForecastsTable } from './ForecastsTableContext'
-import { ForecastCell, HazardCell, PublishedCell, StatusBadge, ValidUntilCell } from '../cells'
-import { useListDates } from '../hooks'
-import { getForecastListStatus } from '../model'
+import { getForecastListStatus, StatusBadge, useListDates } from '../../shared'
+import { ForecastCell, HazardCell, PublishedCell, ValidUntilCell } from '../cells'
 import { RowActions } from '../RowActions'
 
 type RowCellProps = CellContext<ForecastListItem, unknown>

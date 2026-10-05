@@ -3,7 +3,7 @@
 import { useTransition } from 'react'
 import { useToast } from '@components/hooks'
 import { useForecastDelete, useForecastStatusToggle } from '@data/hooks/forecasts'
-import type { Forecast, ForecastListItem, RegionId } from '@domain/types'
+import type { Forecast, RegionId } from '@domain/types'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'src/i18n/navigation'
 import { useCopyToClipboard } from 'usehooks-ts'
@@ -12,15 +12,27 @@ import useWriteErrorToast from './useWriteErrorToast'
 
 import { routes } from '@/routes'
 
-const useForecastRowActions = ({ id }: ForecastListItem, regionId: RegionId) => {
+type ForecastRowActionsOptions = {
+  // Where Edit was opened from; the form's Cancel / Save & close return there
+  editFrom?: 'view'
+  // The view page leaves for the list; the list needs nothing
+  onDeleted?: VoidFunction
+}
+
+const useForecastRowActions = (
+  { id }: Pick<Forecast, 'id'>,
+  regionId: RegionId,
+  { editFrom, onDeleted }: ForecastRowActionsOptions = {},
+) => {
   const t = useTranslations()
   const router = useRouter()
-  const [isNavigating, startNavigation] = useTransition()
+  const [isEditNavigating, startEditNavigation] = useTransition()
+  const [isDuplicateNavigating, startDuplicateNavigation] = useTransition()
   const { toastAction, toastError, toastSuccess } = useToast()
   const toastWriteError = useWriteErrorToast()
   const [, copyToClipboard] = useCopyToClipboard()
-  const { mutateAsync: toggleStatus } = useForecastStatusToggle()
-  const { mutateAsync: deleteForecast } = useForecastDelete()
+  const { isPending: isStatusChanging, mutateAsync: toggleStatus } = useForecastStatusToggle()
+  const { isPending: isDeleting, mutateAsync: deleteForecast } = useForecastDelete()
   const publicPath = routes.forecastsByRegion(regionId).view(id)
 
   const setStatus = async (status: Forecast['status']) => {
@@ -51,6 +63,7 @@ const useForecastRowActions = ({ id }: ForecastListItem, regionId: RegionId) => 
     try {
       await deleteForecast({ forecastId: id, regionId })
       toastSuccess(t('admin.forecasts.messages.deleted'))
+      onDeleted?.()
     } catch (error) {
       toastWriteError('useForecastRowActions | handleDelete', error)
     }
@@ -64,13 +77,25 @@ const useForecastRowActions = ({ id }: ForecastListItem, regionId: RegionId) => 
     toastSuccess(t('admin.forecasts.messages.linkCopied'))
   }
 
-  const navigate = (href: string) => startNavigation(() => router.push(href))
+  const handleEdit = () =>
+    startEditNavigation(() =>
+      router.push(routes.admin.forecasts.editInRegion(id, regionId, editFrom)),
+    )
+
+  const handleDuplicate = () =>
+    startDuplicateNavigation(() =>
+      router.push(routes.admin.forecasts.duplicateInRegion(id, regionId)),
+    )
 
   return {
-    isNavigating,
+    isDeleting,
+    isDuplicateNavigating,
+    isEditNavigating,
+    isNavigating: isEditNavigating || isDuplicateNavigating,
+    isStatusChanging,
     onDelete: handleDelete,
-    onDuplicate: () => navigate(routes.admin.forecasts.duplicateInRegion(id, regionId)),
-    onEdit: () => navigate(routes.admin.forecasts.editInRegion(id, regionId)),
+    onDuplicate: handleDuplicate,
+    onEdit: handleEdit,
     onLinkCopy: handleLinkCopy,
     onPublicPageOpen: () => void window.open(publicPath, '_blank', 'noopener'),
     onPublish: () => changeStatus('published'),

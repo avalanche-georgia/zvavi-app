@@ -7,10 +7,10 @@ import type { ForecastSavedEvent } from './useForecastFormSave'
 
 import { routes } from '@/routes'
 
-// After a save: Save & close goes back to the list; Save stays. The first save
+// After a save: Save & close goes back to the list (or closeHref); Save stays. The first save
 // of a new forecast swaps /new for its edit URL, so a refresh can't create a
 // duplicate — without remounting the form.
-const useForecastSavedNavigation = (regionId: RegionId) => {
+const useForecastSavedNavigation = (regionId: RegionId, closeHref?: string) => {
   const t = useTranslations()
   const locale = useLocale()
   const router = useRouter()
@@ -20,7 +20,7 @@ const useForecastSavedNavigation = (regionId: RegionId) => {
   return ({ andClose, forecastId, isCreated }: ForecastSavedEvent) => {
     if (andClose) {
       toastSuccess(t(isCreated ? `${key}.created` : `${key}.updated`))
-      router.push(routes.admin.forecasts.listByRegion(regionId))
+      router.push(closeHref ?? routes.admin.forecasts.listByRegion(regionId))
 
       return
     }

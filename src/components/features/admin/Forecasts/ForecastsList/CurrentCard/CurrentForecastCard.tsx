@@ -11,7 +11,7 @@ import { useRouter } from 'src/i18n/navigation'
 import { cardShellClasses } from './cardShell'
 import CurrentForecastHeading from './CurrentForecastHeading'
 import ZoneTiles from './ZoneTiles'
-import { HazardTile } from '../cells'
+import { HazardTile } from '../../shared'
 
 import { cn } from '@/lib/utils'
 import { routes } from '@/routes'
