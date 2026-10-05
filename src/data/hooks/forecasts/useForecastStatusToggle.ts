@@ -4,9 +4,10 @@ import { forecastsKeys } from '@data/query-keys'
 import type { ForecastListItem } from '@domain/types'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
+import { ForecastWriteDeniedError } from './errors'
 import type { ForecastStatusToggleVariables } from './types'
 
-type ToggleContext = { previousForecasts?: ForecastListItem[] }
+type ToggleContext = { previousRow?: Pick<ForecastListItem, 'publishedAt' | 'status'> }
 
 const toggleStatus = async ({ forecastId, status }: ForecastStatusToggleVariables) => {
   const { data, error } = await supabase
@@ -17,36 +18,45 @@ const toggleStatus = async ({ forecastId, status }: ForecastStatusToggleVariable
 
   handleSupabaseError(error)
 
-  // RLS hides a blocked update: no error, just no rows
-  if (!data?.length) throw new Error('Forecast status was not changed')
+  if (!data?.length) throw new ForecastWriteDeniedError()
 }
 
 const useForecastStatusToggle = () => {
   const queryClient = useQueryClient()
 
+  const patchRow = (
+    { forecastId, regionId }: ForecastStatusToggleVariables,
+    patch: Pick<ForecastListItem, 'publishedAt' | 'status'>,
+  ) =>
+    queryClient.setQueryData<ForecastListItem[]>(forecastsKeys.adminList(regionId), (forecasts) =>
+      forecasts?.map((forecast) =>
+        forecast.id === forecastId ? { ...forecast, ...patch } : forecast,
+      ),
+    )
+
   return useMutation<void, Error, ForecastStatusToggleVariables, ToggleContext>({
     mutationFn: toggleStatus,
 
-    onError: (_error, { regionId }, context) => {
-      if (!context?.previousForecasts) return
-      queryClient.setQueryData(forecastsKeys.adminList(regionId), context.previousForecasts)
+    // Only this row goes back — other rows may have their own changes in flight
+    onError: (_error, variables, context) => {
+      if (!context?.previousRow) return
+      patchRow(variables, context.previousRow)
     },
+
     // The row changes at once; the DB trigger sets the real published_at
-    onMutate: async ({ forecastId, regionId, status }) => {
-      const queryKey = forecastsKeys.adminList(regionId)
+    onMutate: async (variables) => {
+      const queryKey = forecastsKeys.adminList(variables.regionId)
 
       await queryClient.cancelQueries({ queryKey })
 
-      const previousForecasts = queryClient.getQueryData<ForecastListItem[]>(queryKey)
-      const publishedAt = status === 'published' ? new Date().toISOString() : null
+      const row = queryClient
+        .getQueryData<ForecastListItem[]>(queryKey)
+        ?.find(({ id }) => id === variables.forecastId)
+      const publishedAt = variables.status === 'published' ? new Date().toISOString() : null
 
-      queryClient.setQueryData<ForecastListItem[]>(queryKey, (forecasts) =>
-        forecasts?.map((forecast) =>
-          forecast.id === forecastId ? { ...forecast, publishedAt, status } : forecast,
-        ),
-      )
+      patchRow(variables, { publishedAt, status: variables.status })
 
-      return { previousForecasts }
+      return { previousRow: row && { publishedAt: row.publishedAt, status: row.status } }
     },
     // Refreshes `current` (public rule), history and the dashboard. Not awaited, so
     // mutateAsync (and the Undo toast) don't wait for every refetch.

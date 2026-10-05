@@ -17,13 +17,15 @@ const sizeClasses: Record<HazardTileSize, string> = {
 
 type HazardTileProps = {
   className?: string
+  // Screen-reader text for the level (the number alone means little)
+  label?: string
   level: HazardLevelScale
   size: HazardTileSize
   title?: string
 }
 
 // Coloured square with the level number; 0 (no rating) shows a dash
-const HazardTile = ({ className, level, size, title }: HazardTileProps) => (
+const HazardTile = ({ className, label, level, size, title }: HazardTileProps) => (
   <span
     className={cn(
       'grid shrink-0 place-items-center font-bold tabular-nums',
@@ -34,7 +36,8 @@ const HazardTile = ({ className, level, size, title }: HazardTileProps) => (
     )}
     title={title}
   >
-    {level === '0' ? '–' : level}
+    <span aria-hidden={!!label}>{level === '0' ? '–' : level}</span>
+    {label && <span className="sr-only">{label}</span>}
   </span>
 )
 

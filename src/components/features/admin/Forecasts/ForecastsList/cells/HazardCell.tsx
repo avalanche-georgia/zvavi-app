@@ -12,12 +12,12 @@ const HazardCell = ({ hazardLevels }: { hazardLevels: HazardLevels }) => {
   return (
     <div className="flex items-center gap-2.5">
       <HazardTile
+        label={levelName}
         level={hazardLevels.overall}
         size="md"
         title={t('admin.forecasts.list.overallTitle', { level: levelName })}
       />
       <HazardBars hazardLevels={hazardLevels} />
-      <span className="sr-only">{levelName}</span>
     </div>
   )
 }

@@ -14,7 +14,7 @@ import ZoneTiles from './ZoneTiles'
 import { HazardTile } from '../cells'
 
 import { cn } from '@/lib/utils'
-import { baseUrl, routes } from '@/routes'
+import { routes } from '@/routes'
 
 type CurrentForecastCardProps = { forecast: Forecast; now: Date; regionId: RegionId }
 
@@ -24,7 +24,8 @@ const CurrentForecastCard = ({ forecast, now, regionId }: CurrentForecastCardPro
   const [isNavigating, startNavigation] = useTransition()
   const { hazardLevels, id, validUntil } = forecast
   const isExpired = !validUntil || !isAfter(validUntil, now)
-  const publicUrl = `${new URL(baseUrl).host}${routes.regionHome(regionId)}`
+  // The page opens on this site (staging opens staging); rendered client-side only
+  const publicUrl = `${window.location.host}${routes.regionHome(regionId)}`
 
   const handlePublicPageOpen = () => window.open(routes.regionHome(regionId), '_blank', 'noopener')
   const handleDuplicate = () =>

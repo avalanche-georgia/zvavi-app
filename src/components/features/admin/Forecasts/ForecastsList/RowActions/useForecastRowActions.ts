@@ -8,6 +8,8 @@ import { useTranslations } from 'next-intl'
 import { useRouter } from 'src/i18n/navigation'
 import { useCopyToClipboard } from 'usehooks-ts'
 
+import useWriteErrorToast from './useWriteErrorToast'
+
 import { routes } from '@/routes'
 
 const useForecastRowActions = ({ id }: ForecastListItem, regionId: RegionId) => {
@@ -15,6 +17,7 @@ const useForecastRowActions = ({ id }: ForecastListItem, regionId: RegionId) => 
   const router = useRouter()
   const [isNavigating, startNavigation] = useTransition()
   const { toastAction, toastError, toastSuccess } = useToast()
+  const toastWriteError = useWriteErrorToast()
   const [, copyToClipboard] = useCopyToClipboard()
   const { mutateAsync: toggleStatus } = useForecastStatusToggle()
   const { mutateAsync: deleteForecast } = useForecastDelete()
@@ -26,7 +29,7 @@ const useForecastRowActions = ({ id }: ForecastListItem, regionId: RegionId) => 
 
       return true
     } catch (error) {
-      toastError('useForecastRowActions | setStatus', { error })
+      toastWriteError('useForecastRowActions | setStatus', error)
 
       return false
     }
@@ -46,10 +49,10 @@ const useForecastRowActions = ({ id }: ForecastListItem, regionId: RegionId) => 
 
   const handleDelete = async () => {
     try {
-      await deleteForecast(id)
+      await deleteForecast({ forecastId: id, regionId })
       toastSuccess(t('admin.forecasts.messages.deleted'))
     } catch (error) {
-      toastError('useForecastRowActions | handleDelete', { error })
+      toastWriteError('useForecastRowActions | handleDelete', error)
     }
   }
 

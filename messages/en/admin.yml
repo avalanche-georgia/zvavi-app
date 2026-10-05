@@ -226,8 +226,10 @@ admin:
       copyLink: 'Copy link'
       duplicate: 'Duplicate'
       more: 'More actions'
+      moreForForecast: 'More actions for forecast #{id}'
       openPublicPage: 'Open public page'
       publish: 'Publish'
+      publishForecast: 'Publish forecast #{id}'
       unpublish: 'Unpublish'
     deleteConfirm: 'Delete forecast #{id}? Its avalanche problems and avalanche links are deleted too.'
     messages:
@@ -235,6 +237,7 @@ admin:
       linkCopied: 'Link copied'
       published: 'Forecast published'
       unpublished: 'Unpublished — now a draft'
+      writeDenied: 'Not saved — you may not have permission, or the forecast no longer exists.'
 
   profile:
     title: 'My Profile'

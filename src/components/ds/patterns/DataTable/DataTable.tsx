@@ -47,12 +47,17 @@ const DataTable = <TData extends RowData>(props: DataTableProps<TData>) => {
   const isCardMode = useCardMode(width, !!renderCard)
 
   return (
+    // Focusable region: when a focused row leaves (deleted, filtered out) focus lands here
     <div
       ref={ref}
+      aria-label={ariaLabel}
       className={cn(
-        'rounded-card border-rule bg-surface @container overflow-clip border',
+        'rounded-card border-rule bg-surface focus-ring @container overflow-clip border',
         className,
       )}
+      data-table-root
+      role="region"
+      tabIndex={-1}
     >
       {isLoading && (
         <div className="grid h-60 place-items-center">
@@ -63,7 +68,7 @@ const DataTable = <TData extends RowData>(props: DataTableProps<TData>) => {
       {!isLoading && data.length > 0 && (
         <>
           {isCardMode && renderCard ? (
-            <DataTableCards renderCard={renderCard} rows={rows} />
+            <DataTableCards ariaLabel={ariaLabel} renderCard={renderCard} rows={rows} />
           ) : (
             <table
               aria-label={ariaLabel}

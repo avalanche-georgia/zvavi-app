@@ -35,7 +35,12 @@ const fetchAdminForecasts = async (regionId: RegionId): Promise<ForecastListItem
 
   restPages.forEach(({ error }) => handleSupabaseError(error))
 
-  const rows = [firstPage, ...restPages].flatMap(({ data }) => data ?? [])
+  // An insert between requests shifts the offsets — keep each row once
+  const rows = [
+    ...new Map(
+      [firstPage, ...restPages].flatMap(({ data }) => data ?? []).map((row) => [row.id, row]),
+    ).values(),
+  ]
 
   // TODO: type-safe DB conversion — https://app.asana.com/1/1208747886147296/project/1208747689500826/task/1214630622531225
   return convertSnakeToCamel(rows) as ForecastListItem[]

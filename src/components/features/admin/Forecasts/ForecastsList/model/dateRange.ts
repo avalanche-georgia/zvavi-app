@@ -18,7 +18,8 @@ export const parseDay = (value: string | null) => {
 
 // The created-date window a range option stands for
 export const getCreatedBounds = ({ dateFrom, dateTo, now, range }: BoundsInput): CreatedBounds => {
-  if (range === 'last30') return { end: null, start: startOfDay(subDays(now, 30)) }
+  // Calendar days including today — "30 days" is today and the 29 before it
+  if (range === 'last30') return { end: null, start: startOfDay(subDays(now, 29)) }
   if (range === 'season') return getSeasonRange(now)
 
   if (range === 'custom') {

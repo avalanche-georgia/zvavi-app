@@ -4,7 +4,13 @@ import { useTranslations } from 'next-intl'
 
 import type { ForecastRowActions } from './useForecastRowActions'
 
-const PublishedMenuItems = ({ actions }: { actions: ForecastRowActions }) => {
+type PublishedMenuItemsProps = {
+  actions: ForecastRowActions
+  // Wrapped by the menu to keep focus when the row leaves the list
+  onUnpublish: VoidFunction
+}
+
+const PublishedMenuItems = ({ actions, onUnpublish }: PublishedMenuItemsProps) => {
   const t = useTranslations()
 
   return (
@@ -15,7 +21,7 @@ const PublishedMenuItems = ({ actions }: { actions: ForecastRowActions }) => {
       <MenuItem icon={<Link2 />} onClick={actions.onLinkCopy}>
         {t('admin.forecasts.actions.copyLink')}
       </MenuItem>
-      <MenuItem icon={<EyeOff />} onClick={actions.onUnpublish}>
+      <MenuItem icon={<EyeOff />} onClick={onUnpublish}>
         {t('admin.forecasts.actions.unpublish')}
       </MenuItem>
     </>

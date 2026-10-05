@@ -73,18 +73,11 @@ export type Forecast = {
   weather: string
 }
 
-// One row of the admin forecasts list
+// One row of the admin forecasts list — DB nullability kept (old rows may lack fields)
 export type ForecastListItem = Pick<
-  Forecast,
-  | 'createdAt'
-  | 'forecaster'
-  | 'hazardLevels'
-  | 'id'
-  | 'publishedAt'
-  | 'status'
-  | 'summary'
-  | 'validUntil'
->
+  Tables<'forecasts'>,
+  'createdAt' | 'forecaster' | 'id' | 'publishedAt' | 'status' | 'summary' | 'validUntil'
+> & { hazardLevels: HazardLevels }
 
 export type Problem = {
   id?: string | number

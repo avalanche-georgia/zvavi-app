@@ -1,10 +1,11 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { ConfirmPopover, IconButton, Menu, MenuItem, MenuSeparator } from '@ds/primitives'
 import { ArrowUp, Copy, Ellipsis, LoaderIcon, Pencil, Trash2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
+import keepFocusInTable from './keepFocusInTable'
 import PublishedMenuItems from './PublishedMenuItems'
 import type { ForecastRowActions } from './useForecastRowActions'
 
@@ -12,13 +13,14 @@ type RowMenuProps = {
   actions: ForecastRowActions
   forecastId: number
   isPublished: boolean
+  // ⋯ — also the anchor of the delete confirmation
+  triggerRef: React.RefObject<HTMLButtonElement | null>
   // Card layout has no Publish button, so the menu offers it
   withPublish: boolean
 }
 
-const RowMenu = ({ actions, forecastId, isPublished, withPublish }: RowMenuProps) => {
+const RowMenu = ({ actions, forecastId, isPublished, triggerRef, withPublish }: RowMenuProps) => {
   const t = useTranslations()
-  const triggerRef = useRef<HTMLButtonElement>(null)
   const [isDeleteRequested, setIsDeleteRequested] = useState(false)
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false)
 
@@ -32,8 +34,22 @@ const RowMenu = ({ actions, forecastId, isPublished, withPublish }: RowMenuProps
     setIsDeleteConfirmOpen(true)
   }
 
+  // These can take the row (and ⋯ with it) out of the list — keep focus in the table
+  const keepingFocus = (action: () => Promise<void>) => () => {
+    keepFocusInTable(triggerRef.current)
+    void action()
+  }
+
+  const handleDeleteConfirm = keepingFocus(actions.onDelete)
+  const handlePublish = keepingFocus(actions.onPublish)
+  const handleUnpublish = keepingFocus(actions.onUnpublish)
+
   const trigger = (
-    <IconButton ref={triggerRef} aria-label={t('admin.forecasts.actions.more')}>
+    <IconButton
+      ref={triggerRef}
+      aria-label={t('admin.forecasts.actions.moreForForecast', { id: forecastId })}
+      tooltip={t('admin.forecasts.actions.more')}
+    >
       {actions.isNavigating ? (
         <LoaderIcon className="size-4.5 animate-spin" />
       ) : (
@@ -52,11 +68,11 @@ const RowMenu = ({ actions, forecastId, isPublished, withPublish }: RowMenuProps
           {t('admin.forecasts.actions.duplicate')}
         </MenuItem>
         {withPublish && !isPublished && (
-          <MenuItem icon={<ArrowUp />} onClick={actions.onPublish}>
+          <MenuItem icon={<ArrowUp />} onClick={handlePublish}>
             {t('admin.forecasts.actions.publish')}
           </MenuItem>
         )}
-        {isPublished && <PublishedMenuItems actions={actions} />}
+        {isPublished && <PublishedMenuItems actions={actions} onUnpublish={handleUnpublish} />}
         <MenuSeparator />
         <MenuItem icon={<Trash2 />} onClick={handleDeleteRequest} tone="danger">
           {t('common.actions.delete')}
@@ -69,7 +85,7 @@ const RowMenu = ({ actions, forecastId, isPublished, withPublish }: RowMenuProps
         confirmLabel={t('common.actions.delete')}
         isOpen={isDeleteConfirmOpen}
         message={t('admin.forecasts.deleteConfirm', { id: forecastId })}
-        onConfirm={actions.onDelete}
+        onConfirm={handleDeleteConfirm}
         onOpenChange={setIsDeleteConfirmOpen}
       />
     </>
