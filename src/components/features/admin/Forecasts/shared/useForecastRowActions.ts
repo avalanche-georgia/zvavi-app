@@ -1,6 +1,6 @@
 'use client'
 
-import { useTransition } from 'react'
+import { useState, useTransition } from 'react'
 import { useToast } from '@components/hooks'
 import { useForecastDelete, useForecastStatusToggle } from '@data/hooks/forecasts'
 import type { Forecast, RegionId } from '@domain/types'
@@ -20,7 +20,7 @@ type ForecastRowActionsOptions = {
 }
 
 const useForecastRowActions = (
-  { id }: Pick<Forecast, 'id'>,
+  { id, validUntil }: { id: number; validUntil: string | null },
   regionId: RegionId,
   { editFrom, onDeleted }: ForecastRowActionsOptions = {},
 ) => {
@@ -33,9 +33,25 @@ const useForecastRowActions = (
   const [, copyToClipboard] = useCopyToClipboard()
   const { isPending: isStatusChanging, mutateAsync: toggleStatus } = useForecastStatusToggle()
   const { isPending: isDeleting, mutateAsync: deleteForecast } = useForecastDelete()
+  const [isPublishConfirmOpen, setIsPublishConfirmOpen] = useState(false)
   const publicPath = routes.forecastsByRegion(regionId).view(id)
 
+  // Pre-check: the DB rejects publishing without a future valid_until — say why up front
+  const hasFutureValidity = () =>
+    Boolean(validUntil) && new Date(validUntil!).getTime() > Date.now()
+
+  const rejectPublish = () =>
+    toastError('useForecastRowActions | publish', {
+      message: t('admin.forecasts.messages.publishRejected'),
+    })
+
   const setStatus = async (status: Forecast['status']) => {
+    if (status === 'published' && !hasFutureValidity()) {
+      rejectPublish()
+
+      return false
+    }
+
     try {
       await toggleStatus({ forecastId: id, regionId, status })
 
@@ -98,8 +114,14 @@ const useForecastRowActions = (
     onEdit: handleEdit,
     onLinkCopy: handleLinkCopy,
     onPublicPageOpen: () => void window.open(publicPath, '_blank', 'noopener'),
-    onPublish: () => changeStatus('published'),
+    // Publishing is public at once, so it asks first; unpublishing doesn't
+    onPublish: () => (hasFutureValidity() ? setIsPublishConfirmOpen(true) : rejectPublish()),
     onUnpublish: () => changeStatus('draft'),
+    publishConfirm: {
+      isOpen: isPublishConfirmOpen,
+      onConfirm: () => changeStatus('published'),
+      onOpenChange: setIsPublishConfirmOpen,
+    },
   }
 }
 

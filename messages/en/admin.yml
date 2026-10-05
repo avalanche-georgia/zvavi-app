@@ -239,6 +239,14 @@ admin:
       published: 'Forecast published'
       unpublished: 'Unpublished — now a draft'
       writeDenied: 'Not saved — you may not have permission, or the forecast no longer exists.'
+      publishRejected: 'Not published — set a valid-until date in the future first.'
+    publishConfirm:
+      title: 'Publish forecast #{id}?'
+      region: 'Region'
+      overall: 'Overall'
+      validUntil: 'Valid until'
+      visibility: 'It becomes visible immediately on the site and to partner apps.'
+      confirm: 'Publish forecast'
     view:
       breadcrumb: 'Breadcrumb'
       byForecaster: 'by {name}'

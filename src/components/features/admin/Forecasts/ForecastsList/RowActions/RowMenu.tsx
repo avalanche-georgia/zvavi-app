@@ -29,7 +29,6 @@ const RowMenu = ({ actions, forecastId, isPublished, triggerRef, withPublish }: 
   }
 
   const handleDeleteConfirm = keepingFocus(actions.onDelete)
-  const handlePublish = keepingFocus(actions.onPublish)
   const handleUnpublish = keepingFocus(actions.onUnpublish)
 
   const trigger = (
@@ -56,7 +55,7 @@ const RowMenu = ({ actions, forecastId, isPublished, triggerRef, withPublish }: 
           {t('admin.forecasts.actions.duplicate')}
         </MenuItem>
         {withPublish && !isPublished && (
-          <MenuItem icon={<ArrowUp />} onClick={handlePublish}>
+          <MenuItem icon={<ArrowUp />} onClick={actions.onPublish}>
             {t('admin.forecasts.actions.publish')}
           </MenuItem>
         )}

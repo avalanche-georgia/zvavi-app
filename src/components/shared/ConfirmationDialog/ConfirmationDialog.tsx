@@ -6,10 +6,14 @@ export type ConfirmationDialogProps = Omit<ModalProps, 'children'> & {
   onConfirm: () => void
   onCancel?: () => void
   variant?: 'confirm' | 'delete'
-  description?: string
+  // Rich content (e.g. a summary list) is allowed, not only a sentence
+  description?: React.ReactNode
+  // Overrides the variant's generic label ("Confirm") with the action itself
+  confirmLabel?: string
 }
 
 const ConfirmationDialog = ({
+  confirmLabel,
   description,
   isOpen,
   onCancel,
@@ -28,7 +32,7 @@ const ConfirmationDialog = ({
         <Button className="ml-auto" onClick={onCancel || onClose} variant="secondary">
           {tActions('cancel')}
         </Button>
-        <Button onClick={onConfirm}>{tActions(variant)}</Button>
+        <Button onClick={onConfirm}>{confirmLabel || tActions(variant)}</Button>
       </ModalFooter>
     </Modal>
   )
