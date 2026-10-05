@@ -1,0 +1,92 @@
+{
+  "bulletins": [
+    {
+      "bulletinID": "d1f907f1-45e0-5043-ab17-218d09d46033",
+      "lang": "en",
+      "publicationTime": "2026-12-10T14:05:11Z",
+      "validTime": {
+        "endTime": "2026-12-11T14:00:00Z",
+        "startTime": "2026-12-10T14:05:11Z"
+      },
+      "source": {
+        "provider": {
+          "name": "Avalanche Georgia",
+          "website": "https://avalanche.ge"
+        }
+      },
+      "regions": [
+        {
+          "name": "Gudauri",
+          "regionID": "GE-MM-01"
+        }
+      ],
+      "dangerRatings": [
+        {
+          "elevation": {
+            "lowerBound": "2600"
+          },
+          "mainValue": "high",
+          "validTimePeriod": "all_day"
+        },
+        {
+          "elevation": {
+            "lowerBound": "2000",
+            "upperBound": "2600"
+          },
+          "mainValue": "considerable",
+          "validTimePeriod": "all_day"
+        },
+        {
+          "elevation": {
+            "upperBound": "2000"
+          },
+          "mainValue": "low",
+          "validTimePeriod": "all_day"
+        }
+      ],
+      "avalancheProblems": [
+        {
+          "problemType": "new_snow",
+          "avalancheSize": 1,
+          "validTimePeriod": "all_day",
+          "customData": {
+            "avalancheGeorgia": {
+              "priority": 0,
+              "problemType": "looseDry",
+              "bands": []
+            }
+          }
+        }
+      ],
+      "metaData": {
+        "extFiles": [
+          {
+            "description": "Forecast page on avalanche.ge",
+            "fileReferenceURI": "https://avalanche.ge/en/gudauri/forecasts/414",
+            "fileType": "website"
+          }
+        ]
+      },
+      "customData": {
+        "avalancheGeorgia": {
+          "expired": false,
+          "forecastId": 414
+        }
+      }
+    }
+  ],
+  "customData": {
+    "avalancheGeorgia": {
+      "apiVersion": 1
+    }
+  },
+  "metaData": {
+    "extFiles": [
+      {
+        "description": "Avalanche Georgia website",
+        "fileReferenceURI": "https://avalanche.ge",
+        "fileType": "link"
+      }
+    ]
+  }
+}
