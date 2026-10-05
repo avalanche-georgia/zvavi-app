@@ -13,6 +13,8 @@ import useWriteErrorToast from './useWriteErrorToast'
 import { routes } from '@/routes'
 
 type ForecastRowActionsOptions = {
+  // Where Edit was opened from; the form's Cancel / Save & close return there
+  editFrom?: 'view'
   // The view page leaves for the list; the list needs nothing
   onDeleted?: VoidFunction
 }
@@ -20,7 +22,7 @@ type ForecastRowActionsOptions = {
 const useForecastRowActions = (
   { id }: Pick<Forecast, 'id'>,
   regionId: RegionId,
-  { onDeleted }: ForecastRowActionsOptions = {},
+  { editFrom, onDeleted }: ForecastRowActionsOptions = {},
 ) => {
   const t = useTranslations()
   const router = useRouter()
@@ -81,7 +83,7 @@ const useForecastRowActions = (
     isStatusChanging,
     onDelete: handleDelete,
     onDuplicate: () => navigate(routes.admin.forecasts.duplicateInRegion(id, regionId)),
-    onEdit: () => navigate(routes.admin.forecasts.editInRegion(id, regionId)),
+    onEdit: () => navigate(routes.admin.forecasts.editInRegion(id, regionId, editFrom)),
     onLinkCopy: handleLinkCopy,
     onPublicPageOpen: () => void window.open(publicPath, '_blank', 'noopener'),
     onPublish: () => changeStatus('published'),

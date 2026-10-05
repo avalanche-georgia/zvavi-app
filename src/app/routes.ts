@@ -13,8 +13,9 @@ export const routes = {
       duplicateInRegion: (id: number, regionId: string) =>
         `/admin/forecasts/new?regionId=${regionId}&duplicateId=${id}`,
       edit: (id: number) => `/admin/forecasts/${id}/edit`,
-      editInRegion: (id: number, regionId: string) =>
-        `/admin/forecasts/${id}/edit?regionId=${regionId}`,
+      // from=view: Cancel / Save & close return to the forecast's view page
+      editInRegion: (id: number, regionId: string, from?: 'view') =>
+        `/admin/forecasts/${id}/edit?regionId=${regionId}${from ? `&from=${from}` : ''}`,
       listByRegion: (regionId: string) => `/admin/forecasts?regionId=${regionId}`,
       new: '/admin/forecasts/new',
       newInRegion: (regionId: string) => `/admin/forecasts/new?regionId=${regionId}`,

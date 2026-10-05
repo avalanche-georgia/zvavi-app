@@ -16,7 +16,10 @@ const useForecastViewActions = (forecast: AdminForecast, onLeave: VoidFunction) 
     router.replace(routes.admin.forecasts.listByRegion(forecast.regionId))
   }
 
-  return useForecastRowActions(forecast, forecast.regionId, { onDeleted: handleDeleted })
+  return useForecastRowActions(forecast, forecast.regionId, {
+    editFrom: 'view',
+    onDeleted: handleDeleted,
+  })
 }
 
 export type ForecastViewActions = ReturnType<typeof useForecastViewActions>
