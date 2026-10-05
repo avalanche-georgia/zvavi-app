@@ -15,7 +15,7 @@ const ViewTitle = ({ forecast, status }: ViewTitleProps) => {
 
   // h2: the shell header already renders the page h1 ("Forecasts")
   return (
-    <h2 className="text-ink flex flex-wrap items-center gap-2.5 text-[26px] font-semibold tracking-[-.02em]">
+    <h2 className="text-ink text-title-lg flex flex-wrap items-center gap-2.5 font-semibold">
       {range}
       <span className="bg-tile text-muted rounded-badge text-copy-sm px-1.75 py-0.75 font-mono font-semibold">
         #{id}

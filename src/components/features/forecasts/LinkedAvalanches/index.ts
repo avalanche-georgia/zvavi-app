@@ -1,5 +1,3 @@
-export { default as AvalancheRecordCard } from './AvalancheRecordCard'
 export { default as LinkedAvalanchesSection } from './LinkedAvalanchesSection'
-export { default as PublicHiddenNote } from './PublicHiddenNote'
 export { default as RecordEditNote } from './RecordEditNote'
 export { default as ViewAvalancheItem } from './ViewAvalancheItem'

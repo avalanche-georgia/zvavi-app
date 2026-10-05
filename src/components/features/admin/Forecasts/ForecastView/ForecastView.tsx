@@ -27,7 +27,7 @@ const ForecastView = ({ forecastId }: { forecastId: number }) => {
 
   if (!isValidId) return <ViewNotFound />
   if (isLeaving || isPending) return <CenteredSpinner />
-  if (isError) return <LoadError onRetry={handleRetry} />
+  if (isError && !forecast) return <LoadError onRetry={handleRetry} />
   if (!forecast) return <ViewNotFound />
 
   return <ForecastViewContent forecast={forecast} onLeave={handleLeave} />

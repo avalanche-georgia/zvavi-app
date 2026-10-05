@@ -1,4 +1,4 @@
-export { default as HazardTile, type HazardTileSize } from './HazardTile'
+export { default as HazardTile } from './HazardTile'
 export { default as LinkPendingIndicator } from './LinkPendingIndicator'
 export { type ForecastListStatus, getForecastListStatus } from './listStatus'
 export { default as StatusBadge } from './StatusBadge'

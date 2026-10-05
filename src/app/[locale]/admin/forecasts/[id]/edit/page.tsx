@@ -28,7 +28,10 @@ const EditForecastPage = () => {
   const searchParams = useSearchParams()
 
   const forecastId = Number(params.id)
-  const { data: forecast, isPending } = useAdminGetForecast({ forecastId })
+  const { data: forecast, isPending } = useAdminGetForecast({
+    enabled: !Number.isNaN(forecastId),
+    forecastId,
+  })
 
   if (Number.isNaN(forecastId)) {
     return <NotFound />
