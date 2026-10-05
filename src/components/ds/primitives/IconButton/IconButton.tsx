@@ -8,6 +8,7 @@ export type IconButtonTone = 'danger' | 'default'
 type IconButtonProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'aria-label'> & {
   // Icon-only: the accessible name is required
   'aria-label': string
+  ref?: React.Ref<HTMLButtonElement>
   size?: IconButtonSize
   tone?: IconButtonTone
   // Shorter hover label when the accessible name is long (defaults to aria-label)

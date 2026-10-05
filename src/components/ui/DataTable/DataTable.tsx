@@ -36,6 +36,7 @@ type DataTableProps<TData extends RowData> = {
 
 const defaultPageSize = 15
 
+/** @deprecated Use `DataTable` from `@ds/patterns` */
 const DataTable = <TData extends RowData>({
   className,
   columns,

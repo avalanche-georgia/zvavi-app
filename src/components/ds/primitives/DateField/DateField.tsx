@@ -11,6 +11,8 @@ const dateFormat = 'yyyy-MM-dd'
 const timeFormat = 'HH:mm'
 
 type DateFieldProps = {
+  // Accessible name of the date input when no visible Field label names it
+  ariaLabel?: string
   className?: string
   // Accessible name of the time input (the Field label names the date input)
   timeLabel?: string
@@ -26,6 +28,7 @@ type DateFieldProps = {
 
 // Native date (+ time) inputs. Put it inside <Field> for the label and error wiring.
 const DateField = ({
+  ariaLabel,
   className,
   defaultTime = '18:00',
   min,
@@ -55,6 +58,7 @@ const DateField = ({
   return (
     <div className={cn('flex gap-2', className)}>
       <Input
+        aria-label={ariaLabel}
         className={cn(fieldControlClasses, 'focus-ring h-11.5 px-3')}
         min={min}
         onValueChange={handleDateChange}

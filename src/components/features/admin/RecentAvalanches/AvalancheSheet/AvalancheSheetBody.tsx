@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react'
+import { LoadError } from '@components/shared'
 import { Spinner } from '@components/ui'
 import type { AvalancheListItem } from '@data/hooks/recentAvalanches'
 import { useTranslations } from 'next-intl'
 
-import LoadError from './LoadError'
 import type { AvalancheSheetMode } from './types'
 import { AvalancheView } from '../AvalancheView'
 import { RecentAvalancheForm } from '../RecentAvalancheForm'
