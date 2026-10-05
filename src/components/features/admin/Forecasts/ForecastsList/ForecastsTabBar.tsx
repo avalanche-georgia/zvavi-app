@@ -22,9 +22,10 @@ const ForecastsTabBar = ({ initialRegions, regionId }: ForecastsTabBarProps) => 
     startNavigation(() => router.push(routes.admin.forecasts.newInRegion(regionId)))
 
   return (
-    <div className="border-rule bg-surface flex items-center justify-between gap-4 border-b px-4 md:px-6">
+    // Tabs sit on the bottom rule; the button gets its own vertical breathing room
+    <div className="border-rule bg-surface flex items-end justify-between gap-4 border-b px-4 md:px-6">
       <RegionTabs currentRegionId={regionId} initialRegions={initialRegions} />
-      <Button isBusy={isNavigating} onClick={handleCreate} size="sm">
+      <Button className="my-2 self-center" isBusy={isNavigating} onClick={handleCreate} size="sm">
         <Plus aria-hidden className="size-4" />
         {t('admin.forecast.title.create')}
       </Button>
