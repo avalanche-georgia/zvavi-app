@@ -19,6 +19,8 @@ import { ConditionsCard, GeneralCard, SummaryCard } from './sections'
 import { sectionIds } from './useSectionStatus'
 
 type ForecastFormProps = {
+  // Where Save & close goes; defaults to the region's list
+  closeHref?: string
   // undefined for a new forecast (including a duplicate)
   forecastId?: number
   initialValues: ForecastFormSchema
@@ -26,7 +28,13 @@ type ForecastFormProps = {
   regionId: RegionId
 }
 
-const ForecastForm = ({ forecastId, initialValues, onClose, regionId }: ForecastFormProps) => {
+const ForecastForm = ({
+  closeHref,
+  forecastId,
+  initialValues,
+  onClose,
+  regionId,
+}: ForecastFormProps) => {
   const [isConfirmingCancel, setIsConfirmingCancel] = useState(false)
   const form = useForm<ForecastFormSchema>({
     defaultValues: initialValues,
@@ -34,7 +42,7 @@ const ForecastForm = ({ forecastId, initialValues, onClose, regionId }: Forecast
   })
   const { isDirty } = form.formState
   const { formRef, scrollToFirstError } = useScrollToFirstError()
-  const handleSaved = useForecastSavedNavigation(regionId)
+  const handleSaved = useForecastSavedNavigation(regionId, closeHref)
   const saver = useForecastFormSave({
     form,
     initialForecastId: forecastId,

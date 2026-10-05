@@ -10,6 +10,7 @@ const useListDates = () => {
 
   return {
     formatDate: (value: string | Date) => format(value, dateFormat, { locale }),
+    formatDay: (value: string | Date) => format(value, 'EEE d MMM', { locale }),
     formatTime: (value: string | Date) => format(value, timeFormat, { locale }),
   }
 }

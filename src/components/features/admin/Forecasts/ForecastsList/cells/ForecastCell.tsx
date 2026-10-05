@@ -2,7 +2,7 @@ import type { ForecastListItem } from '@domain/types'
 import { useTranslations } from 'next-intl'
 import { Link } from 'src/i18n/navigation'
 
-import LinkPendingIndicator from './LinkPendingIndicator'
+import { LinkPendingIndicator } from '../../shared'
 import { toPlainText } from '../model'
 
 import { cn } from '@/lib/utils'
@@ -23,8 +23,6 @@ const ForecastCell = ({ forecast }: { forecast: ForecastListItem }) => {
         <Link
           className="focus-ring text-ink hover:text-accent truncate rounded-sm font-semibold hover:underline"
           href={routes.admin.forecasts.view(id)}
-          // The view page doesn't exist yet — don't prefetch a 404
-          prefetch={false}
         >
           {forecaster || '—'}
           <LinkPendingIndicator />

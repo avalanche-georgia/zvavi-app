@@ -1,12 +1,12 @@
 'use client'
 
 import { AvalancheCreateSheet, AvalancheSheet } from '@components/features/admin/RecentAvalanches'
-import { formatAvalancheId } from '@components/features/observations'
 import type { LinkableAvalanche } from '@data/hooks/recentAvalanches'
 import type { RegionId } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import { AvalanchePickerSheet } from './AvalanchePickerSheet'
+import RecordEditNote from './RecordEditNote'
 import SheetNote from './SheetNote'
 import type { AvalancheSheetState } from './useAvalancheSheets'
 
@@ -62,18 +62,7 @@ const AvalancheSheets = (props: AvalancheSheetsProps) => {
         onLink={handleLinkPicked}
       />
       <AvalancheSheet
-        editNote={
-          recordId !== null && (
-            <SheetNote tone="info">
-              {t.rich(`${key}.editNote`, {
-                count: record?.forecastAvalanche.length ?? 0,
-                id: formatAvalancheId(recordId),
-
-                strong: (chunks) => <strong>{chunks}</strong>,
-              })}
-            </SheetNote>
-          )
-        }
+        editNote={recordId !== null && <RecordEditNote id={recordId} record={record} />}
         editSaveLabel={t(`${key}.saveRecord`)}
         id={recordId}
         initialMode={sheet?.mode === 'edit' ? 'edit' : 'view'}

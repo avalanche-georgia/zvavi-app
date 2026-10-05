@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl'
 import { useRouter } from 'src/i18n/navigation'
 
 import { cardShellClasses } from './cardShell'
-import { useListDates } from '../hooks'
+import { useListDates } from '../../shared'
 
 import { cn } from '@/lib/utils'
 import { routes } from '@/routes'
