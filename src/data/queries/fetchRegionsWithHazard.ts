@@ -22,7 +22,8 @@ const fetchRegionsWithHazard = cache(async (): Promise<RegionWithHazard[]> => {
       regions.map((region) => region.id),
     )
     .eq('status', 'published')
-    .order('published_at', { ascending: false })
+    // Same rule as fetchCurrentForecast (the public "current forecast"): latest created
+    .order('created_at', { ascending: false })
 
   handleSupabaseError(error)
 

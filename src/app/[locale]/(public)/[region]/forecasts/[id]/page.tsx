@@ -1,7 +1,7 @@
 import { ForecastContainer } from '@components/features/forecast'
 import { PageWrapper } from '@components/layout'
 import { isNoRowsError } from '@data/helpers'
-import type { HazardLevelScale } from '@domain/types'
+import type { HazardLevelScale, RegionId } from '@domain/types'
 import { format } from 'date-fns'
 import type { Metadata } from 'next'
 import { headers } from 'next/headers'
@@ -77,7 +77,7 @@ const ForecastPage = async (props: ForecastPageProps) => {
     notFound()
   }
 
-  const data = await fetchForecastPageData(forecastId)
+  const data = await fetchForecastPageData(forecastId, params.region as RegionId)
 
   if (!data) {
     notFound()

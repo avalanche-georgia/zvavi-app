@@ -127,6 +127,8 @@ common:
     vehicle: 'სატრანსპორტო საშუალება'
 
   table:
+    nextPage: 'შემდეგი გვერდი'
+    previousPage: 'წინა გვერდი'
     rowRange: '{from}–{to} / {total}'
 
   words:

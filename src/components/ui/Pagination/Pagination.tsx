@@ -6,6 +6,7 @@ export type PaginationProps = {
   totalPages: number
 }
 
+/** @deprecated Use `Pagination` from `@ds/primitives` */
 const Pagination = ({ currentPage, onPageChange, totalPages }: PaginationProps) => (
   <div className="flex items-center justify-center gap-3">
     <IconButton

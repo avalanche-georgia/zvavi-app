@@ -1,3 +1,4 @@
+import DataTableGallery from '@ds/patterns/DataTable/DataTable.gallery'
 import FooterActionsGallery from '@ds/patterns/FooterActions/FooterActions.gallery'
 import FormCardGallery from '@ds/patterns/FormCard/FormCard.gallery'
 import StickyActionBarGallery from '@ds/patterns/StickyActionBar/StickyActionBar.gallery'
@@ -11,6 +12,8 @@ import DateFieldGallery from '@ds/primitives/DateField/DateField.gallery'
 import FieldGallery from '@ds/primitives/Field/Field.gallery'
 import IconButtonGallery from '@ds/primitives/IconButton/IconButton.gallery'
 import InfoTipGallery from '@ds/primitives/InfoTip/InfoTip.gallery'
+import MenuGallery from '@ds/primitives/Menu/Menu.gallery'
+import PaginationGallery from '@ds/primitives/Pagination/Pagination.gallery'
 import RatingScaleGallery from '@ds/primitives/RatingScale/RatingScale.gallery'
 import SegmentedControlGallery from '@ds/primitives/SegmentedControl/SegmentedControl.gallery'
 import SelectGallery from '@ds/primitives/Select/Select.gallery'
@@ -38,6 +41,7 @@ export const galleryEntries: GalleryEntry[] = [
   { Demo: ButtonGallery, id: 'button', title: 'Button' },
   { Demo: BadgeGallery, id: 'badge', title: 'Badge' },
   { Demo: ConfirmPopoverGallery, id: 'confirm-popover', title: 'ConfirmPopover' },
+  { Demo: MenuGallery, id: 'menu', title: 'Menu' },
   { Demo: IconButtonGallery, id: 'icon-button', title: 'IconButton' },
   { Demo: InfoTipGallery, id: 'info-tip', title: 'InfoTip' },
   { Demo: TooltipGallery, id: 'tooltip', title: 'Tooltip' },
@@ -50,8 +54,10 @@ export const galleryEntries: GalleryEntry[] = [
   { Demo: SegmentedControlGallery, id: 'segmented-control', title: 'SegmentedControl' },
   { Demo: RatingScaleGallery, id: 'rating-scale', title: 'RatingScale' },
   { Demo: SelectGallery, id: 'select', title: 'Select' },
+  { Demo: PaginationGallery, id: 'pagination', title: 'Pagination' },
   { Demo: FooterActionsGallery, id: 'footer-actions', title: 'FooterActions' },
   { Demo: FormCardGallery, id: 'form-card', title: 'FormCard' },
   { Demo: StickyActionBarGallery, id: 'sticky-action-bar', title: 'StickyActionBar' },
   { Demo: SuccessStateGallery, id: 'success-state', title: 'SuccessState' },
+  { Demo: DataTableGallery, id: 'data-table', title: 'DataTable' },
 ]

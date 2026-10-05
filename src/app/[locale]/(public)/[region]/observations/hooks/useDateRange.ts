@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
+import { getSeasonRange } from '@domain/season'
 import { endOfDay, format, parseISO, startOfDay, subDays } from 'date-fns'
 
-import getSeasonRange from '../helpers/getSeasonRange'
 import type { ObservationsFilters } from '../helpers/searchParams'
 
 // Calendar days including today — "7 days" is today and the 6 before it

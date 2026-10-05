@@ -4,6 +4,7 @@ import { useState } from 'react'
 
 import Field from './Field'
 import NumberField from '../NumberField/NumberField'
+import SearchField from '../SearchField/SearchField'
 import Textarea from '../Textarea/Textarea'
 import TextField from '../TextField/TextField'
 
@@ -11,6 +12,7 @@ const FieldGallery = () => {
   const [name, setName] = useState('')
   const [depth, setDepth] = useState<number | null>(null)
   const [notes, setNotes] = useState('')
+  const [query, setQuery] = useState('')
 
   return (
     <div className="grid gap-5 md:grid-cols-2">
@@ -32,6 +34,13 @@ const FieldGallery = () => {
       <Field hint="Optional" label="Notes">
         <Textarea onValueChange={setNotes} placeholder="Anything else…" value={notes} />
       </Field>
+      <SearchField
+        aria-label="Search forecasts"
+        clearLabel="Clear"
+        onValueChange={setQuery}
+        placeholder="Search ID, forecaster or summary"
+        value={query}
+      />
     </div>
   )
 }
