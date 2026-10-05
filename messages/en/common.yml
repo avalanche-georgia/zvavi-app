@@ -127,6 +127,8 @@ common:
     vehicle: 'Vehicle'
 
   table:
+    nextPage: 'Next page'
+    previousPage: 'Previous page'
     rowRange: '{from}–{to} of {total}'
 
   words:

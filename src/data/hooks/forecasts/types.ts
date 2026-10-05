@@ -23,8 +23,14 @@ export type ForecastSavePayload = {
 
 export type ForecastQueryVariables = { forecastId: Forecast['id'] }
 
+export type ForecastDeleteVariables = {
+  forecastId: Forecast['id']
+  regionId: RegionId
+}
+
 export type ForecastStatusToggleVariables = {
   forecastId: Forecast['id']
+  regionId: RegionId
   status: Forecast['status']
 }
 

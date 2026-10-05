@@ -1,8 +1,21 @@
 import { convertSnakeToCamel } from '@data/helpers'
 import fetchPublicForecastAvalanches from '@data/queries/fetchPublicForecastAvalanches'
-import type { FullForecast } from '@domain/types'
+import type { FullForecast, RegionId } from '@domain/types'
 
 import { createClient } from '@/lib/supabase/server'
+
+type SupabaseServerClient = Awaited<ReturnType<typeof createClient>>
+
+// Same rule as fetchCurrentForecast: latest created published forecast in the region
+const requestCurrentForecastId = (supabase: SupabaseServerClient, regionId: RegionId) =>
+  supabase
+    .from('forecasts')
+    .select('id')
+    .eq('status', 'published')
+    .eq('region_id', regionId)
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .single()
 
 type ForecastPageData = {
   initialForecast: FullForecast
@@ -11,6 +24,7 @@ type ForecastPageData = {
 
 export const fetchForecastPageData = async (
   forecastId: number,
+  regionId: RegionId,
 ): Promise<ForecastPageData | null> => {
   const supabase = await createClient()
 
@@ -19,13 +33,8 @@ export const fetchForecastPageData = async (
       supabase.from('forecasts').select().match({ id: forecastId, status: 'published' }).single(),
       fetchPublicForecastAvalanches(forecastId),
       supabase.from('avalanche_problems').select().eq('forecast_id', forecastId).order('order'),
-      supabase
-        .from('forecasts')
-        .select('id')
-        .eq('status', 'published')
-        .order('created_at', { ascending: false })
-        .limit(1)
-        .single(),
+      // Usually the forecast's own region; checked below
+      requestCurrentForecastId(supabase, regionId),
     ])
 
   if (!forecastResult.data) return null
@@ -46,7 +55,14 @@ export const fetchForecastPageData = async (
 
   const initialForecast: FullForecast = { ...forecastWithProblems, recentAvalanches }
 
-  const isCurrentForecast = forecastResult.data.id === currentForecastResult.data?.id
+  // A link with the wrong region in the URL still compares against the forecast's own region
+  const forecastRegionId = forecastResult.data.region_id
+  const currentForecastId =
+    forecastRegionId && forecastRegionId !== regionId
+      ? (await requestCurrentForecastId(supabase, forecastRegionId)).data?.id
+      : currentForecastResult.data?.id
+
+  const isCurrentForecast = forecastResult.data.id === currentForecastId
 
   return { initialForecast, isCurrentForecast }
 }

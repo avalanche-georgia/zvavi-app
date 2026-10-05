@@ -10,6 +10,8 @@ export const routes = {
   admin: {
     designSystem: '/admin/ds',
     forecasts: {
+      duplicateInRegion: (id: number, regionId: string) =>
+        `/admin/forecasts/new?regionId=${regionId}&duplicateId=${id}`,
       edit: (id: number) => `/admin/forecasts/${id}/edit`,
       editInRegion: (id: number, regionId: string) =>
         `/admin/forecasts/${id}/edit?regionId=${regionId}`,
@@ -17,6 +19,8 @@ export const routes = {
       new: '/admin/forecasts/new',
       newInRegion: (regionId: string) => `/admin/forecasts/new?regionId=${regionId}`,
       root: '/admin/forecasts',
+      // Read-only admin view (built in a follow-up)
+      view: (id: number) => `/admin/forecasts/${id}`,
     },
     members: {
       edit: (id: string) => `/admin/members/${id}/edit`,
