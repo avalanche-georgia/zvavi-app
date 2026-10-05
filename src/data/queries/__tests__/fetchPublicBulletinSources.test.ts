@@ -55,6 +55,8 @@ describe('fetchPublicBulletinSources', () => {
     })
     expect(callsOf('forecasts', 'eq')).toContainEqual(['status', 'published'])
     expect(callsOf('forecasts', 'order')[0]).toEqual(['created_at', { ascending: false }])
+    // Only the newest published forecast: an invalid one is never replaced by an older one
+    expect(callsOf('forecasts', 'limit')).toEqual([[1]])
     expect(callsOf('regions', 'eq')).toContainEqual(['is_active', true])
     expect(callsOf('regions', 'not')).toContainEqual(['caaml_region_id', 'is', null])
     expect(callsOf('avalanche_problems', 'eq')).toContainEqual(['forecast_id', 7])
