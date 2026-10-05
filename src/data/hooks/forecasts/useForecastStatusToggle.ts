@@ -4,7 +4,7 @@ import { forecastsKeys } from '@data/query-keys'
 import type { AdminForecast, ForecastListItem } from '@domain/types'
 import { type Query, useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { ForecastWriteDeniedError } from './errors'
+import { ForecastPublishRejectedError, ForecastWriteDeniedError } from './errors'
 import type { ForecastStatusToggleVariables } from './types'
 
 type ToggleContext = {
@@ -24,6 +24,9 @@ const toggleStatus = async ({ forecastId, status }: ForecastStatusToggleVariable
     .update({ status })
     .eq('id', forecastId)
     .select('id')
+
+  // Postgres check_violation from the publish guard
+  if (error?.code === '23514') throw new ForecastPublishRejectedError()
 
   handleSupabaseError(error)
 
