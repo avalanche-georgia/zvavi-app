@@ -2,6 +2,7 @@
 
 import { AspectMiniGrid } from '@components/features/observations'
 import { useAspectSummary } from '@components/hooks'
+import { MarkdownContent } from '@components/shared'
 import { useTranslations } from 'next-intl'
 
 import ProblemFacts from './ProblemFacts'
@@ -33,14 +34,18 @@ const ProblemCardBody = ({
         <div className="flex-1">
           <ProblemFacts problem={problem} />
         </div>
-        <div className="flex max-w-60 flex-col gap-1.5">
+        <div className="flex w-60 shrink-0 flex-col gap-1.5 @max-[700px]:w-auto">
           <AspectMiniGrid aspects={aspects} />
           <p className="text-caption text-body">
             {getSummary(aspects) ?? t('admin.forecast.editor.problems.noAspects')}
           </p>
         </div>
       </div>
-      {description && <p className="text-copy-sm text-body whitespace-pre-line">{description}</p>}
+      {description && (
+        <div className="text-copy-sm text-body flex flex-col gap-2">
+          <MarkdownContent content={description} />
+        </div>
+      )}
       {children}
     </div>
   )
