@@ -81,6 +81,7 @@
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "16.1.6",
+    "@posthog/nextjs-config": "^1.11.1",
     "@svgr/webpack": "^8.1.0",
     "@tailwindcss/postcss": "^4.2.2",
     "@types/geojson": "^7946.0.16",
