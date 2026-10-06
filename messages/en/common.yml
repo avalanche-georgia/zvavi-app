@@ -102,7 +102,7 @@ common:
     description: 'May we collect anonymous visit statistics using cookies? They help us show the reach of our forecasts to partners and funders. We never collect personal data and never share it for advertising.'
     allow: 'Allow'
     decline: 'No thanks'
-    close: 'Close'
+    closeAndDecline: 'Close (no thanks)'
     preferences: 'Analytics preferences'
     privacyLink: 'Privacy Policy'
     status:

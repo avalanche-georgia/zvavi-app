@@ -3,8 +3,8 @@
 import { useContext } from 'react'
 import type { Partner } from '@domain/types'
 
-import hasPartnerDetails from './hasPartnerDetails'
 import PartnerTrackingContext from './PartnerTrackingContext'
+import hasPartnerDetails from '../PartnersList/hasPartnerDetails'
 
 import { trackPartnerBadgeClick, trackPartnerWebsiteClick } from '@/lib/posthog/events'
 

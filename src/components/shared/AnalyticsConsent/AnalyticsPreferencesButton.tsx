@@ -36,7 +36,7 @@ const AnalyticsPreferencesButton = ({ className }: { className?: string }) => {
         </ModalBody>
 
         <ModalFooter>
-          <AnalyticsConsentActions className="w-full" onChoose={handleChoose} />
+          <AnalyticsConsentActions className="w-full" onConsentChoose={handleChoose} />
         </ModalFooter>
       </Modal>
     </>

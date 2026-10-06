@@ -26,7 +26,7 @@ const AnalyticsConsentCard = () => {
         <header className="flex items-center gap-2">
           <h2 className="flex-1 text-sm font-semibold">{t('common.analyticsConsent.title')}</h2>
           <IconButton
-            aria-label={t('common.analyticsConsent.close')}
+            aria-label={t('common.analyticsConsent.closeAndDecline')}
             iconProps={{ icon: 'xMark' }}
             onClick={handleDismiss}
             size="sm"
@@ -38,7 +38,7 @@ const AnalyticsConsentCard = () => {
           <PrivacyPolicyLink>{t('common.analyticsConsent.privacyLink')}</PrivacyPolicyLink>
         </p>
 
-        <AnalyticsConsentActions onChoose={setConsent} />
+        <AnalyticsConsentActions onConsentChoose={setConsent} />
       </div>
     </aside>
   )
