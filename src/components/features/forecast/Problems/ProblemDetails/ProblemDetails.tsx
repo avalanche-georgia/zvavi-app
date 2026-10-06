@@ -1,3 +1,4 @@
+import { MarkdownContent } from '@components/shared'
 import type { Problem } from '@domain/types'
 
 import Aspects from './Aspects'
@@ -22,7 +23,9 @@ const ProblemDetails = ({ problem }: { problem: Problem }) => {
   return (
     <>
       {description && (
-        <p className="mb-4 text-justify text-sm whitespace-pre-line">{description}</p>
+        <div className="mb-4 flex flex-col gap-2 text-justify text-sm">
+          <MarkdownContent content={description} />
+        </div>
       )}
       <div className="grid grid-cols-2 justify-items-center gap-2">
         <AvalancheSize avalancheSize={avalancheSize} />
