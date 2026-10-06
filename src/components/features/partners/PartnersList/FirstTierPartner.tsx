@@ -6,15 +6,14 @@ import type { Partner } from '@domain/types'
 
 import PartnerInfo from './PartnerInfo'
 import PartnerLogo from './PartnerLogo'
+import { usePartnerTracking } from '../tracking'
 
 const cardClassName = 'bg-primary/10 flex w-full flex-col items-center gap-4 rounded-2xl p-4'
 
 const FirstTierPartner = ({ partner }: { partner: Partner }) => {
   const localizeField = useLocalizeField()
   const name = localizeField(partner.nameEn, partner.nameKa)
-  const hasDrawerContent = Boolean(
-    partner.benefitEn || partner.benefitKa || partner.descriptionEn || partner.descriptionKa,
-  )
+  const { hasDetails, trackBadgeClick } = usePartnerTracking(partner)
 
   const logoNode = (
     <>
@@ -25,11 +24,12 @@ const FirstTierPartner = ({ partner }: { partner: Partner }) => {
     </>
   )
 
-  if (!hasDrawerContent) {
+  if (!hasDetails) {
     return (
       <a
         className={cardClassName}
         href={partner.websiteUrl}
+        onClick={trackBadgeClick}
         rel="noopener noreferrer"
         target="_blank"
       >
@@ -40,7 +40,7 @@ const FirstTierPartner = ({ partner }: { partner: Partner }) => {
 
   return (
     <Drawer content={<PartnerInfo partner={partner} />} title={name}>
-      <button className={cardClassName} type="button">
+      <button className={cardClassName} onClick={trackBadgeClick} type="button">
         {logoNode}
       </button>
     </Drawer>

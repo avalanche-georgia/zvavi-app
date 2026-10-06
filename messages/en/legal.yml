@@ -1,7 +1,7 @@
 legal:
   privacy:
     title: 'Privacy Policy'
-    lastUpdated: 'Last updated: February 2026'
+    lastUpdated: 'Last updated: October 2026'
     intro: 'Avalanche Georgia ("we", "us", "our") is committed to protecting your personal data. This Privacy Policy explains how we collect, use, and safeguard information when you apply for membership or use our services.'
     dataCollected:
       title: 'What Data We Collect'
@@ -27,9 +27,21 @@ legal:
     storage:
       title: 'How Your Data Is Stored'
       description: 'Your data is stored securely using Supabase, a cloud database platform with encryption at rest and in transit. We take reasonable measures to protect your information from unauthorized access, alteration, or destruction.'
+    analytics:
+      title: 'Website Analytics'
+      description: 'With your permission, we use PostHog, a web analytics service hosted in the European Union, to understand how many people use our website and which pages they visit. This helps us improve the service and report its reach to our partners and supporters. If you tick “Allow anonymous usage statistics” (or press “Allow” in the notice), we store a random identifier in a cookie or your browser’s local storage and collect:'
+      items:
+        - 'Pages you visit and the page or website that referred you'
+        - 'Your device type, browser and operating system'
+        - 'Your approximate location (country and city), derived from your IP address'
+        - 'How many times partner logos are shown and clicked, in aggregate'
+      details: 'We do not collect your name, email or any information you enter in forms for analytics, we do not record your screen or keystrokes, we do not use analytics data for advertising, and we do not sell it. If you do not allow analytics, no cookie or local storage entry is created for this purpose and your visit is counted only anonymously, without your location, using a one-way code that cannot be used to identify you. You can change your choice at any time using the “Analytics preferences” link in the footer. We keep analytics data only as long as needed for the purposes above.'
+    necessaryStorage:
+      title: 'Strictly Necessary Storage'
+      description: 'Our website also stores a few small items in your browser that are needed for it to work and do not require consent: your chosen region and language, the fact that you have read the safety disclaimer, your analytics choice, and sign-in information for organisation members and administrators. These are not used for tracking.'
     access:
       title: 'Who Has Access'
-      description: 'Access to your personal data is restricted to authorised organisation administrators who need it for membership management purposes. We do not sell, share, or distribute your personal data to third parties.'
+      description: 'Access to your personal data is restricted to authorised organisation administrators who need it for membership management purposes. We do not sell your personal data and we do not share it for advertising. We use a small number of service providers to run our services, such as Supabase (data storage), Vercel (hosting) and PostHog (anonymous website analytics); they process data only on our behalf and under our instructions.'
     retention:
       title: 'Data Retention'
       description: 'We retain your personal data for as long as your membership is active, plus a reasonable period after membership ends for administrative purposes. You may request deletion of your data at any time.'
@@ -48,7 +60,7 @@ legal:
 
   terms:
     title: 'Terms of Service'
-    lastUpdated: 'Last updated: February 2026'
+    lastUpdated: 'Last updated: October 2026'
     intro: 'By using the services of Avalanche Georgia ("we", "us", "our") or applying for membership, you agree to the following terms.'
     membership:
       title: 'Membership'
@@ -66,6 +78,12 @@ legal:
     disclaimer:
       title: 'Disclaimer'
       description: 'Avalanche forecasts and safety information provided by Avalanche Georgia are based on the best available data but cannot guarantee accuracy. Backcountry travel inherently carries risks. You are solely responsible for your own safety decisions in the mountains. Avalanche Georgia and its members accept no liability for any injury, loss, or damage arising from the use of our information.'
+    websiteUse:
+      title: 'Use of the Website'
+      description: 'Our forecasts and website are provided free of charge and “as is”, without any guarantee that the service will be uninterrupted, error-free or always up to date. We may change, suspend or discontinue any part of the service at any time. Your use of the website is also subject to our Privacy Policy, including how we use anonymous analytics.'
+    thirdPartyLinks:
+      title: 'Partners and Third-Party Links'
+      description: 'Our website displays logos of and links to partner organisations and other third-party websites. These are provided for your convenience. We do not control and are not responsible for their content, products, services or privacy practices, and a link does not mean we endorse everything offered there. Your use of third-party websites is at your own risk and subject to their own terms.'
     fees:
       title: 'Membership Fees'
       description: 'Membership is subject to an annual fee as specified during the application process. Fees support the operational costs of the organisation and are non-refundable unless otherwise decided by the organisation.'
