@@ -1,7 +1,7 @@
 import type { IconName } from '@components/icons/types'
 import { useCurrentForecastsPerRegion } from '@data/hooks/forecasts'
 import { useMembersQuery } from '@data/hooks/members'
-import { useAvalanchesPerRegion } from '@data/hooks/recentAvalanches'
+import { useAvalanchesPerRegion, usePendingObservationsSummary } from '@data/hooks/recentAvalanches'
 import type { Region } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
@@ -21,9 +21,12 @@ const useActivityEvents = (regions: Region[]): ActivityEventsResult => {
   const { data: members, isPending: isMembersPending } = useMembersQuery()
   const forecastQueries = useCurrentForecastsPerRegion(regions)
   const avalancheQueries = useAvalanchesPerRegion(regions)
+  const { isPending: isObservationsPending, latest: latestObservation } =
+    usePendingObservationsSummary()
 
   const isPending =
     isMembersPending ||
+    isObservationsPending ||
     forecastQueries.some((query) => query.isPending) ||
     avalancheQueries.some((query) => query.isPending)
 
@@ -70,6 +73,20 @@ const useActivityEvents = (regions: Region[]): ActivityEventsResult => {
       label: t('admin.dashboard.activity.newMemberRequest', {
         name: `${latestPending.firstName} ${latestPending.lastName}`,
       }),
+    })
+  }
+
+  if (latestObservation) {
+    const { createdAt, regionId } = latestObservation
+
+    events.push({
+      at: new Date(createdAt),
+      icon: 'telescope',
+      label: regionId
+        ? t('admin.dashboard.activity.observationSubmitted', {
+            region: t(`regions.names.${regionId}`),
+          })
+        : t('admin.dashboard.activity.observationSubmittedNoRegion'),
     })
   }
 

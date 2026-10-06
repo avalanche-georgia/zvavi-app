@@ -6,6 +6,7 @@ import { Icon } from 'src/components'
 
 import { cn } from '@/lib/utils'
 
+/** @deprecated Use `Menu` / `MenuItem` from `@ds/primitives` */
 const DropdownMenu = Menu.Root
 
 const DropdownMenuTrigger = Menu.Trigger

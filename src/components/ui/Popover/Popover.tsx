@@ -4,8 +4,11 @@
 
 import { forwardRef } from 'react'
 import * as PopoverPrimitive from '@radix-ui/react-popover'
-import clsx from 'clsx'
 import type { ComponentPropsWithoutRef, ElementRef } from 'react'
+
+import { stopEscapePropagation, usePortalContainer } from '../PortalContainer'
+
+import { cn } from '@/lib/utils'
 
 const Popover = PopoverPrimitive.Root
 
@@ -16,27 +19,37 @@ const PopoverAnchor = PopoverPrimitive.Anchor
 const PopoverContent = forwardRef<
   ElementRef<typeof PopoverPrimitive.Content>,
   ComponentPropsWithoutRef<typeof PopoverPrimitive.Content>
->(({ align = 'center', children, className, sideOffset = 4, ...props }, ref) => (
-  <PopoverPrimitive.Portal>
-    <PopoverPrimitive.Content
-      ref={ref}
-      align={align}
-      className={clsx(
-        'z-50 w-auto rounded-md border border-gray-200 bg-white p-4 shadow-md outline-hidden',
-        'data-[state=open]:animate-in data-[state=closed]:animate-out',
-        'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
-        'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
-        'data-[side=bottom]:slide-in-from-top-2 data-[side=top]:slide-in-from-bottom-2',
-        'data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2',
-        className,
-      )}
-      sideOffset={sideOffset}
-      {...props}
-    >
-      {children}
-    </PopoverPrimitive.Content>
-  </PopoverPrimitive.Portal>
-))
+>(({ align = 'center', children, className, onEscapeKeyDown, sideOffset = 4, ...props }, ref) => {
+  const portalContainer = usePortalContainer()
+
+  const handleEscapeKeyDown = (event: KeyboardEvent) => {
+    stopEscapePropagation(event)
+    onEscapeKeyDown?.(event)
+  }
+
+  return (
+    <PopoverPrimitive.Portal container={portalContainer}>
+      <PopoverPrimitive.Content
+        ref={ref}
+        align={align}
+        className={cn(
+          'z-50 w-auto rounded-md border border-gray-200 bg-white p-4 shadow-md outline-hidden',
+          'data-[state=open]:animate-in data-[state=closed]:animate-out',
+          'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
+          'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
+          'data-[side=bottom]:slide-in-from-top-2 data-[side=top]:slide-in-from-bottom-2',
+          'data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2',
+          className,
+        )}
+        onEscapeKeyDown={handleEscapeKeyDown}
+        sideOffset={sideOffset}
+        {...props}
+      >
+        {children}
+      </PopoverPrimitive.Content>
+    </PopoverPrimitive.Portal>
+  )
+})
 
 PopoverContent.displayName = PopoverPrimitive.Content.displayName
 

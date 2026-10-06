@@ -1,0 +1,111 @@
+'use client'
+
+import { useState } from 'react'
+import {
+  BaseMapLayers,
+  baseMapMaxZoom,
+  RegionBoundary,
+  useRegionBounds,
+} from '@components/shared/map'
+import type { Region } from '@domain/types'
+import type { Map as LeafletMap } from 'leaflet'
+import { MapContainer, useMapEvents, ZoomControl } from 'react-leaflet'
+
+import DraggablePin from './DraggablePin'
+import MapHint from './MapHint'
+import MapOverlayControls from './MapOverlayControls'
+import useGeolocatePin from './useGeolocatePin'
+import useMapSync from './useMapSync'
+
+import 'leaflet/dist/leaflet.css'
+import { cn } from '@/lib/utils'
+
+// Used only if a region has neither a forecast zone nor a map center
+const fallbackCenter: [number, number] = [42.1, 43.5]
+const fallbackZoom = 7
+
+const ClickHandler = ({
+  onLocationPick,
+}: {
+  onLocationPick: (latitude: number, longitude: number) => void
+}) => {
+  useMapEvents({ click: (event) => onLocationPick(event.latlng.lat, event.latlng.lng) })
+
+  return null
+}
+
+export type LocationMapClientProps = {
+  isExpanded: boolean
+  latitude: number | null
+  longitude: number | null
+  onExpandedToggle: () => void
+  onLocationPick: (latitude: number, longitude: number) => void
+  // Set only for typed coordinates: the map pans there. Picks on the map (tap,
+  // drag, My location) move the view themselves.
+  panTarget: [number, number] | null
+  region: Region
+  regionName: string
+}
+
+const LocationMapClient = ({
+  isExpanded,
+  latitude,
+  longitude,
+  onExpandedToggle,
+  onLocationPick,
+  panTarget,
+  region,
+  regionName,
+}: LocationMapClientProps) => {
+  const [map, setMap] = useState<LeafletMap | null>(null)
+  // "Region + 20%" for the initial view, pan limit, and zoom-out limit
+  const bounds = useRegionBounds(region, 0.2)
+  const { isLocating, locate } = useGeolocatePin({ bounds, map, onLocationPick, regionName })
+  const hasPin = latitude != null && longitude != null
+
+  useMapSync({ isExpanded, map, panTarget })
+
+  const regionCenter: [number, number] | undefined = region.mapCenter
+    ? [region.mapCenter.lat, region.mapCenter.lng]
+    : undefined
+
+  return (
+    // The height lives on this wrapper: react-leaflet ignores className changes on
+    // MapContainer after it mounts, so the map just fills whatever height we animate
+    <div
+      className={cn(
+        'border-rule rounded-media relative isolate -mx-1 overflow-hidden border transition-[height] duration-250 md:mx-0',
+        isExpanded ? 'h-[62vh]' : 'h-65 md:h-80',
+      )}
+    >
+      <MapContainer
+        ref={setMap}
+        bounds={bounds ?? undefined}
+        center={bounds ? undefined : (regionCenter ?? fallbackCenter)}
+        className="bg-map size-full cursor-crosshair"
+        maxBounds={bounds ?? undefined}
+        maxBoundsViscosity={1}
+        maxZoom={baseMapMaxZoom}
+        zoom={bounds ? undefined : (region.defaultZoom ?? fallbackZoom)}
+        zoomControl={false}
+      >
+        <BaseMapLayers />
+        <RegionBoundary bounds={bounds} region={region} />
+        <ZoomControl position="bottomleft" />
+        <ClickHandler onLocationPick={onLocationPick} />
+        {hasPin && (
+          <DraggablePin latitude={latitude} longitude={longitude} onLocationPick={onLocationPick} />
+        )}
+      </MapContainer>
+      <MapOverlayControls
+        isExpanded={isExpanded}
+        isLocating={isLocating}
+        onExpandedToggle={onExpandedToggle}
+        onLocate={locate}
+      />
+      <MapHint hasPin={hasPin} />
+    </div>
+  )
+}
+
+export default LocationMapClient

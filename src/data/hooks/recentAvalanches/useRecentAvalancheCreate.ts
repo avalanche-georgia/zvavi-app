@@ -1,28 +1,26 @@
-import { supabase } from '@data'
 import { recentAvalanchesKeys } from '@data/query-keys'
-import type { AvalancheFormData } from '@domain/types'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { convertCamelToSnake, handleSupabaseError } from '../../helpers'
+import requestAdminAvalanche from './requestAdminAvalanche'
 
-const createRecentAvalanche = async (formData: AvalancheFormData): Promise<void> => {
-  if (!formData.regionId) throw new Error('regionId is required to create a recent avalanche')
-  const { error } = await supabase.from('recent_avalanches').insert(convertCamelToSnake(formData))
+import type { CreateAvalancheBody } from '@/api/admin/recent-avalanches/schema'
 
-  handleSupabaseError(error)
+// Resolves to the new record's id
+const createRecentAvalanche = async (body: CreateAvalancheBody) => {
+  const { id } = await requestAdminAvalanche('/api/admin/recent-avalanches', 'POST', body)
+
+  if (id === undefined) throw new Error('failed to save avalanche')
+
+  return id
 }
 
 const useRecentAvalancheCreate = () => {
   const queryClient = useQueryClient()
 
-  return useMutation<void, Error, AvalancheFormData>({
+  return useMutation<number, Error, CreateAvalancheBody>({
     mutationFn: createRecentAvalanche,
-    onSuccess: (_, variables) => {
-      const { regionId } = variables
-
-      queryClient.invalidateQueries({
-        queryKey: regionId ? recentAvalanchesKeys.byRegion(regionId) : recentAvalanchesKeys.all,
-      })
+    onSuccess: (_, { regionId }) => {
+      queryClient.invalidateQueries({ queryKey: recentAvalanchesKeys.byRegion(regionId) })
     },
   })
 }

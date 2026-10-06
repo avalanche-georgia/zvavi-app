@@ -6,10 +6,11 @@ import type {
 } from '../hooks/forecasts/types'
 
 const forecastsKeys = {
+  // Admin list — its own key: `list` is the public history list, a different shape
+  adminList: (regionId: RegionId) => [...forecastsKeys.byRegion(regionId), 'adminList'] as const,
+
   all: ['forecastsKeys'] as const,
 
-  allAvalanches: (regionId: RegionId) =>
-    [...forecastsKeys.byRegion(regionId), 'allAvalanches'] as const,
   byRegion: (regionId: RegionId) => [...forecastsKeys.all, regionId] as const,
   current: (regionId: RegionId, variables: CurrentForecastQueryVariables) =>
     [...forecastsKeys.byRegion(regionId), 'current', variables] as const,

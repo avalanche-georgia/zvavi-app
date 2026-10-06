@@ -4,7 +4,8 @@ import type { QueryFunctionContext, UseQueryOptions } from '@tanstack/react-quer
 
 import { useQuery } from '@/tanstack-query/hooks'
 
-import { convertSnakeToCamel } from '../../helpers'
+import requestForecastAvalanches from './requestForecastAvalanches'
+import { convertSnakeToCamel, handleSupabaseError } from '../../helpers'
 import { forecastsKeys } from '../../query-keys'
 
 type QueryKey = ReturnType<typeof forecastsKeys.current>
@@ -15,6 +16,8 @@ export const fetchCurrentForecast = async ({
 }: QueryFunctionContext<QueryKey>): Promise<Response> => {
   const [, regionId, , variables] = queryKey
 
+  // The public "current forecast" rule: latest created published forecast in the region.
+  // fetchRegionsWithHazard and fetchForecastPageData use the same rule — keep them in sync.
   const { data: forecastData, error: forecastError } = await supabase
     .from('forecasts')
     .select()
@@ -23,9 +26,7 @@ export const fetchCurrentForecast = async ({
     .order('created_at', { ascending: false })
     .limit(1)
 
-  if (forecastError) {
-    throw new Error(forecastError.message)
-  }
+  handleSupabaseError(forecastError)
 
   if (!forecastData || forecastData.length === 0) return null
 
@@ -36,15 +37,7 @@ export const fetchCurrentForecast = async ({
     return convertSnakeToCamel(currentForecast) as Forecast
   }
 
-  const { data: recentAvalanches, error: avalanchesError } = await supabase
-    .from('recent_avalanches')
-    .select('*, forecast_avalanche!inner(forecast_id)')
-    .eq('forecast_avalanche.forecast_id', currentForecast.id)
-    .order('created_at', { ascending: false })
-
-  if (avalanchesError) {
-    throw new Error(avalanchesError.message)
-  }
+  const recentAvalanches = await requestForecastAvalanches(currentForecast.id)
 
   const { data: problems, error: problemsError } = await supabase
     .from('avalanche_problems')
@@ -52,15 +45,13 @@ export const fetchCurrentForecast = async ({
     .match({ forecast_id: currentForecast.id })
     .order('order')
 
-  if (problemsError) {
-    throw new Error(problemsError.message)
-  }
+  handleSupabaseError(problemsError)
 
   // TODO: type-safe DB conversion — https://app.asana.com/1/1208747886147296/project/1208747689500826/task/1214630622531225
   return convertSnakeToCamel({
     ...currentForecast,
     avalancheProblems: problems ?? [],
-    recentAvalanches: recentAvalanches ?? [],
+    recentAvalanches,
   }) as Response
 }
 

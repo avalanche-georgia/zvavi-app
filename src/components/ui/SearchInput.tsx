@@ -10,6 +10,7 @@ type SearchInputProps = {
   value: string
 }
 
+/** @deprecated Use `SearchField` from `@ds/primitives` */
 const SearchInput = ({ className, onChange, placeholder, value }: SearchInputProps) => (
   <div className={cn('relative', className)}>
     <TextInput

@@ -1,21 +1,15 @@
-import { supabase } from '@data'
 import { recentAvalanchesKeys } from '@data/query-keys'
-import type { AvalancheFormData } from '@domain/types'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { convertCamelToSnake, handleSupabaseError } from '../../helpers'
+import requestAdminAvalanche from './requestAdminAvalanche'
 
-type UpdatePayload = AvalancheFormData & { id: number }
+import type { UpdateAvalancheBody } from '@/api/admin/recent-avalanches/schema'
 
-const updateRecentAvalanche = async ({ id, ...formData }: UpdatePayload): Promise<void> => {
-  if (!formData.regionId) throw new Error('regionId is required to update a recent avalanche')
+// Any subset of fields; `photos` only when the photo set changed
+type UpdatePayload = UpdateAvalancheBody & { id: number }
 
-  const { error } = await supabase
-    .from('recent_avalanches')
-    .update(convertCamelToSnake(formData))
-    .eq('id', id)
-
-  handleSupabaseError(error)
+const updateRecentAvalanche = async ({ id, ...body }: UpdatePayload) => {
+  await requestAdminAvalanche(`/api/admin/recent-avalanches/${id}`, 'PATCH', body)
 }
 
 const useRecentAvalancheUpdate = () => {
@@ -23,12 +17,10 @@ const useRecentAvalancheUpdate = () => {
 
   return useMutation<void, Error, UpdatePayload>({
     mutationFn: updateRecentAvalanche,
-    onSuccess: (_, variables) => {
-      const { regionId } = variables
-
-      queryClient.invalidateQueries({
-        queryKey: regionId ? recentAvalanchesKeys.byRegion(regionId) : recentAvalanchesKeys.all,
-      })
+    onSuccess: () => {
+      // `all`, not `byRegion`: single-record queries opened without a region
+      // (direct links) and the pending-review counters must refresh too
+      queryClient.invalidateQueries({ queryKey: recentAvalanchesKeys.all })
     },
   })
 }

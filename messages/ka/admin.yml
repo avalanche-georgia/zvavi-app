@@ -8,6 +8,8 @@ admin:
       forecastsPublished: გამოქვეყნებული პროგნოზები
       forecastsOf: '{total} რეგიონიდან'
       pendingMembers: მომლოდინე წევრები
+      pendingObservations: განსახილველი დაკვირვებები
+      loadError: "ვერ ჩაიტვირთა"
       avalanchesWeek: 'ზვავები · 7 დღე'
     regions:
       title: პროგნოზის სტატუსი რეგიონების მიხედვით
@@ -18,18 +20,23 @@ admin:
       title: სწრაფი მოქმედებები
       newForecast: ახალი პროგნოზი
       memberRequests: წევრების მოთხოვნები
+      observationsReview: განსახილველი დაკვირვებები
       logAvalanche: ზვავის ჩაწერა
     activity:
       title: ბოლო აქტივობა
       forecastPublished: '{region} პროგნოზი გამოქვეყნდა'
       newMemberRequest: 'ახალი მოთხოვნა {name}-სგან'
       avalancheLogged: 'ზვავი დაფიქსირდა · {region}'
+      observationSubmitted: 'ახალი დაკვირვება · {region}'
+      observationSubmittedNoRegion: ახალი დაკვირვება
 
   sidebar:
+    designSystem: 'დიზაინ-სისტემა'
     forecasts: 'პროგნოზები'
     home: 'მთავარი'
     members: 'წევრები'
     menu: 'ადმინ მენიუ'
+    observations: 'დაკვირვებები'
     partners: 'პარტნიორები'
     recentAvalanches: 'ბოლო ზვავები'
     weatherStations: 'ამინდის სადგურები'
@@ -163,35 +170,128 @@ admin:
   forecasts:
     title: 'პროგნოზები'
     list:
-      empty: 'პროგნოზები არ არის.'
+      ariaLabel: '{region} — პროგნოზები'
       columns:
         actions: 'მოქმედებები'
-        createdAt: 'შექმნის თარიღი'
-        forecaster: 'პროგნოზის ავტორი'
-        publishedAt: 'გამოქვეყნებულია'
+        createdAt: 'შექმნილია'
+        forecast: 'პროგნოზი'
+        hazard: 'საფრთხე'
+        publishedAt: 'გამოქვეყნდა'
         status: 'სტატუსი'
-        validUntil: 'ძალაშია'
+        validUntil: 'მოქმედებს'
+      endsInDays: 'სრულდება {count} დღეში'
+      endsInHours: 'სრულდება {count} სთ-ში'
+      noSummary: 'შეჯამება ჯერ არ არის'
+      overallTitle: 'საერთო: {level}'
+      validUntilInline: 'მოქმედებს {date}-მდე'
+    statuses:
+      current: 'მიმდინარე'
+      draft: 'მონახაზი'
+      published: 'გამოქვეყნებული'
+    filters:
+      status:
+        label: 'სტატუსი'
+        all: 'ყველა'
+        published: 'გამოქვეყნებული'
+        draft: 'მონახაზები'
+      range:
+        label: 'შექმნის თარიღი'
+        all: 'ყველა დრო'
+        last30: 'ბოლო 30 დღე'
+        season: 'სეზონი {season}'
+        custom: 'პერიოდი'
+        from: 'შექმნილია (დან)'
+        to: 'შექმნილია (მდე)'
+      search:
+        label: 'პროგნოზების ძიება'
+        placeholder: 'ძიება ID-ით, პროგნოზისტით ან შეჯამებით'
+    empty:
+      noForecastsTitle: 'პროგნოზები ჯერ არ არის — {region}'
+      noForecastsHint: 'სეზონის დასაწყებად გამოიყენეთ ზემოთ „პროგნოზის შექმნა“.'
+      noMatchesTitle: 'ვერაფერი მოიძებნა'
+      noMatchesHint: 'სცადეთ სხვა სტატუსი, პერიოდი ან ძიება.'
+      clearFilters: 'ფილტრების გასუფთავება'
+    current:
+      eyebrow: 'მიმდინარე პროგნოზი'
+      eyebrowExpired: 'მიმდინარე პროგნოზი · ვადაგასული'
+      endsSoon: 'სრულდება {count} სთ-ში'
+      subline: 'გამოქვეყნდა {publishedAt} · მოქმედებს {validUntil}-მდე'
+      expiredHint: 'საჯარო საიტი მას კვლავ აჩვენებს — გამოაქვეყნეთ ახალი პროგნოზი.'
+      openPublicPageHint: '{url} გაიხსნება ახალ ჩანართში'
+      noneEyebrow: 'მიმდინარე პროგნოზი არ არის'
+      noneTitle: '{region}: გამოქვეყნებული პროგნოზი არ არის'
+      latestDraft: 'ბოლო მონახაზი: {name} · შექმნილია {date}'
+      noneHint: 'დღევანდელი საფრთხის გამოსაქვეყნებლად გამოიყენეთ ზემოთ „პროგნოზის შექმნა“.'
+      continueDraft: 'მონახაზის გაგრძელება'
     actions:
-      copyUrl: 'URL-ის კოპირება'
-      delete: 'წაშლა'
+      copyLink: 'ბმულის კოპირება'
       duplicate: 'დუბლირება'
-      edit: 'რედაქტირება'
+      more: 'სხვა მოქმედებები'
+      moreForForecast: 'სხვა მოქმედებები — პროგნოზი #{id}'
+      openPublicPage: 'საჯარო გვერდის გახსნა'
       publish: 'გამოქვეყნება'
+      publishForecast: 'პროგნოზის #{id} გამოქვეყნება'
       unpublish: 'გამოქვეყნების გაუქმება'
-    deleteForecastModal:
-      title: 'წავშალოთ პროგნოზი?'
-      description: 'გსურთ სამუდამოდ წაშალოთ პროგნოზი პერიოდისთვის'
-    statusModal:
-      publishTitle: 'პროგნოზის გამოქვეყნება?'
-      publishDescription: 'ეს პროგნოზი გახდება ხილული ყველა მომხმარებლისთვის.'
-      unpublishTitle: 'პროგნოზის გამოქვეყნების გაუქმება?'
-      unpublishDescription: 'ეს პროგნოზი დაიმალება მომხმარებლებისგან.'
+    deleteConfirm: 'წაიშალოს პროგნოზი #{id}? მისი ზვავის პრობლემები და ზვავების ბმულებიც წაიშლება.'
     messages:
-      created: 'პროგნოზი წარმატებით შეიქმნა.'
-      deleted: 'პროგნოზი წარმატებით წაიშალა.'
-      published: 'პროგნოზი გამოქვეყნებულია.'
-      unpublished: 'პროგნოზი მოხსნილია გამოქვეყნებიდან.'
-      updated: 'პროგნოზი წარმატებით განახლდა.'
+      deleted: 'პროგნოზი წაიშალა.'
+      linkCopied: 'ბმული დაკოპირდა'
+      published: 'პროგნოზი გამოქვეყნდა'
+      unpublished: 'გამოქვეყნება გაუქმდა — ახლა მონახაზია'
+      writeDenied: 'არ შეინახა — შესაძლოა არ გაქვთ უფლება, ან პროგნოზი აღარ არსებობს.'
+      publishRejected: 'არ გამოქვეყნდა — ჯერ მიუთითეთ მომავალი თარიღი, როდემდე მოქმედებს პროგნოზი.'
+      saveRejected: 'არ შეინახა — გამოქვეყნებული პროგნოზი უნდა მოქმედებდეს გამოქვეყნების დროის შემდეგაც.'
+    publishConfirm:
+      title: 'გამოქვეყნდეს პროგნოზი #{id}?'
+      region: 'რეგიონი'
+      overall: 'საერთო'
+      validUntil: 'მოქმედებს'
+      visibility: 'პროგნოზი მაშინვე გამოჩნდება საიტზე და პარტნიორ აპლიკაციებში.'
+      confirm: 'პროგნოზის გამოქვეყნება'
+    view:
+      breadcrumb: 'ნავიგაცია'
+      byForecaster: 'ავტორი: {name}'
+      untilTime: '{time}-მდე'
+      daysAgo: '{count} დღის წინ'
+      hoursAgo: '{count} სთ-ის წინ'
+      statuses:
+        live: 'მიმდინარე'
+        expired: 'მიმდინარე · ვადაგასული'
+        superseded: 'გამოქვეყნებული'
+        draft: 'მონახაზი'
+      meta:
+        status: 'სტატუსი'
+        validUntil: 'მოქმედებს'
+        expired: 'ვადაგასული'
+        published: 'გამოქვეყნდა'
+        forecaster: 'პროგნოზისტი'
+        created: 'შექმნილია'
+      banner:
+        live:
+          lead: 'მიმდინარეა საჯარო {region} გვერდზე'
+          rest: '· {timeLeft}. ცვლილებები შენახვისთანავე ქვეყნდება.'
+        expired:
+          lead: 'ვადა გავიდა {ago} — საჯარო {region} გვერდი მაინც აჩვენებს მას.'
+          leadNoDate: 'მოქმედების ვადა არ არის — საჯარო {region} გვერდი მაინც აჩვენებს მას.'
+          rest: 'დასრულდა {date}, {time}. ჩასანაცვლებლად გამოაქვეყნეთ ახალი პროგნოზი.'
+          restNoDate: 'ჩასანაცვლებლად გამოაქვეყნეთ ახალი პროგნოზი.'
+        superseded:
+          lead: 'გამოქვეყნებულია, მაგრამ არ არის მიმდინარე.'
+          rest: 'საჯარო {region} გვერდი აჩვენებს #{id}-ს, უფრო ახალ პროგნოზს.'
+          open: '#{id}-ის გახსნა'
+        draft:
+          lead: 'მონახაზი — საჯაროდ არ ჩანს.'
+          rest: 'გამოქვეყნების შემდეგ ეს იქნება მიმდინარე {region} პროგნოზი {date}, {time}-მდე.'
+          restOlder: 'გამოქვეყნება მას მიმდინარედ არ აქცევს: #{id} უფრო ახალია.'
+          restNoValidity: 'მომავალი ვადა არ აქვს — ახლა გამოქვეყნების შემთხვევაში მაშინვე ვადაგასულად გამოჩნდება.'
+      openRecord: 'ჩანაწერის გახსნა'
+      recordLoadFailed: 'ჩანაწერი {id} ვერ ჩაიტვირთა'
+      notWritten: 'არ არის დაწერილი'
+      noProblems: 'ამ პროგნოზში პრობლემები არ არის'
+      noAvalanches: 'ზვავები არ არის მიბმული'
+      overall: 'საერთო'
+      pendingCount: '{count} მოლოდინში'
+      publicPage: 'საჯარო გვერდი'
 
   profile:
     title: 'ჩემი პროფილი'
@@ -233,6 +333,133 @@ admin:
 
   forecast:
     notFound: 'პროგნოზი ვერ მოიძებნა.'
+    editor:
+      general:
+        title: 'ზოგადი'
+        forecasterRequired: 'მიუთითეთ პროგნოზის ავტორი.'
+        validUntilRequired: 'აირჩიეთ, როდემდე მოქმედებს პროგნოზი.'
+        time: 'დრო'
+        quickDates: 'სწრაფი არჩევა'
+        inDays:
+          '1': 'ხვალ'
+          '2': '2 დღეში'
+          '3': '3 დღეში'
+      summary:
+        hint: 'საჯარო პროგნოზში პირველი ჩანს'
+        required: 'დაამატეთ პირობების მოკლე შეჯამება.'
+      conditions:
+        title: 'პირობები'
+      avalanches:
+        title: 'ბოლო ზვავები'
+        scopeTag: 'დაკავშირებული ჩანაწერები'
+        catalog: '{region}-ის კატალოგი'
+        description: 'ჩანაწერები კატალოგიდან: {catalog}. რედაქტირება ცვლის ჩანაწერს ყველგან; წაშლა მხოლოდ ამ პროგნოზიდან ხსნის კავშირს.'
+        addExisting: 'არსებულის დამატება'
+        createNew: 'ახლის შექმნა'
+        emptyExistingText: 'აირჩიეთ ზვავები, რომლებიც უკვე არის კატალოგში ({catalog}), მათ შორის მონახაზები და განსახილველი ჩანაწერები.'
+        emptyCreateText: 'გაიხსნება ზვავის ფორმა. შენახვისას ჩანაწერი გამოქვეყნდება კატალოგში და დაუკავშირდება ამ პროგნოზს.'
+        editRecord: 'ჩანაწერის რედაქტირება'
+        remove: '{id}-ის ამოღება ამ პროგნოზიდან'
+        unlinked: '{id} ამოღებულია ამ პროგნოზიდან · ჩანაწერი არ შეცვლილა'
+        unlinkConfirm: 'მოვხსნათ {id} ამ პროგნოზიდან? ჩანაწერი კატალოგში დარჩება.'
+        unlinkAction: 'მოხსნა'
+        noAspects: 'ექსპოზიცია მითითებული არ არის'
+        alsoOn: 'ასევე {count, plural, one {# სხვა პროგნოზში} other {# სხვა პროგნოზში}}'
+        hiddenOnPublic:
+          pending: 'საჯარო პროგნოზში არ ჩანს დადასტურებამდე'
+          draft: 'მონახაზი — საჯარო პროგნოზში არ ჩანს'
+          archived: 'დაარქივებული — საჯარო პროგნოზში არ ჩანს'
+        dateUnknown: 'თარიღი უცნობია · მოხსენებულია {reported}'
+        badges:
+          notSaved: 'დაკავშირებულია · არ არის შენახული'
+          alreadyLinked: 'უკვე დაკავშირებულია'
+        picker:
+          title: 'არსებული ზვავების დამატება'
+          searchLabel: 'ზვავების ძიება'
+          searchPlaceholder: 'ძიება ადგილით, ტიპით ან ID-ით'
+          periodLabel: 'პერიოდი'
+          periods:
+            all: 'ყველა'
+            last7: 'ბოლო 7 დღე'
+            last30: 'ბოლო 30 დღე'
+          mineNotLinked: 'ჩემი · დაუკავშირებელი'
+          soon: 'მალე'
+          count: '{count, plural, one {# ჩანაწერი} other {# ჩანაწერი}}'
+          newestFirst: 'ჯერ ახალი'
+          onForecasts: '{count, plural, one {# პროგნოზში} other {# პროგნოზში}}'
+          notOnForecasts: 'არცერთ პროგნოზში არ არის'
+          emptyTitle: 'შესაბამისი ზვავები ვერ მოიძებნა'
+          emptyText: 'სცადეთ სხვა ძიება ან პერიოდი.'
+          footerHint: 'დაარქივებული ჩანაწერები სიაში არ ჩანს.'
+          link: 'ზვავების დაკავშირება'
+          linkCount: '{count, plural, one {# ზვავის დაკავშირება} other {# ზვავის დაკავშირება}}'
+        sheet:
+          createTitle: 'ახალი ზვავი'
+          createNote: '<strong>ეს ქმნის რეალურ ზვავის ჩანაწერს.</strong> შენახვისთანავე ის გამოქვეყნდება კატალოგში ({catalog}) და დაუკავშირდება ამ პროგნოზს.'
+          createAndLink: 'შექმნა და დაკავშირება'
+          editNote: '<strong>თქვენ არედაქტირებთ საერთო ჩანაწერს.</strong> შენახვისთანავე {id} განახლდება ყველგან, სადაც ჩანს — კატალოგში და {count, plural, =0 {მის პროგნოზებში} one {# პროგნოზში} other {# პროგნოზში}}.'
+          saveRecord: 'ჩანაწერის შენახვა'
+      rail:
+        title: 'სექციები'
+        general: 'ზოგადი'
+        hazard: 'საფრთხის დონეები'
+        summary: 'შეჯამება'
+        problems: 'პრობლემები'
+        avalanches: 'ზვავები'
+        conditions: 'პირობები'
+      actionBar:
+        new: 'ახალი პროგნოზი · ჯერ არ არის შენახული'
+        unsaved: 'შეუნახავი ცვლილებები · ჯერ არ არის შენახული'
+        unsavedSince: 'შეუნახავი ცვლილებები · ბოლოს შენახულია {time}'
+        saved: 'შენახულია'
+        savedAt: 'შენახულია · {time}'
+        save: 'შენახვა'
+        saveAndClose: 'შენახვა და დახურვა'
+        discardConfirm: 'გავაუქმოთ შეუნახავი ცვლილებები?'
+        keepEditing: 'რედაქტირების გაგრძელება'
+        discard: 'გაუქმება'
+      save:
+        created: 'პროგნოზი შეიქმნა'
+        updated: 'პროგნოზი განახლდა'
+        createdKeepEditing: 'პროგნოზი შეიქმნა · გააგრძელეთ რედაქტირება'
+        saved: 'პროგნოზი შენახულია'
+        fieldsRequired: 'შესანახად შეავსეთ სავალდებულო ველები'
+        finishProblem: 'დაასრულეთ ან გააუქმეთ რედაქტირებადი პრობლემა'
+        unlinkedUnavailable: '{count, plural, one {# დაარქივებული ან წაშლილი ზვავი მოიხსნა პროგნოზიდან} other {# დაარქივებული ან წაშლილი ზვავი მოიხსნა პროგნოზიდან}}'
+      hazard:
+        title: 'საფრთხის დონეები'
+        description: 'შეაფასეთ საერთო საფრთხე, შემდეგ თითოეული სიმაღლის ზონა. შეგიძლიათ ისრები ან 0–5 კლავიშებიც გამოიყენოთ.'
+        byElevation: 'სიმაღლის მიხედვით'
+        matchesHighest: 'ემთხვევა ყველაზე მაღალ ზონას'
+        highestIs: 'ყველაზე მაღალი ზონაა <strong>{level} · {label}</strong>'
+        setOverall: 'საერთო დონედ {level}-ის დაყენება'
+        previewCaption: 'საჯარო პროგნოზის გრაფიკის გადახედვა'
+      problems:
+        title: 'ზვავის პრობლემები'
+        scopeTag: 'მხოლოდ ეს პროგნოზი'
+        description: 'იწერება ამ პროგნოზისთვის და ინახება მასთან ერთად. პრიორიტეტის დასაყენებლად გადაათრიეთ.'
+        add: 'პრობლემის დამატება'
+        emptyTitle: 'პრობლემები ჯერ არ არის'
+        emptyText: 'დაამატეთ პრობლემები, რომლებიც დღევანდელ საფრთხეს განაპირობებს, ყველაზე მნიშვნელოვანი — პირველი.'
+        new: 'ახალი პრობლემა'
+        edit: 'პრობლემის რედაქტირება'
+        partOfForecast: 'ამ პროგნოზის ნაწილი'
+        aspects: 'ექსპოზიცია და სიმაღლე'
+        aspectsHint: 'შეეხეთ ან გადაათრიეთ'
+        keptNote: 'ინახება ამ პროგნოზში — შენახვა მოხდება პროგნოზის შენახვისას.'
+        done: 'მზადაა'
+        size: 'ზომა {size}'
+        noAspects: 'ექსპოზიციები არჩეული არ არის'
+        reorder: 'გადაათრიეთ თანმიმდევრობის შესაცვლელად'
+        removed: '„{type}“ წაიშალა'
+        typeTakenHint: 'თითოეული ტიპი ერთხელ ემატება — პროგნოზში უკვე არსებული ტიპები გაუქმებულია.'
+        removeConfirm: 'წავშალოთ „{type}“ ამ პროგნოზიდან?'
+        removeAction: 'წაშლა'
+        errors:
+          aspects: 'აირჩიეთ ერთი ექსპოზიცია მაინც.'
+          duplicateType: 'ეს ტიპი პროგნოზში უკვე არის — შეცვალეთ ან წაშალეთ ერთ-ერთი.'
+          type: 'აირჩიეთ პრობლემის ტიპი.'
+          size: 'აირჩიეთ ზვავის ზომა.'
     title:
       create: 'პროგნოზის შექმნა'
       edit: 'პროგნოზის რედაქტირება'
@@ -327,17 +554,18 @@ admin:
     list:
       columns:
         actions: მოქმედებები
-        createdAt: შექმნილია
         date: თარიღი
-        description: აღწერა
-        location: ადგილმდებარეობა
         size: ზომა
-        trigger: გამომწვევი
+        source: წყარო
+        status: სტატუსი
+        submitter: ავტორი
         type: სახეობა
       empty: ზვავის ჩანაწერები არ მოიძებნა.
       total: "ნაჩვენებია: {shown} / {total}"
 
     filters:
+      all: ყველა
+      allStatuses: ყველა სტატუსი
       reset: ფილტრების გადატვირთვა
       dateMode:
         created: შექმნის თარიღი
@@ -348,29 +576,59 @@ admin:
       page: "გვ. {current} / {total}"
 
     actions:
+      approve: დადასტურება
       deleteDescription: ეს ჩანაწერი სამუდამოდ წაიშლება.
       deleteTitle: ზვავის წაშლა
+      publish: გამოქვეყნება
+      unpublish: გამოქვეყნების გაუქმება
 
     form:
       labels:
         description: აღწერა
         involvement: ჩართულობა
-        isDateUnknown: თარიღი უცნობია
-        latitude: განედი
         location: ადგილი
-        longitude: გრძედი
         quantity: რაოდენობა
-        size: ზომა
-        slabDepth: ფილის სისქე (სმ)
+        status: სტატუსი
+        submitterContact: კონტაქტი
+        submitterEducation: განათლება
+        submitterName: სახელი
+        submitterSection: წარმდგენი
         trigger: გამომწვევი
-        type: სახეობა
-        width: სიგანე (მ)
+      hints:
+        involvement: არასავალდებულო · მხოლოდ გუნდისთვის
+        location: არასავალდებულო · ადგილის მოკლე სახელი
       placeholders:
-        trigger: აირჩიეთ გამომწვევი
-        type: აირჩიეთ სახეობა
+        description: ნებისმიერი შენიშვნა — რა მანძილზე ჩამოვიდა, ამინდი, თოვლის საფარი…
+        involvement: ვინმე მოჰყვა ზვავს, ჩაიმარხა ან დაშავდა?
       messages:
         created: ზვავი წარმატებით დაემატა.
         updated: ზვავი წარმატებით განახლდა.
+
+    view:
+      archivedHint: ჩანაწერი დაარქივებულია. აღსადგენად გახსენით რედაქტირება და შეცვალეთ სტატუსი.
+      coordinates: კოორდინატები
+      forecastLink: 'პროგნოზი #{id}'
+      linkedForecasts: დაკავშირებული პროგნოზები
+      logged: დამატებულია
+      occurred: მოხდა
+      openFullPage: სრულ გვერდზე გახსნა
+      photosError: ფოტოების ჩატვირთვა ვერ მოხერხდა.
+      where: სად
+
+    sheet:
+      deleteConfirm: წავშალოთ ჩანაწერი სამუდამოდ?
+      discard: გაუქმება
+      discardConfirm: გავაუქმოთ შეუნახავი ცვლილებები?
+      keepEditing: რედაქტირების გაგრძელება
+      next: შემდეგი ჩანაწერი
+      position: '{current} / {total}'
+      previous: წინა ჩანაწერი
+
+  observations:
+    queue:
+      columns:
+        submitted: გამოგზავნილია
+      empty: განსახილველი არაფერია — ახალი დაკვირვებები აქ გამოჩნდება.
 
   weatherStations:
     title: 'ამინდის სადგურები'

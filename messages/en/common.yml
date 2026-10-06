@@ -3,8 +3,12 @@ common:
     add: 'Add'
     backToList: 'Back to List'
     cancel: 'Cancel'
+    clear: 'Clear'
+    close: 'Close'
     confirm: 'Confirm'
     continue: 'Continue'
+    copy: 'Copy'
+    copied: 'Copied'
     delete: 'Delete'
     edit: 'Edit'
     getInTouch: 'Get in Touch'
@@ -16,6 +20,7 @@ common:
     submit: 'Submit'
     tryAgain: 'Try again'
     visitWebsite: 'Visit Website'
+    undo: 'Undo'
 
   labels:
     confirmPassword: 'Confirm Password'
@@ -40,14 +45,19 @@ common:
   validation:
     activeWithExpiredDate: 'Status cannot be active when expiration date is in the past'
     expiresAtBeforeJoined: 'Expiration date must be after joined date'
+    futureDate: 'Cannot be in the future'
+    invalid: 'Invalid value'
     invalidCredentials: 'Incorrect current password'
     invalid_string: 'Invalid format'
     joinedAtFuture: 'Cannot be in the future'
     passwordMismatch: 'Passwords do not match'
     passwordTooShort: 'Minimum 8 characters'
     positive: 'Must be greater than 0'
-    required: 'Required'
-    too_small: 'Required'
+    required: 'Required field'
+    tooLong: 'Too long'
+    tooLarge: 'Value is too large'
+    tooSmall: 'Value is too small'
+    too_small: 'Required field'
 
   notFound:
     title: 'Oops...'
@@ -60,6 +70,41 @@ common:
     highAlpine: 'High Alpine'
     alpine: 'Alpine'
     subAlpine: 'Sub Alpine'
+  elevationZonesShort:
+    highAlpine: 'HA'
+    alpine: 'A'
+    subAlpine: 'SA'
+
+  aspects:
+    allAspects: 'all aspects'
+    allElevations: 'All elevations'
+    names:
+      n: 'North'
+      ne: 'North-east'
+      e: 'East'
+      se: 'South-east'
+      s: 'South'
+      sw: 'South-west'
+      w: 'West'
+      nw: 'North-west'
+
+  aspectElevationPicker:
+    all: 'All'
+    allAria: 'All aspects, {zone}'
+    cellAria: '{zone}, {aspect}'
+    emptyHint: 'Tap or drag to select aspects'
+    sameAspectsOn: 'Same aspects on:'
+    zonesAria: 'Elevation band'
+
+  avalancheSources:
+    external: 'External'
+    team: 'Team'
+
+  avalancheStatuses:
+    archived: 'Archived'
+    draft: 'Draft'
+    pending: 'Under review'
+    published: 'Published'
 
   avalancheTypes:
     cornice: 'Cornice'
@@ -82,13 +127,26 @@ common:
     vehicle: 'Vehicle'
 
   table:
+    nextPage: 'Next page'
+    previousPage: 'Previous page'
     rowRange: '{from}–{to} of {total}'
 
   words:
     from: 'From'
+    optional: 'Optional'
     overall: 'Overall'
     to: 'To'
     unknown: 'Unknown'
+
+  photoViewer:
+    open: 'Open photo {index}'
+    previous: 'Previous photo'
+    next: 'Next photo'
+    counter: '{current} / {total}'
+
+  units:
+    centimeters: '{value} cm'
+    meters: '{value} m'
 
   disclaimer:
     title: '⚠️ Disclaimer ⚠️'

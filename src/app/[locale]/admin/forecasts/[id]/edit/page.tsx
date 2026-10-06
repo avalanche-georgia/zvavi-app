@@ -1,9 +1,12 @@
 'use client'
 
-import { ForecastForm, getInitialFormData } from '@components/features/admin/Forecasts/ForecastForm'
+import {
+  ForecastForm,
+  getInitialFormValues,
+} from '@components/features/admin/Forecasts/ForecastForm'
 import { Spinner } from '@components/ui'
 import { useAdminGetForecast } from '@data/hooks/forecasts'
-import { useParams } from 'next/navigation'
+import { useParams, useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'src/i18n/navigation'
 
@@ -22,9 +25,13 @@ const NotFound = () => {
 const EditForecastPage = () => {
   const router = useRouter()
   const params = useParams()
+  const searchParams = useSearchParams()
 
   const forecastId = Number(params.id)
-  const { data: forecast, isPending } = useAdminGetForecast({ forecastId })
+  const { data: forecast, isPending } = useAdminGetForecast({
+    enabled: !Number.isNaN(forecastId),
+    forecastId,
+  })
 
   if (Number.isNaN(forecastId)) {
     return <NotFound />
@@ -42,23 +49,23 @@ const EditForecastPage = () => {
     return <NotFound />
   }
 
-  const handleCancel = () => {
-    router.push(routes.admin.forecasts.listByRegion(forecast.regionId))
-  }
+  const closeHref =
+    searchParams.get('from') === 'view'
+      ? routes.admin.forecasts.view(forecast.id)
+      : routes.admin.forecasts.listByRegion(forecast.regionId)
 
-  const handleSuccess = () => {
-    router.push(routes.admin.forecasts.listByRegion(forecast.regionId))
+  const handleClose = () => {
+    router.push(closeHref)
   }
 
   return (
-    <div className="mx-auto max-w-7xl p-4 md:p-6">
-      <ForecastForm
-        initialFormData={getInitialFormData(forecast)}
-        onCancel={handleCancel}
-        onSuccess={handleSuccess}
-        regionId={forecast.regionId}
-      />
-    </div>
+    <ForecastForm
+      closeHref={closeHref}
+      forecastId={forecast.id}
+      initialValues={getInitialFormValues(forecast)}
+      onClose={handleClose}
+      regionId={forecast.regionId}
+    />
   )
 }
 

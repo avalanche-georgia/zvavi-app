@@ -47,6 +47,8 @@ export type AvalancheSize = 1 | 2 | 3 | 4 | 5
 export type AvalancheType = keyof typeof avalancheTypes
 export type AvalancheTrigger = keyof typeof avalancheTriggers
 export type AvalancheProblemType = AvalancheType
+export type AvalancheSource = Enums<'avalanche_source'>
+export type AvalancheStatus = Enums<'avalanche_status'>
 export type Confidence = keyof typeof confidenceLevels
 export type Distribution = keyof typeof distributionTypes
 export type Sensitivity = keyof typeof sensitivityLevels
@@ -71,6 +73,12 @@ export type Forecast = {
   weather: string
 }
 
+// One row of the admin forecasts list — DB nullability kept (old rows may lack fields)
+export type ForecastListItem = Pick<
+  Tables<'forecasts'>,
+  'createdAt' | 'forecaster' | 'id' | 'publishedAt' | 'status' | 'summary' | 'validUntil'
+> & { hazardLevels: HazardLevels }
+
 export type Problem = {
   id?: string | number
   aspects: Aspects
@@ -91,6 +99,7 @@ export type Avalanche = {
   id?: number
   aspects: Aspects
   createdAt?: string
+  createdByUserId?: string | null
   date: Date | string | null
   description: string
   involvement: string | null
@@ -98,10 +107,16 @@ export type Avalanche = {
   latitude: number | null
   location: string | null
   longitude: number | null
+  photoKeys?: string[] | null
   quantity: number
   regionId: RegionId
   size: AvalancheSize
   slabDepth: number | null
+  source?: AvalancheSource
+  status?: AvalancheStatus
+  submitterContact?: string | null
+  submitterEducation?: string | null
+  submitterName?: string | null
   trigger: AvalancheTrigger
   type: AvalancheType | 'unknown'
   width: number | null
@@ -117,38 +132,98 @@ export type AvalancheFormData = {
   latitude: number | null
   location: string | null
   longitude: number | null
+  photoKeys?: string[] | null
   quantity: number
   regionId?: RegionId
   size: AvalancheSize
   slabDepth: number | null
+  source?: AvalancheSource
+  status?: AvalancheStatus
+  submitterContact?: string | null
+  submitterEducation?: string | null
+  submitterName?: string | null
   trigger: AvalancheTrigger | null
   type: AvalancheType | 'unknown' | null
   width: number | null
 }
 
-export type ForecastDetails = {
+// Signed, short-lived URLs for one photo's resized variants
+export type PhotoUrls = {
+  // Stable per photo — for React keys
+  id: string
+  largeUrl: string
+  previewUrl: string
+  thumbUrl: string
+}
+
+// What the public observations endpoint exposes — never contact, education or
+// any other submitter data beyond the shortened name.
+export type PublicObservation = Pick<
+  Avalanche,
+  | 'aspects'
+  | 'date'
+  | 'description'
+  | 'isDateUnknown'
+  | 'latitude'
+  | 'longitude'
+  | 'quantity'
+  | 'regionId'
+  | 'size'
+  | 'slabDepth'
+  | 'trigger'
+  | 'type'
+  | 'width'
+> & {
+  createdAt: string
+  id: number
+  photos: PhotoUrls[]
+  submitterName: string
+}
+
+export type ObservationDateBasis = 'occurred' | 'reported'
+export type ObservationsSort = 'newest' | 'largest'
+
+// One page of the public list, plus the total matching the filter
+export type ObservationsPage = {
+  observations: PublicObservation[]
+  total: number
+}
+
+// Just enough to draw a map marker
+export type ObservationPoint = Pick<PublicObservation, 'id' | 'size' | 'type'> & {
+  latitude: number
+  longitude: number
+}
+
+export type ObservationPoints = {
+  points: ObservationPoint[]
+  // All published observations in the region, ignoring the filter
+  regionTotal: number
+}
+
+// A linked record as the public sees it: no internal or submitter fields
+export type PublicAvalanche = Omit<
+  Avalanche,
+  | 'createdByUserId'
+  | 'involvement'
+  | 'source'
+  | 'status'
+  | 'submitterContact'
+  | 'submitterEducation'
+  | 'submitterName'
+>
+
+// Public forecast: only published linked records, public fields only
+export type FullForecast = Forecast & {
   avalancheProblems: Problem[]
-  recentAvalanches: Avalanche[]
+  recentAvalanches: PublicAvalanche[]
 }
 
-export type BaseFormData = {
-  id?: number
-  additionalHazards: string
-  forecaster: string
-  hazardLevels: HazardLevels
-  regionId?: RegionId
-  snowpack: string
-  summary: string
-  validUntil: Date | null
-  weather: string
+// Admin forecast (edit form): problems + the IDs of the linked records
+export type AdminForecast = Forecast & {
+  avalancheProblems: Problem[]
+  recentAvalancheIds: number[]
 }
-
-export type ForecastFormData = {
-  baseFormData: BaseFormData
-  forecastDetails: ForecastDetails
-}
-
-export type FullForecast = Forecast & ForecastDetails
 
 export type MemberStatus = Enums<'member_status'>
 

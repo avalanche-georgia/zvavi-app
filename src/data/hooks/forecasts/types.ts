@@ -1,6 +1,7 @@
-import type { Forecast, ForecastDetails, HazardLevels, RegionId } from '@domain/types'
+import type { Forecast, HazardLevels, Problem, RegionId } from '@domain/types'
 
-type ForecastBaseData = {
+type ForecastSaveFields = {
+  // Absent: create a new forecast
   id?: Forecast['id']
   additionalHazards: string
   forecaster: string
@@ -8,18 +9,28 @@ type ForecastBaseData = {
   regionId: RegionId
   snowpack: string
   summary: string
-  validUntil: string | null
+  validUntil: string
   weather: string
 }
 
-export type ForecastFormPayload = {
-  forecast: ForecastBaseData
-} & ForecastDetails
+// What save_forecast takes: the forecast, its problems in priority order, and
+// the IDs of the linked records
+export type ForecastSavePayload = {
+  avalancheProblems: Omit<Problem, 'createdAt' | 'id' | 'order'>[]
+  forecast: ForecastSaveFields
+  recentAvalancheIds: number[]
+}
 
 export type ForecastQueryVariables = { forecastId: Forecast['id'] }
 
+export type ForecastDeleteVariables = {
+  forecastId: Forecast['id']
+  regionId: RegionId
+}
+
 export type ForecastStatusToggleVariables = {
   forecastId: Forecast['id']
+  regionId: RegionId
   status: Forecast['status']
 }
 

@@ -1,7 +1,10 @@
 'use client'
 
 import { useEffect } from 'react'
-import { ForecastForm, getInitialFormData } from '@components/features/admin/Forecasts/ForecastForm'
+import {
+  ForecastForm,
+  getInitialFormValues,
+} from '@components/features/admin/Forecasts/ForecastForm'
 import { RequireRegionId } from '@components/shared'
 import { Spinner } from '@components/ui'
 import { useAdminGetForecast } from '@data/hooks/forecasts'
@@ -24,15 +27,21 @@ const NewForecastContent = ({ regionId }: { regionId: RegionId }) => {
     data: sourceForecast,
     isError,
     isLoading,
+    isSuccess,
   } = useAdminGetForecast({
     enabled: isValidDuplicateId,
     forecastId: parsedDuplicateId ?? 0,
     regionId,
+    // A wrong or foreign duplicateId won't start working on a retry — redirect
+    // straight away instead of after the default backoff
+    retry: false,
   })
 
   const { data: currentProfile, isPending: isProfilePending } = useCurrentUserProfileQuery()
 
-  const shouldRedirectOnInvalidDuplicate = isValidDuplicateId && (isError || !sourceForecast)
+  // Only once the source has loaded (or failed) — not while it's still on its way
+  const shouldRedirectOnInvalidDuplicate =
+    isValidDuplicateId && (isError || (isSuccess && !sourceForecast))
 
   useEffect(() => {
     if (!shouldRedirectOnInvalidDuplicate) return
@@ -48,39 +57,19 @@ const NewForecastContent = ({ regionId }: { regionId: RegionId }) => {
     return <Spinner />
   }
 
-  const handleCancel = () => {
+  const handleClose = () => {
     router.push(routes.admin.forecasts.listByRegion(regionId))
   }
 
-  const handleSuccess = () => {
-    router.push(routes.admin.forecasts.listByRegion(regionId))
+  // A duplicate copies everything but when it expires; the forecaster is whoever
+  // writes this one
+  const initialValues = {
+    ...getInitialFormValues(sourceForecast ?? null),
+    forecaster: currentProfile?.fullName ?? '',
+    validUntil: null,
   }
 
-  const forecasterName = currentProfile?.fullName ?? ''
-
-  const initialBaseFormData = getInitialFormData(sourceForecast ?? null)
-  const initialFormData = sourceForecast
-    ? {
-        ...initialBaseFormData,
-        baseFormData: { ...initialBaseFormData.baseFormData, id: undefined, validUntil: null },
-      }
-    : initialBaseFormData
-
-  const initialFormDataPrefilled = {
-    ...initialFormData,
-    baseFormData: { ...initialFormData.baseFormData, forecaster: forecasterName },
-  }
-
-  return (
-    <div className="mx-auto max-w-7xl p-4 md:p-6">
-      <ForecastForm
-        initialFormData={initialFormDataPrefilled}
-        onCancel={handleCancel}
-        onSuccess={handleSuccess}
-        regionId={regionId}
-      />
-    </div>
-  )
+  return <ForecastForm initialValues={initialValues} onClose={handleClose} regionId={regionId} />
 }
 
 const NewForecastPage = () => (

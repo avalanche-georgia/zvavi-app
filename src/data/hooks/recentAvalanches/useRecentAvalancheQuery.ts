@@ -1,21 +1,28 @@
 import { supabase } from '@data'
 import { recentAvalanchesKeys } from '@data/query-keys'
-import type { Avalanche, RegionId } from '@domain/types'
+import type { RegionId } from '@domain/types'
 import type { UseQueryOptions } from '@tanstack/react-query'
 
 import { useQuery } from '@/tanstack-query/hooks'
 
+import type { AvalancheListItem } from './types'
 import { convertSnakeToCamel } from '../../helpers'
 
 type QueryKey = ReturnType<typeof recentAvalanchesKeys.item>
 
 type QueryOptions = Omit<
-  UseQueryOptions<Avalanche | null, Error, Avalanche | null, QueryKey>,
+  UseQueryOptions<AvalancheListItem | null, Error, AvalancheListItem | null, QueryKey>,
   'queryFn' | 'queryKey'
 > & { id: number; regionId?: RegionId }
 
-const fetchRecentAvalanche = async (id: number, regionId?: RegionId): Promise<Avalanche | null> => {
-  let query = supabase.from('recent_avalanches').select('*').eq('id', id)
+const fetchRecentAvalanche = async (
+  id: number,
+  regionId?: RegionId,
+): Promise<AvalancheListItem | null> => {
+  let query = supabase
+    .from('recent_avalanches')
+    .select('*, forecast_avalanche(forecast_id)')
+    .eq('id', id)
 
   if (regionId) {
     query = query.eq('region_id', regionId)
@@ -29,7 +36,7 @@ const fetchRecentAvalanche = async (id: number, regionId?: RegionId): Promise<Av
   }
 
   // TODO: type-safe DB conversion — https://app.asana.com/1/1208747886147296/project/1208747689500826/task/1214630622531225
-  return convertSnakeToCamel(data) as Avalanche
+  return convertSnakeToCamel(data) as AvalancheListItem
 }
 
 const useRecentAvalancheQuery = ({ id, regionId, ...options }: QueryOptions) =>

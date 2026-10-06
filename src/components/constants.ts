@@ -48,6 +48,7 @@ export const backgroundColorByHazardLevel = {
 }
 
 export const links = {
+  avalancheEncyclopedia: 'https://avalanche.org/avalanche-encyclopedia',
   courseForm: 'https://forms.gle/NGN3TP8uR3rWqHV97',
   email: 'zvavisaqartvelo@gmail.com',
   facebook: 'https://www.facebook.com/avalanche.ge',
