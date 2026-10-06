@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { ConfirmPopover, IconButton, Menu, MenuItem, MenuSeparator } from '@ds/primitives'
 import { ArrowUp, Copy, Ellipsis, LoaderIcon, Pencil, Trash2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
@@ -21,6 +22,17 @@ type RowMenuProps = {
 const RowMenu = ({ actions, forecastId, isPublished, triggerRef, withPublish }: RowMenuProps) => {
   const t = useTranslations()
   const deleteConfirm = useDeleteAfterMenuClose()
+  // Like Delete: open the publish dialog only once the menu has fully closed,
+  // so the menu's focus return can't fight the dialog's focus trap
+  const [isPublishRequested, setIsPublishRequested] = useState(false)
+
+  const handleMenuOpenChangeComplete = (isOpen: boolean) => {
+    deleteConfirm.onMenuOpenChangeComplete(isOpen)
+
+    if (isOpen || !isPublishRequested) return
+    setIsPublishRequested(false)
+    actions.onPublish()
+  }
 
   // These can take the row (and ⋯ with it) out of the list — keep focus in the table
   const keepingFocus = (action: () => Promise<void>) => () => {
@@ -29,7 +41,6 @@ const RowMenu = ({ actions, forecastId, isPublished, triggerRef, withPublish }: 
   }
 
   const handleDeleteConfirm = keepingFocus(actions.onDelete)
-  const handlePublish = keepingFocus(actions.onPublish)
   const handleUnpublish = keepingFocus(actions.onUnpublish)
 
   const trigger = (
@@ -48,7 +59,7 @@ const RowMenu = ({ actions, forecastId, isPublished, triggerRef, withPublish }: 
 
   return (
     <>
-      <Menu onOpenChangeComplete={deleteConfirm.onMenuOpenChangeComplete} trigger={trigger}>
+      <Menu onOpenChangeComplete={handleMenuOpenChangeComplete} trigger={trigger}>
         <MenuItem icon={<Pencil />} onClick={actions.onEdit}>
           {t('common.actions.edit')}
         </MenuItem>
@@ -56,7 +67,7 @@ const RowMenu = ({ actions, forecastId, isPublished, triggerRef, withPublish }: 
           {t('admin.forecasts.actions.duplicate')}
         </MenuItem>
         {withPublish && !isPublished && (
-          <MenuItem icon={<ArrowUp />} onClick={handlePublish}>
+          <MenuItem icon={<ArrowUp />} onClick={() => setIsPublishRequested(true)}>
             {t('admin.forecasts.actions.publish')}
           </MenuItem>
         )}
