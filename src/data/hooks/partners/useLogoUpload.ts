@@ -1,6 +1,8 @@
 import { useCallback, useState } from 'react'
 import { supabase } from '@data'
 
+import { reportError } from '@/lib/observability'
+
 const bucket = 'partner-logos'
 const maxSize = 512 * 1024 // 512 KB
 const allowedTypes = ['image/png', 'image/jpeg', 'image/webp', 'image/svg+xml']
@@ -39,7 +41,9 @@ const useLogoUpload = (): UseLogoUploadResult => {
       const { data } = supabase.storage.from(bucket).getPublicUrl(path)
 
       return { error: null, url: data.publicUrl }
-    } catch {
+    } catch (error) {
+      reportError(error, { scope: 'useLogoUpload' })
+
       return { error: 'uploadFailed', url: null }
     } finally {
       setIsUploading(false)

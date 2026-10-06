@@ -1,8 +1,6 @@
 import { useTranslations } from 'next-intl'
 import { toast } from 'sonner'
 
-import { reportError } from '@/lib/observability'
-
 type ToastData = {
   message?: string
   error?: string | unknown
@@ -11,10 +9,11 @@ type ToastData = {
 const useToast = () => {
   const t = useTranslations()
 
+  // Shows the message only: failed requests are reported centrally (QueryClientProvider), and
+  // expected errors such as a wrong password must not be reported
   const toastError = (scope: string, { error, message }: ToastData) => {
     if (error) {
       console.error(`${scope}: `, error)
-      reportError(error instanceof Error ? error : new Error(String(error)), { scope })
     }
 
     return toast.error(message ?? t('common.messages.error'), {

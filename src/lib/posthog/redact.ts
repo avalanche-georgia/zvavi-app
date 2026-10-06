@@ -4,7 +4,7 @@
 const redactedValue = 'redacted'
 
 // /verify/<code> — the code is a bearer secret for a member's card
-const tokenPathPattern = /(\/verify\/)[^/?#]+/
+const tokenPathPattern = /(\/verify\/)[^/?#\s]+/g
 
 // Supabase auth redirects (password reset, email change) put one-time codes/tokens here
 const sensitiveQueryParams = [

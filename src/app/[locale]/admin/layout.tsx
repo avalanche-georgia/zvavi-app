@@ -1,7 +1,12 @@
 'use client'
 
 import { useBoolean } from '@components/hooks'
-import { AdminPageHeader, AdminSidebar, MobileDrawer } from '@components/layout/admin'
+import {
+  AdminErrorTracking,
+  AdminPageHeader,
+  AdminSidebar,
+  MobileDrawer,
+} from '@components/layout/admin'
 import { useCurrentUserProfileQuery } from '@data/hooks/userProfiles'
 
 type LayoutProps = {
@@ -14,6 +19,7 @@ const AdminLayout = ({ children }: Readonly<LayoutProps>) => {
 
   return (
     <div className="flex h-svh">
+      <AdminErrorTracking />
       <AdminSidebar />
 
       <div className="flex h-full flex-1 flex-col">

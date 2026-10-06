@@ -15,6 +15,7 @@ import { getNavMenuItems } from './constants'
 import MobileNavAccordion from './MobileNavAccordion'
 import MobileNavLink from './MobileNavLink'
 
+import { reportError } from '@/lib/observability'
 import { routes } from '@/routes'
 
 type MobileNavProps = {
@@ -36,6 +37,7 @@ const MobileNav = ({ isOpen, onClose }: MobileNavProps) => {
       onClose()
       router.push(routes.auth.login)
     } catch (error) {
+      reportError(error, { scope: 'MobileNav | handleSignOut' })
       toastError('MobileNav | handleSignOut', { error, message: 'Error logging out' })
     }
   }, [onClose, router, toastError])
