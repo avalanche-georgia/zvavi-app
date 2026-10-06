@@ -1,7 +1,9 @@
 import { createServerClient } from '@supabase/ssr'
+import { isAuthRetryableFetchError } from '@supabase/supabase-js'
 import { type NextRequest, NextResponse } from 'next/server'
 import { defaultLocale } from 'src/i18n/config'
 
+import { reportServerError } from '@/lib/posthog/server'
 import { routes } from '@/routes'
 
 export async function updateSession(request: NextRequest, response: NextResponse) {
@@ -31,7 +33,13 @@ export async function updateSession(request: NextRequest, response: NextResponse
   // the JWT is verified locally against the cached public keys (and refreshed
   // when expired) — getUser asked the Auth server on every request, which
   // delayed every page by a full round trip to Supabase
-  const { data } = await supabase.auth.getClaims()
+  const { data, error } = await supabase.auth.getClaims()
+
+  // A missing or invalid session is expected; only an unreachable Auth server (e.g. fetching the
+  // signing keys failed) is a real failure — it currently looks like being logged out
+  if (error && isAuthRetryableFetchError(error)) {
+    await reportServerError(error, { scope: 'supabase middleware | getClaims' })
+  }
 
   if (!data?.claims && pathname.includes('/admin')) {
     const loginUrl = new URL(`/${defaultLocale}${routes.auth.login}`, request.url)

@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { locales } from 'src/i18n/config'
 
+import { reportServerError } from '@/lib/posthog/server'
 import { createClient } from '@/lib/supabase/server'
 import { baseUrl, routes } from '@/routes'
 
@@ -51,7 +52,7 @@ const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
     .order('display_order', { ascending: true })
 
   if (error) {
-    console.error('sitemap: failed to fetch regions', error.message)
+    await reportServerError(new Error(error.message), { scope: 'sitemap | regions' })
   }
 
   const activeRegionIds = (data ?? []).map((r) => r.id as string)

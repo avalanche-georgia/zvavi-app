@@ -48,12 +48,12 @@ export const isNoiseException = (event: CaptureResult) => {
 }
 
 // Error messages can echo a URL; also caps runaway messages
-const sanitizeMessage = (message: string) =>
+export const sanitizeErrorMessage = (message: string) =>
   redactPathname(message.replaceAll(/([?&]code=)[^&\s]+/g, '$1redacted')).slice(0, maxMessageLength)
 
 export const sanitizeException = (event: CaptureResult) => {
   getExceptionList(event).forEach((entry) => {
-    if (entry.value) entry.value = sanitizeMessage(entry.value)
+    if (entry.value) entry.value = sanitizeErrorMessage(entry.value)
   })
 
   return event

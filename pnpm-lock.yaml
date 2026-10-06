@@ -120,6 +120,9 @@ importers:
       posthog-js:
         specifier: ^1.438.1
         version: 1.438.1(@types/react@19.2.14)(react@19.2.4)
+      posthog-node:
+        specifier: ^5.55.0
+        version: 5.55.0
       prettier:
         specifier: ^3.3.3
         version: 3.3.3
@@ -159,6 +162,9 @@ importers:
       resend:
         specifier: ^6.9.2
         version: 6.9.2
+      server-only:
+        specifier: ^0.0.1
+        version: 0.0.1
       sonner:
         specifier: ^2.0.7
         version: 2.0.7(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -4642,6 +4648,15 @@ packages:
       react:
         optional: true
 
+  posthog-node@5.55.0:
+    resolution: {integrity: sha512-8dFtlDTqs0CKGZ8t4mUnk4NdShAgzru3B9D0MfM/NTBzlRyAjctivzWINLtMLRQxYjvgBohxy7RTwiQf4mPycQ==}
+    engines: {node: ^20.20.0 || >=22.22.0}
+    peerDependencies:
+      rxjs: ^7.0.0
+    peerDependenciesMeta:
+      rxjs:
+        optional: true
+
   preact@10.29.8:
     resolution: {integrity: sha512-ej2aVZ+vZ8WO7tvlQWRM9N63A0KzF9q4mWJfDUHgYaIofWY9hu74QdnQrjoPMmZi2/nZ5gN0bJCQF49xQqx09Q==}
     peerDependencies:
@@ -4966,6 +4981,9 @@ packages:
     resolution: {integrity: sha512-SdsKMrI9TdgjdweUSR9MweHA4EJ8YxHn8DFaDisvhVlUOe4BF1tLD7GAj0lIqWVl+dPb/rExr0Btby5loQm20Q==}
     engines: {node: '>=10'}
     hasBin: true
+
+  server-only@0.0.1:
+    resolution: {integrity: sha512-qepMx2JxAa5jjfzxG79yPPq+8BuFToHd1hm7kI+Z4zAq1ftQiP7HcxMhDDItrbtwVeLg/cY2JnKnrcFkmiswNA==}
 
   set-blocking@2.0.0:
     resolution: {integrity: sha512-KiKBS8AnWGEyLzofFfmvKwpdPzqiy16LvQfK3yv/fVH7Bj13/wl3JSR1J+rfgRE9q7xUJK4qvgS8raSOeLUehw==}
@@ -10379,6 +10397,10 @@ snapshots:
     transitivePeerDependencies:
       - preact-render-to-string
 
+  posthog-node@5.55.0:
+    dependencies:
+      '@posthog/core': 1.57.0
+
   preact@10.29.8: {}
 
   prelude-ls@1.2.1: {}
@@ -10692,6 +10714,8 @@ snapshots:
   semver@7.6.3: {}
 
   semver@7.7.3: {}
+
+  server-only@0.0.1: {}
 
   set-blocking@2.0.0: {}
 

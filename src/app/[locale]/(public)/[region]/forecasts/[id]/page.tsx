@@ -9,6 +9,7 @@ import { getTranslations } from 'next-intl/server'
 
 import { fetchForecastPageData } from './fetchForecastPageData'
 
+import { isNoRowsError, reportServerError } from '@/lib/posthog/server'
 import { createClient } from '@/lib/supabase/server'
 
 const hazardLevelLabels: Record<HazardLevelScale, string> = {
@@ -33,11 +34,18 @@ export const generateMetadata = async (props: ForecastPageProps): Promise<Metada
   const origin = `https://${host}`
 
   const supabase = await createClient()
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from('forecasts')
     .select('hazard_levels, valid_until')
     .match({ id: forecastId, status: 'published' })
     .single()
+
+  if (error && !isNoRowsError(error)) {
+    await reportServerError(new Error(error.message), {
+      forecast_id: forecastId,
+      scope: 'forecast page | generateMetadata',
+    })
+  }
 
   if (!data) return {}
 

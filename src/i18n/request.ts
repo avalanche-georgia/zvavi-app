@@ -5,6 +5,8 @@ import { getRequestConfig } from 'next-intl/server'
 import { type Locale, locales } from './config'
 import { routing } from './routing'
 
+import { reportServerError } from '@/lib/posthog/server'
+
 // Whitelist of the message file imports to prevent path traversal
 const messageFiles = {
   en: () => import('../../messages/en.json'),
@@ -29,7 +31,9 @@ export default getRequestConfig(async ({ requestLocale }) => {
       messages,
       timeZone: 'Asia/Tbilisi',
     }
-  } catch {
+  } catch (error) {
+    await reportServerError(error, { scope: 'i18n | load messages' })
+
     return notFound()
   }
 })

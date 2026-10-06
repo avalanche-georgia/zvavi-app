@@ -10,6 +10,8 @@ import { hazardColors, hazardIconFiles, hazardLevelLabels, loadFont } from './he
 
 import ForecastCard from './ForecastCard'
 
+import { isNoRowsError, reportServerError } from '@/lib/posthog/server'
+
 export async function GET(request: NextRequest) {
   const id = request.nextUrl.searchParams.get('id')
 
@@ -22,11 +24,15 @@ export async function GET(request: NextRequest) {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
   )
 
-  const { data: forecast } = await supabase
+  const { data: forecast, error } = await supabase
     .from('forecasts')
     .select('hazard_levels, valid_until')
     .match({ id: Number(id), status: 'published' })
     .single()
+
+  if (error && !isNoRowsError(error)) {
+    await reportServerError(new Error(error.message), { scope: 'api/og | forecasts' })
+  }
 
   if (!forecast) {
     return new Response('Forecast not found', { status: 404 })
