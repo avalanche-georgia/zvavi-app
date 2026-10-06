@@ -6,6 +6,7 @@ import createMiddleware from 'next-intl/middleware'
 
 import { defaultLocale, locales } from './i18n/config'
 
+import { posthogHosts, posthogProxyPath } from '@/lib/posthog/config'
 import { updateSession } from '@/lib/supabase/middleware'
 
 const knownRegions = new Set<string>(Object.values(regionIds))
@@ -60,8 +61,43 @@ const publicRootFilesSet = new Set(publicRootFiles.map((f) => `/${f}`))
 // Does NOT match: /en/forecasts/123, /en/forecasts/current, /en/forecasts/history
 const oldForecastPattern = /^\/(en|ka)\/forecasts\/Gudauri_.*$/
 
+const isPosthogProxyPath = (pathname: string) =>
+  pathname === posthogProxyPath || pathname.startsWith(`${posthogProxyPath}/`)
+
+// Forward analytics requests to PostHog without the site's cookies (Supabase session) or auth header
+const rewriteToPosthog = (request: NextRequest) => {
+  const { pathname, search } = request.nextUrl
+  const upstreamPath = pathname.slice(posthogProxyPath.length) || '/'
+  const isAsset = upstreamPath.startsWith('/static/') || upstreamPath.startsWith('/array/')
+  const host = isAsset ? posthogHosts.assets : posthogHosts.api
+
+  const headers = new Headers(request.headers)
+
+  headers.delete('cookie')
+  headers.delete('authorization')
+  headers.set('host', host)
+
+  return NextResponse.rewrite(new URL(`https://${host}${upstreamPath}${search}`), {
+    request: { headers },
+  })
+}
+
 export default async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
+
+  if (isPosthogProxyPath(pathname)) {
+    return rewriteToPosthog(request)
+  }
+
+  // next.config sets skipTrailingSlashRedirect (PostHog needs trailing slashes),
+  // so the default trailing-slash redirect is done here for every other path
+  if (pathname !== '/' && pathname.endsWith('/')) {
+    const url = new URL(request.url)
+
+    url.pathname = pathname.replace(/\/+$/, '') || '/'
+
+    return NextResponse.redirect(url, 308)
+  }
 
   // Log suspicious requests to old forecast URL formats
   if (oldForecastPattern.test(pathname)) {
