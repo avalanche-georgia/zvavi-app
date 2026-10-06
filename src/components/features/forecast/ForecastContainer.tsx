@@ -30,7 +30,7 @@ const ForecastContainer = ({ initialForecast, isCurrentForecast }: ForecastConta
   return (
     <div>
       {!isCurrentForecast && <StaleForecastBanner />}
-      <Forecast forecast={forecast} regionId={region!.id} />
+      <Forecast forecast={forecast} region={region!} />
     </div>
   )
 }
