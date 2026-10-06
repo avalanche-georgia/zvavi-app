@@ -33,6 +33,16 @@ const TermsOfServiceContent = () => {
       />
 
       <LegalSection
+        description={t('legal.terms.websiteUse.description')}
+        title={t('legal.terms.websiteUse.title')}
+      />
+
+      <LegalSection
+        description={t('legal.terms.thirdPartyLinks.description')}
+        title={t('legal.terms.thirdPartyLinks.title')}
+      />
+
+      <LegalSection
         description={t('legal.terms.fees.description')}
         title={t('legal.terms.fees.title')}
       />
