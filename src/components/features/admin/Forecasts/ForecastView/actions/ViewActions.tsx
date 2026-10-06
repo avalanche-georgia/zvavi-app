@@ -7,6 +7,7 @@ import { useTranslations } from 'next-intl'
 
 import type { ForecastViewActions } from './useForecastViewActions'
 import ViewMenu from './ViewMenu'
+import { PublishConfirmDialog } from '../../shared'
 
 type ViewActionsProps = {
   actions: ForecastViewActions
@@ -57,6 +58,13 @@ const ViewActions = ({ actions, forecast }: ViewActionsProps) => {
         </>
       )}
       <ViewMenu actions={actions} forecastId={forecast.id} isPublished={isPublished} />
+      <PublishConfirmDialog
+        forecast={forecast}
+        isOpen={actions.publishConfirm.isOpen}
+        onConfirm={actions.publishConfirm.onConfirm}
+        onOpenChange={actions.publishConfirm.onOpenChange}
+        regionId={forecast.regionId}
+      />
     </div>
   )
 }

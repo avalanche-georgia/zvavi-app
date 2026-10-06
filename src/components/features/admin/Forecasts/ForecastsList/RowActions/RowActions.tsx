@@ -8,7 +8,10 @@ import { useTranslations } from 'next-intl'
 
 import keepFocusInTable from './keepFocusInTable'
 import RowMenu from './RowMenu'
-import { useForecastRowActions } from '../../shared'
+import { PublishConfirmDialog, useForecastRowActions } from '../../shared'
+
+// Headless UI dialog close transition (300 ms) plus a margin
+const dialogCloseMs = 320
 
 type RowActionsProps = {
   forecast: ForecastListItem
@@ -26,10 +29,11 @@ const RowActions = ({ forecast, isCompact = false, regionId }: RowActionsProps) 
 
   // The Publish button goes away with the draft status — carry on from ⋯ (or the table,
   // if the row leaves the current filter)
-  const handlePublish = () => {
-    menuTriggerRef.current?.focus()
+  // The dialog keeps focus until its close transition ends, so move it to ⋯ afterwards
+  const handlePublishConfirm = () => {
     keepFocusInTable(menuTriggerRef.current)
-    void actions.onPublish()
+    setTimeout(() => menuTriggerRef.current?.focus(), dialogCloseMs)
+    void actions.publishConfirm.onConfirm()
   }
 
   return (
@@ -37,7 +41,7 @@ const RowActions = ({ forecast, isCompact = false, regionId }: RowActionsProps) 
       {!isPublished && !isCompact && (
         <IconButton
           aria-label={t('admin.forecasts.actions.publishForecast', { id })}
-          onClick={handlePublish}
+          onClick={actions.onPublish}
           tooltip={t('admin.forecasts.actions.publish')}
         >
           <ArrowUp className="size-4.5" />
@@ -49,6 +53,13 @@ const RowActions = ({ forecast, isCompact = false, regionId }: RowActionsProps) 
         isPublished={isPublished}
         triggerRef={menuTriggerRef}
         withPublish={isCompact}
+      />
+      <PublishConfirmDialog
+        forecast={forecast}
+        isOpen={actions.publishConfirm.isOpen}
+        onConfirm={handlePublishConfirm}
+        onOpenChange={actions.publishConfirm.onOpenChange}
+        regionId={regionId}
       />
     </div>
   )
