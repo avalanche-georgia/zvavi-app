@@ -573,33 +573,45 @@ export type Database = {
       }
       regions: {
         Row: {
+          caaml_region_id: string | null
           created_at: string
           default_zoom: number | null
           display_order: number
+          elevation_high_m: number | null
+          elevation_low_m: number | null
           forecast_zone: Json | null
           id: Database['public']['Enums']['region_id']
           is_active: boolean
           map_center: Json | null
+          name_en: string | null
           updated_at: string
         }
         Insert: {
+          caaml_region_id?: string | null
           created_at?: string
           default_zoom?: number | null
           display_order?: number
+          elevation_high_m?: number | null
+          elevation_low_m?: number | null
           forecast_zone?: Json | null
           id: Database['public']['Enums']['region_id']
           is_active?: boolean
           map_center?: Json | null
+          name_en?: string | null
           updated_at?: string
         }
         Update: {
+          caaml_region_id?: string | null
           created_at?: string
           default_zoom?: number | null
           display_order?: number
+          elevation_high_m?: number | null
+          elevation_low_m?: number | null
           forecast_zone?: Json | null
           id?: Database['public']['Enums']['region_id']
           is_active?: boolean
           map_center?: Json | null
+          name_en?: string | null
           updated_at?: string
         }
         Relationships: []
