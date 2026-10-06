@@ -7,7 +7,7 @@ const redactedValue = 'redacted'
 const tokenPathPattern = /(\/verify\/)[^/?#\s]+/g
 
 // Supabase auth redirects (password reset, email change) put one-time codes/tokens here
-const sensitiveQueryParams = [
+export const sensitiveQueryParams = [
   'access_token',
   'code',
   'error_description',
@@ -78,3 +78,12 @@ export const redactEventUrls = <T extends RedactableEvent>(event: T) => {
 
   return event
 }
+
+const sensitiveParamPattern = new RegExp(
+  `([?&#](?:${sensitiveQueryParams.join('|')})=)[^&#\\s]+`,
+  'g',
+)
+
+// For free text such as error messages, which can echo a URL
+export const redactText = (text: string) =>
+  redactPathname(text).replaceAll(sensitiveParamPattern, `$1${redactedValue}`)

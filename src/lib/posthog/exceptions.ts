@@ -3,7 +3,7 @@ import type { CaptureResult } from 'posthog-js'
 import { locales } from 'src/i18n/config'
 
 import { appRelease } from './config'
-import { redactPathname } from './redact'
+import { redactText } from './redact'
 
 const maxMessageLength = 500
 
@@ -49,7 +49,7 @@ export const isNoiseException = (event: CaptureResult) => {
 
 // Error messages can echo a URL; also caps runaway messages
 export const sanitizeErrorMessage = (message: string) =>
-  redactPathname(message.replaceAll(/([?&]code=)[^&\s]+/g, '$1redacted')).slice(0, maxMessageLength)
+  redactText(message).slice(0, maxMessageLength)
 
 export const sanitizeException = (event: CaptureResult) => {
   getExceptionList(event).forEach((entry) => {

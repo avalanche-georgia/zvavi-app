@@ -23,6 +23,7 @@ const useWeatherStationCreate = () => {
   const queryClient = useQueryClient()
 
   return useMutation<WeatherStation, Error, WeatherStationFormData>({
+    meta: { scope: 'useWeatherStationCreate' },
     mutationFn: createWeatherStation,
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: weatherStationsKeys.list() })

@@ -15,6 +15,7 @@ const useWeatherStationDelete = () => {
   const queryClient = useQueryClient()
 
   return useMutation<void, Error, WeatherStation['id']>({
+    meta: { scope: 'useWeatherStationDelete' },
     mutationFn: deleteWeatherStation,
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: weatherStationsKeys.list() })

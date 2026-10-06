@@ -25,6 +25,7 @@ const useUserProfileUpdate = () => {
   const queryClient = useQueryClient()
 
   return useMutation<void, Error, UpdatePayload>({
+    meta: { scope: 'useUserProfileUpdate' },
     mutationFn: updateUserProfile,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: userProfilesKeys.current() })

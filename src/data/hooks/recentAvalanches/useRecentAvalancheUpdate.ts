@@ -22,6 +22,7 @@ const useRecentAvalancheUpdate = () => {
   const queryClient = useQueryClient()
 
   return useMutation<void, Error, UpdatePayload>({
+    meta: { scope: 'useRecentAvalancheUpdate' },
     mutationFn: updateRecentAvalanche,
     onSuccess: (_, variables) => {
       const { regionId } = variables

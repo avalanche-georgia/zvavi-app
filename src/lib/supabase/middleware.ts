@@ -6,6 +6,20 @@ import { defaultLocale } from 'src/i18n/config'
 import { reportServerError } from '@/lib/posthog/server'
 import { routes } from '@/routes'
 
+// Runs on every request: during an Auth outage, report at most once a minute per instance
+const authOutageReportIntervalMs = 60 * 1000
+let lastAuthOutageReportAt = 0
+
+const shouldReportAuthOutage = () => {
+  const now = Date.now()
+
+  if (now - lastAuthOutageReportAt < authOutageReportIntervalMs) return false
+
+  lastAuthOutageReportAt = now
+
+  return true
+}
+
 export async function updateSession(request: NextRequest, response: NextResponse) {
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -37,8 +51,8 @@ export async function updateSession(request: NextRequest, response: NextResponse
 
   // A missing or invalid session is expected; only an unreachable Auth server (e.g. fetching the
   // signing keys failed) is a real failure — it currently looks like being logged out
-  if (error && isAuthRetryableFetchError(error)) {
-    await reportServerError(error, { scope: 'supabase middleware | getClaims' })
+  if (error && isAuthRetryableFetchError(error) && shouldReportAuthOutage()) {
+    reportServerError(error, { scope: 'supabase middleware | getClaims' })
   }
 
   if (!data?.claims && pathname.includes('/admin')) {

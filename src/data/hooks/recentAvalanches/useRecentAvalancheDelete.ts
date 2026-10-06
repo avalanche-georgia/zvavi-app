@@ -17,6 +17,7 @@ const useRecentAvalancheDelete = () => {
   const queryClient = useQueryClient()
 
   return useMutation<void, Error, DeleteAvalanchePayload>({
+    meta: { scope: 'useRecentAvalancheDelete' },
     mutationFn: deleteRecentAvalanche,
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({

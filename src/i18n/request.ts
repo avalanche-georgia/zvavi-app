@@ -32,7 +32,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
       timeZone: 'Asia/Tbilisi',
     }
   } catch (error) {
-    await reportServerError(error, { scope: 'i18n | load messages' })
+    reportServerError(error, { scope: 'i18n | load messages' })
 
     return notFound()
   }

@@ -28,7 +28,7 @@ const PartnersPage = async () => {
     .order('name_en', { ascending: true })
 
   if (error) {
-    await reportServerError(new Error(error.message), { scope: 'partners page | partners' })
+    reportServerError(new Error(error.message), { scope: 'partners page | partners' })
   }
 
   const initialPartners = convertSnakeToCamel(data ?? []) as Partner[]

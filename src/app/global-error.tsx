@@ -31,7 +31,7 @@ const GlobalError = ({ error, reset }: GlobalErrorProps) => {
           minHeight: '100dvh',
         }}
       >
-        <p>Something went wrong. Please try again later.</p>
+        <p role="alert">Something went wrong. Please try again later.</p>
         <button onClick={reset} type="button">
           Try again
         </button>

@@ -40,13 +40,13 @@ export const POST = async (request: Request) => {
 
     // The response body is not reported: it can echo the message, which contains the applicant's data
     if (!response.ok) {
-      await reportServerError(new Error(`Telegram sendMessage failed: ${response.status}`), {
+      reportServerError(new Error(`Telegram sendMessage failed: ${response.status}`), {
         scope: 'api/notify/new-application',
         status_code: response.status,
       })
     }
   } catch (error) {
-    await reportServerError(error, { scope: 'api/notify/new-application' })
+    reportServerError(error, { scope: 'api/notify/new-application' })
   }
 
   return NextResponse.json({ ok: true })

@@ -15,6 +15,7 @@ const useMemberDelete = () => {
   const queryClient = useQueryClient()
 
   return useMutation<void, Error, Member['id']>({
+    meta: { scope: 'useMemberDelete' },
     mutationFn: deleteMember,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: membersKeys.list() })

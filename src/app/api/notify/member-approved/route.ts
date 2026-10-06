@@ -73,13 +73,13 @@ export const POST = async (request: Request) => {
 
     // Resend returns API errors instead of throwing; only its name/status are reported (no email)
     if (error) {
-      await reportServerError(new Error(`Resend send failed: ${error.name}`), {
+      reportServerError(new Error(`Resend send failed: ${error.name}`), {
         scope: 'api/notify/member-approved',
         status_code: error.statusCode,
       })
     }
   } catch (error) {
-    await reportServerError(error, { scope: 'api/notify/member-approved' })
+    reportServerError(error, { scope: 'api/notify/member-approved' })
   }
 
   return NextResponse.json({ ok: true })

@@ -24,6 +24,7 @@ const usePartnerCreate = () => {
   const queryClient = useQueryClient()
 
   return useMutation<Partner, Error, PartnerFormData>({
+    meta: { scope: 'usePartnerCreate' },
     mutationFn: createPartner,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: partnersKeys.list() })

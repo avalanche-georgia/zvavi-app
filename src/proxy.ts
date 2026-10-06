@@ -31,12 +31,12 @@ const logSuspiciousRequest = async (request: NextRequest) => {
     })
 
     if (error) {
-      await reportServerError(new Error(error.message), {
+      reportServerError(new Error(error.message), {
         scope: 'proxy | logSuspiciousRequest',
       })
     }
   } catch (error) {
-    await reportServerError(error, { scope: 'proxy | logSuspiciousRequest' })
+    reportServerError(error, { scope: 'proxy | logSuspiciousRequest' })
   }
 }
 

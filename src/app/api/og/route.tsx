@@ -1,3 +1,4 @@
+import { isNoRowsError } from '@data/helpers'
 import type { HazardLevelScale } from '@domain/types'
 import { createClient } from '@supabase/supabase-js'
 import { format } from 'date-fns'
@@ -10,7 +11,7 @@ import { hazardColors, hazardIconFiles, hazardLevelLabels, loadFont } from './he
 
 import ForecastCard from './ForecastCard'
 
-import { isNoRowsError, reportServerError } from '@/lib/posthog/server'
+import { reportServerError } from '@/lib/posthog/server'
 
 export async function GET(request: NextRequest) {
   const id = request.nextUrl.searchParams.get('id')
@@ -31,7 +32,7 @@ export async function GET(request: NextRequest) {
     .single()
 
   if (error && !isNoRowsError(error)) {
-    await reportServerError(new Error(error.message), { scope: 'api/og | forecasts' })
+    reportServerError(new Error(error.message), { scope: 'api/og | forecasts' })
   }
 
   if (!forecast) {

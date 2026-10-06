@@ -16,6 +16,7 @@ const useRecentAvalancheCreate = () => {
   const queryClient = useQueryClient()
 
   return useMutation<void, Error, AvalancheFormData>({
+    meta: { scope: 'useRecentAvalancheCreate' },
     mutationFn: createRecentAvalanche,
     onSuccess: (_, variables) => {
       const { regionId } = variables

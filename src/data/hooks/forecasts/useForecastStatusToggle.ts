@@ -18,6 +18,7 @@ const useForecastStatusToggle = () => {
   const queryClient = useQueryClient()
 
   return useMutation<void, Error, ForecastStatusToggleVariables>({
+    meta: { scope: 'useForecastStatusToggle' },
     mutationFn: toggleStatus,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: forecastsKeys.all })

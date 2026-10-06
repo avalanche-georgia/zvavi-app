@@ -1,7 +1,8 @@
+import { after } from 'next/server'
 import { PostHog } from 'posthog-node'
 
 import { appRelease, posthogHosts, posthogProjectToken } from './config'
-import { sanitizeErrorMessage } from './exceptions'
+import { getPageContextProperties, sanitizeErrorMessage } from './exceptions'
 import { redactUrl } from './redact'
 
 import 'server-only'
@@ -58,6 +59,7 @@ export const captureServerError = async (
   try {
     await posthog.captureExceptionImmediate(toSafeError(error), serverDistinctId, {
       $process_person_profile: false,
+      ...getPageContextProperties(properties.path),
       app_release: appRelease,
       source: 'server',
       ...properties,
@@ -69,9 +71,13 @@ export const captureServerError = async (
 }
 
 // For failures that are caught and turned into a response (so onRequestError never sees them).
-// Never use for expected 4xx/validation errors.
-export const reportServerError = (error: unknown, context: ServerErrorContext) =>
-  captureServerError(error, context)
-
-// PostgREST code for `.single()` finding no row: an expected "not found", not a failure
-export const isNoRowsError = (error: { code?: string } | null) => error?.code === 'PGRST116'
+// Never use for expected 4xx/validation errors. Sent after the response, so a slow PostHog never
+// delays the user.
+export const reportServerError = (error: unknown, context: ServerErrorContext) => {
+  try {
+    after(() => captureServerError(error, context))
+  } catch {
+    // Outside a request (e.g. build time) after() is unavailable
+    void captureServerError(error, context)
+  }
+}

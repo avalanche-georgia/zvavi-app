@@ -33,6 +33,7 @@ const useMemberCreate = () => {
   const queryClient = useQueryClient()
 
   return useMutation<Member, Error, MemberFormData>({
+    meta: { scope: 'useMemberCreate' },
     mutationFn: createMember,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: membersKeys.list() })

@@ -52,7 +52,7 @@ const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
     .order('display_order', { ascending: true })
 
   if (error) {
-    await reportServerError(new Error(error.message), { scope: 'sitemap | regions' })
+    reportServerError(new Error(error.message), { scope: 'sitemap | regions' })
   }
 
   const activeRegionIds = (data ?? []).map((r) => r.id as string)

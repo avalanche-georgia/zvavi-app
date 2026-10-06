@@ -1,7 +1,8 @@
 import { convertSnakeToCamel } from '@data/helpers'
+import { isNoRowsError } from '@data/helpers'
 import type { FullForecast } from '@domain/types'
 
-import { isNoRowsError, reportServerError } from '@/lib/posthog/server'
+import { reportServerError } from '@/lib/posthog/server'
 import { createClient } from '@/lib/supabase/server'
 
 type ForecastPageData = {
@@ -33,14 +34,14 @@ export const fetchForecastPageData = async (
     ])
 
   if (forecastResult.error && !isNoRowsError(forecastResult.error)) {
-    await reportServerError(new Error(forecastResult.error.message), {
+    reportServerError(new Error(forecastResult.error.message), {
       forecast_id: forecastId,
       scope: 'fetchForecastPageData | forecasts',
     })
   }
 
   if (currentForecastResult.error && !isNoRowsError(currentForecastResult.error)) {
-    await reportServerError(new Error(currentForecastResult.error.message), {
+    reportServerError(new Error(currentForecastResult.error.message), {
       scope: 'fetchForecastPageData | current forecast',
     })
   }
