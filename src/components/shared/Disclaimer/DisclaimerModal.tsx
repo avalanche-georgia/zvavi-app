@@ -1,15 +1,24 @@
 import { useState } from 'react'
+import { useAnalyticsConsent } from '@components/hooks'
 import { LanguageToggle } from '@components/shared'
+import { AnalyticsConsentField } from '@components/shared/AnalyticsConsent'
 import { Button, Checkbox } from '@components/ui'
 import { Modal, ModalBody, ModalFooter } from '@components/ui/Modal'
 import { useTranslations } from 'next-intl'
 
 const DisclaimerModal = ({ onAccept }: { onAccept: VoidFunction }) => {
   const t = useTranslations()
+  const { setConsent, status: analyticsStatus } = useAnalyticsConsent()
   const [isAccepted, setIsAccepted] = useState(false)
+  // Optional and independent of the safety acknowledgement; never pre-ticked for a new choice
+  const [isAnalyticsAllowed, setIsAnalyticsAllowed] = useState(analyticsStatus === 'granted')
 
   const handleClose = () => {
     if (!isAccepted) return
+
+    if (analyticsStatus) {
+      setConsent(isAnalyticsAllowed)
+    }
 
     onAccept()
   }
@@ -30,6 +39,12 @@ const DisclaimerModal = ({ onAccept }: { onAccept: VoidFunction }) => {
             label={t('common.disclaimer.checkbox')}
             onChange={setIsAccepted}
           />
+          {analyticsStatus && (
+            <AnalyticsConsentField
+              isAllowed={isAnalyticsAllowed}
+              onChange={setIsAnalyticsAllowed}
+            />
+          )}
         </div>
       </ModalBody>
 

@@ -94,3 +94,18 @@ common:
     title: '⚠️ Disclaimer ⚠️'
     content: 'Our avalanche forecasters are internationally qualified and experienced professionals, and data is provided by skilled observers. We encourage you to make your own observations and decisions, without relying solely on our forecast, since any forecast is a generalised "best guess", and in certain cases it might be inaccurate. We can not be held liable for any actions you take in the backcountry that may result in injury, loss or death.'
     checkbox: 'I understand and accept'
+    analyticsCheckbox: 'Allow anonymous usage statistics (cookies)'
+    analyticsHint: 'Optional. Anonymous visit statistics help us show the reach of our forecasts to partners and funders. We never collect personal data and never share it for advertising. <link>Privacy Policy</link>'
+
+  analyticsConsent:
+    title: 'Anonymous usage statistics'
+    description: 'May we collect anonymous visit statistics using cookies? They help us show the reach of our forecasts to partners and funders. We never collect personal data and never share it for advertising.'
+    allow: 'Allow'
+    decline: 'No thanks'
+    close: 'Close'
+    preferences: 'Analytics preferences'
+    privacyLink: 'Privacy Policy'
+    status:
+      granted: 'Current choice: allowed.'
+      denied: 'Current choice: not allowed.'
+      pending: 'You have not made a choice yet.'

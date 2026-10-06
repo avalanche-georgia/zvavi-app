@@ -21,6 +21,14 @@ export const getAnalyticsConsent = (): AnalyticsConsentStatus | null => {
   }
 }
 
+// Opting out clears PostHog's persistent storage, but window/session ids from a previously
+// granted session stay in sessionStorage until the tab closes
+const clearSessionStorageLeftovers = () => {
+  Object.keys(sessionStorage)
+    .filter((key) => key.startsWith(`ph_${posthogProjectToken}`))
+    .forEach((key) => sessionStorage.removeItem(key))
+}
+
 export const setAnalyticsConsent = (isGranted: boolean) => {
   if (!isAnalyticsEnabled()) return
 
@@ -29,6 +37,7 @@ export const setAnalyticsConsent = (isGranted: boolean) => {
       posthog.opt_in_capturing()
     } else {
       posthog.opt_out_capturing()
+      clearSessionStorageLeftovers()
     }
   } catch {
     return

@@ -1,3 +1,4 @@
+export { default as useAnalyticsConsent } from './useAnalyticsConsent'
 export { default as useAuth } from './useAuth'
 export { default as useBoolean } from './useBoolean'
 export { default as useCopyWithFeedback } from './useCopyWithFeedback'
