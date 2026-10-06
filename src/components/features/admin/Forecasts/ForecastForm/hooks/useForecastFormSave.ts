@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import { useToast } from '@components/hooks'
-import { useForecastSave } from '@data/hooks/forecasts'
+import { ForecastSaveRejectedError, useForecastSave } from '@data/hooks/forecasts'
 import type { RegionId } from '@domain/types'
 import cloneDeep from 'lodash/cloneDeep'
 import { useTranslations } from 'next-intl'
@@ -82,6 +82,12 @@ const useForecastFormSave = ({
       setLastSavedAt(new Date())
       onSaved({ andClose, forecastId: savedId, isCreated: previousId === undefined })
     } catch (error) {
+      if (error instanceof ForecastSaveRejectedError) {
+        toastError('ForecastForm | save', { message: t('admin.forecasts.messages.saveRejected') })
+
+        return
+      }
+
       toastError('ForecastForm | save', { error })
     } finally {
       isSavingRef.current = false
