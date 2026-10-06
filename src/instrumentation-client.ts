@@ -1,6 +1,12 @@
 import posthog from 'posthog-js'
 
-import { isAdminPathname, posthogHosts, posthogProjectToken, posthogProxyPath } from '@/lib/posthog'
+import {
+  isAdminPathname,
+  posthogHosts,
+  posthogProjectToken,
+  posthogProxyPath,
+  redactEventUrls,
+} from '@/lib/posthog'
 
 if (posthogProjectToken) {
   posthog.init(posthogProjectToken, {
@@ -9,11 +15,13 @@ if (posthogProjectToken) {
     api_host: posthogProxyPath,
     autocapture: false,
     before_send: (event) => {
-      const pathname = event?.properties.$pathname
+      if (!event) return null
+
+      const pathname = event.properties.$pathname
 
       if (typeof pathname === 'string' && isAdminPathname(pathname)) return null
 
-      return event
+      return redactEventUrls(event)
     },
     capture_dead_clicks: false,
     capture_exceptions: false,
