@@ -43,7 +43,9 @@ next-env.d.ts
 # other
 .idea/
 local/
-.claude/
+.claude/settings.local.json
+.claude/worktrees/
+.claude/projects/
 
 # Auto-generated translation files (generated from YAML)
 /messages/*.json
