@@ -75,3 +75,9 @@ The entire public site is available in **English** and **Georgian**, with automa
 
 - Mobile-responsive design for use in the field
 - Monitored with Vercel Analytics and Speed Insights for performance and usage trends
+
+---
+
+## Privacy-Friendly Visitor Statistics
+
+Visitors are asked once, alongside the safety disclaimer, whether they allow anonymous usage statistics; the answer is optional and never blocks the site. Visitors who agreed to the disclaimer earlier see a small one-time notice instead, and anyone can change their choice later from the "Analytics preferences" link in the footer. The statistics show how many people use the site, which pages and regions they visit and where they come from, and — for each partner — how often their logo was shown, clicked, and how many visitors went on to their website. Admin pages are never counted. The Privacy Policy and Terms of Service describe what is collected.

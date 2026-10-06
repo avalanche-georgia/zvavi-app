@@ -1,5 +1,6 @@
 'use client'
 
+import { PartnersTracking } from '@components/features/partners/tracking'
 import { PageSection } from '@components/layout'
 import { ButtonLink } from '@components/shared'
 import type { Partner } from '@domain/types'
@@ -20,7 +21,9 @@ const Partners = ({ partners }: { partners: Partner[] }) => {
           <MainPartnerPlaceholder />
         </div>
       ) : (
-        <PartnersScrollBox partners={partners} />
+        <PartnersTracking partners={partners} placement="home">
+          <PartnersScrollBox partners={partners} />
+        </PartnersTracking>
       )}
 
       <ButtonLink className="mt-4" href={routes.partners}>

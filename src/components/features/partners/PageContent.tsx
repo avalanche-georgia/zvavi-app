@@ -6,6 +6,7 @@ import type { Partner, PartnerTier } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import { PartnersList } from './PartnersList'
+import { PartnersTracking } from './tracking'
 
 import { routes } from '@/routes'
 
@@ -23,9 +24,11 @@ const PageContent = ({ initialPartners }: PageContentProps) => {
     <div className="flex flex-col gap-8">
       <p>{t('partners.description')}</p>
 
-      <PartnersList partners={byTier(1)} scrollDirection="backward" tier={1} />
-      <PartnersList partners={byTier(2)} tier={2} />
-      <PartnersList partners={byTier(3)} scrollDirection="backward" tier={3} />
+      <PartnersTracking partners={partners} placement="partners_page">
+        <PartnersList partners={byTier(1)} scrollDirection="backward" tier={1} />
+        <PartnersList partners={byTier(2)} tier={2} />
+        <PartnersList partners={byTier(3)} scrollDirection="backward" tier={3} />
+      </PartnersTracking>
 
       <section className="space-y-3">
         <h3 className="text-xl font-semibold">{t('partners.becomePartner.title')}</h3>

@@ -1,6 +1,7 @@
 'use client'
 
 import { PartnerInfo, PartnerLogo } from '@components/features/partners/PartnersList'
+import { usePartnerTracking } from '@components/features/partners/tracking'
 import { useLocalizeField } from '@components/hooks'
 import { Drawer } from '@components/ui'
 import type { Partner } from '@domain/types'
@@ -11,9 +12,7 @@ const cardClassName =
 const MainPartnerCard = ({ partner }: { partner: Partner }) => {
   const localizeField = useLocalizeField()
   const name = localizeField(partner.nameEn, partner.nameKa)
-  const hasDrawerContent = Boolean(
-    partner.benefitEn || partner.benefitKa || partner.descriptionEn || partner.descriptionKa,
-  )
+  const { hasDetails, trackBadgeClick } = usePartnerTracking(partner)
 
   const logoNode = (
     <div className="inline-flex h-30 max-w-50 items-center justify-center">
@@ -21,11 +20,12 @@ const MainPartnerCard = ({ partner }: { partner: Partner }) => {
     </div>
   )
 
-  if (!hasDrawerContent) {
+  if (!hasDetails) {
     return (
       <a
         className={cardClassName}
         href={partner.websiteUrl}
+        onClick={trackBadgeClick}
         rel="noopener noreferrer"
         target="_blank"
       >
@@ -36,7 +36,7 @@ const MainPartnerCard = ({ partner }: { partner: Partner }) => {
 
   return (
     <Drawer content={<PartnerInfo partner={partner} />} title={name}>
-      <button className={cardClassName} type="button">
+      <button className={cardClassName} onClick={trackBadgeClick} type="button">
         {logoNode}
       </button>
     </Drawer>

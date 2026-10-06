@@ -1,5 +1,6 @@
 'use client'
 
+import { PartnersTracking } from '@components/features/partners/tracking'
 import { PageSection } from '@components/layout'
 import { usePartnersQuery } from '@data/hooks/partners'
 import { useTranslations } from 'next-intl'
@@ -15,7 +16,9 @@ const ForecastPartnersSection = () => {
 
   return (
     <PageSection title={t('forecast.sections.partners.title')}>
-      <PartnersScrollBox partners={visiblePartners} />
+      <PartnersTracking partners={visiblePartners} placement="forecast">
+        <PartnersScrollBox partners={visiblePartners} />
+      </PartnersTracking>
     </PageSection>
   )
 }
