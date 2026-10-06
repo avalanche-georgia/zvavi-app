@@ -19,6 +19,10 @@ Forecasts are authored in a draft/publish workflow, so forecasters can prepare a
 
 Interactive map showing the forecast area boundary for each region, giving users a clear spatial reference for where the forecast applies.
 
+## Forecasts for Partner Apps
+
+Forecasts are available to partner apps in the European standard format used by avalanche warning services across the Alps. Mountain and navigation apps can show each region's current danger levels, avalanche problems and forecast texts, together with the forecast area outline and a link back to the full forecast on our website. Updates reach partner apps within minutes of publishing.
+
 ## Forecast Archive
 
 Full history of past forecasts, browsable by date, so users can track how conditions evolved through the season.

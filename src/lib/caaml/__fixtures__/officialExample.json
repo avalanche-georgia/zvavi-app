@@ -1,0 +1,158 @@
+{
+    "bulletins": [
+        {
+            "bulletinID": "3846a8dd-97cc-4f6d-9616-a814c9876dbe",
+            "lang": "de",
+            "publicationTime": "2022-03-02T16:00:00.002869Z",
+            "validTime": {
+                "startTime": "2022-03-02T23:00:00Z",
+                "endTime": "2022-03-03T23:00:00Z"
+            },
+            "source": {
+                "provider": {
+                    "name": "Avalanche.report",
+                    "website": "https://avalanche.report",
+                    "contactPerson": {
+                        "name": "Norbert Lanzanasto"
+                    }
+                }
+            },
+            "regions": [
+                {
+                    "regionID" : "IT-32-TN-13",
+                    "name" : "Primiero - Pale di S. Martino"
+                },
+                {
+                    "regionID" : "IT-32-TN-01",
+                    "name" : "Adamello - Presanella"
+                },
+                {
+                    "regionID" : "IT-32-TN-04",
+                    "name" : "Northern Brenta - Peller"
+                },
+                {
+                    "regionID" : "IT-32-TN-16",
+                    "name" : "Fassa Valley"
+                },
+                {
+                    "regionID" : "IT-32-TN-19",
+                    "name" : "Sole, Pejo and Rabbi"
+                },
+                {
+                    "regionID" : "IT-32-TN-07",
+                    "name" : "Northern Lagorai"
+                },
+                {
+                    "regionID" : "IT-32-TN-09",
+                    "name" : "Latemar"
+                },
+                {
+                    "regionID" : "IT-32-TN-20",
+                    "name" : "Maddalene"
+                }
+            ],
+            "dangerRatings": [
+                {
+                    "mainValue": "moderate",
+                    "elevation": {
+                        "lowerBound": "1800"
+                    },
+                    "validTimePeriod": "all_day"
+                },
+                {
+                    "mainValue": "low",
+                    "elevation": {
+                        "upperBound": "1800"
+                    },
+                    "validTimePeriod": "all_day"
+                }
+            ],
+            "avalancheProblems": [
+                {
+                    "problemType": "wind_slab",
+                    "elevation": {
+                        "lowerBound": "2400"
+                    },
+                    "aspects": ["NE", "NW", "N"],
+                    "validTimePeriod": "all_day",
+                    "comment": "In particular adjacent to ridgelines and in gullies and bowls in all aspects.",
+                    "avalancheSize": 2,
+                    "snowpackStability": "poor",
+                    "frequency": "some"
+                },
+                {
+                    "problemType": "persistent_weak_layers",
+                    "elevation": {
+                        "lowerBound": "1800",
+                        "upperBound": "2400"
+                    },
+                    "aspects": ["E", "NE", "N", "NW", "W"],
+                    "validTimePeriod": "all_day",
+                    "avalancheSize": 3,
+                    "snowpackStability": "poor",
+                    "frequency": "few"
+                }
+            ],
+            "highlights": "Many starting zones have released the snow but not entirely.",
+            "avalancheActivity": {
+                "highlights": "The snowpack will be in most cases stable. Wind slabs require caution.",
+                "comment": "As a consequence of a strong northerly wind, sometimes avalanche prone wind slabs formed in some localities. These avalanche prone locations are to be found in particular on very steep shady slopes at elevated altitudes and in gullies and bowls, and behind abrupt changes in the terrain. They are mostly easy to recognise. Weak layers in the old snowpack can be released in isolated cases and mostly by large additional loads on steep shady slopes. At lower altitudes and below the tree line hardly any snow is lying."
+            },
+            "snowpackStructure": {
+                "comment": "At high altitudes and in high Alpine regions less snow than usual is lying. As a consequence of solar radiation the snow drift accumulations stabilised during the last few days, in particular on sunny slopes. Here the snowpack is better bonded. The old snowpack will be prone to triggering in some places, especially on shady slopes above approximately 2400 m."
+            },
+            "tendency": [{
+                "comment": "The avalanche danger will persist.",
+                "tendencyType": "steady",
+                "validTime": {
+                    "startTime": "2022-03-03T23:00:00Z",
+                    "endTime": "2022-03-04T23:00:00Z"
+                }
+            }],
+            "metaData": {
+                "extFiles" : [
+                    {
+                        "fileType": "danger_rating_map",
+                        "description": "Simplified danger rating map of the region",
+                        "fileReferenceURI": "https://avalanche.report/albina_files_local/2019-01-16/2019-01-15_16-00-00/a19bd3dc-85df-448f-be5e-f88f0c14ed4f.jpg"
+                    },
+                    {
+                        "fileType": "website",
+                        "description": "Link to region on the website",
+                        "fileReferenceURI": "https://avalanche.report/bulletin/2019-01-16?region=a19bd3dc-85df-448f-be5e-f88f0c14ed4f"
+                    }
+                ]
+            }
+        }
+    ],
+    "metaData": {
+        "extFiles" : [
+            {
+                "fileType": "link",
+                "description": "Link to the website",
+                "fileReferenceURI": "https://avalanche.report/bulletin/2019-01-16"
+            },
+            {
+                "fileType": "simple_link",
+                "description": "Link to the simplified website",
+                "fileReferenceURI": "https://avalanche.report/simple/2019-01-16/en.html"
+            },
+            {
+                "fileType": "danger_rating_map",
+                "description": "Danger rating map (whole day)",
+                "fileReferenceURI": "https://avalanche.report/albina_files_local/2019-01-16/2019-01-15_16-00-00/fd_albina_map.jpg"
+            },
+            {
+                "fileType": "pdf",
+                "description": "PDF ",
+                "fileReferenceURI": "https://avalanche.report/albina_files_local/2019-01-16/2019-01-15_16-00-00/2019-01-16_en.pdf"
+            },
+            {
+                "fileType": "danger_rating_map_overlay",
+                "description": "Danger rating overlay (AM)",
+                "fileReferenceURI": "https://avalanche.report/albina_files_local/2019-01-16/2019-01-15_16-00-00/fd_overlay.png"
+            }
+        ]
+    },
+    "customData": {}
+}

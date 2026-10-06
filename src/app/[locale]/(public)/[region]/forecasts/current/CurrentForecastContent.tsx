@@ -16,7 +16,7 @@ const CurrentForecastContent = () => {
 
   return (
     <PageWrapper title={t('forecast.pageTitle', { regionName: t(`regions.names.${region!.id}`) })}>
-      {forecast ? <Forecast forecast={forecast} regionId={region!.id} /> : <NoForecast />}
+      {forecast ? <Forecast forecast={forecast} region={region!} /> : <NoForecast />}
     </PageWrapper>
   )
 }

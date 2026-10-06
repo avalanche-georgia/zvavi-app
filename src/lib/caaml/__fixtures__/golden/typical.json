@@ -1,0 +1,250 @@
+{
+  "bulletins": [
+    {
+      "bulletinID": "0a85a087-a35d-548e-aaca-10a96d91bc31",
+      "lang": "en",
+      "publicationTime": "2026-12-10T14:05:11Z",
+      "validTime": {
+        "endTime": "2026-12-11T14:00:00Z",
+        "startTime": "2026-12-10T14:05:11Z"
+      },
+      "source": {
+        "provider": {
+          "name": "Avalanche Georgia",
+          "website": "https://avalanche.ge"
+        }
+      },
+      "regions": [
+        {
+          "name": "Gudauri",
+          "regionID": "GE-MM-01"
+        }
+      ],
+      "dangerRatings": [
+        {
+          "elevation": {
+            "lowerBound": "2600"
+          },
+          "mainValue": "considerable",
+          "validTimePeriod": "all_day"
+        },
+        {
+          "elevation": {
+            "lowerBound": "2000",
+            "upperBound": "2600"
+          },
+          "mainValue": "considerable",
+          "validTimePeriod": "all_day"
+        },
+        {
+          "elevation": {
+            "upperBound": "2000"
+          },
+          "mainValue": "moderate",
+          "validTimePeriod": "all_day"
+        }
+      ],
+      "avalancheProblems": [
+        {
+          "problemType": "new_snow",
+          "comment": "Storm snow sits on a weak interface.",
+          "avalancheSize": 2,
+          "snowpackStability": "poor",
+          "frequency": "some",
+          "validTimePeriod": "all_day",
+          "aspects": [
+            "N",
+            "NE",
+            "E"
+          ],
+          "elevation": {
+            "lowerBound": "2000"
+          },
+          "customData": {
+            "avalancheGeorgia": {
+              "confidence": "moderate",
+              "priority": 0,
+              "problemType": "stormSlab",
+              "trend": "deteriorating",
+              "bands": [
+                "highAlpine",
+                "alpine"
+              ]
+            }
+          }
+        },
+        {
+          "problemType": "wind_slab",
+          "avalancheSize": 3,
+          "snowpackStability": "very_poor",
+          "frequency": "many",
+          "validTimePeriod": "all_day",
+          "aspects": [
+            "N",
+            "NE"
+          ],
+          "elevation": {
+            "lowerBound": "2600"
+          },
+          "customData": {
+            "avalancheGeorgia": {
+              "confidence": "high",
+              "priority": 1,
+              "problemType": "windSlab",
+              "trend": "noChange",
+              "bands": [
+                "highAlpine"
+              ]
+            }
+          }
+        },
+        {
+          "problemType": "wind_slab",
+          "avalancheSize": 3,
+          "snowpackStability": "very_poor",
+          "frequency": "many",
+          "validTimePeriod": "all_day",
+          "aspects": [
+            "N",
+            "NE",
+            "E"
+          ],
+          "elevation": {
+            "lowerBound": "2000",
+            "upperBound": "2600"
+          },
+          "customData": {
+            "avalancheGeorgia": {
+              "confidence": "high",
+              "priority": 1,
+              "problemType": "windSlab",
+              "trend": "noChange",
+              "bands": [
+                "alpine"
+              ]
+            }
+          }
+        },
+        {
+          "problemType": "wet_snow",
+          "comment": "Afternoon warming.",
+          "avalancheSize": 2,
+          "snowpackStability": "fair",
+          "frequency": "few",
+          "validTimePeriod": "later",
+          "aspects": [
+            "SE",
+            "S",
+            "SW"
+          ],
+          "elevation": {
+            "upperBound": "2000"
+          },
+          "customData": {
+            "avalancheGeorgia": {
+              "confidence": "low",
+              "priority": 2,
+              "problemType": "wetSlab",
+              "trend": "improving",
+              "bands": [
+                "subAlpine"
+              ]
+            }
+          }
+        },
+        {
+          "problemType": "persistent_weak_layers",
+          "comment": "Deep weak layer.",
+          "avalancheSize": 4,
+          "snowpackStability": "good",
+          "frequency": "few",
+          "validTimePeriod": "all_day",
+          "aspects": [
+            "N"
+          ],
+          "elevation": {
+            "lowerBound": "2600"
+          },
+          "customData": {
+            "avalancheGeorgia": {
+              "confidence": "moderate",
+              "priority": 3,
+              "problemType": "persistentSlab",
+              "trend": "noChange",
+              "bands": [
+                "highAlpine"
+              ]
+            }
+          }
+        },
+        {
+          "problemType": "persistent_weak_layers",
+          "comment": "Deep weak layer.",
+          "avalancheSize": 4,
+          "snowpackStability": "good",
+          "frequency": "few",
+          "validTimePeriod": "all_day",
+          "aspects": [
+            "N"
+          ],
+          "elevation": {
+            "upperBound": "2000"
+          },
+          "customData": {
+            "avalancheGeorgia": {
+              "confidence": "moderate",
+              "priority": 3,
+              "problemType": "persistentSlab",
+              "trend": "noChange",
+              "bands": [
+                "subAlpine"
+              ]
+            }
+          }
+        }
+      ],
+      "avalancheActivity": {
+        "comment": "Considerable danger above <b>2000 m</b>.<br/><br/>Fresh wind slabs on N-E aspects.<br/>Be careful below cornices."
+      },
+      "snowpackStructure": {
+        "comment": "Weak layer buried 40 cm deep.<br/>Expect it to be reactive on shady slopes."
+      },
+      "travelAdvisory": {
+        "comment": "Cornices are large and fragile."
+      },
+      "weatherForecast": {
+        "comment": "Snowfall continues until noon, wind NW 40 km/h."
+      },
+      "metaData": {
+        "extFiles": [
+          {
+            "description": "Forecast page on avalanche.ge",
+            "fileReferenceURI": "https://avalanche.ge/en/gudauri/forecasts/412",
+            "fileType": "website"
+          }
+        ]
+      },
+      "customData": {
+        "avalancheGeorgia": {
+          "expired": false,
+          "forecastId": 412,
+          "overallDangerLevel": "3"
+        }
+      }
+    }
+  ],
+  "customData": {
+    "avalancheGeorgia": {
+      "apiVersion": 1
+    }
+  },
+  "metaData": {
+    "extFiles": [
+      {
+        "description": "Avalanche Georgia website",
+        "fileReferenceURI": "https://avalanche.ge",
+        "fileType": "link"
+      }
+    ]
+  }
+}
