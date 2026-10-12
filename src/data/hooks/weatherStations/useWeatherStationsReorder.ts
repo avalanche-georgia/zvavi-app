@@ -9,6 +9,7 @@ const useWeatherStationsReorder = () => {
   const queryClient = useQueryClient()
 
   return useMutation<void, Error, WeatherStation[]>({
+    meta: { scope: 'useWeatherStationsReorder' },
     mutationFn: async (ordered) => {
       const updates = ordered.map((station, index) => ({ id: station.id, sort_order: index }))
       const { error } = await supabase.rpc('reorder_weather_stations', { updates })

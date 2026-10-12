@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
 
+import { reportServerError } from '@/lib/posthog/server'
 import { createClient } from '@/lib/supabase/server'
 
 type RequestBody = {
@@ -63,14 +64,22 @@ export const POST = async (request: Request) => {
   const { email, name, verificationUrl } = (await request.json()) as RequestBody
 
   try {
-    await resend.emails.send({
+    const { error } = await resend.emails.send({
       from: process.env.RESEND_FROM_EMAIL || 'Avalanche Georgia <noreply@contact.avalanche.ge>',
       html: buildEmailHtml(name, verificationUrl),
       subject: 'Your Avalanche Georgia membership has been approved!',
       to: email,
     })
+
+    // Resend returns API errors instead of throwing; only its name/status are reported (no email)
+    if (error) {
+      reportServerError(new Error(`Resend send failed: ${error.name}`), {
+        scope: 'api/notify/member-approved',
+        status_code: error.statusCode,
+      })
+    }
   } catch (error) {
-    console.error('[Resend notify] Error:', error)
+    reportServerError(error, { scope: 'api/notify/member-approved' })
   }
 
   return NextResponse.json({ ok: true })

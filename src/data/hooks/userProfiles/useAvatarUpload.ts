@@ -5,6 +5,8 @@ import { useQueryClient } from '@tanstack/react-query'
 
 import { handleSupabaseError } from '../../helpers'
 
+import { reportError } from '@/lib/observability'
+
 const bucket = 'avatars'
 const maxSize = 5 * 1024 * 1024 // 5 MB
 const allowedTypes = ['image/jpeg', 'image/png', 'image/webp']
@@ -81,7 +83,9 @@ const useAvatarUpload = (): UseAvatarUploadResult => {
         void queryClient.invalidateQueries({ queryKey: userProfilesKeys.current() })
 
         return { error: null, url: data.publicUrl }
-      } catch {
+      } catch (error) {
+        reportError(error, { scope: 'useAvatarUpload' })
+
         return { error: 'uploadFailed', url: null }
       } finally {
         setIsUploading(false)

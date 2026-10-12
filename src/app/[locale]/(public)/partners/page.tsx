@@ -6,6 +6,8 @@ import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import { createClient } from 'src/lib/supabase/server'
 
+import { reportServerError } from '@/lib/posthog/server'
+
 export const generateMetadata = async (): Promise<Metadata> => {
   const t = await getTranslations()
 
@@ -19,11 +21,15 @@ const PartnersPage = async () => {
   const t = await getTranslations()
   const supabase = await createClient()
 
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from('partners')
     .select('*')
     .eq('is_active', true)
     .order('name_en', { ascending: true })
+
+  if (error) {
+    reportServerError(new Error(error.message), { scope: 'partners page | partners' })
+  }
 
   const initialPartners = convertSnakeToCamel(data ?? []) as Partner[]
 

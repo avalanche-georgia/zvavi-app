@@ -12,6 +12,7 @@ import { Link, useRouter } from 'src/i18n/navigation'
 
 import { DesktopNav, MobileMenuButton } from './NavMenu'
 
+import { reportError } from '@/lib/observability'
 import { routes } from '@/routes'
 
 const Header = () => {
@@ -25,6 +26,7 @@ const Header = () => {
       await supabase.auth.signOut()
       router.push(routes.auth.login)
     } catch (error) {
+      reportError(error, { scope: 'Header | handleLogOutClick' })
       toastError('Header | handleLogOutClick', { error, message: 'Error logging out' })
     }
   }, [router, toastError])

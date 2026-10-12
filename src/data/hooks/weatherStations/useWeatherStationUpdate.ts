@@ -20,6 +20,7 @@ const useWeatherStationUpdate = () => {
   const queryClient = useQueryClient()
 
   return useMutation<void, Error, UpdatePayload>({
+    meta: { scope: 'useWeatherStationUpdate' },
     mutationFn: updateWeatherStation,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: weatherStationsKeys.list() })

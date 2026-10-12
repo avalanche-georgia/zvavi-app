@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server'
 
+import { reportServerError } from '@/lib/posthog/server'
+
 const { TELEGRAM_ADMIN_CHAT_ID, TELEGRAM_BOT_ADMIN_TOKEN } = process.env
 
 type RequestBody = {
@@ -36,13 +38,15 @@ export const POST = async (request: Request) => {
       },
     )
 
+    // The response body is not reported: it can echo the message, which contains the applicant's data
     if (!response.ok) {
-      const body = await response.text()
-
-      console.error('[Telegram notify] Failed:', response.status, body)
+      reportServerError(new Error(`Telegram sendMessage failed: ${response.status}`), {
+        scope: 'api/notify/new-application',
+        status_code: response.status,
+      })
     }
   } catch (error) {
-    console.error('[Telegram notify] Error:', error)
+    reportServerError(error, { scope: 'api/notify/new-application' })
   }
 
   return NextResponse.json({ ok: true })

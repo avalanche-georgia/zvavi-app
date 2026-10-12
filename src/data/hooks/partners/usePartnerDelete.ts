@@ -15,6 +15,7 @@ const usePartnerDelete = () => {
   const queryClient = useQueryClient()
 
   return useMutation<void, Error, Partner['id']>({
+    meta: { scope: 'usePartnerDelete' },
     mutationFn: deletePartner,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: partnersKeys.list() })

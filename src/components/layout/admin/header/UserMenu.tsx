@@ -9,6 +9,7 @@ import { useCurrentUserProfileQuery } from '@data/hooks/userProfiles'
 import { useTranslations } from 'next-intl'
 import { Link, useRouter } from 'src/i18n/navigation'
 
+import { reportError } from '@/lib/observability'
 import { routes } from '@/routes'
 
 const UserMenu = () => {
@@ -23,6 +24,7 @@ const UserMenu = () => {
       await supabase.auth.signOut()
       router.push(routes.auth.login)
     } catch (error) {
+      reportError(error, { scope: 'UserMenu | handleSignOut' })
       toastError('UserMenu | handleSignOut', { error })
     }
   }, [router, toastError])

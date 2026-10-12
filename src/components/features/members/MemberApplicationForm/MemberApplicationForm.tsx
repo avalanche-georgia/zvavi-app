@@ -18,6 +18,7 @@ import { memberApplicationSchema } from './schema'
 import type { SubmitResult } from './submitApplication'
 import submitApplication from './submitApplication'
 
+import { reportError } from '@/lib/observability'
 import { routes } from '@/routes'
 
 const MemberApplicationForm = () => {
@@ -55,6 +56,7 @@ const MemberApplicationForm = () => {
 
       setResult(submitResult)
     } catch (error) {
+      reportError(error, { scope: 'MemberApplicationForm' })
       toastError('MemberApplicationForm', {
         error,
         message: t('joinUs.apply.messages.error'),

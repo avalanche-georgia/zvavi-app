@@ -1,5 +1,6 @@
 import { ForecastContainer } from '@components/features/forecast'
 import { PageWrapper } from '@components/layout'
+import { isNoRowsError } from '@data/helpers'
 import type { HazardLevelScale } from '@domain/types'
 import { format } from 'date-fns'
 import type { Metadata } from 'next'
@@ -9,6 +10,7 @@ import { getTranslations } from 'next-intl/server'
 
 import { fetchForecastPageData } from './fetchForecastPageData'
 
+import { reportServerError } from '@/lib/posthog/server'
 import { createClient } from '@/lib/supabase/server'
 
 const hazardLevelLabels: Record<HazardLevelScale, string> = {
@@ -33,11 +35,18 @@ export const generateMetadata = async (props: ForecastPageProps): Promise<Metada
   const origin = `https://${host}`
 
   const supabase = await createClient()
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from('forecasts')
     .select('hazard_levels, valid_until')
     .match({ id: forecastId, status: 'published' })
     .single()
+
+  if (error && !isNoRowsError(error)) {
+    reportServerError(new Error(error.message), {
+      forecast_id: forecastId,
+      scope: 'forecast page | generateMetadata',
+    })
+  }
 
   if (!data) return {}
 

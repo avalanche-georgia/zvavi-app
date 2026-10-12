@@ -25,6 +25,7 @@ const useMemberUpdate = () => {
   const queryClient = useQueryClient()
 
   return useMutation<void, Error, UpdatePayload>({
+    meta: { scope: 'useMemberUpdate' },
     mutationFn: updateMember,
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: membersKeys.list() })

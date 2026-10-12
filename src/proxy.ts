@@ -7,6 +7,7 @@ import createMiddleware from 'next-intl/middleware'
 import { defaultLocale, locales } from './i18n/config'
 
 import { posthogHosts, posthogProxyPath } from '@/lib/posthog/config'
+import { reportServerError } from '@/lib/posthog/server'
 import { updateSession } from '@/lib/supabase/middleware'
 
 const knownRegions = new Set<string>(Object.values(regionIds))
@@ -30,10 +31,12 @@ const logSuspiciousRequest = async (request: NextRequest) => {
     })
 
     if (error) {
-      console.error('Failed to log suspicious request:', error.message)
+      reportServerError(new Error(error.message), {
+        scope: 'proxy | logSuspiciousRequest',
+      })
     }
-  } catch (err) {
-    console.error('Error logging suspicious request:', err)
+  } catch (error) {
+    reportServerError(error, { scope: 'proxy | logSuspiciousRequest' })
   }
 }
 

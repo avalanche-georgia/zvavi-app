@@ -20,6 +20,7 @@ const usePartnerUpdate = () => {
   const queryClient = useQueryClient()
 
   return useMutation<void, Error, UpdatePayload>({
+    meta: { scope: 'usePartnerUpdate' },
     mutationFn: updatePartner,
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: partnersKeys.list() })
