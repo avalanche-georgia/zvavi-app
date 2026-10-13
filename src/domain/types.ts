@@ -211,7 +211,12 @@ export type PublicAvalanche = Omit<
   | 'submitterContact'
   | 'submitterEducation'
   | 'submitterName'
->
+> & {
+  createdAt: string
+  id: number
+  // Signed, short-lived URLs of the record's photos
+  photos: PhotoUrls[]
+}
 
 // Public forecast: only published linked records, public fields only
 export type FullForecast = Forecast & {

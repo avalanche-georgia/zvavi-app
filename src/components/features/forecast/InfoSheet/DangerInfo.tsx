@@ -1,6 +1,6 @@
 import { backgroundColorByHazardLevel, hazardIcons } from '@components/constants'
 import { hazardLevelNamesByScale } from '@domain/constants'
-import type { HazardLevelScale } from '@domain/types'
+import type { ElevationKey, HazardLevels, HazardLevelScale } from '@domain/types'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 
@@ -11,10 +11,21 @@ import { hazardScaleLevels, hazardTextClass } from '../model/hazard'
 
 import { cn } from '@/lib/utils'
 
-// What the overall danger level means: travel advice, likelihood, size and
+// What a danger level means: travel advice, likelihood, size and
 // distribution — then the whole 1–5 scale with this forecast's level marked
-const DangerInfo = ({ level }: { level: HazardLevelScale }) => {
+type DangerInfoProps = {
+  hazardLevels: HazardLevels
+  // The overall level, or one elevation band's
+  scope: ElevationKey
+}
+
+const DangerInfo = ({ hazardLevels, scope }: DangerInfoProps) => {
   const t = useTranslations()
+  const level = hazardLevels[scope]
+  const scopeLabel =
+    scope === 'overall'
+      ? t('common.labels.overallDangerLevel')
+      : t('common.labels.zoneDangerLevel', { zone: t(`common.elevationZones.${scope}`) })
 
   // "travel advice | likelihood | size and distribution"
   const getParts = (scaleLevel: HazardLevelScale) =>
@@ -24,6 +35,9 @@ const DangerInfo = ({ level }: { level: HazardLevelScale }) => {
       .filter(Boolean)
 
   const parts = getParts(level)
+  // "This forecast" for the overall level, the band's name for a band
+  const currentLabel =
+    scope === 'overall' ? t('forecast.page.thisForecast') : t(`common.elevationZones.${scope}`)
   const isRated = level !== '0'
 
   return (
@@ -41,7 +55,7 @@ const DangerInfo = ({ level }: { level: HazardLevelScale }) => {
             {isRated && `${level} · `}
             {t(hazardLevelNamesByScale[level])}
           </h2>
-          <p className="text-muted text-copy-sm mt-0.5">{t('common.labels.overallDangerLevel')}</p>
+          <p className="text-muted text-copy-sm mt-0.5">{scopeLabel}</p>
         </div>
       </div>
       {!isRated && <p className="text-ink text-copy-lg mx-4 mt-3.5 leading-[1.55]">{parts[0]}</p>}
@@ -68,7 +82,7 @@ const DangerInfo = ({ level }: { level: HazardLevelScale }) => {
                 backgroundColorByHazardLevel[scaleLevel],
                 hazardTextClass(scaleLevel),
               )}
-              currentLabel={scaleLevel === level ? t('forecast.page.thisForecast') : undefined}
+              currentLabel={scaleLevel === level ? currentLabel : undefined}
               description={getParts(scaleLevel)[0]}
               name={t(hazardLevelNamesByScale[scaleLevel])}
             />

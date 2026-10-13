@@ -1,10 +1,13 @@
-import { AspectsOverview, DetailSection, hasCoordinates } from '@components/features/observations'
 import type { PublicObservation } from '@domain/types'
 import { MapPin } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
+import AspectsOverview from '../AspectsOverview'
+import DetailSection from '../DetailSection'
+import hasCoordinates from '../hasCoordinates'
+
 type DetailWhereProps = {
-  observation: PublicObservation
+  observation: Pick<PublicObservation, 'aspects' | 'latitude' | 'longitude'>
   onShowOnMap: VoidFunction
 }
 

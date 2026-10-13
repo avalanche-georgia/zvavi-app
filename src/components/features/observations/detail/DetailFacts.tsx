@@ -1,13 +1,19 @@
-import { type Fact, FactsGrid } from '@components/features/observations'
-import { useFormatDay } from '@components/features/observations'
 import type { PublicObservation } from '@domain/types'
 import { useTranslations } from 'next-intl'
+
+import FactsGrid, { type Fact } from '../FactsGrid'
+import useFormatDay from '../useFormatDay'
+
+type FactsRecord = Pick<
+  PublicObservation,
+  'createdAt' | 'date' | 'isDateUnknown' | 'quantity' | 'slabDepth' | 'trigger' | 'width'
+>
 
 // Shown for facts the reporter left empty — the grid keeps its shape
 const emptyValue = '—'
 
 // Every fact is always shown
-const DetailFacts = ({ observation }: { observation: PublicObservation }) => {
+const DetailFacts = ({ observation }: { observation: FactsRecord }) => {
   const t = useTranslations()
   const formatDay = useFormatDay()
   const { createdAt, date, isDateUnknown, quantity, slabDepth, trigger, width } = observation

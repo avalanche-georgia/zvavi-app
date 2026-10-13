@@ -5,6 +5,7 @@ import { hazardLevelNamesByScale } from '@domain/constants'
 import type { FullForecast } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
+import { AvalancheSheet } from './AvalancheSheet'
 import ForecastMain from './ForecastMain'
 import ForecastRail from './ForecastRail'
 import PageHead from './head/PageHead'
@@ -25,8 +26,9 @@ const ForecastPage = (props: ForecastPageProps) => {
   const { forecast, isCurrentForecast, nextForecastId, previousForecastId } = props
   const t = useTranslations()
   const headerHeight = useHeaderHeight()
-  const { avalancheProblems, hazardLevels, regionId } = forecast
-  const sheets = useForecastSheets(avalancheProblems)
+  const { avalancheProblems, hazardLevels, recentAvalanches, regionId } = forecast
+  const sheets = useForecastSheets(forecast)
+  const { dangerInfo } = sheets
 
   // Sticky offsets and anchor margins sit below the sticky site header
   const style = { '--forecast-header-height': `${headerHeight}px` } as React.CSSProperties
@@ -48,7 +50,9 @@ const ForecastPage = (props: ForecastPageProps) => {
           />
           <ForecastMain
             forecast={forecast}
+            onAvalancheOpen={sheets.openAvalanche}
             onProblemOpen={sheets.openProblem}
+            openAvalancheIndex={sheets.openAvalancheIndex}
             openProblemIndex={sheets.openProblemIndex}
           />
         </div>
@@ -57,18 +61,23 @@ const ForecastPage = (props: ForecastPageProps) => {
       <ProblemSheet
         index={sheets.openProblemIndex}
         infoField={sheets.problemInfoField}
-        onClose={sheets.closeAll}
+        onClose={sheets.close}
         onInfoChange={sheets.setProblemInfoField}
         onNavigate={sheets.openProblem}
         problems={avalancheProblems}
       />
+      <AvalancheSheet
+        avalanches={recentAvalanches}
+        index={sheets.openAvalancheIndex}
+        onClose={sheets.close}
+        onNavigate={sheets.openAvalanche}
+      />
       <InfoSheet
-        isOpen={sheets.isDangerInfoOpen}
-        onBack={sheets.closeInfo}
-        onCloseAll={sheets.closeAll}
-        title={t(hazardLevelNamesByScale[hazardLevels.overall])}
+        isOpen={dangerInfo.isOpen}
+        onClose={sheets.closeDangerInfo}
+        title={t(hazardLevelNamesByScale[hazardLevels[dangerInfo.scope]])}
       >
-        <DangerInfo level={hazardLevels.overall} />
+        <DangerInfo hazardLevels={hazardLevels} scope={dangerInfo.scope} />
       </InfoSheet>
     </div>
   )

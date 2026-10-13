@@ -21,7 +21,7 @@ const HazardPreview = () => {
     <div className="sticky top-22.5 flex flex-col items-center gap-3 @max-[640px]:hidden">
       {/* Pyramid positions itself against the bottom-right of this box */}
       <div className="relative h-60 w-52">
-        <Pyramid hazardLevels={hazardLevels} isInteractive={false} />
+        <Pyramid hazardLevels={hazardLevels} />
       </div>
       <div className="flex items-center gap-2">
         <span

@@ -11,10 +11,14 @@ import { routes } from '@/routes'
 type AvalanchesCardProps = {
   avalanches: PublicAvalanche[]
   className?: string
+  onAvalancheOpen: (index: number) => void
+  // The record whose sheet is open
+  openIndex: number | null
   regionId: RegionId
 }
 
-const AvalanchesCard = ({ avalanches, className, regionId }: AvalanchesCardProps) => {
+const AvalanchesCard = (props: AvalanchesCardProps) => {
+  const { avalanches, className, onAvalancheOpen, openIndex, regionId } = props
   const t = useTranslations()
   const key = 'forecast.sections.recentAvalanches'
 
@@ -29,9 +33,13 @@ const AvalanchesCard = ({ avalanches, className, regionId }: AvalanchesCardProps
         <p className="text-muted text-copy">{t(`${key}.noAvalanches`)}</p>
       ) : (
         <ul className="flex flex-col gap-2">
-          {avalanches.map((avalanche) => (
+          {avalanches.map((avalanche, index) => (
             <li key={avalanche.id}>
-              <AvalancheCard avalanche={avalanche} />
+              <AvalancheCard
+                avalanche={avalanche}
+                isSelected={index === openIndex}
+                onOpen={() => onAvalancheOpen(index)}
+              />
             </li>
           ))}
         </ul>

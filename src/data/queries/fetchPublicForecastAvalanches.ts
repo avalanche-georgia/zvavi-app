@@ -1,6 +1,7 @@
 import { convertSnakeToCamel, handleSupabaseError } from '@data/helpers'
 import type { PublicAvalanche } from '@domain/types'
 
+import { signPhotoUrls } from '@/lib/r2'
 import { createServiceRoleClient } from '@/lib/supabase/serviceRole'
 
 // Explicit columns — never `*`: submitter_*, created_by_user_id and
@@ -27,9 +28,18 @@ const fetchPublicForecastAvalanches = async (forecastId: number): Promise<Public
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const rows = (data ?? []).map(({ forecast_avalanche, ...row }) => row)
+  // One signing pass for all records
+  const photoUrls = await signPhotoUrls(rows.flatMap((row) => row.photo_keys ?? []))
 
   // TODO: type-safe DB conversion — https://app.asana.com/1/1208747886147296/project/1208747689500826/task/1214630622531225
-  return convertSnakeToCamel(rows) as PublicAvalanche[]
+  const avalanches = convertSnakeToCamel(rows) as Omit<PublicAvalanche, 'photos'>[]
+
+  return avalanches.map((avalanche) => ({
+    ...avalanche,
+    photos: (avalanche.photoKeys ?? [])
+      .map((key) => photoUrls.get(key))
+      .filter((photo) => photo !== undefined),
+  }))
 }
 
 export default fetchPublicForecastAvalanches

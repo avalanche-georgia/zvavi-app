@@ -1,14 +1,15 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import { Sheet } from '@components/ui'
 import type { Problem } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import ProblemBody from './ProblemBody'
-import ProblemSheetHeader from './ProblemSheetHeader'
 import { FieldInfo, InfoSheet, type ProblemField } from '../InfoSheet'
 import { getProblemKey } from '../model/problemKey'
+import StepSheetHeader from '../sheets/StepSheetHeader'
+import useStepSheet from '../sheets/useStepSheet'
 
 type ProblemSheetProps = {
   // The open problem; null closes the sheet
@@ -24,47 +25,21 @@ type ProblemSheetProps = {
 const ProblemSheet = (props: ProblemSheetProps) => {
   const { index, infoField, onClose, onInfoChange, onNavigate, problems } = props
   const t = useTranslations()
-  const bodyRef = useRef<HTMLDivElement>(null)
-  // Keep the content rendered while the sheet (or the info sheet) animates
-  // closed — including a problem that has just left the forecast
-  const [shown, setShown] = useState({ index: index ?? 0, problem: problems[index ?? 0] })
+  const {
+    bodyRef,
+    handleKeyDown,
+    shownIndex,
+    shownItem: problem,
+    step,
+  } = useStepSheet({ getKey: getProblemKey, index, items: problems, onNavigate })
+  // Keeps the explanation rendered while its sheet animates closed
   const [shownField, setShownField] = useState<ProblemField>(infoField ?? 'size')
 
-  if (index !== null && problems[index]) {
-    const isChanged = problems[index] !== shown.problem || index !== shown.index
-
-    if (isChanged) setShown({ index, problem: problems[index] })
-  }
-
   if (infoField !== null && infoField !== shownField) setShownField(infoField)
-
-  const { index: shownIndex, problem } = shown
-  const shownKey = problem && getProblemKey(problem)
-
-  // Each problem starts at the top
-  useEffect(() => {
-    bodyRef.current?.closest('[data-sheet-body]')?.scrollTo({ top: 0 })
-  }, [shownKey])
 
   if (!problem) return null
 
   const title = t(`common.avalancheTypes.${problem.type}`)
-
-  const handleNavigate = (offset: number) => {
-    const nextIndex = shownIndex + offset
-
-    if (nextIndex >= 0 && nextIndex < problems.length) onNavigate(nextIndex)
-  }
-
-  // ←/→ step through the problems. Keys from the stacked info sheet (portaled
-  // outside this popup) bubble here through React too — ignore them, and leave
-  // browser shortcuts (Alt+←, Cmd+←) alone.
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (!event.currentTarget.contains(event.target as Node)) return
-    if (event.altKey || event.ctrlKey || event.metaKey) return
-    if (event.key === 'ArrowLeft') handleNavigate(-1)
-    if (event.key === 'ArrowRight') handleNavigate(1)
-  }
 
   const handleOpenChange = (isOpen: boolean) => {
     if (!isOpen) onClose()
@@ -73,10 +48,16 @@ const ProblemSheet = (props: ProblemSheetProps) => {
   return (
     <Sheet
       header={
-        <ProblemSheetHeader
+        <StepSheetHeader
           index={shownIndex}
-          onNext={() => handleNavigate(1)}
-          onPrevious={() => handleNavigate(-1)}
+          nextLabel={t('forecast.page.nextProblem')}
+          onNext={() => step(1)}
+          onPrevious={() => step(-1)}
+          positionLabel={t('forecast.page.problemPosition', {
+            current: shownIndex + 1,
+            total: problems.length,
+          })}
+          previousLabel={t('forecast.page.previousProblem')}
           title={title}
           total={problems.length}
         />
@@ -93,8 +74,7 @@ const ProblemSheet = (props: ProblemSheetProps) => {
       <InfoSheet
         backLabel={title}
         isOpen={infoField !== null && index !== null}
-        onBack={() => onInfoChange(null)}
-        onCloseAll={onClose}
+        onClose={() => onInfoChange(null)}
         title={t(`forecast.sections.avalancheProblems.modal.labels.${shownField}`)}
       >
         <FieldInfo field={shownField} problem={problem} />

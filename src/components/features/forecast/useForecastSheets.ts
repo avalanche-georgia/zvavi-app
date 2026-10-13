@@ -1,44 +1,56 @@
 import { useState } from 'react'
-import type { Problem } from '@domain/types'
+import type { ElevationKey, FullForecast } from '@domain/types'
 
-import type { InfoTopic, ProblemField } from './InfoSheet'
+import type { ProblemField } from './InfoSheet'
 import { getProblemKey } from './model/problemKey'
 
-// Which sheets are open: a problem, and an explanation — of the danger level
-// on its own, or of a problem property stacked over the problem.
-// The open problem is remembered by identity, not position: the forecast
-// refreshes in the background and its problems may be reordered or removed.
-const useForecastSheets = (problems: Problem[]) => {
-  const [openProblemKey, setOpenProblemKey] = useState<string | null>(null)
-  const [infoTopic, setInfoTopic] = useState<InfoTopic | null>(null)
+type OpenItem = { key: string; kind: 'avalanche' | 'problem' }
 
-  const foundIndex = problems.findIndex((problem) => getProblemKey(problem) === openProblemKey)
-  // A problem that is gone closes its sheet
-  const openProblemIndex = foundIndex === -1 ? null : foundIndex
+// Which sheets are open: a problem or an avalanche record, an explanation of a
+// problem property stacked over the problem, and the danger-level explanation.
+// The open item is remembered by identity, not position: the forecast
+// refreshes in the background and its lists may be reordered or shortened.
+const useForecastSheets = ({ avalancheProblems, recentAvalanches }: FullForecast) => {
+  const [openItem, setOpenItem] = useState<OpenItem | null>(null)
+  const [problemInfoField, setProblemInfoField] = useState<ProblemField | null>(null)
+  // The scope stays while the sheet animates closed
+  const [dangerInfo, setDangerInfo] = useState<{ isOpen: boolean; scope: ElevationKey }>({
+    isOpen: false,
+    scope: 'overall',
+  })
 
-  const closeAll = () => {
-    setInfoTopic(null)
-    setOpenProblemKey(null)
+  const findIndex = (kind: OpenItem['kind'], keys: string[]) => {
+    const index = openItem?.kind === kind ? keys.indexOf(openItem.key) : -1
+
+    // An item that is gone closes its sheet
+    return index === -1 ? null : index
   }
 
-  const openProblem = (index: number) => {
-    const problem = problems[index]
+  const problemKeys = avalancheProblems.map(getProblemKey)
+  const avalancheKeys = recentAvalanches.map((avalanche) => String(avalanche.id))
+  const openProblemIndex = findIndex('problem', problemKeys)
 
-    if (!problem) return
+  const open = (kind: OpenItem['kind'], key: string | undefined) => {
+    if (key === undefined) return
 
-    setInfoTopic(null)
-    setOpenProblemKey(getProblemKey(problem))
+    setProblemInfoField(null)
+    setOpenItem({ key, kind })
   }
 
   return {
-    closeAll,
-    closeInfo: () => setInfoTopic(null),
-    isDangerInfoOpen: infoTopic === 'danger',
-    openDangerInfo: () => setInfoTopic('danger'),
-    openProblem,
+    close: () => {
+      setProblemInfoField(null)
+      setOpenItem(null)
+    },
+    closeDangerInfo: () => setDangerInfo((current) => ({ ...current, isOpen: false })),
+    dangerInfo,
+    openAvalanche: (index: number) => open('avalanche', avalancheKeys[index]),
+    openAvalancheIndex: findIndex('avalanche', avalancheKeys),
+    openDangerInfo: (scope: ElevationKey) => setDangerInfo({ isOpen: true, scope }),
+    openProblem: (index: number) => open('problem', problemKeys[index]),
     openProblemIndex,
-    problemInfoField: infoTopic === 'danger' || openProblemIndex === null ? null : infoTopic,
-    setProblemInfoField: (field: ProblemField | null) => setInfoTopic(field),
+    problemInfoField: openProblemIndex === null ? null : problemInfoField,
+    setProblemInfoField,
   }
 }
 

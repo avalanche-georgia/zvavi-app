@@ -1,4 +1,4 @@
-import type { Forecast } from '@domain/types'
+import type { ElevationKey, Forecast } from '@domain/types'
 
 import { DangerCard } from './DangerCard'
 import { ElevationCard } from './ElevationCard'
@@ -8,7 +8,7 @@ import SponsorsCard from './sections/SponsorsCard'
 type ForecastRailProps = {
   forecast: Forecast
   isCurrentForecast: boolean
-  onDangerInfoOpen: VoidFunction
+  onDangerInfoOpen: (scope: ElevationKey) => void
 }
 
 // Danger card → By elevation → Forecast area → Sponsors. A sticky left column
@@ -20,11 +20,12 @@ const ForecastRail = ({ forecast, isCurrentForecast, onDangerInfoOpen }: Forecas
       className="order-1 lg:order-none"
       forecast={forecast}
       isCurrentForecast={isCurrentForecast}
-      onInfoOpen={onDangerInfoOpen}
+      onInfoOpen={() => onDangerInfoOpen('overall')}
     />
     <ElevationCard
       className="order-2 lg:order-none"
       hazardLevels={forecast.hazardLevels}
+      onZoneInfoOpen={onDangerInfoOpen}
       regionId={forecast.regionId}
     />
     <ForecastAreaLink className="order-8 lg:order-none" regionId={forecast.regionId} />

@@ -1,9 +1,14 @@
-import { SizeTile } from '@components/features/observations'
 import type { PublicObservation } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
+import SizeTile from '../SizeTile'
+
 // Size + type. Dates live in the facts grid right below.
-const DetailTitle = ({ observation }: { observation: PublicObservation }) => {
+const DetailTitle = ({
+  observation,
+}: {
+  observation: Pick<PublicObservation, 'size' | 'type'>
+}) => {
   const t = useTranslations()
   const { size, type } = observation
 

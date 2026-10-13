@@ -9,7 +9,9 @@ import SummaryCard from './sections/SummaryCard'
 
 type ForecastMainProps = {
   forecast: FullForecast
+  onAvalancheOpen: (index: number) => void
   onProblemOpen: (index: number) => void
+  openAvalancheIndex: number | null
   openProblemIndex: number | null
 }
 
@@ -25,7 +27,8 @@ const orderClasses = {
 
 // Jump bar → Summary → Problems → Recent avalanches → Conditions.
 // Sections with nothing to show are left out, and so are their chips.
-const ForecastMain = ({ forecast, onProblemOpen, openProblemIndex }: ForecastMainProps) => {
+const ForecastMain = (props: ForecastMainProps) => {
+  const { forecast, onAvalancheOpen, onProblemOpen, openAvalancheIndex, openProblemIndex } = props
   const t = useTranslations()
   const { additionalHazards, avalancheProblems, recentAvalanches, snowpack, summary, weather } =
     forecast
@@ -62,6 +65,8 @@ const ForecastMain = ({ forecast, onProblemOpen, openProblemIndex }: ForecastMai
       <AvalanchesCard
         avalanches={recentAvalanches}
         className={orderClasses.avalanches}
+        onAvalancheOpen={onAvalancheOpen}
+        openIndex={openAvalancheIndex}
         regionId={forecast.regionId}
       />
       {hasConditions && <ConditionsCard className={orderClasses.conditions} forecast={forecast} />}

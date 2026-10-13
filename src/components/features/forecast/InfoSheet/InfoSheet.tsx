@@ -5,24 +5,23 @@ import { ChevronLeft, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 type InfoSheetProps = {
-  // Name of the sheet underneath; without it there is nothing to go back to
+  // Name of the sheet underneath — the sheet then shows a back button to it
+  // instead of a close button
   backLabel?: string
   children: React.ReactNode
   isOpen: boolean
-  // Closes this sheet only (also Esc, backdrop, swipe)
-  onBack: VoidFunction
-  // The × — closes this sheet and the one underneath
-  onCloseAll: VoidFunction
+  // Closes this sheet only — never the one underneath
+  onClose: VoidFunction
   title: string
 }
 
-// Explanation sheet. Opened on its own (danger level) or stacked over the
-// problem sheet — shorter on mobile so the sheet underneath stays visible.
-const InfoSheet = ({ backLabel, children, isOpen, onBack, onCloseAll, title }: InfoSheetProps) => {
+// Explanation sheet. Opened on its own (danger level) or stacked over another
+// sheet — shorter on mobile so the sheet underneath stays visible.
+const InfoSheet = ({ backLabel, children, isOpen, onClose, title }: InfoSheetProps) => {
   const t = useTranslations()
 
   const handleOpenChange = (isNextOpen: boolean) => {
-    if (!isNextOpen) onBack()
+    if (!isNextOpen) onClose()
   }
 
   return (
@@ -39,9 +38,11 @@ const InfoSheet = ({ backLabel, children, isOpen, onBack, onCloseAll, title }: I
             </SheetClose>
           )}
           <span className="flex-1" />
-          <SheetIconButton aria-label={t('common.actions.close')} onClick={onCloseAll}>
-            <X aria-hidden className="size-4.5" />
-          </SheetIconButton>
+          {!backLabel && (
+            <SheetClose render={<SheetIconButton aria-label={t('common.actions.close')} />}>
+              <X aria-hidden className="size-4.5" />
+            </SheetClose>
+          )}
         </>
       }
       isOpen={isOpen}
