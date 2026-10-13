@@ -76,9 +76,9 @@ common:
     subAlpine: 'SA'
 
   elevationRanges:
-    above: 'above {value} m'
+    above: '> {value} m'
     between: '{low}–{high} m'
-    below: 'below {value} m'
+    below: '< {value} m'
 
   aspects:
     allAspects: 'all aspects'

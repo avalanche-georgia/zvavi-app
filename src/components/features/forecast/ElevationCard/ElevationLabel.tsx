@@ -9,7 +9,7 @@ type ElevationLabelProps = {
   zone: ElevationZone
 }
 
-// "Considerable" / "High Alpine · above 2600 m" — the text next to a slice
+// "Considerable" / "High Alpine · > 2600 m" — the text next to a slice
 const ElevationLabel = ({ level, regionId, zone }: ElevationLabelProps) => {
   const t = useTranslations()
   const getElevationRange = useElevationRanges(regionId)

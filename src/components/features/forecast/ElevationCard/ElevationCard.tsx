@@ -24,7 +24,7 @@ const ElevationCard = ({
 
   return (
     <SectionCard className={className} title={t('forecast.page.byElevation')}>
-      <div className="grid grid-cols-[minmax(0,1fr)_101px] gap-y-0.75">
+      <div className="grid grid-cols-[minmax(0,1fr)_111px] gap-y-0.75">
         {sortedElevationZones.map((zone) => (
           <ElevationLabel key={zone} level={hazardLevels[zone]} regionId={regionId} zone={zone} />
         ))}
