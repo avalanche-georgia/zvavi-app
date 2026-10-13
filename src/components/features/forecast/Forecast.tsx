@@ -1,5 +1,5 @@
 import { ButtonLink, HazardLevelBanner, MarkdownContent, Spoiler } from '@components/shared'
-import type { FullForecast, Region } from '@domain/types'
+import type { FullForecast } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import AdditionalHazards from './AdditionalHazards'
@@ -14,10 +14,10 @@ import { routes } from '@/routes'
 
 type ForecastProps = {
   forecast: FullForecast
-  region: Region
+  regionId: string
 }
 
-const Forecast = ({ forecast, region }: ForecastProps) => {
+const Forecast = ({ forecast, regionId }: ForecastProps) => {
   const t = useTranslations()
   const {
     additionalHazards,
@@ -37,7 +37,7 @@ const Forecast = ({ forecast, region }: ForecastProps) => {
           <MarkdownContent content={summary} />
         </div>
       </Spoiler>
-      <HazardLevelsByElevation hazardLevels={hazardLevels} region={region} />
+      <HazardLevelsByElevation hazardLevels={hazardLevels} />
       {avalancheProblems.length > 0 ? <Problems problems={avalancheProblems} /> : <hr />}
 
       <section className="space-y-4">
@@ -47,7 +47,7 @@ const Forecast = ({ forecast, region }: ForecastProps) => {
         {weather && <Weather weather={weather} />}
       </section>
 
-      <ButtonLink href={routes.forecastsByRegion(region.id).forecastArea}>
+      <ButtonLink href={routes.forecastsByRegion(regionId).forecastArea}>
         {t('forecast.viewForecastArea')}
       </ButtonLink>
 
