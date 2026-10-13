@@ -41,6 +41,7 @@ const ElevationRow = ({ level, onInfoOpen, regionId, zone }: ElevationRowProps) 
         label={`${t('common.labels.zoneDangerLevel', { zone: zoneLabel })} — ${level}`}
         level={level}
         onClick={onInfoOpen}
+        size="sm"
         zone={zone}
       />
     </li>
