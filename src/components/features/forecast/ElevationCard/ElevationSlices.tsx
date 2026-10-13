@@ -35,7 +35,7 @@ const ElevationSlices = ({ hazardLevels, onZoneInfoOpen }: ElevationSlicesProps)
             aria-haspopup="dialog"
             aria-label={`${t('common.labels.zoneDangerLevel', { zone: zoneLabel })} — ${level}`}
             className={cn(
-              'text-heading flex cursor-pointer items-center justify-end pr-3 font-bold',
+              'text-heading flex cursor-pointer items-center justify-end pr-6 font-bold',
               // Inside the slice: the mountain's clip would cut an outer ring
               'focus-visible:outline-accent outline-hidden focus-visible:outline-2 focus-visible:-outline-offset-4',
               backgroundColorByHazardLevel[level],

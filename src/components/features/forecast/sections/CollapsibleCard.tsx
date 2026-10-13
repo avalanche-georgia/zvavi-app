@@ -13,24 +13,31 @@ type CollapsibleCardProps = {
   className?: string
   count?: number
   // Anchor for the jump bar
-  id: SectionId
+  id?: SectionId
+  isInitiallyOpen?: boolean
   title: string
 }
 
-// A section card whose heading folds its content away. Open until the reader
-// closes it.
-const CollapsibleCard = ({ children, className, count, id, title }: CollapsibleCardProps) => (
+// A section card whose heading folds its content away
+const CollapsibleCard = ({
+  children,
+  className,
+  count,
+  id,
+  isInitiallyOpen = true,
+  title,
+}: CollapsibleCardProps) => (
   <Collapsible.Root
     className={cn(
       'rounded-card border-rule bg-surface min-w-0 border outline-hidden',
-      sectionAnchorClasses,
+      id && sectionAnchorClasses,
       className,
     )}
-    defaultOpen
+    defaultOpen={isInitiallyOpen}
     id={id}
     render={<section />}
     // Focusable from the jump bar only
-    tabIndex={-1}
+    tabIndex={id ? -1 : undefined}
   >
     <h2 className="m-0">
       <Collapsible.Trigger
