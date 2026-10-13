@@ -23,10 +23,11 @@ export const routes = {
       view: (id: number) => `/admin/forecasts/${id}`,
     },
     members: {
-      edit: (id: string) => `/admin/members/${id}/edit`,
-      new: '/admin/members/new',
+      // The list with its create sheet open
+      create: '/admin/members?create=1',
       root: '/admin/members',
-      view: (id: string) => `/admin/members/${id}`,
+      // The list with the member's sheet open
+      view: (id: string) => `/admin/members?member=${id}`,
     },
     observations: {
       root: '/admin/observations',
