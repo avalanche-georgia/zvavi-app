@@ -13,6 +13,7 @@ import PastForecastBanner from './head/PastForecastBanner'
 import { DangerInfo, InfoSheet } from './InfoSheet'
 import { ProblemSheet } from './ProblemSheet'
 import useForecastSheets from './useForecastSheets'
+import useStableScroll from './useStableScroll'
 
 export type ForecastPageProps = {
   forecast: FullForecast
@@ -26,6 +27,9 @@ const ForecastPage = (props: ForecastPageProps) => {
   const { forecast, isCurrentForecast, nextForecastId, previousForecastId } = props
   const t = useTranslations()
   const headerHeight = useHeaderHeight()
+
+  useStableScroll()
+
   const { avalancheProblems, hazardLevels, recentAvalanches, regionId } = forecast
   const sheets = useForecastSheets(forecast)
   const { dangerInfo } = sheets
