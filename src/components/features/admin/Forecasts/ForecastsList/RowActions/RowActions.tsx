@@ -1,12 +1,12 @@
 'use client'
 
 import { useRef } from 'react'
+import { keepFocusInTable } from '@components/features/admin/shared'
 import type { ForecastListItem, RegionId } from '@domain/types'
 import { IconButton } from '@ds/primitives'
 import { ArrowUp } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
-import keepFocusInTable from './keepFocusInTable'
 import RowMenu from './RowMenu'
 import { PublishConfirmDialog, useForecastRowActions } from '../../shared'
 

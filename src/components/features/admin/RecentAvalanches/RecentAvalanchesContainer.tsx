@@ -1,12 +1,13 @@
 'use client'
 
+import { useCreateSheetParam } from '@components/features/admin/shared'
 import { RegionTabs } from '@components/shared'
 import { usePendingObservationsSummary } from '@data/hooks/recentAvalanches'
 import { defaultRegionId } from '@domain/constants'
 import type { Region, RegionId } from '@domain/types'
 import { useSearchParams } from 'next/navigation'
 
-import { AvalancheCreateSheet, useCreateSheetParam } from './AvalancheCreateSheet'
+import { AvalancheCreateSheet } from './AvalancheCreateSheet'
 import {
   AvalancheSheet,
   useAvalancheSelection,

@@ -1,11 +1,12 @@
 'use client'
 
+import { useListDates } from '@components/features/admin/shared'
 import type { AdminForecast } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import MetaRow from './MetaRow'
 import type { ForecastViewStatus } from './model'
-import { useListDates, useTimeLeft } from '../shared'
+import { useTimeLeft } from '../shared'
 
 type MetaPanelProps = {
   forecast: AdminForecast

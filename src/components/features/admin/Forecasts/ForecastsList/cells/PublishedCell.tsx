@@ -1,4 +1,4 @@
-import { useListDates } from '../../shared'
+import { useListDates } from '@components/features/admin/shared'
 
 const PublishedCell = ({ publishedAt }: { publishedAt: string | null }) => {
   const { formatDate, formatTime } = useListDates()

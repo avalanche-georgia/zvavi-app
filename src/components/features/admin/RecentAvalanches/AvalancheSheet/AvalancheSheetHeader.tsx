@@ -1,6 +1,7 @@
+import { SheetHeader } from '@components/features/admin/shared'
 import { Icon } from '@components/icons'
-import { SheetClose, SheetIconButton, SheetTitle } from '@components/ui'
-import { ChevronLeft, ChevronRight, X } from 'lucide-react'
+import { SheetIconButton } from '@components/ui'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { Link } from 'src/i18n/navigation'
 
@@ -22,11 +23,7 @@ const AvalancheSheetHeader = ({ fullPageId, navigation, title }: AvalancheSheetH
   const total = navigation?.total ?? 0
 
   return (
-    <>
-      <SheetClose render={<SheetIconButton aria-label={t('common.actions.close')} />}>
-        <X className="size-4.5" />
-      </SheetClose>
-      <SheetTitle className="m-0 flex-1 truncate text-[15px] font-semibold">{title}</SheetTitle>
+    <SheetHeader title={title}>
       {navigation && (navigation.hasNext || navigation.hasPrevious) && (
         <>
           {index !== null && (
@@ -59,7 +56,7 @@ const AvalancheSheetHeader = ({ fullPageId, navigation, title }: AvalancheSheetH
           <Icon icon="externalLink" size="sm" />
         </Link>
       )}
-    </>
+    </SheetHeader>
   )
 }
 

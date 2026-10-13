@@ -1,7 +1,6 @@
+import { useListDates } from '@components/features/admin/shared'
 import type { AdminForecast } from '@domain/types'
 import { useTranslations } from 'next-intl'
-
-import { useListDates } from '../../shared'
 
 const ViewSubline = ({ forecast }: { forecast: AdminForecast }) => {
   const t = useTranslations()

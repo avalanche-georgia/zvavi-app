@@ -1,17 +1,17 @@
 import { useState } from 'react'
 
-type UseCreateSheetParams = {
+type UseFormSheetParams = {
   isRequested: boolean
   onClose: VoidFunction
 }
 
-// Open / dirty / confirm state of the create panel. Anything that would drop an
-// unfinished record asks first — including Back removing it from the URL.
-const useCreateSheet = ({ isRequested, onClose }: UseCreateSheetParams) => {
+// Open / dirty / confirm state of a sheet holding a form. Anything that would drop
+// unsaved input asks first — including Back removing the sheet from the URL.
+const useFormSheet = ({ isRequested, onClose }: UseFormSheetParams) => {
   const [isDirty, setIsDirty] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
   const [isConfirmingClose, setIsConfirmingClose] = useState(false)
-  // Remounts the form on every open, so each new record starts empty
+  // Remounts the form on every open, so it always starts from fresh values
   const [formKey, setFormKey] = useState(0)
   const [wasRequested, setWasRequested] = useState(isRequested)
 
@@ -48,4 +48,4 @@ const useCreateSheet = ({ isRequested, onClose }: UseCreateSheetParams) => {
   }
 }
 
-export default useCreateSheet
+export default useFormSheet

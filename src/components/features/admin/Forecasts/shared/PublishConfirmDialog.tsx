@@ -1,11 +1,10 @@
 'use client'
 
+import { useListDates } from '@components/features/admin/shared'
 import { ConfirmationDialog } from '@components/shared'
 import { hazardLevelNamesByScale, sortedElevationZones } from '@domain/constants'
 import type { ForecastListItem, HazardLevelScale, RegionId } from '@domain/types'
 import { useTranslations } from 'next-intl'
-
-import useListDates from './useListDates'
 
 type PublishConfirmDialogProps = {
   forecast: Pick<ForecastListItem, 'hazardLevels' | 'id' | 'validUntil'>

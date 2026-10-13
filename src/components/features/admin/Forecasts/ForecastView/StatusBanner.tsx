@@ -1,5 +1,6 @@
 'use client'
 
+import { LinkPendingIndicator } from '@components/features/admin/shared'
 import type { AdminForecast, Forecast } from '@domain/types'
 import { Button } from '@ds/primitives'
 import { Clock } from 'lucide-react'
@@ -8,7 +9,6 @@ import { Link } from 'src/i18n/navigation'
 
 import type { ForecastViewStatus } from './model'
 import useBannerContent from './useBannerContent'
-import { LinkPendingIndicator } from '../shared'
 
 import { cn } from '@/lib/utils'
 import { routes } from '@/routes'
