@@ -1,4 +1,4 @@
-import fetchCurrentForecast from '@data/queries/fetchCurrentForecast'
+import fetchLatestPublishedForecast from '@data/queries/fetchLatestPublishedForecast'
 import fetchTier1Partners from '@data/queries/fetchTier1Partners'
 import fetchWeatherStations from '@data/queries/fetchWeatherStations'
 import type { Forecast, Partner, PublicObservation, RegionId } from '@domain/types'
@@ -57,7 +57,7 @@ const fetchWeatherStationsCount = async (regionId: RegionId) => {
 
 const fetchRegionHomeData = async (regionId: RegionId): Promise<RegionHomeData> => {
   const [forecast, partners, recentAvalanches, weatherStationsCount] = await Promise.all([
-    fetchCurrentForecast(regionId),
+    fetchLatestPublishedForecast(regionId),
     fetchTier1Partners(),
     fetchRecentAvalanches(regionId),
     fetchWeatherStationsCount(regionId),

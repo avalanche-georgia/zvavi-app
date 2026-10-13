@@ -21,7 +21,7 @@ const RecentAvalancheRow = ({ avalanche }: { avalanche: PublicObservation }) => 
   return (
     <Link
       className="group focus-ring text-ink grid grid-cols-[48px_minmax(0,1fr)] items-center gap-3 rounded-sm py-2.5"
-      href={routes.observationsByRegion(regionId).view(id)}
+      href={routes.observationsByRegion(regionId).detail(id)}
     >
       <SizeTile size={size} />
       <span className="min-w-0">

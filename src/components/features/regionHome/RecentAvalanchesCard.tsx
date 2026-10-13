@@ -1,6 +1,6 @@
 import SectionCard from '@components/features/forecast/sections/SectionCard'
 import type { PublicObservation, RegionId } from '@domain/types'
-import { Map, Plus } from 'lucide-react'
+import { Map as MapIcon, Plus } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { Link } from 'src/i18n/navigation'
 
@@ -54,7 +54,7 @@ const RecentAvalanchesCard = ({ avalanches, regionId }: RecentAvalanchesCardProp
           {t('observations.reportCta')}
         </Link>
         <Link className={buttonClasses} href={observationRoutes.map}>
-          <Map aria-hidden className="size-4.5" />
+          <MapIcon aria-hidden className="size-4.5" />
           {t('observations.view.map')}
         </Link>
       </div>

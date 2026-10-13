@@ -5,8 +5,9 @@ import { reportServerError } from '@/lib/posthog/server'
 import { createClient } from '@/lib/supabase/server'
 
 // The public "current forecast" rule: latest created published forecast in the region.
-// fetchCurrentForecastId and fetchRegionsWithHazard use the same rule — keep them in sync.
-const fetchCurrentForecast = async (regionId: RegionId): Promise<Forecast | null> => {
+// fetchCurrentForecastId, fetchRegionsWithHazard and the client's fetchCurrentForecast
+// (useGetCurrentForecast) use the same rule — keep them in sync.
+const fetchLatestPublishedForecast = async (regionId: RegionId): Promise<Forecast | null> => {
   const supabase = await createClient()
 
   const { data, error } = await supabase
@@ -21,7 +22,7 @@ const fetchCurrentForecast = async (regionId: RegionId): Promise<Forecast | null
   if (error) {
     reportServerError(new Error(error.message), {
       region_id: regionId,
-      scope: 'fetchCurrentForecast',
+      scope: 'fetchLatestPublishedForecast',
     })
 
     // Not "no forecast published" — let the error page say something went wrong
@@ -34,4 +35,4 @@ const fetchCurrentForecast = async (regionId: RegionId): Promise<Forecast | null
   return convertSnakeToCamel(data) as Forecast
 }
 
-export default fetchCurrentForecast
+export default fetchLatestPublishedForecast

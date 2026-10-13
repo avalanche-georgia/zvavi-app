@@ -1,22 +1,28 @@
 import { RegionHome } from '@components/features/regionHome'
-import type { RegionId } from '@domain/types'
+import fetchActiveRegions from '@data/queries/fetchActiveRegions'
+import { notFound } from 'next/navigation'
 
 import fetchRegionHomeData from './fetchRegionHomeData'
 
 type RegionHomePageProps = { params: Promise<{ region: string }> }
 
 const RegionHomePage = async ({ params }: RegionHomePageProps) => {
-  const { region } = await params
-  // Validated by the region layout
-  const regionId = region as RegionId
-  const data = await fetchRegionHomeData(regionId)
+  const { region: regionParam } = await params
+  const regions = await fetchActiveRegions()
+  // The layout answers unknown regions with a 404 too, but it doesn't stop
+  // this page from running — and its queries need a real region id
+  const region = regions.find(({ id }) => id === regionParam)
+
+  if (!region) notFound()
+
+  const data = await fetchRegionHomeData(region.id)
 
   return (
     <RegionHome
       forecast={data.forecast}
       partners={data.partners}
       recentAvalanches={data.recentAvalanches}
-      regionId={regionId}
+      regionId={region.id}
       weatherStationsCount={data.weatherStationsCount}
     />
   )
