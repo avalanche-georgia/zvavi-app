@@ -1,59 +1,60 @@
 'use client'
 
 import { Icon } from '@components/icons'
-import { Skeleton } from '@components/ui'
 import type { Region } from '@domain/types'
+import { Skeleton } from '@ds/primitives'
 import { formatDistanceToNow } from 'date-fns'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 
+import DashboardCard from './DashboardCard'
 import useActivityEvents from './useActivityEvents'
 
+import { getDateFnsLocale } from '@/lib/dateFnsLocale'
+
+const skeletonRows = [0, 1, 2]
+
 const activitySkeleton = (
-  <div className="space-y-2.5">
-    {Array.from({ length: 3 }, (_, index) => (
-      <div key={index} className="flex items-start gap-2">
-        <Skeleton className="mt-px size-4 rounded-full" />
+  <div className="flex flex-col gap-2.5">
+    {skeletonRows.map((row) => (
+      <div key={row} className="flex items-center gap-2">
+        <Skeleton className="size-4 rounded-full" />
         <Skeleton className="h-4 flex-1" />
       </div>
     ))}
   </div>
 )
 
-type RecentActivityProps = { regions: Region[] }
-
-const RecentActivity = ({ regions }: RecentActivityProps) => {
+// The latest thing that happened in each area — hidden when nothing has
+const RecentActivity = ({ regions }: { regions: Region[] }) => {
   const t = useTranslations()
+  const locale = getDateFnsLocale(useLocale())
   const { events, isPending } = useActivityEvents(regions)
 
   if (!isPending && events.length === 0) return null
 
   return (
-    <div className="rounded-xl border border-gray-200 bg-white px-4 py-4">
-      <p className="mb-3 text-sm font-semibold text-gray-900">
-        {t('admin.dashboard.activity.title')}
-      </p>
-
+    <DashboardCard title={t('admin.dashboard.activity.title')}>
       {isPending ? (
         activitySkeleton
       ) : (
-        <div className="space-y-2.5">
-          {events.map((event) => (
-            <div
-              key={`${event.at.getTime()}-${event.icon}`}
-              className="flex items-center gap-2 text-xs text-gray-600"
+        <ul className="flex flex-col gap-2.5">
+          {events.map(({ at, icon, label }) => (
+            <li
+              key={`${at.getTime()}-${icon}`}
+              className="text-copy-sm text-body flex items-start gap-2"
             >
-              <Icon className="mt-px text-gray-400" icon={event.icon} size="sm" />
+              <Icon className="text-muted mt-0.5 shrink-0" icon={icon} size="sm" />
               <span>
-                {event.label}{' '}
-                <span className="text-gray-400">
-                  · {formatDistanceToNow(event.at, { addSuffix: true })}
+                {label}
+                <span className="text-muted">
+                  {` · ${formatDistanceToNow(at, { addSuffix: true, locale })}`}
                 </span>
               </span>
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       )}
-    </div>
+    </DashboardCard>
   )
 }
 

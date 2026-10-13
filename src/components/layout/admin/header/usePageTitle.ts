@@ -34,6 +34,8 @@ export const usePageTitle = (pathname: string): string => {
   const regionId = searchParams.get('regionId') as RegionId | null
   const regionSuffix = regionId ? `— ${t(`regions.names.${regionId}`)}` : ''
 
+  // /admin itself is the overview
+  if (!segments[1]) return t('admin.dashboard.title')
   if (!config) return t('admin.title')
 
   const last = segments.at(-1)

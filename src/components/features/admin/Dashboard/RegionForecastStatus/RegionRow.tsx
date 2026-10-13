@@ -1,33 +1,34 @@
-import { Icon } from '@components/icons'
-import { Skeleton } from '@components/ui'
+import { LinkPendingIndicator } from '@components/features/admin/shared'
 import { useGetCurrentForecast } from '@data/hooks/forecasts'
 import type { RegionId } from '@domain/types'
+import { Skeleton, StatusPill } from '@ds/primitives'
+import { MapPin } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import { Link } from 'src/i18n/navigation'
 
-import { useStatusBadge } from './useStatusBadge'
+import useRegionStatus from './useRegionStatus'
 
-import { cn } from '@/lib/utils'
+import { routes } from '@/routes'
 
+// Region name (opens its forecasts) + the state of its public forecast
 const RegionRow = ({ regionId }: { regionId: RegionId }) => {
   const t = useTranslations()
   const { data: currentForecast, isPending } = useGetCurrentForecast({ isShort: true, regionId })
-  const badge = useStatusBadge(currentForecast)
+  const { label, tone } = useRegionStatus(currentForecast)
 
   return (
-    <div className="mb-1.5 flex items-center justify-between rounded-md border border-gray-100 px-2.5 py-2 last:mb-0">
-      <span className="flex items-center gap-1.5 text-sm text-gray-700">
-        <Icon icon="mapPin" size="sm" />
+    <li className="border-rule flex min-h-12 flex-wrap items-center justify-between gap-x-3 gap-y-1 border-b py-2 last:border-b-0">
+      <Link
+        className="focus-ring text-copy text-ink hover:text-accent flex items-center gap-1.5 rounded-sm font-medium hover:underline"
+        href={routes.admin.forecasts.listByRegion(regionId)}
+      >
+        <MapPin aria-hidden className="text-muted size-4" />
         {t(`regions.names.${regionId}`)}
-      </span>
+        <LinkPendingIndicator />
+      </Link>
 
-      {isPending ? (
-        <Skeleton className="h-5 w-28" />
-      ) : (
-        <span className={cn('rounded-full px-2.5 py-0.5 text-sm', badge.className)}>
-          {badge.label}
-        </span>
-      )}
-    </div>
+      {isPending ? <Skeleton className="h-6 w-36" /> : <StatusPill tone={tone}>{label}</StatusPill>}
+    </li>
   )
 }
 
