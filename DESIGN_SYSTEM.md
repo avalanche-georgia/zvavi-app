@@ -33,12 +33,13 @@ src/components/
 │   │                    # StatusPill
 │   ├── patterns/        # FormCard, StickyActionBar, SuccessState, DataTable
 │   └── form/            # react-hook-form bindings: FormTextField, FormTextarea, FormNumberField,
-│                        # FormStepper, FormChipGroup, FormCheckbox, FormSelect, useFormFieldError
+│                        # FormStepper, FormChipGroup, FormCheckbox, FormSelect, FormDateField,
+│                        # useFormFieldError
 ├── ui/                  # legacy kit — frozen, deleted piece by piece
 └── features/            # domain components, built from ds
     └── admin/shared/    # admin-wide building blocks that need translations or routing, so they
                          # can't live in ds: list toolbar pieces, URL list state, RecordMenu,
-                         # sheet header / discard confirmation
+                         # record / form sheets (URL selection, unsaved-input confirmation)
 ```
 
 - Import through the `@ds/*` alias.
