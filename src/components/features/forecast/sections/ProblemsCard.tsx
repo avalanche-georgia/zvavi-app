@@ -1,8 +1,8 @@
 import type { Problem } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
+import CollapsibleCard from './CollapsibleCard'
 import ProblemRow from './ProblemRow'
-import SectionCard from './SectionCard'
 import { getProblemKey } from '../model/problemKey'
 
 type ProblemsCardProps = {
@@ -17,7 +17,7 @@ const ProblemsCard = ({ className, onProblemOpen, openIndex, problems }: Problem
   const t = useTranslations()
 
   return (
-    <SectionCard
+    <CollapsibleCard
       className={className}
       count={problems.length}
       id="problems"
@@ -34,7 +34,7 @@ const ProblemsCard = ({ className, onProblemOpen, openIndex, problems }: Problem
           </li>
         ))}
       </ol>
-    </SectionCard>
+    </CollapsibleCard>
   )
 }
 

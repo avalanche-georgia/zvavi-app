@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl'
 import { Link } from 'src/i18n/navigation'
 
 import AvalancheCard from './AvalancheCard'
-import SectionCard from './SectionCard'
+import CollapsibleCard from './CollapsibleCard'
 
 import { routes } from '@/routes'
 
@@ -23,7 +23,7 @@ const AvalanchesCard = (props: AvalanchesCardProps) => {
   const key = 'forecast.sections.recentAvalanches'
 
   return (
-    <SectionCard
+    <CollapsibleCard
       className={className}
       count={avalanches.length || undefined}
       id="avalanches"
@@ -51,7 +51,7 @@ const AvalanchesCard = (props: AvalanchesCardProps) => {
         {t('forecast.page.allObservations')}
         <ChevronRight aria-hidden className="size-4.5" />
       </Link>
-    </SectionCard>
+    </CollapsibleCard>
   )
 }
 
