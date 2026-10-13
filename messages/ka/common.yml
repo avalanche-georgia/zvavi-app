@@ -75,6 +75,11 @@ common:
     alpine: 'ა'
     subAlpine: 'ქა'
 
+  elevationRanges:
+    above: '{value} მ-ზე მაღლა'
+    between: '{low}–{high} მ'
+    below: '{value} მ-ზე დაბლა'
+
   aspects:
     allAspects: 'ყველა ექსპოზიცია'
     allElevations: 'ყველა სიმაღლე'

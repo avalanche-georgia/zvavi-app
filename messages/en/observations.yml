@@ -189,9 +189,6 @@ observations:
     aspectsHint: 'Tap or drag'
     elevationZones:
       label: 'About elevation zones'
-      highAlpine: 'above 2600 m'
-      alpine: '2000–2600 m'
-      subAlpine: 'below 2000 m'
     labels:
       description: 'Description'
       latitude: 'Latitude'

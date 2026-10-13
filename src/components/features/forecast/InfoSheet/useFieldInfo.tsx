@@ -1,3 +1,4 @@
+import { useElevationRanges } from '@components/hooks'
 import {
   distributionTypesSorted,
   sensitivityLevelsSorted,
@@ -33,6 +34,8 @@ const sizes: AvalancheSize[] = [1, 2, 3, 4, 5]
 // The explanation of one problem property: its scale with this problem's value marked
 const useFieldInfo = (field: ProblemField, problem: Problem): FieldInfoContent => {
   const t = useTranslations()
+  // The page's region — the forecast being read
+  const getElevationRange = useElevationRanges()
   const scale = { listTitle: t('forecast.page.scale'), title: t(`${labelsKey}.${field}`) }
 
   const toItems = <T extends string>(
@@ -52,7 +55,7 @@ const useFieldInfo = (field: ProblemField, problem: Problem): FieldInfoContent =
     aspects: () => ({
       items: sortedElevationZones.map((zone) => ({
         badge: t(`common.elevationZonesShort.${zone}`),
-        description: t(`observations.form.elevationZones.${zone}`),
+        description: getElevationRange(zone),
         isCurrent: false,
         name: t(`common.elevationZones.${zone}`),
       })),

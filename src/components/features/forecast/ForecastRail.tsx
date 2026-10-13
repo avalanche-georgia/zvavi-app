@@ -22,7 +22,11 @@ const ForecastRail = ({ forecast, isCurrentForecast, onDangerInfoOpen }: Forecas
       isCurrentForecast={isCurrentForecast}
       onInfoOpen={onDangerInfoOpen}
     />
-    <ElevationCard className="order-2 lg:order-none" hazardLevels={forecast.hazardLevels} />
+    <ElevationCard
+      className="order-2 lg:order-none"
+      hazardLevels={forecast.hazardLevels}
+      regionId={forecast.regionId}
+    />
     <ForecastAreaLink className="order-8 lg:order-none" regionId={forecast.regionId} />
     <SponsorsCard className="order-9 lg:order-none" />
   </div>

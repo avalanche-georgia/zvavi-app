@@ -75,6 +75,11 @@ common:
     alpine: 'A'
     subAlpine: 'SA'
 
+  elevationRanges:
+    above: 'above {value} m'
+    between: '{low}–{high} m'
+    below: 'below {value} m'
+
   aspects:
     allAspects: 'all aspects'
     allElevations: 'All elevations'

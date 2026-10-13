@@ -1,6 +1,7 @@
 import { backgroundColorByHazardLevel } from '@components/constants'
+import { useElevationRanges } from '@components/hooks'
 import { hazardLevelNamesByScale } from '@domain/constants'
-import type { ElevationZone, HazardLevelScale } from '@domain/types'
+import type { ElevationZone, HazardLevelScale, RegionId } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import { hazardTextClass } from '../model/hazard'
@@ -9,6 +10,7 @@ import { cn } from '@/lib/utils'
 
 type ElevationRowProps = {
   level: HazardLevelScale
+  regionId: RegionId
   zone: ElevationZone
 }
 
@@ -21,8 +23,9 @@ const pyramidClipPaths: Record<ElevationZone, string> = {
 }
 
 // "Considerable" / "High Alpine · above 2600 m" next to its pyramid slice
-const ElevationRow = ({ level, zone }: ElevationRowProps) => {
+const ElevationRow = ({ level, regionId, zone }: ElevationRowProps) => {
   const t = useTranslations()
+  const getElevationRange = useElevationRanges(regionId)
 
   return (
     <li className="group grid min-h-14.5 grid-cols-[minmax(0,1fr)_92px] items-stretch">
@@ -31,7 +34,7 @@ const ElevationRow = ({ level, zone }: ElevationRowProps) => {
           {t(hazardLevelNamesByScale[level])}
         </b>
         <span className="text-muted text-caption wrap-anywhere">
-          {t(`common.elevationZones.${zone}`)} · {t(`observations.form.elevationZones.${zone}`)}
+          {t(`common.elevationZones.${zone}`)} · {getElevationRange(zone)}
         </span>
       </div>
       <div
