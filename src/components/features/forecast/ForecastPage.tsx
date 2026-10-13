@@ -65,6 +65,7 @@ const ForecastPage = (props: ForecastPageProps) => {
         onInfoChange={sheets.setProblemInfoField}
         onNavigate={sheets.openProblem}
         problems={avalancheProblems}
+        regionId={regionId}
       />
       <AvalancheSheet
         avalanches={recentAvalanches}

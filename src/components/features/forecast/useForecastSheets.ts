@@ -29,6 +29,11 @@ const useForecastSheets = ({ avalancheProblems, recentAvalanches }: FullForecast
   const problemKeys = avalancheProblems.map(getProblemKey)
   const avalancheKeys = recentAvalanches.map((avalanche) => String(avalanche.id))
   const openProblemIndex = findIndex('problem', problemKeys)
+  const openAvalancheIndex = findIndex('avalanche', avalancheKeys)
+
+  // Forget an item that left the forecast — or its sheet would reopen by
+  // itself if the item came back in a later refresh
+  if (openItem && openProblemIndex === null && openAvalancheIndex === null) setOpenItem(null)
 
   const open = (kind: OpenItem['kind'], key: string | undefined) => {
     if (key === undefined) return
@@ -45,7 +50,7 @@ const useForecastSheets = ({ avalancheProblems, recentAvalanches }: FullForecast
     closeDangerInfo: () => setDangerInfo((current) => ({ ...current, isOpen: false })),
     dangerInfo,
     openAvalanche: (index: number) => open('avalanche', avalancheKeys[index]),
-    openAvalancheIndex: findIndex('avalanche', avalancheKeys),
+    openAvalancheIndex,
     openDangerInfo: (scope: ElevationKey) => setDangerInfo({ isOpen: true, scope }),
     openProblem: (index: number) => open('problem', problemKeys[index]),
     openProblemIndex,

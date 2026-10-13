@@ -8,21 +8,23 @@ import { sectionAnchorClasses } from './SectionCard'
 
 import { cn } from '@/lib/utils'
 
-type ConditionsCardProps = {
+type ConditionsGroupProps = {
   className?: string
   forecast: Pick<Forecast, 'additionalHazards' | 'snowpack' | 'weather'>
 }
 
 // Snowpack, weather and additional hazards — one card each, folded until the
 // reader opens them. The group is one stop of the jump bar.
-const ConditionsCard = ({ className, forecast }: ConditionsCardProps) => {
+const ConditionsGroup = ({ className, forecast }: ConditionsGroupProps) => {
   const t = useTranslations()
   const { additionalHazards, snowpack, weather } = forecast
 
   return (
     <div
+      aria-label={t('forecast.page.jump.conditions')}
       className={cn('flex min-w-0 flex-col gap-3 outline-hidden', sectionAnchorClasses, className)}
       id="conditions"
+      role="group"
       // Focusable from the jump bar only
       tabIndex={-1}
     >
@@ -48,4 +50,4 @@ const ConditionsCard = ({ className, forecast }: ConditionsCardProps) => {
   )
 }
 
-export default ConditionsCard
+export default ConditionsGroup

@@ -11,7 +11,8 @@ import { isDarkHazard } from './constants'
 
 import { cn } from '@/lib/utils'
 
-// The public forecast graphic, updating as levels change
+// The hazard pyramid, updating as levels change (the public page draws its
+// own version next to the elevation rows)
 const HazardPreview = () => {
   const t = useTranslations()
   const hazardLevels = useWatch<ForecastFormSchema, 'hazardLevels'>({ name: 'hazardLevels' })

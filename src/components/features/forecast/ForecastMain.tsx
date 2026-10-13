@@ -3,7 +3,7 @@ import { useTranslations } from 'next-intl'
 
 import { JumpBar, type JumpChip } from './JumpBar'
 import AvalanchesCard from './sections/AvalanchesCard'
-import ConditionsCard from './sections/ConditionsCard'
+import ConditionsGroup from './sections/ConditionsGroup'
 import ProblemsCard from './sections/ProblemsCard'
 import SummaryCard from './sections/SummaryCard'
 
@@ -69,7 +69,7 @@ const ForecastMain = (props: ForecastMainProps) => {
         openIndex={openAvalancheIndex}
         regionId={forecast.regionId}
       />
-      {hasConditions && <ConditionsCard className={orderClasses.conditions} forecast={forecast} />}
+      {hasConditions && <ConditionsGroup className={orderClasses.conditions} forecast={forecast} />}
     </div>
   )
 }

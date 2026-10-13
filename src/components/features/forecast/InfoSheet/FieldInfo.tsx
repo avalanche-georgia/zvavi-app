@@ -1,4 +1,4 @@
-import type { Problem } from '@domain/types'
+import type { Problem, RegionId } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import InfoSection from './InfoSection'
@@ -9,12 +9,14 @@ import useFieldInfo from './useFieldInfo'
 type FieldInfoProps = {
   field: ProblemField
   problem: Problem
+  // The forecast's region — its elevation bands may have their own ranges
+  regionId: RegionId
 }
 
 // Explains one property of a problem (size, sensitivity, …) with its scale
-const FieldInfo = ({ field, problem }: FieldInfoProps) => {
+const FieldInfo = ({ field, problem, regionId }: FieldInfoProps) => {
   const t = useTranslations()
-  const { items, lead, listTitle, title } = useFieldInfo(field, problem)
+  const { items, lead, listTitle, title } = useFieldInfo(field, problem, regionId)
 
   return (
     <>

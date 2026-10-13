@@ -1,5 +1,5 @@
 import { backgroundColorByHazardLevel } from '@components/constants'
-import { sortedElevationZones } from '@domain/constants'
+import { hazardLevelNamesByScale, sortedElevationZones } from '@domain/constants'
 import type { ElevationZone, HazardLevels } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
@@ -33,7 +33,7 @@ const ElevationSlices = ({ hazardLevels, onZoneInfoOpen }: ElevationSlicesProps)
           <button
             key={zone}
             aria-haspopup="dialog"
-            aria-label={`${t('common.labels.zoneDangerLevel', { zone: zoneLabel })} — ${level}`}
+            aria-label={`${t('common.labels.zoneDangerLevel', { zone: zoneLabel })} — ${t(hazardLevelNamesByScale[level])}`}
             className={cn(
               'text-heading flex cursor-pointer items-center justify-end pr-6 font-bold',
               // Inside the slice: the mountain's clip would cut an outer ring

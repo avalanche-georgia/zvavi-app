@@ -5,7 +5,7 @@ import {
   sortedElevationZones,
   trendsSorted,
 } from '@domain/constants'
-import type { AvalancheSize, Problem } from '@domain/types'
+import type { AvalancheSize, Problem, RegionId } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import SizeDetails from './SizeDetails'
@@ -32,10 +32,13 @@ const optionsKey = 'admin.forecast.form.problems.options'
 const sizes: AvalancheSize[] = [1, 2, 3, 4, 5]
 
 // The explanation of one problem property: its scale with this problem's value marked
-const useFieldInfo = (field: ProblemField, problem: Problem): FieldInfoContent => {
+const useFieldInfo = (
+  field: ProblemField,
+  problem: Problem,
+  regionId: RegionId,
+): FieldInfoContent => {
   const t = useTranslations()
-  // The page's region — the forecast being read
-  const getElevationRange = useElevationRanges()
+  const getElevationRange = useElevationRanges(regionId)
   const scale = { listTitle: t('forecast.page.scale'), title: t(`${labelsKey}.${field}`) }
 
   const toItems = <T extends string>(

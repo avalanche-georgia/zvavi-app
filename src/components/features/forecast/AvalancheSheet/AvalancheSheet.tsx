@@ -39,7 +39,11 @@ const AvalancheSheet = ({ avalanches, index, onClose, onNavigate }: AvalancheShe
   const isMapOpen = index !== null && mapRecordId === avalanche.id
 
   const handleOpenChange = (isOpen: boolean) => {
-    if (!isOpen) onClose()
+    if (isOpen) return
+
+    // Reopening a record starts on its detail, never on a leftover map
+    setMapRecordId(null)
+    onClose()
   }
 
   return (

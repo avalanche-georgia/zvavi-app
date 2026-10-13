@@ -58,8 +58,13 @@ const CollapsibleCard = ({
         />
       </Collapsible.Trigger>
     </h2>
-    <Collapsible.Panel className="h-(--collapsible-panel-height) overflow-hidden transition-[height] duration-200 ease-out data-ending-style:h-0 data-starting-style:h-0">
-      <div className="px-4 pb-4 lg:px-5 lg:pb-5">{children}</div>
+    {/* hiddenUntilFound: folded text stays in the page — for search engines and find-in-page */}
+    <Collapsible.Panel
+      className="h-(--collapsible-panel-height) overflow-hidden transition-[height] duration-200 ease-out data-ending-style:h-0 data-starting-style:h-0"
+      hiddenUntilFound
+    >
+      {/* -mt-1 pt-1: room for the focus ring of the first row, which the panel would clip */}
+      <div className="-mt-1 px-4 pt-1 pb-4 lg:px-5 lg:pb-5">{children}</div>
     </Collapsible.Panel>
   </Collapsible.Root>
 )

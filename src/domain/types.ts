@@ -206,6 +206,7 @@ export type PublicAvalanche = Omit<
   Avalanche,
   | 'createdByUserId'
   | 'involvement'
+  | 'photoKeys'
   | 'source'
   | 'status'
   | 'submitterContact'

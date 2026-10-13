@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { Sheet } from '@components/ui'
-import type { Problem } from '@domain/types'
+import type { Problem, RegionId } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import ProblemBody from './ProblemBody'
@@ -20,10 +20,11 @@ type ProblemSheetProps = {
   onInfoChange: (field: ProblemField | null) => void
   onNavigate: (index: number) => void
   problems: Problem[]
+  regionId: RegionId
 }
 
 const ProblemSheet = (props: ProblemSheetProps) => {
-  const { index, infoField, onClose, onInfoChange, onNavigate, problems } = props
+  const { index, infoField, onClose, onInfoChange, onNavigate, problems, regionId } = props
   const t = useTranslations()
   const {
     bodyRef,
@@ -77,7 +78,7 @@ const ProblemSheet = (props: ProblemSheetProps) => {
         onClose={() => onInfoChange(null)}
         title={t(`forecast.sections.avalancheProblems.modal.labels.${shownField}`)}
       >
-        <FieldInfo field={shownField} problem={problem} />
+        <FieldInfo field={shownField} problem={problem} regionId={regionId} />
       </InfoSheet>
     </Sheet>
   )
