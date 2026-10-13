@@ -582,33 +582,36 @@ admin:
     notFound: ზვავი ვერ მოიძებნა.
 
     list:
+      ariaLabel:
+        catalog: 'ბოლო ზვავები — {region}'
+        queue: 'განსახილველი დაკვირვებები — {region}'
       columns:
         actions: მოქმედებები
-        date: თარიღი
+        date: მოხდა
         size: ზომა
         source: წყარო
         status: სტატუსი
+        submitted: გამოგზავნილია
         submitter: ავტორი
-        type: სახეობა
-      empty: ზვავის ჩანაწერები არ მოიძებნა.
-      total: "ნაჩვენებია: {shown} / {total}"
+        type: ზვავი
+
+    empty:
+      emptyTitle: 'ზვავები ჯერ არ არის — {region}'
+      emptyHint: პირველის დასამატებლად გამოიყენეთ ზემოთ „შექმენით ზვავი“.
+      noMatchesTitle: ვერაფერი მოიძებნა
+      noMatchesHint: სცადეთ სხვა პერიოდი ან ფილტრი.
 
     filters:
       all: ყველა
       allStatuses: ყველა სტატუსი
-      reset: ფილტრების გადატვირთვა
       dateMode:
-        created: შექმნის თარიღი
-        occurred: მოვლენის თარიღი
-      placeholder: აირჩიეთ თარიღის დიაპაზონი
-
-    pagination:
-      page: "გვ. {current} / {total}"
+        label: თარიღით გაფილტვრა
+        created: დაემატა
+        occurred: მოხდა
 
     actions:
       approve: დადასტურება
-      deleteDescription: ეს ჩანაწერი სამუდამოდ წაიშლება.
-      deleteTitle: ზვავის წაშლა
+      moreForRecord: 'სხვა მოქმედებები — {id}'
       publish: გამოქვეყნება
       unpublish: გამოქვეყნების გაუქმება
 
@@ -653,9 +656,8 @@ admin:
 
   observations:
     queue:
-      columns:
-        submitted: გამოგზავნილია
-      empty: განსახილველი არაფერია — ახალი დაკვირვებები აქ გამოჩნდება.
+      emptyTitle: 'განსახილველი არაფერია — {region}'
+      emptyHint: ახალი საჯარო შეტყობინებები აქ გამოჩნდება.
 
   weatherStations:
     title: 'ამინდის სადგურები'

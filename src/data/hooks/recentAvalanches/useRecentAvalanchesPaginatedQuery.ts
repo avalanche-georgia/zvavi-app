@@ -1,6 +1,7 @@
 import { supabase } from '@data'
 import { recentAvalanchesKeys } from '@data/query-keys'
 import type { RegionId } from '@domain/types'
+import { keepPreviousData } from '@tanstack/react-query'
 
 import { useQuery } from '@/tanstack-query/hooks'
 
@@ -74,6 +75,10 @@ const useRecentAvalanchesPaginatedQuery = (params: QueryParams) => {
   const { regionId, ...filterParams } = params
 
   return useQuery<PaginatedResult, Error>({
+    // Paging or filtering keeps the rows on screen until the next ones arrive;
+    // another region starts empty — its rows must not be mistaken for this one's
+    placeholderData: (previousData, previousQuery) =>
+      previousQuery?.queryKey[1] === regionId ? keepPreviousData(previousData) : undefined,
     queryFn: () => fetchPaginatedAvalanches(params),
     queryKey: recentAvalanchesKeys.list(regionId, filterParams),
   })

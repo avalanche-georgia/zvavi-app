@@ -582,33 +582,36 @@ admin:
     notFound: Avalanche not found.
 
     list:
+      ariaLabel:
+        catalog: 'Recent avalanches — {region}'
+        queue: 'Observations awaiting review — {region}'
       columns:
         actions: Actions
-        date: Date
+        date: Occurred
         size: Size
         source: Source
         status: Status
+        submitted: Submitted
         submitter: Submitter
-        type: Type
-      empty: No avalanches found.
-      total: 'Shown: {shown} of {total}'
+        type: Avalanche
+
+    empty:
+      emptyTitle: 'No avalanches for {region} yet'
+      emptyHint: Use Create Avalanche above to log the first one.
+      noMatchesTitle: Nothing matches
+      noMatchesHint: Try another date range or filter.
 
     filters:
       all: All
       allStatuses: All statuses
-      reset: Reset filters
       dateMode:
-        created: Created at
-        occurred: Occurred at
-      placeholder: Select date range
-
-    pagination:
-      page: 'Page {current} of {total}'
+        label: Filter by date
+        created: Logged
+        occurred: Occurred
 
     actions:
       approve: Approve
-      deleteDescription: This avalanche record will be permanently deleted.
-      deleteTitle: Delete Avalanche
+      moreForRecord: 'More actions for {id}'
       publish: Publish
       unpublish: Unpublish
 
@@ -653,9 +656,8 @@ admin:
 
   observations:
     queue:
-      columns:
-        submitted: Submitted
-      empty: Nothing waiting for review — new submissions will show up here.
+      emptyTitle: 'Nothing waiting for review in {region}'
+      emptyHint: New public reports will show up here.
 
   weatherStations:
     title: 'Weather Stations'
