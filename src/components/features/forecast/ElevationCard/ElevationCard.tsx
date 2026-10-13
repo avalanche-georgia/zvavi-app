@@ -3,6 +3,7 @@ import type { ElevationZone, HazardLevels, RegionId } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import ElevationRow from './ElevationRow'
+import { sliceGap } from './slope'
 import SectionCard from '../sections/SectionCard'
 
 type ElevationCardProps = {
@@ -12,7 +13,7 @@ type ElevationCardProps = {
   regionId: RegionId
 }
 
-// Danger level per elevation band, next to the hazard pyramid
+// Danger level per elevation band, next to the sliced mountain
 const ElevationCard = ({
   className,
   hazardLevels,
@@ -23,7 +24,7 @@ const ElevationCard = ({
 
   return (
     <SectionCard className={className} title={t('forecast.page.byElevation')}>
-      <ul className="flex flex-col gap-[5px]">
+      <ul className="flex flex-col" style={{ gap: sliceGap }}>
         {sortedElevationZones.map((zone) => (
           <ElevationRow
             key={zone}

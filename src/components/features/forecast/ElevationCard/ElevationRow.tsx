@@ -3,20 +3,14 @@ import { hazardLevelNamesByScale } from '@domain/constants'
 import type { ElevationZone, HazardLevelScale, RegionId } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
-import { PyramidZone } from '../HazardLevelsByElevation'
+import ElevationSlice from './ElevationSlice'
+import { sliceHeights } from './slope'
 
 type ElevationRowProps = {
   level: HazardLevelScale
   onInfoOpen: VoidFunction
   regionId: RegionId
   zone: ElevationZone
-}
-
-// The pyramid's own slice heights — a row grows past them when its text wraps
-const minHeights: Record<ElevationZone, string> = {
-  alpine: 'min-h-[59px]',
-  highAlpine: 'min-h-20',
-  subAlpine: 'min-h-[60px]',
 }
 
 // "Considerable" / "High Alpine · above 2600 m" next to its pyramid slice,
@@ -27,8 +21,12 @@ const ElevationRow = ({ level, onInfoOpen, regionId, zone }: ElevationRowProps) 
   const zoneLabel = t(`common.elevationZones.${zone}`)
 
   return (
-    <li className="group grid grid-cols-[minmax(0,1fr)_auto] items-stretch">
-      <div className="border-rule flex min-w-0 flex-col justify-center gap-0.5 border-b py-2 pr-3 leading-tight group-last:border-b-0">
+    <li
+      className="group grid grid-cols-[minmax(0,1fr)_auto] items-stretch"
+      // The slice sets the row's height — the mountain keeps its shape
+      style={{ height: sliceHeights[zone] }}
+    >
+      <div className="border-rule flex min-w-0 flex-col justify-center gap-0.5 border-b py-1 pr-3 leading-tight group-last:border-b-0">
         <b className="text-copy-lg font-semibold wrap-anywhere hyphens-auto">
           {t(hazardLevelNamesByScale[level])}
         </b>
@@ -36,12 +34,10 @@ const ElevationRow = ({ level, onInfoOpen, regionId, zone }: ElevationRowProps) 
           {zoneLabel} · {getElevationRange(zone)}
         </span>
       </div>
-      <PyramidZone
-        className={minHeights[zone]}
+      <ElevationSlice
         label={`${t('common.labels.zoneDangerLevel', { zone: zoneLabel })} — ${level}`}
         level={level}
         onClick={onInfoOpen}
-        size="sm"
         zone={zone}
       />
     </li>
