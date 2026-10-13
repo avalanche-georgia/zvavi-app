@@ -11,7 +11,8 @@ import { isDarkHazard } from './constants'
 
 import { cn } from '@/lib/utils'
 
-// The public forecast graphic, updating as levels change
+// The hazard pyramid, updating as levels change (the public page draws its
+// own version next to the elevation rows)
 const HazardPreview = () => {
   const t = useTranslations()
   const hazardLevels = useWatch<ForecastFormSchema, 'hazardLevels'>({ name: 'hazardLevels' })
@@ -21,7 +22,7 @@ const HazardPreview = () => {
     <div className="sticky top-22.5 flex flex-col items-center gap-3 @max-[640px]:hidden">
       {/* Pyramid positions itself against the bottom-right of this box */}
       <div className="relative h-60 w-52">
-        <Pyramid hazardLevels={hazardLevels} isInteractive={false} />
+        <Pyramid hazardLevels={hazardLevels} />
       </div>
       <div className="flex items-center gap-2">
         <span
