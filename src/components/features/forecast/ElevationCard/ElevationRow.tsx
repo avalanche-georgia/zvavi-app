@@ -15,11 +15,12 @@ type ElevationRowProps = {
   zone: ElevationZone
 }
 
-// One slice of the mountain per band: a peaked top, then one slanted left edge
-// running down through all three. Percentages, so a taller row stretches it.
+// One slice of the mountain per band: one slanted left edge
+// running down through all three, a straight right edge. Percentages, so a
+// taller row stretches it.
 const pyramidClipPaths: Record<ElevationZone, string> = {
   alpine: 'polygon(32% 0, 100% 0, 100% 100%, 16% 100%)',
-  highAlpine: 'polygon(50% 0, 78% 0, 100% 30%, 100% 100%, 34% 100%)',
+  highAlpine: 'polygon(50% 0, 100% 0, 100% 100%, 34% 100%)',
   subAlpine: 'polygon(14% 0, 100% 0, 100% 100%, 0 100%)',
 }
 
