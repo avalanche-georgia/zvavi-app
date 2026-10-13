@@ -22,7 +22,7 @@ const SizeTile = ({ className, size }: SizeTileProps) => {
   const t = useTranslations()
 
   return (
-    <div
+    <span
       className={cn(
         'flex size-12 shrink-0 flex-col items-center justify-center rounded-[11px] leading-none',
         shadeClassNames[size],
@@ -33,7 +33,7 @@ const SizeTile = ({ className, size }: SizeTileProps) => {
       <span className="mt-0.75 text-[9.5px] font-semibold tracking-[.06em] uppercase opacity-80">
         {t('observations.labels.size')}
       </span>
-    </div>
+    </span>
   )
 }
 
