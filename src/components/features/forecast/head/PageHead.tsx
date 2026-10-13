@@ -13,7 +13,7 @@ type PageHeadProps = {
   previousForecastId: number | null
 }
 
-// "Gudauri Avalanche Forecast" · "Wed 15 Apr – Fri 17 Apr" · previous / next
+// "Gudauri Avalanche Forecast" · "Wed 15 Apr – Fri 17 Apr" · newer / older
 const PageHead = ({ forecast, nextForecastId, previousForecastId }: PageHeadProps) => {
   const t = useTranslations()
   const { formatDay } = useForecastDates()
@@ -31,13 +31,11 @@ const PageHead = ({ forecast, nextForecastId, previousForecastId }: PageHeadProp
           {formatDay(publishedAt ?? createdAt)} – {formatDay(validUntil)}
         </p>
       </div>
-      <ForecastNavLink
-        href={getHref(previousForecastId)}
-        label={t('forecast.page.previousForecast')}
-      >
+      {/* Latest first, as in every list: left steps to a newer forecast, right to an older one */}
+      <ForecastNavLink href={getHref(nextForecastId)} label={t('forecast.page.newerForecast')}>
         <ChevronLeft aria-hidden className="size-4.5" />
       </ForecastNavLink>
-      <ForecastNavLink href={getHref(nextForecastId)} label={t('forecast.page.nextForecast')}>
+      <ForecastNavLink href={getHref(previousForecastId)} label={t('forecast.page.olderForecast')}>
         <ChevronRight aria-hidden className="size-4.5" />
       </ForecastNavLink>
     </div>
