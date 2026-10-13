@@ -1,3 +1,4 @@
+import { Tooltip } from '@ds/primitives'
 import { Info } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
@@ -16,6 +17,7 @@ type TileProps = {
 // Grey tile of the problem sheet: label + ⓘ, the value, then its picture
 const Tile = ({ children, isWide = false, label, onInfoOpen, value }: TileProps) => {
   const t = useTranslations()
+  const infoLabel = t('forecast.page.about', { field: label })
 
   return (
     <div
@@ -27,14 +29,16 @@ const Tile = ({ children, isWide = false, label, onInfoOpen, value }: TileProps)
       <div className="flex min-h-4 items-center gap-1">
         <span className="text-muted min-w-0 flex-1 text-xs font-medium">{label}</span>
         {onInfoOpen && (
-          <button
-            aria-label={t('forecast.page.about', { field: label })}
-            className="focus-ring text-muted hover:bg-tile-hover hover:text-ink relative -my-1.5 -mr-1.5 grid size-7 shrink-0 place-items-center rounded-lg transition-colors after:absolute pointer-coarse:after:-inset-2"
-            onClick={onInfoOpen}
-            type="button"
-          >
-            <Info aria-hidden className="size-4" />
-          </button>
+          <Tooltip label={infoLabel}>
+            <button
+              aria-label={infoLabel}
+              className="focus-ring text-muted hover:bg-tile-hover hover:text-ink relative -my-1.5 -mr-1.5 grid size-7 shrink-0 place-items-center rounded-lg transition-colors after:absolute pointer-coarse:after:-inset-2"
+              onClick={onInfoOpen}
+              type="button"
+            >
+              <Info aria-hidden className="size-4" />
+            </button>
+          </Tooltip>
         )}
       </div>
       {value && (
