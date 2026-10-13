@@ -1,56 +1,48 @@
 'use client'
 
-/* eslint-disable react/jsx-props-no-spreading */
-import { InputBlock, TextInput } from '@components/ui'
-import type { WeatherStationFormData } from '@domain/types'
+import { FormNumberField, FormTextField } from '@ds/form'
+import { FormCard } from '@ds/patterns'
 import { useTranslations } from 'next-intl'
-import { useFormContext } from 'react-hook-form'
+
+import type { WeatherStationFormValues } from './schema'
+
+const altitudeFormat: Intl.NumberFormatOptions = { useGrouping: false }
 
 const FormFields = () => {
   const t = useTranslations()
-  const {
-    formState: { errors },
-    register,
-  } = useFormContext<WeatherStationFormData>()
-  const getError = (field: keyof WeatherStationFormData) =>
-    errors[field] ? t(`common.validation.${errors[field]?.message}`) : undefined
+  const labelKey = 'admin.weatherStations.form.labels'
 
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
-      <InputBlock
-        error={getError('nameEn')}
-        label={t('admin.weatherStations.form.labels.nameEn')}
-        required
-      >
-        <TextInput {...register('nameEn')} hasError={!!errors.nameEn} />
-      </InputBlock>
-
-      <InputBlock error={getError('nameKa')} label={t('admin.weatherStations.form.labels.nameKa')}>
-        <TextInput {...register('nameKa')} />
-      </InputBlock>
-
-      <InputBlock
-        error={getError('altitude')}
-        label={t('admin.weatherStations.form.labels.altitude')}
-        required
-      >
-        <TextInput
-          {...register('altitude', { setValueAs: (v) => (v === '' ? undefined : Number(v)) })}
-          hasError={!!errors.altitude}
-          min={1}
-          type="number"
+    <FormCard title={t('admin.weatherStations.form.section')}>
+      <div className="grid gap-4 @sm:grid-cols-2">
+        <FormTextField<WeatherStationFormValues>
+          label={t(`${labelKey}.nameEn`)}
+          name="nameEn"
+          required
         />
-      </InputBlock>
-
-      <InputBlock
-        className="md:col-span-2"
-        error={getError('url')}
-        label={t('admin.weatherStations.form.labels.url')}
+        <FormTextField<WeatherStationFormValues>
+          hint={t('admin.weatherStations.form.optional')}
+          label={t(`${labelKey}.nameKa`)}
+          name="nameKa"
+        />
+      </div>
+      <FormNumberField<WeatherStationFormValues>
+        className="@sm:max-w-1/2"
+        format={altitudeFormat}
+        label={t(`${labelKey}.altitude`)}
+        min={1}
+        name="altitude"
         required
-      >
-        <TextInput {...register('url')} hasError={!!errors.url} />
-      </InputBlock>
-    </div>
+        unit={t('admin.weatherStations.form.altitudeUnit')}
+      />
+      <FormTextField<WeatherStationFormValues>
+        description={t('admin.weatherStations.form.hints.url')}
+        label={t(`${labelKey}.url`)}
+        name="url"
+        placeholder="https://"
+        required
+      />
+    </FormCard>
   )
 }
 

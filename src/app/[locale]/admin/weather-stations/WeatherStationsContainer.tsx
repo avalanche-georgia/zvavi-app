@@ -1,60 +1,68 @@
 'use client'
 
-import { useCallback, useState } from 'react'
 import {
-  WeatherStationFormModal,
+  ListLoadError,
+  useCreateSheetParam,
+  useRecordSelection,
+} from '@components/features/admin/shared'
+import {
+  WeatherStationSheets,
   WeatherStationsList,
 } from '@components/features/admin/WeatherStations'
 import { useSortableList, useToast } from '@components/hooks'
-import { Icon } from '@components/icons'
-import { Button } from '@components/ui'
+import { AdminPageBody } from '@components/layout/admin'
 import { useWeatherStationsQuery, useWeatherStationsReorder } from '@data/hooks/weatherStations'
-import type { WeatherStation } from '@domain/types'
+import { Button } from '@ds/primitives'
+import { Plus } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 const WeatherStationsContainer = () => {
   const t = useTranslations()
   const { toastError } = useToast()
-  const { data: stations, isPending } = useWeatherStationsQuery()
+  const stationsQuery = useWeatherStationsQuery()
   const { mutateAsync: reorder } = useWeatherStationsReorder()
+  const createSheet = useCreateSheetParam()
+  const selection = useRecordSelection({ defaultMode: 'edit', param: 'station' })
 
-  const { handleReorder, localItems: localStations } = useSortableList(stations, reorder, (error) =>
-    toastError('WeatherStationsContainer | handleReorder', { error }),
+  const { handleReorder, localItems: stations } = useSortableList(
+    stationsQuery.data,
+    reorder,
+    (error) => toastError('WeatherStationsContainer | handleReorder', { error }),
   )
 
-  const [formTarget, setFormTarget] = useState<WeatherStation | null | undefined>(undefined)
+  // A failed background refetch keeps the data on screen; the error block is for first loads
+  const isLoadFailed = stationsQuery.isError && !stationsQuery.data
+  const selectedStation = stations.find(({ id }) => id === selection.selectedId) ?? null
 
-  const isModalOpen = formTarget !== undefined
-  const formKey = formTarget === undefined ? 'closed' : (formTarget?.id ?? 'new')
-
-  const handleClose = () => setFormTarget(undefined)
-  const handleNew = () => setFormTarget(null)
-  const handleEdit = useCallback((station: WeatherStation) => setFormTarget(station), [])
+  const handleRetry = () => void stationsQuery.refetch()
 
   return (
     <>
-      <div className="flex items-center justify-between gap-4 border-b bg-white px-4 py-3 md:px-6">
-        <div />
-        <Button onClick={handleNew}>
-          <Icon icon="plus" size="sm" />
-          {t('admin.weatherStations.new')}
-        </Button>
-      </div>
+      <AdminPageBody className="max-w-3xl">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <p className="text-copy-sm text-muted">{t('admin.weatherStations.orderHint')}</p>
+          <Button onClick={createSheet.openCreate} size="sm">
+            <Plus aria-hidden className="size-4" />
+            {t('admin.weatherStations.new')}
+          </Button>
+        </div>
+        {isLoadFailed ? (
+          <ListLoadError onRetry={handleRetry} />
+        ) : (
+          <WeatherStationsList
+            isLoading={stationsQuery.isPending}
+            onEdit={selection.openRecord}
+            onReorder={handleReorder}
+            stations={stations}
+          />
+        )}
+      </AdminPageBody>
 
-      <div className="p-4 md:p-6">
-        <WeatherStationsList
-          isLoading={isPending}
-          onEdit={handleEdit}
-          onReorder={handleReorder}
-          stations={localStations}
-        />
-      </div>
-
-      <WeatherStationFormModal
-        key={formKey}
-        isOpen={isModalOpen}
-        onClose={handleClose}
-        station={formTarget ?? null}
+      <WeatherStationSheets
+        isCreateRequested={createSheet.isCreateOpen}
+        onCreateClose={createSheet.closeCreate}
+        onEditClose={selection.closeRecord}
+        station={selectedStation}
       />
     </>
   )

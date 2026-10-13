@@ -659,21 +659,27 @@ admin:
 
   weatherStations:
     title: 'Weather Stations'
-    new: 'New Station'
-    noStations: 'No weather stations found.'
+    new: 'Add Station'
+    orderHint: 'Stations appear on the public page in this order. Drag a row to move it.'
     dragToReorder: 'Drag to reorder'
-    deleteModal:
-      title: 'Delete Station?'
-      description: 'Do you want to permanently delete {name}?'
+    dragStation: 'Reorder {name}'
+    moreForStation: 'More actions for {name}'
+    openStation: 'Open station page'
+    deleteConfirm: 'Delete {name} permanently? It disappears from the public weather stations page.'
+    empty:
+      title: 'No weather stations yet'
+      hint: 'Use Add Station above to add the first one.'
     form:
-      title:
-        create: 'Add Station'
-        edit: 'Edit Station'
+      section: 'Station'
+      optional: 'Optional'
+      altitudeUnit: 'm'
       labels:
-        altitude: 'Altitude (m)'
+        altitude: 'Altitude'
         nameEn: 'Name (EN)'
         nameKa: 'Name (KA)'
         url: 'URL'
+      hints:
+        url: 'The page with the station’s live data; the public list links to it.'
       messages:
         created: 'Station created successfully.'
         deleted: 'Station deleted successfully.'
