@@ -1,26 +1,28 @@
 'use client'
 
-import { StaleForecastBanner } from '@components/shared'
 import { Spinner } from '@components/ui'
 import { useGetForecast } from '@data/hooks/forecasts'
-import { useRegionContext } from '@domain/context/RegionContext'
 import type { FullForecast } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
-import Forecast from './Forecast'
+import ForecastPage from './ForecastPage'
 
 type ForecastContainerProps = {
   initialForecast: FullForecast
   isCurrentForecast: boolean
+  nextForecastId: number | null
+  previousForecastId: number | null
 }
 
-const ForecastContainer = ({ initialForecast, isCurrentForecast }: ForecastContainerProps) => {
+// Renders the server-loaded forecast at once and keeps it fresh in the browser
+const ForecastContainer = (props: ForecastContainerProps) => {
+  const { initialForecast, isCurrentForecast, nextForecastId, previousForecastId } = props
   const t = useTranslations()
-  const { region } = useRegionContext()
   const { data: forecast, isPending } = useGetForecast({
     forecastId: initialForecast.id,
     initialData: initialForecast,
-    regionId: region!.id,
+    // The forecast's own region — the one in the URL may be wrong
+    regionId: initialForecast.regionId,
   })
 
   if (isPending || !forecast) {
@@ -28,10 +30,12 @@ const ForecastContainer = ({ initialForecast, isCurrentForecast }: ForecastConta
   }
 
   return (
-    <div>
-      {!isCurrentForecast && <StaleForecastBanner />}
-      <Forecast forecast={forecast} regionId={region!.id} />
-    </div>
+    <ForecastPage
+      forecast={forecast}
+      isCurrentForecast={isCurrentForecast}
+      nextForecastId={nextForecastId}
+      previousForecastId={previousForecastId}
+    />
   )
 }
 

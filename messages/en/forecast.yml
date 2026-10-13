@@ -3,7 +3,6 @@ forecast:
   forecastAreaPageTitle: '{regionName} Forecast Area'
   historyPageTitle: '{regionName} Forecasts History'
   previewNote: 'Tap the banner to view full forecast'
-  viewForecastArea: 'View Forecast Area'
 
   history:
     emptyTitle: 'No Forecasts Yet'
@@ -101,17 +100,35 @@ forecast:
     recentAvalanches:
       title: 'Recent Avalanches'
       noAvalanches: 'Nothing reported yet'
-      labels:
-        dateUnknown: 'Date Unknown'
-        dimensions: 'Width / Slab Depth'
-        location: 'Location'
-        quantity: 'Quantity'
-        size: 'Size'
-        trigger: 'Trigger'
-        type: 'Type'
     partners:
       title: 'Forecast made possible by'
     snowpack:
       title: 'Snowpack'
     weather:
       title: 'Weather'
+
+  page:
+    whatThisMeans: 'What this means'
+    byElevation: 'By elevation'
+    expired: 'expired'
+    hoursLeft: '{count}h left'
+    daysLeft: '{count}d left'
+    olderForecast: 'Older forecast'
+    newerForecast: 'Newer forecast'
+    sizeShort: 'Size {size}'
+    allObservations: 'All observations'
+    problemPosition: 'Problem {current} of {total}'
+    previousProblem: 'Previous problem'
+    nextProblem: 'Next problem'
+    about: 'About {field}'
+    scale: 'Scale'
+    elevationBands: 'Elevation bands'
+    dangerScale: 'Danger scale'
+    thisProblem: 'This problem'
+    thisForecast: 'This forecast'
+    back: 'Back'
+    jump:
+      label: 'Sections'
+      problems: 'Problems'
+      avalanches: 'Avalanches'
+      conditions: 'Snowpack & weather'

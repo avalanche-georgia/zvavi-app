@@ -1,8 +1,9 @@
 'use client'
 
 import { useAspectSummary } from '@components/hooks'
-import { Sheet, SheetClose, SheetIconButton, SheetTitle, Spinner } from '@components/ui'
+import { Sheet, SheetClose, SheetTitle, Spinner } from '@components/ui'
 import type { ObservationPoint, PublicObservation } from '@domain/types'
+import { IconButton } from '@ds/primitives'
 import { X } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import { useTranslations } from 'next-intl'
@@ -73,7 +74,7 @@ const LocationSheet = ({ contextPoints, isOpen, observation, onClose }: Location
               type: t(`common.avalancheTypes.${type}`),
             })}
           </SheetTitle>
-          <SheetClose render={<SheetIconButton aria-label={t('common.actions.close')} />}>
+          <SheetClose render={<IconButton aria-label={t('common.actions.close')} size="md" />}>
             <X className="size-4.5" />
           </SheetClose>
         </>

@@ -3,7 +3,6 @@ forecast:
   forecastAreaPageTitle: '{regionName} პროგნოზის ტერიტორია'
   historyPageTitle: '{regionName} პროგნოზების ისტორია'
   previewNote: 'დააწკაპუნეთ ბანერზე სრული პროგნოზისთვის'
-  viewForecastArea: 'პროგნოზის ტერიტორიის ნახვა'
 
   history:
     emptyTitle: 'პროგნოზები ჯერ არ არის'
@@ -101,17 +100,35 @@ forecast:
     recentAvalanches:
       title: 'ბოლო ზვავები'
       noAvalanches: 'ჯერ არაფერია დაფიქსირებული'
-      labels:
-        dateUnknown: 'თარიღი უცნობია'
-        dimensions: 'სიგანე / ფილის სიღრმე'
-        location: 'მდებარეობა'
-        quantity: 'რაოდენობა'
-        size: 'ზომა'
-        trigger: 'ტრიგერი'
-        type: 'ტიპი'
     partners:
       title: 'პროგნოზი შესაძლებელი გახდა'
     snowpack:
       title: 'თოვლის საფარი'
     weather:
       title: 'ამინდი'
+
+  page:
+    whatThisMeans: 'რას ნიშნავს ეს'
+    byElevation: 'სიმაღლის მიხედვით'
+    expired: 'ვადა გასულია'
+    hoursLeft: 'დარჩა {count} სთ'
+    daysLeft: 'დარჩა {count} დღე'
+    olderForecast: 'უფრო ძველი პროგნოზი'
+    newerForecast: 'უფრო ახალი პროგნოზი'
+    sizeShort: 'ზომა {size}'
+    allObservations: 'ყველა დაკვირვება'
+    problemPosition: 'პრობლემა {current} / {total}'
+    previousProblem: 'წინა პრობლემა'
+    nextProblem: 'შემდეგი პრობლემა'
+    about: '{field} — განმარტება'
+    scale: 'სკალა'
+    elevationBands: 'სიმაღლის ზონები'
+    dangerScale: 'საფრთხის სკალა'
+    thisProblem: 'ეს პრობლემა'
+    thisForecast: 'ეს პროგნოზი'
+    back: 'უკან'
+    jump:
+      label: 'სექციები'
+      problems: 'პრობლემები'
+      avalanches: 'ზვავები'
+      conditions: 'თოვლი და ამინდი'

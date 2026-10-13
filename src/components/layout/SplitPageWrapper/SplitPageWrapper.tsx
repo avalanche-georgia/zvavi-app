@@ -1,6 +1,6 @@
 'use client'
 
-import useHeaderHeight from './useHeaderHeight'
+import { useHeaderHeight } from '@components/hooks'
 
 import { cn } from '@/lib/utils'
 

@@ -1,3 +1,4 @@
+import { useElevationRanges } from '@components/hooks'
 import { sortedElevationZones } from '@domain/constants'
 import { InfoTip } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
@@ -6,6 +7,7 @@ import { useTranslations } from 'next-intl'
 // hazard-by-elevation view
 const ElevationZonesInfo = () => {
   const t = useTranslations()
+  const getElevationRange = useElevationRanges()
 
   return (
     <InfoTip ariaLabel={t('observations.form.elevationZones.label')}>
@@ -13,7 +15,7 @@ const ElevationZonesInfo = () => {
         {sortedElevationZones.map((zone) => (
           <div key={zone} className="contents">
             <dt className="font-semibold">{t(`common.elevationZones.${zone}`)}</dt>
-            <dd>{t(`observations.form.elevationZones.${zone}`)}</dd>
+            <dd>{getElevationRange(zone)}</dd>
           </div>
         ))}
       </dl>
