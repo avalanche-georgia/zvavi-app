@@ -13,6 +13,8 @@ Daily professional forecasts for each active region in the Georgian backcountry.
 - **Narratives** — weather outlook, snowpack assessment, and additional hazard notes written by certified forecasters
 - **Recent avalanche history** — observed natural and human-triggered events with location, size, and date, taken from the region's avalanche catalog. Only reviewed, published records appear on a public forecast
 
+The forecast page is built for phones first: the overall danger level sits at the top with an explanation one tap away, followed by danger by elevation, the summary, the avalanche problems, recent avalanches, and snowpack and weather. A row of shortcuts jumps between sections. Each avalanche problem opens a panel showing where it is expected (by aspect and elevation), its size, sensitivity, distribution, trend and time of day — each with a short explanation of its scale. Arrows step to the previous or next forecast, and an older forecast is clearly marked with a link back to the current one.
+
 Forecasts are authored in a draft/publish workflow, so forecasters can prepare and review before going live.
 
 ## Forecast Area Map

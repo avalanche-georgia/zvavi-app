@@ -225,7 +225,7 @@ Update this table when a legacy component's last consumer is migrated.
 | DropdownMenu | base-ui | `primitives/Menu` | ☐ |
 | Drawer, Sheet | vaul / base-ui | `patterns/Sheet` (TBD) | ☐ |
 | IconButton | custom | `primitives/IconButton` | ☐ |
-| Alert | custom | `patterns/Alert` | ☐ |
+| Alert | custom | — (last consumer removed with the forecast page redesign; add `patterns/Alert` when needed) | ✅ |
 | Spinner, Skeleton | custom | `primitives/Spinner`, `Skeleton` | ☐ |
 | Pagination, DataTable | custom | `primitives/Pagination`, `patterns/DataTable` | ☐ |
 | AspectElevationPicker | base-ui | moved to `features/observations/` | ✅ |
