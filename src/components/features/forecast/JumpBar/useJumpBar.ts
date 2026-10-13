@@ -19,12 +19,9 @@ const useJumpBar = (sectionIds: SectionId[]) => {
   const sectionsKey = sectionIds.join(',')
 
   useEffect(() => {
-    let frame = 0
     const ids = sectionsKey.split(',').filter(Boolean) as SectionId[]
 
     const update = () => {
-      frame = 0
-
       const { innerHeight, scrollY } = window
       const isAtBottom = innerHeight + scrollY >= document.documentElement.scrollHeight - 2
       const inView = ids.find((id) => {
@@ -39,18 +36,15 @@ const useJumpBar = (sectionIds: SectionId[]) => {
       setIsStuck(barTop <= headerHeight + 1 && !window.matchMedia(desktopMediaQuery).matches)
     }
 
-    const schedule = () => {
-      if (!frame) frame = window.requestAnimationFrame(update)
-    }
-
-    schedule()
-    window.addEventListener('scroll', schedule, { passive: true })
-    window.addEventListener('resize', schedule)
+    // Scroll events already fire at most once per frame; React drops the
+    // state updates that change nothing
+    update()
+    window.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update)
 
     return () => {
-      window.cancelAnimationFrame(frame)
-      window.removeEventListener('scroll', schedule)
-      window.removeEventListener('resize', schedule)
+      window.removeEventListener('scroll', update)
+      window.removeEventListener('resize', update)
     }
   }, [headerHeight, sectionsKey])
 

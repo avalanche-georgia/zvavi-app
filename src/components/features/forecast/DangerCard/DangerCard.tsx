@@ -49,7 +49,7 @@ const DangerCard = ({ className, forecast, isCurrentForecast, onInfoOpen }: Dang
           <span className="block text-xs font-semibold tracking-[.06em] uppercase">
             {t('common.labels.overallDangerLevel')}
           </span>
-          <span className="text-title-lg mt-0.5 block font-bold wrap-anywhere">
+          <span className="text-title mt-0.5 block font-bold wrap-break-word hyphens-auto">
             {t(hazardLevelNamesByScale[level])}
           </span>
           <span className="text-caption mt-1.5 inline-flex items-center gap-1 font-semibold underline decoration-1 underline-offset-3 group-hover:decoration-2">
