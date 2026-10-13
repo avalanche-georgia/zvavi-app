@@ -15,6 +15,7 @@ type WhereTileProps = {
 const WhereTile = ({ aspects, onInfoOpen }: WhereTileProps) => {
   const t = useTranslations()
   const { getSummary } = useAspectSummary()
+  const summary = getSummary(aspects)
 
   return (
     <Tile
@@ -24,9 +25,9 @@ const WhereTile = ({ aspects, onInfoOpen }: WhereTileProps) => {
     >
       {/* The compasses are colour-coded — the summary says the same in words */}
       <div
-        aria-label={getSummary(aspects) ?? undefined}
+        aria-label={summary ?? undefined}
         className="grid grid-cols-3 gap-1.5"
-        role="img"
+        role={summary ? 'img' : undefined}
       >
         {sortedElevationZones.map((zone) => {
           const zoneAspects = aspects[zone] ?? []

@@ -24,12 +24,13 @@ const ConditionsCard = ({ className, forecast }: ConditionsCardProps) => {
   return (
     <section
       className={cn(
-        'rounded-card border-rule bg-rule grid min-w-0 gap-px overflow-hidden border',
+        'rounded-card border-rule bg-rule grid min-w-0 gap-px overflow-hidden border outline-hidden',
         hasBothColumns && 'lg:grid-cols-2',
         sectionAnchorClasses,
         className,
       )}
       id="conditions"
+      tabIndex={-1}
     >
       {snowpack && (
         <div className="bg-surface min-w-0 p-4 lg:p-5">

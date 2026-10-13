@@ -34,6 +34,8 @@ const JumpBar = ({ chips, className }: JumpBarProps) => {
     const isMotionReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
     section.scrollIntoView({ behavior: isMotionReduced ? 'auto' : 'smooth', block: 'start' })
+    // Keyboard and screen-reader users continue from the section, not the chip bar
+    section.focus({ preventScroll: true })
   }
 
   return (

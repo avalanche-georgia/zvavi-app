@@ -3,7 +3,6 @@ forecast:
   forecastAreaPageTitle: '{regionName} პროგნოზის ტერიტორია'
   historyPageTitle: '{regionName} პროგნოზების ისტორია'
   previewNote: 'დააწკაპუნეთ ბანერზე სრული პროგნოზისთვის'
-  viewForecastArea: 'პროგნოზის ტერიტორიის ნახვა'
 
   history:
     emptyTitle: 'პროგნოზები ჯერ არ არის'
@@ -101,14 +100,6 @@ forecast:
     recentAvalanches:
       title: 'ბოლო ზვავები'
       noAvalanches: 'ჯერ არაფერია დაფიქსირებული'
-      labels:
-        dateUnknown: 'თარიღი უცნობია'
-        dimensions: 'სიგანე / ფილის სიღრმე'
-        location: 'მდებარეობა'
-        quantity: 'რაოდენობა'
-        size: 'ზომა'
-        trigger: 'ტრიგერი'
-        type: 'ტიპი'
     partners:
       title: 'პროგნოზი შესაძლებელი გახდა'
     snowpack:

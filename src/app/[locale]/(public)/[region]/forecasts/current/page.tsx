@@ -23,7 +23,8 @@ export const generateMetadata = async ({ params }: CurrentForecastPageProps): Pr
 const CurrentForecastPage = async ({ params }: CurrentForecastPageProps) => {
   const { region } = await params
   const forecastId = await fetchCurrentForecastId(region as RegionId)
-  const data = forecastId === null ? null : await fetchForecastPageData(forecastId)
+  const data =
+    forecastId === null ? null : await fetchForecastPageData(forecastId, { isKnownCurrent: true })
 
   if (!data) {
     return (

@@ -8,6 +8,7 @@ import { useTranslations } from 'next-intl'
 import ProblemBody from './ProblemBody'
 import ProblemSheetHeader from './ProblemSheetHeader'
 import { FieldInfo, InfoSheet, type ProblemField } from '../InfoSheet'
+import { getProblemKey } from '../model/problemKey'
 
 type ProblemSheetProps = {
   // The open problem; null closes the sheet
@@ -24,30 +25,45 @@ const ProblemSheet = (props: ProblemSheetProps) => {
   const { index, infoField, onClose, onInfoChange, onNavigate, problems } = props
   const t = useTranslations()
   const bodyRef = useRef<HTMLDivElement>(null)
-  // Keep the content rendered while the sheet (or the info sheet) animates closed
-  const [shownIndex, setShownIndex] = useState(index ?? 0)
+  // Keep the content rendered while the sheet (or the info sheet) animates
+  // closed — including a problem that has just left the forecast
+  const [shown, setShown] = useState({ index: index ?? 0, problem: problems[index ?? 0] })
   const [shownField, setShownField] = useState<ProblemField>(infoField ?? 'size')
 
-  if (index !== null && index !== shownIndex) setShownIndex(index)
+  if (index !== null && problems[index]) {
+    const isChanged = problems[index] !== shown.problem || index !== shown.index
+
+    if (isChanged) setShown({ index, problem: problems[index] })
+  }
+
   if (infoField !== null && infoField !== shownField) setShownField(infoField)
+
+  const { index: shownIndex, problem } = shown
+  const shownKey = problem && getProblemKey(problem)
 
   // Each problem starts at the top
   useEffect(() => {
     bodyRef.current?.closest('[data-sheet-body]')?.scrollTo({ top: 0 })
-  }, [shownIndex])
-
-  const problem = problems[shownIndex]
+  }, [shownKey])
 
   if (!problem) return null
 
   const title = t(`common.avalancheTypes.${problem.type}`)
 
+  const handleNavigate = (offset: number) => {
+    const nextIndex = shownIndex + offset
+
+    if (nextIndex >= 0 && nextIndex < problems.length) onNavigate(nextIndex)
+  }
+
   // ←/→ step through the problems. Keys from the stacked info sheet (portaled
-  // outside this popup) bubble here through React too — ignore them.
+  // outside this popup) bubble here through React too — ignore them, and leave
+  // browser shortcuts (Alt+←, Cmd+←) alone.
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (!event.currentTarget.contains(event.target as Node)) return
-    if (event.key === 'ArrowLeft' && shownIndex > 0) onNavigate(shownIndex - 1)
-    if (event.key === 'ArrowRight' && shownIndex < problems.length - 1) onNavigate(shownIndex + 1)
+    if (event.altKey || event.ctrlKey || event.metaKey) return
+    if (event.key === 'ArrowLeft') handleNavigate(-1)
+    if (event.key === 'ArrowRight') handleNavigate(1)
   }
 
   const handleOpenChange = (isOpen: boolean) => {
@@ -59,8 +75,8 @@ const ProblemSheet = (props: ProblemSheetProps) => {
       header={
         <ProblemSheetHeader
           index={shownIndex}
-          onNext={() => onNavigate(shownIndex + 1)}
-          onPrevious={() => onNavigate(shownIndex - 1)}
+          onNext={() => handleNavigate(1)}
+          onPrevious={() => handleNavigate(-1)}
           title={title}
           total={problems.length}
         />

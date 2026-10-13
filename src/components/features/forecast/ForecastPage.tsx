@@ -25,8 +25,8 @@ const ForecastPage = (props: ForecastPageProps) => {
   const { forecast, isCurrentForecast, nextForecastId, previousForecastId } = props
   const t = useTranslations()
   const headerHeight = useHeaderHeight()
-  const sheets = useForecastSheets()
   const { avalancheProblems, hazardLevels, regionId } = forecast
+  const sheets = useForecastSheets(avalancheProblems)
 
   // Sticky offsets and anchor margins sit below the sticky site header
   const style = { '--forecast-header-height': `${headerHeight}px` } as React.CSSProperties

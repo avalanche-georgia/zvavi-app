@@ -23,7 +23,10 @@ const useJumpBar = (sectionIds: SectionId[]) => {
 
     const update = () => {
       const { innerHeight, scrollY } = window
-      const isAtBottom = innerHeight + scrollY >= document.documentElement.scrollHeight - 2
+      // Only once the page has actually been scrolled — a page that fits the
+      // viewport is at its "bottom" from the start
+      const isAtBottom =
+        scrollY > 0 && innerHeight + scrollY >= document.documentElement.scrollHeight - 2
       const inView = ids.find((id) => {
         const rect = document.getElementById(id)?.getBoundingClientRect()
 

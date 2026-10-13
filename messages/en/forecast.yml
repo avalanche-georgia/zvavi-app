@@ -3,7 +3,6 @@ forecast:
   forecastAreaPageTitle: '{regionName} Forecast Area'
   historyPageTitle: '{regionName} Forecasts History'
   previewNote: 'Tap the banner to view full forecast'
-  viewForecastArea: 'View Forecast Area'
 
   history:
     emptyTitle: 'No Forecasts Yet'
@@ -101,14 +100,6 @@ forecast:
     recentAvalanches:
       title: 'Recent Avalanches'
       noAvalanches: 'Nothing reported yet'
-      labels:
-        dateUnknown: 'Date Unknown'
-        dimensions: 'Width / Slab Depth'
-        location: 'Location'
-        quantity: 'Quantity'
-        size: 'Size'
-        trigger: 'Trigger'
-        type: 'Type'
     partners:
       title: 'Forecast made possible by'
     snowpack:

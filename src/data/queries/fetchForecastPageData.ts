@@ -59,8 +59,15 @@ export type ForecastPageData = {
   previousForecastId: number | null
 }
 
+type ForecastPageDataOptions = {
+  // The caller has just resolved this id as the region's current forecast —
+  // skips the lookup of a newer one
+  isKnownCurrent?: boolean
+}
+
 export const fetchForecastPageData = async (
   forecastId: number,
+  { isKnownCurrent = false }: ForecastPageDataOptions = {},
 ): Promise<ForecastPageData | null> => {
   const supabase = await createClient()
 
@@ -80,10 +87,11 @@ export const fetchForecastPageData = async (
   if (!forecastResult.data) return null
 
   if (avalancheProblemsResult.error) {
-    console.error('fetchForecastPageData | avalanche_problems query failed', {
-      error: avalancheProblemsResult.error,
-      forecastId,
+    reportServerError(new Error(avalancheProblemsResult.error.message), {
+      forecast_id: forecastId,
+      scope: 'fetchForecastPageData | avalanche_problems',
     })
+
     throw new Error(avalancheProblemsResult.error.message)
   }
 
@@ -98,7 +106,9 @@ export const fetchForecastPageData = async (
   const { created_at: createdAt, region_id: regionId } = forecastResult.data
   const [previousForecastId, nextForecastId] = await Promise.all([
     fetchAdjacentForecastId(supabase, { createdAt, direction: 'previous', forecastId, regionId }),
-    fetchAdjacentForecastId(supabase, { createdAt, direction: 'next', forecastId, regionId }),
+    isKnownCurrent
+      ? null
+      : fetchAdjacentForecastId(supabase, { createdAt, direction: 'next', forecastId, regionId }),
   ])
 
   return {

@@ -22,11 +22,13 @@ export const sectionAnchorClasses =
 const SectionCard = ({ children, className, count, id, title }: SectionCardProps) => (
   <section
     className={cn(
-      'rounded-card border-rule bg-surface min-w-0 border p-4 lg:p-5',
+      'rounded-card border-rule bg-surface min-w-0 border p-4 outline-hidden lg:p-5',
       sectionAnchorClasses,
       className,
     )}
     id={id}
+    // Focusable from the jump bar only
+    tabIndex={id ? -1 : undefined}
   >
     <h2 className={cn(sectionLabelClasses, 'mb-3 flex items-baseline gap-2')}>
       {title}

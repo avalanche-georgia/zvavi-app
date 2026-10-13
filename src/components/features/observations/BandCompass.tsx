@@ -35,7 +35,7 @@ const BandCompass = ({ aspects, isDimmed = false, label, surface = 'white' }: Ba
     )}
   >
     <span className="text-body text-center text-xs leading-tight font-semibold">{label}</span>
-    <div className="grid grid-cols-[repeat(3,20px)] gap-0.75">
+    <div className="mt-auto grid grid-cols-[repeat(3,20px)] gap-0.75">
       {compassGrid.map((aspect, index) =>
         aspect === null ? (
           <i key={index} />

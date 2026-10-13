@@ -12,39 +12,44 @@ const TimeTile = ({ problem }: { problem: Pick<Problem, 'isAllDay' | 'timeOfDay'
   const { formatTime, getDayFraction } = useForecastDates()
   const { isAllDay, timeOfDay } = problem
   const { end = null, start = null } = timeOfDay ?? {}
-  const hasWindow = !isAllDay && Boolean(start && end)
 
-  const getWindow = () => {
-    if (isAllDay) return { left: 0, width: 1 }
-    if (!start || !end) return null
+  // Filled stretches of the 24h track; a window past midnight wraps around
+  const getSegments = () => {
+    if (isAllDay) return [{ left: 0, width: 1 }]
+    if (!start || !end) return []
 
     const from = getDayFraction(start)
     const to = getDayFraction(end)
 
-    // An end at or before the start runs to midnight
-    return { left: from, width: (to > from ? to : 1) - from }
+    if (to > from) return [{ left: from, width: to - from }]
+
+    return [
+      { left: from, width: 1 - from },
+      { left: 0, width: to },
+    ]
   }
 
-  const window = getWindow()
-  const value = isAllDay
-    ? t('admin.forecast.form.problems.labels.allDay')
-    : hasWindow
-      ? `${formatTime(start!)} – ${formatTime(end!)}`
-      : '—'
+  const getValue = () => {
+    if (isAllDay) return t('admin.forecast.form.problems.labels.allDay')
+    if (!start || !end) return '—'
+
+    return `${formatTime(start)} – ${formatTime(end)}`
+  }
 
   return (
     <Tile
       isWide
       label={t('forecast.sections.avalancheProblems.modal.labels.timeOfDay')}
-      value={value}
+      value={getValue()}
     >
       <div aria-hidden className="bg-off relative h-3.5 overflow-hidden rounded-sm">
-        {window && (
+        {getSegments().map(({ left, width }) => (
           <i
+            key={left}
             className="bg-accent absolute inset-y-0"
-            style={{ left: `${window.left * 100}%`, width: `${window.width * 100}%` }}
+            style={{ left: `${left * 100}%`, width: `${width * 100}%` }}
           />
-        )}
+        ))}
       </div>
       <div
         aria-hidden
