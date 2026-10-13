@@ -1,25 +1,24 @@
-'use client'
-
 import type { UserProfile } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
-const UserProfileView = ({ profile }: { profile: UserProfile | null }) => {
+// Read-only profile: name, role and the "about" text
+const UserProfileView = ({ profile }: { profile: UserProfile }) => {
   const t = useTranslations()
-  const { about, fullName, role } = profile || {}
+  const { about, fullName, role } = profile
 
   return (
     <div className="flex flex-col gap-4">
       <div>
-        <p className="text-lg font-semibold">{fullName || '—'}</p>
-        <p className="text-sm text-gray-500 capitalize">{role ?? '—'}</p>
+        <p className="text-heading text-ink font-bold">{fullName || '—'}</p>
+        <p className="text-copy-sm text-muted capitalize">{role ?? '—'}</p>
       </div>
 
       {about && (
-        <div>
-          <p className="text-xs font-medium tracking-wide text-gray-400 uppercase">
+        <div className="flex flex-col gap-1">
+          <p className="text-caption text-muted font-semibold tracking-wider uppercase">
             {t('admin.profile.form.labels.about')}
           </p>
-          <p className="mt-0.5 text-sm whitespace-pre-wrap">{about}</p>
+          <p className="text-copy text-body whitespace-pre-wrap">{about}</p>
         </div>
       )}
     </div>

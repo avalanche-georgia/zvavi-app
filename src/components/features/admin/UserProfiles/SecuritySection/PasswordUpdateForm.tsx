@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, InputBlock, TextInput } from '@components/ui'
+import { FormTextField } from '@ds/form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslations } from 'next-intl'
 import { FormProvider, useForm } from 'react-hook-form'
@@ -8,27 +8,29 @@ import { z } from 'zod'
 
 import { usePasswordUpdate } from './hooks'
 
+import InlineFormActions from '../InlineFormActions'
+
 const passwordSchema = z
   .object({
     confirmPassword: z.string(),
     currentPassword: z.string().min(1, { error: () => ({ message: 'required' }) }),
     password: z.string().min(8, { error: () => ({ message: 'passwordTooShort' }) }),
   })
-  .refine((data) => data.password === data.confirmPassword, {
+  .refine(({ confirmPassword, password }) => password === confirmPassword, {
     message: 'passwordMismatch',
     path: ['confirmPassword'],
   })
 
-const defaultValues = { confirmPassword: '', currentPassword: '', password: '' }
-
 type PasswordFormSchema = z.infer<typeof passwordSchema>
+
+const defaultValues: PasswordFormSchema = { confirmPassword: '', currentPassword: '', password: '' }
 
 type PasswordUpdateFormProps = {
   email: string
-  onCancel: VoidFunction
+  onClose: VoidFunction
 }
 
-const PasswordUpdateForm = ({ email, onCancel }: PasswordUpdateFormProps) => {
+const PasswordUpdateForm = ({ email, onClose }: PasswordUpdateFormProps) => {
   const t = useTranslations()
   const { updatePassword } = usePasswordUpdate()
 
@@ -37,58 +39,40 @@ const PasswordUpdateForm = ({ email, onCancel }: PasswordUpdateFormProps) => {
     resolver: zodResolver(passwordSchema),
   })
 
-  const {
-    formState: { errors },
-    register,
-  } = form
+  const handleSubmit = async ({ currentPassword, password }: PasswordFormSchema) => {
+    const isUpdated = await updatePassword({ currentPassword, email, newPassword: password })
 
-  const handleSubmit = async (data: PasswordFormSchema) => {
-    const success = await updatePassword({
-      currentPassword: data.currentPassword,
-      email,
-      newPassword: data.password,
-    })
-
-    if (!success) return
-
-    onCancel()
+    if (isUpdated) onClose()
   }
-
-  const getError = (field: keyof PasswordFormSchema) =>
-    errors[field] ? t(`common.validation.${errors[field]?.message}`) : undefined
 
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <FormProvider {...form}>
-      <form className="flex flex-col gap-4" onSubmit={form.handleSubmit(handleSubmit)}>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          <InputBlock
-            error={getError('currentPassword')}
+      <form className="flex flex-col gap-4" noValidate onSubmit={form.handleSubmit(handleSubmit)}>
+        <div className="grid gap-4 @2xl:grid-cols-3">
+          <FormTextField<PasswordFormSchema>
+            autoComplete="current-password"
             label={t('admin.profile.security.labels.currentPassword')}
+            name="currentPassword"
             required
-          >
-            {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-            <TextInput {...register('currentPassword')} type="password" />
-          </InputBlock>
-          <InputBlock error={getError('password')} label={t('common.labels.newPassword')} required>
-            {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-            <TextInput {...register('password')} type="password" />
-          </InputBlock>
-          <InputBlock
-            error={getError('confirmPassword')}
+            type="password"
+          />
+          <FormTextField<PasswordFormSchema>
+            autoComplete="new-password"
+            label={t('common.labels.newPassword')}
+            name="password"
+            required
+            type="password"
+          />
+          <FormTextField<PasswordFormSchema>
+            autoComplete="new-password"
             label={t('common.labels.confirmPassword')}
+            name="confirmPassword"
             required
-          >
-            {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-            <TextInput {...register('confirmPassword')} type="password" />
-          </InputBlock>
+            type="password"
+          />
         </div>
-        <div className="ml-auto flex gap-3">
-          <Button onClick={onCancel} type="button" variant="secondary">
-            {t('common.actions.cancel')}
-          </Button>
-          <Button type="submit">{t('common.actions.save')}</Button>
-        </div>
+        <InlineFormActions isSaving={form.formState.isSubmitting} onCancel={onClose} />
       </form>
     </FormProvider>
   )

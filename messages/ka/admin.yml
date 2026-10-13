@@ -325,6 +325,7 @@ admin:
 
   profile:
     title: 'ჩემი პროფილი'
+    details: 'პირადი მონაცემები'
 
     form:
       labels:

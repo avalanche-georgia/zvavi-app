@@ -1,59 +1,44 @@
 'use client'
 
 import { useBoolean } from '@components/hooks'
-import { Button } from '@components/ui'
+import { FormCard } from '@ds/patterns'
 import { useTranslations } from 'next-intl'
 
 import EmailUpdateForm from './EmailUpdateForm'
 import PasswordUpdateForm from './PasswordUpdateForm'
+import SecurityRow from './SecurityRow'
 
-type SecuritySectionProps = {
-  email: string
-}
+const maskedPassword = '••••••••'
 
-const SecuritySection = ({ email }: SecuritySectionProps) => {
+// Sign-in email and password, each changed in place
+const SecuritySection = ({ email }: { email: string }) => {
   const t = useTranslations()
-  const [emailOpen, { setFalse: closeEmail, setTrue: openEmail }] = useBoolean(false)
-  const [passwordOpen, { setFalse: closePassword, setTrue: openPassword }] = useBoolean(false)
+  const [isEmailOpen, { setFalse: closeEmail, setTrue: openEmail }] = useBoolean(false)
+  const [isPasswordOpen, { setFalse: closePassword, setTrue: openPassword }] = useBoolean(false)
 
   return (
-    <div className="rounded-lg bg-white shadow-sm">
-      <div className="border-b px-4 py-3 md:px-6">
-        <h2 className="text-xl font-semibold">{t('admin.profile.security.title')}</h2>
+    <FormCard className="@container" title={t('admin.profile.security.title')}>
+      <div>
+        <SecurityRow
+          changeLabel={t('admin.profile.security.actions.changeEmail')}
+          isOpen={isEmailOpen}
+          label={t('admin.profile.security.labels.email')}
+          onOpen={openEmail}
+          value={email}
+        >
+          <EmailUpdateForm onClose={closeEmail} />
+        </SecurityRow>
+        <SecurityRow
+          changeLabel={t('admin.profile.security.actions.changePassword')}
+          isOpen={isPasswordOpen}
+          label={t('common.labels.password')}
+          onOpen={openPassword}
+          value={maskedPassword}
+        >
+          <PasswordUpdateForm email={email} onClose={closePassword} />
+        </SecurityRow>
       </div>
-
-      <div className="flex flex-col divide-y p-4 md:p-6">
-        <div className="flex flex-col gap-4 pb-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="font-medium">{t('admin.profile.security.labels.email')}</p>
-              <p className="text-sm text-gray-500">{email}</p>
-            </div>
-            {!emailOpen && (
-              <Button onClick={openEmail} variant="outline">
-                {t('admin.profile.security.actions.changeEmail')}
-              </Button>
-            )}
-          </div>
-          {emailOpen && <EmailUpdateForm onClose={closeEmail} />}
-        </div>
-
-        <div className="flex flex-col gap-4 pt-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="font-medium">{t('common.labels.password')}</p>
-              <p className="text-sm text-gray-500">••••••••</p>
-            </div>
-            {!passwordOpen && (
-              <Button onClick={openPassword} variant="outline">
-                {t('admin.profile.security.actions.changePassword')}
-              </Button>
-            )}
-          </div>
-          {passwordOpen && <PasswordUpdateForm email={email} onCancel={closePassword} />}
-        </div>
-      </div>
-    </div>
+    </FormCard>
   )
 }
 

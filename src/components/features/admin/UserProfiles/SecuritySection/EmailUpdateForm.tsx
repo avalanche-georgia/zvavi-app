@@ -1,12 +1,14 @@
 'use client'
 
-import { Button, InputBlock, TextInput } from '@components/ui'
+import { FormTextField } from '@ds/form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslations } from 'next-intl'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { useEmailUpdate } from './hooks'
+
+import InlineFormActions from '../InlineFormActions'
 
 const emailSchema = z.object({
   email: z.email({ error: () => ({ message: 'invalid_string' }) }),
@@ -23,36 +25,24 @@ const EmailUpdateForm = ({ onClose }: { onClose: VoidFunction }) => {
     resolver: zodResolver(emailSchema),
   })
 
-  const {
-    formState: { errors },
-    register,
-  } = form
-
-  const handleSubmit = async (data: EmailFormSchema) => {
-    const success = await updateEmail(data.email)
-
-    if (success) onClose()
+  const handleSubmit = async ({ email }: EmailFormSchema) => {
+    if (await updateEmail(email)) onClose()
   }
 
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <FormProvider {...form}>
-      <form className="flex flex-col gap-4" onSubmit={form.handleSubmit(handleSubmit)}>
-        <InputBlock
-          error={errors.email ? t(`common.validation.${errors.email.message}`) : undefined}
+      <form className="flex flex-col gap-4" noValidate onSubmit={form.handleSubmit(handleSubmit)}>
+        <FormTextField<EmailFormSchema>
+          autoComplete="email"
+          className="@md:max-w-1/2"
+          description={t('admin.profile.security.hints.emailChange')}
           label={t('admin.profile.security.labels.newEmail')}
+          name="email"
           required
-        >
-          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-          <TextInput {...register('email')} type="email" />
-        </InputBlock>
-        <p className="text-xs text-gray-500">{t('admin.profile.security.hints.emailChange')}</p>
-        <div className="ml-auto flex gap-3">
-          <Button onClick={onClose} variant="secondary">
-            {t('common.actions.cancel')}
-          </Button>
-          <Button type="submit">{t('common.actions.save')}</Button>
-        </div>
+          type="email"
+        />
+        <InlineFormActions isSaving={form.formState.isSubmitting} onCancel={onClose} />
       </form>
     </FormProvider>
   )
