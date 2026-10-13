@@ -33,8 +33,10 @@ export const routes = {
       root: '/admin/observations',
     },
     partners: {
-      edit: (id: string) => `/admin/partners/${id}/edit`,
-      new: '/admin/partners/new',
+      // The list with its create sheet open
+      create: '/admin/partners?create=1',
+      // The list with the partner's edit sheet open
+      edit: (id: string) => `/admin/partners?partner=${id}`,
       root: '/admin/partners',
     },
     profile: '/admin/profile',

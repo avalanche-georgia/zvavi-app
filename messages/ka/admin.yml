@@ -135,25 +135,41 @@ admin:
   partners:
     title:
       create: 'პარტნიორის დამატება'
-      edit: 'პარტნიორის რედაქტირება'
-    notFound: 'პარტნიორი ვერ მოიძებნა.'
     list:
+      ariaLabel: 'პარტნიორები'
       columns:
         actions: 'მოქმედებები'
-        name: 'სახელი'
+        name: 'პარტნიორი'
         benefit: 'შეღავათი'
         tier: 'დონე'
         status: 'სტატუსი'
-      noPartners: 'პარტნიორები ვერ მოიძებნა.'
+      tierLine: 'დონე {tier} · {level}'
+    empty:
+      noPartnersTitle: 'პარტნიორები ჯერ არ არის'
+      noPartnersHint: 'პირველის დასამატებლად გამოიყენეთ ზემოთ „პარტნიორის დამატება“.'
+      noMatchesTitle: 'ვერაფერი მოიძებნა'
+      noMatchesHint: 'სცადეთ სხვა სტატუსი ან ძიება.'
     filters:
-      searchPlaceholder: 'ძიება სახელით...'
+      searchLabel: 'პარტნიორების ძიება'
+      searchPlaceholder: 'ძიება სახელით'
+      status:
+        label: 'სტატუსი'
+        all: 'ყველა'
+        active: 'აქტიური'
+        inactive: 'არააქტიური'
+    statuses:
+      active: 'აქტიური'
+      inactive: 'არააქტიური'
     actions:
-      delete: 'წაშლა'
-      edit: 'რედაქტირება'
-    deleteModal:
-      title: 'წავშალოთ პარტნიორი?'
-      description: 'გსურთ სამუდამოდ წაშალოთ {name}?'
+      moreForPartner: 'სხვა მოქმედებები — {name}'
+      openWebsite: 'ვებსაიტის გახსნა'
+    deleteConfirm: 'წავშალოთ {name} სამუდამოდ? ის გაქრება პარტნიორების საჯარო სიიდან.'
     form:
+      optional: 'სურვილისამებრ'
+      sections:
+        benefit: 'შეღავათი წევრებისთვის'
+        description: 'აღწერა'
+        partner: 'პარტნიორი'
       labels:
         nameEn: 'სახელი (EN)'
         nameKa: 'სახელი (KA)'
@@ -166,14 +182,9 @@ admin:
         tier: 'დონე'
         isActive: 'აქტიური'
       placeholders:
-        nameKa: 'სურვილისამებრ'
-        benefitEn: 'სურვილისამებრ'
-        benefitKa: 'სურვილისამებრ'
-        descriptionEn: 'სურვილისამებრ'
-        descriptionKa: 'სურვილისამებრ'
-        tier: 'აირჩიეთ დონე'
         websiteUrl: 'https://example.com'
       hints:
+        isActive: 'აქტიური პარტნიორები ჩანს საჯარო საიტზე.'
         logo: 'PNG, JPG, WebP ან SVG · მაქს. 512 KB'
       actions:
         logoUpload: 'ლოგოს ატვირთვა'

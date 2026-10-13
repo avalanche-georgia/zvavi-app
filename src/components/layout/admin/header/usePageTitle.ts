@@ -15,11 +15,7 @@ const sectionTitles: Record<string, SectionTitles> = {
     main: 'admin.forecasts.title',
   },
   members: { main: 'admin.sidebar.members' },
-  partners: {
-    create: 'admin.partners.title.create',
-    edit: 'admin.partners.title.edit',
-    main: 'admin.sidebar.partners',
-  },
+  partners: { main: 'admin.sidebar.partners' },
   'recent-avalanches': {
     create: 'admin.recentAvalanches.title.create',
     edit: 'admin.recentAvalanches.title.edit',
