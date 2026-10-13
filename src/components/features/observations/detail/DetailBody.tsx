@@ -1,14 +1,12 @@
-import {
-  DetailFacts,
-  DetailSection,
-  DetailTitle,
-  DetailWhere,
-  PhotoStrip,
-} from '@components/features/observations'
 import type { PublicObservation } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
+import DetailFacts from './DetailFacts'
 import DetailReporter from './DetailReporter'
+import DetailTitle from './DetailTitle'
+import DetailWhere from './DetailWhere'
+import DetailSection from '../DetailSection'
+import PhotoStrip from '../PhotoStrip'
 
 type DetailBodyProps = {
   observation: PublicObservation

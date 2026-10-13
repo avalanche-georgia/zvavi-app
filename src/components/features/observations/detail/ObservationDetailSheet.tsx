@@ -1,24 +1,24 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { LocationSheet } from '@components/features/observations'
 import { Sheet } from '@components/ui'
 import type { ObservationPoint, PublicObservation } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import DetailBody from './DetailBody'
 import DetailHeader from './DetailHeader'
+import LocationSheet from '../location/LocationSheet'
 
 type ObservationDetailSheetProps = {
-  // Filtered set, for the location map's context dots
+  // Other observations, shown as context dots on the location map
   contextPoints: ObservationPoint[]
-  // Position within the filtered list; null if the observation isn't in it
+  // Position within the list being stepped through; null if the observation isn't in it
   index: number | null
   observation: PublicObservation | null
   onClose: VoidFunction
-  // Step by ±1 through the filtered list (loads the next page when needed)
+  // Step by ±1 through the list
   onNavigate: (offset: number) => void
-  // Size of the filtered list, loaded or not
+  // Size of the whole list, loaded or not
   total: number
 }
 

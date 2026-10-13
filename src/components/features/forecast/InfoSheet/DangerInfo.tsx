@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl'
 
 import InfoSection from './InfoSection'
 import ScaleItem from './ScaleItem'
-import { descriptionLabelKeys } from '../HazardLevelsByElevation/HazardLevelDescriptionRows'
+import { descriptionLabelKeys } from '../model/dangerDescription'
 import { hazardScaleLevels, hazardTextClass } from '../model/hazard'
 
 import { cn } from '@/lib/utils'
