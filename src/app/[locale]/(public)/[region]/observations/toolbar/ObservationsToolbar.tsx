@@ -13,10 +13,11 @@ import {
   type ObservationsFilters,
   type ObservationsPeriod,
   observationsPeriods,
-  type ObservationsView,
 } from '../helpers/searchParams'
 
 import { cn } from '@/lib/utils'
+
+export type ObservationsView = 'list' | 'map'
 
 type ObservationsToolbarProps = {
   filters: ObservationsFilters
