@@ -1,6 +1,7 @@
-import { useRelativeDate } from '@components/features/observations'
 import type { ObservationDateBasis, PublicObservation } from '@domain/types'
 import { useTranslations } from 'next-intl'
+
+import useRelativeDate from './useRelativeDate'
 
 // "Yesterday" / "3 weeks ago", or "Reported 2 days ago" in the Reported view
 const useCardDateLabel = () => {

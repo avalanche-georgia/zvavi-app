@@ -2,8 +2,10 @@ import { createClient } from '@supabase/supabase-js'
 
 import type { Database } from './database.types'
 
-// Service-role key bypasses RLS entirely — never expose to the client, never
-// import this outside API routes that need to call service_role-only RPCs.
+import 'server-only'
+
+// Service-role key bypasses RLS entirely — server only (API routes and server
+// fetch functions), never reachable from client code.
 export const createServiceRoleClient = () =>
   createClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,

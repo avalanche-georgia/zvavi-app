@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { hasCoordinates } from '@components/features/observations'
+import { hasCoordinates, ObservationDetailSheet } from '@components/features/observations'
 import { desktopMediaQuery } from '@components/features/observations/map/mapConfig'
 import { SplitPageWrapper } from '@components/layout'
 import { useRegionContext } from '@domain/context/RegionContext'
@@ -12,7 +12,6 @@ import useMobileMapOffset from './hooks/useMobileMapOffset'
 import useObservationLookup from './hooks/useObservationLookup'
 import useObservationsPage from './hooks/useObservationsPage'
 
-import ObservationDetailSheet from './detail/ObservationDetailSheet'
 import ObservationsListPane from './list/ObservationsListPane'
 import ObservationsMap from './map/ObservationsMap'
 import ObservationsHeader from './ObservationsHeader'
