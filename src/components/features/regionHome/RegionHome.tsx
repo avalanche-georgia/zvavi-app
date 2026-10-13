@@ -49,7 +49,7 @@ const RegionHome = (props: RegionHomeProps) => {
             ) : (
               <NoForecastCard />
             )}
-            <MainPartnersCard partners={partners} regionId={regionId} />
+            <MainPartnersCard partners={partners} />
           </div>
           <div className={columnClasses}>
             <RecentAvalanchesCard avalanches={recentAvalanches} regionId={regionId} />

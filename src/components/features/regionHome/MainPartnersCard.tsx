@@ -2,7 +2,7 @@
 
 import SectionCard from '@components/features/forecast/sections/SectionCard'
 import { PartnersTracking } from '@components/features/partners/tracking'
-import type { Partner, RegionId } from '@domain/types'
+import type { Partner } from '@domain/types'
 import { useTranslations } from 'next-intl'
 import { Link } from 'src/i18n/navigation'
 
@@ -12,13 +12,8 @@ import MainPartnerTile from './MainPartnerTile'
 import { cn } from '@/lib/utils'
 import { routes } from '@/routes'
 
-type MainPartnersCardProps = {
-  partners: Partner[]
-  regionId: RegionId
-}
-
 // Tier-1 partners as large logo tiles, or an invitation while there are none
-const MainPartnersCard = ({ partners, regionId }: MainPartnersCardProps) => {
+const MainPartnersCard = ({ partners }: { partners: Partner[] }) => {
   const t = useTranslations()
   const hasMany = partners.length > 1
 
@@ -36,7 +31,7 @@ const MainPartnersCard = ({ partners, regionId }: MainPartnersCardProps) => {
       title={hasMany ? t('partners.main.title') : t('regionHome.partners.titleOne')}
     >
       {partners.length === 0 ? (
-        <BecomePartnerBox regionId={regionId} />
+        <BecomePartnerBox />
       ) : (
         <PartnersTracking partners={partners} placement="home">
           {/* The 1px gaps over a rule-coloured background draw the dividers */}
