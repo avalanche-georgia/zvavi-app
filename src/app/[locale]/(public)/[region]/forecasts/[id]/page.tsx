@@ -1,14 +1,11 @@
 import { ForecastContainer } from '@components/features/forecast'
-import { PageWrapper } from '@components/layout'
 import { isNoRowsError } from '@data/helpers'
-import type { HazardLevelScale, RegionId } from '@domain/types'
+import { fetchForecastPageData } from '@data/queries/fetchForecastPageData'
+import type { HazardLevelScale } from '@domain/types'
 import { format } from 'date-fns'
 import type { Metadata } from 'next'
 import { headers } from 'next/headers'
 import { notFound } from 'next/navigation'
-import { getTranslations } from 'next-intl/server'
-
-import { fetchForecastPageData } from './fetchForecastPageData'
 
 import { reportServerError } from '@/lib/posthog/server'
 import { createClient } from '@/lib/supabase/server'
@@ -77,21 +74,19 @@ const ForecastPage = async (props: ForecastPageProps) => {
     notFound()
   }
 
-  const data = await fetchForecastPageData(forecastId, params.region as RegionId)
+  const data = await fetchForecastPageData(forecastId)
 
   if (!data) {
     notFound()
   }
 
-  const { initialForecast, isCurrentForecast } = data
-  const t = await getTranslations()
-
   return (
-    <PageWrapper
-      title={t('forecast.pageTitle', { regionName: t(`regions.names.${params.region}`) })}
-    >
-      <ForecastContainer initialForecast={initialForecast} isCurrentForecast={isCurrentForecast} />
-    </PageWrapper>
+    <ForecastContainer
+      initialForecast={data.initialForecast}
+      isCurrentForecast={data.isCurrentForecast}
+      nextForecastId={data.nextForecastId}
+      previousForecastId={data.previousForecastId}
+    />
   )
 }
 

@@ -8,13 +8,22 @@ import PartnerInfo from './PartnerInfo'
 import PartnerLogo from './PartnerLogo'
 import { usePartnerTracking } from '../tracking'
 
-const PartnerBadge = ({ partner }: { partner: Partner }) => {
+import { cn } from '@/lib/utils'
+
+type PartnerBadgeProps = {
+  className?: string
+  partner: Partner
+}
+
+const PartnerBadge = ({ className, partner }: PartnerBadgeProps) => {
   const localizeField = useLocalizeField()
   const name = localizeField(partner.nameEn, partner.nameKa)
   const { hasDetails, trackBadgeClick } = usePartnerTracking(partner)
 
-  const badgeClassName =
-    'flex size-24 flex-none items-center justify-center rounded-2xl bg-gray-100 p-2'
+  const badgeClassName = cn(
+    'flex size-24 flex-none items-center justify-center rounded-2xl bg-gray-100 p-2',
+    className,
+  )
 
   const logoNode = <PartnerLogo className="size-full" logoUrl={partner.logoUrl} name={name} />
 

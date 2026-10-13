@@ -152,11 +152,21 @@ export const distributionTypes = {
   widespread: 'widespread',
 } as const
 
+// Low → high
+export const distributionTypesSorted = [
+  distributionTypes.isolated,
+  distributionTypes.specific,
+  distributionTypes.widespread,
+]
+
 export const trends = {
   deteriorating: 'deteriorating',
   improving: 'improving',
   noChange: 'noChange',
 } as const
+
+// Getting better → getting worse
+export const trendsSorted = [trends.improving, trends.noChange, trends.deteriorating]
 
 export const confidenceLevels = {
   high: 'high',
