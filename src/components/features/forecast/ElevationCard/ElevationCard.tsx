@@ -2,7 +2,8 @@ import { sortedElevationZones } from '@domain/constants'
 import type { ElevationZone, HazardLevels, RegionId } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
-import ElevationRow from './ElevationRow'
+import ElevationLabel from './ElevationLabel'
+import ElevationSlices from './ElevationSlices'
 import SectionCard from '../sections/SectionCard'
 
 type ElevationCardProps = {
@@ -12,7 +13,7 @@ type ElevationCardProps = {
   regionId: RegionId
 }
 
-// Danger level per elevation band, drawn as a three-slice pyramid
+// Danger level per elevation band: three rows of text, the mountain beside them
 const ElevationCard = ({
   className,
   hazardLevels,
@@ -23,17 +24,12 @@ const ElevationCard = ({
 
   return (
     <SectionCard className={className} title={t('forecast.page.byElevation')}>
-      <ul className="flex flex-col gap-0.75">
+      <div className="grid grid-cols-[minmax(0,1fr)_101px] gap-y-0.75">
         {sortedElevationZones.map((zone) => (
-          <ElevationRow
-            key={zone}
-            level={hazardLevels[zone]}
-            onInfoOpen={() => onZoneInfoOpen(zone)}
-            regionId={regionId}
-            zone={zone}
-          />
+          <ElevationLabel key={zone} level={hazardLevels[zone]} regionId={regionId} zone={zone} />
         ))}
-      </ul>
+        <ElevationSlices hazardLevels={hazardLevels} onZoneInfoOpen={onZoneInfoOpen} />
+      </div>
     </SectionCard>
   )
 }
