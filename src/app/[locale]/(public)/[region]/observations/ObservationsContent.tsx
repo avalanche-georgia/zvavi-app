@@ -8,6 +8,7 @@ import { useRegionContext } from '@domain/context/RegionContext'
 import { useTranslations } from 'next-intl'
 import { useMediaQuery } from 'usehooks-ts'
 
+import type { ObservationsView } from './helpers/searchParams'
 import useMobileMapOffset from './hooks/useMobileMapOffset'
 import useObservationLookup from './hooks/useObservationLookup'
 import useObservationsPage from './hooks/useObservationsPage'
@@ -17,7 +18,7 @@ import ObservationsListPane from './list/ObservationsListPane'
 import ObservationsMap from './map/ObservationsMap'
 import ObservationsHeader from './ObservationsHeader'
 import ReportButton from './ReportButton'
-import ObservationsToolbar, { type ObservationsView } from './toolbar/ObservationsToolbar'
+import ObservationsToolbar from './toolbar/ObservationsToolbar'
 
 const ObservationsContent = () => {
   const t = useTranslations()
@@ -25,7 +26,6 @@ const ObservationsContent = () => {
   const page = useObservationsPage(region.id)
   const { list, params, points, selectedObservation, setParams } = page
 
-  const [view, setView] = useState<ObservationsView>('list')
   const [peekId, setPeekId] = useState<number | null>(null)
   // Matches the server render (no media queries there) on the first pass
   const isDesktop = useMediaQuery(desktopMediaQuery, { initializeWithValue: false })
@@ -37,7 +37,7 @@ const ObservationsContent = () => {
     regionId: region.id,
   })
 
-  const isMapView = view === 'map' && !isDesktop
+  const isMapView = params.view === 'map' && !isDesktop
   const mapFocus =
     isDesktop && selectedObservation && hasCoordinates(selectedObservation)
       ? ([selectedObservation.latitude, selectedObservation.longitude] as [number, number])
@@ -50,7 +50,7 @@ const ObservationsContent = () => {
   const handleMarkerClick = (id: number) => (isDesktop ? handleOpen(id) : setPeekId(id))
 
   const handleViewChange = (nextView: ObservationsView) => {
-    setView(nextView)
+    setParams({ view: nextView })
     setPeekId(null)
   }
 
@@ -87,7 +87,7 @@ const ObservationsContent = () => {
         filters={params}
         onFiltersChange={setParams}
         onViewChange={handleViewChange}
-        view={view}
+        view={params.view}
       />
       {!isMapView && (
         <ObservationsListPane

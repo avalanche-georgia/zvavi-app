@@ -4,6 +4,10 @@
 
 The homepage shows an interactive map of all active forecast regions, each polygon colored by its current overall hazard level. Tapping a region opens a summary popup with the hazard icon, level, and a link to the region page. The selected region is remembered between visits.
 
+## Region Page
+
+Each region has its own landing page. It opens with the current overall danger level on the official 1–5 scale, when the forecast was issued, how long it stays valid and who wrote it — one tap leads to the full forecast. If the latest forecast's validity has run out and no new one has been issued yet, a notice says so. Below are the region's main partners (or an invitation to become one), the three most recent avalanche reports with shortcuts to see all of them, report a new one or open the map, and quick links to the forecast area, the weather stations and past forecasts.
+
 ## Avalanche Forecasts
 
 Daily professional forecasts for each active region in the Georgian backcountry. Each forecast includes:

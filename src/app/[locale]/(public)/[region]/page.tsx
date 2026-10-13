@@ -1,18 +1,24 @@
-import { CurrentForecastContainer } from '@components/features/home/CurrentForecast'
-import { Partners } from '@components/features/home/Partners'
-import fetchTier1Partners from '@data/queries/fetchTier1Partners'
+import { RegionHome } from '@components/features/regionHome'
+import type { RegionId } from '@domain/types'
 
-import RegionHomeQuickLinks from './RegionHomeQuickLinks'
+import fetchRegionHomeData from './fetchRegionHomeData'
 
-const RegionHomePage = async () => {
-  const partners = await fetchTier1Partners()
+type RegionHomePageProps = { params: Promise<{ region: string }> }
+
+const RegionHomePage = async ({ params }: RegionHomePageProps) => {
+  const { region } = await params
+  // Validated by the region layout
+  const regionId = region as RegionId
+  const data = await fetchRegionHomeData(regionId)
 
   return (
-    <div className="mx-auto max-w-(--breakpoint-md) space-y-8 px-4 pt-3 pb-6">
-      <CurrentForecastContainer />
-      <RegionHomeQuickLinks />
-      <Partners partners={partners} />
-    </div>
+    <RegionHome
+      forecast={data.forecast}
+      partners={data.partners}
+      recentAvalanches={data.recentAvalanches}
+      regionId={regionId}
+      weatherStationsCount={data.weatherStationsCount}
+    />
   )
 }
 

@@ -2,7 +2,6 @@ forecast:
   pageTitle: '{regionName} Avalanche Forecast'
   forecastAreaPageTitle: '{regionName} Forecast Area'
   historyPageTitle: '{regionName} Forecasts History'
-  previewNote: 'Tap the banner to view full forecast'
 
   history:
     emptyTitle: 'No Forecasts Yet'

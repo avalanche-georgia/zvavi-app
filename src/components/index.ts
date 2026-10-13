@@ -9,7 +9,6 @@ export {
   ButtonLink,
   ConfirmationDialog,
   DisclaimerGate,
-  HazardLevelBanner,
   HTMLContainer,
   LanguageToggle,
   Spoiler,

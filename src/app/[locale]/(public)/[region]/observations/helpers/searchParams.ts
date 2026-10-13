@@ -11,7 +11,13 @@ export type ObservationsFilters = {
   to: string | null
 }
 
-export type ObservationsParams = ObservationsFilters & { selectedId: number | null }
+// Mobile shows the list or the map; desktop always shows both
+export type ObservationsView = 'list' | 'map'
+
+export type ObservationsParams = ObservationsFilters & {
+  selectedId: number | null
+  view: ObservationsView
+}
 
 export const defaultFilters: ObservationsFilters = {
   dateBasis: 'occurred',
@@ -38,7 +44,7 @@ const pick = <T extends string>(value: string | null, allowed: T[], fallback: T)
 const toDay = (value: string | null) => (value && dayPattern.test(value) ? value : null)
 
 // URL ⇄ state. Defaults are left out of the URL so plain links stay clean:
-// ?by=reported&period=custom&from=2026-01-01&to=2026-01-31&sort=largest&id=42
+// ?by=reported&period=custom&from=2026-01-01&to=2026-01-31&sort=largest&view=map&id=42
 export const parseObservationsParams = (searchParams: URLSearchParams): ObservationsParams => {
   const dateBasis = searchParams.get('by') === 'reported' ? 'reported' : 'occurred'
   const pickedPeriod = pick(searchParams.get('period'), observationsPeriods, 'all')
@@ -53,6 +59,7 @@ export const parseObservationsParams = (searchParams: URLSearchParams): Observat
     selectedId: Number.isInteger(selectedId) && selectedId > 0 ? selectedId : null,
     sort: searchParams.get('sort') === 'largest' ? 'largest' : 'newest',
     to: period === 'custom' ? toDay(searchParams.get('to')) : null,
+    view: searchParams.get('view') === 'map' ? 'map' : 'list',
   }
 }
 
@@ -64,6 +71,7 @@ export const serializeObservationsParams = (params: ObservationsParams): string 
   if (params.period === 'custom' && params.from) searchParams.set('from', params.from)
   if (params.period === 'custom' && params.to) searchParams.set('to', params.to)
   if (params.sort !== defaultFilters.sort) searchParams.set('sort', params.sort)
+  if (params.view === 'map') searchParams.set('view', params.view)
   if (params.selectedId !== null) searchParams.set('id', String(params.selectedId))
 
   return searchParams.toString()

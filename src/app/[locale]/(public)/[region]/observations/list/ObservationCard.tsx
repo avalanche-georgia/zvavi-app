@@ -1,11 +1,10 @@
-import { SizeTile } from '@components/features/observations'
+import { SizeTile, useCardDateLabel } from '@components/features/observations'
 import { MiniCompass } from '@components/ui'
 import { getAllAspects, getZonesWithAspects } from '@domain/aspects'
 import type { ObservationDateBasis, PublicObservation } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import CardThumbnail from './CardThumbnail'
-import useCardDateLabel from './useCardDateLabel'
 
 import { cn } from '@/lib/utils'
 

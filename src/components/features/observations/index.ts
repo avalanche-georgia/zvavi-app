@@ -13,5 +13,6 @@ export { default as LocationSheet, type LocationSheetRecord } from './location/L
 export { default as PhotoPlaceholder } from './PhotoPlaceholder'
 export { default as PhotoStrip } from './PhotoStrip'
 export { default as SizeTile } from './SizeTile'
+export { default as useCardDateLabel } from './useCardDateLabel'
 export { default as useFormatDay } from './useFormatDay'
 export { default as useRelativeDate } from './useRelativeDate'

@@ -65,8 +65,12 @@ export const routes = {
   }),
   home: '/',
   observationsByRegion: (regionId: string) => ({
+    // The list with its map shown (mobile; desktop always shows both)
+    map: `/${regionId}/observations?view=map`,
     root: `/${regionId}/observations`,
     submit: `/${regionId}/observations/submit`,
+    // The list with one observation open
+    view: (id: number) => `/${regionId}/observations?id=${id}`,
   }),
   partners: '/partners',
   privacy: '/privacy-policy',

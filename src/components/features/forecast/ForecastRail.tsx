@@ -17,10 +17,10 @@ type ForecastRailProps = {
 const ForecastRail = ({ forecast, isCurrentForecast, onDangerInfoOpen }: ForecastRailProps) => (
   <div className="contents lg:sticky lg:top-[calc(var(--forecast-header-height)+16px)] lg:flex lg:flex-col lg:gap-3">
     <DangerCard
+      action={{ onInfoOpen: () => onDangerInfoOpen('overall') }}
       className="order-1 lg:order-0"
       forecast={forecast}
       isCurrentForecast={isCurrentForecast}
-      onInfoOpen={() => onDangerInfoOpen('overall')}
     />
     <ElevationCard
       className="order-2 lg:order-0"
