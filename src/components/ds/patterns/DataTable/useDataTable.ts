@@ -19,10 +19,11 @@ type DataTableInput<TData extends RowData> = {
   columns: ColumnDef<TData, any>[]
   data: TData[]
   getRowId: (row: TData) => string
-  onSortChange: (sort: DataTableSort) => void
+  onSortChange?: (sort: DataTableSort) => void
   pageIndex: number
   pageSize: number
-  sort: DataTableSort
+  rowCount?: number
+  sort?: DataTableSort
 }
 
 const useDataTable = <TData extends RowData>({
@@ -32,18 +33,20 @@ const useDataTable = <TData extends RowData>({
   onSortChange,
   pageIndex,
   pageSize,
+  rowCount,
   sort,
 }: DataTableInput<TData>) => {
-  const sorting: SortingState = [sort]
+  const sorting: SortingState = sort ? [sort] : []
+  const isServerPaged = rowCount !== undefined
   // A stale page (rows deleted, filters narrowed) shows the last page instead of nothing
-  const lastPageIndex = Math.max(0, Math.ceil(data.length / pageSize) - 1)
+  const lastPageIndex = Math.max(0, Math.ceil((rowCount ?? data.length) / pageSize) - 1)
   const safePageIndex = Math.min(pageIndex, lastPageIndex)
 
   const handleSortingChange = (updater: Updater<SortingState>) => {
     const [nextSort] = typeof updater === 'function' ? updater(sorting) : updater
 
     if (!nextSort) return
-    onSortChange({ desc: nextSort.desc, id: nextSort.id })
+    onSortChange?.({ desc: nextSort.desc, id: nextSort.id })
   }
 
   // TODO: Revise 'use no memo' when upgrading Tanstack Table to v9.
@@ -61,7 +64,10 @@ const useDataTable = <TData extends RowData>({
     getPaginationRowModel: getPaginationRowModel(),
     getRowId,
     getSortedRowModel: getSortedRowModel(),
+    // Server-paged: `data` already is the page, in the server's order
+    manualPagination: isServerPaged,
     onSortingChange: handleSortingChange,
+    rowCount,
     sortDescFirst: true,
     state: { pagination: { pageIndex: safePageIndex, pageSize }, sorting },
   })

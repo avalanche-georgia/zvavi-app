@@ -28,12 +28,16 @@ type DataTableProps<TData extends RowData> = {
   isLoading?: boolean
   labels: DataTableLabels
   onPageChange: (pageIndex: number) => void
-  onSortChange: (sort: DataTableSort) => void
+  // Leave out (with `sort`) when no column sorts, e.g. the server fixes the order
+  onSortChange?: (sort: DataTableSort) => void
   pageIndex: number
   pageSize?: number
   // ≤640px table width: each row renders as this card instead
   renderCard?: (row: TData) => React.ReactNode
-  sort: DataTableSort
+  // Server-side paging: `data` holds the current page only and this is the total row count.
+  // Without it the table pages `data` itself.
+  rowCount?: number
+  sort?: DataTableSort
 }
 
 // Sortable, paginated table on the table's own width: columns hide by container query,
@@ -41,7 +45,7 @@ type DataTableProps<TData extends RowData> = {
 const DataTable = <TData extends RowData>(props: DataTableProps<TData>) => {
   const { ariaLabel, className, data, empty, getRowClassName, isLoading, labels, onPageChange } =
     props
-  const { pageSize = 15, renderCard } = props
+  const { pageSize = 15, renderCard, rowCount } = props
   const { ref, width } = useElementWidth<HTMLDivElement>()
   const { rows, safePageIndex, table } = useDataTable({ ...props, pageSize })
   const isCardMode = useCardMode(width, !!renderCard)
@@ -83,7 +87,7 @@ const DataTable = <TData extends RowData>(props: DataTableProps<TData>) => {
             onPageChange={onPageChange}
             pageIndex={safePageIndex}
             pageSize={pageSize}
-            total={data.length}
+            total={rowCount ?? data.length}
           />
         </>
       )}

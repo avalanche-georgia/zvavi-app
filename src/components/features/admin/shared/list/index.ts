@@ -1,4 +1,5 @@
 export { default as CountedSegments } from './CountedSegments'
+export * from './isoDay'
 export { default as keepFocusInTable } from './keepFocusInTable'
 export { default as LinkPendingIndicator } from './LinkPendingIndicator'
 export { default as ListEmptyState } from './ListEmptyState'
