@@ -4,11 +4,8 @@ import type { ElevationZone, Region } from './types'
 // thresholds use the values the site has always shown.
 const defaultThresholds = { high: 2600, low: 2000 }
 
-// The region's own thresholds, once its row carries them
-type ThresholdSource = Pick<Region, 'id'> & {
-  elevationHighM?: number | null
-  elevationLowM?: number | null
-}
+// The region's own thresholds — the same columns the public bulletin API reads
+type ThresholdSource = Pick<Region, 'elevationHighM' | 'elevationLowM'>
 
 export type ElevationThresholds = { high: number; low: number }
 
