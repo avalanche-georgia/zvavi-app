@@ -1,6 +1,7 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
+import { useSearchReset } from '@components/features/admin/shared'
 import { useMembersQuery } from '@data/hooks/members'
 
 import useMembersListParams from './useMembersListParams'
@@ -9,7 +10,7 @@ import { countByStatus, filterMembers } from '../model'
 // Everything the list page shows: all members, the filters and what they leave visible
 const useMembersListPage = () => {
   const list = useMembersListParams()
-  const [searchResetKey, setSearchResetKey] = useState(0)
+  const { onFiltersClear, searchResetKey } = useSearchReset(list.onFiltersClear)
   const membersQuery = useMembersQuery()
   const members = useMemo(() => membersQuery.data ?? [], [membersQuery.data])
   const { query, status } = list
@@ -21,14 +22,9 @@ const useMembersListPage = () => {
   )
   const counts = useMemo(() => countByStatus(members), [members])
 
-  const handleFiltersClear = () => {
-    setSearchResetKey((key) => key + 1)
-    list.onFiltersClear()
-  }
-
   return {
     counts,
-    list: { ...list, onFiltersClear: handleFiltersClear },
+    list: { ...list, onFiltersClear },
     members,
     membersQuery,
     searchResetKey,
