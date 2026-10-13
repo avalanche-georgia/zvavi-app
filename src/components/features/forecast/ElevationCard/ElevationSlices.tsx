@@ -3,6 +3,7 @@ import { sortedElevationZones } from '@domain/constants'
 import type { ElevationZone, HazardLevels } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
+import { mountainClipPath } from './mountain'
 import { hazardTextClass } from '../model/hazard'
 
 import { cn } from '@/lib/utils'
@@ -12,13 +13,10 @@ type ElevationSlicesProps = {
   onZoneInfoOpen: (zone: ElevationZone) => void
 }
 
-// The mountain: one shape — a straight slope on the left, a vertical right
-// edge — clipped once around all three slices, so the slope stays a single
-// straight line however tall each row grows. The slices take their heights
-// from the card's rows (subgrid).
-const mountainClipPath = 'polygon(50% 0, 100% 0, 100% 100%, 0 100%)'
-
-// The three coloured slices; each opens the explanation of its band's level
+// The three coloured slices of the mountain, clipped once as a single shape —
+// the slope stays one straight line however tall each row grows. They take
+// their heights from the card's rows (subgrid). Each opens the explanation of
+// its band's level.
 const ElevationSlices = ({ hazardLevels, onZoneInfoOpen }: ElevationSlicesProps) => {
   const t = useTranslations()
 
