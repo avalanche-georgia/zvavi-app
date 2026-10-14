@@ -10,6 +10,7 @@ import ButtonGallery from '@ds/primitives/Button/Button.gallery'
 import CheckboxGallery from '@ds/primitives/Checkbox/Checkbox.gallery'
 import ChipGroupGallery from '@ds/primitives/ChipGroup/ChipGroup.gallery'
 import ConfirmPopoverGallery from '@ds/primitives/ConfirmPopover/ConfirmPopover.gallery'
+import CountBadgeGallery from '@ds/primitives/CountBadge/CountBadge.gallery'
 import DateFieldGallery from '@ds/primitives/DateField/DateField.gallery'
 import FieldGallery from '@ds/primitives/Field/Field.gallery'
 import IconButtonGallery from '@ds/primitives/IconButton/IconButton.gallery'
@@ -46,6 +47,7 @@ export const galleryEntries: GalleryEntry[] = [
   { Demo: ButtonGallery, id: 'button', title: 'Button' },
   { Demo: BadgeGallery, id: 'badge', title: 'Badge' },
   { Demo: StatusPillGallery, id: 'status-pill', title: 'StatusPill' },
+  { Demo: CountBadgeGallery, id: 'count-badge', title: 'CountBadge' },
   { Demo: SkeletonGallery, id: 'skeleton', title: 'Skeleton' },
   { Demo: SpinnerGallery, id: 'spinner', title: 'Spinner' },
   { Demo: LoadingStateGallery, id: 'loading-state', title: 'LoadingState' },

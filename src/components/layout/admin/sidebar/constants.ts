@@ -18,3 +18,6 @@ export const navItems: NavItem[] = [
     ? [{ href: routes.admin.designSystem, icon: 'palette', label: 'designSystem' } as const]
     : []),
 ]
+
+// Back to the public site, pinned to the bottom of the sidebar
+export const homeItem: NavItem = { href: routes.home, icon: 'home', label: 'home' }

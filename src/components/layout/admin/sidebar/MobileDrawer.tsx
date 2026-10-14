@@ -1,6 +1,7 @@
 'use client'
 
-import { Icon } from '@components/icons'
+import { IconButton } from '@ds/primitives'
+import { X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { Drawer } from 'vaul'
 
@@ -8,31 +9,32 @@ import SidebarContent from './SidebarContent'
 
 type MobileDrawerProps = {
   isOpen: boolean
-  onClose: () => void
+  onClose: VoidFunction
 }
 
 const MobileDrawer = ({ isOpen, onClose }: MobileDrawerProps) => {
-  const t = useTranslations('admin')
+  const t = useTranslations()
+
+  const handleOpenChange = (isNextOpen: boolean) => {
+    if (!isNextOpen) onClose()
+  }
 
   return (
-    <Drawer.Root direction="left" onOpenChange={(o) => !o && onClose()} open={isOpen}>
+    <Drawer.Root direction="left" onOpenChange={handleOpenChange} open={isOpen}>
       <Drawer.Portal>
-        <Drawer.Overlay className="fixed inset-0 z-40 bg-black/20" />
-        <Drawer.Content className="fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-xl outline-hidden">
-          <Drawer.Title className="sr-only">{t('sidebar.menu')}</Drawer.Title>
+        <Drawer.Overlay className="bg-scrim fixed inset-0 z-40" />
+        <Drawer.Content className="bg-surface shadow-menu fixed inset-y-0 left-0 z-50 w-64 outline-hidden">
+          <Drawer.Title className="sr-only">{t('admin.sidebar.menu')}</Drawer.Title>
           <Drawer.Description className="sr-only">
-            {t('sidebar.menuDescription')}
+            {t('admin.sidebar.menuDescription')}
           </Drawer.Description>
-          <div className="absolute top-2 right-2">
-            <button
-              aria-label={t('sidebar.closeMenu')}
-              className="rounded-lg p-2 hover:bg-gray-100"
-              onClick={onClose}
-              type="button"
-            >
-              <Icon className="size-5" icon="xMark" />
-            </button>
-          </div>
+          <IconButton
+            aria-label={t('admin.sidebar.closeMenu')}
+            className="absolute top-2 right-2"
+            onClick={onClose}
+          >
+            <X className="size-5" />
+          </IconButton>
           <SidebarContent onItemClick={onClose} />
         </Drawer.Content>
       </Drawer.Portal>

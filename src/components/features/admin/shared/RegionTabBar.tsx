@@ -1,5 +1,6 @@
-import { RegionTabs } from '@components/shared'
 import type { Region, RegionId } from '@domain/types'
+
+import RegionTabs from './RegionTabs'
 
 type RegionTabBarProps = {
   // The page's main action (e.g. "Create forecast"), on the right
