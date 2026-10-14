@@ -25,17 +25,21 @@ const useFormSheet = ({ isRequested, onClose }: UseFormSheetParams) => {
     }
   }
 
-  const close = () => {
+  // `leave` goes somewhere else than `onClose` does, e.g. on to the record just created
+  const closeTo = (leave: VoidFunction) => {
     setIsDirty(false)
     setIsConfirmingClose(false)
-    onClose()
+    leave()
   }
+
+  const close = () => closeTo(onClose)
 
   const requestClose = () => (isDirty ? setIsConfirmingClose(true) : close())
 
   return {
     cancelConfirm: () => setIsConfirmingClose(false),
     close,
+    closeTo,
     formKey,
     isConfirmingClose,
     isDirty,

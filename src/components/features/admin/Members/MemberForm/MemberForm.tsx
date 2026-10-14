@@ -1,59 +1,57 @@
 'use client'
 
+import { useReportFormState } from '@components/features/admin/shared'
 import { useUnsavedChangesWarning } from '@components/hooks'
-import { Button } from '@components/ui'
 import type { Member, MemberFormData } from '@domain/types'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useTranslations } from 'next-intl'
 import { FormProvider, useForm } from 'react-hook-form'
 
 import { useMemberFormSubmit } from './hooks'
 
 import FormFields from './FormFields'
-import QRCodeSection from './QRCodeSection'
+import getInitialFormData from './getInitialFormData'
 import { memberFormSchema } from './schema'
 
 type MemberFormProps = {
-  initialFormData: MemberFormData
+  // The host sheet renders Cancel / Save itself and submits the form by this id
+  formId: string
+  // undefined when adding a member
   member?: Member
-  onCancel: VoidFunction
+  onDirtyChange: (isDirty: boolean) => void
+  onSubmittingChange: (isSubmitting: boolean) => void
+  // Gets the new member after a create
   onSuccess: (createdMember?: Member) => void
 }
 
-const MemberForm = ({ initialFormData, member, onCancel, onSuccess }: MemberFormProps) => {
-  const t = useTranslations()
-
+const MemberForm = ({
+  formId,
+  member,
+  onDirtyChange,
+  onSubmittingChange,
+  onSuccess,
+}: MemberFormProps) => {
   const form = useForm<MemberFormData>({
-    defaultValues: initialFormData,
+    defaultValues: getInitialFormData(member ?? null),
     resolver: zodResolver(memberFormSchema),
   })
+  const { isDirty, isSubmitting } = form.formState
 
-  useUnsavedChangesWarning(form.formState.isDirty)
+  useUnsavedChangesWarning(isDirty)
+  useReportFormState({ isDirty, isSubmitting }, { onDirtyChange, onSubmittingChange })
 
   const { handleSubmit } = useMemberFormSubmit({ memberId: member?.id, onSuccess })
 
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <FormProvider {...form}>
-      <div className="rounded-lg bg-white shadow-sm">
-        <section className="flex w-full flex-col gap-6 p-4 md:p-6">
-          <h2 className="text-xl font-semibold">
-            {member ? t('admin.members.title.edit') : t('admin.members.title.create')}
-          </h2>
-
-          <form className="flex w-full flex-col gap-6" onSubmit={form.handleSubmit(handleSubmit)}>
-            <FormFields />
-            {member && <QRCodeSection member={member} />}
-          </form>
-        </section>
-
-        <footer className="flex h-16 items-center justify-end gap-4 border-t px-4 md:px-6">
-          <Button onClick={onCancel} variant="secondary">
-            {t('common.actions.cancel')}
-          </Button>
-          <Button onClick={form.handleSubmit(handleSubmit)}>{t('common.actions.submit')}</Button>
-        </footer>
-      </div>
+      <form
+        className="bg-canvas @container flex min-h-full flex-col gap-3 p-3 md:p-4"
+        id={formId}
+        noValidate
+        onSubmit={form.handleSubmit(handleSubmit)}
+      >
+        <FormFields />
+      </form>
     </FormProvider>
   )
 }

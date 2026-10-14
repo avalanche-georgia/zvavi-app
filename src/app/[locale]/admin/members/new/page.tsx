@@ -1,51 +1,14 @@
-'use client'
-
-import { useState } from 'react'
-import {
-  getInitialFormData,
-  MemberCreatedDialog,
-  MemberForm,
-} from '@components/features/admin/Members/MemberForm'
-import type { Member } from '@domain/types'
-import { useRouter } from 'src/i18n/navigation'
+import { redirect } from 'src/i18n/navigation'
 
 import { routes } from '@/routes'
 
-const NewMemberPage = () => {
-  const router = useRouter()
-  const [createdMember, setCreatedMember] = useState<Member | null>(null)
+type NewMemberPageProps = { params: Promise<{ locale: string }> }
 
-  const handleCancel = () => {
-    router.push(routes.admin.members.root)
-  }
+// Adding a member happens in a sheet over the list — old links land there
+const NewMemberPage = async ({ params }: NewMemberPageProps) => {
+  const { locale } = await params
 
-  const handleSuccess = (member?: Member) => {
-    if (member) {
-      setCreatedMember(member)
-    } else {
-      router.push(routes.admin.members.root)
-    }
-  }
-
-  const handleDialogClose = () => {
-    setCreatedMember(null)
-    router.push(routes.admin.members.root)
-  }
-
-  return (
-    <div className="mx-auto max-w-(--breakpoint-xl) p-4 md:p-6">
-      <MemberForm
-        initialFormData={getInitialFormData(null)}
-        onCancel={handleCancel}
-        onSuccess={handleSuccess}
-      />
-      <MemberCreatedDialog
-        isOpen={!!createdMember}
-        member={createdMember}
-        onClose={handleDialogClose}
-      />
-    </div>
-  )
+  redirect({ href: routes.admin.members.create, locale })
 }
 
 export default NewMemberPage

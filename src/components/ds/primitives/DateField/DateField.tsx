@@ -17,6 +17,8 @@ type DateFieldProps = {
   // Accessible name of the time input (the Field label names the date input)
   timeLabel?: string
   // yyyy-MM-dd
+  max?: string
+  // yyyy-MM-dd
   min?: string
   onValueChange: (value: Date | null) => void
   required?: boolean
@@ -31,6 +33,7 @@ const DateField = ({
   ariaLabel,
   className,
   defaultTime = '18:00',
+  max,
   min,
   onValueChange,
   required,
@@ -60,6 +63,7 @@ const DateField = ({
       <Input
         aria-label={ariaLabel}
         className={cn(fieldControlClasses, 'focus-ring h-11.5 px-3')}
+        max={max}
         min={min}
         onValueChange={handleDateChange}
         required={required}
