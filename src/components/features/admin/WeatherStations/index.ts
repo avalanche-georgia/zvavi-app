@@ -1,2 +1,2 @@
-export { default as WeatherStationFormModal } from './WeatherStationFormModal'
-export { WeatherStationsList } from './WeatherStationsList'
+export { default as WeatherStationSheets } from './WeatherStationSheets'
+export { default as WeatherStationsList } from './WeatherStationsList/WeatherStationsList'

@@ -7,6 +7,8 @@ import useFormFieldError from './useFormFieldError'
 import { Field, NumberField } from '../primitives'
 
 type FormNumberFieldProps<TFieldValues extends FieldValues> = FormFieldProps<TFieldValues> & {
+  // e.g. { useGrouping: false } for a value that isn't a quantity to read at a glance
+  format?: Intl.NumberFormatOptions
   max?: number
   min?: number
   placeholder?: string
@@ -16,6 +18,7 @@ type FormNumberFieldProps<TFieldValues extends FieldValues> = FormFieldProps<TFi
 const FormNumberField = <TFieldValues extends FieldValues>({
   className,
   description,
+  format,
   hint,
   isLabelHidden,
   label,
@@ -41,6 +44,7 @@ const FormNumberField = <TFieldValues extends FieldValues>({
       required={required}
     >
       <NumberField
+        format={format}
         max={max}
         min={min}
         onValueChange={field.onChange}

@@ -1,29 +1,28 @@
 'use client'
 
-import { useBoolean, useToast } from '@components/hooks'
-import { ConfirmationDialog } from '@components/shared'
-import { IconButton } from '@components/ui'
+import { RecordMenu } from '@components/features/admin/shared'
+import { useToast } from '@components/hooks'
 import { useWeatherStationDelete } from '@data/hooks/weatherStations'
 import type { WeatherStation } from '@domain/types'
+import { IconButton, MenuItem } from '@ds/primitives'
+import { ExternalLink, GripVertical, Pencil } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 type StationRowProps = {
   dragHandleRef: (element: Element | null) => void
-  onEdit: (station: WeatherStation) => void
+  onEdit: (id: string) => void
   station: WeatherStation
 }
 
 const StationRow = ({ dragHandleRef, onEdit, station }: StationRowProps) => {
   const t = useTranslations()
-  const { mutateAsync: deleteStation } = useWeatherStationDelete()
   const { toastError, toastSuccess } = useToast()
-  const [isDeletionDialogOpen, { setFalse: closeDeletionDialog, setTrue: openDeletionDialog }] =
-    useBoolean(false)
+  const { mutateAsync: deleteStation } = useWeatherStationDelete()
+  const { altitude, id, nameEn, nameKa, url } = station
 
   const handleDelete = async () => {
     try {
-      await deleteStation(station.id)
-      closeDeletionDialog()
+      await deleteStation(id)
       toastSuccess(t('admin.weatherStations.form.messages.deleted'))
     } catch (error) {
       toastError('StationRow | handleDelete', { error })
@@ -31,54 +30,47 @@ const StationRow = ({ dragHandleRef, onEdit, station }: StationRowProps) => {
   }
 
   return (
-    <>
-      <div className="flex h-14 items-center gap-3 px-4">
-        <div ref={dragHandleRef}>
-          <IconButton
-            aria-label={t('admin.weatherStations.dragToReorder')}
-            className="cursor-grab active:cursor-grabbing"
-            iconProps={{ icon: 'grip' }}
-          />
-        </div>
+    <div className="flex min-h-15 items-center gap-2 py-2 pr-3 pl-2">
+      <IconButton
+        ref={dragHandleRef}
+        aria-label={t('admin.weatherStations.dragStation', { name: nameEn })}
+        className="text-muted cursor-grab touch-none active:cursor-grabbing"
+        tooltip={t('admin.weatherStations.dragToReorder')}
+      >
+        <GripVertical className="size-4.5" />
+      </IconButton>
 
-        <div className="min-w-0 flex-1">
-          <div className="font-medium">{station.nameEn}</div>
-          {station.nameKa && <div className="truncate text-sm text-gray-400">{station.nameKa}</div>}
-        </div>
-
-        <div className="shrink-0 text-sm text-gray-400">{station.altitude}m</div>
-
-        <div className="flex shrink-0 items-center gap-1">
-          <IconButton
-            aria-label="Open station"
-            href={station.url}
-            iconProps={{ icon: 'externalLink', size: 'sm' }}
-            rel="noopener noreferrer"
-            size="sm"
-            target="_blank"
-          />
-          <IconButton
-            iconProps={{ icon: 'pencil', size: 'sm' }}
-            onClick={() => onEdit(station)}
-            size="sm"
-          />
-          <IconButton
-            iconProps={{ icon: 'trash', size: 'sm' }}
-            onClick={openDeletionDialog}
-            size="sm"
-          />
-        </div>
+      <div className="flex min-w-0 flex-1 flex-col items-start gap-0.5">
+        <button
+          className="focus-ring text-copy text-ink hover:text-accent max-w-full truncate rounded-sm font-semibold hover:underline"
+          onClick={() => onEdit(id)}
+          type="button"
+        >
+          {nameEn}
+        </button>
+        {nameKa && <p className="text-caption text-muted max-w-full truncate">{nameKa}</p>}
       </div>
 
-      <ConfirmationDialog
-        description={t('admin.weatherStations.deleteModal.description', { name: station.nameEn })}
-        isOpen={isDeletionDialogOpen}
-        onClose={closeDeletionDialog}
-        onConfirm={handleDelete}
-        title={t('admin.weatherStations.deleteModal.title')}
-        variant="delete"
-      />
-    </>
+      <span className="text-copy text-body shrink-0 px-2 tabular-nums">
+        {t('common.units.meters', { value: altitude })}
+      </span>
+
+      <RecordMenu
+        deleteMessage={t('admin.weatherStations.deleteConfirm', { name: nameEn })}
+        label={t('admin.weatherStations.moreForStation', { name: nameEn })}
+        onDelete={handleDelete}
+      >
+        <MenuItem icon={<Pencil />} onClick={() => onEdit(id)}>
+          {t('common.actions.edit')}
+        </MenuItem>
+        <MenuItem
+          icon={<ExternalLink />}
+          onClick={() => void window.open(url, '_blank', 'noopener')}
+        >
+          {t('admin.weatherStations.openStation')}
+        </MenuItem>
+      </RecordMenu>
+    </div>
   )
 }
 
