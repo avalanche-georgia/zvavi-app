@@ -13,10 +13,11 @@ type RegionTabBarProps = {
 
 // Top bar of a per-region admin list: region tabs + the page's main action
 const RegionTabBar = ({ children, counts, initialRegions, regionId }: RegionTabBarProps) => (
-  // Tabs sit on the bottom rule; the action gets its own vertical breathing room
-  <div className="border-rule bg-surface flex items-end justify-between gap-4 border-b px-4 md:px-6">
+  // Same height with or without the action (room for a small button): tabs sit
+  // on the bottom rule, the action is centred
+  <div className="border-rule bg-surface flex min-h-14 items-end justify-between gap-4 border-b px-4 md:px-6">
     <RegionTabs counts={counts} currentRegionId={regionId} initialRegions={initialRegions} />
-    {children && <div className="my-2 shrink-0 self-center">{children}</div>}
+    {children && <div className="shrink-0 self-center">{children}</div>}
   </div>
 )
 
