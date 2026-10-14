@@ -9,6 +9,7 @@ import { Field, TextField } from '../primitives'
 type FormTextFieldProps<TFieldValues extends FieldValues> = FormFieldProps<TFieldValues> & {
   autoComplete?: string
   placeholder?: string
+  type?: 'email' | 'password' | 'tel' | 'text' | 'url'
   unit?: string
 }
 
@@ -23,6 +24,7 @@ const FormTextField = <TFieldValues extends FieldValues>({
   placeholder,
   required,
   requiredMessage,
+  type,
   unit,
 }: FormTextFieldProps<TFieldValues>) => {
   const { field } = useController<TFieldValues>({ name })
@@ -45,6 +47,7 @@ const FormTextField = <TFieldValues extends FieldValues>({
         onValueChange={field.onChange}
         placeholder={placeholder}
         required={required}
+        type={type}
         unit={unit}
         value={field.value ?? ''}
       />

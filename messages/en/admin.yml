@@ -325,6 +325,7 @@ admin:
 
   profile:
     title: 'My Profile'
+    details: 'Personal details'
 
     form:
       labels:
