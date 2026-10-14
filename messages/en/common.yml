@@ -36,7 +36,6 @@ common:
     summary: 'Summary'
     tapForDetails: 'Tap for details'
     validUntil: 'Valid Until'
-    wait: 'Please wait...'
 
   messages:
     error: 'Something went wrong. Please try again later.'
