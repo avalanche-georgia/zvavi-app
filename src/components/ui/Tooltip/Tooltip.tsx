@@ -4,8 +4,6 @@ import { useState } from 'react'
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import type { ReactNode } from 'react'
 
-import { usePortalContainer } from '../PortalContainer'
-
 import { cn } from '@/lib/utils'
 
 const TooltipProvider = TooltipPrimitive.Provider
@@ -22,25 +20,21 @@ const TooltipContent = ({
   className,
   side = 'top',
   sideOffset = 4,
-}: TooltipContentProps) => {
-  const portalContainer = usePortalContainer()
-
-  return (
-    <TooltipPrimitive.Portal container={portalContainer}>
-      <TooltipPrimitive.Content
-        className={cn(
-          'z-50 rounded-md bg-gray-900 px-3 py-1.5 text-xs text-white shadow-md',
-          'data-[state=closed]:animate-tooltip-out data-[state=delayed-open]:animate-tooltip-in',
-          className,
-        )}
-        side={side}
-        sideOffset={sideOffset}
-      >
-        {children}
-      </TooltipPrimitive.Content>
-    </TooltipPrimitive.Portal>
-  )
-}
+}: TooltipContentProps) => (
+  <TooltipPrimitive.Portal>
+    <TooltipPrimitive.Content
+      className={cn(
+        'z-50 rounded-md bg-gray-900 px-3 py-1.5 text-xs text-white shadow-md',
+        'data-[state=closed]:animate-tooltip-out data-[state=delayed-open]:animate-tooltip-in',
+        className,
+      )}
+      side={side}
+      sideOffset={sideOffset}
+    >
+      {children}
+    </TooltipPrimitive.Content>
+  </TooltipPrimitive.Portal>
+)
 
 type TooltipProps = {
   children: ReactNode

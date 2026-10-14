@@ -1,8 +1,8 @@
 'use client'
 
 import { useId } from 'react'
-import { Sheet } from '@components/ui'
 import type { RegionId } from '@domain/types'
+import { Sheet } from '@ds/patterns'
 import { useTranslations } from 'next-intl'
 
 import AvalancheSheetBody from './AvalancheSheetBody'
@@ -45,14 +45,11 @@ const AvalancheSheet = ({
   const sheet = useAvalancheSheet({ id, initialMode, onReopen, regionId })
   const { avalanche, confirm, hasUnsavedEdits, mode, setConfirm, setMode } = sheet
 
-  const {
-    handleConfirm,
-    handleEditCancel,
-    handleKeyDown,
-    handleOpenChange,
-    handleSaved,
-    isDeleting,
-  } = useAvalancheSheetActions({ ...sheet, ...actionProps })
+  const { handleConfirm, handleEditCancel, handleOpenChange, handleSaved, isDeleting } =
+    useAvalancheSheetActions({ ...sheet, ...actionProps })
+  // Stepping only while viewing: leaving the record would drop edits, and a
+  // running delete acts on the open one
+  const navigation = mode === 'view' && !isDeleting ? (actionProps.navigation ?? null) : null
 
   return (
     <Sheet
@@ -78,7 +75,7 @@ const AvalancheSheet = ({
       header={
         <AvalancheSheetHeader
           fullPageId={mode === 'view' && avalanche ? avalanche.id : null}
-          navigation={mode === 'view' && !isDeleting ? (actionProps.navigation ?? null) : null}
+          navigation={navigation}
           title={avalanche ? t(`common.avalancheTypes.${avalanche.type}`) : ''}
         />
       }
@@ -86,8 +83,10 @@ const AvalancheSheet = ({
       // Stays open while edits are unsaved, even if the URL lost the record
       isOpen={id !== null || hasUnsavedEdits}
       isTall
-      onKeyDown={handleKeyDown}
       onOpenChange={handleOpenChange}
+      // Each record starts at the top
+      scrollKey={avalanche?.id}
+      steps={navigation}
     >
       <AvalancheSheetBody
         avalanche={avalanche}

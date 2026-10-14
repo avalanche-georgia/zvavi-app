@@ -1,7 +1,6 @@
-import { SheetHeader } from '@components/features/admin/shared'
 import { Icon } from '@components/icons'
-import { SheetIconButton } from '@components/ui'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { SheetHeader, SheetStepButtons } from '@ds/patterns'
+import { Tooltip } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 import { Link } from 'src/i18n/navigation'
 
@@ -19,42 +18,38 @@ type AvalancheSheetHeaderProps = {
 
 const AvalancheSheetHeader = ({ fullPageId, navigation, title }: AvalancheSheetHeaderProps) => {
   const t = useTranslations()
-  const index = navigation?.index ?? null
-  const total = navigation?.total ?? 0
+  const fullPageLabel = t('admin.recentAvalanches.view.openFullPage')
+  const hasSteps = navigation && (navigation.hasNext || navigation.hasPrevious)
 
   return (
-    <SheetHeader title={title}>
-      {navigation && (navigation.hasNext || navigation.hasPrevious) && (
+    <SheetHeader closeLabel={t('common.actions.close')} title={title}>
+      {hasSteps && (
         <>
-          {index !== null && (
-            <span className="text-muted text-[13px] tabular-nums">
-              {t('admin.recentAvalanches.sheet.position', { current: index + 1, total })}
+          {navigation.index !== null && (
+            <span className="text-muted text-copy-sm tabular-nums">
+              {t('admin.recentAvalanches.sheet.position', {
+                current: navigation.index + 1,
+                total: navigation.total,
+              })}
             </span>
           )}
-          <SheetIconButton
-            aria-label={t('admin.recentAvalanches.sheet.previous')}
-            disabled={!navigation.hasPrevious}
-            onClick={navigation.onPrevious}
-          >
-            <ChevronLeft className="size-4.5" />
-          </SheetIconButton>
-          <SheetIconButton
-            aria-label={t('admin.recentAvalanches.sheet.next')}
-            disabled={!navigation.hasNext}
-            onClick={navigation.onNext}
-          >
-            <ChevronRight className="size-4.5" />
-          </SheetIconButton>
+          <SheetStepButtons
+            nextLabel={t('admin.recentAvalanches.sheet.next')}
+            previousLabel={t('admin.recentAvalanches.sheet.previous')}
+            steps={navigation}
+          />
         </>
       )}
       {fullPageId !== null && (
-        <Link
-          aria-label={t('admin.recentAvalanches.view.openFullPage')}
-          className="hover:bg-tile grid size-10 shrink-0 place-items-center rounded-[10px] transition-colors"
-          href={routes.admin.recentAvalanches.view(fullPageId)}
-        >
-          <Icon icon="externalLink" size="sm" />
-        </Link>
+        <Tooltip label={fullPageLabel}>
+          <Link
+            aria-label={fullPageLabel}
+            className="focus-ring hover:bg-tile rounded-control grid size-10 shrink-0 place-items-center transition-colors"
+            href={routes.admin.recentAvalanches.view(fullPageId)}
+          >
+            <Icon icon="externalLink" size="sm" />
+          </Link>
+        </Tooltip>
       )}
     </SheetHeader>
   )

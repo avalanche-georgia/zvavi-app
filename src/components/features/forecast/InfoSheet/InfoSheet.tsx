@@ -1,8 +1,7 @@
 'use client'
 
-import { Sheet, SheetClose, SheetTitle } from '@components/ui'
-import { IconButton } from '@ds/primitives'
-import { ChevronLeft, X } from 'lucide-react'
+import { Sheet, SheetClose, SheetCloseButton, SheetTitle } from '@ds/patterns'
+import { ChevronLeft } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 type InfoSheetProps = {
@@ -39,11 +38,7 @@ const InfoSheet = ({ backLabel, children, isOpen, onClose, title }: InfoSheetPro
             </SheetClose>
           )}
           <span className="flex-1" />
-          {!backLabel && (
-            <SheetClose render={<IconButton aria-label={t('common.actions.close')} size="md" />}>
-              <X aria-hidden className="size-4.5" />
-            </SheetClose>
-          )}
+          {!backLabel && <SheetCloseButton label={t('common.actions.close')} />}
         </>
       }
       isOpen={isOpen}

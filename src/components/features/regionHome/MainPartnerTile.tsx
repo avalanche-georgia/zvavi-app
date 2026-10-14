@@ -3,7 +3,7 @@
 import { PartnerInfo, PartnerLogo } from '@components/features/partners/PartnersList'
 import { usePartnerTracking } from '@components/features/partners/tracking'
 import { useLocalizeField } from '@components/hooks'
-import { Drawer } from '@components/ui'
+import { DetailsSheet } from '@components/shared'
 import type { Partner } from '@domain/types'
 
 const tileClasses =
@@ -39,11 +39,16 @@ const MainPartnerTile = ({ partner }: { partner: Partner }) => {
   }
 
   return (
-    <Drawer content={<PartnerInfo partner={partner} />} title={name}>
-      <button className={tileClasses} onClick={trackBadgeClick} type="button">
-        {content}
-      </button>
-    </Drawer>
+    <DetailsSheet
+      title={name}
+      trigger={
+        <button className={tileClasses} onClick={trackBadgeClick} type="button">
+          {content}
+        </button>
+      }
+    >
+      <PartnerInfo partner={partner} />
+    </DetailsSheet>
   )
 }
 

@@ -1,7 +1,7 @@
 import type { AvalancheListItem } from '@data/hooks/recentAvalanches'
 import { defaultRegionId } from '@domain/constants'
 
-import type { AvalancheSheetConfirm, AvalancheSheetMode, AvalancheSheetNavigation } from './types'
+import type { AvalancheSheetConfirm, AvalancheSheetMode } from './types'
 import useCloseOnStatusChange from './useCloseOnStatusChange'
 import { useAvalancheDelete } from '../hooks'
 
@@ -11,8 +11,6 @@ type UseAvalancheSheetActionsParams = {
   entryMode: AvalancheSheetMode
   hasUnsavedEdits: boolean
   id: number | null
-  mode: AvalancheSheetMode
-  navigation?: AvalancheSheetNavigation
   onClose: VoidFunction
   onDeleted?: (id: number) => void
   onRecordLeave?: VoidFunction
@@ -21,7 +19,7 @@ type UseAvalancheSheetActionsParams = {
   showView: VoidFunction
 }
 
-// Close / cancel / delete / keyboard stepping — anything that would drop
+// Close / cancel / delete — anything that would drop
 // unsaved edits asks first
 const useAvalancheSheetActions = ({
   avalanche,
@@ -29,8 +27,6 @@ const useAvalancheSheetActions = ({
   entryMode,
   hasUnsavedEdits,
   id,
-  mode,
-  navigation,
   onClose,
   onDeleted,
   onRecordLeave,
@@ -86,26 +82,9 @@ const useAvalancheSheetActions = ({
     if (confirm) confirmActions[confirm]()
   }
 
-  // ←/→ step through the list while viewing. Keys from stacked layers (map,
-  // photo viewer) portal outside this popup but bubble here through React — ignore
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    // No stepping while a delete runs — its completion acts on the open panel
-    if (mode !== 'view' || !navigation || isDeleting) return
-
-    // Alt+← is browser Back; a held key would step through the list
-    if (event.altKey || event.metaKey || event.ctrlKey || event.repeat || event.defaultPrevented) {
-      return
-    }
-
-    if (!event.currentTarget.contains(event.target as Node)) return
-    if (event.key === 'ArrowLeft') navigation.onPrevious()
-    if (event.key === 'ArrowRight') navigation.onNext()
-  }
-
   return {
     handleConfirm,
     handleEditCancel,
-    handleKeyDown,
     handleOpenChange,
     handleSaved: finishEdit,
     isDeleting,

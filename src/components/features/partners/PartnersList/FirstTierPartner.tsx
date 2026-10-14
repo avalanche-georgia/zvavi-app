@@ -1,7 +1,7 @@
 'use client'
 
 import { useLocalizeField } from '@components/hooks'
-import { Drawer } from '@components/ui'
+import { DetailsSheet } from '@components/shared'
 import type { Partner } from '@domain/types'
 
 import PartnerInfo from './PartnerInfo'
@@ -39,11 +39,16 @@ const FirstTierPartner = ({ partner }: { partner: Partner }) => {
   }
 
   return (
-    <Drawer content={<PartnerInfo partner={partner} />} title={name}>
-      <button className={cardClassName} onClick={trackBadgeClick} type="button">
-        {logoNode}
-      </button>
-    </Drawer>
+    <DetailsSheet
+      title={name}
+      trigger={
+        <button className={cardClassName} onClick={trackBadgeClick} type="button">
+          {logoNode}
+        </button>
+      }
+    >
+      <PartnerInfo partner={partner} />
+    </DetailsSheet>
   )
 }
 

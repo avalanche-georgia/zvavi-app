@@ -1,16 +1,17 @@
 'use client'
 
 import { useLocalizeField } from '@components/hooks'
-import { Button, Drawer } from '@components/ui'
+import { DetailsSheet } from '@components/shared'
 import { usePartnersQuery } from '@data/hooks/partners'
 import type { Partner } from '@domain/types'
+import { Button } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 
-type DrawerContentProps = {
+type PartnerBenefitsListProps = {
   partners: Partner[]
 }
 
-const DrawerContent = ({ partners }: DrawerContentProps) => {
+const PartnerBenefitsList = ({ partners }: PartnerBenefitsListProps) => {
   const localize = useLocalizeField()
 
   return (
@@ -31,7 +32,7 @@ const DrawerContent = ({ partners }: DrawerContentProps) => {
   )
 }
 
-const PartnerBenefitsDrawer = () => {
+const PartnerBenefitsSheet = () => {
   const t = useTranslations()
   const { data: partners } = usePartnersQuery()
 
@@ -41,15 +42,13 @@ const PartnerBenefitsDrawer = () => {
   if (partnersWithBenefits.length === 0) return null
 
   return (
-    <Drawer
-      content={<DrawerContent partners={partnersWithBenefits} />}
+    <DetailsSheet
       title={t('partners.benefits.drawerTitle')}
+      trigger={<Button variant="secondary">{t('partners.benefits.triggerLabel')}</Button>}
     >
-      <div>
-        <Button variant="secondary">{t('partners.benefits.triggerLabel')}</Button>
-      </div>
-    </Drawer>
+      <PartnerBenefitsList partners={partnersWithBenefits} />
+    </DetailsSheet>
   )
 }
 
-export default PartnerBenefitsDrawer
+export default PartnerBenefitsSheet

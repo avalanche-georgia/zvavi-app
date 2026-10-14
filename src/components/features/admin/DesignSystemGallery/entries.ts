@@ -3,6 +3,7 @@ import DataTableGallery from '@ds/patterns/DataTable/DataTable.gallery'
 import FooterActionsGallery from '@ds/patterns/FooterActions/FooterActions.gallery'
 import FormCardGallery from '@ds/patterns/FormCard/FormCard.gallery'
 import LoadingStateGallery from '@ds/patterns/LoadingState/LoadingState.gallery'
+import SheetGallery from '@ds/patterns/Sheet/Sheet.gallery'
 import StickyActionBarGallery from '@ds/patterns/StickyActionBar/StickyActionBar.gallery'
 import SuccessStateGallery from '@ds/patterns/SuccessState/SuccessState.gallery'
 import BadgeGallery from '@ds/primitives/Badge/Badge.gallery'
@@ -54,6 +55,7 @@ export const galleryEntries: GalleryEntry[] = [
   { Demo: LoadingStateGallery, id: 'loading-state', title: 'LoadingState' },
   { Demo: ConfirmPopoverGallery, id: 'confirm-popover', title: 'ConfirmPopover' },
   { Demo: ConfirmDialogGallery, id: 'confirm-dialog', title: 'ConfirmDialog' },
+  { Demo: SheetGallery, id: 'sheet', title: 'Sheet' },
   { Demo: MenuGallery, id: 'menu', title: 'Menu' },
   { Demo: IconButtonGallery, id: 'icon-button', title: 'IconButton' },
   { Demo: InfoTipGallery, id: 'info-tip', title: 'InfoTip' },

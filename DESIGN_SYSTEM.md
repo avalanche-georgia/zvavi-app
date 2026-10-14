@@ -32,7 +32,7 @@ src/components/
 │   │                    # IconButton, RatingScale, DateField, Menu, Pagination, SearchField,
 │   │                    # StatusPill, CountBadge, Skeleton, Spinner, Dialog
 │   ├── patterns/        # FormCard, StickyActionBar, SuccessState, DataTable, LoadingState,
-│   │                    # ConfirmDialog
+│   │                    # ConfirmDialog, FooterActions, Sheet
 │   └── form/            # react-hook-form bindings: FormTextField, FormTextarea, FormNumberField,
 │                        # FormStepper, FormChipGroup, FormCheckbox, FormSelect, FormDateField,
 │                        # useFormFieldError
@@ -73,8 +73,12 @@ in `features`.
   Dialog, Popover, Select, Menu, and so on.
 - No new Headless UI or Radix usage.
 - Existing exceptions stay until their migration phase:
-  - vaul (Drawer). Base-ui portals inside a vaul Drawer break on mobile; see memory
-    `feedback_vaul_baseui_portal`.
+  - vaul, only for the two mobile navigation menus (public header, admin sidebar). Base-ui portals
+    inside a vaul Drawer break on mobile; see memory `feedback_vaul_baseui_portal`. Sheets of
+    content never use vaul — they use `patterns/Sheet`.
+- Legacy Radix popups (`ui/Select`, `ui/Popover`, `ui/DatePicker`, `InfoIcon`) portal to `body`: never
+  put them inside a ds `Sheet` or `Dialog` — the focus trap and outside-press handling break them.
+  Use the ds primitives there.
   - react-day-picker (Calendar)
   - @dnd-kit (sortable lists)
   - sonner (toasts)
@@ -109,8 +113,9 @@ them.
 |---|---|---|
 | **Semantic colour** | text `ink`, `body`, `muted`, `placeholder`, `disabled` · lines `rule`, `rule-strong` · surfaces `surface`, `canvas`, `tile`, `tile-hover`, `off`, `map` · brand `primary(-hover/-soft/-ink)`, `brand-blue` · `accent(-hover/-soft)` · status `danger`, `danger-border`, `success`, `success-soft`, `warning`, `warning-soft` · domain `hazard-*`, `size-*` | `text-ink`, `bg-surface`, `border-rule`, … |
 | **Type scale** | `title-lg` 28, `title` 24, `heading` 17, `copy-lg` 15, `copy` 14, `copy-sm` 13, `caption` 12.5, `micro` 10.5. Line-height and tracking are part of the token | `text-heading`, … |
-| **Radii** | `card` 16, `media` 12, `field` 11, `control` 10, `badge` 5 (pills use `rounded-full`) | `rounded-card`, … |
-| **Shadows** | `raised` (segmented thumb), `overlay` (map buttons), `float` (sticky bar), `pin` | `shadow-float`, … |
+| **Radii** | `card` 16, `media` 12, `field` 11, `control` 10, `badge` 5, `sheet` 20 (pills use `rounded-full`) | `rounded-card`, … |
+| **Shadows** | `raised` (segmented thumb), `overlay` (map buttons), `float` (sticky bar), `pin`, `menu`, `sheet` (bottom sheet), `panel` (desktop side panel) | `shadow-float`, … |
+| **Motion** | `sheet` easing (sheet slide in / out) | `ease-sheet` |
 | **Focus** | `focus-ring` utility: 2px accent outline, 2px offset, on `:focus-visible` | `focus-ring` |
 
 - **There is no raw-palette layer yet.** Semantic tokens hold the hex values directly. A primitive
@@ -204,7 +209,7 @@ Rules:
 | **2. Primitives for submit** | Button, Badge, Field / FieldGroup, TextField, NumberField, Textarea, ChipGroup, ToggleGrid, SegmentedControl, Stepper. Patterns FormCard, StickyActionBar, SuccessState. Form bindings. Gallery demos | ✅ |
 | **3. Submit page redesign** | `local/observations/design_handoff_submit_observation/` built on ds | ✅ |
 | **4. Rest of observations** | List toolbar, detail views, aspect/elevation picker moved to `features/` with a bare variant | ☐ |
-| **5. Legacy, by screen area** | Public pages (auth, forecasts, about) → admin forms → admin tables, modals and drawers. Admin lists, forms and the overview are done; what's left in admin: `Sheet`, the vaul mobile menu drawer, and the shared `BrandedQRCode` / `SortableItem` / `FallbackImage` | ☐ |
+| **5. Legacy, by screen area** | Public pages (auth, forecasts, about) → admin forms → admin tables, modals and drawers. Admin lists, forms, the overview and every sheet are done; what's left in admin: the vaul mobile menu drawer, and the shared `BrandedQRCode` / `SortableItem` / `FallbackImage` | ☐ |
 | **6. Cleanup** | Delete `ui/`. Remove `@headlessui/react`, `@radix-ui/*` and `clsx` | ☐ |
 
 ### Component tracker
@@ -232,7 +237,8 @@ Update this table when a legacy component's last consumer is migrated.
 | Popover | Radix | `primitives/Popover` (base-ui) | ☐ |
 | Tooltip, InfoIcon | Radix | `primitives/Tooltip` (base-ui Tooltip; hover/focus labels), `primitives/InfoTip` (base-ui Popover; explanations) | ☐ |
 | DropdownMenu | base-ui | `primitives/Menu` | ✅ |
-| Drawer, Sheet | vaul / base-ui | `patterns/Sheet` (TBD) | ☐ |
+| Sheet, Drawer (bottom sheet) | base-ui / vaul | `patterns/Sheet` (+ `SheetHeader`, `SheetStepButtons`; `shared/DetailsSheet` for a sheet opened from a button) | ✅ |
+| Mobile nav menus (not in `ui/`: `Header/NavMenu/MobileNav`, `admin/sidebar/MobileDrawer`) | vaul | — (a side placement of `patterns/Sheet`, or a `patterns/Drawer`) | ☐ |
 | IconButton | custom | `primitives/IconButton` | ☐ |
 | Alert | custom | — (last consumer removed with the forecast page redesign; add `patterns/Alert` when needed) | ✅ |
 | Spinner | custom | `primitives/Spinner`, `patterns/LoadingState` (admin migrated) | ☐ |

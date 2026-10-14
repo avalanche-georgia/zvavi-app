@@ -80,7 +80,7 @@ Forecasters and administrators can view and edit their own profile — including
 Administrators can manage the list of mountain weather stations: add, edit, delete, and reorder them via drag-and-drop. Each station has a name in English and Georgian, an altitude, and a link to its live data feed.
 
 ### Partner Benefits Management
-Administrators can manage a list of partner organizations and the exclusive discounts or perks they offer to Avalanche Georgia members. Each partner has a name, optional benefit description, logo, and website — all stored in both English and Georgian. The list can be searched by name, filtered by active / inactive and sorted by name or tier; a partner is added or edited in a side panel next to the list. Active partners are displayed to the public in a "Member Benefits" drawer accessible from the Join Us page and the member verification card.
+Administrators can manage a list of partner organizations and the exclusive discounts or perks they offer to Avalanche Georgia members. Each partner has a name, optional benefit description, logo, and website — all stored in both English and Georgian. The list can be searched by name, filtered by active / inactive and sorted by name or tier; a partner is added or edited in a side panel next to the list. Active partners are displayed to the public in a "Member Benefits" panel accessible from the Join Us page and the member verification card.
 
 ---
 
