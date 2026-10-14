@@ -1,0 +1,13 @@
+footer:
+  description: 'ზვავის პროგნოზები და დაკვირვებები საქართველოს მთებისთვის.'
+  social: 'გამოგვყევით'
+  columns:
+    forecasts: 'პროგნოზები'
+    resources: 'რესურსები'
+    organisation: 'ორგანიზაცია'
+  links:
+    archive: 'პროგნოზების არქივი'
+    donate: 'შემოწირულობა'
+    submitObservation: 'დაკვირვების გაგზავნა'
+  emergency: 'გადაუდებელი დახმარება:'
+  copyright: '© {year} ზვავი საქართველო'

@@ -46,6 +46,14 @@ const useForecastDates = () => {
 
       return `${getWeekday(weekday)} ${day} ${getMonth(month)}`
     },
+    // "Tuesday, 14 October"
+    formatLongDay: (value: Date | string) => {
+      const { day, month, weekday } = toTbilisiParts(value)
+      const weekdayName = localize.day(weekday, { context: 'formatting', width: 'wide' })
+      const monthName = localize.month(month, { context: 'formatting', width: 'wide' })
+
+      return `${weekdayName}, ${day} ${monthName}`
+    },
     // "07:37"
     formatTime: (value: Date | string) => {
       const { hours, minutes } = toTbilisiParts(value)

@@ -1,9 +1,9 @@
 'use client'
 
 import { Select } from '@base-ui/react/select'
-import { Icon } from '@components/icons'
 import { regionLocalStorageKey } from '@domain/constants'
 import { useRegionContext } from '@domain/context/RegionContext'
+import { Check, ChevronDown } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'src/i18n/navigation'
 
@@ -14,6 +14,7 @@ type RegionSelectProps = {
   onSelect?: () => void
 }
 
+// Picks the region the site remembers and opens its page
 const RegionSelect = ({ onSelect }: RegionSelectProps) => {
   const t = useTranslations()
   const router = useRouter()
@@ -31,9 +32,9 @@ const RegionSelect = ({ onSelect }: RegionSelectProps) => {
     <Select.Root onValueChange={handleValueChange} value={region?.id ?? null}>
       <Select.Trigger
         className={cn(
-          'flex items-center gap-1 rounded-sm border px-2 py-1 text-sm font-medium shadow-xs backdrop-blur-sm',
-          'transition-colors hover:bg-gray-100',
-          !region && 'text-gray-400',
+          'focus-ring border-rule bg-surface rounded-control text-copy flex h-9 items-center gap-1.5 border px-3 font-medium whitespace-nowrap',
+          'hover:bg-tile data-popup-open:border-rule-strong transition-colors',
+          region ? 'text-ink' : 'text-muted',
         )}
       >
         <Select.Value>
@@ -41,32 +42,27 @@ const RegionSelect = ({ onSelect }: RegionSelectProps) => {
             value ? t(`regions.names.${value}`) : t('regions.selector.label')
           }
         </Select.Value>
-        <Icon className="size-3.5" icon="chevronDown" />
+        <ChevronDown aria-hidden className="text-muted size-3.5" />
       </Select.Trigger>
 
-      <Select.Positioner className="z-60" sideOffset={6}>
-        <Select.Popup
-          className={cn(
-            'min-w-36 overflow-hidden rounded-xl p-1',
-            'bg-white shadow-lg ring-1 ring-black/5',
-          )}
-        >
-          {regions.map((r) => (
-            <Select.Item
-              key={r.id}
-              className={cn(
-                'flex cursor-pointer items-center rounded-lg px-3 py-2 text-sm outline-hidden',
-                'transition-colors',
-                'data-highlighted:bg-gray-100',
-                'data-selected:text-primary text-gray-700 data-selected:font-medium',
-              )}
-              value={r.id}
-            >
-              <Select.ItemText>{t(`regions.names.${r.id}`)}</Select.ItemText>
-            </Select.Item>
-          ))}
-        </Select.Popup>
-      </Select.Positioner>
+      <Select.Portal>
+        <Select.Positioner alignItemWithTrigger={false} className="z-60" sideOffset={6}>
+          <Select.Popup className="rounded-field border-rule bg-surface shadow-menu min-w-(--anchor-width) border p-1 outline-hidden">
+            {regions.map((regionOption) => (
+              <Select.Item
+                key={regionOption.id}
+                className="rounded-control text-copy text-ink data-highlighted:bg-tile flex cursor-pointer items-center justify-between gap-3 px-3 py-2 outline-hidden select-none data-selected:font-semibold pointer-coarse:py-3"
+                value={regionOption.id}
+              >
+                <Select.ItemText>{t(`regions.names.${regionOption.id}`)}</Select.ItemText>
+                <Select.ItemIndicator className="text-accent">
+                  <Check aria-hidden className="size-4" strokeWidth={2.5} />
+                </Select.ItemIndicator>
+              </Select.Item>
+            ))}
+          </Select.Popup>
+        </Select.Positioner>
+      </Select.Portal>
     </Select.Root>
   )
 }

@@ -1,6 +1,8 @@
 import type { IconName } from '@components/icons'
 
 export type NavMenuItemBase = {
+  // Path prefixes that mark the item as the current section (defaults to its own path)
+  activePaths?: string[]
   icon: IconName
   id: string
   isHidden?: boolean

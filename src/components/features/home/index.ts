@@ -1,4 +1,3 @@
-export { AboutUs } from './About'
-export { JoinUs } from './JoinUs'
-export { Partners } from './Partners'
-export { RegionPickerMap } from './RegionPickerMap'
+export { default as HomePage } from './HomePage'
+export type { HomeRegion } from './toHeroRegion'
+export type { RegionForecastState } from './types'

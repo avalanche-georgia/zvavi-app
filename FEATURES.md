@@ -1,8 +1,14 @@
 # Features
 
-## Region Picker
+## Home Page
 
-The homepage shows an interactive map of all active forecast regions, each polygon colored by its current overall hazard level. Tapping a region opens a summary popup with the hazard icon, level, and a link to the region page. The selected region is remembered between visits.
+The home page opens with today's date and the avalanche danger for every forecast region at a glance. With a single region it shows the full danger card — level on the official 1–5 scale, when the forecast was issued and how long it stays valid — with one tap to the full forecast. With several regions it shows a compact list, one row per region with its danger level, or a clear note when no forecast was issued today. Next to it, a map shows every forecast area coloured by its danger level with a numbered marker; hovering a region in the list highlights it on the map and the other way round, and tapping a region opens its forecast. Between June and November, when no forecasts are being issued, the page says so and points to last season's forecasts.
+
+Below are the latest field observations for the region the visitor is looking at (with an invitation to report one), the main partners — or an invitation to become one — and short introductions to the organisation and how to help, including donating.
+
+## Site Header and Footer
+
+Every public page shares the same header and footer. The header holds the main navigation (forecasts for each region and the archive, observations, weather stations, partners, and about pages), an EN / ქარ language switch, the region picker (when there is more than one region) and the team's account menu or a sign-in link; on phones and tablets these move into a menu. The footer lists every forecast region, resources and organisation pages, the team's social channels, the emergency number 112 and the legal pages. The selected region is remembered between visits.
 
 ## Region Page
 

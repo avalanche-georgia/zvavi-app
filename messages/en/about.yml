@@ -1,9 +1,4 @@
 about:
-  title: 'About Us'
-  section:
-    main:
-      description: 'Avalanche Georgia is a volunteer-based, non-profit avalanche forecasting service focused on helping backcountry users make safer decisions.'
-
   content:
     paragraph1: '<b>Zvavi Saqartvelo</b> – Avalanche Georgia is a volunteer-run, registered non-profit NGO providing public avalanche forecasts in Georgia’s mountain regions.'
     paragraph2: 'We offer free, high-quality risk assessments to help backcountry riders and ski tourers make safer decisions in the Georgian backcountry.'

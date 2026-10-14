@@ -5,6 +5,8 @@ export const routes = {
     aboutUs: '/about/about-us',
     apply: '/about/join-us/apply',
     contact: '/about/contact',
+    // The Join us page, scrolled to its "Support financially" section
+    donate: '/about/join-us#donate',
     joinUs: '/about/join-us',
   },
   admin: {
@@ -77,6 +79,8 @@ export const routes = {
   observationsByRegion: (regionId: string) => ({
     root: `/${regionId}/observations`,
     submit: `/${regionId}/observations/submit`,
+    // The list with the observation's details open
+    view: (id: number) => `/${regionId}/observations?id=${id}`,
   }),
   partners: '/partners',
   privacy: '/privacy-policy',

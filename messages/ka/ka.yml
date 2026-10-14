@@ -1,6 +1,9 @@
 navigation:
   about: 'შესახებ'
   aboutUs: 'ჩვენ შესახებ'
+  account: 'ანგარიში'
+  adminPanel: 'ადმინ პანელი'
+  archive: 'პროგნოზების არქივი'
   closeMenu: 'მენიუს დახურვა'
   contact: 'კონტაქტი'
   currentForecast: 'მიმდინარე პროგნოზი'
@@ -9,9 +12,11 @@ navigation:
   history: 'წინა პროგნოზები'
   home: 'მთავარი'
   joinUs: 'შემოგვიერთდი'
+  language: 'ენა'
   menu: 'მენიუ'
   menuDescription: 'საიტის სანავიგაციო მენიუ'
   observations: 'დაკვირვებები'
+  openMenu: 'მენიუს გახსნა'
   partners: 'პარტნიორები'
   weatherStations: 'ამინდის სადგურები'
 

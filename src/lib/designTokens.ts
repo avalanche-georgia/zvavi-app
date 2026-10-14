@@ -2,8 +2,10 @@
 // `cn()` needs them to tell a font size (`text-title`) from a colour (`text-ink`); the gallery
 // uses them to list every token.
 export const fontSizeTokens = [
+  'display',
   'title-lg',
   'title',
+  'title-sm',
   'heading',
   'copy-lg',
   'copy',

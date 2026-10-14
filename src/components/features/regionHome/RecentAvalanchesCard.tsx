@@ -1,5 +1,6 @@
 import SectionCard from '@components/features/forecast/sections/SectionCard'
 import type { PublicObservation, RegionId } from '@domain/types'
+import { getButtonClasses } from '@ds/primitives'
 import { Plus } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { Link } from 'src/i18n/navigation'
@@ -16,8 +17,6 @@ type RecentAvalanchesCardProps = {
 
 const linkClasses =
   'focus-ring text-accent hover:text-accent-hover text-copy-sm rounded-sm font-semibold'
-const buttonClasses =
-  'focus-ring border-rule bg-surface text-ink hover:bg-tile rounded-media text-copy mt-3 flex h-11 items-center justify-center gap-1.5 border font-semibold transition-colors'
 
 // The latest avalanche observations of the region, with ways to see all of
 // them or report one
@@ -40,7 +39,10 @@ const RecentAvalanchesCard = ({ avalanches, regionId }: RecentAvalanchesCardProp
         </p>
       )}
       {avalanches && avalanches.length > 0 && <RecentAvalanchesList avalanches={avalanches} />}
-      <Link className={buttonClasses} href={observationRoutes.submit}>
+      <Link
+        className={getButtonClasses({ className: 'mt-3 w-full', variant: 'secondary' })}
+        href={observationRoutes.submit}
+      >
         <Plus aria-hidden className="size-4.5" />
         {t('observations.reportCta')}
       </Link>

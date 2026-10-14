@@ -9,7 +9,7 @@ const FinancialSection = () => {
   const t = useTranslations()
 
   return (
-    <section className="space-y-3">
+    <section className="scroll-mt-20 space-y-3" id="donate">
       <h3 className="text-xl font-semibold">{t('joinUs.page.financialSupport.title')}</h3>
       <div>
         <p className="text-justify">{t('joinUs.page.financialSupport.description')}</p>

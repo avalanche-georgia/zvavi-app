@@ -1,16 +1,20 @@
-import { AboutUs, JoinUs, Partners, RegionPickerMap } from '@components/features/home'
-import fetchTier1Partners from '@data/queries/fetchTier1Partners'
+import { HomePage } from '@components/features/home'
+import { regionLocalStorageKey } from '@domain/constants'
+import { cookies } from 'next/headers'
+
+import fetchHomeData from './fetchHomeData'
 
 const Home = async () => {
-  const partners = await fetchTier1Partners()
+  const cookieStore = await cookies()
+  const data = await fetchHomeData(cookieStore.get(regionLocalStorageKey)?.value ?? null)
 
   return (
-    <div className="mx-auto max-w-(--breakpoint-md) space-y-8 px-4 pt-3 pb-6">
-      <RegionPickerMap />
-      <Partners partners={partners} />
-      <AboutUs />
-      <JoinUs />
-    </div>
+    <HomePage
+      latestObservations={data.latestObservations}
+      now={data.now}
+      partners={data.partners}
+      regions={data.regions}
+    />
   )
 }
 

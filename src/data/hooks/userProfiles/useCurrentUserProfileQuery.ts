@@ -28,8 +28,10 @@ const fetchCurrentUserProfile = async (): Promise<UserProfile | null> => {
   }
 }
 
-const useCurrentUserProfileQuery = () =>
+// isEnabled: false skips the lookup (e.g. no one is signed in)
+const useCurrentUserProfileQuery = ({ isEnabled = true }: { isEnabled?: boolean } = {}) =>
   useQuery<UserProfile | null, Error>({
+    enabled: isEnabled,
     queryFn: fetchCurrentUserProfile,
     queryKey: userProfilesKeys.current(),
   })
