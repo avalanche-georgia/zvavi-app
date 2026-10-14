@@ -5,9 +5,10 @@ import {
   ForecastsTabBar,
   ForecastsTable,
   ForecastsToolbar,
-  ListLoadError,
   useForecastsListPage,
 } from '@components/features/admin/Forecasts/ForecastsList'
+import { ListLoadError } from '@components/features/admin/shared'
+import { AdminPageBody } from '@components/layout/admin'
 import { defaultRegionId } from '@domain/constants'
 import type { Region, RegionId } from '@domain/types'
 import { useSearchParams } from 'next/navigation'
@@ -30,7 +31,7 @@ const ForecastsContainer = ({ initialRegions }: ForecastsContainerProps) => {
   return (
     <>
       <ForecastsTabBar initialRegions={initialRegions} regionId={regionId} />
-      <div className="@container mx-auto flex w-full max-w-360 flex-col gap-4 px-3 py-4 md:px-8 md:pt-6 md:pb-10">
+      <AdminPageBody>
         <CurrentCard
           currentForecast={currentQuery.data}
           forecasts={page.forecasts}
@@ -59,7 +60,7 @@ const ForecastsContainer = ({ initialRegions }: ForecastsContainerProps) => {
             regionId={regionId}
           />
         )}
-      </div>
+      </AdminPageBody>
     </>
   )
 }

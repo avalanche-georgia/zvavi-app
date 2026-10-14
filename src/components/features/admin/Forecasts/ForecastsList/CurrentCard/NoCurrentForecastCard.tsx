@@ -1,13 +1,13 @@
 'use client'
 
 import { useTransition } from 'react'
+import { useListDates } from '@components/features/admin/shared'
 import type { ForecastListItem, RegionId } from '@domain/types'
 import { Button } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'src/i18n/navigation'
 
 import { cardShellClasses } from './cardShell'
-import { useListDates } from '../../shared'
 
 import { cn } from '@/lib/utils'
 import { routes } from '@/routes'

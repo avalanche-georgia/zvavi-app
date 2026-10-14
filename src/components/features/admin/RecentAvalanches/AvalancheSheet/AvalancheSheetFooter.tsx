@@ -1,9 +1,9 @@
+import { DiscardConfirm, FooterConfirm } from '@components/features/admin/shared'
 import type { AvalancheListItem } from '@data/hooks/recentAvalanches'
 import { FooterActions } from '@ds/patterns'
 import { Button } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 
-import FooterConfirm from './FooterConfirm'
 import type { AvalancheSheetConfirm, AvalancheSheetMode } from './types'
 import { ViewActions } from '../AvalancheView'
 
@@ -52,15 +52,7 @@ const AvalancheSheetFooter = ({
   }
 
   if (confirm) {
-    return (
-      <FooterConfirm
-        cancelLabel={t('admin.recentAvalanches.sheet.keepEditing')}
-        confirmLabel={t('admin.recentAvalanches.sheet.discard')}
-        message={t('admin.recentAvalanches.sheet.discardConfirm')}
-        onCancel={onConfirmCancel}
-        onConfirm={onConfirm}
-      />
-    )
+    return <DiscardConfirm onCancel={onConfirmCancel} onConfirm={onConfirm} />
   }
 
   if (mode === 'view') {

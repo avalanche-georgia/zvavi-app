@@ -44,6 +44,16 @@ admin:
     openMenu: 'მენიუს გახსნა'
     closeMenu: 'მენიუს დახურვა'
 
+  shared:
+    actions:
+      more: 'სხვა მოქმედებები'
+    list:
+      clearFilters: 'ფილტრების გასუფთავება'
+    sheet:
+      discard: გაუქმება
+      discardConfirm: გავაუქმოთ შეუნახავი ცვლილებები?
+      keepEditing: რედაქტირების გაგრძელება
+
   members:
     title:
       create: 'წევრის დამატება'
@@ -210,7 +220,6 @@ admin:
       noForecastsHint: 'სეზონის დასაწყებად გამოიყენეთ ზემოთ „პროგნოზის შექმნა“.'
       noMatchesTitle: 'ვერაფერი მოიძებნა'
       noMatchesHint: 'სცადეთ სხვა სტატუსი, პერიოდი ან ძიება.'
-      clearFilters: 'ფილტრების გასუფთავება'
     current:
       eyebrow: 'მიმდინარე პროგნოზი'
       eyebrowExpired: 'მიმდინარე პროგნოზი · ვადაგასული'
@@ -226,7 +235,6 @@ admin:
     actions:
       copyLink: 'ბმულის კოპირება'
       duplicate: 'დუბლირება'
-      more: 'სხვა მოქმედებები'
       moreForForecast: 'სხვა მოქმედებები — პროგნოზი #{id}'
       openPublicPage: 'საჯარო გვერდის გახსნა'
       publish: 'გამოქვეყნება'
@@ -617,9 +625,6 @@ admin:
 
     sheet:
       deleteConfirm: წავშალოთ ჩანაწერი სამუდამოდ?
-      discard: გაუქმება
-      discardConfirm: გავაუქმოთ შეუნახავი ცვლილებები?
-      keepEditing: რედაქტირების გაგრძელება
       next: შემდეგი ჩანაწერი
       position: '{current} / {total}'
       previous: წინა ჩანაწერი

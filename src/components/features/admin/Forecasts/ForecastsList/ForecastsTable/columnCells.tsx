@@ -1,9 +1,10 @@
+import { useListDates } from '@components/features/admin/shared'
 import type { ForecastListItem } from '@domain/types'
 import type { CellContext } from '@ds/patterns'
 import { useTranslations } from 'next-intl'
 
 import { useForecastsTable } from './ForecastsTableContext'
-import { getForecastListStatus, StatusBadge, useListDates } from '../../shared'
+import { getForecastListStatus, StatusBadge } from '../../shared'
 import { ForecastCell, HazardCell, PublishedCell, ValidUntilCell } from '../cells'
 import { RowActions } from '../RowActions'
 

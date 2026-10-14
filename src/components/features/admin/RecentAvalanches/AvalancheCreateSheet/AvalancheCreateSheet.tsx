@@ -1,15 +1,13 @@
 'use client'
 
 import { useId } from 'react'
-import { Sheet, SheetClose, SheetIconButton, SheetTitle } from '@components/ui'
+import { DiscardConfirm, SheetHeader, useFormSheet } from '@components/features/admin/shared'
+import { Sheet } from '@components/ui'
 import type { RegionId } from '@domain/types'
 import { FooterActions } from '@ds/patterns'
 import { Button } from '@ds/primitives'
-import { X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
-import useCreateSheet from './useCreateSheet'
-import FooterConfirm from '../AvalancheSheet/FooterConfirm'
 import { RecentAvalancheForm } from '../RecentAvalancheForm'
 
 type AvalancheCreateSheetProps = {
@@ -37,7 +35,7 @@ const AvalancheCreateSheet = ({
 }: AvalancheCreateSheetProps) => {
   const t = useTranslations()
   const formId = useId()
-  const sheet = useCreateSheet({ isRequested, onClose })
+  const sheet = useFormSheet({ isRequested, onClose })
 
   const handleOpenChange = (isOpen: boolean) => !isOpen && sheet.requestClose()
 
@@ -47,13 +45,7 @@ const AvalancheCreateSheet = ({
   }
 
   const footer = sheet.isConfirmingClose ? (
-    <FooterConfirm
-      cancelLabel={t('admin.recentAvalanches.sheet.keepEditing')}
-      confirmLabel={t('admin.recentAvalanches.sheet.discard')}
-      message={t('admin.recentAvalanches.sheet.discardConfirm')}
-      onCancel={sheet.cancelConfirm}
-      onConfirm={sheet.close}
-    />
+    <DiscardConfirm onCancel={sheet.cancelConfirm} onConfirm={sheet.close} />
   ) : (
     <FooterActions>
       <Button onClick={sheet.requestClose} variant="secondary">
@@ -70,16 +62,7 @@ const AvalancheCreateSheet = ({
     <Sheet
       className="lg:w-200"
       footer={footer}
-      header={
-        <>
-          <SheetClose render={<SheetIconButton aria-label={t('common.actions.close')} />}>
-            <X className="size-4.5" />
-          </SheetClose>
-          <SheetTitle className="m-0 flex-1 truncate text-[15px] font-semibold">
-            {title ?? t('admin.recentAvalanches.title.create')}
-          </SheetTitle>
-        </>
-      }
+      header={<SheetHeader title={title ?? t('admin.recentAvalanches.title.create')} />}
       isDismissible={!sheet.isDirty}
       isOpen={sheet.isOpen}
       isTall
