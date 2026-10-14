@@ -4,21 +4,19 @@ import type { Region } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import RegionRow from './RegionRow'
+import DashboardCard from '../DashboardCard'
 
-type RegionForecastStatusProps = { regions: Region[] }
-
-const RegionForecastStatus = ({ regions }: RegionForecastStatusProps) => {
+const RegionForecastStatus = ({ regions }: { regions: Region[] }) => {
   const t = useTranslations()
 
   return (
-    <div className="rounded-xl border border-gray-200 bg-white px-4 py-4">
-      <p className="mb-3 text-sm font-semibold text-gray-900">
-        {t('admin.dashboard.regions.title')}
-      </p>
-      {regions.map((region) => (
-        <RegionRow key={region.id} regionId={region.id} />
-      ))}
-    </div>
+    <DashboardCard title={t('admin.dashboard.regions.title')}>
+      <ul className="-my-2">
+        {regions.map((region) => (
+          <RegionRow key={region.id} regionId={region.id} />
+        ))}
+      </ul>
+    </DashboardCard>
   )
 }
 

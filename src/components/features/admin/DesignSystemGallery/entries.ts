@@ -17,6 +17,7 @@ import PaginationGallery from '@ds/primitives/Pagination/Pagination.gallery'
 import RatingScaleGallery from '@ds/primitives/RatingScale/RatingScale.gallery'
 import SegmentedControlGallery from '@ds/primitives/SegmentedControl/SegmentedControl.gallery'
 import SelectGallery from '@ds/primitives/Select/Select.gallery'
+import SkeletonGallery from '@ds/primitives/Skeleton/Skeleton.gallery'
 import StatusPillGallery from '@ds/primitives/StatusPill/StatusPill.gallery'
 import StepperGallery from '@ds/primitives/Stepper/Stepper.gallery'
 import ToggleGridGallery from '@ds/primitives/ToggleGrid/ToggleGrid.gallery'
@@ -42,6 +43,7 @@ export const galleryEntries: GalleryEntry[] = [
   { Demo: ButtonGallery, id: 'button', title: 'Button' },
   { Demo: BadgeGallery, id: 'badge', title: 'Badge' },
   { Demo: StatusPillGallery, id: 'status-pill', title: 'StatusPill' },
+  { Demo: SkeletonGallery, id: 'skeleton', title: 'Skeleton' },
   { Demo: ConfirmPopoverGallery, id: 'confirm-popover', title: 'ConfirmPopover' },
   { Demo: MenuGallery, id: 'menu', title: 'Menu' },
   { Demo: IconButtonGallery, id: 'icon-button', title: 'IconButton' },

@@ -25,6 +25,8 @@ export const routes = {
     members: {
       // The list with its create sheet open
       create: '/admin/members?create=1',
+      // Applications waiting for approval
+      pending: '/admin/members?status=pending',
       root: '/admin/members',
       // The list with the member's sheet open
       view: (id: string) => `/admin/members?member=${id}`,

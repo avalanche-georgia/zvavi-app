@@ -10,70 +10,57 @@ import { useTranslations } from 'next-intl'
 
 import MetricCard from './MetricCard'
 
+import { routes } from '@/routes'
+
+// Four numbers that say what needs attention; each opens the list behind it
 const MetricCards = ({ regions }: { regions: Region[] }) => {
   const t = useTranslations()
   const dateFrom = useMemo(() => subDays(new Date(), 7).toISOString(), [])
 
   const forecastQueries = useCurrentForecastsPerRegion(regions)
-  const isForecastPending = forecastQueries.some((query) => query.isPending)
-  const isForecastError = forecastQueries.some((query) => query.isError)
-  const publishedCount = forecastQueries.filter((query) => query.data != null).length
-
-  const { data: members, isError: isMembersError, isPending: isMembersPending } = useMembersQuery()
-  const pendingCount = members?.filter((member) => member.status === 'pending').length ?? 0
-
-  const {
-    isError: isObservationsError,
-    isPending: isObservationsPending,
-    total: pendingObservationsCount,
-  } = usePendingObservationsSummary()
-
+  const membersQuery = useMembersQuery()
+  const observations = usePendingObservationsSummary()
   const avalancheQueries = useAvalanchesPerRegion(regions, { dateFrom, dateMode: 'created' })
-  const isAvalanchePending = avalancheQueries.some((query) => query.isPending)
-  const isAvalancheError = avalancheQueries.some((query) => query.isError)
+
+  const publishedCount = forecastQueries.filter((query) => query.data != null).length
+  const pendingMembersCount =
+    membersQuery.data?.filter((member) => member.status === 'pending').length ?? 0
   const avalancheCount = avalancheQueries.reduce(
     (sum, query) => sum + (query.data?.totalCount ?? 0),
     0,
   )
 
   return (
-    <div className="mb-3.5 grid grid-cols-2 gap-3 lg:grid-cols-4">
+    <div className="grid grid-cols-2 gap-3 @4xl:grid-cols-4">
       <MetricCard
-        isError={isForecastError}
-        isPending={isForecastPending}
+        href={routes.admin.forecasts.root}
+        isError={forecastQueries.some((query) => query.isError)}
+        isPending={forecastQueries.some((query) => query.isPending)}
         label={t('admin.dashboard.metrics.forecastsPublished')}
-      >
-        <div className="flex items-baseline gap-1.5">
-          <span className="text-2xl font-semibold text-gray-900">{publishedCount}</span>
-          <span className="text-sm text-gray-400">
-            {t('admin.dashboard.metrics.forecastsOf', { total: regions.length })}
-          </span>
-        </div>
-      </MetricCard>
-
+        note={t('admin.dashboard.metrics.forecastsOf', { total: regions.length })}
+        value={publishedCount}
+      />
       <MetricCard
-        isError={isMembersError}
-        isPending={isMembersPending}
+        href={routes.admin.members.pending}
+        isError={membersQuery.isError}
+        isPending={membersQuery.isPending}
         label={t('admin.dashboard.metrics.pendingMembers')}
-      >
-        <span className="text-2xl font-semibold text-gray-900">{pendingCount}</span>
-      </MetricCard>
-
+        value={pendingMembersCount}
+      />
       <MetricCard
-        isError={isObservationsError}
-        isPending={isObservationsPending}
+        href={routes.admin.observations.root}
+        isError={observations.isError}
+        isPending={observations.isPending}
         label={t('admin.dashboard.metrics.pendingObservations')}
-      >
-        <span className="text-2xl font-semibold text-gray-900">{pendingObservationsCount}</span>
-      </MetricCard>
-
+        value={observations.total}
+      />
       <MetricCard
-        isError={isAvalancheError}
-        isPending={isAvalanchePending}
+        href={routes.admin.recentAvalanches.root}
+        isError={avalancheQueries.some((query) => query.isError)}
+        isPending={avalancheQueries.some((query) => query.isPending)}
         label={t('admin.dashboard.metrics.avalanchesWeek')}
-      >
-        <span className="text-2xl font-semibold text-gray-900">{avalancheCount}</span>
-      </MetricCard>
+        value={avalancheCount}
+      />
     </div>
   )
 }
