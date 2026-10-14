@@ -1,5 +1,6 @@
 'use client'
 
+import { Icon } from '@components/icons'
 import { Menu, MenuItem } from '@ds/primitives'
 import { ChevronDown } from 'lucide-react'
 import { useTranslations } from 'next-intl'
@@ -28,6 +29,7 @@ const NavDropdown = ({ item }: { item: NavMenuGroup }) => {
       {item.children.map((child) => (
         <MenuItem
           key={child.id}
+          icon={<Icon className="text-muted" icon={child.icon} size="sm" />}
           isActive={isNavItemActive(child, pathname)}
           render={<Link href={child.path} />}
         >

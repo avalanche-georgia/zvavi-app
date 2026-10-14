@@ -59,6 +59,7 @@ const MobileNavAccordion = ({ item, onClose }: MobileNavAccordionProps) => {
                 href={child.path}
                 onClick={onClose}
               >
+                <Icon className="text-muted" icon={child.icon} size="sm" />
                 {t(child.titleId)}
               </Link>
             )
