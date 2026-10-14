@@ -1,9 +1,5 @@
-'use client'
+import { SetNewPasswordForm } from '@components/features/auth'
 
-import { SetNewPasswordForm } from '@components/features/admin/SetNewPassword/SetNewPasswordForm'
-
-const SetNewPasswordPage = () => {
-  return <SetNewPasswordForm />
-}
+const SetNewPasswordPage = () => <SetNewPasswordForm />
 
 export default SetNewPasswordPage
