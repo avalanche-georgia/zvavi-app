@@ -1,16 +1,22 @@
 'use client'
 
-import { Skeleton } from '@components/ui'
+import { LinkPendingIndicator } from '@components/features/admin/shared'
+import { Skeleton } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
+import { Link } from 'src/i18n/navigation'
 
 type MetricCardProps = {
-  children: React.ReactNode
+  // Where the number comes from — the tile opens that list
+  href: string
   isError: boolean
   isPending: boolean
   label: string
+  // Muted text after the number, e.g. "of 2 regions"
+  note?: string
+  value: number
 }
 
-const MetricCard = ({ children, isError, isPending, label }: MetricCardProps) => {
+const MetricCard = ({ href, isError, isPending, label, note, value }: MetricCardProps) => {
   const t = useTranslations()
 
   const renderValue = () => {
@@ -19,23 +25,32 @@ const MetricCard = ({ children, isError, isPending, label }: MetricCardProps) =>
     // A failed fetch must not read as a real zero
     if (isError) {
       return (
-        <span
-          className="text-2xl font-semibold text-gray-400"
-          title={t('admin.dashboard.metrics.loadError')}
-        >
-          —<span className="sr-only">{t('admin.dashboard.metrics.loadError')}</span>
+        <span className="text-title text-placeholder font-semibold">
+          <span aria-hidden>—</span>
+          <span className="sr-only">{t('admin.dashboard.metrics.loadError')}</span>
         </span>
       )
     }
 
-    return children
+    return (
+      <span className="flex items-baseline gap-1.5">
+        <span className="text-title text-ink font-semibold tabular-nums">{value}</span>
+        {note && <span className="text-copy-sm text-muted">{note}</span>}
+      </span>
+    )
   }
 
   return (
-    <div className="rounded-lg border bg-gray-100 px-4 py-3.5">
-      <p className="mb-1.5 text-xs tracking-wide text-gray-500 uppercase">{label}</p>
+    <Link
+      className="rounded-card border-rule bg-surface hover:border-rule-strong focus-ring flex flex-col gap-1.5 border px-4 py-3.5 transition-colors"
+      href={href}
+    >
+      <span className="text-caption text-muted font-semibold tracking-wider uppercase">
+        {label}
+        <LinkPendingIndicator />
+      </span>
       {renderValue()}
-    </div>
+    </Link>
   )
 }
 
