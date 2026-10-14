@@ -1,6 +1,7 @@
 import { IconButton } from '@components/ui'
 import { CloseButton, Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
-import clsx from 'clsx'
+
+import { cn } from '@/lib/utils'
 
 export type ModalProps = {
   children: React.ReactNode
@@ -12,6 +13,7 @@ export type ModalProps = {
   titleClassName?: string
 }
 
+/** @deprecated Use `Dialog` from `@ds/primitives` or `ConfirmDialog` from `@ds/patterns` — see DESIGN_SYSTEM.md */
 const Modal = ({
   children,
   className,
@@ -28,7 +30,7 @@ const Modal = ({
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div className="flex min-h-full items-center justify-center p-8">
           <DialogPanel
-            className={clsx(
+            className={cn(
               'duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0',
               'max-w-(--breakpoint-lg) rounded-md bg-white md:min-w-[512px]',
               className,
@@ -37,10 +39,7 @@ const Modal = ({
           >
             <header className="flex h-14 items-center border-b px-4 lg:h-16 lg:px-6">
               {title && (
-                <DialogTitle
-                  as="h4"
-                  className={clsx('flex-1 text-xl font-semibold', titleClassName)}
-                >
+                <DialogTitle as="h4" className={cn('flex-1 text-xl font-semibold', titleClassName)}>
                   {title}
                 </DialogTitle>
               )}

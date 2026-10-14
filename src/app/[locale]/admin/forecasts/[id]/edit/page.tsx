@@ -4,7 +4,7 @@ import {
   ForecastForm,
   getInitialFormValues,
 } from '@components/features/admin/Forecasts/ForecastForm'
-import { Spinner } from '@components/ui'
+import { Loading } from '@components/features/admin/shared'
 import { useAdminGetForecast } from '@data/hooks/forecasts'
 import { useParams, useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
@@ -38,11 +38,7 @@ const EditForecastPage = () => {
   }
 
   if (isPending) {
-    return (
-      <div className="flex items-center justify-center py-12">
-        <Spinner />
-      </div>
-    )
+    return <Loading isPage />
   }
 
   if (!forecast) {

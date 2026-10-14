@@ -5,8 +5,8 @@ import {
   ForecastForm,
   getInitialFormValues,
 } from '@components/features/admin/Forecasts/ForecastForm'
+import { Loading } from '@components/features/admin/shared'
 import { RequireRegionId } from '@components/shared'
-import { Spinner } from '@components/ui'
 import { useAdminGetForecast } from '@data/hooks/forecasts'
 import { useCurrentUserProfileQuery } from '@data/hooks/userProfiles'
 import type { RegionId } from '@domain/types'
@@ -50,11 +50,11 @@ const NewForecastContent = ({ regionId }: { regionId: RegionId }) => {
   }, [regionId, shouldRedirectOnInvalidDuplicate, router])
 
   if (isProfilePending || (isValidDuplicateId && isLoading)) {
-    return <Spinner />
+    return <Loading isPage />
   }
 
   if (shouldRedirectOnInvalidDuplicate) {
-    return <Spinner />
+    return <Loading isPage />
   }
 
   const handleClose = () => {

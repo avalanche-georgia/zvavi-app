@@ -52,6 +52,8 @@
   --color-off: #d3d6db;
   /* Behind map tiles while they load */
   --color-map: #e8e6df;
+  /* Dims the page behind a dialog or sheet */
+  --color-scrim: rgb(20 20 24 / 0.42);
 
   /* Interactive accent — every selected state, links, text buttons, focus rings */
   --color-accent: #0c5aa6;

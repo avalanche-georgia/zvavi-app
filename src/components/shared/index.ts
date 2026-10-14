@@ -1,5 +1,4 @@
 export { default as ButtonLink } from './ButtonLink'
-export { ConfirmationDialog } from './ConfirmationDialog'
 export { default as CopyField } from './CopyField'
 export { default as CopyInput } from './CopyInput'
 export { DisclaimerGate } from './Disclaimer'

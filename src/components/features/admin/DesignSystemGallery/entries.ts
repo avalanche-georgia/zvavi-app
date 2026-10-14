@@ -1,6 +1,8 @@
+import ConfirmDialogGallery from '@ds/patterns/ConfirmDialog/ConfirmDialog.gallery'
 import DataTableGallery from '@ds/patterns/DataTable/DataTable.gallery'
 import FooterActionsGallery from '@ds/patterns/FooterActions/FooterActions.gallery'
 import FormCardGallery from '@ds/patterns/FormCard/FormCard.gallery'
+import LoadingStateGallery from '@ds/patterns/LoadingState/LoadingState.gallery'
 import StickyActionBarGallery from '@ds/patterns/StickyActionBar/StickyActionBar.gallery'
 import SuccessStateGallery from '@ds/patterns/SuccessState/SuccessState.gallery'
 import BadgeGallery from '@ds/primitives/Badge/Badge.gallery'
@@ -18,6 +20,7 @@ import RatingScaleGallery from '@ds/primitives/RatingScale/RatingScale.gallery'
 import SegmentedControlGallery from '@ds/primitives/SegmentedControl/SegmentedControl.gallery'
 import SelectGallery from '@ds/primitives/Select/Select.gallery'
 import SkeletonGallery from '@ds/primitives/Skeleton/Skeleton.gallery'
+import SpinnerGallery from '@ds/primitives/Spinner/Spinner.gallery'
 import StatusPillGallery from '@ds/primitives/StatusPill/StatusPill.gallery'
 import StepperGallery from '@ds/primitives/Stepper/Stepper.gallery'
 import ToggleGridGallery from '@ds/primitives/ToggleGrid/ToggleGrid.gallery'
@@ -44,7 +47,10 @@ export const galleryEntries: GalleryEntry[] = [
   { Demo: BadgeGallery, id: 'badge', title: 'Badge' },
   { Demo: StatusPillGallery, id: 'status-pill', title: 'StatusPill' },
   { Demo: SkeletonGallery, id: 'skeleton', title: 'Skeleton' },
+  { Demo: SpinnerGallery, id: 'spinner', title: 'Spinner' },
+  { Demo: LoadingStateGallery, id: 'loading-state', title: 'LoadingState' },
   { Demo: ConfirmPopoverGallery, id: 'confirm-popover', title: 'ConfirmPopover' },
+  { Demo: ConfirmDialogGallery, id: 'confirm-dialog', title: 'ConfirmDialog' },
   { Demo: MenuGallery, id: 'menu', title: 'Menu' },
   { Demo: IconButtonGallery, id: 'icon-button', title: 'IconButton' },
   { Demo: InfoTipGallery, id: 'info-tip', title: 'InfoTip' },

@@ -1,6 +1,6 @@
 'use client'
 
-import { Spinner } from '@components/ui'
+import { Loading } from '@components/features/admin/shared'
 import { useRegionQuery } from '@data/hooks/regions'
 import type { Avalanche, RegionId } from '@domain/types'
 import { useTranslations } from 'next-intl'
@@ -30,11 +30,7 @@ const RecentAvalancheForm = (props: RecentAvalancheFormProps) => {
   const { data: region, isPending } = useRegionQuery({ regionId: props.regionId })
 
   if (isPending) {
-    return (
-      <div className="flex justify-center py-12">
-        <Spinner />
-      </div>
-    )
+    return <Loading />
   }
 
   if (!region) {

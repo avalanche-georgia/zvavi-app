@@ -30,8 +30,9 @@ src/components/
 │   ├── primitives/      # Button, Badge, Checkbox, Field, FieldGroup, TextField, NumberField,
 │   │                    # Textarea, ChipGroup, ToggleGrid, SegmentedControl, Select, Stepper, InfoTip,
 │   │                    # IconButton, RatingScale, DateField, Menu, Pagination, SearchField,
-│   │                    # StatusPill, Skeleton
-│   ├── patterns/        # FormCard, StickyActionBar, SuccessState, DataTable
+│   │                    # StatusPill, Skeleton, Spinner, Dialog
+│   ├── patterns/        # FormCard, StickyActionBar, SuccessState, DataTable, LoadingState,
+│   │                    # ConfirmDialog
 │   └── form/            # react-hook-form bindings: FormTextField, FormTextarea, FormNumberField,
 │                        # FormStepper, FormChipGroup, FormCheckbox, FormSelect, FormDateField,
 │                        # useFormFieldError
@@ -227,14 +228,14 @@ Update this table when a legacy component's last consumer is migrated.
 | Select | Radix | `primitives/Select` (base-ui) | ☐ |
 | DatePicker, Calendar, TimeInput, DatePickerTimeInput | Headless UI + react-day-picker | `primitives/DateField` | ☐ |
 | TimePicker | Headless UI | `primitives/DateField` (`withTime`) | ✅ |
-| Modal | Headless UI | `primitives/Dialog` (base-ui) | ☐ |
+| Modal (+ `shared/ConfirmationDialog`, removed) | Headless UI | `primitives/Dialog` (base-ui), `patterns/ConfirmDialog` | ☐ |
 | Popover | Radix | `primitives/Popover` (base-ui) | ☐ |
 | Tooltip, InfoIcon | Radix | `primitives/Tooltip` (base-ui Tooltip; hover/focus labels), `primitives/InfoTip` (base-ui Popover; explanations) | ☐ |
 | DropdownMenu | base-ui | `primitives/Menu` | ✅ |
 | Drawer, Sheet | vaul / base-ui | `patterns/Sheet` (TBD) | ☐ |
 | IconButton | custom | `primitives/IconButton` | ☐ |
 | Alert | custom | — (last consumer removed with the forecast page redesign; add `patterns/Alert` when needed) | ✅ |
-| Spinner | custom | `primitives/Spinner` (TBD) | ☐ |
+| Spinner | custom | `primitives/Spinner`, `patterns/LoadingState` (admin migrated) | ☐ |
 | Skeleton | custom | `primitives/Skeleton` | ☐ |
 | Pagination, DataTable | custom | `primitives/Pagination`, `patterns/DataTable` | ✅ |
 | AspectElevationPicker | base-ui | moved to `features/observations/` | ✅ |
