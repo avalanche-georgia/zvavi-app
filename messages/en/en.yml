@@ -15,14 +15,6 @@ navigation:
   partners: 'Partners'
   weatherStations: 'Weather Stations'
 
-modal:
-  confirm:
-    title: 'Confirmation Required'
-    description: 'Do you want to proceed and perform the action?'
-  delete:
-    title: 'Confirm Deletion?'
-    description: 'The deletion is permanent. Do you want to proceed anyway?'
-
 auth:
   errors:
     invalidSession: 'Invalid or expired session. Please request a new password reset link.'
