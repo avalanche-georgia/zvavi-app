@@ -1,8 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { Sheet } from '@components/ui'
 import type { Problem, RegionId } from '@domain/types'
+import { Sheet } from '@ds/patterns'
 import { useTranslations } from 'next-intl'
 
 import ProblemBody from './ProblemBody'
@@ -27,11 +27,10 @@ const ProblemSheet = (props: ProblemSheetProps) => {
   const { index, infoField, onClose, onInfoChange, onNavigate, problems, regionId } = props
   const t = useTranslations()
   const {
-    bodyRef,
-    handleKeyDown,
+    scrollKey,
     shownIndex,
     shownItem: problem,
-    step,
+    steps,
   } = useStepSheet({ getKey: getProblemKey, index, items: problems, onNavigate })
   // Keeps the explanation rendered while its sheet animates closed
   const [shownField, setShownField] = useState<ProblemField>(infoField ?? 'size')
@@ -50,27 +49,23 @@ const ProblemSheet = (props: ProblemSheetProps) => {
     <Sheet
       header={
         <StepSheetHeader
-          index={shownIndex}
           nextLabel={t('forecast.page.nextProblem')}
-          onNext={() => step(1)}
-          onPrevious={() => step(-1)}
           positionLabel={t('forecast.page.problemPosition', {
             current: shownIndex + 1,
             total: problems.length,
           })}
           previousLabel={t('forecast.page.previousProblem')}
+          steps={steps}
           title={title}
-          total={problems.length}
         />
       }
       isOpen={index !== null}
       isTall
-      onKeyDown={handleKeyDown}
       onOpenChange={handleOpenChange}
+      scrollKey={scrollKey}
+      steps={steps}
     >
-      <div ref={bodyRef}>
-        <ProblemBody onInfoOpen={onInfoChange} problem={problem} />
-      </div>
+      <ProblemBody onInfoOpen={onInfoChange} problem={problem} />
 
       <InfoSheet
         backLabel={title}

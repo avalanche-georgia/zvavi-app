@@ -1,23 +1,26 @@
 'use client'
 
-import { Checkbox, Drawer } from '@components/ui'
+import { DetailsSheet } from '@components/shared'
+import { Checkbox } from '@components/ui'
 import { useTranslations } from 'next-intl'
 import { Controller, useFormContext } from 'react-hook-form'
 
 import type { MemberApplicationFormData } from './schema'
 
-const CharterDrawerButton = ({ chunks }: { chunks: React.ReactNode }) => {
+const CharterSheetButton = ({ chunks }: { chunks: React.ReactNode }) => {
   const t = useTranslations()
 
   return (
-    <Drawer
-      content={<p className="text-sm text-gray-700">{t('joinUs.apply.charter.content')}</p>}
+    <DetailsSheet
       title={t('joinUs.apply.charter.drawerTitle')}
+      trigger={
+        <button className="text-primary underline" type="button">
+          {chunks}
+        </button>
+      }
     >
-      <button className="text-primary underline" type="button">
-        {chunks}
-      </button>
-    </Drawer>
+      <p className="text-sm text-gray-700">{t('joinUs.apply.charter.content')}</p>
+    </DetailsSheet>
   )
 }
 
@@ -43,7 +46,7 @@ const CharterAgreement = () => {
         />
         <span className="text-sm">
           {t.rich('joinUs.apply.charter.checkbox', {
-            link: (chunks) => <CharterDrawerButton chunks={chunks} />,
+            link: (chunks) => <CharterSheetButton chunks={chunks} />,
           })}
         </span>
       </div>

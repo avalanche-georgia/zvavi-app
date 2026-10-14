@@ -2,8 +2,8 @@
 
 import { useState } from 'react'
 import { LocationSheet } from '@components/features/observations'
-import { Sheet } from '@components/ui'
 import type { PublicAvalanche } from '@domain/types'
+import { Sheet } from '@ds/patterns'
 import { useTranslations } from 'next-intl'
 
 import AvalancheBody from './AvalancheBody'
@@ -25,11 +25,10 @@ const getAvalancheKey = (avalanche: PublicAvalanche) => String(avalanche.id)
 const AvalancheSheet = ({ avalanches, index, onClose, onNavigate }: AvalancheSheetProps) => {
   const t = useTranslations()
   const {
-    bodyRef,
-    handleKeyDown,
+    scrollKey,
     shownIndex,
     shownItem: avalanche,
-    step,
+    steps,
   } = useStepSheet({ getKey: getAvalancheKey, index, items: avalanches, onNavigate })
   const [mapRecordId, setMapRecordId] = useState<number | null>(null)
 
@@ -50,27 +49,23 @@ const AvalancheSheet = ({ avalanches, index, onClose, onNavigate }: AvalancheShe
     <Sheet
       header={
         <StepSheetHeader
-          index={shownIndex}
           nextLabel={t('observations.detail.next')}
-          onNext={() => step(1)}
-          onPrevious={() => step(-1)}
           positionLabel={t('observations.detail.position', {
             current: shownIndex + 1,
             total: avalanches.length,
           })}
           previousLabel={t('observations.detail.previous')}
+          steps={steps}
           title={t(`common.avalancheTypes.${avalanche.type}`)}
-          total={avalanches.length}
         />
       }
       isOpen={index !== null}
       isTall
-      onKeyDown={handleKeyDown}
       onOpenChange={handleOpenChange}
+      scrollKey={scrollKey}
+      steps={steps}
     >
-      <div ref={bodyRef}>
-        <AvalancheBody avalanche={avalanche} onShowOnMap={() => setMapRecordId(avalanche.id)} />
-      </div>
+      <AvalancheBody avalanche={avalanche} onShowOnMap={() => setMapRecordId(avalanche.id)} />
 
       <LocationSheet
         contextPoints={[]}

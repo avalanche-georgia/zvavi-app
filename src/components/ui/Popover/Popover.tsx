@@ -6,7 +6,7 @@ import { forwardRef } from 'react'
 import * as PopoverPrimitive from '@radix-ui/react-popover'
 import type { ComponentPropsWithoutRef, ElementRef } from 'react'
 
-import { stopEscapePropagation, usePortalContainer } from '../PortalContainer'
+import { stopEscapePropagation } from '../stopEscapePropagation'
 
 import { cn } from '@/lib/utils'
 
@@ -20,15 +20,13 @@ const PopoverContent = forwardRef<
   ElementRef<typeof PopoverPrimitive.Content>,
   ComponentPropsWithoutRef<typeof PopoverPrimitive.Content>
 >(({ align = 'center', children, className, onEscapeKeyDown, sideOffset = 4, ...props }, ref) => {
-  const portalContainer = usePortalContainer()
-
   const handleEscapeKeyDown = (event: KeyboardEvent) => {
     stopEscapePropagation(event)
     onEscapeKeyDown?.(event)
   }
 
   return (
-    <PopoverPrimitive.Portal container={portalContainer}>
+    <PopoverPrimitive.Portal>
       <PopoverPrimitive.Content
         ref={ref}
         align={align}

@@ -1,6 +1,6 @@
 'use client'
 
-import { PartnerBenefitsDrawer } from '@components/features/join'
+import { PartnerBenefitsSheet } from '@components/features/join'
 import { Spinner } from '@components/ui'
 import { useVerifyMember } from '@data/hooks/members'
 import { useTranslations } from 'next-intl'
@@ -43,7 +43,7 @@ const VerificationPage = ({ code }: VerificationPageProps) => {
         status={data.member.status}
       />
 
-      <PartnerBenefitsDrawer />
+      <PartnerBenefitsSheet />
     </div>
   )
 }

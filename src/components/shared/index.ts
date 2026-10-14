@@ -1,6 +1,7 @@
 export { default as ButtonLink } from './ButtonLink'
 export { default as CopyField } from './CopyField'
 export { default as CopyInput } from './CopyInput'
+export { default as DetailsSheet } from './DetailsSheet'
 export { DisclaimerGate } from './Disclaimer'
 export { default as HTMLContainer } from './HTMLContainer'
 export { default as LanguageToggle } from './LanguageToggle'

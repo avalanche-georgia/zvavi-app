@@ -103,6 +103,7 @@
   --radius-field: 11px;
   --radius-control: 10px;
   --radius-badge: 5px;
+  --radius-sheet: 20px;
 
   /* Elevation */
   --shadow-raised: 0 1px 2px rgb(0 0 0 / 0.08), 0 0 0 1px rgb(0 0 0 / 0.04);
@@ -110,6 +111,11 @@
   --shadow-float: 0 6px 24px -8px rgb(0 0 0 / 0.12);
   --shadow-menu: 0 12px 32px -8px rgb(0 0 0 / 0.18);
   --shadow-pin: 0 2px 6px rgb(0 0 0 / 0.35);
+  --shadow-sheet: 0 -10px 40px rgb(0 0 0 / 0.12);
+  --shadow-panel: 0 12px 40px rgb(0 0 0 / 0.2), 0 0 0 1px rgb(0 0 0 / 0.04);
+
+  /* Motion */
+  --ease-sheet: cubic-bezier(0.2, 0.8, 0.2, 1);
 
   @keyframes fadeIn {
     from {

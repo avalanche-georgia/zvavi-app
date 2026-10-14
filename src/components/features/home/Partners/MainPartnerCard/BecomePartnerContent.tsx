@@ -3,7 +3,7 @@ import { useTranslations } from 'next-intl'
 
 import { routes } from '@/routes'
 
-const DrawerContent = () => {
+const BecomePartnerContent = () => {
   const t = useTranslations()
 
   return (
@@ -16,4 +16,4 @@ const DrawerContent = () => {
   )
 }
 
-export default DrawerContent
+export default BecomePartnerContent

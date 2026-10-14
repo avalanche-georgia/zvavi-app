@@ -1,10 +1,9 @@
 'use client'
 
 import { useId } from 'react'
-import { DiscardConfirm, SheetHeader, useFormSheet } from '@components/features/admin/shared'
-import { Sheet } from '@components/ui'
+import { DiscardConfirm, useFormSheet } from '@components/features/admin/shared'
 import type { RegionId } from '@domain/types'
-import { FooterActions } from '@ds/patterns'
+import { FooterActions, Sheet, SheetHeader } from '@ds/patterns'
 import { Button } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 
@@ -62,7 +61,12 @@ const AvalancheCreateSheet = ({
     <Sheet
       className="lg:w-200"
       footer={footer}
-      header={<SheetHeader title={title ?? t('admin.recentAvalanches.title.create')} />}
+      header={
+        <SheetHeader
+          closeLabel={t('common.actions.close')}
+          title={title ?? t('admin.recentAvalanches.title.create')}
+        />
+      }
       isDismissible={!sheet.isDirty}
       isOpen={sheet.isOpen}
       isTall

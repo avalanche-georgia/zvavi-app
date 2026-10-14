@@ -1,8 +1,8 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-import { Sheet } from '@components/ui'
+import { useState } from 'react'
 import type { ObservationPoint, PublicObservation } from '@domain/types'
+import { Sheet, type SheetSteps } from '@ds/patterns'
 import { useTranslations } from 'next-intl'
 
 import DetailBody from './DetailBody'
@@ -31,7 +31,6 @@ const ObservationDetailSheet = ({
   total,
 }: ObservationDetailSheetProps) => {
   const t = useTranslations()
-  const bodyRef = useRef<HTMLDivElement>(null)
   const [isLocationOpen, setIsLocationOpen] = useState(false)
   // Keeps the content rendered while the sheet animates closed
   const [shownObservation, setShownObservation] = useState(observation)
@@ -42,20 +41,11 @@ const ObservationDetailSheet = ({
     if (observation.id !== shownObservation?.id) setIsLocationOpen(false)
   }
 
-  const shownId = shownObservation?.id
-
-  // Each observation starts at the top
-  useEffect(() => {
-    bodyRef.current?.closest('[data-sheet-body]')?.scrollTo({ top: 0 })
-  }, [shownId])
-
-  // ←/→ step through the list. Keys from stacked sheets and the photo viewer
-  // (portaled outside this popup) bubble here through React too — ignore them.
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (!event.currentTarget.contains(event.target as Node)) return
-    if (index === null) return
-    if (event.key === 'ArrowLeft' && index > 0) onNavigate(-1)
-    if (event.key === 'ArrowRight' && index < total - 1) onNavigate(1)
+  const steps: SheetSteps = {
+    hasNext: index !== null && index < total - 1,
+    hasPrevious: index !== null && index > 0,
+    onNext: () => onNavigate(1),
+    onPrevious: () => onNavigate(-1),
   }
 
   const handleOpenChange = (isOpen: boolean) => {
@@ -69,20 +59,19 @@ const ObservationDetailSheet = ({
       header={
         <DetailHeader
           index={index}
-          onNext={() => onNavigate(1)}
-          onPrevious={() => onNavigate(-1)}
+          steps={steps}
           total={total}
           typeLabel={t(`common.avalancheTypes.${shownObservation.type}`)}
         />
       }
       isOpen={observation !== null}
       isTall
-      onKeyDown={handleKeyDown}
       onOpenChange={handleOpenChange}
+      // Each observation starts at the top
+      scrollKey={shownObservation.id}
+      steps={steps}
     >
-      <div ref={bodyRef}>
-        <DetailBody observation={shownObservation} onShowOnMap={() => setIsLocationOpen(true)} />
-      </div>
+      <DetailBody observation={shownObservation} onShowOnMap={() => setIsLocationOpen(true)} />
 
       <LocationSheet
         contextPoints={contextPoints}
