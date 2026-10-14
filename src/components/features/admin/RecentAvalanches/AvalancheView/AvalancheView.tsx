@@ -33,7 +33,7 @@ const AvalancheView = ({ avalanche }: { avalanche: AvalancheListItem }) => {
   return (
     <div className="pb-8">
       {status === 'archived' && (
-        <p className="mx-4 mt-4 rounded-lg bg-gray-100 px-3 py-2 text-sm text-gray-700">
+        <p className="rounded-control bg-tile text-copy-sm text-body mx-4 mt-4 px-3 py-2">
           {t('admin.recentAvalanches.view.archivedHint')}
         </p>
       )}

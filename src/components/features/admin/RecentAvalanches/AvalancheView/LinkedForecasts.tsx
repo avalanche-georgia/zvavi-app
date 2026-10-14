@@ -4,8 +4,7 @@ import { Link } from 'src/i18n/navigation'
 
 import { routes } from '@/routes'
 
-// Links to the forecast editor for now — switches to the forecast view page
-// once it exists (local/forecasts/admin-forecast-view-draft.md)
+// Opens the forecast's view page
 const LinkedForecasts = ({ forecastIds }: { forecastIds: number[] }) => {
   const t = useTranslations()
 
@@ -17,8 +16,8 @@ const LinkedForecasts = ({ forecastIds }: { forecastIds: number[] }) => {
         {forecastIds.map((forecastId) => (
           <Link
             key={forecastId}
-            className="rounded-sm border bg-gray-50 px-3 py-1.5 text-sm hover:bg-gray-100"
-            href={routes.admin.forecasts.edit(forecastId)}
+            className="rounded-control border-rule bg-surface text-copy-sm text-ink hover:bg-tile focus-ring border px-3 py-1.5 transition-colors"
+            href={routes.admin.forecasts.view(forecastId)}
           >
             {t('admin.recentAvalanches.view.forecastLink', { id: forecastId })}
           </Link>
