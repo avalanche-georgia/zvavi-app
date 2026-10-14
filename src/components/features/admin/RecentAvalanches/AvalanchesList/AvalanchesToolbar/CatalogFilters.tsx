@@ -1,5 +1,5 @@
 import type { AvalancheSource } from '@domain/types'
-import { Checkbox, SegmentedControl, Select } from '@ds/primitives'
+import { InfoTip, SegmentedControl, Select, Switch } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 
 import type { AvalanchesListPage } from '../hooks/useAvalanchesListPage'
@@ -61,9 +61,14 @@ const CatalogFilters = ({ page }: CatalogFiltersProps) => {
           value={page.status ?? allValue}
         />
       </div>
-      <Checkbox
+      <Switch
         checked={page.isUnlinked}
-        label={t('admin.recentAvalanches.filters.unlinked')}
+        label={t('admin.recentAvalanches.filters.unlinked.label')}
+        labelAside={
+          <InfoTip ariaLabel={t('admin.recentAvalanches.filters.unlinked.about')}>
+            {t('admin.recentAvalanches.filters.unlinked.hint')}
+          </InfoTip>
+        }
         onCheckedChange={page.onUnlinkedChange}
       />
     </>
