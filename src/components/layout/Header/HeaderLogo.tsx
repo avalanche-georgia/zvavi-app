@@ -15,10 +15,10 @@ const HeaderLogo = ({ isPriority = false }: { isPriority?: boolean }) => {
 
   return (
     <Link
-      className="focus-ring text-primary text-logo inline-flex shrink-0 items-center gap-2.5 rounded-lg font-bold"
+      className="focus-ring text-primary inline-flex shrink-0 items-center gap-2 rounded-lg text-xl font-semibold md:text-2xl"
       href={region ? routes.regionHome(region.id) : routes.regions}
     >
-      <Image alt="" height={30} priority={isPriority} src={Logo} width={30} />
+      <Image alt="" height={32} priority={isPriority} src={Logo} width={32} />
       Avalanche.ge
     </Link>
   )

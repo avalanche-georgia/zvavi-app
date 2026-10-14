@@ -6,7 +6,6 @@ export const fontSizeTokens = [
   'title-lg',
   'title',
   'title-sm',
-  'logo',
   'heading',
   'copy-lg',
   'copy',
