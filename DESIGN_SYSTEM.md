@@ -30,7 +30,7 @@ src/components/
 │   ├── primitives/      # Button, Badge, Checkbox, Field, FieldGroup, TextField, NumberField,
 │   │                    # Textarea, ChipGroup, ToggleGrid, SegmentedControl, Select, Stepper, InfoTip,
 │   │                    # IconButton, RatingScale, DateField, Menu, Pagination, SearchField,
-│   │                    # StatusPill, CountBadge, Skeleton, Spinner, Dialog
+│   │                    # StatusPill, CountBadge, Skeleton, Spinner, AvalancheLoader, Dialog
 │   ├── patterns/        # FormCard, StickyActionBar, SuccessState, DataTable, LoadingState,
 │   │                    # ConfirmDialog, FooterActions, Sheet, Drawer
 │   └── form/            # react-hook-form bindings: FormTextField, FormTextarea, FormNumberField,
@@ -175,6 +175,17 @@ Rules:
 - **Icon-only buttons** (`primitives/IconButton`) always show their label as a `Tooltip` on hover and
   keyboard focus (pass `tooltip` for a shorter label than the accessible name). Tooltips don't show
   on touch, so the icon must be clear without it.
+- **Loading indicators** — pick by what is loading, never invent another:
+  - A page, route fallback or any block (map, list, panel, sheet body, table): the mountain loader.
+    In features use `Loading` from `@components/shared` (translated, `isPage` for a whole page); in
+    `ds/` use `patterns/LoadingState`. Both render `primitives/AvalancheLoader` (sizes `sm` 40px, `md`
+    64px, `lg` 112px). Fit it to the space with `className` (e.g. `h-60 py-0`), never by restyling the
+    loader.
+  - Inline and tiny (button busy state, menu row, "load more" trigger, a link pending): `primitives/Spinner`,
+    or `Button`'s `isBusy`. The mountain is unreadable below ~40px.
+  - The final layout is known (cards, rows, metrics): `primitives/Skeleton`.
+  - Measurable progress (an upload): a progress ring, not either of the above.
+  - No bare `LoaderIcon` + `animate-spin` for a block. Colours are the `snow-*` / `rock-*` tokens.
 - **i18n:** components take their strings as props, and callers translate them with the project rules.
   `ds/` primitives never call `useTranslations()` themselves.
 - **Keep files under ~100 lines.** Split sub-parts into their own files.
@@ -238,7 +249,7 @@ Update this table when a legacy component's last consumer is migrated.
 | Mobile nav menus (not in `ui/`: `Header/NavMenu/MobileNav`, `admin/sidebar/MobileDrawer`) | vaul (removed) | `patterns/Drawer` | ✅ |
 | IconButton | custom | `primitives/IconButton` | ☐ |
 | Alert | custom | — (last consumer removed with the forecast page redesign; add `patterns/Alert` when needed) | ✅ |
-| Spinner | custom | `primitives/Spinner`, `patterns/LoadingState` (admin migrated) | ☐ |
+| Spinner | custom | `primitives/Spinner` (inline), `primitives/AvalancheLoader` via `patterns/LoadingState` / `shared/Loading` (blocks and pages); legacy `ui/Spinner` removed | ✅ |
 | Skeleton | custom | `primitives/Skeleton` | ☐ |
 | Pagination, DataTable | custom | `primitives/Pagination`, `patterns/DataTable` | ✅ |
 | AspectElevationPicker | base-ui | moved to `features/observations/` | ✅ |

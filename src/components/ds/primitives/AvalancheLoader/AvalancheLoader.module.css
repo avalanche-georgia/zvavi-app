@@ -1,0 +1,255 @@
+/*
+  One loop (--avl-cycle): snow settles on the slope, a crack opens along the top of the slab,
+  then the slab breaks into rounded clumps that slide down the fall line and settle as rubble.
+  Everything below is keyed to percentages of that single cycle.
+*/
+
+.root {
+  --avl-cycle: 2.6s;
+}
+
+/* Snowfall */
+.flake {
+  animation: fall 1.3s linear infinite;
+}
+.flake2 {
+  animation-duration: 1.05s;
+  animation-delay: -0.4s;
+}
+.flake3 {
+  animation-duration: 1.5s;
+  animation-delay: -0.9s;
+}
+.flake4 {
+  animation-duration: 1.15s;
+  animation-delay: -0.2s;
+}
+.flake5 {
+  animation-duration: 1.4s;
+  animation-delay: -1s;
+}
+.flake6 {
+  animation-duration: 1s;
+  animation-delay: -0.6s;
+}
+.flake7 {
+  animation-duration: 1.25s;
+  animation-delay: -0.75s;
+}
+@keyframes fall {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  25% {
+    transform: translate(3px, 25px);
+  }
+  50% {
+    transform: translate(-2px, 50px);
+  }
+  75% {
+    transform: translate(3px, 75px);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0, 104px);
+    opacity: 0;
+  }
+}
+
+/* Snow slab settling in: one seamless shape, so no seams show while it fades up */
+.fill {
+  animation: fill var(--avl-cycle) ease-in-out infinite;
+}
+@keyframes fill {
+  0% {
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.35;
+  }
+  34%,
+  100% {
+    opacity: 1;
+  }
+}
+
+/* The whole slab hands over to the clumps once they are fully opaque on top of it */
+.under {
+  animation: under var(--avl-cycle) linear infinite;
+}
+@keyframes under {
+  0%,
+  41% {
+    opacity: 1;
+  }
+  41.1%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Crack along the top of the slab, drawn from the middle outwards */
+.crack {
+  stroke-dasharray: 100 300;
+  stroke-dashoffset: 100;
+  opacity: 0;
+  animation: crack var(--avl-cycle) linear infinite;
+}
+@keyframes crack {
+  0%,
+  29.9% {
+    stroke-dashoffset: 100;
+    opacity: 0;
+  }
+  30% {
+    stroke-dashoffset: 100;
+    opacity: 1;
+  }
+  38% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  80% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  90%,
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
+/*
+  Clumps: --dx/--dy is the slide along the slope, --rot/--sc a slight tilt and growth (they come
+  towards the viewer). Eased in and out, sampled every 4% from 40% to 80%.
+*/
+.clump {
+  animation: slide var(--avl-cycle) linear infinite;
+}
+@keyframes slide {
+  0%,
+  34% {
+    transform: none;
+    opacity: 0;
+  }
+  39%,
+  40% {
+    transform: none;
+    opacity: 1;
+  }
+  44% {
+    transform: translate(calc(var(--dx) * 0.028), calc(var(--dy) * 0.028))
+      rotate(calc(var(--rot) * 0.028)) scale(calc(1 + var(--sc) * 0.028));
+  }
+  48% {
+    transform: translate(calc(var(--dx) * 0.104), calc(var(--dy) * 0.104))
+      rotate(calc(var(--rot) * 0.104)) scale(calc(1 + var(--sc) * 0.104));
+  }
+  52% {
+    transform: translate(calc(var(--dx) * 0.216), calc(var(--dy) * 0.216))
+      rotate(calc(var(--rot) * 0.216)) scale(calc(1 + var(--sc) * 0.216));
+  }
+  56% {
+    transform: translate(calc(var(--dx) * 0.352), calc(var(--dy) * 0.352))
+      rotate(calc(var(--rot) * 0.352)) scale(calc(1 + var(--sc) * 0.352));
+  }
+  60% {
+    transform: translate(calc(var(--dx) * 0.5), calc(var(--dy) * 0.5))
+      rotate(calc(var(--rot) * 0.5)) scale(calc(1 + var(--sc) * 0.5));
+  }
+  64% {
+    transform: translate(calc(var(--dx) * 0.648), calc(var(--dy) * 0.648))
+      rotate(calc(var(--rot) * 0.648)) scale(calc(1 + var(--sc) * 0.648));
+  }
+  68% {
+    transform: translate(calc(var(--dx) * 0.784), calc(var(--dy) * 0.784))
+      rotate(calc(var(--rot) * 0.784)) scale(calc(1 + var(--sc) * 0.784));
+  }
+  72% {
+    transform: translate(calc(var(--dx) * 0.896), calc(var(--dy) * 0.896))
+      rotate(calc(var(--rot) * 0.896)) scale(calc(1 + var(--sc) * 0.896));
+  }
+  76% {
+    transform: translate(calc(var(--dx) * 0.972), calc(var(--dy) * 0.972))
+      rotate(calc(var(--rot) * 0.972)) scale(calc(1 + var(--sc) * 0.972));
+  }
+  80%,
+  90% {
+    transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(calc(1 + var(--sc)));
+    opacity: 1;
+  }
+  96%,
+  100% {
+    transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(calc(1 + var(--sc)));
+    opacity: 0;
+  }
+}
+
+/* Powder thrown up by the slide, and dust settling at the foot */
+.puff {
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  animation: puff var(--avl-cycle) ease-out infinite;
+}
+@keyframes puff {
+  0%,
+  54% {
+    opacity: 0;
+    transform: translateY(0) scale(0.5);
+  }
+  64% {
+    opacity: 0.9;
+  }
+  90%,
+  100% {
+    opacity: 0;
+    transform: translateY(60px) scale(1.7);
+  }
+}
+.dust {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  opacity: 0;
+  animation: dust var(--avl-cycle) ease-out infinite;
+}
+@keyframes dust {
+  0%,
+  70% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  78% {
+    opacity: 0.9;
+  }
+  95%,
+  100% {
+    opacity: 0;
+    transform: scale(1.8);
+  }
+}
+
+/* Reduced motion: a still mountain with the slab in place and the crack showing */
+@media (prefers-reduced-motion: reduce) {
+  .flake,
+  .puff,
+  .dust,
+  .clump {
+    display: none;
+  }
+  .fill,
+  .under {
+    animation: none;
+    opacity: 1;
+  }
+  .crack {
+    animation: none;
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}

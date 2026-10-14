@@ -1,15 +1,11 @@
 'use client'
 
-import { Spinner } from '@components/ui'
+import { Loading } from '@components/shared'
 import type { RegionWithHazard } from '@data/queries/fetchRegionsWithHazard'
 import dynamic from 'next/dynamic'
 
 const LeafletMap = dynamic(() => import('./RegionPickerMapClient'), {
-  loading: () => (
-    <div className="relative flex h-115 items-center justify-center rounded-xl bg-gray-100 md:h-150">
-      <Spinner />
-    </div>
-  ),
+  loading: () => <Loading className="h-115 rounded-xl bg-gray-100 py-0 md:h-150" />,
   ssr: false,
 })
 

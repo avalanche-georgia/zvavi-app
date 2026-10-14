@@ -16,6 +16,8 @@ declare module '@tanstack/react-table' {
 export type DataTableSort = { desc: boolean; id: string }
 
 export type DataTableLabels = {
+  // Read out while `isLoading`
+  loading: string
   nextPage: string
   previousPage: string
   // e.g. "1–15 of 40"

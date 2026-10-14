@@ -1,4 +1,4 @@
-import { Spinner } from '@components/ui'
+import { Loading } from '@components/shared'
 import type { LinkableAvalanche } from '@data/hooks/recentAvalanches'
 import { useTranslations } from 'next-intl'
 
@@ -22,11 +22,7 @@ const PickerResults = ({
   const t = useTranslations()
 
   if (isPending) {
-    return (
-      <div className="flex justify-center py-12">
-        <Spinner />
-      </div>
-    )
+    return <Loading />
   }
 
   if (avalanches.length === 0) {

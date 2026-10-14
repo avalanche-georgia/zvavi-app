@@ -37,6 +37,7 @@ const columns = [
 ]
 
 const labels = {
+  loading: 'Loading',
   nextPage: 'Next page',
   previousPage: 'Previous page',
   rowRange: ({ from, to, total }: { from: number; to: number; total: number }) =>
