@@ -39,12 +39,7 @@ const FooterLinks = () => {
 
   return (
     <>
-      {forecastLinks.length > 0 && (
-        <FooterColumn
-          links={forecastLinks}
-          title={regionId ? t(`regions.names.${regionId}`) : t('footer.columns.forecasts')}
-        />
-      )}
+      {regionId && <FooterColumn links={forecastLinks} title={t(`regions.names.${regionId}`)} />}
       <FooterColumn links={resourceLinks} title={t('footer.columns.resources')} />
       <FooterColumn
         links={[

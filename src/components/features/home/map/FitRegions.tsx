@@ -19,6 +19,7 @@ const FitRegions = ({ bounds }: { bounds: LatLngBounds }) => {
 
   useEffect(() => {
     let fittedWidth = 0
+    let minZoom = 0
 
     const fit = () => {
       const { width } = map.getContainer().getBoundingClientRect()
@@ -33,7 +34,14 @@ const FitRegions = ({ bounds }: { bounds: LatLngBounds }) => {
       // Limits after the fit: set before it, setMinZoom would queue an animated zoom
       // that undoes the fit a frame later. Zoomed out no further than the whole
       // country fits the card.
-      map.setMinZoom(map.getBoundsZoom(countryBounds))
+      const nextMinZoom = map.getBoundsZoom(countryBounds)
+
+      // Only when it changes: setMinZoom zooms in (animated) if the reader is below it
+      if (nextMinZoom !== minZoom) {
+        minZoom = nextMinZoom
+        map.setMinZoom(minZoom)
+      }
+
       map.setMaxBounds(panBounds)
     }
 

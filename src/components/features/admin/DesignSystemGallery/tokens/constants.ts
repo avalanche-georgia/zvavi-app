@@ -1,4 +1,4 @@
-import type { FontSizeToken, RadiusToken, ShadowToken } from '@/lib/designTokens'
+import type { FontSizeToken, RadiusToken, ShadowToken, TrackingToken } from '@/lib/designTokens'
 
 type ColorGroup = {
   title: string
@@ -91,4 +91,8 @@ export const shadowClasses: Record<ShadowToken, string> = {
   pin: 'shadow-pin',
   raised: 'shadow-raised',
   sheet: 'shadow-sheet',
+}
+
+export const trackingClasses: Record<TrackingToken, string> = {
+  eyebrow: 'tracking-eyebrow',
 }

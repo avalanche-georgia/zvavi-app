@@ -1,4 +1,4 @@
-import { useDiceBearAvatar } from '@components/hooks'
+import useDiceBearAvatar from '@components/hooks/useDiceBearAvatar'
 
 import { cn } from '@/lib/utils'
 

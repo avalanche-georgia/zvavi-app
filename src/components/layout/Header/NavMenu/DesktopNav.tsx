@@ -29,7 +29,7 @@ const NavDropdown = ({ item }: { item: NavMenuGroup }) => {
       {item.children.map((child) => (
         <MenuItem
           key={child.id}
-          icon={<Icon className="text-muted" icon={child.icon} size="sm" />}
+          icon={<Icon icon={child.icon} size="sm" />}
           isActive={isNavItemActive(child, pathname)}
           render={<Link href={child.path} />}
         >

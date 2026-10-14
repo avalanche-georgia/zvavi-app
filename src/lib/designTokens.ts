@@ -22,4 +22,5 @@ export const shadowTokens = ['raised', 'overlay', 'float', 'pin', 'menu', 'sheet
 
 export type FontSizeToken = (typeof fontSizeTokens)[number]
 export type RadiusToken = (typeof radiusTokens)[number]
+export type TrackingToken = (typeof trackingTokens)[number]
 export type ShadowToken = (typeof shadowTokens)[number]

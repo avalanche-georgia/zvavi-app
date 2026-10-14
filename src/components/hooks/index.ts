@@ -3,7 +3,8 @@ export { default as useAspectSummary } from './useAspectSummary'
 export { default as useAuth } from './useAuth'
 export { default as useBoolean } from './useBoolean'
 export { default as useCopyWithFeedback } from './useCopyWithFeedback'
-export { default as useDiceBearAvatar } from './useDiceBearAvatar'
+// useDiceBearAvatar is not re-exported: its avatar library would land in every page that
+// imports this barrel. Import it by path.
 export { default as useElevationRanges } from './useElevationRanges'
 export { default as useFieldError } from './useFieldError'
 export { default as useHeaderHeight } from './useHeaderHeight'
