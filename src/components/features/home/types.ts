@@ -9,7 +9,7 @@ export type RegionForecastState = 'current' | 'expired' | 'noRating' | 'none' | 
 export type HeroRegion = {
   forecastZone: Region['forecastZone']
   id: RegionId
-  // Set while a rated forecast is in force (state "current")
+  // null without a published forecast
   issuedAt: string | null
   level: HazardLevelScale | null
   state: RegionForecastState

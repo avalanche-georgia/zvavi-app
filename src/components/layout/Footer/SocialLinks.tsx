@@ -3,6 +3,7 @@
 import FacebookIcon from '@assets/icons/brand/facebook.svg'
 import InstagramIcon from '@assets/icons/brand/instagram.svg'
 import { links } from '@components/constants'
+import { Tooltip } from '@ds/primitives'
 import { AtSign } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
@@ -11,6 +12,7 @@ const socialLinks = [
   {
     href: links.facebook,
     icon: <FacebookIcon aria-hidden className="size-7 fill-[#0866ff]" />,
+    isMail: false,
     labelKey: 'contact.links.facebook',
   },
   {
@@ -23,6 +25,7 @@ const socialLinks = [
         <InstagramIcon className="size-4.5 fill-white" />
       </span>
     ),
+    isMail: false,
     labelKey: 'contact.links.instagram',
   },
   {
@@ -32,6 +35,7 @@ const socialLinks = [
         <AtSign className="size-4 text-white" strokeWidth={2.25} />
       </span>
     ),
+    isMail: true,
     labelKey: 'contact.links.email',
   },
 ]
@@ -41,17 +45,20 @@ const SocialLinks = () => {
 
   return (
     <ul aria-label={t('footer.social')} className="-ml-1.5 flex gap-2.5">
-      {socialLinks.map(({ href, icon, labelKey }) => (
+      {socialLinks.map(({ href, icon, isMail, labelKey }) => (
         <li key={labelKey}>
-          <a
-            aria-label={t(labelKey)}
-            className="focus-ring rounded-control hover:bg-tile grid size-11 place-items-center transition-colors"
-            href={href}
-            rel="noreferrer"
-            target="_blank"
-          >
-            {icon}
-          </a>
+          <Tooltip label={t(labelKey)}>
+            <a
+              aria-label={t(labelKey)}
+              className="focus-ring rounded-control hover:bg-tile grid size-11 place-items-center transition-colors"
+              href={href}
+              rel={isMail ? undefined : 'noreferrer'}
+              // mailto opens the mail app — a new tab would stay empty
+              target={isMail ? undefined : '_blank'}
+            >
+              {icon}
+            </a>
+          </Tooltip>
         </li>
       ))}
     </ul>

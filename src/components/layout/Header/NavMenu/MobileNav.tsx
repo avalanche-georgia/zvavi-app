@@ -52,7 +52,7 @@ const MobileNav = ({ isOpen, isSignedIn, onClose }: MobileNavProps) => {
         <LanguageToggle />
         {regions.length > 1 && <RegionSelect onSelect={onClose} />}
       </div>
-      <nav className="min-h-0 flex-1 overflow-y-auto py-2">
+      <nav aria-label={t('navigation.mainNav')} className="min-h-0 flex-1 overflow-y-auto py-2">
         {navMenuItems.map((item) =>
           item.children ? (
             <MobileNavAccordion key={item.id} item={item} onClose={onClose} />

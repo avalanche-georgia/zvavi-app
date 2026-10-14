@@ -1,7 +1,7 @@
 'use client'
 
 import { PhotoPlaceholder, useCardDateLabel } from '@components/features/observations'
-import { useAspectSummary } from '@components/hooks'
+import { useAspectSummary, useIsClient } from '@components/hooks'
 import { FallbackImage } from '@components/ui'
 import type { PublicObservation } from '@domain/types'
 import { useTranslations } from 'next-intl'
@@ -15,6 +15,8 @@ const ObservationTile = ({ observation }: { observation: PublicObservation }) =>
   const t = useTranslations()
   const { getSummary } = useAspectSummary()
   const getDateLabel = useCardDateLabel()
+  // "Today" / "3 days ago" depend on the reader's clock — only known in the browser
+  const isClient = useIsClient()
   const { aspects, id, photos, regionId, size, trigger, type } = observation
   const [firstPhoto] = photos
 
@@ -22,7 +24,7 @@ const ObservationTile = ({ observation }: { observation: PublicObservation }) =>
     t(`common.avalancheTypes.${type ?? 'unknown'}`),
     trigger && trigger !== 'unknown' ? t(`common.avalancheTriggers.${trigger}`) : null,
   ]
-  const meta = [getSummary(aspects), getDateLabel(observation, 'occurred')]
+  const meta = [getSummary(aspects), isClient ? getDateLabel(observation, 'occurred') : null]
 
   return (
     <Link

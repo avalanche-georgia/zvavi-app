@@ -19,7 +19,7 @@ const Menu = ({ align = 'end', children, onOpenChangeComplete, trigger }: MenuPr
     <BaseMenu.Trigger render={trigger} />
     <BaseMenu.Portal>
       <BaseMenu.Positioner align={align} className="z-60" collisionPadding={16} sideOffset={6}>
-        <BaseMenu.Popup className="rounded-media bg-surface shadow-menu border-rule min-w-57 border p-1.5 outline-hidden transition-[opacity,scale] duration-150 data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0">
+        <BaseMenu.Popup className="rounded-media bg-surface shadow-menu border-rule w-57 border p-1.5 outline-hidden transition-[opacity,scale] duration-150 data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0">
           {children}
         </BaseMenu.Popup>
       </BaseMenu.Positioner>

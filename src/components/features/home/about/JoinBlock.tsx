@@ -13,18 +13,18 @@ const JoinBlock = () => {
 
   return (
     <div className="rounded-card bg-ink flex flex-col items-start gap-3 p-5 text-white md:p-7">
-      <p className="text-caption font-semibold tracking-[.06em] text-[#a5a4aa] uppercase">
+      <p className="text-caption font-semibold tracking-[.06em] text-white/60 uppercase">
         {t('home.join.eyebrow')}
       </p>
       <h2 className="text-title-sm font-bold">{t('home.join.title')}</h2>
-      <p className="max-w-[46ch] leading-[1.55] text-pretty text-[#c9c8cd]">
+      <p className="max-w-[46ch] leading-[1.55] text-pretty text-white/80">
         {t('home.join.message')}
       </p>
       <ul aria-label={t('home.join.skillsLabel')} className="flex flex-wrap gap-1.5">
         {skills.map((skill) => (
           <li
             key={skill}
-            className="text-caption rounded-full bg-white/10 px-2.5 py-1.25 text-[#e7e6ea]"
+            className="text-caption rounded-full bg-white/10 px-2.5 py-1.25 text-white/90"
           >
             {t(`home.join.skills.${skill}`)}
           </li>

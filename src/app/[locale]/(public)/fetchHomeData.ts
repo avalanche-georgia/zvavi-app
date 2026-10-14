@@ -1,3 +1,4 @@
+import { toTbilisiParts } from '@components/features/forecast/model/useForecastDates'
 import type { HomeRegion, RegionForecastState } from '@components/features/home'
 import fetchActiveRegions from '@data/queries/fetchActiveRegions'
 import fetchLatestPublishedForecast from '@data/queries/fetchLatestPublishedForecast'
@@ -20,13 +21,22 @@ export type HomeData = {
   regions: HomeRegion[]
 }
 
-// Georgia is UTC+4 all year
-const tbilisiOffsetMs = 4 * 60 * 60 * 1000
-// June (5) → November (10)
+// June (5) → November (10), Georgian time
 const offSeasonMonths = [5, 6, 7, 8, 9, 10]
 
-const isOffSeasonMonth = (now: Date) =>
-  offSeasonMonths.includes(new Date(now.getTime() + tbilisiOffsetMs).getUTCMonth())
+const isOffSeasonMonth = (now: Date) => offSeasonMonths.includes(toTbilisiParts(now).month)
+
+// A failed lookup only costs that region its danger (shown as "no forecast"),
+// not the whole page
+const fetchRegionForecast = async (regionId: RegionId) => {
+  try {
+    return await fetchLatestPublishedForecast(regionId)
+  } catch (error) {
+    reportServerError(error, { region_id: regionId, scope: 'fetchHomeData | forecast' })
+
+    return null
+  }
+}
 
 const getForecastState = (forecast: Forecast | null, now: Date): RegionForecastState => {
   const level = forecast?.hazardLevels.overall ?? '0'
@@ -71,7 +81,7 @@ const fetchHomeData = async (selectedRegionId: string | null): Promise<HomeData>
       : activeRegions.find((region) => region.id === selectedRegionId)
 
   const [forecasts, partners, latestObservations] = await Promise.all([
-    Promise.all(activeRegions.map((region) => fetchLatestPublishedForecast(region.id))),
+    Promise.all(activeRegions.map((region) => fetchRegionForecast(region.id))),
     fetchTier1Partners(),
     fetchLatestObservations(knownRegion?.id ?? null),
   ])

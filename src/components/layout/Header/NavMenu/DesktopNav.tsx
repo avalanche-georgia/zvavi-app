@@ -45,7 +45,7 @@ const DesktopNav = () => {
   const navMenuItems = useNavMenuItems()
 
   return (
-    <nav className="ml-7 hidden items-center gap-0.5 xl:flex">
+    <nav aria-label={t('navigation.mainNav')} className="ml-7 hidden items-center gap-0.5 xl:flex">
       {navMenuItems.map((item) => {
         if (item.children) return <NavDropdown key={item.id} item={item} />
 

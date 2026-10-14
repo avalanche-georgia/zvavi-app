@@ -10,6 +10,8 @@ home:
   regions:
     listLabel: 'Forecast regions'
     issued: 'Issued {time} · valid to {validUntil}'
+    expired: 'Forecast expired'
+    expiredStatus: 'Expired'
     noForecastToday: 'No forecast issued today'
     nextForecast: 'Next forecast in December'
     notIssued: 'Not issued'

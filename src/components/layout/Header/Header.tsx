@@ -17,7 +17,7 @@ const Header = () => {
   return (
     <header className="border-rule bg-surface/92 sticky inset-x-0 top-0 z-40 border-b backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-310 items-center gap-2 px-4 md:px-5 xl:px-8">
-        <HeaderLogo />
+        <HeaderLogo isPriority />
         <DesktopNav />
 
         <div className="ml-auto flex shrink-0 items-center gap-2">

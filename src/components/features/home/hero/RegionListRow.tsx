@@ -18,7 +18,9 @@ type RegionListRowProps = {
 }
 
 // Danger tile, region name, when issued · level name. Leads to the forecast,
-// or to the previous ones while there is none in force.
+// or to the previous ones while none has been published this season.
+const forecastStates = new Set(['current', 'expired', 'noRating'])
+
 const RegionListRow = ({ isHighlighted, onHover, region }: RegionListRowProps) => {
   const t = useTranslations()
   const { formatTime } = useForecastDates()
@@ -26,21 +28,23 @@ const RegionListRow = ({ isHighlighted, onHover, region }: RegionListRowProps) =
   const level = state === 'current' ? region.level : null
   const forecastRoutes = routes.forecastsByRegion(id)
 
-  const getMeta = () => {
-    if (level && issuedAt && validUntil) {
-      return t('home.regions.issued', {
-        time: formatTime(issuedAt),
-        validUntil: formatTime(validUntil),
-      })
-    }
+  const hasForecast = forecastStates.has(state)
 
-    return state === 'offSeason'
-      ? t('home.regions.nextForecast')
-      : t('home.regions.noForecastToday')
+  const getMeta = () => {
+    if (state === 'expired') return t('home.regions.expired')
+    if (state === 'offSeason') return t('home.regions.nextForecast')
+    if (!issuedAt || !validUntil) return t('home.regions.noForecastToday')
+
+    return t('home.regions.issued', {
+      time: formatTime(issuedAt),
+      validUntil: formatTime(validUntil),
+    })
   }
 
   const getStatus = () => {
     if (level) return t(hazardLevelNamesByScale[level])
+    if (state === 'noRating') return t(hazardLevelNamesByScale['0'])
+    if (state === 'expired') return t('home.regions.expiredStatus')
 
     return state === 'offSeason' ? t('home.regions.offSeason') : t('home.regions.notIssued')
   }
@@ -51,7 +55,7 @@ const RegionListRow = ({ isHighlighted, onHover, region }: RegionListRowProps) =
         'group focus-ring text-ink grid grid-cols-[44px_minmax(0,1fr)_auto] items-center gap-3.5 py-3 pr-3.5 pl-3 transition-colors',
         isHighlighted ? 'bg-canvas' : 'hover:bg-canvas',
       )}
-      href={level ? forecastRoutes.current : forecastRoutes.history}
+      href={hasForecast ? forecastRoutes.current : forecastRoutes.history}
       onBlur={() => onHover(null)}
       onFocus={() => onHover(id)}
       onMouseEnter={() => onHover(id)}

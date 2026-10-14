@@ -10,6 +10,8 @@ home:
   regions:
     listLabel: 'პროგნოზის რეგიონები'
     issued: 'გამოქვეყნდა {time} · მოქმედებს {validUntil}-მდე'
+    expired: 'პროგნოზს ვადა გაუვიდა'
+    expiredStatus: 'ვადაგასული'
     noForecastToday: 'დღეს პროგნოზი არ გამოქვეყნებულა'
     nextForecast: 'შემდეგი პროგნოზი დეკემბერში'
     notIssued: 'არ გამოქვეყნებულა'
