@@ -21,6 +21,14 @@ if [ -z "$SUPABASE_ACCESS_TOKEN" ]; then
   error "SUPABASE_ACCESS_TOKEN must be set in .env.local\n  Get your token at: https://supabase.com/dashboard/account/tokens"
 fi
 
+# The CLI connects to the prod database directly — it needs the prod DB password
+# (SUPABASE_DB_PASSWORD is the variable the CLI reads; scoped to this script)
+export SUPABASE_DB_PASSWORD=$(grep '^SUPABASE_PROD_DB_PASSWORD=' .env.local | cut -d '=' -f2- || true)
+
+if [ -z "$SUPABASE_DB_PASSWORD" ]; then
+  error "SUPABASE_PROD_DB_PASSWORD must be set in .env.local\n  Find it in the prod project: Project Settings → Database"
+fi
+
 trap 'supabase link --project-ref "$SUPABASE_STAGING_PROJECT_REF" > /dev/null 2>&1 || true' EXIT
 
 info "Linking to production..."
