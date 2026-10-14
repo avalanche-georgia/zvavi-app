@@ -39,11 +39,14 @@ DROP POLICY IF EXISTS "Allow all users to update any forecast" ON public.forecas
 DROP POLICY IF EXISTS "Allow insert for authenticated users" ON public.forecasts;
 DROP POLICY IF EXISTS "Allow delete for authenticated users" ON public.forecasts;
 
+DROP POLICY IF EXISTS "Editors can insert forecasts" ON public.forecasts;
 CREATE POLICY "Editors can insert forecasts" ON public.forecasts
   FOR INSERT TO authenticated WITH CHECK (public.can_edit_forecasts());
+DROP POLICY IF EXISTS "Editors can update forecasts" ON public.forecasts;
 CREATE POLICY "Editors can update forecasts" ON public.forecasts
   FOR UPDATE TO authenticated
   USING (public.can_edit_forecasts()) WITH CHECK (public.can_edit_forecasts());
+DROP POLICY IF EXISTS "Editors can delete forecasts" ON public.forecasts;
 CREATE POLICY "Editors can delete forecasts" ON public.forecasts
   FOR DELETE TO authenticated USING (public.can_edit_forecasts());
 
@@ -52,22 +55,28 @@ DROP POLICY IF EXISTS "Enable update for users" ON public.avalanche_problems;
 DROP POLICY IF EXISTS "Allow insert for authenticated users" ON public.avalanche_problems;
 DROP POLICY IF EXISTS "Enable delete for users" ON public.avalanche_problems;
 
+DROP POLICY IF EXISTS "Editors can insert problems" ON public.avalanche_problems;
 CREATE POLICY "Editors can insert problems" ON public.avalanche_problems
   FOR INSERT TO authenticated WITH CHECK (public.can_edit_forecasts());
+DROP POLICY IF EXISTS "Editors can update problems" ON public.avalanche_problems;
 CREATE POLICY "Editors can update problems" ON public.avalanche_problems
   FOR UPDATE TO authenticated
   USING (public.can_edit_forecasts()) WITH CHECK (public.can_edit_forecasts());
+DROP POLICY IF EXISTS "Editors can delete problems" ON public.avalanche_problems;
 CREATE POLICY "Editors can delete problems" ON public.avalanche_problems
   FOR DELETE TO authenticated USING (public.can_edit_forecasts());
 
 -- 5. forecast_avalanche (links)
 DROP POLICY IF EXISTS "Admins can manage forecast_avalanche" ON public.forecast_avalanche;
 
+DROP POLICY IF EXISTS "Editors can insert links" ON public.forecast_avalanche;
 CREATE POLICY "Editors can insert links" ON public.forecast_avalanche
   FOR INSERT TO authenticated WITH CHECK (public.can_edit_forecasts());
+DROP POLICY IF EXISTS "Editors can update links" ON public.forecast_avalanche;
 CREATE POLICY "Editors can update links" ON public.forecast_avalanche
   FOR UPDATE TO authenticated
   USING (public.can_edit_forecasts()) WITH CHECK (public.can_edit_forecasts());
+DROP POLICY IF EXISTS "Editors can delete links" ON public.forecast_avalanche;
 CREATE POLICY "Editors can delete links" ON public.forecast_avalanche
   FOR DELETE TO authenticated USING (public.can_edit_forecasts());
 
