@@ -1,5 +1,6 @@
 import ConfirmDialogGallery from '@ds/patterns/ConfirmDialog/ConfirmDialog.gallery'
 import DataTableGallery from '@ds/patterns/DataTable/DataTable.gallery'
+import DrawerGallery from '@ds/patterns/Drawer/Drawer.gallery'
 import FooterActionsGallery from '@ds/patterns/FooterActions/FooterActions.gallery'
 import FormCardGallery from '@ds/patterns/FormCard/FormCard.gallery'
 import LoadingStateGallery from '@ds/patterns/LoadingState/LoadingState.gallery'
@@ -56,6 +57,7 @@ export const galleryEntries: GalleryEntry[] = [
   { Demo: ConfirmPopoverGallery, id: 'confirm-popover', title: 'ConfirmPopover' },
   { Demo: ConfirmDialogGallery, id: 'confirm-dialog', title: 'ConfirmDialog' },
   { Demo: SheetGallery, id: 'sheet', title: 'Sheet' },
+  { Demo: DrawerGallery, id: 'drawer', title: 'Drawer' },
   { Demo: MenuGallery, id: 'menu', title: 'Menu' },
   { Demo: IconButtonGallery, id: 'icon-button', title: 'IconButton' },
   { Demo: InfoTipGallery, id: 'info-tip', title: 'InfoTip' },

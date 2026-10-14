@@ -32,7 +32,7 @@ src/components/
 │   │                    # IconButton, RatingScale, DateField, Menu, Pagination, SearchField,
 │   │                    # StatusPill, CountBadge, Skeleton, Spinner, Dialog
 │   ├── patterns/        # FormCard, StickyActionBar, SuccessState, DataTable, LoadingState,
-│   │                    # ConfirmDialog, FooterActions, Sheet
+│   │                    # ConfirmDialog, FooterActions, Sheet, Drawer
 │   └── form/            # react-hook-form bindings: FormTextField, FormTextarea, FormNumberField,
 │                        # FormStepper, FormChipGroup, FormCheckbox, FormSelect, FormDateField,
 │                        # useFormFieldError
@@ -73,9 +73,6 @@ in `features`.
   Dialog, Popover, Select, Menu, and so on.
 - No new Headless UI or Radix usage.
 - Existing exceptions stay until their migration phase:
-  - vaul, only for the two mobile navigation menus (public header, admin sidebar). Base-ui portals
-    inside a vaul Drawer break on mobile; see memory `feedback_vaul_baseui_portal`. Sheets of
-    content never use vaul — they use `patterns/Sheet`.
 - Legacy Radix popups (`ui/Select`, `ui/Popover`, `ui/DatePicker`, `InfoIcon`) portal to `body`: never
   put them inside a ds `Sheet` or `Dialog` — the focus trap and outside-press handling break them.
   Use the ds primitives there.
@@ -209,7 +206,7 @@ Rules:
 | **2. Primitives for submit** | Button, Badge, Field / FieldGroup, TextField, NumberField, Textarea, ChipGroup, ToggleGrid, SegmentedControl, Stepper. Patterns FormCard, StickyActionBar, SuccessState. Form bindings. Gallery demos | ✅ |
 | **3. Submit page redesign** | `local/observations/design_handoff_submit_observation/` built on ds | ✅ |
 | **4. Rest of observations** | List toolbar, detail views, aspect/elevation picker moved to `features/` with a bare variant | ☐ |
-| **5. Legacy, by screen area** | Public pages (auth, forecasts, about) → admin forms → admin tables, modals and drawers. Admin lists, forms, the overview and every sheet are done; what's left in admin: the vaul mobile menu drawer, and the shared `BrandedQRCode` / `SortableItem` / `FallbackImage` | ☐ |
+| **5. Legacy, by screen area** | Public pages (auth, forecasts, about) → admin forms → admin tables, modals and drawers. Admin lists, forms, the overview, every sheet and the mobile menus are done; what's left in admin: the shared `BrandedQRCode` / `SortableItem` / `FallbackImage` | ☐ |
 | **6. Cleanup** | Delete `ui/`. Remove `@headlessui/react`, `@radix-ui/*` and `clsx` | ☐ |
 
 ### Component tracker
@@ -238,7 +235,7 @@ Update this table when a legacy component's last consumer is migrated.
 | Tooltip, InfoIcon | Radix | `primitives/Tooltip` (base-ui Tooltip; hover/focus labels), `primitives/InfoTip` (base-ui Popover; explanations) | ☐ |
 | DropdownMenu | base-ui | `primitives/Menu` | ✅ |
 | Sheet, Drawer (bottom sheet) | base-ui / vaul | `patterns/Sheet` (+ `SheetHeader`, `SheetStepButtons`; `shared/DetailsSheet` for a sheet opened from a button) | ✅ |
-| Mobile nav menus (not in `ui/`: `Header/NavMenu/MobileNav`, `admin/sidebar/MobileDrawer`) | vaul | — (a side placement of `patterns/Sheet`, or a `patterns/Drawer`) | ☐ |
+| Mobile nav menus (not in `ui/`: `Header/NavMenu/MobileNav`, `admin/sidebar/MobileDrawer`) | vaul (removed) | `patterns/Drawer` | ✅ |
 | IconButton | custom | `primitives/IconButton` | ☐ |
 | Alert | custom | — (last consumer removed with the forecast page redesign; add `patterns/Alert` when needed) | ✅ |
 | Spinner | custom | `primitives/Spinner`, `patterns/LoadingState` (admin migrated) | ☐ |
