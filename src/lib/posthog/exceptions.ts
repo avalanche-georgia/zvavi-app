@@ -1,4 +1,4 @@
-import { regionIds } from '@domain/constants'
+import { allRegionIds } from '@domain/constants'
 import type { CaptureResult } from 'posthog-js'
 import { locales } from 'src/i18n/config'
 
@@ -7,7 +7,7 @@ import { redactText } from './redact'
 
 const maxMessageLength = 500
 
-const knownRegionIds = new Set<string>(Object.values(regionIds))
+const knownRegionIds = new Set<string>(allRegionIds)
 
 // Harmless browser noise; more can be suppressed with rules in the PostHog UI
 const noiseMessagePatterns = [

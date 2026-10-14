@@ -3,53 +3,43 @@
 import { useRegionContext } from '@domain/context/RegionContext'
 import { useTranslations } from 'next-intl'
 
-import FooterColumn from './FooterColumn'
+import FooterColumn, { type FooterLink } from './FooterColumn'
 
 import { routes } from '@/routes'
 
-// Forecasts · Resources · Organisation. Region pages open for the remembered
-// region, else the first one.
+// Forecasts (the active region's pages, as in the header) · Resources · Organisation
 const FooterLinks = () => {
   const t = useTranslations()
   const { region, regions } = useRegionContext()
-  const defaultRegionId = region?.id ?? regions[0]?.id
-  const regionLinks = defaultRegionId
-    ? {
-        archive: routes.forecastsByRegion(defaultRegionId).history,
-        observations: routes.observationsByRegion(defaultRegionId),
-      }
-    : null
+  const regionId = region?.id
+  const forecastRoutes = regionId ? routes.forecastsByRegion(regionId) : null
+  const observationRoutes = regionId ? routes.observationsByRegion(regionId) : null
 
-  const forecastLinks = regions.map(({ id }) => ({
-    href: routes.forecastsByRegion(id).current,
-    label: t(`regions.names.${id}`),
-  }))
+  const forecastLinks: FooterLink[] =
+    regionId && forecastRoutes && observationRoutes
+      ? [
+          { href: routes.regionHome(regionId), label: t('navigation.overview') },
+          { href: forecastRoutes.current, label: t('navigation.currentForecast') },
+          { href: forecastRoutes.forecastArea, label: t('navigation.forecastArea') },
+          { href: forecastRoutes.history, label: t('footer.links.archive') },
+          { href: observationRoutes.root, label: t('navigation.observations') },
+        ]
+      : []
+
+  const resourceLinks: FooterLink[] = [
+    ...(observationRoutes
+      ? [{ href: observationRoutes.submit, label: t('footer.links.submitObservation') }]
+      : []),
+    { href: routes.weatherStations, label: t('navigation.weatherStations') },
+    ...(regions.length > 1 ? [{ href: routes.regions, label: t('navigation.allRegions') }] : []),
+  ]
 
   return (
     <>
-      <FooterColumn
-        links={
-          regionLinks
-            ? [...forecastLinks, { href: regionLinks.archive, label: t('footer.links.archive') }]
-            : forecastLinks
-        }
-        title={t('footer.columns.forecasts')}
-      />
-      <FooterColumn
-        links={[
-          ...(regionLinks
-            ? [
-                { href: regionLinks.observations.root, label: t('navigation.observations') },
-                {
-                  href: regionLinks.observations.submit,
-                  label: t('footer.links.submitObservation'),
-                },
-              ]
-            : []),
-          { href: routes.weatherStations, label: t('navigation.weatherStations') },
-        ]}
-        title={t('footer.columns.resources')}
-      />
+      {forecastLinks.length > 0 && (
+        <FooterColumn links={forecastLinks} title={t('footer.columns.forecasts')} />
+      )}
+      <FooterColumn links={resourceLinks} title={t('footer.columns.resources')} />
       <FooterColumn
         links={[
           { href: routes.about.aboutUs, label: t('navigation.aboutUs') },

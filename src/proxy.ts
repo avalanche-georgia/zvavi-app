@@ -1,4 +1,4 @@
-import { regionIds, regionLocalStorageKey } from '@domain/constants'
+import { allRegionIds, regionLocalStorageKey } from '@domain/constants'
 import { createServerClient } from '@supabase/ssr'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
@@ -10,7 +10,92 @@ import { posthogHosts, posthogProxyPath } from '@/lib/posthog/config'
 import { reportServerError } from '@/lib/posthog/server'
 import { updateSession } from '@/lib/supabase/middleware'
 
-const knownRegions = new Set<string>(Object.values(regionIds))
+const knownRegions = new Set<string>(allRegionIds)
+
+// Active regions, kept per server instance for as long as fetchActiveRegions caches them
+const activeRegionsTtlMs = 600 * 1000
+let activeRegionsCache: { expiresAt: number; ids: Set<string> } | null = null
+
+// The anon REST endpoint: the proxy can't use the cookie-bound server client.
+// null: the lookup failed.
+const getActiveRegionIds = async (): Promise<Set<string> | null> => {
+  if (activeRegionsCache && activeRegionsCache.expiresAt > Date.now()) {
+    return activeRegionsCache.ids
+  }
+
+  try {
+    const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/regions?select=id&is_active=eq.true`,
+      { headers: { apikey: anonKey, authorization: `Bearer ${anonKey}` } },
+    )
+
+    if (!response.ok) throw new Error(`regions lookup failed: ${response.status}`)
+
+    const rows = (await response.json()) as { id: string }[]
+    const ids = new Set(rows.map(({ id }) => id))
+
+    activeRegionsCache = { expiresAt: Date.now() + activeRegionsTtlMs, ids }
+
+    return ids
+  } catch (error) {
+    reportServerError(error, { scope: 'proxy | getActiveRegionIds' })
+
+    return null
+  }
+}
+
+type RegionTarget = {
+  // The cookie names a region that isn't active (or doesn't exist) — drop it
+  isCookieStale: boolean
+  // null: there is a choice to make → the region chooser
+  regionId: string | null
+}
+
+// The one place that decides which region an entry request lands on:
+// 1. the remembered region, if still active
+// 2. else the only active region
+// 3. else none (the region chooser)
+// When the lookup fails, a remembered known region is trusted and nothing is guessed.
+const resolveRegionTarget = async (request: NextRequest): Promise<RegionTarget> => {
+  const cookieRegion = request.cookies.get(regionLocalStorageKey)?.value ?? null
+  const activeIds = await getActiveRegionIds()
+
+  if (!activeIds) {
+    const isKnown = cookieRegion !== null && knownRegions.has(cookieRegion)
+
+    return { isCookieStale: false, regionId: isKnown ? cookieRegion : null }
+  }
+
+  const isCookieActive = cookieRegion !== null && activeIds.has(cookieRegion)
+  const onlyRegion = activeIds.size === 1 ? [...activeIds][0] : null
+
+  return {
+    isCookieStale: cookieRegion !== null && !isCookieActive,
+    regionId: isCookieActive ? cookieRegion : onlyRegion,
+  }
+}
+
+// A redirect whose target depends on the visitor (cookie) and on which regions are
+// active: temporary (307), never stored by a shared cache
+const regionRedirect = async (
+  request: NextRequest,
+  toRegionPath: (regionId: string) => string,
+  locale: string,
+) => {
+  const { isCookieStale, regionId } = await resolveRegionTarget(request)
+  const path = regionId ? `/${locale}${toRegionPath(regionId)}` : `/${locale}/regions`
+  const response = NextResponse.redirect(new URL(path, request.url), 307)
+
+  response.headers.set('Cache-Control', 'private, no-store')
+  response.headers.set('Vary', 'Cookie')
+
+  if (isCookieStale) response.cookies.delete(regionLocalStorageKey)
+
+  return response
+}
+
+const toRegionHome = (regionId: string) => `/${regionId}`
 
 // Log suspicious requests to old forecast URL formats (non-integer IDs)
 const logSuspiciousRequest = async (request: NextRequest) => {
@@ -117,6 +202,20 @@ export default async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL(`/${localeFileMatch[2]}`, request.url))
   }
 
+  // Entry URLs ("/" and "/{locale}" have no page): one hop straight to the final page.
+  // Bare "/" takes the locale from next-intl's cookie — never Accept-Language, so
+  // crawlers always get one consistent answer.
+  if (pathname === '/') {
+    const cookieLocale = request.cookies.get('NEXT_LOCALE')?.value
+    const locale = locales.find((supported) => supported === cookieLocale) ?? defaultLocale
+
+    return regionRedirect(request, toRegionHome, locale)
+  }
+
+  const entryLocale = locales.find((locale) => pathname === `/${locale}`)
+
+  if (entryLocale) return regionRedirect(request, toRegionHome, entryLocale)
+
   // Skip Next.js internals, API routes and root public metadata files
   if (
     pathname.startsWith('/_next') ||
@@ -145,14 +244,33 @@ export default async function proxy(request: NextRequest) {
   if (bareForecastsMatch) {
     const locale = bareForecastsMatch[1]
     const rest = bareForecastsMatch[2] ?? ''
-    const cookieRegion = request.cookies.get(regionLocalStorageKey)?.value
-    const regionId = cookieRegion && knownRegions.has(cookieRegion) ? cookieRegion : null
 
-    if (!regionId) {
-      return NextResponse.redirect(new URL(`/${locale}`, request.url))
+    return regionRedirect(request, (regionId) => `/${regionId}/forecasts${rest}`, locale)
+  }
+
+  // The region chooser with nothing to choose: straight to the only region (temporary —
+  // it changes when another region opens). The page itself never redirects.
+  const regionsPageMatch = pathname.match(new RegExp(`^/(${localePattern})/regions$`))
+
+  if (regionsPageMatch) {
+    const activeIds = await getActiveRegionIds()
+
+    if (activeIds?.size === 1) {
+      return regionRedirect(request, toRegionHome, regionsPageMatch[1])
     }
+  }
 
-    return NextResponse.redirect(new URL(`/${locale}/${regionId}/forecasts${rest}`, request.url))
+  // A region that exists but is inactive: a real 404 status for crawlers. The [region]
+  // layout renders the not-found screen, but the public loading boundary would stream
+  // it with a 200.
+  const regionSegment = pathname.split('/')[2]
+
+  if (regionSegment && knownRegions.has(regionSegment)) {
+    const activeIds = await getActiveRegionIds()
+
+    if (activeIds && !activeIds.has(regionSegment)) {
+      return NextResponse.rewrite(request.nextUrl, { status: 404 })
+    }
   }
 
   // Update the request locale

@@ -1,18 +1,20 @@
 # Features
 
-## Home Page
+## Opening the Site
 
-The home page opens with today's date and the avalanche danger for every forecast region at a glance. With a single region it shows the full danger card — level on the official 1–5 scale, when the forecast was issued and how long it stays valid — with one tap to the full forecast. With several regions it shows a compact list, one row per region with its danger level, or a clear note when no forecast was issued today. Next to it, a map shows every forecast area coloured by its danger level with a numbered marker; hovering a region in the list highlights it on the map and the other way round, and tapping a region opens its forecast. Between June and November, when no forecasts are being issued, the page says so and points to last season's forecasts.
+Opening the site takes visitors straight to the home page of the region they chose before. Visitors who haven't chosen one yet see the region chooser — or, while there is only one region, go directly to it. Following a link to another region's page doesn't change the visitor's chosen region.
 
-Below are the latest field observations for the region the visitor is looking at (with an invitation to report one), the main partners — or an invitation to become one — and short introductions to the organisation and how to help, including donating.
+## Region Chooser
+
+Shows today's avalanche danger for every forecast region at a glance: a compact list, one row per region with its danger level — or a clear note when the forecast has expired, no forecast was issued today, it's off-season, or the region doesn't have a forecaster yet — next to a map of every forecast area coloured by its danger level with a numbered marker. Hovering a region in the list highlights it on the map and the other way round. Choosing a region opens its home page and remembers it for the next visit. Between June and November, when no forecasts are being issued, the page says so. Below are the main partners — or an invitation to become one — and short introductions to the organisation and how to help, including donating.
 
 ## Site Header and Footer
 
-Every public page shares the same header and footer. The header holds the main navigation (forecasts for each region and the archive, observations, weather stations, partners, and about pages), an EN / ქარ language switch, the region picker (when there is more than one region) and the team's account menu or a sign-in link; on phones and tablets these move into a menu. The footer lists every forecast region, resources and organisation pages, the team's social channels, the emergency number 112 and the legal pages. The selected region is remembered between visits.
+Every public page shares the same header and footer. The header shows the region you're looking at — tap it to choose another region — and a menu with that region's pages (overview, current forecast, forecast area, past forecasts, observations), plus weather stations, partners and the about pages, an EN / ქარ language switch and the team's account menu or a sign-in link. The logo always leads back to the region's home page. On phones and tablets these move into a menu. The footer repeats the region's pages, lists resources and organisation pages, the team's social channels, the emergency number 112 and the legal pages.
 
 ## Region Page
 
-Each region has its own landing page. It opens with the current overall danger level on the official 1–5 scale, when the forecast was issued, how long it stays valid and who wrote it — one tap leads to the full forecast. If the latest forecast's validity has run out and no new one has been issued yet, a notice says so. Below are the region's main partners (or an invitation to become one), the three most recent avalanche reports — each opens in place with its details — with shortcuts to see all of them or report a new one, and quick links to the forecast area, the weather stations and past forecasts.
+Each region has its own home page. It opens with the current overall danger level on the official 1–5 scale, when the forecast was issued, how long it stays valid and who wrote it — one tap leads to the full forecast. If the latest forecast's validity has run out and no new one has been issued yet, a notice says so. A region that has never had a forecast says that we're looking for a forecaster, with a link to join. Below are the region's main partners (or an invitation to become one), the three most recent avalanche reports — each opens in place with its details — with shortcuts to see all of them or report a new one, and quick links to the forecast area, observations, the weather stations and past forecasts.
 
 ## Avalanche Forecasts
 

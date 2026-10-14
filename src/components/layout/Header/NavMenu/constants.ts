@@ -1,50 +1,53 @@
-import type { Region } from '@domain/types'
-
 import type { NavMenuItem } from './types'
 
 import { routes } from '@/routes'
 
-type NavMenuOptions = {
-  // The remembered region, if any
-  regionId: string | null
-  regions: Region[]
-}
-
-// Order is important
-export const getNavMenuItems = ({ regionId, regions }: NavMenuOptions): NavMenuItem[] => {
-  // Region-wide pages open for the remembered region, else the first one
-  const defaultRegionId = regionId ?? regions[0]?.id ?? null
-  const hasRegions = Boolean(defaultRegionId)
+// Order is important. regionId: the region the page is about (URL, remembered, or the
+// only one) — its pages form the first group; without one the group is left out
+// (region choice lives in the region switcher).
+export const getNavMenuItems = (regionId: string | null): NavMenuItem[] => {
+  const forecastRoutes = routes.forecastsByRegion(regionId ?? '')
 
   return [
     {
-      activePaths: regions.map((region) => routes.forecastsByRegion(region.id).root),
+      activePaths: regionId ? [routes.regionHome(regionId)] : [],
       children: [
-        ...regions.map((region) => ({
-          icon: 'mountainSnow' as const,
-          id: region.id,
-          path: routes.forecastsByRegion(region.id).current,
-          titleId: `regions.names.${region.id}`,
-        })),
+        {
+          icon: 'mountainSnow',
+          id: 'overview',
+          isExact: true,
+          path: routes.regionHome(regionId ?? ''),
+          titleId: 'navigation.overview',
+        },
+        {
+          icon: 'snowflake',
+          id: 'currentForecast',
+          path: forecastRoutes.current,
+          titleId: 'navigation.currentForecast',
+        },
+        {
+          icon: 'mapPinned',
+          id: 'forecastArea',
+          path: forecastRoutes.forecastArea,
+          titleId: 'navigation.forecastArea',
+        },
         {
           icon: 'cloudSnow',
-          id: 'archive',
-          path: routes.forecastsByRegion(defaultRegionId ?? '').history,
+          id: 'history',
+          path: forecastRoutes.history,
           titleId: 'navigation.archive',
+        },
+        {
+          icon: 'telescope',
+          id: 'observations',
+          path: routes.observationsByRegion(regionId ?? '').root,
+          titleId: 'navigation.observations',
         },
       ],
       icon: 'snowflake',
       id: 'forecasts',
-      isHidden: !hasRegions,
+      isHidden: !regionId,
       titleId: 'navigation.forecasts',
-    },
-    {
-      activePaths: regions.map((region) => routes.observationsByRegion(region.id).root),
-      icon: 'telescope',
-      id: 'observations',
-      isHidden: !hasRegions,
-      path: routes.observationsByRegion(defaultRegionId ?? '').root,
-      titleId: 'navigation.observations',
     },
     {
       icon: 'thermometerSnowflake',
@@ -93,6 +96,7 @@ const isUnder = (pathname: string, path: string) =>
 export const isNavItemActive = (item: NavMenuItem, pathname: string): boolean => {
   if (item.activePaths?.some((path) => isUnder(pathname, path))) return true
   if (item.children) return item.children.some((child) => isNavItemActive(child, pathname))
+  if (item.isExact) return pathname === item.path
 
   return isUnder(pathname, item.path)
 }

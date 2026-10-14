@@ -18,9 +18,12 @@ forecast:
     message: 'The forecast you are looking for does not exist or is no longer available.'
     linkText: 'View Current Forecast'
 
+  noForecaster:
+    title: 'No forecasts yet'
+    message: 'We are looking for someone who can write forecasts for this region.'
+    action: 'Become a forecaster'
+
   noForecast:
-    title: 'No Forecast Published'
-    message: 'There is no active avalanche forecast for this region at this time. Check back later for updates.'
     backToHome: 'Back to Home'
 
   hazardLevels:

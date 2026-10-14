@@ -1,5 +1,5 @@
 import type { RegionId } from '@domain/types'
-import { History, Mountain, RadioTower } from 'lucide-react'
+import { History, Mountain, RadioTower, Telescope } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 import QuickLinkTile from './QuickLinkTile'
@@ -12,19 +12,27 @@ type QuickLinksProps = {
   weatherStationsCount: number | null
 }
 
-// Forecast area · Weather stations · Past forecasts
+// Forecast area · Observations · Weather stations · Past forecasts
 const QuickLinks = ({ regionId, weatherStationsCount }: QuickLinksProps) => {
   const t = useTranslations()
   const forecastRoutes = routes.forecastsByRegion(regionId)
 
   return (
-    <ul className="grid grid-cols-3 gap-2">
+    <ul className="grid grid-cols-2 gap-2 sm:grid-cols-4">
       <li>
         <QuickLinkTile
           href={forecastRoutes.forecastArea}
           icon={<Mountain />}
           label={t('navigation.forecastArea')}
           note={t('regionHome.quickLinks.forecastArea')}
+        />
+      </li>
+      <li>
+        <QuickLinkTile
+          href={routes.observationsByRegion(regionId).root}
+          icon={<Telescope />}
+          label={t('navigation.observations')}
+          note={t('regionHome.quickLinks.observations')}
         />
       </li>
       <li>

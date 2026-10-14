@@ -1,4 +1,10 @@
+import type { RegionId } from '@domain/types'
+
 export const baseUrl = 'https://avalanche.ge'
+
+// The region chooser's segment. Reserved: a region id "regions" would make this a
+// type error (Exclude → never), since the static route would shadow that region.
+const regionsSegment = 'regions' satisfies Exclude<'regions', RegionId>
 
 export const routes = {
   about: {
@@ -85,6 +91,8 @@ export const routes = {
   partners: '/partners',
   privacy: '/privacy-policy',
   regionHome: (regionId: string) => `/${regionId}`,
+  // Region chooser
+  regions: `/${regionsSegment}`,
   terms: '/terms-of-service',
   verify: (code: string) => `/verify/${code}`,
   weatherStations: '/weather-stations',

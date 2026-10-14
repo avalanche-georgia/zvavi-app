@@ -11,6 +11,8 @@ export type NavMenuItemBase = {
 
 export type NavMenuLink = NavMenuItemBase & {
   children?: never
+  // Active only on this exact page, not on the pages below it (a region's overview)
+  isExact?: boolean
   path: string
 }
 

@@ -22,7 +22,7 @@ const HistoryList = ({ forecasts, regionId }: HistoryListProps) => {
     t('forecast.history.winterSeason'),
   )
 
-  if (forecasts.length === 0) return <HistoryEmptyState />
+  if (forecasts.length === 0) return <HistoryEmptyState regionId={regionId} />
 
   return (
     <div className="flex flex-col gap-2">

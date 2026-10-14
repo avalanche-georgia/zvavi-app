@@ -16,27 +16,11 @@ home:
     nextForecast: 'Next forecast in December'
     notIssued: 'Not issued'
     offSeason: 'Off-season'
-
-  noDanger:
-    label: 'No forecast'
-    offSeason: 'Off-season'
-    notIssued: 'Not issued yet'
-    lastSeason: 'Last season’s forecasts'
-    archive: 'Previous forecasts'
+    noForecaster: 'No forecasts yet'
+    lookingForForecaster: 'Looking for a forecaster'
 
   map:
-    oneRegion: '{region} forecast area'
     manyRegions: 'Forecast regions'
-    noForecast: 'No forecast'
-
-  observations:
-    title: 'Latest from the field'
-    seeAll: 'All observations'
-    avalancheTag: 'Avalanche · Size {size}'
-    empty: 'No observations yet.'
-    cta:
-      title: 'Been out today?'
-      message: 'Your observation helps forecasters and everyone heading out tomorrow.'
 
   partners:
     titleOne: 'Main partner'

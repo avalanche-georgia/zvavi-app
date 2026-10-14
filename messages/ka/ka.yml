@@ -1,24 +1,3 @@
-navigation:
-  about: 'შესახებ'
-  aboutUs: 'ჩვენ შესახებ'
-  account: 'ანგარიში'
-  adminPanel: 'ადმინ პანელი'
-  archive: 'პროგნოზების არქივი'
-  closeMenu: 'მენიუს დახურვა'
-  contact: 'კონტაქტი'
-  forecastArea: 'პროგნოზის ტერიტორია'
-  forecasts: 'პროგნოზები'
-  history: 'წინა პროგნოზები'
-  joinUs: 'შემოგვიერთდი'
-  language: 'ენა'
-  mainNav: 'მთავარი'
-  menu: 'მენიუ'
-  menuDescription: 'საიტის სანავიგაციო მენიუ'
-  observations: 'დაკვირვებები'
-  openMenu: 'მენიუს გახსნა'
-  partners: 'პარტნიორები'
-  weatherStations: 'ამინდის სადგურები'
-
 auth:
   errors:
     invalidSession: 'სესია არასწორია ან ვადაგასულია. გთხოვთ მოითხოვოთ პაროლის აღდგენის ახალი ბმული.'

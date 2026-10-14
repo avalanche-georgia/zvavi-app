@@ -16,27 +16,11 @@ home:
     nextForecast: 'შემდეგი პროგნოზი დეკემბერში'
     notIssued: 'არ გამოქვეყნებულა'
     offSeason: 'არასეზონი'
-
-  noDanger:
-    label: 'პროგნოზი არ არის'
-    offSeason: 'არასეზონი'
-    notIssued: 'ჯერ არ გამოქვეყნებულა'
-    lastSeason: 'გასული სეზონის პროგნოზები'
-    archive: 'წინა პროგნოზები'
+    noForecaster: 'პროგნოზები ჯერ არ არის'
+    lookingForForecaster: 'ვეძებთ პროგნოზისტს'
 
   map:
-    oneRegion: '{region} — პროგნოზის ტერიტორია'
     manyRegions: 'პროგნოზის რეგიონები'
-    noForecast: 'პროგნოზი არ არის'
-
-  observations:
-    title: 'უახლესი დაკვირვებები'
-    seeAll: 'ყველა დაკვირვება'
-    avalancheTag: 'ზვავი · ზომა {size}'
-    empty: 'დაკვირვებები ჯერ არ არის.'
-    cta:
-      title: 'დღეს მთაში იყავით?'
-      message: 'თქვენი დაკვირვება ეხმარება პროგნოზისტებს და ყველას, ვინც ხვალ მთაში მიდის.'
 
   partners:
     titleOne: 'მთავარი პარტნიორი'

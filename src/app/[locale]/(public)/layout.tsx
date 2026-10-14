@@ -14,7 +14,9 @@ const PublicLayout = async ({ children }: LayoutProps) => {
   const regions = await fetchActiveRegions()
   const cookieStore = await cookies()
   const cookieRegionId = cookieStore.get(regionLocalStorageKey)?.value
-  const region = regions.find((r) => r.id === cookieRegionId) ?? null
+  // The remembered region, else the only one there is
+  const region =
+    regions.find(({ id }) => id === cookieRegionId) ?? (regions.length === 1 ? regions[0] : null)
 
   return (
     <RegionContextProvider region={region} regions={regions}>

@@ -1,16 +1,20 @@
 import { Suspense } from 'react'
 import type { Metadata } from 'next'
-import { getTranslations } from 'next-intl/server'
+import { getLocale, getTranslations } from 'next-intl/server'
 
 import ObservationsContent from './ObservationsContent'
+
+import getAlternates from '@/lib/seo/getAlternates'
+import { routes } from '@/routes'
 
 type ObservationsPageProps = { params: Promise<{ region: string }> }
 
 export const generateMetadata = async ({ params }: ObservationsPageProps): Promise<Metadata> => {
   const { region: regionId } = await params
-  const t = await getTranslations()
+  const [locale, t] = await Promise.all([getLocale(), getTranslations()])
 
   return {
+    alternates: getAlternates(locale, routes.observationsByRegion(regionId).root),
     description: t('seo.observations.description', {
       regionName: t(`regions.names.${regionId}`),
     }),

@@ -12,13 +12,11 @@ type HomeHeroProps = {
   // Date, title and lede (rendered on the server)
   intro: React.ReactNode
   regions: HeroRegion[]
-  // The danger card when there is only one region (rendered on the server)
-  singleRegionCard: React.ReactNode
 }
 
-// Today's danger per region next to the map of their zones. Hovering a list
-// row highlights its zone and the other way round.
-const HomeHero = ({ intro, regions, singleRegionCard }: HomeHeroProps) => {
+// Today's danger per region next to the map of their zones; choosing one opens its
+// home. Hovering a list row highlights its zone and the other way round.
+const HomeHero = ({ intro, regions }: HomeHeroProps) => {
   const [highlightedId, setHighlightedId] = useState<HeroRegion['id'] | null>(null)
   const isOffSeason = regions.length > 0 && regions.every(({ state }) => state === 'offSeason')
 
@@ -27,11 +25,7 @@ const HomeHero = ({ intro, regions, singleRegionCard }: HomeHeroProps) => {
       <div className="flex min-w-0 flex-col">
         {intro}
         {isOffSeason && <OffSeasonNote />}
-        {regions.length === 1 ? (
-          singleRegionCard
-        ) : (
-          <RegionList highlightedId={highlightedId} onHover={setHighlightedId} regions={regions} />
-        )}
+        <RegionList highlightedId={highlightedId} onHover={setHighlightedId} regions={regions} />
         <DangerLegend />
       </div>
       <RegionsMap highlightedId={highlightedId} onHover={setHighlightedId} regions={regions} />

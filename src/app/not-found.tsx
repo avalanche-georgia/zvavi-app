@@ -12,7 +12,7 @@ const NotFound = async () => {
   const t = await getTranslations()
   const cookieStore = await cookies()
   const regionId = cookieStore.get(regionLocalStorageKey)?.value
-  const href = regionId ? routes.forecastsByRegion(regionId).current : routes.home
+  const href = regionId ? routes.regionHome(regionId) : routes.regions
 
   return (
     <PageWrapper>

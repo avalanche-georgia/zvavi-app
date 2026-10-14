@@ -2,8 +2,7 @@
 
 import { useSignOut } from '@components/hooks'
 import { Icon } from '@components/icons'
-import { LanguageToggle, RegionSelect } from '@components/shared'
-import { useRegionContext } from '@domain/context/RegionContext'
+import { LanguageToggle, RegionSwitcher } from '@components/shared'
 import { Drawer, DrawerClose, DrawerTitle } from '@ds/patterns'
 import { IconButton } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
@@ -22,7 +21,6 @@ type MobileNavProps = {
 // Burger menu: language and region on top, then the site links and the account
 const MobileNav = ({ isOpen, isSignedIn, onClose }: MobileNavProps) => {
   const t = useTranslations()
-  const { regions } = useRegionContext()
   const { signOut } = useSignOut()
   const navMenuItems = useNavMenuItems()
 
@@ -50,7 +48,7 @@ const MobileNav = ({ isOpen, isSignedIn, onClose }: MobileNavProps) => {
       </div>
       <div className="border-rule flex flex-wrap items-center gap-2 border-b px-4 py-3">
         <LanguageToggle />
-        {regions.length > 1 && <RegionSelect onSelect={onClose} />}
+        <RegionSwitcher onNavigate={onClose} />
       </div>
       <nav aria-label={t('navigation.mainNav')} className="min-h-0 flex-1 overflow-y-auto py-2">
         {navMenuItems.map((item) =>

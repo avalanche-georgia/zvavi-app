@@ -1,3 +1,2 @@
-export { default as HomePage } from './HomePage'
-export type { HomeRegion } from './toHeroRegion'
-export type { RegionForecastState } from './types'
+export { default as RegionsPage } from './RegionsPage'
+export type { RegionsPageRegion } from './toHeroRegion'

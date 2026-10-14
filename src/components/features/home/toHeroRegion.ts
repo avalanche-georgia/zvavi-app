@@ -1,16 +1,17 @@
+import type { RegionForecastState } from '@domain/forecastState'
 import type { Forecast, Region } from '@domain/types'
 
-import type { HeroRegion, RegionForecastState } from './types'
+import type { HeroRegion } from './types'
 
-export type HomeRegion = {
+export type RegionsPageRegion = {
   // null: the region has no published forecast
   forecast: Forecast | null
   region: Region
   state: RegionForecastState
 }
 
-// Only what the hero's list and map need — keeps full forecasts out of the client bundle data
-const toHeroRegion = ({ forecast, region, state }: HomeRegion): HeroRegion => ({
+// Only what the list and map need — keeps full forecasts out of the client props
+const toHeroRegion = ({ forecast, region, state }: RegionsPageRegion): HeroRegion => ({
   forecastZone: region.forecastZone,
   id: region.id,
   issuedAt: forecast ? (forecast.publishedAt ?? forecast.createdAt) : null,

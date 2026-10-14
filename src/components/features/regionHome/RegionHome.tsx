@@ -3,7 +3,7 @@ import type { Forecast, Partner, PublicObservation, RegionId } from '@domain/typ
 
 import ExpiredNote from './ExpiredNote'
 import MainPartnersCard from './MainPartnersCard'
-import NoForecastCard from './NoForecastCard'
+import NoForecasterCard from './NoForecasterCard'
 import QuickLinks from './QuickLinks'
 import RecentAvalanchesCard from './RecentAvalanchesCard'
 import RegionHead from './RegionHead'
@@ -47,7 +47,7 @@ const RegionHome = (props: RegionHomeProps) => {
                 />
               </>
             ) : (
-              <NoForecastCard />
+              <NoForecasterCard />
             )}
             <MainPartnersCard partners={partners} />
           </div>

@@ -11,8 +11,10 @@ import { useRouter } from 'src/i18n/navigation'
 import { getZoneStyle } from './mapColors'
 import { markerClasses } from './markerClasses'
 import { tooltipClasses } from './tooltipClasses'
+import useRegionStatus from '../hero/useRegionStatus'
 import type { HeroRegion } from '../types'
 
+import rememberRegion from '@/lib/rememberRegion'
 import { routes } from '@/routes'
 
 type RegionShapeProps = {
@@ -22,9 +24,10 @@ type RegionShapeProps = {
 }
 
 // A region's zone in its danger colour, with a numbered marker at its centre.
-// Hover links it to the list row; a click opens the forecast.
+// Hover links it to the list row; a click remembers the region and opens its home.
 const RegionShape = ({ isHighlighted, onHover, region }: RegionShapeProps) => {
   const t = useTranslations()
+  const { getStatus } = useRegionStatus()
   const router = useRouter()
   const markerRef = useRef<LeafletMarker | null>(null)
   const { forecastZone, id, state } = region
@@ -50,17 +53,14 @@ const RegionShape = ({ isHighlighted, onHover, region }: RegionShapeProps) => {
 
   if (!zone || !center) return null
 
-  const getStatus = () => {
-    if (level) return `${level} ${t(hazardLevelNamesByScale[level])}`
-    if (state === 'noRating') return t(hazardLevelNamesByScale['0'])
-
-    return t('home.map.noForecast')
-  }
-  const label = `${t(`regions.names.${id}`)} · ${getStatus()}`
-  const hasForecast = state === 'current' || state === 'expired' || state === 'noRating'
-  const forecastRoutes = routes.forecastsByRegion(id)
+  const label = `${t(`regions.names.${id}`)} · ${
+    level ? `${level} ${t(hazardLevelNamesByScale[level])}` : getStatus(region)
+  }`
   const eventHandlers = {
-    click: () => router.push(hasForecast ? forecastRoutes.current : forecastRoutes.history),
+    click: () => {
+      rememberRegion(id)
+      router.push(routes.regionHome(id))
+    },
     mouseout: () => onHover(null),
     mouseover: () => onHover(id),
   }

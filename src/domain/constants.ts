@@ -8,7 +8,10 @@ import type {
   HazardLevel,
   HazardLevelScale,
   MemberStatus,
+  RegionId,
 } from './types'
+
+import { Constants } from '@/lib/supabase/types'
 
 export const hazardLevelNames: Record<HazardLevel, string> = {
   considerable: 'forecast.hazardLevels.considerable',
@@ -188,9 +191,8 @@ export const memberStatuses: Record<MemberStatus, MemberStatus> = {
   suspended: 'suspended',
 }
 
-export const regionIds = {
-  gudauri: 'gudauri',
-} as const
+// Every region the database knows (the region_id enum) — active or not
+export const allRegionIds: readonly RegionId[] = Constants.public.Enums.region_id
 
 export const userRoles = {
   admin: 'admin',

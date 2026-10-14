@@ -25,7 +25,6 @@ export type RegionsMapProps = {
 const RegionsMapClient = ({ highlightedId, onHover, regions }: RegionsMapProps) => {
   const t = useTranslations()
   const bounds = useMemo(() => computeBounds(regions), [regions])
-  const [onlyRegion] = regions
 
   return (
     <>
@@ -53,9 +52,7 @@ const RegionsMapClient = ({ highlightedId, onHover, regions }: RegionsMapProps) 
         ))}
       </MapContainer>
       <p className="bg-surface text-copy-sm shadow-overlay rounded-control pointer-events-none absolute top-3.5 left-3.5 z-500 px-3 py-2 font-semibold">
-        {regions.length === 1
-          ? t('home.map.oneRegion', { region: t(`regions.names.${onlyRegion.id}`) })
-          : t('home.map.manyRegions')}
+        {t('home.map.manyRegions')}
       </p>
     </>
   )
