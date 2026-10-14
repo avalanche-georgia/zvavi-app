@@ -25,8 +25,13 @@ export const routes = {
     members: {
       // The list with its create sheet open
       create: '/admin/members?create=1',
+
+      // The list with the member's sheet open in edit mode
+      edit: (id: string) => `/admin/members?member=${id}&mode=edit`,
+
       // Applications waiting for approval
       pending: '/admin/members?status=pending',
+
       root: '/admin/members',
       // The list with the member's sheet open
       view: (id: string) => `/admin/members?member=${id}`,

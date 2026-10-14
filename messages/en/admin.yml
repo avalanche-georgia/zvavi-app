@@ -117,6 +117,7 @@ admin:
       download: 'Download QR Code'
       linkLabel: 'Verification link'
     messages:
+      approvalEmailFailed: 'The confirmation email didn''t go out. Share the verification link from the member''s card instead.'
       approved: 'Member approved successfully.'
       created: 'Member created successfully.'
       deleted: 'Member deleted successfully.'
