@@ -18,7 +18,7 @@ const QuickLinks = ({ regionId, weatherStationsCount }: QuickLinksProps) => {
   const forecastRoutes = routes.forecastsByRegion(regionId)
 
   return (
-    <ul className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+    <ul className="grid grid-cols-2 gap-2">
       <li>
         <QuickLinkTile
           href={forecastRoutes.forecastArea}

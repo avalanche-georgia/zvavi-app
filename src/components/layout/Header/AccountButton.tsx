@@ -9,8 +9,8 @@ import { useTranslations } from 'next-intl'
 import { Link } from 'src/i18n/navigation'
 
 import AvatarButton from './AvatarButton'
+import UserAvatar from '../admin/header/UserMenu/UserAvatar'
 
-import getInitials from '@/lib/getInitials'
 import { routes } from '@/routes'
 
 type AccountButtonProps = {
@@ -18,7 +18,7 @@ type AccountButtonProps = {
   user: User | null
 }
 
-// Initials that open the account menu, or "Sign in" when signed out
+// The profile photo (uploaded, else the generated one) opens the account menu, or "Sign in" when signed out
 const AccountButton = ({ isLoading, user }: AccountButtonProps) => {
   const t = useTranslations()
   const { signOut } = useSignOut()
@@ -40,7 +40,7 @@ const AccountButton = ({ isLoading, user }: AccountButtonProps) => {
     <Menu
       trigger={
         <AvatarButton label={t('navigation.account')}>
-          {getInitials(displayName) || '?'}
+          <UserAvatar avatarUrl={profile?.avatarUrl} className="size-9" name="" userId={user.id} />
         </AvatarButton>
       }
     >

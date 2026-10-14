@@ -47,7 +47,8 @@ export const getNavMenuItems = (regionId: string | null): NavMenuItem[] => {
       icon: 'snowflake',
       id: 'forecasts',
       isHidden: !regionId,
-      titleId: 'navigation.forecasts',
+      // The group is the region: labelled with its name
+      titleId: regionId ? `regions.names.${regionId}` : 'navigation.forecasts',
     },
     {
       icon: 'thermometerSnowflake',

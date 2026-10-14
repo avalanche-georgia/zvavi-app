@@ -8,13 +8,13 @@ type AvatarButtonProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'ar
   ref?: React.Ref<HTMLButtonElement>
 }
 
-// Round initials button. Passes the props a Menu trigger adds on to the <button>.
+// Round avatar button. Passes the props a Menu trigger adds on to the <button>.
 const AvatarButton = ({ children, label, ...props }: AvatarButtonProps) => (
   <Tooltip label={label}>
     <button
       {...props}
       aria-label={label}
-      className="focus-ring bg-primary-soft text-primary-ink text-caption relative grid size-9 shrink-0 place-items-center rounded-full font-bold after:absolute pointer-coarse:after:-inset-1"
+      className="focus-ring relative grid size-9 shrink-0 place-items-center rounded-full after:absolute pointer-coarse:after:-inset-1"
       type="button"
     >
       {children}

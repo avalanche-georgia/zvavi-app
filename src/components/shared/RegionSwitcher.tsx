@@ -1,41 +1,38 @@
 'use client'
 
 import { useRegionContext } from '@domain/context/RegionContext'
-import { MapPin } from 'lucide-react'
+import { ArrowLeftRight } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { Link } from 'src/i18n/navigation'
 
 import { cn } from '@/lib/utils'
 import { routes } from '@/routes'
 
-// The active region's name. With one region it leads to that region's home; with
-// several, to the region chooser — where picking one is remembered.
-const RegionSwitcher = ({ onNavigate }: { onNavigate?: () => void }) => {
+// "Switch region" → the region chooser, where picking one is remembered. Only while
+// there is more than one region (the nav already names the current one).
+const RegionSwitcher = ({
+  className,
+  onNavigate,
+}: {
+  className?: string
+  onNavigate?: () => void
+}) => {
   const t = useTranslations()
   const { region, regions } = useRegionContext()
-  const hasChoice = regions.length > 1
 
-  if (!region && !hasChoice) return null
+  if (regions.length < 2) return null
 
   return (
     <Link
       className={cn(
-        'focus-ring border-rule bg-surface rounded-control text-copy hover:bg-tile flex h-9 items-center gap-1.5 border px-3 font-medium whitespace-nowrap transition-colors',
-        region ? 'text-ink' : 'text-muted',
+        'focus-ring border-rule bg-surface text-ink rounded-control text-copy hover:bg-tile flex h-9 items-center gap-1.5 border px-3 font-medium whitespace-nowrap transition-colors',
+        className,
       )}
-      href={hasChoice || !region ? routes.regions : routes.regionHome(region.id)}
+      href={routes.regions}
       onClick={onNavigate}
     >
-      <MapPin aria-hidden className="text-muted size-3.5" />
-      {region ? (
-        <>
-          {t(`regions.names.${region.id}`)}
-          {/* Says where the link goes; after the visible name, so voice control matches it */}
-          {hasChoice && <span className="sr-only"> — {t('navigation.chooseRegion')}</span>}
-        </>
-      ) : (
-        t('navigation.chooseRegion')
-      )}
+      <ArrowLeftRight aria-hidden className="text-muted size-3.5" />
+      {region ? t('navigation.switchRegion') : t('navigation.chooseRegion')}
     </Link>
   )
 }

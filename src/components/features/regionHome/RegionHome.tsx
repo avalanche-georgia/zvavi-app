@@ -1,4 +1,3 @@
-import { DangerCard } from '@components/features/forecast'
 import OffSeasonNote from '@components/features/home/hero/OffSeasonNote'
 import type { RegionForecastState } from '@domain/forecastState'
 import type { Forecast, Partner, PublicObservation, RegionId } from '@domain/types'
@@ -8,9 +7,8 @@ import MainPartnersCard from './MainPartnersCard'
 import NoForecasterCard from './NoForecasterCard'
 import QuickLinks from './QuickLinks'
 import RecentAvalanchesCard from './RecentAvalanchesCard'
+import RegionDangerCard from './RegionDangerCard'
 import RegionHead from './RegionHead'
-
-import { routes } from '@/routes'
 
 type RegionHomeProps = {
   // null: the region has no published forecast
@@ -44,11 +42,7 @@ const RegionHome = (props: RegionHomeProps) => {
                 {forecast.hazardLevels.overall !== '0' && (
                   <ExpiredNote validUntil={forecast.validUntil} />
                 )}
-                <DangerCard
-                  action={{ forecastHref: routes.forecastsByRegion(regionId).current }}
-                  forecast={forecast}
-                  isCurrentForecast
-                />
+                <RegionDangerCard forecast={forecast} regionId={regionId} />
               </>
             ) : (
               <NoForecasterCard />

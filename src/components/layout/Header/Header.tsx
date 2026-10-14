@@ -20,9 +20,7 @@ const Header = () => {
 
         <div className="ml-auto flex shrink-0 items-center gap-2">
           <LanguageToggle className="hidden xl:flex" />
-          <div className="hidden sm:block">
-            <RegionSwitcher />
-          </div>
+          <RegionSwitcher className="hidden sm:flex" />
           <AccountButton isLoading={isLoading} user={user} />
           <MobileMenuButton isSignedIn={isAuthenticated} />
         </div>

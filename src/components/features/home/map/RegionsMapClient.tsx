@@ -21,7 +21,7 @@ export type RegionsMapProps = {
   regions: HeroRegion[]
 }
 
-// Every region's zone in its danger colour. The wheel scrolls the page, not the map.
+// Every region's zone in its danger colour. Zooming out stops around Georgia.
 const RegionsMapClient = ({ highlightedId, onHover, regions }: RegionsMapProps) => {
   const t = useTranslations()
   const bounds = useMemo(() => computeBounds(regions), [regions])
@@ -31,7 +31,7 @@ const RegionsMapClient = ({ highlightedId, onHover, regions }: RegionsMapProps) 
       <MapContainer
         center={fallbackCenter}
         className="bg-map absolute! inset-0 size-full"
-        scrollWheelZoom={false}
+        maxBoundsViscosity={0.8}
         zoom={fallbackZoom}
         zoomControl={false}
         zoomSnap={0.25}

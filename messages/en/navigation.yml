@@ -21,4 +21,5 @@ navigation:
   openMenu: 'Open menu'
   overview: 'Overview'
   partners: 'Partners'
+  switchRegion: 'Switch region'
   weatherStations: 'Weather Stations'
