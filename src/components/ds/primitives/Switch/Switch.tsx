@@ -24,12 +24,14 @@ const Switch = ({ checked, className, label, labelAside, onCheckedChange }: Swit
       <BaseSwitch.Root
         checked={checked}
         className={cn(
-          'focus-ring bg-off relative flex h-5.5 w-9.5 shrink-0 rounded-full p-0.5 transition-colors',
-          'hover:bg-rule-strong data-checked:bg-accent data-checked:hover:bg-accent-hover',
+          // Off: outlined track + dark thumb, so the state reads on any surface
+          'focus-ring border-muted bg-tile relative flex h-5.5 w-9.5 shrink-0 rounded-full border p-0.5 transition-colors',
+          'hover:bg-tile-hover data-checked:border-accent data-checked:bg-accent',
+          'data-checked:hover:border-accent-hover data-checked:hover:bg-accent-hover',
         )}
         onCheckedChange={onCheckedChange}
       >
-        <BaseSwitch.Thumb className="bg-surface shadow-overlay size-4.5 rounded-full transition-transform data-checked:translate-x-4" />
+        <BaseSwitch.Thumb className="bg-muted data-checked:bg-surface size-4 rounded-full transition-[translate,background-color] data-checked:translate-x-4" />
       </BaseSwitch.Root>
       <span className="text-copy text-ink font-medium">{label}</span>
     </label>

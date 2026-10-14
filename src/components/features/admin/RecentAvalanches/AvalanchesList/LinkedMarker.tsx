@@ -18,7 +18,7 @@ const LinkedMarker = ({ count }: { count: number }) => {
       <span
         className={cn(
           'text-caption inline-flex items-center gap-0.5 font-medium tabular-nums',
-          count ? 'text-accent' : 'text-placeholder',
+          count ? 'text-accent' : 'text-muted',
         )}
       >
         <LinkIcon aria-hidden className="size-3.5" />

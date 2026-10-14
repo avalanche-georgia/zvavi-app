@@ -9,7 +9,6 @@ import type { AvalancheListItem, ListFilterParams } from './types'
 import { convertSnakeToCamel } from '../../helpers'
 
 type PaginatedResult = {
-  grandTotal: number
   avalanches: AvalancheListItem[]
   totalCount: number
 }
@@ -49,27 +48,13 @@ export const fetchPaginatedAvalanches = async (params: QueryParams): Promise<Pag
 
   avalanchesQuery = avalanchesQuery.range(offset, offset + pageSize - 1)
 
-  let grandTotalQuery = supabase
-    .from('recent_avalanches')
-    .select('*', { count: 'exact', head: true })
-    .eq('region_id', regionId)
-
-  if (source) grandTotalQuery = grandTotalQuery.eq('source', source)
-  if (status) grandTotalQuery = grandTotalQuery.eq('status', status)
-  if (excludeStatus) grandTotalQuery = grandTotalQuery.neq('status', excludeStatus)
-
-  const [{ count, data, error }, { count: grandTotal, error: totalError }] = await Promise.all([
-    avalanchesQuery,
-    grandTotalQuery,
-  ])
+  const { count, data, error } = await avalanchesQuery
 
   if (error) throw new Error(error.message)
-  if (totalError) throw new Error(totalError.message)
 
   // TODO: type-safe DB conversion — https://app.asana.com/1/1208747886147296/project/1208747689500826/task/1214630622531225
   return {
     avalanches: convertSnakeToCamel(data ?? []),
-    grandTotal: grandTotal ?? 0,
     totalCount: count ?? 0,
   } as PaginatedResult
 }
