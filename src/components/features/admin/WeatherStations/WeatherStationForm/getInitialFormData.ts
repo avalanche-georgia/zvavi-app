@@ -1,16 +1,13 @@
 import type { WeatherStation } from '@domain/types'
 
-const getInitialFormData = (station: WeatherStation | null) => {
-  if (!station) {
-    return { altitude: undefined, nameEn: '', nameKa: '', url: '' }
-  }
+import type { WeatherStationFormValues } from './schema'
 
-  return {
-    altitude: station.altitude,
-    nameEn: station.nameEn,
-    nameKa: station.nameKa,
-    url: station.url,
-  }
+const getInitialFormData = (station: WeatherStation | null): WeatherStationFormValues => {
+  if (!station) return { altitude: null, nameEn: '', nameKa: '', url: '' }
+
+  const { altitude, nameEn, nameKa, url } = station
+
+  return { altitude, nameEn, nameKa: nameKa ?? '', url }
 }
 
 export default getInitialFormData

@@ -1,21 +1,25 @@
 'use client'
 
-import { useCallback } from 'react'
-import { SortableItem, Spinner } from '@components/ui'
+import { ListEmptyState } from '@components/features/admin/shared'
+import { SortableItem } from '@components/ui'
 import { DragDropProvider, type DragEndEvent } from '@dnd-kit/react'
 import { isSortableOperation } from '@dnd-kit/react/sortable'
 import type { WeatherStation } from '@domain/types'
+import { LoaderIcon } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 import StationRow from './StationRow'
 
 type WeatherStationsListProps = {
-  isLoading?: boolean
-  onEdit: (station: WeatherStation) => void
+  isLoading: boolean
+  onEdit: (id: string) => void
   onReorder: (fromIndex: number, toIndex: number) => void
   stations: WeatherStation[]
 }
 
+const shellClasses = 'rounded-card border-rule bg-surface overflow-clip border'
+
+// Stations in the order the public page shows them; drag a row to change it
 const WeatherStationsList = ({
   isLoading,
   onEdit,
@@ -24,43 +28,50 @@ const WeatherStationsList = ({
 }: WeatherStationsListProps) => {
   const t = useTranslations()
 
-  const handleDragEnd = useCallback<DragEndEvent>(
-    (event) => {
-      if (event.canceled) return
-      if (!isSortableOperation(event.operation)) return
-      const { source, target } = event.operation
+  const handleDragEnd: DragEndEvent = (event) => {
+    if (event.canceled || !isSortableOperation(event.operation)) return
 
-      if (!source || !target) return
-      if (source.initialIndex === target.index) return
-      onReorder(source.initialIndex, target.index)
-    },
-    [onReorder],
-  )
+    const { source, target } = event.operation
 
-  if (isLoading) return <Spinner label={t('common.labels.wait')} size="lg" />
+    if (!source || !target || source.initialIndex === target.index) return
+    onReorder(source.initialIndex, target.index)
+  }
+
+  if (isLoading) {
+    return (
+      <div className={`${shellClasses} grid h-60 place-items-center`}>
+        <LoaderIcon aria-hidden className="text-muted size-6 animate-spin" />
+      </div>
+    )
+  }
 
   if (stations.length === 0) {
-    return <p className="py-8 text-center text-gray-500">{t('admin.weatherStations.noStations')}</p>
+    return (
+      <div className={shellClasses}>
+        <ListEmptyState
+          hint={t('admin.weatherStations.empty.hint')}
+          title={t('admin.weatherStations.empty.title')}
+        />
+      </div>
+    )
   }
 
   return (
     <DragDropProvider onDragEnd={handleDragEnd}>
-      <div className="overflow-hidden rounded-sm border bg-white shadow-sm">
-        <ul>
-          {stations.map((station, index) => (
-            <SortableItem
-              key={station.id}
-              className="border-b last:border-0 even:bg-gray-100/60"
-              id={station.id}
-              index={index}
-            >
-              {(handleRef) => (
-                <StationRow dragHandleRef={handleRef} onEdit={onEdit} station={station} />
-              )}
-            </SortableItem>
-          ))}
-        </ul>
-      </div>
+      <ul aria-label={t('admin.weatherStations.title')} className={shellClasses}>
+        {stations.map((station, index) => (
+          <SortableItem
+            key={station.id}
+            className="border-rule bg-surface data-dragging:shadow-float border-b last:border-b-0"
+            id={station.id}
+            index={index}
+          >
+            {(handleRef) => (
+              <StationRow dragHandleRef={handleRef} onEdit={onEdit} station={station} />
+            )}
+          </SortableItem>
+        ))}
+      </ul>
     </DragDropProvider>
   )
 }

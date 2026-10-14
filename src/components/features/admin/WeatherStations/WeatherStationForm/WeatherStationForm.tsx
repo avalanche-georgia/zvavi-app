@@ -1,64 +1,58 @@
 'use client'
 
-import { useToast } from '@components/hooks'
-import { Button } from '@components/ui'
-import { useWeatherStationCreate, useWeatherStationUpdate } from '@data/hooks/weatherStations'
+import { useReportFormState } from '@components/features/admin/shared'
+import { useUnsavedChangesWarning } from '@components/hooks'
 import type { WeatherStation } from '@domain/types'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useTranslations } from 'next-intl'
 import { FormProvider, useForm } from 'react-hook-form'
 
 import FormFields from './FormFields'
 import getInitialFormData from './getInitialFormData'
-import type { WeatherStationFormSchema } from './schema'
-import { weatherStationFormSchema } from './schema'
+import {
+  type WeatherStationFormSchema,
+  weatherStationFormSchema,
+  type WeatherStationFormValues,
+} from './schema'
+import useWeatherStationFormSubmit from './useWeatherStationFormSubmit'
 
 type WeatherStationFormProps = {
-  onClose: VoidFunction
-  station: WeatherStation | null
+  // The host sheet renders Cancel / Save itself and submits the form by this id
+  formId: string
+  onDirtyChange: (isDirty: boolean) => void
+  onSubmittingChange: (isSubmitting: boolean) => void
+  onSuccess: VoidFunction
+  // undefined when adding a station
+  station?: WeatherStation
 }
 
-const WeatherStationForm = ({ onClose, station }: WeatherStationFormProps) => {
-  const t = useTranslations()
-  const { toastError, toastSuccess } = useToast()
-  const { mutateAsync: createStation } = useWeatherStationCreate()
-  const { mutateAsync: updateStation } = useWeatherStationUpdate()
-
-  const form = useForm<WeatherStationFormSchema>({
-    defaultValues: getInitialFormData(station),
+const WeatherStationForm = ({
+  formId,
+  onDirtyChange,
+  onSubmittingChange,
+  onSuccess,
+  station,
+}: WeatherStationFormProps) => {
+  const form = useForm<WeatherStationFormValues, unknown, WeatherStationFormSchema>({
+    defaultValues: getInitialFormData(station ?? null),
     resolver: zodResolver(weatherStationFormSchema),
   })
+  const { isDirty, isSubmitting } = form.formState
 
-  const handleSubmit = async (fields: WeatherStationFormSchema) => {
-    try {
-      if (station) {
-        await updateStation({ ...fields, id: station.id })
-        toastSuccess(t('admin.weatherStations.form.messages.updated'))
-      } else {
-        await createStation(fields)
-        toastSuccess(t('admin.weatherStations.form.messages.created'))
-      }
+  useUnsavedChangesWarning(isDirty)
+  useReportFormState({ isDirty, isSubmitting }, { onDirtyChange, onSubmittingChange })
 
-      onClose()
-    } catch (error) {
-      toastError('WeatherStationForm | handleSubmit', { error })
-    }
-  }
+  const { handleSubmit } = useWeatherStationFormSubmit({ onSuccess, stationId: station?.id })
 
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)}>
-        <div className="p-4 md:p-6">
-          <FormFields />
-        </div>
-
-        <footer className="flex h-16 items-center justify-end gap-4 border-t px-4 md:px-6">
-          <Button onClick={onClose} type="button" variant="secondary">
-            {t('common.actions.cancel')}
-          </Button>
-          <Button type="submit">{t('common.actions.submit')}</Button>
-        </footer>
+      <form
+        className="bg-canvas @container flex min-h-full flex-col gap-3 p-3 md:p-4"
+        id={formId}
+        noValidate
+        onSubmit={form.handleSubmit(handleSubmit)}
+      >
+        <FormFields />
       </form>
     </FormProvider>
   )

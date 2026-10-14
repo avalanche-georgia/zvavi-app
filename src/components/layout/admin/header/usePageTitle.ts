@@ -15,12 +15,14 @@ const sectionTitles: Record<string, SectionTitles> = {
     main: 'admin.forecasts.title',
   },
   members: { main: 'admin.sidebar.members' },
+  observations: { main: 'admin.sidebar.observations' },
   partners: { main: 'admin.sidebar.partners' },
   'recent-avalanches': {
     create: 'admin.recentAvalanches.title.create',
     edit: 'admin.recentAvalanches.title.edit',
     main: 'admin.recentAvalanches.title.list',
   },
+  'weather-stations': { main: 'admin.weatherStations.title' },
 }
 
 export const usePageTitle = (pathname: string): string => {
