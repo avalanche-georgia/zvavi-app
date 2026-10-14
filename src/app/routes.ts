@@ -23,17 +23,27 @@ export const routes = {
       view: (id: number) => `/admin/forecasts/${id}`,
     },
     members: {
-      edit: (id: string) => `/admin/members/${id}/edit`,
-      new: '/admin/members/new',
+      // The list with its create sheet open
+      create: '/admin/members?create=1',
+
+      // The list with the member's sheet open in edit mode
+      edit: (id: string) => `/admin/members?member=${id}&mode=edit`,
+
+      // Applications waiting for approval
+      pending: '/admin/members?status=pending',
+
       root: '/admin/members',
-      view: (id: string) => `/admin/members/${id}`,
+      // The list with the member's sheet open
+      view: (id: string) => `/admin/members?member=${id}`,
     },
     observations: {
       root: '/admin/observations',
     },
     partners: {
-      edit: (id: string) => `/admin/partners/${id}/edit`,
-      new: '/admin/partners/new',
+      // The list with its create sheet open
+      create: '/admin/partners?create=1',
+      // The list with the partner's edit sheet open
+      edit: (id: string) => `/admin/partners?partner=${id}`,
       root: '/admin/partners',
     },
     profile: '/admin/profile',

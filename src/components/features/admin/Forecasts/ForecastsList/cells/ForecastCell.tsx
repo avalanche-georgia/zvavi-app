@@ -1,8 +1,8 @@
+import { LinkPendingIndicator } from '@components/features/admin/shared'
 import type { ForecastListItem } from '@domain/types'
 import { useTranslations } from 'next-intl'
 import { Link } from 'src/i18n/navigation'
 
-import { LinkPendingIndicator } from '../../shared'
 import { toPlainText } from '../model'
 
 import { cn } from '@/lib/utils'

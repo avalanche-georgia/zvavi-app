@@ -14,21 +14,16 @@ const sectionTitles: Record<string, SectionTitles> = {
     edit: 'admin.forecast.title.edit',
     main: 'admin.forecasts.title',
   },
-  members: {
-    create: 'admin.members.title.create',
-    edit: 'admin.members.title.edit',
-    main: 'admin.sidebar.members',
-  },
-  partners: {
-    create: 'admin.partners.title.create',
-    edit: 'admin.partners.title.edit',
-    main: 'admin.sidebar.partners',
-  },
+  members: { main: 'admin.sidebar.members' },
+  observations: { main: 'admin.sidebar.observations' },
+  partners: { main: 'admin.sidebar.partners' },
+  profile: { main: 'admin.profile.title' },
   'recent-avalanches': {
     create: 'admin.recentAvalanches.title.create',
     edit: 'admin.recentAvalanches.title.edit',
     main: 'admin.recentAvalanches.title.list',
   },
+  'weather-stations': { main: 'admin.weatherStations.title' },
 }
 
 export const usePageTitle = (pathname: string): string => {
@@ -40,6 +35,8 @@ export const usePageTitle = (pathname: string): string => {
   const regionId = searchParams.get('regionId') as RegionId | null
   const regionSuffix = regionId ? `— ${t(`regions.names.${regionId}`)}` : ''
 
+  // /admin itself is the overview
+  if (!segments[1]) return t('admin.dashboard.title')
   if (!config) return t('admin.title')
 
   const last = segments.at(-1)

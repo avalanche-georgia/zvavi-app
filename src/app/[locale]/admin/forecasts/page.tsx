@@ -1,5 +1,4 @@
-import { Suspense } from 'react'
-import { Spinner } from '@components/ui'
+import AdminPageBoundary from '@components/features/admin/shared/AdminPageBoundary'
 import fetchActiveRegions from '@data/queries/fetchActiveRegions'
 
 import ForecastsContainer from './ForecastsContainer'
@@ -8,9 +7,9 @@ const ForecastsPage = async () => {
   const initialRegions = await fetchActiveRegions()
 
   return (
-    <Suspense fallback={<Spinner size="lg" />}>
+    <AdminPageBoundary>
       <ForecastsContainer initialRegions={initialRegions} />
-    </Suspense>
+    </AdminPageBoundary>
   )
 }
 

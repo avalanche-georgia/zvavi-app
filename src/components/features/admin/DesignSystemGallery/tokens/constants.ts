@@ -27,6 +27,7 @@ export const colorSwatchClasses: Record<string, string> = {
   'primary-soft': 'bg-primary-soft',
   rule: 'bg-rule',
   'rule-strong': 'bg-rule-strong',
+  scrim: 'bg-scrim',
   success: 'bg-success',
   'success-soft': 'bg-success-soft',
   surface: 'bg-surface',
@@ -39,7 +40,7 @@ export const colorSwatchClasses: Record<string, string> = {
 export const colorGroups: ColorGroup[] = [
   { title: 'Text', tokens: ['ink', 'body', 'muted', 'placeholder', 'disabled'] },
   { title: 'Lines', tokens: ['rule', 'rule-strong'] },
-  { title: 'Surfaces', tokens: ['surface', 'canvas', 'tile', 'tile-hover', 'off', 'map'] },
+  { title: 'Surfaces', tokens: ['surface', 'canvas', 'tile', 'tile-hover', 'off', 'map', 'scrim'] },
   {
     title: 'Brand',
     tokens: ['primary', 'primary-hover', 'primary-soft', 'primary-ink', 'brand-blue'],

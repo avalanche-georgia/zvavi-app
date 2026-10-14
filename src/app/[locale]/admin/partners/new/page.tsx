@@ -1,28 +1,14 @@
-'use client'
-
-import { getInitialFormData, PartnerForm } from '@components/features/admin/Partners/PartnerForm'
-import { useRouter } from 'src/i18n/navigation'
+import { redirect } from 'src/i18n/navigation'
 
 import { routes } from '@/routes'
 
-const NewPartnerPage = () => {
-  const router = useRouter()
+type NewPartnerPageProps = { params: Promise<{ locale: string }> }
 
-  const handleCancel = () => {
-    router.push(routes.admin.partners.root)
-  }
+// Adding a partner happens in a sheet over the list — old links land there
+const NewPartnerPage = async ({ params }: NewPartnerPageProps) => {
+  const { locale } = await params
 
-  const handleSuccess = () => {
-    router.push(routes.admin.partners.root)
-  }
-
-  return (
-    <PartnerForm
-      initialFormData={getInitialFormData(null)}
-      onCancel={handleCancel}
-      onSuccess={handleSuccess}
-    />
-  )
+  redirect({ href: routes.admin.partners.create, locale })
 }
 
 export default NewPartnerPage

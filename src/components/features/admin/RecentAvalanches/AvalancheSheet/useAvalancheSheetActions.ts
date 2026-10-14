@@ -3,7 +3,7 @@ import { defaultRegionId } from '@domain/constants'
 
 import type { AvalancheSheetConfirm, AvalancheSheetMode, AvalancheSheetNavigation } from './types'
 import useCloseOnStatusChange from './useCloseOnStatusChange'
-import { useAvalancheDeleteDialog } from '../hooks'
+import { useAvalancheDelete } from '../hooks'
 
 type UseAvalancheSheetActionsParams = {
   avalanche: AvalancheListItem | null
@@ -53,7 +53,7 @@ const useAvalancheSheetActions = ({
     leave()
   }
 
-  const { handleDelete, isDeleting } = useAvalancheDeleteDialog({
+  const { handleDelete, isDeleting } = useAvalancheDelete({
     id: avalanche?.id ?? 0,
     onSuccess: handleDeleted,
     regionId: avalanche?.regionId ?? defaultRegionId,

@@ -2,33 +2,30 @@
 
 import { useRef, useState } from 'react'
 import { useDiceBearAvatar, useToast } from '@components/hooks'
-import { Icon } from '@components/icons'
-import { Button } from '@components/ui'
 import { useAvatarUpload } from '@data/hooks/userProfiles'
 import type { UserProfile } from '@domain/types'
-import { LoaderIcon } from 'lucide-react'
+import { Button } from '@ds/primitives'
+import { LoaderIcon, Upload } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
-type AvatarUploadProps = {
-  profile: UserProfile
-}
+import { cn } from '@/lib/utils'
 
-const AvatarUpload = ({ profile }: AvatarUploadProps) => {
+const acceptedTypes = 'image/jpeg,image/png,image/webp'
+
+// The profile photo with its own upload: it saves at once, apart from the form
+const AvatarUpload = ({ profile }: { profile: UserProfile }) => {
   const t = useTranslations()
   const { toastError, toastSuccess } = useToast()
   const { isUploading, upload } = useAvatarUpload()
   const inputRef = useRef<HTMLInputElement>(null)
-
   const { avatarUrl, fullName, id } = profile
-
   const diceBearSrc = useDiceBearAvatar(id)
-  const avatarSrc = avatarUrl ?? diceBearSrc
-
   const [isImageLoading, setIsImageLoading] = useState(true)
   const isLoading = isUploading || isImageLoading
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
+    const input = event.target
+    const file = input.files?.[0]
 
     if (!file) return
 
@@ -36,13 +33,10 @@ const AvatarUpload = ({ profile }: AvatarUploadProps) => {
 
     const result = await upload(id, file, avatarUrl)
 
-    event.target.value = ''
+    // The same file can be picked again after an error
+    input.value = ''
 
-    if (!result.error) {
-      toastSuccess(t('admin.profile.messages.avatarUpdated'))
-
-      return
-    }
+    if (!result.error) return void toastSuccess(t('admin.profile.messages.avatarUpdated'))
 
     toastError('AvatarUpload | handleFileChange', {
       error: result.error,
@@ -51,45 +45,47 @@ const AvatarUpload = ({ profile }: AvatarUploadProps) => {
     setIsImageLoading(false)
   }
 
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
-    const img = e.currentTarget as HTMLImageElement
-
-    img.src = diceBearSrc
+  // A broken photo falls back to the generated avatar
+  const handleImageError = ({ currentTarget }: React.SyntheticEvent<HTMLImageElement>) => {
+    currentTarget.src = diceBearSrc
     setIsImageLoading(false)
   }
 
   return (
-    <div className="flex flex-col items-center gap-4">
-      <div className="relative size-34 overflow-hidden rounded-2xl bg-gray-100">
+    <div className="flex shrink-0 flex-col items-center gap-3">
+      <div className="rounded-card bg-tile relative size-34 overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          alt={fullName}
-          className={isLoading ? 'invisible size-full object-cover' : 'size-full object-cover'}
+          alt={fullName ?? ''}
+          className={cn('size-full object-cover', isLoading && 'invisible')}
           onError={handleImageError}
           onLoad={() => setIsImageLoading(false)}
-          src={avatarSrc}
+          src={avatarUrl ?? diceBearSrc}
         />
         {isLoading && (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <LoaderIcon className="text-primary size-5 animate-spin" />
+          <div className="absolute inset-0 grid place-items-center">
+            <LoaderIcon aria-hidden className="text-muted size-5 animate-spin" />
           </div>
         )}
       </div>
 
-      <Button disabled={isLoading} onClick={() => inputRef.current?.click()} variant="outline">
-        <Icon icon="upload" size="sm" />
-        {avatarUrl
-          ? t('admin.profile.form.actions.avatarReplace')
-          : t('admin.profile.form.actions.avatarUpload')}
+      <Button
+        disabled={isLoading}
+        onClick={() => inputRef.current?.click()}
+        size="sm"
+        variant="secondary"
+      >
+        <Upload aria-hidden className="size-4" />
+        {t(`admin.profile.form.actions.${avatarUrl ? 'avatarReplace' : 'avatarUpload'}`)}
       </Button>
-
-      <p className="text-xs text-gray-500">{t('admin.profile.form.hints.avatar')}</p>
+      <p className="text-caption text-muted">{t('admin.profile.form.hints.avatar')}</p>
 
       <input
         ref={inputRef}
-        accept="image/jpeg,image/png,image/webp"
+        accept={acceptedTypes}
         className="hidden"
         onChange={handleFileChange}
+        tabIndex={-1}
         type="file"
       />
     </div>

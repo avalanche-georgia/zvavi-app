@@ -1,9 +1,8 @@
+import { LinkPendingIndicator, useListDates } from '@components/features/admin/shared'
 import { hazardLevelNamesByScale } from '@domain/constants'
 import type { Forecast } from '@domain/types'
 import { useTranslations } from 'next-intl'
 import { Link } from 'src/i18n/navigation'
-
-import { LinkPendingIndicator, useListDates } from '../../shared'
 
 import { cn } from '@/lib/utils'
 import { routes } from '@/routes'

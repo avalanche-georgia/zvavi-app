@@ -1,9 +1,9 @@
 'use client'
 
 import { AvalancheViewPage } from '@components/features/admin/RecentAvalanches'
+import { Loading, RecordNotFound } from '@components/features/admin/shared'
+import { AdminPageBody } from '@components/layout/admin'
 import { LoadError } from '@components/shared'
-import { ButtonLink } from '@components/shared'
-import { Spinner } from '@components/ui'
 import { useRecentAvalancheQuery } from '@data/hooks/recentAvalanches'
 import { useParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
@@ -25,40 +25,26 @@ const RecentAvalancheViewPage = () => {
   } = useRecentAvalancheQuery({ enabled: isValidId, id })
 
   if (isValidId && isPending) {
-    return (
-      <div className="relative flex h-full items-center justify-center py-12">
-        <Spinner size="lg" />
-      </div>
-    )
+    return <Loading isPage />
   }
 
-  if (isValidId && isError) {
-    return (
-      <div className="p-4 md:p-6">
-        <div className="rounded-lg bg-white shadow-sm">
-          <LoadError onRetry={refetch} />
-        </div>
-      </div>
-    )
-  }
-
-  if (!isValidId || !avalanche) {
-    return (
-      <div className="p-4 md:p-6">
-        <div className="flex flex-col items-center gap-4 rounded-lg bg-white py-16 text-center shadow-sm">
-          <p className="text-gray-500">{t('admin.recentAvalanches.notFound')}</p>
-          <ButtonLink href={routes.admin.recentAvalanches.root}>
-            {t('common.actions.backToList')}
-          </ButtonLink>
-        </div>
-      </div>
-    )
-  }
+  const handleRetry = () => void refetch()
 
   return (
-    <div className="p-4 md:p-6">
-      <AvalancheViewPage avalanche={avalanche} />
-    </div>
+    <AdminPageBody className="max-w-2xl">
+      {isError && !avalanche && (
+        <div className="rounded-card border-rule bg-surface border">
+          <LoadError onRetry={handleRetry} />
+        </div>
+      )}
+      {!isError && !avalanche && (
+        <RecordNotFound
+          backHref={routes.admin.recentAvalanches.root}
+          message={t('admin.recentAvalanches.notFound')}
+        />
+      )}
+      {avalanche && <AvalancheViewPage avalanche={avalanche} />}
+    </AdminPageBody>
   )
 }
 

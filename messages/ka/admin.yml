@@ -44,34 +44,56 @@ admin:
     openMenu: 'მენიუს გახსნა'
     closeMenu: 'მენიუს დახურვა'
 
+  shared:
+    actions:
+      more: 'სხვა მოქმედებები'
+    list:
+      clearFilters: 'ფილტრების გასუფთავება'
+    sheet:
+      discard: გაუქმება
+      discardConfirm: გავაუქმოთ შეუნახავი ცვლილებები?
+      keepEditing: რედაქტირების გაგრძელება
+
   members:
     title:
       create: 'წევრის დამატება'
-      edit: 'წევრის რედაქტირება'
     notFound: 'წევრი ვერ მოიძებნა.'
     list:
+      ariaLabel: 'წევრები'
       columns:
         actions: 'მოქმედებები'
+        createdAt: 'რეგისტრაცია'
         expiresAt: 'ვადა'
         joinedAt: 'გაწევრიანება'
         memberId: 'წევრის ID'
-        name: 'სახელი'
+        name: 'წევრი'
         status: 'სტატუსი'
-      noMembers: 'წევრები ვერ მოიძებნა.'
+      expiredOn: 'ვადა გაუვიდა {date}'
+      expiresOn: 'ვადა {date}'
+      overdue: 'დასრულდა'
+    empty:
+      noMembersTitle: 'წევრები ჯერ არ არის'
+      noMembersHint: 'პირველის დასამატებლად გამოიყენეთ ზემოთ „წევრის დამატება“.'
+      noMatchesTitle: 'ვერაფერი მოიძებნა'
+      noMatchesHint: 'სცადეთ სხვა სტატუსი ან ძიება.'
     filters:
-      allStatuses: 'ყველა სტატუსი'
-      searchPlaceholder: 'ძიება სახელით, ID-ით ან ელფოსტით...'
+      all: 'ყველა'
+      searchLabel: 'წევრების ძიება'
+      searchPlaceholder: 'ძიება სახელით, ID-ით ან ელფოსტით'
+      statusLabel: 'სტატუსი'
     actions:
       approve: 'დამტკიცება'
-      delete: 'წაშლა'
-      edit: 'რედაქტირება'
-    approveModal:
-      title: 'წევრის დამტკიცება'
-      description: 'დაამტკიცეთ {name} აქტიურ წევრად შემდეგი თარიღებით:'
-    deleteMemberModal:
-      title: 'წავშალოთ წევრი?'
-      description: 'გსურთ სამუდამოდ წაშალოთ {name}?'
+      approveMember: 'დამტკიცება — {name}'
+      copyLink: 'გადამოწმების ბმულის კოპირება'
+      moreForMember: 'სხვა მოქმედებები — {name}'
+    approve:
+      title: 'წევრობის დამტკიცება'
+      description: '{name} გახდება აქტიური წევრი ამ თარიღებით. თუ ელფოსტა მითითებულია, მიიღებს დადასტურებას გადამოწმების ბმულით.'
+    deleteConfirm: 'წავშალოთ {name} სამუდამოდ? მისი QR კოდი აღარ იმუშავებს.'
     form:
+      sections:
+        membership: 'წევრობა'
+        person: 'პიროვნება'
       labels:
         email: 'ელფოსტა'
         expiresAt: 'ვადა'
@@ -84,20 +106,22 @@ admin:
         status: 'სტატუსი'
       placeholders:
         expiresAt: 'უვადო'
-        memberId: 'დატოვეთ ცარიელი ავტომატური გენერაციისთვის'
+        memberId: 'ავტომატურად'
         notes: 'შიდა შენიშვნები (წევრს არ ჩანს)'
+      hints:
+        expiresAt: 'უვადო წევრობისთვის დატოვეთ ცარიელი.'
+        notes: 'მხოლოდ გუნდისთვის'
     qrCode:
       title: 'წევრის QR კოდი'
       description: 'ეს QR კოდი შეიძლება დაიბეჭდოს საწევრო ბარათზე. სკანირებისას ნაჩვენები იქნება გადამოწმების გვერდი.'
       download: 'QR კოდის ჩამოტვირთვა'
-      copyUrl: 'ბმულის კოპირება'
-      successTitle: 'წევრი დაემატა'
-      successDescription: 'QR კოდი მზადაა {name}-სთვის'
-      done: 'დახურვა'
+      linkLabel: 'გადამოწმების ბმული'
     messages:
+      approvalEmailFailed: 'დადასტურების წერილი ვერ გაიგზავნა. გაუზიარეთ წევრს ვერიფიკაციის ბმული მისი ბარათიდან.'
       approved: 'წევრი წარმატებით დამტკიცდა.'
       created: 'წევრი წარმატებით დაემატა.'
       deleted: 'წევრი წარმატებით წაიშალა.'
+      linkCopied: 'გადამოწმების ბმული დაკოპირდა.'
       updated: 'წევრი წარმატებით განახლდა.'
     statuses:
       active: 'აქტიური'
@@ -108,31 +132,45 @@ admin:
     view:
       registeredAt: 'რეგისტრაცია'
       noEmail: 'ელფოსტა არ არის'
-      noPhone: 'ტელეფონი არ არის'
-      noNotes: 'შენიშვნები არ არის'
 
   partners:
     title:
       create: 'პარტნიორის დამატება'
-      edit: 'პარტნიორის რედაქტირება'
-    notFound: 'პარტნიორი ვერ მოიძებნა.'
     list:
+      ariaLabel: 'პარტნიორები'
       columns:
         actions: 'მოქმედებები'
-        name: 'სახელი'
+        name: 'პარტნიორი'
         benefit: 'შეღავათი'
         tier: 'დონე'
         status: 'სტატუსი'
-      noPartners: 'პარტნიორები ვერ მოიძებნა.'
+      tierLine: 'დონე {tier} · {level}'
+    empty:
+      noPartnersTitle: 'პარტნიორები ჯერ არ არის'
+      noPartnersHint: 'პირველის დასამატებლად გამოიყენეთ ზემოთ „პარტნიორის დამატება“.'
+      noMatchesTitle: 'ვერაფერი მოიძებნა'
+      noMatchesHint: 'სცადეთ სხვა სტატუსი ან ძიება.'
     filters:
-      searchPlaceholder: 'ძიება სახელით...'
+      searchLabel: 'პარტნიორების ძიება'
+      searchPlaceholder: 'ძიება სახელით'
+      status:
+        label: 'სტატუსი'
+        all: 'ყველა'
+        active: 'აქტიური'
+        inactive: 'არააქტიური'
+    statuses:
+      active: 'აქტიური'
+      inactive: 'არააქტიური'
     actions:
-      delete: 'წაშლა'
-      edit: 'რედაქტირება'
-    deleteModal:
-      title: 'წავშალოთ პარტნიორი?'
-      description: 'გსურთ სამუდამოდ წაშალოთ {name}?'
+      moreForPartner: 'სხვა მოქმედებები — {name}'
+      openWebsite: 'ვებსაიტის გახსნა'
+    deleteConfirm: 'წავშალოთ {name} სამუდამოდ? ის გაქრება პარტნიორების საჯარო სიიდან.'
     form:
+      optional: 'სურვილისამებრ'
+      sections:
+        benefit: 'შეღავათი წევრებისთვის'
+        description: 'აღწერა'
+        partner: 'პარტნიორი'
       labels:
         nameEn: 'სახელი (EN)'
         nameKa: 'სახელი (KA)'
@@ -145,14 +183,9 @@ admin:
         tier: 'დონე'
         isActive: 'აქტიური'
       placeholders:
-        nameKa: 'სურვილისამებრ'
-        benefitEn: 'სურვილისამებრ'
-        benefitKa: 'სურვილისამებრ'
-        descriptionEn: 'სურვილისამებრ'
-        descriptionKa: 'სურვილისამებრ'
-        tier: 'აირჩიეთ დონე'
         websiteUrl: 'https://example.com'
       hints:
+        isActive: 'აქტიური პარტნიორები ჩანს საჯარო საიტზე.'
         logo: 'PNG, JPG, WebP ან SVG · მაქს. 512 KB'
       actions:
         logoUpload: 'ლოგოს ატვირთვა'
@@ -210,7 +243,6 @@ admin:
       noForecastsHint: 'სეზონის დასაწყებად გამოიყენეთ ზემოთ „პროგნოზის შექმნა“.'
       noMatchesTitle: 'ვერაფერი მოიძებნა'
       noMatchesHint: 'სცადეთ სხვა სტატუსი, პერიოდი ან ძიება.'
-      clearFilters: 'ფილტრების გასუფთავება'
     current:
       eyebrow: 'მიმდინარე პროგნოზი'
       eyebrowExpired: 'მიმდინარე პროგნოზი · ვადაგასული'
@@ -226,7 +258,6 @@ admin:
     actions:
       copyLink: 'ბმულის კოპირება'
       duplicate: 'დუბლირება'
-      more: 'სხვა მოქმედებები'
       moreForForecast: 'სხვა მოქმედებები — პროგნოზი #{id}'
       openPublicPage: 'საჯარო გვერდის გახსნა'
       publish: 'გამოქვეყნება'
@@ -295,6 +326,7 @@ admin:
 
   profile:
     title: 'ჩემი პროფილი'
+    details: 'პირადი მონაცემები'
 
     form:
       labels:
@@ -552,33 +584,42 @@ admin:
     notFound: ზვავი ვერ მოიძებნა.
 
     list:
+      ariaLabel:
+        catalog: 'ბოლო ზვავები — {region}'
+        queue: 'განსახილველი დაკვირვებები — {region}'
+      linked: 'დაკავშირებულია {count} პროგნოზთან'
+      unlinked: არ არის დაკავშირებული პროგნოზთან
       columns:
         actions: მოქმედებები
-        date: თარიღი
+        date: მოხდა
         size: ზომა
         source: წყარო
         status: სტატუსი
+        submitted: გამოგზავნილია
         submitter: ავტორი
-        type: სახეობა
-      empty: ზვავის ჩანაწერები არ მოიძებნა.
-      total: "ნაჩვენებია: {shown} / {total}"
+        type: ზვავი
+
+    empty:
+      emptyTitle: 'ზვავები ჯერ არ არის — {region}'
+      emptyHint: პირველის დასამატებლად გამოიყენეთ ზემოთ „შექმენით ზვავი“.
+      noMatchesTitle: ვერაფერი მოიძებნა
+      noMatchesHint: სცადეთ სხვა პერიოდი ან ფილტრი.
 
     filters:
       all: ყველა
       allStatuses: ყველა სტატუსი
-      reset: ფილტრების გადატვირთვა
+      unlinked:
+        label: დაუკავშირებელი
+        about: ფილტრის შესახებ
+        hint: მხოლოდ ზვავები, რომლებიც ჯერ არცერთ პროგნოზს არ უკავშირდება
       dateMode:
-        created: შექმნის თარიღი
-        occurred: მოვლენის თარიღი
-      placeholder: აირჩიეთ თარიღის დიაპაზონი
-
-    pagination:
-      page: "გვ. {current} / {total}"
+        label: თარიღით გაფილტვრა
+        created: დაემატა
+        occurred: მოხდა
 
     actions:
       approve: დადასტურება
-      deleteDescription: ეს ჩანაწერი სამუდამოდ წაიშლება.
-      deleteTitle: ზვავის წაშლა
+      moreForRecord: 'სხვა მოქმედებები — {id}'
       publish: გამოქვეყნება
       unpublish: გამოქვეყნების გაუქმება
 
@@ -617,36 +658,38 @@ admin:
 
     sheet:
       deleteConfirm: წავშალოთ ჩანაწერი სამუდამოდ?
-      discard: გაუქმება
-      discardConfirm: გავაუქმოთ შეუნახავი ცვლილებები?
-      keepEditing: რედაქტირების გაგრძელება
       next: შემდეგი ჩანაწერი
       position: '{current} / {total}'
       previous: წინა ჩანაწერი
 
   observations:
     queue:
-      columns:
-        submitted: გამოგზავნილია
-      empty: განსახილველი არაფერია — ახალი დაკვირვებები აქ გამოჩნდება.
+      emptyTitle: 'განსახილველი არაფერია — {region}'
+      emptyHint: ახალი საჯარო შეტყობინებები აქ გამოჩნდება.
 
   weatherStations:
     title: 'ამინდის სადგურები'
-    new: 'ახალი სადგური'
-    noStations: 'ამინდის სადგურები არ მოიძებნა.'
+    new: 'სადგურის დამატება'
+    orderHint: 'სადგურები საჯარო გვერდზე ამ თანმიმდევრობით ჩანს. გადასაადგილებლად გადაათრიეთ სტრიქონი.'
     dragToReorder: 'გადაადგილება თანმიმდევრობის შესაცვლელად'
-    deleteModal:
-      title: 'სადგურის წაშლა?'
-      description: 'გსურთ {name} სამუდამოდ წაშლა?'
+    dragStation: 'გადაადგილება — {name}'
+    moreForStation: 'სხვა მოქმედებები — {name}'
+    openStation: 'სადგურის გვერდის გახსნა'
+    deleteConfirm: 'წავშალოთ {name} სამუდამოდ? ის გაქრება ამინდის სადგურების საჯარო გვერდიდან.'
+    empty:
+      title: 'ამინდის სადგურები ჯერ არ არის'
+      hint: 'პირველის დასამატებლად გამოიყენეთ ზემოთ „სადგურის დამატება“.'
     form:
-      title:
-        create: 'სადგურის დამატება'
-        edit: 'სადგურის რედაქტირება'
+      section: 'სადგური'
+      optional: 'სურვილისამებრ'
+      altitudeUnit: 'მ'
       labels:
-        altitude: 'სიმაღლე (მ)'
+        altitude: 'სიმაღლე'
         nameEn: 'დასახელება (EN)'
         nameKa: 'დასახელება (KA)'
         url: 'URL'
+      hints:
+        url: 'გვერდი სადგურის მიმდინარე მონაცემებით; საჯარო სია მასზე მიუთითებს.'
       messages:
         created: 'სადგური წარმატებით დაემატა.'
         deleted: 'სადგური წარმატებით წაიშალა.'

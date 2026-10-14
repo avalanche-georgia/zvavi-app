@@ -1,13 +1,12 @@
+import { StatusPill, type StatusPillTone } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 
 import type { ForecastListStatus } from './listStatus'
 
-import { cn } from '@/lib/utils'
-
-const statusClasses: Record<ForecastListStatus, string> = {
-  current: 'bg-success-soft text-success',
-  draft: 'bg-warning-soft text-warning',
-  published: 'bg-tile text-muted',
+const statusTones: Record<ForecastListStatus, StatusPillTone> = {
+  current: 'success',
+  draft: 'warning',
+  published: 'neutral',
 }
 
 type StatusBadgeProps = {
@@ -18,22 +17,16 @@ type StatusBadgeProps = {
 
 const StatusBadge = ({ isExpired = false, status }: StatusBadgeProps) => {
   const t = useTranslations()
-  const isExpiredCurrent = status === 'current' && isExpired
+  const isCurrent = status === 'current'
+
+  if (isCurrent && isExpired) {
+    return <StatusPill>{t('admin.forecasts.view.statuses.expired')}</StatusPill>
+  }
 
   return (
-    <span
-      className={cn(
-        'text-caption inline-flex items-center gap-1.5 rounded-md px-2 py-0.75 font-semibold whitespace-nowrap',
-        isExpiredCurrent ? 'bg-tile text-muted' : statusClasses[status],
-      )}
-    >
-      {status === 'current' && !isExpired && (
-        <span aria-hidden className="bg-success ring-success/20 size-1.5 rounded-full ring-3" />
-      )}
-      {isExpiredCurrent
-        ? t('admin.forecasts.view.statuses.expired')
-        : t(`admin.forecasts.statuses.${status}`)}
-    </span>
+    <StatusPill tone={statusTones[status]} withDot={isCurrent}>
+      {t(`admin.forecasts.statuses.${status}`)}
+    </StatusPill>
   )
 }
 

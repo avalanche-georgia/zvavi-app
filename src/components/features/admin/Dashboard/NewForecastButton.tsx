@@ -1,56 +1,49 @@
 'use client'
 
-import { Icon } from '@components/icons'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@components/ui/DropdownMenu/DropdownMenu'
 import type { Region } from '@domain/types'
+import { Menu, MenuItem } from '@ds/primitives'
+import { ChevronDown, Plus } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-import { Link } from 'src/i18n/navigation'
+import { Link, useRouter } from 'src/i18n/navigation'
 
-import { actionBaseClass } from './QuickActions'
+import { primaryActionClasses } from './actionClasses'
 
-import { cn } from '@/lib/utils'
 import { routes } from '@/routes'
 
+// A forecast belongs to a region: with several, a menu asks which one
 const NewForecastButton = ({ regions }: { regions: Region[] }) => {
   const t = useTranslations()
-
-  const buttonClass = cn(
-    actionBaseClass,
-    'border-orange-200 bg-orange-50 text-orange-700 hover:bg-orange-100',
-  )
+  const router = useRouter()
+  const label = t('admin.dashboard.actions.newForecast')
 
   if (regions.length === 1) {
     return (
-      <Link className={buttonClass} href={routes.admin.forecasts.newInRegion(regions[0].id)}>
-        <Icon icon="plus" size="sm" />
-        {t('admin.dashboard.actions.newForecast')}
+      <Link
+        className={primaryActionClasses}
+        href={routes.admin.forecasts.newInRegion(regions[0].id)}
+      >
+        <Plus aria-hidden />
+        {label}
       </Link>
     )
   }
 
+  const trigger = (
+    <button className={primaryActionClasses} type="button">
+      <Plus aria-hidden />
+      {label}
+      <ChevronDown aria-hidden className="ml-auto" />
+    </button>
+  )
+
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger className={buttonClass}>
-        <Icon icon="plus" size="sm" />
-        {t('admin.dashboard.actions.newForecast')}
-        <Icon icon="chevronDown" size="sm" />
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="start">
-        {regions.map((region) => (
-          <DropdownMenuItem
-            key={region.id}
-            render={<Link href={routes.admin.forecasts.newInRegion(region.id)} />}
-          >
-            {t(`regions.names.${region.id}`)}
-          </DropdownMenuItem>
-        ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <Menu trigger={trigger}>
+      {regions.map(({ id }) => (
+        <MenuItem key={id} onClick={() => router.push(routes.admin.forecasts.newInRegion(id))}>
+          {t(`regions.names.${id}`)}
+        </MenuItem>
+      ))}
+    </Menu>
   )
 }
 

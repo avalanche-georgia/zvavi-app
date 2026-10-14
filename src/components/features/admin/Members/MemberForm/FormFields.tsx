@@ -1,121 +1,101 @@
 'use client'
 
-/* eslint-disable react/jsx-props-no-spreading, max-lines */
-
-import { DatePicker, InputBlock, Select, Textarea, TextInput, toOptions } from '@components/ui'
-import { memberStatuses } from '@domain/constants'
-import type { MemberFormData, MemberStatus } from '@domain/types'
-import { startOfDay } from 'date-fns'
+import { useEffect } from 'react'
+import { memberStatuses, serverDateFormat } from '@domain/constants'
+import type { MemberFormData } from '@domain/types'
+import { FormDateField, FormSelect, FormTextarea, FormTextField } from '@ds/form'
+import { FormCard } from '@ds/patterns'
+import { format } from 'date-fns'
 import { useTranslations } from 'next-intl'
-import { Controller, useFormContext, useWatch } from 'react-hook-form'
+import { useFormContext, useWatch } from 'react-hook-form'
+
+const fieldGridClasses = 'grid gap-4 @sm:grid-cols-2'
 
 const FormFields = () => {
   const t = useTranslations()
-  const {
-    control,
-    formState: { errors },
-    register,
-    setValue,
-    trigger,
-  } = useFormContext<MemberFormData>()
-  const joinedAt = useWatch({ control, name: 'joinedAt' })
-  const statusOptions = toOptions(memberStatuses, (key) => t(`admin.members.statuses.${key}`))
-  const getError = (field: keyof MemberFormData) =>
-    errors[field] ? t(`common.validation.${errors[field]?.message}`) : undefined
-  const hasError = (field: keyof MemberFormData) => !!errors[field]
-  const today = startOfDay(new Date())
+  const { control, formState, trigger } = useFormContext<MemberFormData>()
+  const [joinedAt, expiresAt] = useWatch({ control, name: ['joinedAt', 'expiresAt'] })
+  const isExpiryEdited = !!formState.dirtyFields.expiresAt
 
-  const handleExpiresAtChange = (date: Date | null) => {
-    setValue('expiresAt', date, { shouldDirty: true, shouldTouch: true, shouldValidate: true })
-    void trigger('status')
-  }
+  const statusOptions = Object.values(memberStatuses).map((status) => ({
+    label: t(`admin.members.statuses.${status}`),
+    value: status,
+  }))
+
+  // An active member can't have a past expiry — the rule sits on the status field,
+  // so re-check it when the date changes
+  useEffect(() => {
+    if (isExpiryEdited) void trigger(['expiresAt', 'status'])
+  }, [expiresAt, isExpiryEdited, trigger])
 
   return (
     <>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
-        <InputBlock
-          error={getError('firstName')}
-          label={t('admin.members.form.labels.firstName')}
-          required
-        >
-          <TextInput {...register('firstName')} hasError={hasError('firstName')} />
-        </InputBlock>
-        <InputBlock
-          error={getError('lastName')}
-          label={t('admin.members.form.labels.lastName')}
-          required
-        >
-          <TextInput {...register('lastName')} hasError={hasError('lastName')} />
-        </InputBlock>
-        <InputBlock error={getError('email')} label={t('admin.members.form.labels.email')}>
-          <TextInput {...register('email')} hasError={hasError('email')} type="email" />
-        </InputBlock>
-        <InputBlock error={getError('phone')} label={t('admin.members.form.labels.phone')}>
-          <TextInput {...register('phone')} hasError={hasError('phone')} />
-        </InputBlock>
-        <InputBlock error={getError('memberId')} label={t('admin.members.form.labels.memberId')}>
-          <TextInput
-            {...register('memberId')}
-            hasError={hasError('memberId')}
+      <FormCard title={t('admin.members.form.sections.person')}>
+        <div className={fieldGridClasses}>
+          <FormTextField<MemberFormData>
+            autoComplete="off"
+            label={t('admin.members.form.labels.firstName')}
+            name="firstName"
+            required
+          />
+          <FormTextField<MemberFormData>
+            autoComplete="off"
+            label={t('admin.members.form.labels.lastName')}
+            name="lastName"
+            required
+          />
+          <FormTextField<MemberFormData>
+            autoComplete="off"
+            label={t('admin.members.form.labels.email')}
+            name="email"
+          />
+          <FormTextField<MemberFormData>
+            autoComplete="off"
+            label={t('admin.members.form.labels.phone')}
+            name="phone"
+          />
+        </div>
+      </FormCard>
+
+      <FormCard title={t('admin.members.form.sections.membership')}>
+        <div className={fieldGridClasses}>
+          <FormTextField<MemberFormData>
+            autoComplete="off"
+            label={t('admin.members.form.labels.memberId')}
+            name="memberId"
             placeholder={t('admin.members.form.placeholders.memberId')}
           />
-        </InputBlock>
-        <InputBlock error={getError('status')} label={t('admin.members.form.labels.status')}>
-          <Controller
-            control={control}
+          <FormSelect<MemberFormData, MemberFormData['status']>
+            label={t('admin.members.form.labels.status')}
             name="status"
-            render={({ field }) => (
-              <Select
-                hasError={hasError('status')}
-                onChange={(value) => field.onChange(value as MemberStatus)}
-                options={statusOptions}
-                value={field.value}
-              />
-            )}
+            options={statusOptions}
           />
-        </InputBlock>
-        <InputBlock
-          error={getError('joinedAt')}
-          label={t('admin.members.form.labels.joinedAt')}
-          required
-        >
-          <Controller
-            control={control}
+          <FormDateField<MemberFormData>
+            label={t('admin.members.form.labels.joinedAt')}
+            max={format(new Date(), serverDateFormat)}
             name="joinedAt"
-            render={({ field }) => (
-              <DatePicker
-                hasError={hasError('joinedAt')}
-                maxDate={today}
-                onChange={(date) => field.onChange(date)}
-                value={field.value}
-              />
-            )}
+            required
           />
-        </InputBlock>
-        <InputBlock error={getError('expiresAt')} label={t('admin.members.form.labels.expiresAt')}>
-          <Controller
-            control={control}
+          <FormDateField<MemberFormData>
+            description={t('admin.members.form.hints.expiresAt')}
+            label={t('admin.members.form.labels.expiresAt')}
+            min={joinedAt ? format(joinedAt, serverDateFormat) : undefined}
             name="expiresAt"
-            render={({ field }) => (
-              <DatePicker
-                hasError={hasError('expiresAt')}
-                isClearable
-                minDate={joinedAt ? startOfDay(joinedAt) : undefined}
-                onChange={handleExpiresAtChange}
-                placeholder={t('admin.members.form.placeholders.expiresAt')}
-                value={field.value}
-              />
-            )}
           />
-        </InputBlock>
-      </div>
-      <InputBlock error={getError('notes')} label={t('admin.members.form.labels.notes')}>
-        <Textarea
-          {...register('notes')}
+        </div>
+      </FormCard>
+
+      <FormCard
+        headerAside={t('admin.members.form.hints.notes')}
+        title={t('admin.members.form.labels.notes')}
+      >
+        <FormTextarea<MemberFormData>
+          isLabelHidden
+          label={t('admin.members.form.labels.notes')}
+          name="notes"
           placeholder={t('admin.members.form.placeholders.notes')}
-          rows={3}
         />
-      </InputBlock>
+      </FormCard>
     </>
   )
 }

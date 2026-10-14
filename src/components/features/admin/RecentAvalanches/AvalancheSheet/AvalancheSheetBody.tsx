@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
+import { Loading } from '@components/features/admin/shared'
 import { LoadError } from '@components/shared'
-import { Spinner } from '@components/ui'
 import type { AvalancheListItem } from '@data/hooks/recentAvalanches'
 import { useTranslations } from 'next-intl'
 
@@ -45,11 +45,7 @@ const AvalancheSheetBody = ({
   }, [shownId])
 
   if (isPending) {
-    return (
-      <div className="flex justify-center py-12">
-        <Spinner />
-      </div>
-    )
+    return <Loading />
   }
 
   // A failed load isn't "not found" — the record may well exist

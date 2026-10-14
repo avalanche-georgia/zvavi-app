@@ -44,34 +44,56 @@ admin:
     openMenu: 'Open menu'
     closeMenu: 'Close menu'
 
+  shared:
+    actions:
+      more: 'More actions'
+    list:
+      clearFilters: 'Clear filters'
+    sheet:
+      discard: Discard
+      discardConfirm: Discard unsaved changes?
+      keepEditing: Keep editing
+
   members:
     title:
       create: 'Add Member'
-      edit: 'Edit Member'
     notFound: 'Member not found.'
     list:
+      ariaLabel: 'Members'
       columns:
         actions: 'Actions'
+        createdAt: 'Registered'
         expiresAt: 'Expires'
         joinedAt: 'Joined'
         memberId: 'Member ID'
-        name: 'Name'
+        name: 'Member'
         status: 'Status'
-      noMembers: 'No members found.'
+      expiredOn: 'Expired {date}'
+      expiresOn: 'Expires {date}'
+      overdue: 'ended'
+    empty:
+      noMembersTitle: 'No members yet'
+      noMembersHint: 'Use Add Member above to add the first one.'
+      noMatchesTitle: 'Nothing matches'
+      noMatchesHint: 'Try another status or search.'
     filters:
-      allStatuses: 'All Statuses'
-      searchPlaceholder: 'Search by name, ID or email...'
+      all: 'All'
+      searchLabel: 'Search members'
+      searchPlaceholder: 'Search name, ID or email'
+      statusLabel: 'Status'
     actions:
       approve: 'Approve'
-      delete: 'Delete'
-      edit: 'Edit'
-    approveModal:
-      title: 'Approve Member'
-      description: 'Approve {name} as an active member with the following membership dates:'
-    deleteMemberModal:
-      title: 'Delete Member?'
-      description: 'Do you want to permanently delete {name}?'
+      approveMember: 'Approve {name}'
+      copyLink: 'Copy verification link'
+      moreForMember: 'More actions for {name}'
+    approve:
+      title: 'Approve membership'
+      description: '{name} becomes an active member with these membership dates. If they left an email, they get a confirmation with their verification link.'
+    deleteConfirm: 'Delete {name} permanently? Their QR code stops verifying.'
     form:
+      sections:
+        membership: 'Membership'
+        person: 'Person'
       labels:
         email: 'Email'
         expiresAt: 'Expires At'
@@ -84,20 +106,22 @@ admin:
         status: 'Status'
       placeholders:
         expiresAt: 'No expiration'
-        memberId: 'Leave empty to auto-generate'
+        memberId: 'Auto-generated'
         notes: 'Internal notes (not visible to member)'
+      hints:
+        expiresAt: 'Leave empty for no expiration.'
+        notes: 'Team only'
     qrCode:
       title: 'Member QR Code'
       description: 'This QR code can be printed on a member card. When scanned, it shows the verification page.'
       download: 'Download QR Code'
-      copyUrl: 'Copy URL'
-      successTitle: 'Member Created'
-      successDescription: 'QR code is ready for {name}'
-      done: 'Done'
+      linkLabel: 'Verification link'
     messages:
+      approvalEmailFailed: 'The confirmation email didn''t go out. Share the verification link from the member''s card instead.'
       approved: 'Member approved successfully.'
       created: 'Member created successfully.'
       deleted: 'Member deleted successfully.'
+      linkCopied: 'Verification link copied.'
       updated: 'Member updated successfully.'
     statuses:
       active: 'Active'
@@ -108,31 +132,45 @@ admin:
     view:
       registeredAt: 'Registered'
       noEmail: 'No email provided'
-      noPhone: 'No phone provided'
-      noNotes: 'No notes'
 
   partners:
     title:
       create: 'Add Partner'
-      edit: 'Edit Partner'
-    notFound: 'Partner not found.'
     list:
+      ariaLabel: 'Partners'
       columns:
         actions: 'Actions'
-        name: 'Name'
+        name: 'Partner'
         benefit: 'Benefit'
         tier: 'Tier'
         status: 'Status'
-      noPartners: 'No partners found.'
+      tierLine: 'Tier {tier} · {level}'
+    empty:
+      noPartnersTitle: 'No partners yet'
+      noPartnersHint: 'Use Add Partner above to add the first one.'
+      noMatchesTitle: 'Nothing matches'
+      noMatchesHint: 'Try another status or search.'
     filters:
-      searchPlaceholder: 'Search by name...'
+      searchLabel: 'Search partners'
+      searchPlaceholder: 'Search by name'
+      status:
+        label: 'Status'
+        all: 'All'
+        active: 'Active'
+        inactive: 'Inactive'
+    statuses:
+      active: 'Active'
+      inactive: 'Inactive'
     actions:
-      delete: 'Delete'
-      edit: 'Edit'
-    deleteModal:
-      title: 'Delete Partner?'
-      description: 'Do you want to permanently delete {name}?'
+      moreForPartner: 'More actions for {name}'
+      openWebsite: 'Open website'
+    deleteConfirm: 'Delete {name} permanently? It disappears from the public partners list.'
     form:
+      optional: 'Optional'
+      sections:
+        benefit: 'Member benefit'
+        description: 'Description'
+        partner: 'Partner'
       labels:
         nameEn: 'Name (EN)'
         nameKa: 'Name (KA)'
@@ -145,14 +183,9 @@ admin:
         tier: 'Tier'
         isActive: 'Active'
       placeholders:
-        nameKa: 'Optional'
-        benefitEn: 'Optional'
-        benefitKa: 'Optional'
-        descriptionEn: 'Optional'
-        descriptionKa: 'Optional'
-        tier: 'Select tier'
         websiteUrl: 'https://example.com'
       hints:
+        isActive: 'Active partners are shown on the public site.'
         logo: 'PNG, JPG, WebP or SVG · max 512 KB'
       actions:
         logoUpload: 'Upload logo'
@@ -210,7 +243,6 @@ admin:
       noForecastsHint: 'Use Create forecast above to start the season.'
       noMatchesTitle: 'Nothing matches'
       noMatchesHint: 'Try another status, date range or search.'
-      clearFilters: 'Clear filters'
     current:
       eyebrow: 'Current forecast'
       eyebrowExpired: 'Current forecast · expired'
@@ -226,7 +258,6 @@ admin:
     actions:
       copyLink: 'Copy link'
       duplicate: 'Duplicate'
-      more: 'More actions'
       moreForForecast: 'More actions for forecast #{id}'
       openPublicPage: 'Open public page'
       publish: 'Publish'
@@ -295,6 +326,7 @@ admin:
 
   profile:
     title: 'My Profile'
+    details: 'Personal details'
 
     form:
       labels:
@@ -552,33 +584,42 @@ admin:
     notFound: Avalanche not found.
 
     list:
+      ariaLabel:
+        catalog: 'Recent avalanches — {region}'
+        queue: 'Observations awaiting review — {region}'
+      linked: 'Linked to {count, plural, one {# forecast} other {# forecasts}}'
+      unlinked: Not linked to a forecast
       columns:
         actions: Actions
-        date: Date
+        date: Occurred
         size: Size
         source: Source
         status: Status
+        submitted: Submitted
         submitter: Submitter
-        type: Type
-      empty: No avalanches found.
-      total: 'Shown: {shown} of {total}'
+        type: Avalanche
+
+    empty:
+      emptyTitle: 'No avalanches for {region} yet'
+      emptyHint: Use Create Avalanche above to log the first one.
+      noMatchesTitle: Nothing matches
+      noMatchesHint: Try another date range or filter.
 
     filters:
       all: All
       allStatuses: All statuses
-      reset: Reset filters
+      unlinked:
+        label: Unlinked
+        about: About this filter
+        hint: Only avalanches no forecast links to yet
       dateMode:
-        created: Created at
-        occurred: Occurred at
-      placeholder: Select date range
-
-    pagination:
-      page: 'Page {current} of {total}'
+        label: Filter by date
+        created: Logged
+        occurred: Occurred
 
     actions:
       approve: Approve
-      deleteDescription: This avalanche record will be permanently deleted.
-      deleteTitle: Delete Avalanche
+      moreForRecord: 'More actions for {id}'
       publish: Publish
       unpublish: Unpublish
 
@@ -617,36 +658,38 @@ admin:
 
     sheet:
       deleteConfirm: Delete this record permanently?
-      discard: Discard
-      discardConfirm: Discard unsaved changes?
-      keepEditing: Keep editing
       next: Next record
       position: '{current} of {total}'
       previous: Previous record
 
   observations:
     queue:
-      columns:
-        submitted: Submitted
-      empty: Nothing waiting for review — new submissions will show up here.
+      emptyTitle: 'Nothing waiting for review in {region}'
+      emptyHint: New public reports will show up here.
 
   weatherStations:
     title: 'Weather Stations'
-    new: 'New Station'
-    noStations: 'No weather stations found.'
+    new: 'Add Station'
+    orderHint: 'Stations appear on the public page in this order. Drag a row to move it.'
     dragToReorder: 'Drag to reorder'
-    deleteModal:
-      title: 'Delete Station?'
-      description: 'Do you want to permanently delete {name}?'
+    dragStation: 'Reorder {name}'
+    moreForStation: 'More actions for {name}'
+    openStation: 'Open station page'
+    deleteConfirm: 'Delete {name} permanently? It disappears from the public weather stations page.'
+    empty:
+      title: 'No weather stations yet'
+      hint: 'Use Add Station above to add the first one.'
     form:
-      title:
-        create: 'Add Station'
-        edit: 'Edit Station'
+      section: 'Station'
+      optional: 'Optional'
+      altitudeUnit: 'm'
       labels:
-        altitude: 'Altitude (m)'
+        altitude: 'Altitude'
         nameEn: 'Name (EN)'
         nameKa: 'Name (KA)'
         url: 'URL'
+      hints:
+        url: 'The page with the station’s live data; the public list links to it.'
       messages:
         created: 'Station created successfully.'
         deleted: 'Station deleted successfully.'

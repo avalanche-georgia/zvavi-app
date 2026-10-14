@@ -1,6 +1,7 @@
+import { useListDates } from '@components/features/admin/shared'
 import type { AdminForecast } from '@domain/types'
 
-import { StatusBadge, useListDates } from '../../shared'
+import { StatusBadge } from '../../shared'
 import { type ForecastViewStatus, toListStatus } from '../model'
 
 type ViewTitleProps = {

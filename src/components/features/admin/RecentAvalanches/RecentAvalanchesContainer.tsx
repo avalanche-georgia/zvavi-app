@@ -1,34 +1,43 @@
 'use client'
 
-import { RegionTabs } from '@components/shared'
+import { ListLoadError, RegionTabBar, useCreateSheetParam } from '@components/features/admin/shared'
+import { AdminPageBody } from '@components/layout/admin'
 import { usePendingObservationsSummary } from '@data/hooks/recentAvalanches'
 import { defaultRegionId } from '@domain/constants'
 import type { Region, RegionId } from '@domain/types'
+import { Button } from '@ds/primitives'
+import { Plus } from 'lucide-react'
 import { useSearchParams } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
-import { AvalancheCreateSheet, useCreateSheetParam } from './AvalancheCreateSheet'
+import { AvalancheCreateSheet } from './AvalancheCreateSheet'
 import {
   AvalancheSheet,
   useAvalancheSelection,
   useAvalancheSheetNavigation,
 } from './AvalancheSheet'
-import ListToolbar from './ListToolbar'
-import { type AvalancheTableVariant, RecentAvalanchesTable } from './RecentAvalanchesTable'
-import useRecentAvalanchesPage from './useRecentAvalanchesPage'
+import {
+  type AvalanchesListVariant,
+  AvalanchesTable,
+  AvalanchesToolbar,
+  useAvalanchesListPage,
+} from './AvalanchesList'
 
 type RecentAvalanchesContainerProps = {
   initialRegions?: Region[]
-  variant: AvalancheTableVariant
+  variant: AvalanchesListVariant
 }
 
 // Catalog (Recent Avalanches) and moderation queue (Observations): same table,
 // records open in a side panel
 const RecentAvalanchesContainer = ({ initialRegions, variant }: RecentAvalanchesContainerProps) => {
+  const t = useTranslations()
   const searchParams = useSearchParams()
   const regionId = (searchParams.get('regionId') as RegionId) ?? defaultRegionId
   const isQueue = variant === 'queue'
 
-  const page = useRecentAvalanchesPage(variant)
+  const page = useAvalanchesListPage(variant, regionId)
+  const { query } = page
   const selection = useAvalancheSelection()
   const createSheet = useCreateSheetParam()
   const sheetNavigation = useAvalancheSheetNavigation({
@@ -39,33 +48,39 @@ const RecentAvalanchesContainer = ({ initialRegions, variant }: RecentAvalanches
   })
   const pendingSummary = usePendingObservationsSummary()
 
+  // A failed background refetch keeps the data on screen; the error block is for first loads
+  const isLoadFailed = query.isError && !query.data
+
+  const handleRetry = () => void query.refetch()
+
   return (
     <>
-      <div className="flex items-center border-b bg-white px-4 md:px-6">
-        <RegionTabs
-          counts={isQueue ? pendingSummary.byRegion : undefined}
-          currentRegionId={regionId}
-          initialRegions={initialRegions}
-        />
-      </div>
+      <RegionTabBar
+        counts={isQueue ? pendingSummary.byRegion : undefined}
+        initialRegions={initialRegions}
+        regionId={regionId}
+      >
+        {!isQueue && (
+          <Button onClick={createSheet.openCreate} size="sm">
+            <Plus aria-hidden className="size-4" />
+            {t('admin.recentAvalanches.title.create')}
+          </Button>
+        )}
+      </RegionTabBar>
 
-      <ListToolbar onCreate={createSheet.openCreate} page={page} variant={variant} />
-
-      <div className="p-4 md:p-6">
-        <RecentAvalanchesTable
-          avalanches={page.avalanches}
-          grandTotal={page.grandTotal}
-          isPending={page.isPending}
-          onAvalancheOpen={selection.openAvalanche}
-          paginationProps={{
-            currentPage: page.page,
-            onPageChange: page.onPageChange,
-            totalPages: page.totalPages,
-          }}
-          regionId={regionId}
-          variant={variant}
-        />
-      </div>
+      <AdminPageBody>
+        <AvalanchesToolbar page={page} variant={variant} />
+        {isLoadFailed ? (
+          <ListLoadError onRetry={handleRetry} />
+        ) : (
+          <AvalanchesTable
+            onAvalancheOpen={selection.openAvalanche}
+            page={page}
+            regionId={regionId}
+            variant={variant}
+          />
+        )}
+      </AdminPageBody>
 
       <AvalancheSheet
         id={selection.selectedId}

@@ -1,11 +1,10 @@
 'use client'
 
-import { ConfirmationDialog } from '@components/shared'
+import { useListDates } from '@components/features/admin/shared'
 import { hazardLevelNamesByScale, sortedElevationZones } from '@domain/constants'
 import type { ForecastListItem, HazardLevelScale, RegionId } from '@domain/types'
+import { ConfirmDialog } from '@ds/patterns'
 import { useTranslations } from 'next-intl'
-
-import useListDates from './useListDates'
 
 type PublishConfirmDialogProps = {
   forecast: Pick<ForecastListItem, 'hazardLevels' | 'id' | 'validUntil'>
@@ -27,44 +26,35 @@ const PublishConfirmDialog = ({
   const { formatDate, formatTime } = useListDates()
   const levelOf = (level: HazardLevelScale) => `${t(hazardLevelNamesByScale[level])} (${level})`
 
-  const handleClose = () => onOpenChange(false)
-
-  const handleConfirm = () => {
-    onOpenChange(false)
-    onConfirm()
-  }
-
-  const summary = (
-    <div className="flex flex-col gap-3">
-      <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1">
-        <dt className="text-muted">{t('admin.forecasts.publishConfirm.region')}</dt>
-        <dd>{t(`regions.names.${regionId}`)}</dd>
-        <dt className="text-muted">{t('admin.forecasts.publishConfirm.overall')}</dt>
-        <dd className="font-semibold">
-          {hazardLevels.overall ? levelOf(hazardLevels.overall) : '—'}
-        </dd>
-        {sortedElevationZones.map((zone) => (
-          <div key={zone} className="contents">
-            <dt className="text-muted">{t(`common.elevationZones.${zone}`)}</dt>
-            <dd>{levelOf(hazardLevels[zone])}</dd>
-          </div>
-        ))}
-        <dt className="text-muted">{t('admin.forecasts.publishConfirm.validUntil')}</dt>
-        <dd>{validUntil ? `${formatDate(validUntil)}, ${formatTime(validUntil)}` : '—'}</dd>
-      </dl>
-      <p>{t('admin.forecasts.publishConfirm.visibility')}</p>
-    </div>
-  )
-
   return (
-    <ConfirmationDialog
+    <ConfirmDialog
+      cancelLabel={t('common.actions.cancel')}
       confirmLabel={t('admin.forecasts.publishConfirm.confirm')}
-      description={summary}
       isOpen={isOpen}
-      onClose={handleClose}
-      onConfirm={handleConfirm}
+      onConfirm={onConfirm}
+      onOpenChange={onOpenChange}
       title={t('admin.forecasts.publishConfirm.title', { id })}
-    />
+    >
+      <div className="flex flex-col gap-3">
+        <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1">
+          <dt className="text-muted">{t('admin.forecasts.publishConfirm.region')}</dt>
+          <dd>{t(`regions.names.${regionId}`)}</dd>
+          <dt className="text-muted">{t('admin.forecasts.publishConfirm.overall')}</dt>
+          <dd className="font-semibold">
+            {hazardLevels.overall ? levelOf(hazardLevels.overall) : '—'}
+          </dd>
+          {sortedElevationZones.map((zone) => (
+            <div key={zone} className="contents">
+              <dt className="text-muted">{t(`common.elevationZones.${zone}`)}</dt>
+              <dd>{levelOf(hazardLevels[zone])}</dd>
+            </div>
+          ))}
+          <dt className="text-muted">{t('admin.forecasts.publishConfirm.validUntil')}</dt>
+          <dd>{validUntil ? `${formatDate(validUntil)}, ${formatTime(validUntil)}` : '—'}</dd>
+        </dl>
+        <p>{t('admin.forecasts.publishConfirm.visibility')}</p>
+      </div>
+    </ConfirmDialog>
   )
 }
 

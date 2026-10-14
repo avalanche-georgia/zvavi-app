@@ -4,7 +4,8 @@ import {
   ForecastForm,
   getInitialFormValues,
 } from '@components/features/admin/Forecasts/ForecastForm'
-import { Spinner } from '@components/ui'
+import { Loading, RecordNotFound } from '@components/features/admin/shared'
+import { AdminPageBody } from '@components/layout/admin'
 import { useAdminGetForecast } from '@data/hooks/forecasts'
 import { useParams, useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
@@ -16,9 +17,12 @@ const NotFound = () => {
   const t = useTranslations()
 
   return (
-    <div className="rounded-lg bg-white p-6 text-center shadow-sm">
-      <p className="text-gray-600">{t('admin.forecast.notFound')}</p>
-    </div>
+    <AdminPageBody className="max-w-2xl">
+      <RecordNotFound
+        backHref={routes.admin.forecasts.root}
+        message={t('admin.forecast.notFound')}
+      />
+    </AdminPageBody>
   )
 }
 
@@ -38,11 +42,7 @@ const EditForecastPage = () => {
   }
 
   if (isPending) {
-    return (
-      <div className="flex items-center justify-center py-12">
-        <Spinner />
-      </div>
-    )
+    return <Loading isPage />
   }
 
   if (!forecast) {

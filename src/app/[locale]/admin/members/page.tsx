@@ -1,12 +1,11 @@
-import { Suspense } from 'react'
-import { Spinner } from '@components/ui'
+import AdminPageBoundary from '@components/features/admin/shared/AdminPageBoundary'
 
 import MembersContainer from './MembersContainer'
 
 const MembersPage = () => (
-  <Suspense fallback={<Spinner size="lg" />}>
+  <AdminPageBoundary>
     <MembersContainer />
-  </Suspense>
+  </AdminPageBoundary>
 )
 
 export default MembersPage

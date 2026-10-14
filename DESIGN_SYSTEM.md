@@ -29,12 +29,18 @@ src/components/
 ├── ds/                  # new kit — the only place new generic UI goes
 │   ├── primitives/      # Button, Badge, Checkbox, Field, FieldGroup, TextField, NumberField,
 │   │                    # Textarea, ChipGroup, ToggleGrid, SegmentedControl, Select, Stepper, InfoTip,
-│   │                    # IconButton, RatingScale, DateField, Menu, Pagination, SearchField
-│   ├── patterns/        # FormCard, StickyActionBar, SuccessState, DataTable
+│   │                    # IconButton, RatingScale, DateField, Menu, Pagination, SearchField,
+│   │                    # StatusPill, CountBadge, Skeleton, Spinner, Dialog
+│   ├── patterns/        # FormCard, StickyActionBar, SuccessState, DataTable, LoadingState,
+│   │                    # ConfirmDialog
 │   └── form/            # react-hook-form bindings: FormTextField, FormTextarea, FormNumberField,
-│                        # FormStepper, FormChipGroup, FormCheckbox, FormSelect, useFormFieldError
+│                        # FormStepper, FormChipGroup, FormCheckbox, FormSelect, FormDateField,
+│                        # useFormFieldError
 ├── ui/                  # legacy kit — frozen, deleted piece by piece
 └── features/            # domain components, built from ds
+    └── admin/shared/    # admin-wide building blocks that need translations or routing, so they
+                         # can't live in ds: list toolbar pieces, URL list state, RecordMenu,
+                         # record / form sheets (URL selection, unsaved-input confirmation)
 ```
 
 - Import through the `@ds/*` alias.
@@ -198,7 +204,7 @@ Rules:
 | **2. Primitives for submit** | Button, Badge, Field / FieldGroup, TextField, NumberField, Textarea, ChipGroup, ToggleGrid, SegmentedControl, Stepper. Patterns FormCard, StickyActionBar, SuccessState. Form bindings. Gallery demos | ✅ |
 | **3. Submit page redesign** | `local/observations/design_handoff_submit_observation/` built on ds | ✅ |
 | **4. Rest of observations** | List toolbar, detail views, aspect/elevation picker moved to `features/` with a bare variant | ☐ |
-| **5. Legacy, by screen area** | Public pages (auth, forecasts, about) → admin forms → admin tables, modals and drawers | ☐ |
+| **5. Legacy, by screen area** | Public pages (auth, forecasts, about) → admin forms → admin tables, modals and drawers. Admin lists, forms and the overview are done; what's left in admin: `Sheet`, the vaul mobile menu drawer, and the shared `BrandedQRCode` / `SortableItem` / `FallbackImage` | ☐ |
 | **6. Cleanup** | Delete `ui/`. Remove `@headlessui/react`, `@radix-ui/*` and `clsx` | ☐ |
 
 ### Component tracker
@@ -209,33 +215,35 @@ Update this table when a legacy component's last consumer is migrated.
 |---|---|---|---|
 | Button (+ `shared/ButtonLink`) | Headless UI | `primitives/Button` | ☐ |
 | InputBlock | — | `primitives/Field` | ☐ |
-| TextInput, SearchInput | Headless UI | `primitives/TextField`, `primitives/SearchField` | ☐ |
+| TextInput | Headless UI | `primitives/TextField` | ☐ |
+| SearchInput | Headless UI | `primitives/SearchField` | ✅ |
 | Textarea | Headless UI | `primitives/Textarea` | ☐ |
-| NumberInput | base-ui | `primitives/Stepper` / `TextField` | ☐ |
+| NumberInput | base-ui | `primitives/Stepper` / `NumberField` | ✅ |
 | ChipGroup | base-ui | `primitives/ChipGroup` | ☐ |
 | SegmentedControl | base-ui | `primitives/SegmentedControl` | ☐ |
-| RadioGroup, RadioOption | Headless UI / base-ui | `primitives/RadioGroup` or `ToggleGrid` | ☐ |
+| RadioGroup | Headless UI | `primitives/SegmentedControl` | ✅ |
+| RadioOption | base-ui | `primitives/RadioGroup` or `ToggleGrid` | ☐ |
 | Checkbox | Headless UI | `primitives/Checkbox` | ☐ |
-| Switch | base-ui | `primitives/Switch` | ☐ |
+| Switch | base-ui | `primitives/Switch` | ✅ |
 | Select | Radix | `primitives/Select` (base-ui) | ☐ |
-| DatePicker, Calendar, TimeInput, TimePicker, DatePickerTimeInput | Headless UI + react-day-picker | `primitives/DateField` | ☐ |
-| Modal | Headless UI | `primitives/Dialog` (base-ui) | ☐ |
+| DatePicker, Calendar, TimeInput, DatePickerTimeInput | Headless UI + react-day-picker | `primitives/DateField` | ☐ |
+| TimePicker | Headless UI | `primitives/DateField` (`withTime`) | ✅ |
+| Modal (+ `shared/ConfirmationDialog`, removed) | Headless UI | `primitives/Dialog` (base-ui), `patterns/ConfirmDialog` | ☐ |
 | Popover | Radix | `primitives/Popover` (base-ui) | ☐ |
 | Tooltip, InfoIcon | Radix | `primitives/Tooltip` (base-ui Tooltip; hover/focus labels), `primitives/InfoTip` (base-ui Popover; explanations) | ☐ |
-| DropdownMenu | base-ui | `primitives/Menu` | ☐ |
+| DropdownMenu | base-ui | `primitives/Menu` | ✅ |
 | Drawer, Sheet | vaul / base-ui | `patterns/Sheet` (TBD) | ☐ |
 | IconButton | custom | `primitives/IconButton` | ☐ |
 | Alert | custom | — (last consumer removed with the forecast page redesign; add `patterns/Alert` when needed) | ✅ |
-| Spinner, Skeleton | custom | `primitives/Spinner`, `Skeleton` | ☐ |
-| Pagination, DataTable | custom | `primitives/Pagination`, `patterns/DataTable` | ☐ |
+| Spinner | custom | `primitives/Spinner`, `patterns/LoadingState` (admin migrated) | ☐ |
+| Skeleton | custom | `primitives/Skeleton` | ☐ |
+| Pagination, DataTable | custom | `primitives/Pagination`, `patterns/DataTable` | ✅ |
 | AspectElevationPicker | base-ui | moved to `features/observations/` | ✅ |
-| MiniCompass | custom | moves to `features/` | ☐ |
+| MiniCompass | custom | moved to `features/observations/` | ✅ |
 | AutoScrollList, BrandedQRCode, FallbackImage, SortableItem | custom | reviewed individually (may stay generic in ds) | ☐ |
 
 Non-kit Headless UI and Radix users also block Phase 6:
 - `shared/Spoiler`
-- `SetNewPasswordForm`
-- the auth login and forgot-password pages
 - `Header/NavMenu/DesktopNav`
 - `shared/LanguageToggle`
 

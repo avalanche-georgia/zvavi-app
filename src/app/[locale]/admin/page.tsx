@@ -1,15 +1,14 @@
-import { Suspense } from 'react'
 import { AdminDashboard } from '@components/features/admin/Dashboard'
-import { Spinner } from '@components/ui'
+import AdminPageBoundary from '@components/features/admin/shared/AdminPageBoundary'
 import fetchActiveRegions from '@data/queries/fetchActiveRegions'
 
 const AdminPage = async () => {
   const initialRegions = await fetchActiveRegions()
 
   return (
-    <Suspense fallback={<Spinner size="lg" />}>
+    <AdminPageBoundary>
       <AdminDashboard initialRegions={initialRegions} />
-    </Suspense>
+    </AdminPageBoundary>
   )
 }
 

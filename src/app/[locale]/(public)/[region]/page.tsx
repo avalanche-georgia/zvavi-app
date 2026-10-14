@@ -1,18 +1,30 @@
-import { CurrentForecastContainer } from '@components/features/home/CurrentForecast'
-import { Partners } from '@components/features/home/Partners'
-import fetchTier1Partners from '@data/queries/fetchTier1Partners'
+import { RegionHome } from '@components/features/regionHome'
+import fetchActiveRegions from '@data/queries/fetchActiveRegions'
+import { notFound } from 'next/navigation'
 
-import RegionHomeQuickLinks from './RegionHomeQuickLinks'
+import fetchRegionHomeData from './fetchRegionHomeData'
 
-const RegionHomePage = async () => {
-  const partners = await fetchTier1Partners()
+type RegionHomePageProps = { params: Promise<{ region: string }> }
+
+const RegionHomePage = async ({ params }: RegionHomePageProps) => {
+  const { region: regionParam } = await params
+  const regions = await fetchActiveRegions()
+  // The layout answers unknown regions with a 404 too, but it doesn't stop
+  // this page from running — and its queries need a real region id
+  const region = regions.find(({ id }) => id === regionParam)
+
+  if (!region) notFound()
+
+  const data = await fetchRegionHomeData(region.id)
 
   return (
-    <div className="mx-auto max-w-(--breakpoint-md) space-y-8 px-4 pt-3 pb-6">
-      <CurrentForecastContainer />
-      <RegionHomeQuickLinks />
-      <Partners partners={partners} />
-    </div>
+    <RegionHome
+      forecast={data.forecast}
+      partners={data.partners}
+      recentAvalanches={data.recentAvalanches}
+      regionId={region.id}
+      weatherStationsCount={data.weatherStationsCount}
+    />
   )
 }
 

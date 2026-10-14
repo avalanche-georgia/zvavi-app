@@ -1,10 +1,11 @@
 'use client'
 
+import { useListDates } from '@components/features/admin/shared'
 import type { AdminForecast, Forecast } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import type { ForecastViewStatus } from './model'
-import { useListDates, useTimeLeft } from '../shared'
+import { useTimeLeft } from '../shared'
 
 type CurrentForecast = Pick<Forecast, 'createdAt' | 'id'> | null
 

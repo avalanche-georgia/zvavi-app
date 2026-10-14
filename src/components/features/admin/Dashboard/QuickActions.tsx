@@ -1,33 +1,19 @@
 'use client'
 
-import { Icon } from '@components/icons'
+import { LinkPendingIndicator } from '@components/features/admin/shared'
 import { usePendingMembersCount } from '@data/hooks/members'
 import { usePendingObservationsSummary } from '@data/hooks/recentAvalanches'
 import type { Region } from '@domain/types'
+import { CountBadge } from '@ds/primitives'
+import { Telescope, TriangleAlert, Users } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { Link } from 'src/i18n/navigation'
 
+import { actionClasses } from './actionClasses'
+import DashboardCard from './DashboardCard'
 import NewForecastButton from './NewForecastButton'
 
-import { cn } from '@/lib/utils'
 import { routes } from '@/routes'
-
-export const actionBaseClass =
-  'flex w-full items-center gap-2 rounded-md border px-2.5 h-9 text-sm transition-colors'
-const actionLinkClass = cn(
-  actionBaseClass,
-  'border-gray-200 bg-white text-gray-700 hover:bg-gray-50',
-)
-
-const CountBadge = ({ count }: { count: number }) => {
-  if (count === 0) return null
-
-  return (
-    <span className="ml-auto rounded-full bg-blue-500 px-1.5 py-px text-[10px] font-semibold text-white">
-      {count}
-    </span>
-  )
-}
 
 const QuickActions = ({ regions }: { regions: Region[] }) => {
   const t = useTranslations()
@@ -35,32 +21,31 @@ const QuickActions = ({ regions }: { regions: Region[] }) => {
   const { total: pendingObservationsCount } = usePendingObservationsSummary()
 
   return (
-    <div className="rounded-xl border border-gray-200 bg-white px-4 py-4">
-      <p className="mb-3 text-sm font-semibold text-gray-900">
-        {t('admin.dashboard.actions.title')}
-      </p>
-
-      <div className="space-y-1.5">
+    <DashboardCard title={t('admin.dashboard.actions.title')}>
+      <div className="flex flex-col gap-2">
         <NewForecastButton regions={regions} />
 
-        <Link className={actionLinkClass} href={routes.admin.members.root}>
-          <Icon icon="users" size="sm" />
+        <Link className={actionClasses} href={routes.admin.members.pending}>
+          <Users aria-hidden />
           {t('admin.dashboard.actions.memberRequests')}
-          <CountBadge count={pendingMembersCount} />
+          <LinkPendingIndicator />
+          <CountBadge className="ml-auto" count={pendingMembersCount} />
         </Link>
 
-        <Link className={actionLinkClass} href={routes.admin.observations.root}>
-          <Icon icon="telescope" size="sm" />
+        <Link className={actionClasses} href={routes.admin.observations.root}>
+          <Telescope aria-hidden />
           {t('admin.dashboard.actions.observationsReview')}
-          <CountBadge count={pendingObservationsCount} />
+          <LinkPendingIndicator />
+          <CountBadge className="ml-auto" count={pendingObservationsCount} />
         </Link>
 
-        <Link className={actionLinkClass} href={routes.admin.recentAvalanches.create}>
-          <Icon icon="triangleAlert" size="sm" />
+        <Link className={actionClasses} href={routes.admin.recentAvalanches.create}>
+          <TriangleAlert aria-hidden />
           {t('admin.dashboard.actions.logAvalanche')}
+          <LinkPendingIndicator />
         </Link>
       </div>
-    </div>
+    </DashboardCard>
   )
 }
 

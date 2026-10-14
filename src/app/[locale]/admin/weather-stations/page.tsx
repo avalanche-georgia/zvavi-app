@@ -1,12 +1,11 @@
-import { Suspense } from 'react'
-import { Spinner } from '@components/ui'
+import AdminPageBoundary from '@components/features/admin/shared/AdminPageBoundary'
 
 import WeatherStationsContainer from './WeatherStationsContainer'
 
 const WeatherStationsPage = () => (
-  <Suspense fallback={<Spinner size="lg" />}>
+  <AdminPageBoundary>
     <WeatherStationsContainer />
-  </Suspense>
+  </AdminPageBoundary>
 )
 
 export default WeatherStationsPage

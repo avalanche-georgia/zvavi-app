@@ -1,58 +1,77 @@
 'use client'
 
-import { useMemo, useState } from 'react'
-import { MemberFilters, MembersList } from '@components/features/admin/Members/MembersList'
-import { Icon } from '@components/icons'
-import { ButtonLink } from '@components/shared'
-import { useMembersQuery } from '@data/hooks/members'
-import type { MemberStatus } from '@domain/types'
-import { useTranslations } from 'next-intl'
+import {
+  MemberCreateSheet,
+  MemberSheet,
+  type MemberSheetMode,
+  MembersTable,
+  MembersToolbar,
+  useMembersListPage,
+} from '@components/features/admin/Members'
+import {
+  ListLoadError,
+  useCreateSheetParam,
+  useRecordSelection,
+} from '@components/features/admin/shared'
+import { AdminPageBody } from '@components/layout/admin'
 
-import { routes } from '@/routes'
+// Opening a member closes the create sheet in the same navigation
+const replacedParams = ['create']
+const linkModes: MemberSheetMode[] = ['edit']
 
 const MembersContainer = () => {
-  const t = useTranslations()
-  const { data: members, isPending } = useMembersQuery()
+  const page = useMembersListPage()
+  const { list, members, membersQuery } = page
+  const createSheet = useCreateSheetParam()
+  const selection = useRecordSelection<MemberSheetMode>({
+    defaultMode: 'view',
+    linkModes,
+    param: 'member',
+    replacedParams,
+  })
+  const { selectedId } = selection
 
-  const [search, setSearch] = useState('')
-  const [statusFilter, setStatusFilter] = useState<MemberStatus | ''>('')
+  // A failed background refetch keeps the data on screen; the error block is for first loads
+  const isLoadFailed = membersQuery.isError && !membersQuery.data
+  const selectedMember = members.find(({ id }) => id === selectedId) ?? null
 
-  const filteredMembers = useMemo(() => {
-    if (!members) return []
-
-    return members.filter((member) => {
-      const searchLower = search.toLowerCase()
-      const matchesSearch =
-        !search ||
-        member.firstName.toLowerCase().includes(searchLower) ||
-        member.lastName.toLowerCase().includes(searchLower) ||
-        member.memberId.toLowerCase().includes(searchLower) ||
-        member.email?.toLowerCase().includes(searchLower)
-
-      const matchesStatus = !statusFilter || member.status === statusFilter
-
-      return matchesSearch && matchesStatus
-    })
-  }, [members, search, statusFilter])
+  const handleRetry = () => void membersQuery.refetch()
 
   return (
     <>
-      <div className="flex items-center justify-between gap-4 border-b bg-white px-4 py-3 md:px-6">
-        <MemberFilters
-          onSearchChange={setSearch}
-          onStatusChange={setStatusFilter}
-          search={search}
-          statusFilter={statusFilter}
+      <AdminPageBody>
+        <MembersToolbar
+          counts={page.counts}
+          list={list}
+          onCreate={createSheet.openCreate}
+          searchResetKey={page.searchResetKey}
         />
-        <ButtonLink href={routes.admin.members.new}>
-          <Icon icon="plus" size="sm" />
-          {t('admin.members.title.create')}
-        </ButtonLink>
-      </div>
+        {isLoadFailed ? (
+          <ListLoadError onRetry={handleRetry} />
+        ) : (
+          <MembersTable
+            hasMembers={members.length > 0}
+            isLoading={membersQuery.isPending}
+            list={list}
+            members={page.visibleMembers}
+            onMemberOpen={selection.openRecord}
+          />
+        )}
+      </AdminPageBody>
 
-      <div className="p-4 md:p-6">
-        <MembersList isLoading={isPending} members={filteredMembers} />
-      </div>
+      <MemberSheet
+        initialMode={selection.initialMode}
+        isLoading={membersQuery.isPending}
+        member={selectedMember}
+        onClose={selection.closeRecord}
+        onReopen={selection.reopenRecord}
+        selectedId={selectedId}
+      />
+      <MemberCreateSheet
+        isRequested={createSheet.isCreateOpen}
+        onClose={createSheet.closeCreate}
+        onCreated={selection.openRecord}
+      />
     </>
   )
 }
