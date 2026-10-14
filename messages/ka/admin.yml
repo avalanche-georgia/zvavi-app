@@ -587,6 +587,8 @@ admin:
       ariaLabel:
         catalog: 'ბოლო ზვავები — {region}'
         queue: 'განსახილველი დაკვირვებები — {region}'
+      linked: 'დაკავშირებულია {count} პროგნოზთან'
+      unlinked: არ არის დაკავშირებული პროგნოზთან
       columns:
         actions: მოქმედებები
         date: მოხდა
@@ -606,6 +608,10 @@ admin:
     filters:
       all: ყველა
       allStatuses: ყველა სტატუსი
+      unlinked:
+        label: დაუკავშირებელი
+        about: ფილტრის შესახებ
+        hint: მხოლოდ ზვავები, რომლებიც ჯერ არცერთ პროგნოზს არ უკავშირდება
       dateMode:
         label: თარიღით გაფილტვრა
         created: დაემატა

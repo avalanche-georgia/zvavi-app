@@ -4,6 +4,7 @@ import { type ColumnDef, createColumnHelper } from '@ds/patterns'
 import {
   ActionsColumnCell,
   AvalancheColumnCell,
+  CatalogAvalancheColumnCell,
   ColumnLabel,
   OccurredColumnCell,
   SizeColumnCell,
@@ -26,11 +27,7 @@ const sizeColumn = columnHelper.display({
   meta: { cellClassName: 'w-18' },
 })
 
-const avalancheColumn = columnHelper.display({
-  cell: AvalancheColumnCell,
-  header: () => <ColumnLabel labelKey="type" />,
-  id: 'type',
-})
+const avalancheHeader = () => <ColumnLabel labelKey="type" />
 
 const actionsColumn = columnHelper.display({
   cell: ActionsColumnCell,
@@ -44,7 +41,7 @@ const actionsColumn = columnHelper.display({
 export const avalancheColumns: Record<AvalanchesListVariant, AvalancheColumn[]> = {
   catalog: [
     sizeColumn,
-    avalancheColumn,
+    columnHelper.display({ cell: CatalogAvalancheColumnCell, header: avalancheHeader, id: 'type' }),
     columnHelper.display({
       cell: OccurredColumnCell,
       header: () => <ColumnLabel labelKey="date" />,
@@ -73,7 +70,7 @@ export const avalancheColumns: Record<AvalanchesListVariant, AvalancheColumn[]> 
   ],
   queue: [
     sizeColumn,
-    avalancheColumn,
+    columnHelper.display({ cell: AvalancheColumnCell, header: avalancheHeader, id: 'type' }),
     columnHelper.display({
       cell: SubmittedColumnCell,
       header: () => <ColumnLabel labelKey="submitted" />,

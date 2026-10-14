@@ -16,8 +16,9 @@ export type AvalanchesListParams = {
   dateFrom: string | null
   dateMode: DateMode
   dateTo: string | null
+  // Catalog only — the queue's source and status are fixed, and it can't be linked yet
+  isUnlinked: boolean
   pageIndex: number
-  // Catalog only — the queue's source and status are fixed
   source: AvalancheSource | null
   status: CatalogStatus | null
 }
@@ -42,4 +43,5 @@ export const serializeListParams = (params: AvalanchesListParams, base: URLSearc
     page: writePageIndex(params.pageIndex),
     source: params.source,
     status: params.status,
+    unlinked: params.isUnlinked ? '1' : null,
   })

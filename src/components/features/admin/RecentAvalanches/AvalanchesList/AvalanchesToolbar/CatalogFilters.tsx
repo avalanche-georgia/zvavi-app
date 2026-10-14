@@ -1,12 +1,15 @@
 import type { AvalancheSource } from '@domain/types'
-import { SegmentedControl, Select } from '@ds/primitives'
+import { InfoTip, SegmentedControl, Select, Switch } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 
 import type { AvalanchesListPage } from '../hooks/useAvalanchesListPage'
 import { type CatalogStatus, catalogStatuses } from '../model'
 
 type CatalogFiltersProps = {
-  page: Pick<AvalanchesListPage, 'onSourceChange' | 'onStatusChange' | 'source' | 'status'>
+  page: Pick<
+    AvalanchesListPage,
+    'isUnlinked' | 'onSourceChange' | 'onStatusChange' | 'onUnlinkedChange' | 'source' | 'status'
+  >
 }
 
 // "No filter" needs a real value in both controls
@@ -17,7 +20,8 @@ type StatusValue = CatalogStatus | typeof allValue
 
 const sources = [allValue, 'team', 'external'] as const satisfies readonly SourceValue[]
 
-// Who logged it (team / public report) and the publish status — catalog only
+// Who logged it (team / public report), the publish status and whether a
+// forecast links to it — catalog only
 const CatalogFilters = ({ page }: CatalogFiltersProps) => {
   const t = useTranslations()
 
@@ -57,6 +61,16 @@ const CatalogFilters = ({ page }: CatalogFiltersProps) => {
           value={page.status ?? allValue}
         />
       </div>
+      <Switch
+        checked={page.isUnlinked}
+        label={t('admin.recentAvalanches.filters.unlinked.label')}
+        labelAside={
+          <InfoTip ariaLabel={t('admin.recentAvalanches.filters.unlinked.about')}>
+            {t('admin.recentAvalanches.filters.unlinked.hint')}
+          </InfoTip>
+        }
+        onCheckedChange={page.onUnlinkedChange}
+      />
     </>
   )
 }

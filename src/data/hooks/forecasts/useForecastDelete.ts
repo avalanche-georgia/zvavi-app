@@ -1,5 +1,5 @@
 import { supabase } from '@data'
-import { forecastsKeys } from '@data/query-keys'
+import { forecastsKeys, recentAvalanchesKeys } from '@data/query-keys'
 import type { ForecastListItem } from '@domain/types'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
@@ -48,6 +48,8 @@ const useForecastDelete = () => {
     },
     onSettled: () => {
       void queryClient.invalidateQueries({ queryKey: forecastsKeys.all })
+      // Its avalanche links go with it (cascade) — catalog link markers and filter
+      void queryClient.invalidateQueries({ queryKey: recentAvalanchesKeys.all })
     },
   })
 }

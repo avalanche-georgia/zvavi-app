@@ -224,7 +224,7 @@ Update this table when a legacy component's last consumer is migrated.
 | RadioGroup | Headless UI | `primitives/SegmentedControl` | ✅ |
 | RadioOption | base-ui | `primitives/RadioGroup` or `ToggleGrid` | ☐ |
 | Checkbox | Headless UI | `primitives/Checkbox` | ☐ |
-| Switch | base-ui | — (last consumer moved to `primitives/Checkbox`; add `primitives/Switch` when needed) | ✅ |
+| Switch | base-ui | `primitives/Switch` | ✅ |
 | Select | Radix | `primitives/Select` (base-ui) | ☐ |
 | DatePicker, Calendar, TimeInput, DatePickerTimeInput | Headless UI + react-day-picker | `primitives/DateField` | ☐ |
 | TimePicker | Headless UI | `primitives/DateField` (`withTime`) | ✅ |

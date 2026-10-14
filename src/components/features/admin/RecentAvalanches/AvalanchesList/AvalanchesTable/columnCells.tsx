@@ -42,6 +42,12 @@ export const AvalancheColumnCell = ({ row }: RowCellProps) => {
   return <AvalancheCell avalanche={row.original} onOpen={onAvalancheOpen} />
 }
 
+export const CatalogAvalancheColumnCell = ({ row }: RowCellProps) => {
+  const { onAvalancheOpen } = useAvalanchesTable()
+
+  return <AvalancheCell avalanche={row.original} isLinkShown onOpen={onAvalancheOpen} />
+}
+
 export const OccurredColumnCell = ({ row }: RowCellProps) => {
   const getOccurredLabel = useOccurredLabel()
 
