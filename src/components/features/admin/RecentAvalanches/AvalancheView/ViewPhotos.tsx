@@ -1,5 +1,5 @@
+import { Loading } from '@components/features/admin/shared'
 import { PhotoStrip } from '@components/features/observations'
-import { Spinner } from '@components/ui'
 import { useAvalanchePhotosQuery } from '@data/hooks/recentAvalanches'
 import { useTranslations } from 'next-intl'
 
@@ -18,11 +18,7 @@ const ViewPhotos = ({ id, photoKeys }: ViewPhotosProps) => {
   if (!hasPhotos) return null
 
   if (isPending) {
-    return (
-      <div className="flex justify-center px-4 pt-4">
-        <Spinner />
-      </div>
-    )
+    return <Loading />
   }
 
   if (isError) {

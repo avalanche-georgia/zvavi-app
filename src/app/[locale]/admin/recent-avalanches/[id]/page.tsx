@@ -1,9 +1,9 @@
 'use client'
 
 import { AvalancheViewPage } from '@components/features/admin/RecentAvalanches'
+import { Loading } from '@components/features/admin/shared'
 import { LoadError } from '@components/shared'
 import { ButtonLink } from '@components/shared'
-import { Spinner } from '@components/ui'
 import { useRecentAvalancheQuery } from '@data/hooks/recentAvalanches'
 import { useParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
@@ -25,11 +25,7 @@ const RecentAvalancheViewPage = () => {
   } = useRecentAvalancheQuery({ enabled: isValidId, id })
 
   if (isValidId && isPending) {
-    return (
-      <div className="relative flex h-full items-center justify-center py-12">
-        <Spinner size="lg" />
-      </div>
-    )
+    return <Loading isPage />
   }
 
   if (isValidId && isError) {

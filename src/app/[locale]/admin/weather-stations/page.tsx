@@ -1,10 +1,10 @@
 import { Suspense } from 'react'
-import { Spinner } from '@components/ui'
+import Loading from '@components/features/admin/shared/Loading'
 
 import WeatherStationsContainer from './WeatherStationsContainer'
 
 const WeatherStationsPage = () => (
-  <Suspense fallback={<Spinner size="lg" />}>
+  <Suspense fallback={<Loading isPage />}>
     <WeatherStationsContainer />
   </Suspense>
 )

@@ -1,12 +1,12 @@
 'use client'
 
+import { Loading } from '@components/features/admin/shared'
 import { LoadError } from '@components/shared'
 import { useGetCurrentForecast } from '@data/hooks/forecasts'
 import type { AdminForecast } from '@domain/types'
 import { useNow } from 'next-intl'
 
 import { useForecastViewActions, ViewActions } from './actions'
-import CenteredSpinner from './CenteredSpinner'
 import { Breadcrumb, ViewSubline, ViewTitle } from './header'
 import MetaPanel from './MetaPanel'
 import { getViewStatus } from './model'
@@ -43,7 +43,7 @@ const ForecastViewContent = ({ forecast, onLeave }: ForecastViewContentProps) =>
   const currentForecast = currentForecastData ?? null
   const handleRetry = () => void refetch()
 
-  if (isPending) return <CenteredSpinner />
+  if (isPending) return <Loading />
   // Only when there's nothing to show: a failed background refetch keeps the page
   if (isError && currentForecastData === undefined) return <LoadError onRetry={handleRetry} />
 
