@@ -606,6 +606,7 @@ admin:
     filters:
       all: All
       allStatuses: All statuses
+      unlinked: Not linked to a forecast
       dateMode:
         label: Filter by date
         created: Logged

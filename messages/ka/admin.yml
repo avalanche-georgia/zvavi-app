@@ -606,6 +606,7 @@ admin:
     filters:
       all: ყველა
       allStatuses: ყველა სტატუსი
+      unlinked: პროგნოზთან დაუკავშირებელი
       dateMode:
         label: თარიღით გაფილტვრა
         created: დაემატა

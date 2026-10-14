@@ -23,6 +23,7 @@ export const fetchPaginatedAvalanches = async (params: QueryParams): Promise<Pag
     dateTo,
     excludeStatus,
     isOldestFirst = false,
+    isUnlinked = false,
     page,
     pageSize,
     regionId,
@@ -43,6 +44,8 @@ export const fetchPaginatedAvalanches = async (params: QueryParams): Promise<Pag
   if (source) avalanchesQuery = avalanchesQuery.eq('source', source)
   if (status) avalanchesQuery = avalanchesQuery.eq('status', status)
   if (excludeStatus) avalanchesQuery = avalanchesQuery.neq('status', excludeStatus)
+  // No row in the embedded join table
+  if (isUnlinked) avalanchesQuery = avalanchesQuery.is('forecast_avalanche', null)
 
   avalanchesQuery = avalanchesQuery.range(offset, offset + pageSize - 1)
 
