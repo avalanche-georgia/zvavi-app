@@ -20,24 +20,30 @@ REVOKE ALL ON public.avalanche_translations FROM anon;
 -- 3. forecasts: anon reads published forecasts only (drafts carry unreviewed
 --    text and forecaster names); signed-in users keep reading everything.
 DROP POLICY IF EXISTS "Allow read access for all users" ON public.forecasts;
+DROP POLICY IF EXISTS "Anyone can read published forecasts" ON public.forecasts;
 CREATE POLICY "Anyone can read published forecasts" ON public.forecasts
   FOR SELECT TO anon USING (status = 'published');
+DROP POLICY IF EXISTS "Signed-in users can read forecasts" ON public.forecasts;
 CREATE POLICY "Signed-in users can read forecasts" ON public.forecasts
   FOR SELECT TO authenticated USING (true);
 
 DROP POLICY IF EXISTS "Allow read access for all users" ON public.avalanche_problems;
+DROP POLICY IF EXISTS "Anyone can read problems of published forecasts" ON public.avalanche_problems;
 CREATE POLICY "Anyone can read problems of published forecasts" ON public.avalanche_problems
   FOR SELECT TO anon USING (
     EXISTS (SELECT 1 FROM public.forecasts f WHERE f.id = forecast_id AND f.status = 'published')
   );
+DROP POLICY IF EXISTS "Signed-in users can read problems" ON public.avalanche_problems;
 CREATE POLICY "Signed-in users can read problems" ON public.avalanche_problems
   FOR SELECT TO authenticated USING (true);
 
 DROP POLICY IF EXISTS "Public can read forecast_avalanche" ON public.forecast_avalanche;
+DROP POLICY IF EXISTS "Anyone can read links of published forecasts" ON public.forecast_avalanche;
 CREATE POLICY "Anyone can read links of published forecasts" ON public.forecast_avalanche
   FOR SELECT TO anon USING (
     EXISTS (SELECT 1 FROM public.forecasts f WHERE f.id = forecast_id AND f.status = 'published')
   );
+DROP POLICY IF EXISTS "Signed-in users can read links" ON public.forecast_avalanche;
 CREATE POLICY "Signed-in users can read links" ON public.forecast_avalanche
   FOR SELECT TO authenticated USING (true);
 

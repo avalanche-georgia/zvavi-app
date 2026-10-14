@@ -11,6 +11,7 @@
     "convert-messages": "node scripts/convert-messages.js",
     "export-translations": "node scripts/export-translations.js",
     "typegen": "supabase gen types typescript --project-id $SUPABASE_STAGING_PROJECT_REF > src/lib/supabase/database.types.ts && npx eslint --fix src/lib/supabase/database.types.ts",
+    "db:check": "bash scripts/db-check.sh",
     "db:push-prod": "bash scripts/db-push-prod.sh"
   },
   "lint-staged": {
