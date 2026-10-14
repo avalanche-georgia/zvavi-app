@@ -1,6 +1,7 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
+import { useSearchReset } from '@components/features/admin/shared'
 import { useAdminForecastsQuery, useGetCurrentForecast } from '@data/hooks/forecasts'
 import type { RegionId } from '@domain/types'
 import { useNow } from 'next-intl'
@@ -12,7 +13,7 @@ import { countByStatus, filterForecasts, getCreatedBounds } from '../model'
 const useForecastsListPage = (regionId: RegionId) => {
   const list = useForecastsListParams()
   const now = useNow({ updateInterval: 60_000 })
-  const [searchResetKey, setSearchResetKey] = useState(0)
+  const { onFiltersClear, searchResetKey } = useSearchReset(list.onFiltersClear)
   const forecastsQuery = useAdminForecastsQuery(regionId)
   // Same query as the public pages: "current" here always matches the public site
   const currentQuery = useGetCurrentForecast({ isShort: true, regionId })
@@ -27,17 +28,12 @@ const useForecastsListPage = (regionId: RegionId) => {
   }, [dateFrom, dateTo, forecasts, now, query, range, status])
   const counts = useMemo(() => countByStatus(forecasts), [forecasts])
 
-  const handleFiltersClear = () => {
-    setSearchResetKey((key) => key + 1)
-    list.onFiltersClear()
-  }
-
   return {
     counts,
     currentQuery,
     forecasts,
     forecastsQuery,
-    list: { ...list, onFiltersClear: handleFiltersClear },
+    list: { ...list, onFiltersClear },
     now,
     searchResetKey,
     visibleForecasts,

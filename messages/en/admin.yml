@@ -135,25 +135,41 @@ admin:
   partners:
     title:
       create: 'Add Partner'
-      edit: 'Edit Partner'
-    notFound: 'Partner not found.'
     list:
+      ariaLabel: 'Partners'
       columns:
         actions: 'Actions'
-        name: 'Name'
+        name: 'Partner'
         benefit: 'Benefit'
         tier: 'Tier'
         status: 'Status'
-      noPartners: 'No partners found.'
+      tierLine: 'Tier {tier} · {level}'
+    empty:
+      noPartnersTitle: 'No partners yet'
+      noPartnersHint: 'Use Add Partner above to add the first one.'
+      noMatchesTitle: 'Nothing matches'
+      noMatchesHint: 'Try another status or search.'
     filters:
-      searchPlaceholder: 'Search by name...'
+      searchLabel: 'Search partners'
+      searchPlaceholder: 'Search by name'
+      status:
+        label: 'Status'
+        all: 'All'
+        active: 'Active'
+        inactive: 'Inactive'
+    statuses:
+      active: 'Active'
+      inactive: 'Inactive'
     actions:
-      delete: 'Delete'
-      edit: 'Edit'
-    deleteModal:
-      title: 'Delete Partner?'
-      description: 'Do you want to permanently delete {name}?'
+      moreForPartner: 'More actions for {name}'
+      openWebsite: 'Open website'
+    deleteConfirm: 'Delete {name} permanently? It disappears from the public partners list.'
     form:
+      optional: 'Optional'
+      sections:
+        benefit: 'Member benefit'
+        description: 'Description'
+        partner: 'Partner'
       labels:
         nameEn: 'Name (EN)'
         nameKa: 'Name (KA)'
@@ -166,14 +182,9 @@ admin:
         tier: 'Tier'
         isActive: 'Active'
       placeholders:
-        nameKa: 'Optional'
-        benefitEn: 'Optional'
-        benefitKa: 'Optional'
-        descriptionEn: 'Optional'
-        descriptionKa: 'Optional'
-        tier: 'Select tier'
         websiteUrl: 'https://example.com'
       hints:
+        isActive: 'Active partners are shown on the public site.'
         logo: 'PNG, JPG, WebP or SVG · max 512 KB'
       actions:
         logoUpload: 'Upload logo'
