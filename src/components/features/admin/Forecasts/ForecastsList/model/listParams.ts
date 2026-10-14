@@ -1,6 +1,7 @@
 import {
   applyParamEntries,
   pickAllowed,
+  readIsoDay,
   readPageIndex,
   writePageIndex,
 } from '@components/features/admin/shared'
@@ -23,10 +24,6 @@ export type ForecastsListParams = {
   sortKey: SortKey
   status: ListStatusFilter
 }
-
-const isoDayPattern = /^\d{4}-\d{2}-\d{2}$/
-
-const readIsoDay = (value: string | null) => (value && isoDayPattern.test(value) ? value : null)
 
 export const isSortKey = (value: string): value is SortKey => sortKeys.includes(value as SortKey)
 

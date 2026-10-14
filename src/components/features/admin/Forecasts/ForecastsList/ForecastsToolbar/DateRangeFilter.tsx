@@ -1,11 +1,10 @@
-import { serverDateFormat } from '@domain/constants'
+import { parseIsoDay, toIsoDay } from '@components/features/admin/shared'
 import { getSeasonLabel } from '@domain/season'
 import { DateField, SegmentedControl } from '@ds/primitives'
-import { format } from 'date-fns'
 import { useTranslations } from 'next-intl'
 
 import type { ForecastsListState } from '../hooks'
-import { type DateRange, dateRanges, parseDay } from '../model'
+import { type DateRange, dateRanges } from '../model'
 
 type DateRangeFilterProps = {
   list: Pick<
@@ -14,8 +13,6 @@ type DateRangeFilterProps = {
   >
   now: Date
 }
-
-const toIsoDay = (date: Date | null) => (date ? format(date, serverDateFormat) : null)
 
 // Filters by the created date
 const DateRangeFilter = ({ list, now }: DateRangeFilterProps) => {
@@ -48,7 +45,7 @@ const DateRangeFilter = ({ list, now }: DateRangeFilterProps) => {
             ariaLabel={t('admin.forecasts.filters.range.from')}
             className="w-37.5"
             onValueChange={handleFromChange}
-            value={parseDay(dateFrom)}
+            value={parseIsoDay(dateFrom)}
           />
           <span aria-hidden className="text-muted">
             –
@@ -58,7 +55,7 @@ const DateRangeFilter = ({ list, now }: DateRangeFilterProps) => {
             className="w-37.5"
             min={dateFrom ?? undefined}
             onValueChange={handleToChange}
-            value={parseDay(dateTo)}
+            value={parseIsoDay(dateTo)}
           />
         </div>
       )}

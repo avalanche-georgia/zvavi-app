@@ -8,7 +8,7 @@ import { useTranslations } from 'next-intl'
 
 import type { AvalancheFormSchema } from './schema'
 import SubmitterInfo from './SubmitterInfo'
-import SourceBadge from '../RecentAvalanchesTable/SourceBadge'
+import { SourceBadge } from '../shared'
 
 type SubmitterSectionProps = {
   createdByUserId: string | null

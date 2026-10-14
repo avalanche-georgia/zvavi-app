@@ -1,3 +1,3 @@
 export { getStatusToggle } from './statusToggle'
-export { default as useAvalancheDeleteDialog } from './useAvalancheDeleteDialog'
+export { default as useAvalancheDelete } from './useAvalancheDelete'
 export { default as useAvalancheStatusToggle } from './useAvalancheStatusToggle'

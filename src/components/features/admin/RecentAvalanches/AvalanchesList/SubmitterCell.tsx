@@ -10,11 +10,7 @@ const SubmitterCell = ({ avalanche }: { avalanche: AvalancheListItem }) => {
     id: createdByUserId ?? '',
   })
 
-  return (
-    <span className="block truncate text-sm text-gray-600">
-      {submitterName || creatorName || '—'}
-    </span>
-  )
+  return <span className="text-body block truncate">{submitterName || creatorName || '—'}</span>
 }
 
 export default SubmitterCell
