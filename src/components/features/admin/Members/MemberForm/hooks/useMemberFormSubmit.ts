@@ -1,4 +1,3 @@
-import { useCallback } from 'react'
 import { useToast } from '@components/hooks'
 import { useMemberCreate, useMemberUpdate } from '@data/hooks/members'
 import type { Member, MemberFormData } from '@domain/types'
@@ -15,24 +14,24 @@ const useMemberFormSubmit = ({ memberId, onSuccess }: UseMemberFormSubmitParams)
   const { mutateAsync: createMember } = useMemberCreate()
   const { mutateAsync: updateMember } = useMemberUpdate()
 
-  const handleSubmit = useCallback(
-    async (formData: MemberFormData) => {
-      try {
-        if (memberId) {
-          await updateMember({ ...formData, id: memberId })
-          toastSuccess(t('admin.members.messages.updated'))
-          onSuccess()
-        } else {
-          const created = await createMember(formData)
+  const handleSubmit = async (formData: MemberFormData) => {
+    try {
+      if (memberId) {
+        await updateMember({ ...formData, id: memberId })
+        toastSuccess(t('admin.members.messages.updated'))
+        onSuccess()
 
-          onSuccess(created)
-        }
-      } catch (error) {
-        toastError('MemberForm | handleSubmit', { error })
+        return
       }
-    },
-    [memberId, createMember, updateMember, onSuccess, toastError, toastSuccess, t],
-  )
+
+      const createdMember = await createMember(formData)
+
+      toastSuccess(t('admin.members.messages.created'))
+      onSuccess(createdMember)
+    } catch (error) {
+      toastError('MemberForm | handleSubmit', { error })
+    }
+  }
 
   return { handleSubmit }
 }

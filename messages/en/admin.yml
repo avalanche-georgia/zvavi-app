@@ -57,31 +57,43 @@ admin:
   members:
     title:
       create: 'Add Member'
-      edit: 'Edit Member'
     notFound: 'Member not found.'
     list:
+      ariaLabel: 'Members'
       columns:
         actions: 'Actions'
+        createdAt: 'Registered'
         expiresAt: 'Expires'
         joinedAt: 'Joined'
         memberId: 'Member ID'
-        name: 'Name'
+        name: 'Member'
         status: 'Status'
-      noMembers: 'No members found.'
+      expiredOn: 'Expired {date}'
+      expiresOn: 'Expires {date}'
+      overdue: 'ended'
+    empty:
+      noMembersTitle: 'No members yet'
+      noMembersHint: 'Use Add Member above to add the first one.'
+      noMatchesTitle: 'Nothing matches'
+      noMatchesHint: 'Try another status or search.'
     filters:
-      allStatuses: 'All Statuses'
-      searchPlaceholder: 'Search by name, ID or email...'
+      all: 'All'
+      searchLabel: 'Search members'
+      searchPlaceholder: 'Search name, ID or email'
+      statusLabel: 'Status'
     actions:
       approve: 'Approve'
-      delete: 'Delete'
-      edit: 'Edit'
-    approveModal:
-      title: 'Approve Member'
-      description: 'Approve {name} as an active member with the following membership dates:'
-    deleteMemberModal:
-      title: 'Delete Member?'
-      description: 'Do you want to permanently delete {name}?'
+      approveMember: 'Approve {name}'
+      copyLink: 'Copy verification link'
+      moreForMember: 'More actions for {name}'
+    approve:
+      title: 'Approve membership'
+      description: '{name} becomes an active member with these membership dates. If they left an email, they get a confirmation with their verification link.'
+    deleteConfirm: 'Delete {name} permanently? Their QR code stops verifying.'
     form:
+      sections:
+        membership: 'Membership'
+        person: 'Person'
       labels:
         email: 'Email'
         expiresAt: 'Expires At'
@@ -94,20 +106,21 @@ admin:
         status: 'Status'
       placeholders:
         expiresAt: 'No expiration'
-        memberId: 'Leave empty to auto-generate'
+        memberId: 'Auto-generated'
         notes: 'Internal notes (not visible to member)'
+      hints:
+        expiresAt: 'Leave empty for no expiration.'
+        notes: 'Team only'
     qrCode:
       title: 'Member QR Code'
       description: 'This QR code can be printed on a member card. When scanned, it shows the verification page.'
       download: 'Download QR Code'
-      copyUrl: 'Copy URL'
-      successTitle: 'Member Created'
-      successDescription: 'QR code is ready for {name}'
-      done: 'Done'
+      linkLabel: 'Verification link'
     messages:
       approved: 'Member approved successfully.'
       created: 'Member created successfully.'
       deleted: 'Member deleted successfully.'
+      linkCopied: 'Verification link copied.'
       updated: 'Member updated successfully.'
     statuses:
       active: 'Active'
@@ -118,8 +131,6 @@ admin:
     view:
       registeredAt: 'Registered'
       noEmail: 'No email provided'
-      noPhone: 'No phone provided'
-      noNotes: 'No notes'
 
   partners:
     title:

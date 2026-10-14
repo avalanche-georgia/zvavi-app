@@ -1,2 +1,3 @@
-export { default as MemberFilters } from './MemberFilters'
-export { default as MembersList } from './MembersList'
+export { useMembersListPage } from './hooks'
+export { MembersTable } from './MembersTable'
+export { default as MembersToolbar } from './MembersToolbar'
