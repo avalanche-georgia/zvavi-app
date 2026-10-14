@@ -29,12 +29,16 @@ src/components/
 ├── ds/                  # new kit — the only place new generic UI goes
 │   ├── primitives/      # Button, Badge, Checkbox, Field, FieldGroup, TextField, NumberField,
 │   │                    # Textarea, ChipGroup, ToggleGrid, SegmentedControl, Select, Stepper, InfoTip,
-│   │                    # IconButton, RatingScale, DateField, Menu, Pagination, SearchField
+│   │                    # IconButton, RatingScale, DateField, Menu, Pagination, SearchField,
+│   │                    # StatusPill
 │   ├── patterns/        # FormCard, StickyActionBar, SuccessState, DataTable
 │   └── form/            # react-hook-form bindings: FormTextField, FormTextarea, FormNumberField,
 │                        # FormStepper, FormChipGroup, FormCheckbox, FormSelect, useFormFieldError
 ├── ui/                  # legacy kit — frozen, deleted piece by piece
 └── features/            # domain components, built from ds
+    └── admin/shared/    # admin-wide building blocks that need translations or routing, so they
+                         # can't live in ds: list toolbar pieces, URL list state, RecordMenu,
+                         # sheet header / discard confirmation
 ```
 
 - Import through the `@ds/*` alias.

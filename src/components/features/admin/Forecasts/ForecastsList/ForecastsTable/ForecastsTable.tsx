@@ -1,12 +1,12 @@
 'use client'
 
+import { ListEmptyState, useDataTableLabels } from '@components/features/admin/shared'
 import type { ForecastListItem, RegionId } from '@domain/types'
-import { DataTable, type DataTableLabels } from '@ds/patterns'
+import { DataTable } from '@ds/patterns'
 import { useTranslations } from 'next-intl'
 
 import { forecastColumns } from './columns'
 import ForecastCard from './ForecastCard'
-import ForecastsEmptyState from './ForecastsEmptyState'
 import { ForecastsTableContext } from './ForecastsTableContext'
 import type { ForecastsListState } from '../hooks'
 
@@ -35,12 +35,22 @@ const ForecastsTable = ({
   regionId,
 }: ForecastsTableProps) => {
   const t = useTranslations()
+  const labels = useDataTableLabels()
+  const regionName = t(`regions.names.${regionId}`)
 
-  const labels: DataTableLabels = {
-    nextPage: t('common.table.nextPage'),
-    previousPage: t('common.table.previousPage'),
-    rowRange: (range) => t('common.table.rowRange', range),
-  }
+  // Filters hide every row vs. the region has no forecasts at all
+  const empty = hasForecasts ? (
+    <ListEmptyState
+      hint={t('admin.forecasts.empty.noMatchesHint')}
+      onFiltersClear={list.onFiltersClear}
+      title={t('admin.forecasts.empty.noMatchesTitle')}
+    />
+  ) : (
+    <ListEmptyState
+      hint={t('admin.forecasts.empty.noForecastsHint')}
+      title={t('admin.forecasts.empty.noForecastsTitle', { region: regionName })}
+    />
+  )
 
   const getRowClassName = ({ id }: ForecastListItem) =>
     id === currentForecastId ? 'bg-success-soft/40 hover:bg-success-soft/60' : undefined
@@ -48,16 +58,10 @@ const ForecastsTable = ({
   return (
     <ForecastsTableContext value={{ currentForecastId, now, regionId }}>
       <DataTable
-        ariaLabel={t('admin.forecasts.list.ariaLabel', { region: t(`regions.names.${regionId}`) })}
+        ariaLabel={t('admin.forecasts.list.ariaLabel', { region: regionName })}
         columns={forecastColumns}
         data={forecasts}
-        empty={
-          <ForecastsEmptyState
-            hasForecasts={hasForecasts}
-            onFiltersClear={list.onFiltersClear}
-            regionId={regionId}
-          />
-        }
+        empty={empty}
         getRowClassName={getRowClassName}
         getRowId={getRowId}
         isLoading={isLoading}

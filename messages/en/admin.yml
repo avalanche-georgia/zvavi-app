@@ -44,6 +44,16 @@ admin:
     openMenu: 'Open menu'
     closeMenu: 'Close menu'
 
+  shared:
+    actions:
+      more: 'More actions'
+    list:
+      clearFilters: 'Clear filters'
+    sheet:
+      discard: Discard
+      discardConfirm: Discard unsaved changes?
+      keepEditing: Keep editing
+
   members:
     title:
       create: 'Add Member'
@@ -210,7 +220,6 @@ admin:
       noForecastsHint: 'Use Create forecast above to start the season.'
       noMatchesTitle: 'Nothing matches'
       noMatchesHint: 'Try another status, date range or search.'
-      clearFilters: 'Clear filters'
     current:
       eyebrow: 'Current forecast'
       eyebrowExpired: 'Current forecast · expired'
@@ -226,7 +235,6 @@ admin:
     actions:
       copyLink: 'Copy link'
       duplicate: 'Duplicate'
-      more: 'More actions'
       moreForForecast: 'More actions for forecast #{id}'
       openPublicPage: 'Open public page'
       publish: 'Publish'
@@ -617,9 +625,6 @@ admin:
 
     sheet:
       deleteConfirm: Delete this record permanently?
-      discard: Discard
-      discardConfirm: Discard unsaved changes?
-      keepEditing: Keep editing
       next: Next record
       position: '{current} of {total}'
       previous: Previous record

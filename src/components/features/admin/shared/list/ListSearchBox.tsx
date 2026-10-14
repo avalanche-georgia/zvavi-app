@@ -4,8 +4,13 @@ import { useEffect, useRef, useState } from 'react'
 import { SearchField } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 
-type SearchBoxProps = {
+import { cn } from '@/lib/utils'
+
+type ListSearchBoxProps = {
+  className?: string
+  label: string
   onQueryChange: (query: string) => void
+  placeholder: string
   query: string
   // Bumped by "Clear filters": drop the text and any write still waiting
   resetKey: number
@@ -13,8 +18,15 @@ type SearchBoxProps = {
 
 const searchDelayMs = 250
 
-// Local text, written to the URL after a pause in typing
-const SearchBox = ({ onQueryChange, query, resetKey }: SearchBoxProps) => {
+// Local text, written to the list state (the URL) after a pause in typing
+const ListSearchBox = ({
+  className,
+  label,
+  onQueryChange,
+  placeholder,
+  query,
+  resetKey,
+}: ListSearchBoxProps) => {
   const t = useTranslations()
   const [value, setValue] = useState(query)
   const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined)
@@ -37,14 +49,14 @@ const SearchBox = ({ onQueryChange, query, resetKey }: SearchBoxProps) => {
 
   return (
     <SearchField
-      aria-label={t('admin.forecasts.filters.search.label')}
-      className="w-full sm:ml-auto sm:w-70"
+      aria-label={label}
+      className={cn('w-full sm:ml-auto sm:w-70', className)}
       clearLabel={t('common.actions.clear')}
       onValueChange={handleValueChange}
-      placeholder={t('admin.forecasts.filters.search.placeholder')}
+      placeholder={placeholder}
       value={value}
     />
   )
 }
 
-export default SearchBox
+export default ListSearchBox

@@ -1,6 +1,7 @@
+import { useListDates } from '@components/features/admin/shared'
 import { useTranslations } from 'next-intl'
 
-import { getHoursLeft, useListDates, useTimeLeft } from '../../shared'
+import { getHoursLeft, useTimeLeft } from '../../shared'
 
 import { cn } from '@/lib/utils'
 

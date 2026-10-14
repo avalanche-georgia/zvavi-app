@@ -1,34 +1,22 @@
 'use client'
 
+import { useUrlListState } from '@components/features/admin/shared'
 import type { DataTableSort } from '@ds/patterns'
-import { useSearchParams } from 'next/navigation'
 
 import {
   type DateRange,
-  type ForecastsListParams,
   isSortKey,
   type ListStatusFilter,
   readListParams,
   serializeListParams,
 } from '../model'
 
-// Filters, sort and page live in the URL so a view can be shared or reloaded.
-// history.replaceState (Next syncs it into useSearchParams): no navigation, no server round trip.
+// The list's filters, sort and page, kept in the URL
 const useForecastsListParams = () => {
-  const searchParams = useSearchParams()
-
-  // Reads the URL at call time, not render-time params — so the debounced search
-  // write can't undo a filter changed meanwhile
-  const setParams = (changes: Partial<ForecastsListParams>) => {
-    const urlParams = new URLSearchParams(window.location.search)
-    const query = serializeListParams({ ...readListParams(urlParams), ...changes }, urlParams)
-
-    window.history.replaceState(null, '', query ? `?${query}` : window.location.pathname)
-  }
-
-  // Any filter change starts again from the first page
-  const setFilters = (changes: Partial<ForecastsListParams>) =>
-    setParams({ ...changes, pageIndex: 0 })
+  const { params, setFilters, setParams } = useUrlListState({
+    read: readListParams,
+    serialize: serializeListParams,
+  })
 
   const handleRangeChange = (range: DateRange) =>
     setFilters(range === 'custom' ? { range } : { dateFrom: null, dateTo: null, range })
@@ -39,7 +27,7 @@ const useForecastsListParams = () => {
   }
 
   return {
-    ...readListParams(searchParams),
+    ...params,
     onDateFromChange: (dateFrom: string | null) => setFilters({ dateFrom }),
     onDateToChange: (dateTo: string | null) => setFilters({ dateTo }),
     onFiltersClear: () =>
