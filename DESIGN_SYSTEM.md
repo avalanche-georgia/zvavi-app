@@ -204,7 +204,7 @@ Rules:
 | **2. Primitives for submit** | Button, Badge, Field / FieldGroup, TextField, NumberField, Textarea, ChipGroup, ToggleGrid, SegmentedControl, Stepper. Patterns FormCard, StickyActionBar, SuccessState. Form bindings. Gallery demos | ✅ |
 | **3. Submit page redesign** | `local/observations/design_handoff_submit_observation/` built on ds | ✅ |
 | **4. Rest of observations** | List toolbar, detail views, aspect/elevation picker moved to `features/` with a bare variant | ☐ |
-| **5. Legacy, by screen area** | Public pages (auth, forecasts, about) → admin forms → admin tables, modals and drawers. Admin lists, forms and the overview are done; what's left in admin: the avalanche form's legacy fields, `Sheet` and the vaul mobile menu drawer | ☐ |
+| **5. Legacy, by screen area** | Public pages (auth, forecasts, about) → admin forms → admin tables, modals and drawers. Admin lists, forms and the overview are done; what's left in admin: `Sheet`, the vaul mobile menu drawer, and the shared `BrandedQRCode` / `SortableItem` / `FallbackImage` | ☐ |
 | **6. Cleanup** | Delete `ui/`. Remove `@headlessui/react`, `@radix-ui/*` and `clsx` | ☐ |
 
 ### Component tracker
@@ -239,7 +239,7 @@ Update this table when a legacy component's last consumer is migrated.
 | Skeleton | custom | `primitives/Skeleton` | ☐ |
 | Pagination, DataTable | custom | `primitives/Pagination`, `patterns/DataTable` | ✅ |
 | AspectElevationPicker | base-ui | moved to `features/observations/` | ✅ |
-| MiniCompass | custom | moves to `features/` | ☐ |
+| MiniCompass | custom | moved to `features/observations/` | ✅ |
 | AutoScrollList, BrandedQRCode, FallbackImage, SortableItem | custom | reviewed individually (may stay generic in ds) | ☐ |
 
 Non-kit Headless UI and Radix users also block Phase 6:
