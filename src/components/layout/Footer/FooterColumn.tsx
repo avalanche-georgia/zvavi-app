@@ -17,7 +17,7 @@ const FooterColumn = ({ links, title }: FooterColumnProps) => (
       {links.map(({ href, label }) => (
         <li key={href}>
           <Link
-            className="focus-ring text-copy text-ink hover:text-primary block rounded-sm py-1.5 transition-colors md:py-1"
+            className="focus-ring text-copy text-ink hover:text-primary inline-block rounded-sm py-1.5 transition-colors md:py-1"
             href={href}
           >
             {label}
