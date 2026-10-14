@@ -1,6 +1,8 @@
 contact:
-  title: 'We’d love to hear from you!'
+  title: 'Get in touch'
   description: 'Whether you have questions, ideas, want to collaborate, or report an issue — don’t hesitate to reach out.'
+
+  social: 'Find us on social media or write to us.'
 
   links:
     email: 'Email'
@@ -8,7 +10,8 @@ contact:
     instagram: 'Instagram'
 
   bank:
-    title: 'You can support us via bank transfer:'
+    title: 'Bank transfer'
+    description: 'You can support our work with a bank transfer.'
     labels:
       account: 'Account'
       address: 'Address'
@@ -16,9 +19,9 @@ contact:
       code: 'Bank Code'
       name: 'Name of Beneficiary'
       swift: 'Bank Code (SWIFT Code)'
-    GEL: 'For transfer in GEL:'
-    USDEUR: 'For transfer in USD or EUR:'
+    GEL: 'In GEL'
+    USDEUR: 'In USD or EUR'
 
   emergencyDisclaimer:
-    title: '⚠️ Emergency Disclaimer'
-    description: '<u>Please note:</u> <strong>We do not provide emergency rescue services.</strong> In case of an avalanche or any other accident, call local emergency number immediately - <strong>112</strong>.'
+    title: 'We do not provide emergency rescue services'
+    description: 'In case of an avalanche or any other accident, call the emergency number immediately — <b>112</b>.'

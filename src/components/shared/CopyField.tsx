@@ -1,45 +1,38 @@
 'use client'
 
 import { useCopyWithFeedback } from '@components/hooks'
-import { IconButton } from '@components/ui'
-import { AnimatePresence, motion } from 'motion/react'
+import { IconButton } from '@ds/primitives'
+import { Check, Copy } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
-const CopyField = ({ label, value }: { label: string; value: string }) => {
+type CopyFieldProps = {
+  label: string
+  value: string
+}
+
+// A labelled value (account number, SWIFT…) with a copy button
+const CopyField = ({ label, value }: CopyFieldProps) => {
+  const t = useTranslations()
   const { handleCopy, isCopied } = useCopyWithFeedback(value)
+  const actionLabel = isCopied ? t('common.actions.copied') : t('common.actions.copy')
 
   return (
-    <div>
-      <div className="text-sm text-gray-500">{label}</div>
-      <div className="flex items-center justify-between font-mono text-sm">
-        <span>{value}</span>
-
-        <AnimatePresence initial={false} mode="wait">
-          {isCopied ? (
-            <motion.div
-              key="copied"
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.85 }}
-              transition={{ duration: 0.18, ease: 'easeOut' }}
-            >
-              <IconButton
-                aria-label="Copied"
-                className="pointer-events-none stroke-green-500"
-                iconProps={{ icon: 'copyCheck' }}
-                onClick={handleCopy}
-              />
-            </motion.div>
-          ) : (
-            <motion.div
-              key="copy"
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.85 }}
-              transition={{ duration: 0.18, ease: 'easeOut' }}
-            >
-              <IconButton aria-label="Copy" iconProps={{ icon: 'copy' }} onClick={handleCopy} />
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+    <div className="flex items-center gap-3">
+      <dl className="min-w-0 flex-1">
+        <dt className="text-caption text-muted">{label}</dt>
+        <dd className="text-copy text-ink font-mono break-all">{value}</dd>
+      </dl>
+      <IconButton
+        aria-label={`${actionLabel}: ${label}`}
+        onClick={handleCopy}
+        tooltip={actionLabel}
+      >
+        {isCopied ? (
+          <Check aria-hidden className="text-success animate-copy-pop size-4.5" />
+        ) : (
+          <Copy aria-hidden className="size-4.5" />
+        )}
+      </IconButton>
     </div>
   )
 }

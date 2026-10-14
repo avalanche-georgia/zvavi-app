@@ -1,8 +1,8 @@
+import { SocialLinks } from '@components/shared'
 import { useTranslations } from 'next-intl'
 
 import FooterBottom from './FooterBottom'
 import FooterLinks from './FooterLinks'
-import SocialLinks from './SocialLinks'
 import HeaderLogo from '../Header/HeaderLogo'
 
 // Site footer on every public page: brand and socials, link columns, legal bar

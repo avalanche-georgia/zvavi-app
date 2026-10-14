@@ -1,11 +1,14 @@
 joinUs:
   page:
     description: 'Avalanche Georgia is a registered non-profit, volunteer-driven, and community-supported organization — owned and managed by its members. If you believe in safer mountain travel and want to help, there are many ways to contribute.'
+    member:
+      title: 'Become a member'
+      description: 'Anyone can join. Members support the organisation and have a say in how it is run.'
+      action: 'Apply for membership'
     volunteer:
       title: 'Volunteer Your Time and Skills'
       descriptionPre: 'We welcome volunteers with diverse skills, especially in these areas:'
-      descriptionPost: 'Whether you’re a seasoned expert or just passionate about mountain safety, we’d love to hear from you. -> '
-      becomeAMember: 'Anyone can join — <a>Sign up as a member here</a>'
+      descriptionPost: 'Whether you’re a seasoned expert or just passionate about mountain safety, we’d love to hear from you.'
       options:
         - 'Avalanche forecasting & observation (with appropriate training)'
         - 'Software development (React, TypeScript, mapping tools, etc.)'
@@ -16,10 +19,9 @@ joinUs:
     financialSupport:
       title: 'Support Financially'
       description: 'Even small donations go a long way to cover server costs, observation equipment, and course materials.'
-      options:
-        patreon: 'Donate via <a>Patreon</a>'
-        wise: 'Donate via <a>Wise</a>'
-        bank: 'Or make a bank transfer -> '
+      patreon: 'Donate via Patreon'
+      wise: 'Donate via Wise'
+      bank: 'Bank transfer details'
     educate:
       title: 'Educate and Advocate'
       descriptionPre: 'Help us spread avalanche awareness by:'

@@ -1,2 +1,2 @@
-export { default as ContactLinkList } from './ContactLinkList'
+export { bankSectionId } from './BankRequisitesSection/BankRequisitesSection'
 export { default as PageContent } from './PageContent'

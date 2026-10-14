@@ -1,4 +1,6 @@
+import AlertGallery from '@ds/patterns/Alert/Alert.gallery'
 import ConfirmDialogGallery from '@ds/patterns/ConfirmDialog/ConfirmDialog.gallery'
+import ContentCardGallery from '@ds/patterns/ContentCard/ContentCard.gallery'
 import DataTableGallery from '@ds/patterns/DataTable/DataTable.gallery'
 import DrawerGallery from '@ds/patterns/Drawer/Drawer.gallery'
 import FooterActionsGallery from '@ds/patterns/FooterActions/FooterActions.gallery'
@@ -77,6 +79,8 @@ export const galleryEntries: GalleryEntry[] = [
   { Demo: PaginationGallery, id: 'pagination', title: 'Pagination' },
   { Demo: FooterActionsGallery, id: 'footer-actions', title: 'FooterActions' },
   { Demo: FormCardGallery, id: 'form-card', title: 'FormCard' },
+  { Demo: ContentCardGallery, id: 'content-card', title: 'ContentCard' },
+  { Demo: AlertGallery, id: 'alert', title: 'Alert' },
   { Demo: StickyActionBarGallery, id: 'sticky-action-bar', title: 'StickyActionBar' },
   { Demo: SuccessStateGallery, id: 'success-state', title: 'SuccessState' },
   { Demo: DataTableGallery, id: 'data-table', title: 'DataTable' },

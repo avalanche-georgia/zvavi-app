@@ -10,6 +10,8 @@ export const routes = {
   about: {
     aboutUs: '/about/about-us',
     apply: '/about/join-us/apply',
+    // The contact page, scrolled to the bank details
+    bank: '/about/contact#bank',
     contact: '/about/contact',
     // The Join us page, scrolled to its "Support financially" section
     donate: '/about/join-us#donate',
