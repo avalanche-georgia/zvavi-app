@@ -77,9 +77,13 @@ export const POST = async (request: Request) => {
         scope: 'api/notify/member-approved',
         status_code: error.statusCode,
       })
+
+      return NextResponse.json({ ok: false }, { status: 502 })
     }
   } catch (error) {
     reportServerError(error, { scope: 'api/notify/member-approved' })
+
+    return NextResponse.json({ ok: false }, { status: 502 })
   }
 
   return NextResponse.json({ ok: true })

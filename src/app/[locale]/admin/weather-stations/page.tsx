@@ -1,12 +1,11 @@
-import { Suspense } from 'react'
-import Loading from '@components/features/admin/shared/Loading'
+import AdminPageBoundary from '@components/features/admin/shared/AdminPageBoundary'
 
 import WeatherStationsContainer from './WeatherStationsContainer'
 
 const WeatherStationsPage = () => (
-  <Suspense fallback={<Loading isPage />}>
+  <AdminPageBoundary>
     <WeatherStationsContainer />
-  </Suspense>
+  </AdminPageBoundary>
 )
 
 export default WeatherStationsPage

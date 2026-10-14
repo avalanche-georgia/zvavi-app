@@ -1,12 +1,11 @@
-import { Suspense } from 'react'
-import Loading from '@components/features/admin/shared/Loading'
+import AdminPageBoundary from '@components/features/admin/shared/AdminPageBoundary'
 
 import PartnersContainer from './PartnersContainer'
 
 const PartnersPage = () => (
-  <Suspense fallback={<Loading isPage />}>
+  <AdminPageBoundary>
     <PartnersContainer />
-  </Suspense>
+  </AdminPageBoundary>
 )
 
 export default PartnersPage

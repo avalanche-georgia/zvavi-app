@@ -6,6 +6,8 @@ import { useRouter } from 'src/i18n/navigation'
 
 type UseRecordSelectionParams<TMode extends string> = {
   defaultMode: TMode
+  // Modes a link may ask for once with `&mode=` (e.g. an old edit URL)
+  linkModes?: readonly TMode[]
   // Name of the query parameter that holds the open record's id
   param: string
   // Parameters of other sheets that opening a record replaces (e.g. `create`)
@@ -15,21 +17,30 @@ type UseRecordSelectionParams<TMode extends string> = {
 // The record open in a sheet lives in the URL (`?member=<id>`), so it survives a
 // reload, Back closes it and the link can be shared. The mode it opens in is local.
 const noParams: string[] = []
+const noModes: never[] = []
 
 const useRecordSelection = <TMode extends string>({
   defaultMode,
+  linkModes = noModes,
   param,
   replacedParams = noParams,
 }: UseRecordSelectionParams<TMode>) => {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const [initialMode, setInitialMode] = useState<TMode>(defaultMode)
+  const [initialMode, setInitialMode] = useState<TMode>(() => {
+    const linkMode = searchParams.get('mode')
+
+    return linkModes.find((mode) => mode === linkMode) ?? defaultMode
+  })
 
   const selectedId = searchParams.get(param) || null
 
   const setSelectedId = useCallback(
     (id: string | null) => {
       const params = new URLSearchParams(searchParams.toString())
+
+      // Only meant for the record the page was opened with
+      params.delete('mode')
 
       if (id === null) {
         params.delete(param)
