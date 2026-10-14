@@ -7,6 +7,7 @@ import LoadingStateGallery from '@ds/patterns/LoadingState/LoadingState.gallery'
 import SheetGallery from '@ds/patterns/Sheet/Sheet.gallery'
 import StickyActionBarGallery from '@ds/patterns/StickyActionBar/StickyActionBar.gallery'
 import SuccessStateGallery from '@ds/patterns/SuccessState/SuccessState.gallery'
+import AvalancheLoaderGallery from '@ds/primitives/AvalancheLoader/AvalancheLoader.gallery'
 import BadgeGallery from '@ds/primitives/Badge/Badge.gallery'
 import ButtonGallery from '@ds/primitives/Button/Button.gallery'
 import CheckboxGallery from '@ds/primitives/Checkbox/Checkbox.gallery'
@@ -53,6 +54,7 @@ export const galleryEntries: GalleryEntry[] = [
   { Demo: CountBadgeGallery, id: 'count-badge', title: 'CountBadge' },
   { Demo: SkeletonGallery, id: 'skeleton', title: 'Skeleton' },
   { Demo: SpinnerGallery, id: 'spinner', title: 'Spinner' },
+  { Demo: AvalancheLoaderGallery, id: 'avalanche-loader', title: 'AvalancheLoader' },
   { Demo: LoadingStateGallery, id: 'loading-state', title: 'LoadingState' },
   { Demo: ConfirmPopoverGallery, id: 'confirm-popover', title: 'ConfirmPopover' },
   { Demo: ConfirmDialogGallery, id: 'confirm-dialog', title: 'ConfirmDialog' },

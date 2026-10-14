@@ -4,6 +4,23 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/*
+  Mountain scene for AvalancheLoader: snow lightest → darkest, then bare rock. Static, because the
+  SVG gradients reference these as var() rather than through a utility class.
+*/
+@theme static {
+  --color-snow-1: #f4f8fd;
+  --color-snow-2: #e3edf8;
+  --color-snow-3: #d3e2f3;
+  --color-snow-4: #c3d6ec;
+  --color-snow-5: #adc3de;
+  --color-snow-6: #91aacd;
+  --color-snow-7: #7690ba;
+  --color-rock-1: #8f97a6;
+  --color-rock-2: #555d6d;
+  --color-rock-3: #3f4654;
+}
+
 @theme {
   --animate-tooltip-in: tooltipIn 0.15s ease-out;
   --animate-tooltip-out: tooltipOut 0.1s ease-in;
