@@ -7,8 +7,8 @@ import FooterColumn, { type FooterLink } from './FooterColumn'
 
 import { routes } from '@/routes'
 
-// The active region's pages ("All regions" first while there is a choice), as in the
-// header · Resources · Organisation
+// The active region's pages, as in the header · Resources ("All regions" first while
+// there is a choice) · Organisation
 const FooterLinks = () => {
   const t = useTranslations()
   const { region, regions } = useRegionContext()
@@ -21,16 +21,16 @@ const FooterLinks = () => {
   const forecastLinks: FooterLink[] =
     regionId && forecastRoutes && observationRoutes
       ? [
-          ...allRegionsLinks,
           { href: routes.regionHome(regionId), label: t('navigation.overview') },
           { href: forecastRoutes.current, label: t('navigation.currentForecast') },
           { href: forecastRoutes.forecastArea, label: t('navigation.forecastArea') },
           { href: forecastRoutes.history, label: t('footer.links.archive') },
           { href: observationRoutes.root, label: t('navigation.observations') },
         ]
-      : allRegionsLinks
+      : []
 
   const resourceLinks: FooterLink[] = [
+    ...allRegionsLinks,
     ...(observationRoutes
       ? [{ href: observationRoutes.submit, label: t('footer.links.submitObservation') }]
       : []),

@@ -10,7 +10,7 @@ Shows today's avalanche danger for every forecast region at a glance: a compact 
 
 ## Site Header and Footer
 
-Every public page shares the same header and footer. The header has a menu named after the region you're looking at, with that region's pages (overview, current forecast, forecast area, past forecasts, observations), a "Switch region" button when there is more than one region, plus weather stations, partners and the about pages, an EN / ქარ language switch and the team's account menu or a sign-in link. The logo always leads back to the region's home page. On phones and tablets these move into a menu. The footer repeats the region's pages (with "All regions" first when there is a choice), lists resources and organisation pages, the team's social channels, the emergency number 112 and the legal pages.
+Every public page shares the same header and footer. The header has a menu named after the region you're looking at, with that region's pages (overview, current forecast, forecast area, past forecasts, observations), a "Switch region" button when there is more than one region, plus weather stations, partners and the about pages, an EN / ქარ language switch and the team's account menu or a sign-in link. The logo always leads back to the region's home page. On phones and tablets these move into a menu. The footer repeats the region's pages, lists resources (starting with "All regions" when there is a choice) and organisation pages, the team's social channels, the emergency number 112 and the legal pages.
 
 ## Region Page
 
