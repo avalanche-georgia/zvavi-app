@@ -5,6 +5,8 @@ import { cn } from '@/lib/utils'
 
 type SizeTileProps = {
   className?: string
+  // Table rows: a small tile with the number only
+  isCompact?: boolean
   size: AvalancheSize
 }
 
@@ -18,8 +20,23 @@ const shadeClassNames: Record<AvalancheSize, string> = {
 
 // Size number on a tile that darkens with size — size is the first thing to
 // scan for when reading a list of avalanches.
-const SizeTile = ({ className, size }: SizeTileProps) => {
+const SizeTile = ({ className, isCompact = false, size }: SizeTileProps) => {
   const t = useTranslations()
+
+  if (isCompact) {
+    return (
+      <span
+        className={cn(
+          'text-copy grid size-7.5 shrink-0 place-items-center rounded-lg font-bold tabular-nums',
+          shadeClassNames[size],
+          className,
+        )}
+      >
+        <span aria-hidden>{size}</span>
+        <span className="sr-only">{`${t('observations.labels.size')} ${size}`}</span>
+      </span>
+    )
+  }
 
   return (
     <span

@@ -1,17 +1,16 @@
-import { useBoolean, useToast } from '@components/hooks'
+import { useToast } from '@components/hooks'
 import { useRecentAvalancheDelete } from '@data/hooks/recentAvalanches'
 import type { RegionId } from '@domain/types'
 
-type UseAvalancheDeleteDialogParams = {
+type UseAvalancheDeleteParams = {
   id: number
   // Runs after a successful delete — e.g. close the panel or leave the page
   onSuccess?: VoidFunction
   regionId: RegionId
 }
 
-const useAvalancheDeleteDialog = ({ id, onSuccess, regionId }: UseAvalancheDeleteDialogParams) => {
+const useAvalancheDelete = ({ id, onSuccess, regionId }: UseAvalancheDeleteParams) => {
   const { isPending: isDeleting, mutateAsync: deleteAvalanche } = useRecentAvalancheDelete()
-  const [isOpen, { setFalse: closeDialog, setTrue: openDialog }] = useBoolean(false)
   const { toastError, toastSuccess } = useToast()
 
   const handleDelete = async () => {
@@ -19,15 +18,14 @@ const useAvalancheDeleteDialog = ({ id, onSuccess, regionId }: UseAvalancheDelet
 
     try {
       await deleteAvalanche({ id, regionId })
-      closeDialog()
       toastSuccess()
       onSuccess?.()
     } catch (error) {
-      toastError('AvalancheItem | handleDelete', { error })
+      toastError('useAvalancheDelete | handleDelete', { error })
     }
   }
 
-  return { closeDialog, handleDelete, isDeleting, isOpen, openDialog }
+  return { handleDelete, isDeleting }
 }
 
-export default useAvalancheDeleteDialog
+export default useAvalancheDelete

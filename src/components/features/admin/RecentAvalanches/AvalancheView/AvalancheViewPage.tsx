@@ -1,5 +1,7 @@
 'use client'
 
+import { useState } from 'react'
+import { FooterConfirm } from '@components/features/admin/shared'
 import { ButtonLink } from '@components/shared'
 import type { AvalancheListItem } from '@data/hooks/recentAvalanches'
 import { useTranslations } from 'next-intl'
@@ -7,8 +9,7 @@ import { useRouter } from 'src/i18n/navigation'
 
 import AvalancheView from './AvalancheView'
 import ViewActions from './ViewActions'
-import { useAvalancheDeleteDialog } from '../hooks'
-import RowDeleteDialog from '../RecentAvalanchesTable/RowDeleteDialog'
+import { useAvalancheDelete } from '../hooks'
 
 import { routes } from '@/routes'
 
@@ -25,7 +26,10 @@ const AvalancheViewPage = ({ avalanche }: { avalanche: AvalancheListItem }) => {
   const router = useRouter()
   const listHref = getListHref(avalanche)
 
-  const deleteDialog = useAvalancheDeleteDialog({
+  // Asked in the footer, like in the side panel
+  const [isConfirmingDelete, setIsConfirmingDelete] = useState(false)
+
+  const { handleDelete, isDeleting } = useAvalancheDelete({
     id: avalanche.id,
     onSuccess: () => router.push(listHref),
     regionId: avalanche.regionId,
@@ -43,19 +47,24 @@ const AvalancheViewPage = ({ avalanche }: { avalanche: AvalancheListItem }) => {
       <div className="rounded-lg bg-white shadow-sm">
         <AvalancheView avalanche={avalanche} />
         <footer className="border-t px-4 py-3">
-          <ViewActions
-            avalanche={avalanche}
-            onDelete={deleteDialog.openDialog}
-            onEdit={handleEdit}
-          />
+          {isConfirmingDelete ? (
+            <FooterConfirm
+              cancelLabel={t('common.actions.cancel')}
+              confirmLabel={t('common.actions.delete')}
+              isBusy={isDeleting}
+              message={t('admin.recentAvalanches.sheet.deleteConfirm')}
+              onCancel={() => setIsConfirmingDelete(false)}
+              onConfirm={handleDelete}
+            />
+          ) : (
+            <ViewActions
+              avalanche={avalanche}
+              onDelete={() => setIsConfirmingDelete(true)}
+              onEdit={handleEdit}
+            />
+          )}
         </footer>
       </div>
-
-      <RowDeleteDialog
-        isOpen={deleteDialog.isOpen}
-        onClose={deleteDialog.closeDialog}
-        onConfirm={deleteDialog.handleDelete}
-      />
     </div>
   )
 }

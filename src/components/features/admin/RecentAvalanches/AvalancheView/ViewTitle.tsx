@@ -2,8 +2,7 @@ import { formatAvalancheId, SizeTile } from '@components/features/observations'
 import type { AvalancheListItem } from '@data/hooks/recentAvalanches'
 import { useTranslations } from 'next-intl'
 
-import SourceBadge from '../RecentAvalanchesTable/SourceBadge'
-import StatusBadge from '../RecentAvalanchesTable/StatusBadge'
+import { SourceBadge, StatusBadge } from '../shared'
 
 const ViewTitle = ({ avalanche }: { avalanche: AvalancheListItem }) => {
   const t = useTranslations()
