@@ -1,6 +1,7 @@
 'use client'
 
 import { useAspectSummary } from '@components/hooks'
+import { Loading } from '@components/shared'
 import type { ObservationPoint, PublicObservation } from '@domain/types'
 import { Sheet, SheetHeader } from '@ds/patterns'
 import dynamic from 'next/dynamic'
@@ -8,12 +9,11 @@ import { useTranslations } from 'next-intl'
 
 import CoordinatesRow from './CoordinatesRow'
 import getMapsLink from './getMapsLink'
-import LocationMapLoading from './LocationMapLoading'
 import hasCoordinates from '../hasCoordinates'
 import useFormatDay from '../useFormatDay'
 
 const LocationMapClient = dynamic(() => import('./LocationMapClient'), {
-  loading: LocationMapLoading,
+  loading: () => <Loading className="bg-map size-full py-0" />,
   ssr: false,
 })
 

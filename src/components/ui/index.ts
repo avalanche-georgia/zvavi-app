@@ -16,7 +16,6 @@ export { default as SegmentedControl, type ToggleOption } from './SegmentedContr
 export { default as Select, type SelectOption, toOptions } from './Select'
 export { default as Skeleton } from './Skeleton'
 export { default as SortableItem } from './SortableItem'
-export { default as Spinner } from './Spinner'
 export { default as Textarea } from './Textarea'
 export { default as TextInput } from './TextInput'
 export { default as TimeInput } from './TimeInput'

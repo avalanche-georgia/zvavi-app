@@ -1,9 +1,8 @@
 'use client'
 
-import { Spinner } from '@components/ui'
+import { Loading } from '@components/shared'
 import { useGetForecast } from '@data/hooks/forecasts'
 import type { FullForecast } from '@domain/types'
-import { useTranslations } from 'next-intl'
 
 import ForecastPage from './ForecastPage'
 
@@ -17,7 +16,6 @@ type ForecastContainerProps = {
 // Renders the server-loaded forecast at once and keeps it fresh in the browser
 const ForecastContainer = (props: ForecastContainerProps) => {
   const { initialForecast, isCurrentForecast, nextForecastId, previousForecastId } = props
-  const t = useTranslations()
   const { data: forecast, isPending } = useGetForecast({
     forecastId: initialForecast.id,
     initialData: initialForecast,
@@ -26,7 +24,7 @@ const ForecastContainer = (props: ForecastContainerProps) => {
   })
 
   if (isPending || !forecast) {
-    return <Spinner label={t('common.labels.wait')} size="lg" />
+    return <Loading isPage />
   }
 
   return (

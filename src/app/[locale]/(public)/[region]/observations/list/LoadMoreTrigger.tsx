@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { Spinner } from '@components/ui'
+import { Spinner } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 import { useEventCallback } from 'usehooks-ts'
 
@@ -52,11 +52,7 @@ const LoadMoreTrigger = ({ isError, isLoading, onLoadMore }: LoadMoreTriggerProp
 
   return (
     <div ref={sentinelRef} className="text-muted flex min-h-16 items-center justify-center text-sm">
-      {isLoading && (
-        <div className="relative size-8">
-          <Spinner size="sm" />
-        </div>
-      )}
+      {isLoading && <Spinner label={t('common.messages.loading')} size="sm" />}
       {isError && (
         <button
           className="border-rule text-ink hover:bg-tile h-10 rounded-[11px] border bg-white px-3.5 font-semibold transition-colors"

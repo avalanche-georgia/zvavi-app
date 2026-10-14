@@ -1,9 +1,8 @@
 'use client'
 
 import { PartnerBenefitsSheet } from '@components/features/join'
-import { Spinner } from '@components/ui'
+import { Loading } from '@components/shared'
 import { useVerifyMember } from '@data/hooks/members'
-import { useTranslations } from 'next-intl'
 
 import InvalidMember from './InvalidMember'
 import MemberCard from './MemberCard'
@@ -13,15 +12,10 @@ type VerificationPageProps = {
 }
 
 const VerificationPage = ({ code }: VerificationPageProps) => {
-  const t = useTranslations()
   const { data, isError, isPending } = useVerifyMember({ code })
 
   if (isPending) {
-    return (
-      <div className="flex min-h-[50vh] items-center justify-center">
-        <Spinner label={t('common.labels.wait')} size="lg" />
-      </div>
-    )
+    return <Loading className="min-h-[50vh] py-0" isPage />
   }
 
   if (isError || !data?.success || !data.member) {
