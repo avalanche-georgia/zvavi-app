@@ -1,12 +1,11 @@
-import { Suspense } from 'react'
-import Loading from '@components/features/admin/shared/Loading'
+import AdminPageBoundary from '@components/features/admin/shared/AdminPageBoundary'
 
 import MembersContainer from './MembersContainer'
 
 const MembersPage = () => (
-  <Suspense fallback={<Loading isPage />}>
+  <AdminPageBoundary>
     <MembersContainer />
-  </Suspense>
+  </AdminPageBoundary>
 )
 
 export default MembersPage

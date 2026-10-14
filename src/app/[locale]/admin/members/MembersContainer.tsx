@@ -17,6 +17,7 @@ import { AdminPageBody } from '@components/layout/admin'
 
 // Opening a member closes the create sheet in the same navigation
 const replacedParams = ['create']
+const linkModes: MemberSheetMode[] = ['edit']
 
 const MembersContainer = () => {
   const page = useMembersListPage()
@@ -24,6 +25,7 @@ const MembersContainer = () => {
   const createSheet = useCreateSheetParam()
   const selection = useRecordSelection<MemberSheetMode>({
     defaultMode: 'view',
+    linkModes,
     param: 'member',
     replacedParams,
   })

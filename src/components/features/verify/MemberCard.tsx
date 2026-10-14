@@ -4,7 +4,7 @@ import { Icon } from '@components/icons'
 import { dateFormat } from '@domain/constants'
 import type { MemberStatus } from '@domain/types'
 import clsx from 'clsx'
-import { format } from 'date-fns'
+import { format, parseISO } from 'date-fns'
 import { useTranslations } from 'next-intl'
 
 import { statusConfig } from './statusConfig'
@@ -32,8 +32,8 @@ const MemberCard = ({
   const statusLabel = t(`verify.statuses.${status}`)
   const config = statusConfig[status]
 
-  const formattedJoinedAt = format(new Date(joinedAt), dateFormat)
-  const formattedExpiresAt = expiresAt ? format(new Date(expiresAt), dateFormat) : null
+  const formattedJoinedAt = format(parseISO(joinedAt), dateFormat)
+  const formattedExpiresAt = expiresAt ? format(parseISO(expiresAt), dateFormat) : null
 
   return (
     <div className="w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-xl">
