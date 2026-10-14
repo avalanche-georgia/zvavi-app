@@ -203,7 +203,7 @@ Rules:
 | **2. Primitives for submit** | Button, Badge, Field / FieldGroup, TextField, NumberField, Textarea, ChipGroup, ToggleGrid, SegmentedControl, Stepper. Patterns FormCard, StickyActionBar, SuccessState. Form bindings. Gallery demos | ✅ |
 | **3. Submit page redesign** | `local/observations/design_handoff_submit_observation/` built on ds | ✅ |
 | **4. Rest of observations** | List toolbar, detail views, aspect/elevation picker moved to `features/` with a bare variant | ☐ |
-| **5. Legacy, by screen area** | Public pages (auth, forecasts, about) → admin forms → admin tables, modals and drawers | ☐ |
+| **5. Legacy, by screen area** | Public pages (auth, forecasts, about) → admin forms → admin tables, modals and drawers. Admin lists, forms and the overview are done; what's left in admin: the avalanche form's legacy fields, `Sheet`, `Spinner`, `ConfirmationDialog` (Modal), the header and sidebar | ☐ |
 | **6. Cleanup** | Delete `ui/`. Remove `@headlessui/react`, `@radix-ui/*` and `clsx` | ☐ |
 
 ### Component tracker
@@ -214,25 +214,29 @@ Update this table when a legacy component's last consumer is migrated.
 |---|---|---|---|
 | Button (+ `shared/ButtonLink`) | Headless UI | `primitives/Button` | ☐ |
 | InputBlock | — | `primitives/Field` | ☐ |
-| TextInput, SearchInput | Headless UI | `primitives/TextField`, `primitives/SearchField` | ☐ |
+| TextInput | Headless UI | `primitives/TextField` | ☐ |
+| SearchInput | Headless UI | `primitives/SearchField` | ✅ |
 | Textarea | Headless UI | `primitives/Textarea` | ☐ |
-| NumberInput | base-ui | `primitives/Stepper` / `TextField` | ☐ |
+| NumberInput | base-ui | `primitives/Stepper` / `NumberField` | ✅ |
 | ChipGroup | base-ui | `primitives/ChipGroup` | ☐ |
 | SegmentedControl | base-ui | `primitives/SegmentedControl` | ☐ |
-| RadioGroup, RadioOption | Headless UI / base-ui | `primitives/RadioGroup` or `ToggleGrid` | ☐ |
+| RadioGroup | Headless UI | `primitives/SegmentedControl` | ✅ |
+| RadioOption | base-ui | `primitives/RadioGroup` or `ToggleGrid` | ☐ |
 | Checkbox | Headless UI | `primitives/Checkbox` | ☐ |
-| Switch | base-ui | `primitives/Switch` | ☐ |
+| Switch | base-ui | — (last consumer moved to `primitives/Checkbox`; add `primitives/Switch` when needed) | ✅ |
 | Select | Radix | `primitives/Select` (base-ui) | ☐ |
-| DatePicker, Calendar, TimeInput, TimePicker, DatePickerTimeInput | Headless UI + react-day-picker | `primitives/DateField` | ☐ |
+| DatePicker, Calendar, TimeInput, DatePickerTimeInput | Headless UI + react-day-picker | `primitives/DateField` | ☐ |
+| TimePicker | Headless UI | `primitives/DateField` (`withTime`) | ✅ |
 | Modal | Headless UI | `primitives/Dialog` (base-ui) | ☐ |
 | Popover | Radix | `primitives/Popover` (base-ui) | ☐ |
 | Tooltip, InfoIcon | Radix | `primitives/Tooltip` (base-ui Tooltip; hover/focus labels), `primitives/InfoTip` (base-ui Popover; explanations) | ☐ |
-| DropdownMenu | base-ui | `primitives/Menu` | ☐ |
+| DropdownMenu | base-ui | `primitives/Menu` | ✅ |
 | Drawer, Sheet | vaul / base-ui | `patterns/Sheet` (TBD) | ☐ |
 | IconButton | custom | `primitives/IconButton` | ☐ |
 | Alert | custom | — (last consumer removed with the forecast page redesign; add `patterns/Alert` when needed) | ✅ |
-| Spinner, Skeleton | custom | `primitives/Spinner`, `Skeleton` | ☐ |
-| Pagination, DataTable | custom | `primitives/Pagination`, `patterns/DataTable` | ☐ |
+| Spinner | custom | `primitives/Spinner` (TBD) | ☐ |
+| Skeleton | custom | `primitives/Skeleton` | ☐ |
+| Pagination, DataTable | custom | `primitives/Pagination`, `patterns/DataTable` | ✅ |
 | AspectElevationPicker | base-ui | moved to `features/observations/` | ✅ |
 | MiniCompass | custom | moves to `features/` | ☐ |
 | AutoScrollList, BrandedQRCode, FallbackImage, SortableItem | custom | reviewed individually (may stay generic in ds) | ☐ |
