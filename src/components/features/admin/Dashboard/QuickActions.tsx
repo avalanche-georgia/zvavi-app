@@ -4,6 +4,7 @@ import { LinkPendingIndicator } from '@components/features/admin/shared'
 import { usePendingMembersCount } from '@data/hooks/members'
 import { usePendingObservationsSummary } from '@data/hooks/recentAvalanches'
 import type { Region } from '@domain/types'
+import { CountBadge } from '@ds/primitives'
 import { Telescope, TriangleAlert, Users } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { Link } from 'src/i18n/navigation'
@@ -13,17 +14,6 @@ import DashboardCard from './DashboardCard'
 import NewForecastButton from './NewForecastButton'
 
 import { routes } from '@/routes'
-
-// How many items wait behind the action; nothing when there are none
-const CountBadge = ({ count }: { count: number }) => {
-  if (count === 0) return null
-
-  return (
-    <span className="bg-accent text-caption ml-auto rounded-full px-2 font-semibold text-white tabular-nums">
-      {count}
-    </span>
-  )
-}
 
 const QuickActions = ({ regions }: { regions: Region[] }) => {
   const t = useTranslations()
@@ -39,14 +29,14 @@ const QuickActions = ({ regions }: { regions: Region[] }) => {
           <Users aria-hidden />
           {t('admin.dashboard.actions.memberRequests')}
           <LinkPendingIndicator />
-          <CountBadge count={pendingMembersCount} />
+          <CountBadge className="ml-auto" count={pendingMembersCount} />
         </Link>
 
         <Link className={actionClasses} href={routes.admin.observations.root}>
           <Telescope aria-hidden />
           {t('admin.dashboard.actions.observationsReview')}
           <LinkPendingIndicator />
-          <CountBadge count={pendingObservationsCount} />
+          <CountBadge className="ml-auto" count={pendingObservationsCount} />
         </Link>
 
         <Link className={actionClasses} href={routes.admin.recentAvalanches.create}>
