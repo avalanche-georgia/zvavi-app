@@ -24,6 +24,7 @@ import SkeletonGallery from '@ds/primitives/Skeleton/Skeleton.gallery'
 import SpinnerGallery from '@ds/primitives/Spinner/Spinner.gallery'
 import StatusPillGallery from '@ds/primitives/StatusPill/StatusPill.gallery'
 import StepperGallery from '@ds/primitives/Stepper/Stepper.gallery'
+import SwitchGallery from '@ds/primitives/Switch/Switch.gallery'
 import ToggleGridGallery from '@ds/primitives/ToggleGrid/ToggleGrid.gallery'
 import TooltipGallery from '@ds/primitives/Tooltip/Tooltip.gallery'
 
@@ -61,6 +62,7 @@ export const galleryEntries: GalleryEntry[] = [
   { Demo: StepperGallery, id: 'stepper', title: 'Stepper' },
   { Demo: DateFieldGallery, id: 'date-field', title: 'DateField' },
   { Demo: CheckboxGallery, id: 'checkbox', title: 'Checkbox' },
+  { Demo: SwitchGallery, id: 'switch', title: 'Switch' },
   { Demo: ChipGroupGallery, id: 'chip-group', title: 'ChipGroup' },
   { Demo: ToggleGridGallery, id: 'toggle-grid', title: 'ToggleGrid' },
   { Demo: SegmentedControlGallery, id: 'segmented-control', title: 'SegmentedControl' },

@@ -587,6 +587,8 @@ admin:
       ariaLabel:
         catalog: 'Recent avalanches — {region}'
         queue: 'Observations awaiting review — {region}'
+      linked: 'Linked to {count, plural, one {# forecast} other {# forecasts}}'
+      unlinked: Not linked to a forecast
       columns:
         actions: Actions
         date: Occurred
@@ -606,6 +608,10 @@ admin:
     filters:
       all: All
       allStatuses: All statuses
+      unlinked:
+        label: Unlinked
+        about: About this filter
+        hint: Only avalanches no forecast links to yet
       dateMode:
         label: Filter by date
         created: Logged

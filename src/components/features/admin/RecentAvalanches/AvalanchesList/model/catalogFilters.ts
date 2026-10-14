@@ -22,6 +22,7 @@ export const readCatalogFilters = (searchParams: Pick<URLSearchParams, 'get'>) =
   const status = searchParams.get('status')
 
   return {
+    isUnlinked: searchParams.get('unlinked') === '1',
     source: isAvalancheSource(source) ? source : null,
     status: isCatalogStatus(status) ? status : null,
   }

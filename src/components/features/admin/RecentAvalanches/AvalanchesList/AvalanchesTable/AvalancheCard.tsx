@@ -22,7 +22,11 @@ const AvalancheCard = ({ avalanche, variant }: AvalancheCardProps) => {
   return (
     <div className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-3 gap-y-1.5">
       <SizeTile className="row-span-2" isCompact size={avalanche.size} />
-      <AvalancheCell avalanche={avalanche} onOpen={onAvalancheOpen} />
+      <AvalancheCell
+        avalanche={avalanche}
+        isLinkShown={variant === 'catalog'}
+        onOpen={onAvalancheOpen}
+      />
       {/* The queue holds pending records only — the status would say nothing */}
       {variant === 'catalog' ? <StatusBadge status={avalanche.status ?? 'published'} /> : <span />}
       <div className="text-caption text-muted flex min-w-0 items-center gap-1.5">

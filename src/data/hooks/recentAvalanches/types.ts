@@ -10,6 +10,8 @@ export type ListFilterParams = {
   excludeStatus?: AvalancheStatus
   // Moderation queue shows the longest-waiting submissions first
   isOldestFirst?: boolean
+  // Records no forecast links to yet
+  isUnlinked?: boolean
   page: number
   pageSize: number
   source?: AvalancheSource

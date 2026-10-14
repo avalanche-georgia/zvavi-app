@@ -25,11 +25,13 @@ const useAvalanchesListPage = (variant: AvalanchesListVariant, regionId: RegionI
     read: readListParams,
     serialize: serializeListParams,
   })
-  const { dateFrom, dateMode, dateTo, pageIndex, source, status } = params
+  const { dateFrom, dateMode, dateTo, isUnlinked, pageIndex, source, status } = params
   const from = parseIsoDay(dateFrom)
   const to = parseIsoDay(dateTo)
-  const catalogFilters =
-    variant === 'catalog' ? { source: source ?? undefined, status: status ?? undefined } : {}
+  const isCatalog = variant === 'catalog'
+  const catalogFilters = isCatalog
+    ? { isUnlinked, source: source ?? undefined, status: status ?? undefined }
+    : {}
 
   const query = useRecentAvalanchesPaginatedQuery({
     dateFrom: from ? startOfDay(from).toISOString() : undefined,
@@ -56,14 +58,17 @@ const useAvalanchesListPage = (variant: AvalanchesListVariant, regionId: RegionI
     dateFrom,
     dateMode,
     dateTo,
-    hasFilters: !!dateFrom || !!dateTo || (variant === 'catalog' && (!!source || !!status)),
+    hasFilters: !!dateFrom || !!dateTo || (isCatalog && (isUnlinked || !!source || !!status)),
+    isUnlinked,
     onDateFromChange: (day: string | null) => setFilters({ dateFrom: day }),
     onDateModeChange: (mode: DateMode) => setFilters({ dateMode: mode }),
     onDateToChange: (day: string | null) => setFilters({ dateTo: day }),
-    onFiltersClear: () => setFilters({ dateFrom: null, dateTo: null, source: null, status: null }),
+    onFiltersClear: () =>
+      setFilters({ dateFrom: null, dateTo: null, isUnlinked: false, source: null, status: null }),
     onPageChange: (nextPageIndex: number) => setParams({ pageIndex: nextPageIndex }),
     onSourceChange: (nextSource: AvalancheSource | null) => setFilters({ source: nextSource }),
     onStatusChange: (nextStatus: CatalogStatus | null) => setFilters({ status: nextStatus }),
+    onUnlinkedChange: (nextIsUnlinked: boolean) => setFilters({ isUnlinked: nextIsUnlinked }),
     pageIndex,
     query,
     source,
