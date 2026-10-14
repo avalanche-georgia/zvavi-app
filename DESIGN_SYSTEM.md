@@ -110,6 +110,7 @@ them.
 |---|---|---|
 | **Semantic colour** | text `ink`, `body`, `muted`, `placeholder`, `disabled` · lines `rule`, `rule-strong` · surfaces `surface`, `canvas`, `tile`, `tile-hover`, `off`, `map` · brand `primary(-hover/-soft/-ink)`, `brand-blue` · `accent(-hover/-soft)` · status `danger`, `danger-border`, `success`, `success-soft`, `warning`, `warning-soft`, `alert-ink` · domain `hazard-*`, `size-*` | `text-ink`, `bg-surface`, `border-rule`, … |
 | **Type scale** | `display` 34, `title-lg` 28, `title` 24, `title-sm` 22, `heading` 17, `copy-lg` 15, `copy` 14, `copy-sm` 13, `caption` 12.5, `micro` 10.5. Line-height and tracking are part of the token | `text-heading`, … |
+| **Letter spacing** | `eyebrow` 0.06em (uppercase eyebrows and small labels) | `tracking-eyebrow` |
 | **Radii** | `card` 16, `media` 12, `field` 11, `control` 10, `badge` 5, `sheet` 20 (pills use `rounded-full`) | `rounded-card`, … |
 | **Shadows** | `raised` (segmented thumb), `overlay` (map buttons), `float` (sticky bar), `pin`, `menu`, `sheet` (bottom sheet), `panel` (desktop side panel) | `shadow-float`, … |
 | **Motion** | `sheet` easing (sheet slide in / out) | `ease-sheet` |

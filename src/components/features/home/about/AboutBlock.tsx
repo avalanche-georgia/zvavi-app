@@ -10,7 +10,7 @@ const AboutBlock = () => {
 
   return (
     <div className="rounded-card border-rule bg-surface flex flex-col items-start gap-3 border p-5 md:p-7">
-      <p className="text-caption text-muted font-semibold tracking-[.06em] uppercase">
+      <p className="text-caption text-muted tracking-eyebrow font-semibold uppercase">
         {t('home.about.eyebrow')}
       </p>
       <h2 className="text-title-sm font-bold">{t('home.about.title')}</h2>

@@ -13,14 +13,12 @@ const BecomeMainPartner = () => {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-5">
         <span
           aria-hidden
-          className="rounded-media border-rule-strong text-placeholder grid h-16 w-30 shrink-0 place-items-center border-2 border-dashed font-mono text-[10px]"
+          className="rounded-media border-rule-strong text-placeholder text-micro grid h-16 w-30 shrink-0 place-items-center border-2 border-dashed font-mono"
         >
           {t('home.partners.empty.logoSlot')}
         </span>
         <div>
-          <b className="block text-xl font-bold tracking-[-0.02em]">
-            {t('home.partners.empty.title')}
-          </b>
+          <b className="text-title-sm block font-bold">{t('home.partners.empty.title')}</b>
           <p className="text-body text-copy mt-1.5 max-w-[58ch] text-pretty">
             {t('home.partners.empty.message')}
           </p>

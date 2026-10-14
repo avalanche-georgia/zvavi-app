@@ -12,7 +12,7 @@ type FooterColumnProps = {
 
 const FooterColumn = ({ links, title }: FooterColumnProps) => (
   <nav aria-label={title}>
-    <h2 className="text-muted mb-3 text-xs font-semibold tracking-[.06em] uppercase">{title}</h2>
+    <h2 className="text-muted tracking-eyebrow mb-3 text-xs font-semibold uppercase">{title}</h2>
     <ul>
       {links.map(({ href, label }) => (
         <li key={href}>

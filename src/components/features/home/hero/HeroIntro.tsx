@@ -8,7 +8,7 @@ const HeroIntro = ({ now }: { now: string }) => {
 
   return (
     <div className="mb-5">
-      <p className="text-caption text-muted font-semibold tracking-[.06em] uppercase">
+      <p className="text-caption text-muted tracking-eyebrow font-semibold uppercase">
         {formatLongDay(now)}
       </p>
       <h1 className="text-title lg:text-display my-1.5 font-bold text-balance">

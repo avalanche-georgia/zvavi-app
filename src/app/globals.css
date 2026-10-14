@@ -122,6 +122,9 @@
   --text-micro--line-height: 1;
   --text-micro--letter-spacing: 0.04em;
 
+  /* Letter spacing — uppercase eyebrows and labels */
+  --tracking-eyebrow: 0.06em;
+
   /* Radii */
   --radius-card: 16px;
   --radius-media: 12px;

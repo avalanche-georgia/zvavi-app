@@ -13,7 +13,7 @@ const JoinBlock = () => {
 
   return (
     <div className="rounded-card bg-ink flex flex-col items-start gap-3 p-5 text-white md:p-7">
-      <p className="text-caption font-semibold tracking-[.06em] text-white/60 uppercase">
+      <p className="text-caption tracking-eyebrow font-semibold text-white/60 uppercase">
         {t('home.join.eyebrow')}
       </p>
       <h2 className="text-title-sm font-bold">{t('home.join.title')}</h2>

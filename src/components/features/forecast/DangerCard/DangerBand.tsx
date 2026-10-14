@@ -39,7 +39,7 @@ const DangerBand = ({ level, onInfoOpen }: DangerBandProps) => {
         width={64}
       />
       <span className="min-w-0 flex-1">
-        <span className="block text-xs font-semibold tracking-[.06em] uppercase">
+        <span className="tracking-eyebrow block text-xs font-semibold uppercase">
           {t('common.labels.overallDangerLevel')}
         </span>
         <span className="text-title mt-0.5 block font-bold wrap-break-word hyphens-auto">

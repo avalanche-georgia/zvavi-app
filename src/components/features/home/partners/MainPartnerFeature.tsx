@@ -40,7 +40,7 @@ const MainPartnerFeature = ({ isStacked, partner }: MainPartnerFeatureProps) => 
         <PartnerLogo logoUrl={partner.logoUrl} name={name} />
       </span>
       <span className="min-w-0">
-        <span className="text-primary-ink block text-xs font-semibold tracking-[.06em] uppercase">
+        <span className="text-primary-ink tracking-eyebrow block text-xs font-semibold uppercase">
           {t('home.partners.badge')}
         </span>
         <b className="text-title-sm mt-1 mb-1.5 block font-bold wrap-anywhere">{name}</b>
