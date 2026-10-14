@@ -15,7 +15,7 @@ const HeaderLogo = ({ isPriority = false }: { isPriority?: boolean }) => {
 
   return (
     <Link
-      className="focus-ring text-primary flex shrink-0 items-center gap-2.5 rounded-lg text-[19px] font-bold tracking-[-0.01em]"
+      className="focus-ring text-primary inline-flex shrink-0 items-center gap-2.5 rounded-lg text-[19px] font-bold tracking-[-0.01em]"
       href={region ? routes.regionHome(region.id) : routes.regions}
     >
       <Image alt="" height={30} priority={isPriority} src={Logo} width={30} />
