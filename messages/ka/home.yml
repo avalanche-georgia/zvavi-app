@@ -14,7 +14,7 @@ home:
     expiredStatus: 'ვადაგასული'
     noForecastToday: 'დღეს პროგნოზი არ გამოქვეყნებულა'
     nextForecast: 'შემდეგი პროგნოზი დეკემბერში'
-    notIssued: 'არ გამოქვეყნებულა'
+    unavailable: 'პროგნოზი ამჟამად მიუწვდომელია'
     offSeason: 'არასეზონი'
     noForecaster: 'პროგნოზები ჯერ არ არის'
     lookingForForecaster: 'ვეძებთ პროგნოზისტს'

@@ -1,6 +1,7 @@
 import fetchLatestPublishedForecast from '@data/queries/fetchLatestPublishedForecast'
 import fetchTier1Partners from '@data/queries/fetchTier1Partners'
 import fetchWeatherStations from '@data/queries/fetchWeatherStations'
+import { getForecastState, type RegionForecastState } from '@domain/forecastState'
 import type { Forecast, Partner, PublicObservation, RegionId } from '@domain/types'
 
 import 'server-only'
@@ -15,6 +16,8 @@ export type RegionHomeData = {
   partners: Partner[]
   // null: the lookup failed
   recentAvalanches: PublicObservation[] | null
+  // Same rule as the region chooser
+  state: RegionForecastState
   // null: the lookup failed
   weatherStationsCount: number | null
 }
@@ -63,7 +66,13 @@ const fetchRegionHomeData = async (regionId: RegionId): Promise<RegionHomeData> 
     fetchWeatherStationsCount(regionId),
   ])
 
-  return { forecast, partners, recentAvalanches, weatherStationsCount }
+  return {
+    forecast,
+    partners,
+    recentAvalanches,
+    state: getForecastState(forecast, new Date()),
+    weatherStationsCount,
+  }
 }
 
 export default fetchRegionHomeData

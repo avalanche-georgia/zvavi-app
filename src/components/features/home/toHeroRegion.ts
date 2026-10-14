@@ -1,13 +1,12 @@
-import type { RegionForecastState } from '@domain/forecastState'
 import type { Forecast, Region } from '@domain/types'
 
-import type { HeroRegion } from './types'
+import type { ChooserRegionState, HeroRegion } from './types'
 
 export type RegionsPageRegion = {
   // null: the region has no published forecast
   forecast: Forecast | null
   region: Region
-  state: RegionForecastState
+  state: ChooserRegionState
 }
 
 // Only what the list and map need — keeps full forecasts out of the client props

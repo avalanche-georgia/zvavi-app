@@ -3,5 +3,3 @@ regions:
     gudauri: 'გუდაური'
     svaneti: 'სვანეთი'
 
-  selector:
-    label: 'რეგიონის არჩევა'

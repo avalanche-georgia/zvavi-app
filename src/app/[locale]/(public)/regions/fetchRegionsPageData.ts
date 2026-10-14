@@ -14,15 +14,15 @@ export type RegionsPageData = {
   regions: RegionsPageRegion[]
 }
 
-// A failed lookup only costs that region its danger (shown as "no forecasts yet"),
-// not the whole page
+// A failed lookup only costs that region its danger (shown as "unavailable", never as
+// a state it isn't in), not the whole page. undefined: the lookup failed.
 const fetchRegionForecast = async (regionId: RegionId) => {
   try {
     return await fetchLatestPublishedForecast(regionId)
   } catch (error) {
     reportServerError(error, { region_id: regionId, scope: 'fetchRegionsPageData | forecast' })
 
-    return null
+    return undefined
   }
 }
 
@@ -37,11 +37,15 @@ const fetchRegionsPageData = async (regions: Region[]): Promise<RegionsPageData>
   return {
     now: now.toISOString(),
     partners,
-    regions: regions.map((region, index) => ({
-      forecast: forecasts[index],
-      region,
-      state: getForecastState(forecasts[index], now),
-    })),
+    regions: regions.map((region, index) => {
+      const forecast = forecasts[index]
+
+      return {
+        forecast: forecast ?? null,
+        region,
+        state: forecast === undefined ? 'unavailable' : getForecastState(forecast, now),
+      }
+    }),
   }
 }
 

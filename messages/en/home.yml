@@ -14,7 +14,7 @@ home:
     expiredStatus: 'Expired'
     noForecastToday: 'No forecast issued today'
     nextForecast: 'Next forecast in December'
-    notIssued: 'Not issued'
+    unavailable: 'Forecast unavailable right now'
     offSeason: 'Off-season'
     noForecaster: 'No forecasts yet'
     lookingForForecaster: 'Looking for a forecaster'

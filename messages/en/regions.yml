@@ -3,5 +3,3 @@ regions:
     gudauri: 'Gudauri'
     svaneti: 'Svaneti'
 
-  selector:
-    label: 'Select region'

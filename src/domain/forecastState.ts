@@ -26,7 +26,3 @@ export const getForecastState = (forecast: Forecast | null, now: Date): RegionFo
 
   return isBefore(forecast.validUntil, now) ? 'expired' : 'current'
 }
-
-// The region has a forecast page to open (current, expired or "No rating")
-export const hasForecastPage = (state: RegionForecastState) =>
-  state === 'current' || state === 'expired' || state === 'noRating'

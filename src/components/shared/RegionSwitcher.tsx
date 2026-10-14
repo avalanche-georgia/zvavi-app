@@ -29,9 +29,9 @@ const RegionSwitcher = ({ onNavigate }: { onNavigate?: () => void }) => {
       <MapPin aria-hidden className="text-muted size-3.5" />
       {region ? (
         <>
-          {/* Says where the link goes when the name alone would read as "this region" */}
-          {hasChoice && <span className="sr-only">{t('navigation.chooseRegion')}: </span>}
           {t(`regions.names.${region.id}`)}
+          {/* Says where the link goes; after the visible name, so voice control matches it */}
+          {hasChoice && <span className="sr-only"> — {t('navigation.chooseRegion')}</span>}
         </>
       ) : (
         t('navigation.chooseRegion')

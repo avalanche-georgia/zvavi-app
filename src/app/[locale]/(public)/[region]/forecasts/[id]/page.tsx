@@ -36,7 +36,7 @@ export const generateMetadata = async (props: ForecastPageProps): Promise<Metada
   const supabase = await createClient()
   const { data, error } = await supabase
     .from('forecasts')
-    .select('hazard_levels, valid_until')
+    .select('hazard_levels, region_id, valid_until')
     .match({ id: forecastId, status: 'published' })
     .single()
 
@@ -58,9 +58,11 @@ export const generateMetadata = async (props: ForecastPageProps): Promise<Metada
   const description = `Avalanche forecast for Georgia. Overall hazard level: ${levelName}.${validUntil ? ` Valid until ${validUntil}.` : ''}`
 
   return {
+    // The forecast's own region: a mismatched URL still renders it, but must not compete
+    // with the real one
     alternates: getAlternates(
       params.locale,
-      routes.forecastsByRegion(params.region).view(forecastId),
+      routes.forecastsByRegion(data.region_id ?? params.region).view(forecastId),
     ),
     description,
     openGraph: {

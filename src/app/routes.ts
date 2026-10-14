@@ -85,8 +85,6 @@ export const routes = {
   observationsByRegion: (regionId: string) => ({
     root: `/${regionId}/observations`,
     submit: `/${regionId}/observations/submit`,
-    // The list with the observation's details open
-    view: (id: number) => `/${regionId}/observations?id=${id}`,
   }),
   partners: '/partners',
   privacy: '/privacy-policy',

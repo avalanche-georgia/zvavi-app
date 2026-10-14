@@ -24,7 +24,7 @@ const HomeHero = ({ intro, regions }: HomeHeroProps) => {
     <div className="grid gap-6 lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)] lg:items-stretch">
       <div className="flex min-w-0 flex-col">
         {intro}
-        {isOffSeason && <OffSeasonNote />}
+        {isOffSeason && <OffSeasonNote className="mb-3" />}
         <RegionList highlightedId={highlightedId} onHover={setHighlightedId} regions={regions} />
         <DangerLegend />
       </div>

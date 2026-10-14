@@ -43,6 +43,7 @@ const RegionHomePage = async ({ params }: RegionHomePageProps) => {
       partners={data.partners}
       recentAvalanches={data.recentAvalanches}
       regionId={region.id}
+      state={data.state}
       weatherStationsCount={data.weatherStationsCount}
     />
   )
