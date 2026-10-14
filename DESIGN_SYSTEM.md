@@ -30,7 +30,7 @@ src/components/
 │   ├── primitives/      # Button, Badge, Checkbox, Field, FieldGroup, TextField, NumberField,
 │   │                    # Textarea, ChipGroup, ToggleGrid, SegmentedControl, Select, Stepper, InfoTip,
 │   │                    # IconButton, RatingScale, DateField, Menu, Pagination, SearchField,
-│   │                    # StatusPill, Skeleton, Spinner, Dialog
+│   │                    # StatusPill, CountBadge, Skeleton, Spinner, Dialog
 │   ├── patterns/        # FormCard, StickyActionBar, SuccessState, DataTable, LoadingState,
 │   │                    # ConfirmDialog
 │   └── form/            # react-hook-form bindings: FormTextField, FormTextarea, FormNumberField,
@@ -204,7 +204,7 @@ Rules:
 | **2. Primitives for submit** | Button, Badge, Field / FieldGroup, TextField, NumberField, Textarea, ChipGroup, ToggleGrid, SegmentedControl, Stepper. Patterns FormCard, StickyActionBar, SuccessState. Form bindings. Gallery demos | ✅ |
 | **3. Submit page redesign** | `local/observations/design_handoff_submit_observation/` built on ds | ✅ |
 | **4. Rest of observations** | List toolbar, detail views, aspect/elevation picker moved to `features/` with a bare variant | ☐ |
-| **5. Legacy, by screen area** | Public pages (auth, forecasts, about) → admin forms → admin tables, modals and drawers. Admin lists, forms and the overview are done; what's left in admin: the avalanche form's legacy fields, `Sheet`, the header and sidebar | ☐ |
+| **5. Legacy, by screen area** | Public pages (auth, forecasts, about) → admin forms → admin tables, modals and drawers. Admin lists, forms and the overview are done; what's left in admin: the avalanche form's legacy fields, `Sheet` and the vaul mobile menu drawer | ☐ |
 | **6. Cleanup** | Delete `ui/`. Remove `@headlessui/react`, `@radix-ui/*` and `clsx` | ☐ |
 
 ### Component tracker

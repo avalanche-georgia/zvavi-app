@@ -1,36 +1,35 @@
 import { Icon } from '@components/icons'
-import clsx from 'clsx'
+import { CountBadge } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 import { Link } from 'src/i18n/navigation'
 
 import type { NavItem } from './types'
 
+import { cn } from '@/lib/utils'
+
 type NavLinkProps = {
   badge?: number
   isActive?: boolean
   item: NavItem
-  onClick?: () => void
+  onClick?: VoidFunction
 }
 
-const NavLink = ({ badge, isActive, item, onClick }: NavLinkProps) => {
+const NavLink = ({ badge, isActive = false, item, onClick }: NavLinkProps) => {
   const t = useTranslations()
 
   return (
     <Link
-      className={clsx(
-        'flex items-center gap-3 rounded-sm px-3 py-2 text-sm font-medium transition-colors',
-        isActive ? 'bg-primary/10 text-primary' : 'text-gray-700 hover:bg-gray-100',
+      aria-current={isActive ? 'page' : undefined}
+      className={cn(
+        'rounded-control text-copy flex items-center gap-3 px-3 py-2 font-medium transition-colors',
+        isActive ? 'bg-primary-soft text-primary-ink' : 'text-body hover:bg-tile hover:text-ink',
       )}
       href={item.href}
       onClick={onClick}
     >
-      <Icon className="size-5" icon={item.icon} />
+      <Icon className="size-5 shrink-0" icon={item.icon} />
       {t(`admin.sidebar.${item.label}`)}
-      {badge != null && badge > 0 && (
-        <span className="ml-auto flex size-5 items-center justify-center rounded-full bg-blue-500 text-xs text-white">
-          {badge}
-        </span>
-      )}
+      <CountBadge className="ml-auto" count={badge} />
     </Link>
   )
 }

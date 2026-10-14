@@ -1,33 +1,29 @@
 'use client'
 
-import { Icon } from '@components/icons'
+import { IconButton } from '@ds/primitives'
+import { Menu } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { usePathname } from 'src/i18n/navigation'
 
 import { usePageTitle } from './usePageTitle'
 import UserMenu from './UserMenu'
 
-type AdminPageHeaderProps = {
-  onOpenMenu: VoidFunction
-}
-
-const AdminPageHeader = ({ onOpenMenu }: AdminPageHeaderProps) => {
+const AdminPageHeader = ({ onMenuOpen }: { onMenuOpen: VoidFunction }) => {
   const t = useTranslations()
   const pathname = usePathname()
   const title = usePageTitle(pathname)
 
   return (
-    <header className="flex h-14 shrink-0 items-center justify-between border-b bg-white px-4 md:px-6">
-      <div className="flex items-center">
-        <button
+    <header className="border-rule bg-surface flex h-14 shrink-0 items-center justify-between gap-4 border-b px-4 md:px-6">
+      <div className="flex min-w-0 items-center gap-2">
+        <IconButton
           aria-label={t('admin.sidebar.openMenu')}
-          className="rounded-lg p-2 hover:bg-gray-100 md:hidden"
-          onClick={onOpenMenu}
-          type="button"
+          className="-ml-2 md:hidden"
+          onClick={onMenuOpen}
         >
-          <Icon className="size-5" icon="menu" />
-        </button>
-        <h1 className="ml-2 text-lg font-semibold md:ml-0">{title}</h1>
+          <Menu className="size-5" />
+        </IconButton>
+        <h1 className="text-heading text-ink truncate font-bold">{title}</h1>
       </div>
       <UserMenu />
     </header>
