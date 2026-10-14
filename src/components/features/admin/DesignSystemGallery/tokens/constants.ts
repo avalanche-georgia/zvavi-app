@@ -68,6 +68,7 @@ export const fontSizeClasses: Record<FontSizeToken, string> = {
   'copy-sm': 'text-copy-sm',
   display: 'text-display',
   heading: 'text-heading',
+  logo: 'text-logo',
   micro: 'text-micro',
   title: 'text-title',
   'title-lg': 'text-title-lg',

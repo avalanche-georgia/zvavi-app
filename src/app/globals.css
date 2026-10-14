@@ -104,6 +104,9 @@
   --text-title: 24px;
   --text-title--line-height: 1.15;
   --text-title--letter-spacing: -0.02em;
+  --text-logo: 19px;
+  --text-logo--line-height: 1.2;
+  --text-logo--letter-spacing: -0.01em;
   --text-title-sm: 22px;
   --text-title-sm--line-height: 1.2;
   --text-title-sm--letter-spacing: -0.02em;

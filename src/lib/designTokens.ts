@@ -6,6 +6,7 @@ export const fontSizeTokens = [
   'title-lg',
   'title',
   'title-sm',
+  'logo',
   'heading',
   'copy-lg',
   'copy',
@@ -13,6 +14,8 @@ export const fontSizeTokens = [
   'caption',
   'micro',
 ] as const
+
+export const trackingTokens = ['eyebrow'] as const
 
 export const radiusTokens = ['card', 'media', 'field', 'control', 'badge', 'sheet'] as const
 

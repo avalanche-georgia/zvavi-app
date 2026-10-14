@@ -1,12 +1,11 @@
 'use client'
 
 import { useAuth, useSignOut } from '@components/hooks'
+import UserAvatar from '@components/shared/UserAvatar'
 import { useCurrentUserProfileQuery } from '@data/hooks/userProfiles'
 import { Button, Skeleton } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 import { Link } from 'src/i18n/navigation'
-
-import UserAvatar from './UserAvatar'
 
 import { routes } from '@/routes'
 

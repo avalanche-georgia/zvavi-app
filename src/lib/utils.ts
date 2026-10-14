@@ -1,7 +1,7 @@
 import { type ClassValue, clsx } from 'cnfast'
 import { extendTailwindMerge } from 'tailwind-merge'
 
-import { fontSizeTokens, radiusTokens, shadowTokens } from './designTokens'
+import { fontSizeTokens, radiusTokens, shadowTokens, trackingTokens } from './designTokens'
 
 const twMerge = extendTailwindMerge({
   extend: {
@@ -9,6 +9,7 @@ const twMerge = extendTailwindMerge({
       radius: [...radiusTokens],
       shadow: [...shadowTokens],
       text: [...fontSizeTokens],
+      tracking: [...trackingTokens],
     },
   },
 })

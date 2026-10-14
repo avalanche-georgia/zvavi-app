@@ -5,13 +5,19 @@ import { useCurrentUserProfileQuery } from '@data/hooks/userProfiles'
 import type { User } from '@domain/types'
 import { getButtonClasses, Menu, MenuItem, MenuSeparator, Skeleton } from '@ds/primitives'
 import { LayoutDashboard, LogOut } from 'lucide-react'
+import dynamic from 'next/dynamic'
 import { useTranslations } from 'next-intl'
 import { Link } from 'src/i18n/navigation'
 
 import AvatarButton from './AvatarButton'
-import UserAvatar from '../admin/header/UserMenu/UserAvatar'
 
 import { routes } from '@/routes'
+
+// Loaded only for signed-in users: the generated-avatar library stays out of every
+// anonymous visitor's bundle
+const UserAvatar = dynamic(() => import('@components/shared/UserAvatar'), {
+  loading: () => <Skeleton className="size-9 rounded-full" />,
+})
 
 type AccountButtonProps = {
   isLoading: boolean
@@ -22,9 +28,14 @@ type AccountButtonProps = {
 const AccountButton = ({ isLoading, user }: AccountButtonProps) => {
   const t = useTranslations()
   const { signOut } = useSignOut()
-  const { data: profile } = useCurrentUserProfileQuery({ isEnabled: Boolean(user) })
+  const { data: profile, isPending: isProfilePending } = useCurrentUserProfileQuery({
+    isEnabled: Boolean(user),
+  })
 
-  if (isLoading) return <Skeleton className="size-9 rounded-full" />
+  // Wait for the profile too: the generated avatar would flash before the uploaded photo
+  if (isLoading || (user && isProfilePending)) {
+    return <Skeleton className="size-9 rounded-full" />
+  }
 
   if (!user) {
     return (

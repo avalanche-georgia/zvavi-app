@@ -8,7 +8,7 @@ const ReadForecastLink = ({ href }: { href: string }) => {
 
   return (
     <Link
-      className="border-rule text-primary-hover hover:bg-primary-soft text-copy focus-visible:outline-accent flex items-center justify-between border-t px-4 py-3.5 font-semibold transition-colors focus-visible:outline-2 focus-visible:-outline-offset-2"
+      className="border-rule text-accent hover:bg-accent-soft hover:text-accent-hover text-copy focus-visible:outline-accent flex items-center justify-between border-t px-4 py-3.5 font-semibold transition-colors focus-visible:outline-2 focus-visible:-outline-offset-2"
       href={href}
     >
       {t('common.actions.readFullForecast')}

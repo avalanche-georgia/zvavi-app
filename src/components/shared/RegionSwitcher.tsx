@@ -8,15 +8,14 @@ import { Link } from 'src/i18n/navigation'
 import { cn } from '@/lib/utils'
 import { routes } from '@/routes'
 
-// "Switch region" → the region chooser, where picking one is remembered. Only while
-// there is more than one region (the nav already names the current one).
-const RegionSwitcher = ({
-  className,
-  onNavigate,
-}: {
+type RegionSwitcherProps = {
   className?: string
   onNavigate?: () => void
-}) => {
+}
+
+// "Switch region" → the region chooser, where picking one is remembered. Only while
+// there is more than one region (the nav already names the current one).
+const RegionSwitcher = ({ className, onNavigate }: RegionSwitcherProps) => {
   const t = useTranslations()
   const { region, regions } = useRegionContext()
 

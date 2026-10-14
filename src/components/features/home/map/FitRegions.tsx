@@ -24,14 +24,17 @@ const FitRegions = ({ bounds }: { bounds: LatLngBounds }) => {
       const { width } = map.getContainer().getBoundingClientRect()
 
       map.invalidateSize()
-      // Zoomed out no further than the whole country fits the card
+
+      if (width !== fittedWidth) {
+        fittedWidth = width
+        map.fitBounds(bounds, fitOptions)
+      }
+
+      // Limits after the fit: set before it, setMinZoom would queue an animated zoom
+      // that undoes the fit a frame later. Zoomed out no further than the whole
+      // country fits the card.
       map.setMinZoom(map.getBoundsZoom(countryBounds))
       map.setMaxBounds(panBounds)
-
-      if (width === fittedWidth) return
-
-      fittedWidth = width
-      map.fitBounds(bounds, fitOptions)
     }
 
     fit()
