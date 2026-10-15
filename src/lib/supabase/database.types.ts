@@ -4,7 +4,7 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: '14.5'
+    PostgrestVersion: '14.1'
   }
   graphql_public: {
     Tables: {
@@ -209,7 +209,7 @@ export type Database = {
           hazard_levels: Json
           id: number
           published_at: string | null
-          region_id: Database['public']['Enums']['region_id'] | null
+          region_id: Database['public']['Enums']['region_id']
           snow_condition: Database['public']['Enums']['snow_condition']
           snowpack: string | null
           status: Database['public']['Enums']['forecast_status'] | null
@@ -224,7 +224,7 @@ export type Database = {
           hazard_levels?: Json
           id?: number
           published_at?: string | null
-          region_id?: Database['public']['Enums']['region_id'] | null
+          region_id: Database['public']['Enums']['region_id']
           snow_condition?: Database['public']['Enums']['snow_condition']
           snowpack?: string | null
           status?: Database['public']['Enums']['forecast_status'] | null
@@ -239,7 +239,7 @@ export type Database = {
           hazard_levels?: Json
           id?: number
           published_at?: string | null
-          region_id?: Database['public']['Enums']['region_id'] | null
+          region_id?: Database['public']['Enums']['region_id']
           snow_condition?: Database['public']['Enums']['snow_condition']
           snowpack?: string | null
           status?: Database['public']['Enums']['forecast_status'] | null
@@ -512,7 +512,7 @@ export type Database = {
           longitude: number | null
           photo_keys: string[] | null
           quantity: number
-          region_id: Database['public']['Enums']['region_id'] | null
+          region_id: Database['public']['Enums']['region_id']
           size: number
           slab_depth: number | null
           source: Database['public']['Enums']['avalanche_source']
@@ -538,7 +538,7 @@ export type Database = {
           longitude?: number | null
           photo_keys?: string[] | null
           quantity: number
-          region_id?: Database['public']['Enums']['region_id'] | null
+          region_id: Database['public']['Enums']['region_id']
           size: number
           slab_depth?: number | null
           source?: Database['public']['Enums']['avalanche_source']
@@ -564,7 +564,7 @@ export type Database = {
           longitude?: number | null
           photo_keys?: string[] | null
           quantity?: number
-          region_id?: Database['public']['Enums']['region_id'] | null
+          region_id?: Database['public']['Enums']['region_id']
           size?: number
           slab_depth?: number | null
           source?: Database['public']['Enums']['avalanche_source']
@@ -588,33 +588,45 @@ export type Database = {
       }
       regions: {
         Row: {
+          caaml_region_id: string | null
           created_at: string
           default_zoom: number | null
           display_order: number
+          elevation_high_m: number | null
+          elevation_low_m: number | null
           forecast_zone: Json | null
           id: Database['public']['Enums']['region_id']
           is_active: boolean
           map_center: Json | null
+          name_en: string | null
           updated_at: string
         }
         Insert: {
+          caaml_region_id?: string | null
           created_at?: string
           default_zoom?: number | null
           display_order?: number
+          elevation_high_m?: number | null
+          elevation_low_m?: number | null
           forecast_zone?: Json | null
           id: Database['public']['Enums']['region_id']
           is_active?: boolean
           map_center?: Json | null
+          name_en?: string | null
           updated_at?: string
         }
         Update: {
+          caaml_region_id?: string | null
           created_at?: string
           default_zoom?: number | null
           display_order?: number
+          elevation_high_m?: number | null
+          elevation_low_m?: number | null
           forecast_zone?: Json | null
           id?: Database['public']['Enums']['region_id']
           is_active?: boolean
           map_center?: Json | null
+          name_en?: string | null
           updated_at?: string
         }
         Relationships: []
@@ -660,8 +672,13 @@ export type Database = {
           email: string
           first_name: string | null
           id: string
+          is_public: boolean
           last_name: string | null
           role: Database['public']['Enums']['user_role']
+          social_links: string[]
+          team: Database['public']['Enums']['team_section'] | null
+          team_order: number | null
+          team_title: string | null
         }
         Insert: {
           about?: string | null
@@ -670,8 +687,13 @@ export type Database = {
           email: string
           first_name?: string | null
           id: string
+          is_public?: boolean
           last_name?: string | null
           role?: Database['public']['Enums']['user_role']
+          social_links?: string[]
+          team?: Database['public']['Enums']['team_section'] | null
+          team_order?: number | null
+          team_title?: string | null
         }
         Update: {
           about?: string | null
@@ -680,8 +702,13 @@ export type Database = {
           email?: string
           first_name?: string | null
           id?: string
+          is_public?: boolean
           last_name?: string | null
           role?: Database['public']['Enums']['user_role']
+          social_links?: string[]
+          team?: Database['public']['Enums']['team_section'] | null
+          team_order?: number | null
+          team_title?: string | null
         }
         Relationships: []
       }
@@ -723,13 +750,31 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      are_https_urls: { Args: { urls: string[] }; Returns: boolean }
       can_edit_forecasts: { Args: never; Returns: boolean }
       get_staff_name: { Args: { p_id: string }; Returns: string }
+      get_team_profiles: {
+        Args: never
+        Returns: {
+          avatar_url: string
+          first_name: string
+          id: string
+          is_public: boolean
+          last_name: string
+          team: Database['public']['Enums']['team_section']
+          team_order: number
+        }[]
+      }
       is_staff: { Args: never; Returns: boolean }
+      reorder_team_profiles: { Args: { updates: Json }; Returns: undefined }
       reorder_weather_stations: { Args: { updates: Json }; Returns: undefined }
       save_forecast: {
         Args: { p_avalanche_ids: number[]; p_forecast: Json; p_problems: Json }
         Returns: number
+      }
+      set_profile_public: {
+        Args: { p_id: string; p_is_public: boolean }
+        Returns: undefined
       }
       submit_member_application: {
         Args: {
@@ -802,6 +847,7 @@ export type Database = {
       region_id: 'gudauri' | 'svaneti'
       sensitivity: 'reactive' | 'stubborn' | 'touchy' | 'unreactive'
       snow_condition: 'dry' | 'wet'
+      team_section: 'forecasting' | 'development'
       trend: 'deteriorating' | 'improving' | 'noChange'
       user_role: 'admin' | 'forecaster' | 'trainee'
     }
@@ -962,6 +1008,7 @@ export const Constants = {
       region_id: ['gudauri', 'svaneti'],
       sensitivity: ['reactive', 'stubborn', 'touchy', 'unreactive'],
       snow_condition: ['dry', 'wet'],
+      team_section: ['forecasting', 'development'],
       trend: ['deteriorating', 'improving', 'noChange'],
       user_role: ['admin', 'forecaster', 'trainee'],
     },

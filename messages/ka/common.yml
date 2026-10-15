@@ -48,6 +48,7 @@ common:
     futureDate: 'არ შეიძლება იყოს მომავალში'
     invalid: 'არასწორი მნიშვნელობა'
     invalidCredentials: 'მიმდინარე პაროლი არასწორია'
+    invalidUrl: 'შეიყვანეთ ბმული, რომელიც იწყება https://-ით'
     invalid_string: 'არასწორი ფორმატი'
     joinedAtFuture: 'არ შეიძლება იყოს მომავალში'
     passwordMismatch: 'პაროლები არ ემთხვევა'

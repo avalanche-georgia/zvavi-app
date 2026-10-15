@@ -1,0 +1,23 @@
+team:
+  title: 'Our team'
+  lede: 'The volunteers behind the daily avalanche forecast — people who love these mountains and want everyone to come home safe.'
+  count: '{count, plural, one {# person} other {# people}}'
+
+  sections:
+    forecasting:
+      title: 'Forecasters'
+      description: 'Write and publish the daily forecast for their regions.'
+      badge: 'Forecaster'
+    development:
+      title: 'Product team'
+      description: 'Design, build and run Avalanche.ge — the website, forecast tools and observation reports.'
+      badge: 'Product'
+
+  links:
+    title: 'Links'
+
+  join:
+    eyebrow: 'Get involved'
+    title: 'Want to contribute?'
+    message: 'Everything here is built by volunteers. Field observations, code, design, translation or spreading the word — every bit of help keeps the forecasts free.'
+    howToHelp: 'How to help'

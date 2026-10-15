@@ -14,6 +14,7 @@ type StaticEntry = {
 const staticEntries: StaticEntry[] = [
   { changeFrequency: 'monthly', path: routes.weatherStations, priority: 0.8 },
   { changeFrequency: 'monthly', path: routes.about.aboutUs, priority: 0.7 },
+  { changeFrequency: 'monthly', path: routes.about.team, priority: 0.6 },
   { changeFrequency: 'monthly', path: routes.partners, priority: 0.7 },
   { changeFrequency: 'monthly', path: routes.about.contact, priority: 0.6 },
   { changeFrequency: 'monthly', path: routes.about.joinUs, priority: 0.5 },

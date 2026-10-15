@@ -1,16 +1,20 @@
+import { ProfileSocialLinks } from '@components/shared'
 import type { UserProfile } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
-// Read-only profile: name, role and the "about" text
+// Read-only profile: name, role and team title, the "about" text and links
 const UserProfileView = ({ profile }: { profile: UserProfile }) => {
   const t = useTranslations()
-  const { about, fullName, role } = profile
+  const { about, fullName, role, socialLinks, teamTitle } = profile
 
   return (
     <div className="flex flex-col gap-4">
       <div>
         <p className="text-heading text-ink font-bold">{fullName || '—'}</p>
-        <p className="text-copy-sm text-muted capitalize">{role ?? '—'}</p>
+        <p className="text-copy-sm text-muted">
+          <span className="capitalize">{role ?? '—'}</span>
+          {teamTitle && ` · ${teamTitle}`}
+        </p>
       </div>
 
       {about && (
@@ -21,6 +25,8 @@ const UserProfileView = ({ profile }: { profile: UserProfile }) => {
           <p className="text-copy text-body whitespace-pre-wrap">{about}</p>
         </div>
       )}
+
+      <ProfileSocialLinks urls={socialLinks} />
     </div>
   )
 }
