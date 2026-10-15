@@ -1,56 +1,57 @@
 'use client'
 
-import { useCallback } from 'react'
 import { links } from '@components/constants'
-import { Icon } from '@components/icons'
-import { CopyInput } from '@components/shared'
-import { BrandedQRCode, Button } from '@components/ui'
+import { CopyField, CopyFieldGroup } from '@components/shared'
+import { BrandedQRCode } from '@components/ui'
+import { SuccessState } from '@ds/patterns'
+import { Button } from '@ds/primitives'
+import { Download } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 import type { SubmitResult } from './submitApplication'
 
 import { downloadQRCode, getVerificationUrl } from '@/lib/qrcode'
 
+const emailLink = (chunks: React.ReactNode) => (
+  <a
+    className="focus-ring text-accent hover:text-accent-hover rounded-sm underline underline-offset-2"
+    href={`mailto:${links.email}`}
+  >
+    {chunks}
+  </a>
+)
+
+// The member's verification QR code and link: their status page once approved
 const ApplicationSuccess = ({ memberId, verificationCode }: SubmitResult) => {
   const t = useTranslations()
   const verificationUrl = getVerificationUrl(verificationCode)
 
-  const handleDownload = useCallback(async () => {
-    await downloadQRCode(verificationCode, `member-qr-${memberId}`)
-  }, [memberId, verificationCode])
+  const handleDownload = () => downloadQRCode(verificationCode, `member-qr-${memberId}`)
 
   return (
-    <div className="flex flex-col items-center gap-6 text-center">
-      <div className="flex flex-col items-center gap-2">
-        <div className="flex size-12 items-center justify-center rounded-full bg-green-100">
-          <Icon className="text-green-600" icon="check" size="md" />
+    <SuccessState
+      description={t('joinUs.apply.success.description')}
+      title={t('joinUs.apply.success.title')}
+    >
+      <div className="mt-3 flex w-full max-w-sm flex-col items-center gap-4">
+        <div className="rounded-media border-rule border p-3">
+          <BrandedQRCode size={200} value={verificationUrl} />
         </div>
-        <h2 className="text-lg font-semibold">{t('joinUs.apply.success.title')}</h2>
-        <p className="max-w-md text-sm text-gray-600">{t('joinUs.apply.success.description')}</p>
+        <p className="text-copy-sm text-muted text-pretty">{t('joinUs.apply.success.qrHint')}</p>
+        <Button onClick={handleDownload} variant="secondary">
+          <Download aria-hidden className="size-4" />
+          {t('joinUs.apply.success.downloadQR')}
+        </Button>
+        <div className="w-full text-left">
+          <CopyFieldGroup>
+            <CopyField label={t('joinUs.apply.success.verificationLink')} value={verificationUrl} />
+          </CopyFieldGroup>
+        </div>
+        <p className="text-copy-sm text-muted">
+          {t.rich('joinUs.apply.success.contact', { email: links.email, link: emailLink })}
+        </p>
       </div>
-
-      <div className="flex rounded-lg border bg-white p-4 shadow-sm">
-        <BrandedQRCode size={200} value={verificationUrl} />
-      </div>
-
-      <p className="max-w-md text-xs text-gray-500">{t('joinUs.apply.success.qrHint')}</p>
-
-      <Button onClick={handleDownload}>
-        <Icon icon="download" size="sm" />
-        {t('joinUs.apply.success.downloadQR')}
-      </Button>
-
-      <div className="w-full max-w-md">
-        <CopyInput value={verificationUrl} />
-      </div>
-
-      <div className="w-full max-w-md rounded-lg border border-gray-200 bg-gray-50 p-4">
-        <p className="mb-1 text-sm font-medium">{t('joinUs.apply.success.contactTitle')}</p>
-        <a className="text-primary text-sm underline" href={`mailto:${links.email}`}>
-          {links.email}
-        </a>
-      </div>
-    </div>
+    </SuccessState>
   )
 }
 

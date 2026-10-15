@@ -10,8 +10,8 @@ type CopyFieldProps = {
   value: string
 }
 
-// A labelled value (account number, SWIFT…) with a copy button. Render inside a <dl>:
-// a group of fields is one description list
+// A labelled value (account number, SWIFT…) with a copy button. Render inside a <dl>
+// (CopyFieldGroup): a group of fields is one description list
 const CopyField = ({ label, value }: CopyFieldProps) => {
   const t = useTranslations()
   const { handleCopy, isCopied } = useCopyWithFeedback(value)

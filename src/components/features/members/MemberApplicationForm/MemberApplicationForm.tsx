@@ -1,18 +1,19 @@
 'use client'
 
 import { useState } from 'react'
+import { useScrollToFirstError } from '@components/features/observations/form'
 import { useToast, useUnsavedChangesWarning } from '@components/hooks'
-import { Button } from '@components/ui'
+import { Button, getButtonClasses } from '@ds/primitives'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslations } from 'next-intl'
 import { FormProvider, useForm } from 'react-hook-form'
-import { useRouter } from 'src/i18n/navigation'
+import { Link } from 'src/i18n/navigation'
 
+import AgreementsSection from './AgreementsSection'
+import ApplicantSection from './ApplicantSection'
 import ApplicationSuccess from './ApplicationSuccess'
-import CharterAgreement from './CharterAgreement'
-import FormFields from './FormFields'
+import { getInitialFormData } from './getInitialFormData'
 import PaymentSection from './PaymentSection'
-import PrivacyConsent from './PrivacyConsent'
 import type { MemberApplicationFormData } from './schema'
 import { memberApplicationSchema } from './schema'
 import type { SubmitResult } from './submitApplication'
@@ -23,46 +24,26 @@ import { routes } from '@/routes'
 
 const MemberApplicationForm = () => {
   const t = useTranslations()
-  const router = useRouter()
   const { toastError } = useToast()
-  const [isSubmitting, setIsSubmitting] = useState(false)
   const [result, setResult] = useState<SubmitResult | null>(null)
+  const { formRef, scrollToFirstError } = useScrollToFirstError()
 
   const form = useForm<MemberApplicationFormData>({
-    defaultValues: {
-      address: '',
-      age: '',
-      charterAgreed: undefined as unknown as true,
-      email: '',
-      firstName: '',
-      gender: '',
-      lastName: '',
-      motivation: '',
-      occupation: '',
-      paymentMethod: undefined as unknown as MemberApplicationFormData['paymentMethod'],
-      phone: '',
-      privacyAgreed: undefined as unknown as true,
-    },
+    defaultValues: getInitialFormData(),
     resolver: zodResolver(memberApplicationSchema),
+    // Focus + scroll on error is handled by useScrollToFirstError
+    shouldFocusError: false,
   })
 
-  useUnsavedChangesWarning(form.formState.isDirty)
+  useUnsavedChangesWarning(form.formState.isDirty && !result)
 
-  const onSubmit = async (data: MemberApplicationFormData) => {
-    setIsSubmitting(true)
-
+  const handleValid = async (data: MemberApplicationFormData) => {
     try {
-      const submitResult = await submitApplication(data)
-
-      setResult(submitResult)
+      setResult(await submitApplication(data))
+      window.scrollTo({ behavior: 'smooth', top: 0 })
     } catch (error) {
       reportError(error, { scope: 'MemberApplicationForm' })
-      toastError('MemberApplicationForm', {
-        error,
-        message: t('joinUs.apply.messages.error'),
-      })
-    } finally {
-      setIsSubmitting(false)
+      toastError('MemberApplicationForm', { error, message: t('joinUs.apply.messages.error') })
     }
   }
 
@@ -75,21 +56,20 @@ const MemberApplicationForm = () => {
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <FormProvider {...form}>
-      <form className="flex flex-col gap-6" onSubmit={form.handleSubmit(onSubmit)}>
-        <FormFields />
-        <CharterAgreement />
-        <PrivacyConsent />
+      <form
+        ref={formRef}
+        className="flex flex-col gap-3 lg:gap-4"
+        noValidate
+        onSubmit={form.handleSubmit(handleValid, scrollToFirstError)}
+      >
+        <ApplicantSection />
         <PaymentSection />
-
-        <div className="flex items-center justify-end gap-4">
-          <Button
-            onClick={() => router.push(routes.about.joinUs)}
-            type="button"
-            variant="secondary"
-          >
+        <AgreementsSection />
+        <div className="flex justify-end gap-2.5 pt-1">
+          <Link className={getButtonClasses({ variant: 'secondary' })} href={routes.about.joinUs}>
             {t('common.actions.cancel')}
-          </Button>
-          <Button disabled={isSubmitting} type="submit">
+          </Link>
+          <Button isBusy={form.formState.isSubmitting} type="submit">
             {t('common.actions.submit')}
           </Button>
         </div>

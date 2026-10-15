@@ -6,9 +6,10 @@ export type PaymentMethod = (typeof paymentMethods)[number]
 
 export const memberApplicationSchema = z.object({
   address: z.string().default(''),
-  age: z.string().default(''),
+  age: z.number().int().min(0).max(120).nullable(),
   charterAgreed: z.literal(true, { error: () => ({ message: 'required' }) }),
-  email: z.email({ message: 'invalid_string' }),
+  // Empty → "Required", anything else that isn't an address → "Invalid format"
+  email: z.email({ error: (issue) => (issue.input ? 'invalid_string' : 'required') }),
   firstName: z.string().trim().min(1, { message: 'too_small' }),
   gender: z.string().default(''),
   lastName: z.string().trim().min(1, { message: 'too_small' }),
@@ -20,3 +21,5 @@ export const memberApplicationSchema = z.object({
 })
 
 export type MemberApplicationFormData = z.input<typeof memberApplicationSchema>
+
+export const genderKeys = ['male', 'female', 'preferNotToSay'] as const

@@ -21,6 +21,7 @@ import IconButtonGallery from '@ds/primitives/IconButton/IconButton.gallery'
 import InfoTipGallery from '@ds/primitives/InfoTip/InfoTip.gallery'
 import MenuGallery from '@ds/primitives/Menu/Menu.gallery'
 import PaginationGallery from '@ds/primitives/Pagination/Pagination.gallery'
+import RadioGroupGallery from '@ds/primitives/RadioGroup/RadioGroup.gallery'
 import RatingScaleGallery from '@ds/primitives/RatingScale/RatingScale.gallery'
 import SegmentedControlGallery from '@ds/primitives/SegmentedControl/SegmentedControl.gallery'
 import SelectGallery from '@ds/primitives/Select/Select.gallery'
@@ -71,6 +72,7 @@ export const galleryEntries: GalleryEntry[] = [
   { Demo: CheckboxGallery, id: 'checkbox', title: 'Checkbox' },
   { Demo: SwitchGallery, id: 'switch', title: 'Switch' },
   { Demo: ChipGroupGallery, id: 'chip-group', title: 'ChipGroup' },
+  { Demo: RadioGroupGallery, id: 'radio-group', title: 'RadioGroup' },
   { Demo: ToggleGridGallery, id: 'toggle-grid', title: 'ToggleGrid' },
   { Demo: SegmentedControlGallery, id: 'segmented-control', title: 'SegmentedControl' },
   { Demo: RatingScaleGallery, id: 'rating-scale', title: 'RatingScale' },
