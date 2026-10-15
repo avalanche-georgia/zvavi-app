@@ -8,6 +8,7 @@ export const getInitialFormData = (): MemberApplicationFormSchema => ({
   email: '',
   firstName: '',
   gender: '',
+  honeypot: '',
   lastName: '',
   motivation: '',
   occupation: '',

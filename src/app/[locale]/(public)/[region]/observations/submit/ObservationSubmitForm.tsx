@@ -10,6 +10,7 @@ import {
   WhenSection,
 } from '@components/features/observations/form'
 import { useUnsavedChangesWarning } from '@components/hooks'
+import { HoneypotField } from '@components/shared'
 import { useRegionContext } from '@domain/context/RegionContext'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormProvider, useForm } from 'react-hook-form'
@@ -17,7 +18,6 @@ import { FormProvider, useForm } from 'react-hook-form'
 import useObservationSubmitFormSubmit from './hooks/useObservationSubmitFormSubmit'
 
 import getInitialFormData from './getInitialFormData'
-import HoneypotField from './HoneypotField'
 import ObservationKindTabs from './ObservationKindTabs'
 import type { ObservationSubmitFormData, ObservationSubmitFormSchema } from './schema'
 import { observationSubmitSchema } from './schema'

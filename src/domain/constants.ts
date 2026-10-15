@@ -73,6 +73,19 @@ export const avalancheStatuses: Record<AvalancheStatus, AvalancheStatus> = {
 // Field rules shared by the public submit form, the admin avalanche form and
 // the submit API (authoritative). Number inputs clamp to these ranges; the
 // schemas reject anything outside them.
+// Membership application: enum values and column sizes (member_applications), shared
+// by the form (client checks) and POST /api/members/applications (authoritative)
+export const memberPaymentMethods = ['bank_gel', 'bank_foreign', 'wise', 'contact_me'] as const
+export const memberGenders = ['male', 'female', 'preferNotToSay'] as const
+
+export const memberApplicationLimits = {
+  age: { max: 120, min: 0 },
+  emailMaxLength: 255,
+  nameMaxLength: 100,
+  phoneMaxLength: 50,
+  textMaxLength: 2000,
+} as const
+
 export const avalancheFieldLimits = {
   descriptionMaxLength: 2000,
   involvementMaxLength: 2000,
