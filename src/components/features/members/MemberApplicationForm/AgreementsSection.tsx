@@ -5,7 +5,7 @@ import { FormCheckbox } from '@ds/form'
 import { FormCard } from '@ds/patterns'
 import { useTranslations } from 'next-intl'
 
-import type { MemberApplicationFormData as FormData } from './schema'
+import type { MemberApplicationFormSchema as FormSchema } from './schema'
 
 import { routes } from '@/routes'
 
@@ -54,12 +54,12 @@ const AgreementsSection = () => {
       title={t('joinUs.apply.sections.agreements')}
     >
       <div className="flex flex-col gap-3">
-        <FormCheckbox<FormData>
+        <FormCheckbox<FormSchema>
           label={t.rich('joinUs.apply.charter.checkbox', { link: charterLink })}
           name="charterAgreed"
           requiredMessage={t('joinUs.apply.agreementRequired')}
         />
-        <FormCheckbox<FormData>
+        <FormCheckbox<FormSchema>
           label={t.rich('legal.consent.checkbox', { link: privacyLink, link2: termsLink })}
           name="privacyAgreed"
           requiredMessage={t('joinUs.apply.agreementRequired')}

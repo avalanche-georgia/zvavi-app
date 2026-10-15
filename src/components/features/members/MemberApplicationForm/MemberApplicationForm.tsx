@@ -3,24 +3,22 @@
 import { useState } from 'react'
 import { useScrollToFirstError } from '@components/features/observations/form'
 import { useToast, useUnsavedChangesWarning } from '@components/hooks'
-import { Button, getButtonClasses } from '@ds/primitives'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslations } from 'next-intl'
 import { FormProvider, useForm } from 'react-hook-form'
-import { Link } from 'src/i18n/navigation'
 
 import AgreementsSection from './AgreementsSection'
 import ApplicantSection from './ApplicantSection'
 import ApplicationSuccess from './ApplicationSuccess'
+import FormActions from './FormActions'
 import { getInitialFormData } from './getInitialFormData'
 import PaymentSection from './PaymentSection'
-import type { MemberApplicationFormData } from './schema'
+import type { MemberApplicationFormData, MemberApplicationFormSchema } from './schema'
 import { memberApplicationSchema } from './schema'
 import type { SubmitResult } from './submitApplication'
 import submitApplication from './submitApplication'
 
 import { reportError } from '@/lib/observability'
-import { routes } from '@/routes'
 
 const MemberApplicationForm = () => {
   const t = useTranslations()
@@ -28,7 +26,7 @@ const MemberApplicationForm = () => {
   const [result, setResult] = useState<SubmitResult | null>(null)
   const { formRef, scrollToFirstError } = useScrollToFirstError()
 
-  const form = useForm<MemberApplicationFormData>({
+  const form = useForm<MemberApplicationFormSchema, unknown, MemberApplicationFormData>({
     defaultValues: getInitialFormData(),
     resolver: zodResolver(memberApplicationSchema),
     // Focus + scroll on error is handled by useScrollToFirstError
@@ -65,14 +63,7 @@ const MemberApplicationForm = () => {
         <ApplicantSection />
         <PaymentSection />
         <AgreementsSection />
-        <div className="flex justify-end gap-2.5 pt-1">
-          <Link className={getButtonClasses({ variant: 'secondary' })} href={routes.about.joinUs}>
-            {t('common.actions.cancel')}
-          </Link>
-          <Button isBusy={form.formState.isSubmitting} type="submit">
-            {t('common.actions.submit')}
-          </Button>
-        </div>
+        <FormActions />
       </form>
     </FormProvider>
   )

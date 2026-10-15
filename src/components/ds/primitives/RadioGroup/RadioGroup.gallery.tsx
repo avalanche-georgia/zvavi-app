@@ -17,7 +17,12 @@ const RadioGroupGallery = () => {
   const [value, setValue] = useState<PaymentMethod | null>('bank')
 
   return (
-    <RadioGroup ariaLabel="Payment method" onChange={setValue} options={options} value={value} />
+    <RadioGroup
+      ariaLabel="Payment method"
+      onValueChange={setValue}
+      options={options}
+      value={value}
+    />
   )
 }
 

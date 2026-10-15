@@ -1,17 +1,17 @@
-import type { MemberApplicationFormData } from './schema'
+import type { MemberApplicationFormSchema } from './schema'
 
-// Agreements and payment method start unset: the schema requires a choice
-export const getInitialFormData = (): MemberApplicationFormData => ({
+// Agreements and payment method stay unset until the applicant chooses
+export const getInitialFormData = (): MemberApplicationFormSchema => ({
   address: '',
   age: null,
-  charterAgreed: undefined as unknown as true,
+  charterAgreed: undefined,
   email: '',
   firstName: '',
   gender: '',
   lastName: '',
   motivation: '',
   occupation: '',
-  paymentMethod: undefined as unknown as MemberApplicationFormData['paymentMethod'],
+  paymentMethod: undefined,
   phone: '',
-  privacyAgreed: undefined as unknown as true,
+  privacyAgreed: undefined,
 })

@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl'
 import { useWatch } from 'react-hook-form'
 
 import PaymentDetails from './PaymentDetails'
-import type { MemberApplicationFormData as FormData, PaymentMethod } from './schema'
+import type { MemberApplicationFormSchema as FormSchema, PaymentMethod } from './schema'
 import { paymentMethods } from './schema'
 
 const labelKeyByMethod: Record<PaymentMethod, string> = {
@@ -19,7 +19,7 @@ const labelKeyByMethod: Record<PaymentMethod, string> = {
 // The fee, how to pay it, and the details for the chosen way
 const PaymentSection = () => {
   const t = useTranslations()
-  const selectedMethod = useWatch<FormData, 'paymentMethod'>({ name: 'paymentMethod' })
+  const selectedMethod = useWatch<FormSchema, 'paymentMethod'>({ name: 'paymentMethod' })
 
   const options = paymentMethods.map((method) => ({
     label: t(labelKeyByMethod[method]),
@@ -31,7 +31,7 @@ const PaymentSection = () => {
       description={t('joinUs.apply.payment.amount')}
       title={t('joinUs.apply.payment.title')}
     >
-      <FormRadioGroup<FormData, PaymentMethod>
+      <FormRadioGroup<FormSchema, PaymentMethod>
         label={t('joinUs.apply.payment.method')}
         name="paymentMethod"
         options={options}

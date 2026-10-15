@@ -4,7 +4,7 @@ import { FormNumberField, FormSelect, FormTextarea, FormTextField } from '@ds/fo
 import { FormCard } from '@ds/patterns'
 import { useTranslations } from 'next-intl'
 
-import { genderKeys, type MemberApplicationFormData as FormData } from './schema'
+import { genderKeys, type MemberApplicationFormSchema as FormSchema } from './schema'
 
 // Contact details are required; the rest helps us get to know the applicant
 const ApplicantSection = () => {
@@ -18,19 +18,19 @@ const ApplicantSection = () => {
   return (
     <FormCard title={t('joinUs.apply.sections.aboutYou')}>
       <div className="grid gap-5 md:grid-cols-2">
-        <FormTextField<FormData>
+        <FormTextField<FormSchema>
           autoComplete="given-name"
           label={t('joinUs.apply.labels.firstName')}
           name="firstName"
           required
         />
-        <FormTextField<FormData>
+        <FormTextField<FormSchema>
           autoComplete="family-name"
           label={t('joinUs.apply.labels.lastName')}
           name="lastName"
           required
         />
-        <FormTextField<FormData>
+        <FormTextField<FormSchema>
           autoComplete="email"
           label={t('joinUs.apply.labels.email')}
           name="email"
@@ -38,7 +38,7 @@ const ApplicantSection = () => {
           required
           type="email"
         />
-        <FormTextField<FormData>
+        <FormTextField<FormSchema>
           autoComplete="tel"
           label={t('joinUs.apply.labels.phone')}
           name="phone"
@@ -46,30 +46,31 @@ const ApplicantSection = () => {
           required
           type="tel"
         />
-        <FormNumberField<FormData>
+        <FormNumberField<FormSchema>
+          format={{ maximumFractionDigits: 0 }}
           label={t('joinUs.apply.labels.age')}
           max={120}
           min={0}
           name="age"
         />
-        <FormSelect<FormData, string>
+        <FormSelect<FormSchema, string>
           label={t('joinUs.apply.labels.gender')}
           name="gender"
           options={genderOptions}
           placeholder={t('joinUs.apply.placeholders.gender')}
         />
       </div>
-      <FormTextField<FormData>
+      <FormTextField<FormSchema>
         label={t('joinUs.apply.labels.address')}
         name="address"
         placeholder={t('joinUs.apply.placeholders.address')}
       />
-      <FormTextField<FormData>
+      <FormTextField<FormSchema>
         label={t('joinUs.apply.labels.occupation')}
         name="occupation"
         placeholder={t('joinUs.apply.placeholders.occupation')}
       />
-      <FormTextarea<FormData>
+      <FormTextarea<FormSchema>
         label={t('joinUs.apply.labels.motivation')}
         name="motivation"
         placeholder={t('joinUs.apply.placeholders.motivation')}
