@@ -1,5 +1,6 @@
 import { supabase } from '@data'
 import type { UserProfile } from '@domain/types'
+import { isAuthSessionMissingError } from '@supabase/supabase-js'
 
 import { useQuery } from '@/tanstack-query/hooks'
 
@@ -9,7 +10,10 @@ import { userProfilesKeys } from '../../query-keys'
 const fetchCurrentUserProfile = async (): Promise<UserProfile | null> => {
   const { data: authData, error: authError } = await supabase.auth.getUser()
 
-  if (authError || !authData.user) return null
+  // Signed out is "no profile"; any other auth failure (network, Auth down) is an
+  // error, so the admin gate keeps the shell instead of showing No access to staff
+  if (authError && !isAuthSessionMissingError(authError)) throw authError
+  if (!authData.user) return null
 
   const { data, error } = await supabase
     .from('user_profiles')
