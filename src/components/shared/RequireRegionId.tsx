@@ -1,10 +1,11 @@
 'use client'
 
 import { useEffect } from 'react'
-import { Spinner } from '@components/ui'
 import type { RegionId } from '@domain/types'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'src/i18n/navigation'
+
+import Loading from './Loading'
 
 type RequireRegionIdProps = {
   children: (regionId: RegionId) => React.ReactNode
@@ -23,7 +24,7 @@ const RequireRegionId = ({ children, fallbackRoute }: RequireRegionIdProps) => {
   }, [fallbackRoute, regionId, router])
 
   if (!regionId) {
-    return <Spinner />
+    return <Loading />
   }
 
   return children(regionId)

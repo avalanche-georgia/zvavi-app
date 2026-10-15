@@ -5,7 +5,7 @@ import { reportServerError } from '@/lib/posthog/server'
 import { createClient } from '@/lib/supabase/server'
 
 // The public "current forecast" rule: latest created published forecast in the region.
-// fetchCurrentForecastId, fetchRegionsWithHazard and the client's fetchCurrentForecast
+// fetchCurrentForecastId and the client's fetchCurrentForecast
 // (useGetCurrentForecast) use the same rule — keep them in sync.
 const fetchLatestPublishedForecast = async (regionId: RegionId): Promise<Forecast | null> => {
   const supabase = await createClient()

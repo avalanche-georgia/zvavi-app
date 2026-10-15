@@ -5,14 +5,7 @@ export * from './ui'
 export * from './layout'
 
 // Shared components (excluding re-exports that would duplicate)
-export {
-  ButtonLink,
-  DisclaimerGate,
-  HTMLContainer,
-  LanguageToggle,
-  Spoiler,
-  WIPBanner,
-} from './shared'
+export { ButtonLink, DisclaimerGate, LanguageToggle, Spoiler, WIPBanner } from './shared'
 
 // Icons
 export { Icon } from './icons'

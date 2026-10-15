@@ -1,11 +1,11 @@
 'use client'
 
 import { useId } from 'react'
-import { Sheet } from '@components/ui'
+import { Sheet, SheetHeader } from '@ds/patterns'
+import { useTranslations } from 'next-intl'
 
 import DiscardConfirm from './DiscardConfirm'
 import FormSheetActions from './FormSheetActions'
-import SheetHeader from './SheetHeader'
 import useFormSheet from './useFormSheet'
 
 // What the form inside the sheet needs to report back
@@ -38,6 +38,7 @@ const FormSheet = ({
   saveLabel,
   title,
 }: FormSheetProps) => {
+  const t = useTranslations()
   const formId = useId()
   const sheet = useFormSheet({ isRequested, onClose })
 
@@ -59,7 +60,7 @@ const FormSheet = ({
     <Sheet
       className={className}
       footer={footer}
-      header={<SheetHeader title={title} />}
+      header={<SheetHeader closeLabel={t('common.actions.close')} title={title} />}
       isDismissible={!sheet.isDirty}
       isOpen={sheet.isOpen}
       isTall

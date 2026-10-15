@@ -2,7 +2,7 @@ import { LoaderIcon } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 
-export type ButtonVariant = 'danger' | 'overlay' | 'primary' | 'secondary' | 'text'
+export type ButtonVariant = 'danger' | 'inverse' | 'overlay' | 'primary' | 'secondary' | 'text'
 export type ButtonSize = 'lg' | 'md' | 'sm'
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -14,9 +14,10 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 
 // primary: the one main action of a footer / bar. secondary: every other boxed
 // action. danger: confirms a destructive action (Remove, Discard, Delete).
-// text: inline link-style action inside content.
+// text: inline link-style action inside content. inverse: secondary action on a dark (ink) surface.
 const variantClasses: Record<ButtonVariant, string> = {
   danger: 'rounded-field bg-danger text-white hover:bg-danger/90',
+  inverse: 'rounded-field border border-white/25 text-white hover:bg-white/10',
   overlay: 'rounded-control bg-surface text-ink shadow-overlay hover:bg-tile',
   primary: 'rounded-field bg-primary text-white hover:bg-primary-hover',
   secondary: 'rounded-field border border-rule bg-surface text-ink hover:bg-tile',
@@ -36,6 +37,26 @@ const textSizeClasses: Record<ButtonSize, string> = {
   sm: 'py-1.5 text-copy-sm',
 }
 
+type ButtonClassesOptions = {
+  className?: string
+  size?: ButtonSize
+  variant?: ButtonVariant
+}
+
+// The button look for elements that aren't <button>, e.g. a router link that reads as a call to action
+export const getButtonClasses = ({
+  className,
+  size = 'md',
+  variant = 'primary',
+}: ButtonClassesOptions = {}) =>
+  cn(
+    'focus-ring inline-flex shrink-0 items-center justify-center gap-2 font-semibold transition-colors select-none',
+    'disabled:cursor-not-allowed disabled:opacity-50',
+    variant === 'text' ? textSizeClasses[size] : boxSizeClasses[size],
+    variantClasses[variant],
+    className,
+  )
+
 const Button = ({
   children,
   className,
@@ -49,13 +70,7 @@ const Button = ({
   <button
     {...props}
     aria-busy={isBusy || undefined}
-    className={cn(
-      'focus-ring inline-flex shrink-0 items-center justify-center gap-2 font-semibold transition-colors select-none',
-      'disabled:cursor-not-allowed disabled:opacity-50',
-      variant === 'text' ? textSizeClasses[size] : boxSizeClasses[size],
-      variantClasses[variant],
-      className,
-    )}
+    className={getButtonClasses({ className, size, variant })}
     disabled={disabled || isBusy}
     type={type}
   >

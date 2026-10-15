@@ -1,6 +1,6 @@
 'use client'
 
-import { Spinner } from '@components/ui'
+import { Loading } from '@components/shared'
 import type { ObservationDateBasis, PublicObservation } from '@domain/types'
 import dynamic from 'next/dynamic'
 import { useTranslations } from 'next-intl'
@@ -9,11 +9,7 @@ import type { ObservationsMapClientProps } from './ObservationsMapClient'
 import ObservationCard from '../list/ObservationCard'
 
 const ObservationsMapClient = dynamic(() => import('./ObservationsMapClient'), {
-  loading: () => (
-    <div className="bg-map flex size-full items-center justify-center">
-      <Spinner />
-    </div>
-  ),
+  loading: () => <Loading className="bg-map size-full py-0" />,
   ssr: false,
 })
 

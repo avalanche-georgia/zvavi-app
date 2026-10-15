@@ -1,5 +1,5 @@
+import { Loading } from '@components/shared'
 import type { Member } from '@domain/types'
-import { LoaderIcon } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 import { ApproveForm } from './ApproveForm'
@@ -30,11 +30,7 @@ const MemberSheetBody = ({
   const t = useTranslations()
 
   if (!member && isLoading) {
-    return (
-      <div className="grid h-60 place-items-center">
-        <LoaderIcon aria-hidden className="text-muted size-6 animate-spin" />
-      </div>
-    )
+    return <Loading className="h-60 py-0" />
   }
 
   if (!member) {

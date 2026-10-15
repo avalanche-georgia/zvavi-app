@@ -13,7 +13,7 @@ const pad = (value: number) => String(value).padStart(2, '0')
 // them this way never touches the runtime's own zone — so the server and the
 // browser agree. (`Intl` can't do this: browsers lack Georgian date formatting,
 // the server has it, and the two would disagree.)
-const toTbilisiParts = (value: Date | string) => {
+export const toTbilisiParts = (value: Date | string) => {
   const shifted = new Date(new Date(value).getTime() + tbilisiOffsetMs)
 
   return {
@@ -45,6 +45,14 @@ const useForecastDates = () => {
       const { day, month, weekday } = toTbilisiParts(value)
 
       return `${getWeekday(weekday)} ${day} ${getMonth(month)}`
+    },
+    // "Tuesday, 14 October"
+    formatLongDay: (value: Date | string) => {
+      const { day, month, weekday } = toTbilisiParts(value)
+      const weekdayName = localize.day(weekday, { context: 'formatting', width: 'wide' })
+      const monthName = localize.month(month, { context: 'formatting', width: 'wide' })
+
+      return `${weekdayName}, ${day} ${monthName}`
     },
     // "07:37"
     formatTime: (value: Date | string) => {

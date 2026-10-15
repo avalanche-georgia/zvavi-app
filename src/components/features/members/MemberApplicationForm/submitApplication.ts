@@ -1,42 +1,27 @@
-import { supabase } from '@data/index'
-
 import type { MemberApplicationFormData } from './schema'
 
 export type SubmitResult = { memberId: string; verificationCode: string }
 
-const notifyAdmin = (name: string, email: string, paymentMethod: string) => {
-  fetch('/api/notify/new-application', {
-    body: JSON.stringify({ email, name, paymentMethod }),
-    headers: { 'Content-Type': 'application/json' },
-    method: 'POST',
-  }).catch(() => {})
-}
+type ApplicationResponse = Partial<SubmitResult> & { error?: string; ok: boolean }
 
+// The agreements are confirmed in the form; the route only stores the application
 const submitApplication = async ({
   charterAgreed, // eslint-disable-line @typescript-eslint/no-unused-vars
   privacyAgreed, // eslint-disable-line @typescript-eslint/no-unused-vars
-  ...data
-}: MemberApplicationFormData) => {
-  const { address, age, gender, motivation, occupation, ...rest } = data
-
-  const { data: result, error } = await supabase.rpc('submit_member_application', {
-    p_address: address || undefined,
-    p_age: age ? Number(age) : undefined,
-    p_email: rest.email,
-    p_first_name: rest.firstName,
-    p_gender: gender || undefined,
-    p_last_name: rest.lastName,
-    p_motivation: motivation || undefined,
-    p_occupation: occupation || undefined,
-    p_payment_method: rest.paymentMethod,
-    p_phone: rest.phone,
+  ...body
+}: MemberApplicationFormData): Promise<SubmitResult> => {
+  const response = await fetch('/api/members/applications', {
+    body: JSON.stringify(body),
+    headers: { 'Content-Type': 'application/json' },
+    method: 'POST',
   })
+  const result = (await response.json()) as ApplicationResponse
 
-  if (error) throw error
+  if (!result.ok || !result.memberId || !result.verificationCode) {
+    throw new Error(result.error ?? `Application failed: ${response.status}`)
+  }
 
-  notifyAdmin(`${rest.firstName} ${rest.lastName}`, rest.email, rest.paymentMethod)
-
-  return result as SubmitResult
+  return { memberId: result.memberId, verificationCode: result.verificationCode }
 }
 
 export default submitApplication

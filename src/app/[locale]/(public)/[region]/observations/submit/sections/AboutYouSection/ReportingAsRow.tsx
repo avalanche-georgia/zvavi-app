@@ -2,8 +2,9 @@ import { Button } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 
 import ForgetDetailsNote from './ForgetDetailsNote'
-import getInitials from './getInitials'
 import type { SubmitterDetails } from '../../submitterDetailsStorage'
+
+import getInitials from '@/lib/getInitials'
 
 type ReportingAsRowProps = {
   details: SubmitterDetails

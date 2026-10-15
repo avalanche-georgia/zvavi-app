@@ -1,10 +1,9 @@
 'use client'
 
 import { useAspectSummary } from '@components/hooks'
-import { Sheet, SheetClose, SheetTitle, Spinner } from '@components/ui'
+import { Loading } from '@components/shared'
 import type { ObservationPoint, PublicObservation } from '@domain/types'
-import { IconButton } from '@ds/primitives'
-import { X } from 'lucide-react'
+import { Sheet, SheetHeader } from '@ds/patterns'
 import dynamic from 'next/dynamic'
 import { useTranslations } from 'next-intl'
 
@@ -14,11 +13,7 @@ import hasCoordinates from '../hasCoordinates'
 import useFormatDay from '../useFormatDay'
 
 const LocationMapClient = dynamic(() => import('./LocationMapClient'), {
-  loading: () => (
-    <div className="bg-map flex size-full items-center justify-center">
-      <Spinner />
-    </div>
-  ),
+  loading: () => <Loading className="bg-map size-full py-0" />,
   ssr: false,
 })
 
@@ -58,7 +53,7 @@ const LocationSheet = ({ contextPoints, isOpen, observation, onClose }: Location
     <Sheet
       footer={
         <a
-          className="bg-primary hover:bg-primary-hover flex h-12 flex-1 items-center justify-center rounded-xl text-[15px] font-semibold text-white transition-colors"
+          className="focus-ring bg-primary hover:bg-primary-hover rounded-field text-copy-lg flex h-12 flex-1 items-center justify-center font-semibold text-white transition-colors"
           href={mapsLink.href}
           rel={mapsLink.isExternalPage ? 'noopener noreferrer' : undefined}
           target={mapsLink.isExternalPage ? '_blank' : undefined}
@@ -67,17 +62,13 @@ const LocationSheet = ({ contextPoints, isOpen, observation, onClose }: Location
         </a>
       }
       header={
-        <>
-          <SheetTitle className="m-0 flex-1 text-[17px] font-bold tracking-[-.01em]">
-            {t('observations.labels.typeAndSize', {
-              size,
-              type: t(`common.avalancheTypes.${type}`),
-            })}
-          </SheetTitle>
-          <SheetClose render={<IconButton aria-label={t('common.actions.close')} size="md" />}>
-            <X className="size-4.5" />
-          </SheetClose>
-        </>
+        <SheetHeader
+          closeLabel={t('common.actions.close')}
+          title={t('observations.labels.typeAndSize', {
+            size,
+            type: t(`common.avalancheTypes.${type}`),
+          })}
+        />
       }
       isOpen={isOpen}
       onOpenChange={handleOpenChange}
@@ -93,7 +84,7 @@ const LocationSheet = ({ contextPoints, isOpen, observation, onClose }: Location
           />
         </div>
         <CoordinatesRow latitude={latitude} longitude={longitude} />
-        {meta && <p className="text-muted px-4 pt-1.5 pb-4 text-[13px]">{meta}</p>}
+        {meta && <p className="text-muted text-copy-sm px-4 pt-1.5 pb-4">{meta}</p>}
       </div>
     </Sheet>
   )

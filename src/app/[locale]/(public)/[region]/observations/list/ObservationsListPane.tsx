@@ -1,4 +1,4 @@
-import { Spinner } from '@components/ui'
+import { Loading } from '@components/shared'
 import type { ObservationDateBasis, ObservationsSort } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
@@ -30,11 +30,7 @@ const ObservationsListPane = ({
 
   const renderContent = () => {
     if (isPending) {
-      return (
-        <div className="relative h-48">
-          <Spinner label={t('common.labels.wait')} size="lg" />
-        </div>
-      )
+      return <Loading className="h-48 py-0" isPage />
     }
 
     if (isError) return <p className="text-muted py-12 text-center">{t('common.messages.error')}</p>

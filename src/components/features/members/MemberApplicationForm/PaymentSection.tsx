@@ -1,58 +1,46 @@
 'use client'
 
-import { RadioGroup } from '@base-ui/react/radio-group'
-import { RadioOption } from '@components/ui'
+import { FormRadioGroup } from '@ds/form'
+import { FormCard } from '@ds/patterns'
 import { useTranslations } from 'next-intl'
-import { Controller, useFormContext, useWatch } from 'react-hook-form'
+import { useWatch } from 'react-hook-form'
 
 import PaymentDetails from './PaymentDetails'
-import type { MemberApplicationFormData, PaymentMethod } from './schema'
+import type { MemberApplicationFormSchema as FormSchema, PaymentMethod } from './schema'
 import { paymentMethods } from './schema'
 
+const labelKeyByMethod: Record<PaymentMethod, string> = {
+  bank_foreign: 'joinUs.apply.payment.bankTransferForeign',
+  bank_gel: 'joinUs.apply.payment.bankTransferGEL',
+  contact_me: 'joinUs.apply.payment.contactMe',
+  wise: 'joinUs.apply.payment.wise',
+}
+
+// The fee, how to pay it, and the details for the chosen way
 const PaymentSection = () => {
   const t = useTranslations()
-  const {
-    control,
-    formState: { errors },
-  } = useFormContext<MemberApplicationFormData>()
-  const selectedMethod = useWatch({ control, name: 'paymentMethod' })
+  const selectedMethod = useWatch<FormSchema, 'paymentMethod'>({ name: 'paymentMethod' })
 
-  const labelByMethod: Record<PaymentMethod, string> = {
-    bank_foreign: t('joinUs.apply.payment.bankTransferForeign'),
-    bank_gel: t('joinUs.apply.payment.bankTransferGEL'),
-    contact_me: t('joinUs.apply.payment.contactMe'),
-    wise: t('joinUs.apply.payment.wise'),
-  }
+  const options = paymentMethods.map((method) => ({
+    label: t(labelKeyByMethod[method]),
+    value: method,
+  }))
 
   return (
-    <div className="flex flex-col gap-4">
-      <h3 className="text-lg font-semibold">{t('joinUs.apply.payment.title')}</h3>
-      <p className="text-sm font-medium">{t('joinUs.apply.payment.amount')}</p>
-
-      <Controller
-        control={control}
+    <FormCard
+      description={t('joinUs.apply.payment.amount')}
+      title={t('joinUs.apply.payment.title')}
+    >
+      <FormRadioGroup<FormSchema, PaymentMethod>
+        label={t('joinUs.apply.payment.method')}
         name="paymentMethod"
-        render={({ field }) => (
-          <RadioGroup
-            className="flex flex-col gap-3"
-            onValueChange={(value) => field.onChange(value)}
-            value={field.value ?? ''}
-          >
-            {paymentMethods.map((method) => (
-              <RadioOption key={method} label={labelByMethod[method]} value={method} />
-            ))}
-          </RadioGroup>
-        )}
+        options={options}
+        required
+        requiredMessage={t('joinUs.apply.payment.methodRequired')}
+        requiredText={t('common.validation.required')}
       />
-
-      {errors.paymentMethod && (
-        <span className="text-xs text-red-500">
-          {t(`common.validation.${errors.paymentMethod.message}`)}
-        </span>
-      )}
-
       <PaymentDetails method={selectedMethod} />
-    </div>
+    </FormCard>
   )
 }
 

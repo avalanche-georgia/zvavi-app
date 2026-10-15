@@ -17,8 +17,7 @@ export const fetchCurrentForecast = async ({
   const [, regionId, , variables] = queryKey
 
   // The public "current forecast" rule: latest created published forecast in the region.
-  // fetchCurrentForecastId, fetchLatestPublishedForecast and fetchRegionsWithHazard use the
-  // same rule — keep them in sync.
+  // fetchCurrentForecastId and fetchLatestPublishedForecast use the same rule — keep them in sync.
   const { data: forecastData, error: forecastError } = await supabase
     .from('forecasts')
     .select()

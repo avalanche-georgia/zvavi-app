@@ -1,30 +1,35 @@
 import { links } from '@components/constants'
-import { HTMLContainer } from '@components/shared'
+import { NewTabLink } from '@components/shared'
+import { ContentCard } from '@ds/patterns'
 import { useTranslations } from 'next-intl'
+
+import ListSection from './ListSection'
+
+// The course sign-up link inside the translated sentence
+const courseLink = (chunks: React.ReactNode) => (
+  <NewTabLink
+    className="focus-ring text-accent hover:text-accent-hover rounded-sm underline underline-offset-2"
+    href={links.courseForm}
+  >
+    {chunks}
+  </NewTabLink>
+)
 
 const EducateSection = () => {
   const t = useTranslations()
 
   return (
-    <section className="space-y-3">
-      <h3 className="text-xl font-semibold">{t('joinUs.page.educate.title')}</h3>
-      <div>
-        <p className="text-justify">{t('joinUs.page.educate.descriptionPre')}</p>
-        <ul className="mt-2 list-disc pl-4">
-          <li>{t('joinUs.page.educate.options.share')}</li>
-          <HTMLContainer
-            component="li"
-            content={t.rich('joinUs.page.educate.options.courses', {
-              a: (chunks) =>
-                `<a class="text-primary underline" href="${links.courseForm}" rel="noreferrer" target="_blank">${chunks}</a>`,
-            })}
-          />
-
-          <li>{t('joinUs.page.educate.options.events')}</li>
-        </ul>
-      </div>
-      <p className="text-justify">{t('joinUs.page.educate.descriptionPost')}</p>
-    </section>
+    <ContentCard title={t('joinUs.page.educate.title')}>
+      <ListSection
+        intro={t('joinUs.page.educate.descriptionPre')}
+        items={[
+          t('joinUs.page.educate.options.share'),
+          t.rich('joinUs.page.educate.options.courses', { a: courseLink }),
+          t('joinUs.page.educate.options.events'),
+        ]}
+      />
+      <p>{t('joinUs.page.educate.descriptionPost')}</p>
+    </ContentCard>
   )
 }
 

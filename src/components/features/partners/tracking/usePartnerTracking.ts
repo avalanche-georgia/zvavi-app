@@ -29,7 +29,14 @@ const usePartnerTracking = (partner: Partner) => {
     trackPartnerWebsiteClick({ isFromDrawer: true, partner, placement })
   }
 
-  return { hasDetails, trackBadgeClick, trackDrawerWebsiteClick }
+  // A card that links straight to the website (no details step)
+  const trackWebsiteClick = () => {
+    if (!placement) return
+
+    trackPartnerWebsiteClick({ isFromDrawer: false, partner, placement })
+  }
+
+  return { hasDetails, trackBadgeClick, trackDrawerWebsiteClick, trackWebsiteClick }
 }
 
 export default usePartnerTracking

@@ -1,12 +1,20 @@
 # Features
 
-## Region Picker
+## Opening the Site
 
-The homepage shows an interactive map of all active forecast regions, each polygon colored by its current overall hazard level. Tapping a region opens a summary popup with the hazard icon, level, and a link to the region page. The selected region is remembered between visits.
+Opening the site takes visitors straight to the home page of the region they chose before. Visitors who haven't chosen one yet see the region chooser — or, while there is only one region, go directly to it. Following a link to another region's page doesn't change the visitor's chosen region.
+
+## Region Chooser
+
+Shows today's avalanche danger for every forecast region at a glance: a compact list, one row per region with its danger level — or a clear note when the forecast has expired, no forecast was issued today, it's off-season, or the region doesn't have a forecaster yet — next to a map of every forecast area coloured by its danger level with a numbered marker, which zooms in and out but always stays around Georgia. Hovering a region in the list highlights it on the map and the other way round. Choosing a region opens its home page and remembers it for the next visit. Between June and November, when no forecasts are being issued, the page says so. Below are the main partners — or an invitation to become one — and short introductions to the organisation and how to help, including donating.
+
+## Site Header and Footer
+
+Every public page shares the same header and footer. The header has a menu named after the region you're looking at, with that region's pages (overview, current forecast, forecast area, past forecasts, observations), a "Switch region" button when there is more than one region, plus weather stations, partners and the about pages, an EN / ქარ language switch and the team's account menu or a sign-in link. The logo always leads back to the region's home page. On phones and tablets these move into a menu. The footer repeats the region's pages, lists resources (starting with "All regions" when there is a choice) and organisation pages, the team's social channels, the emergency number 112 and the legal pages.
 
 ## Region Page
 
-Each region has its own landing page. It opens with the current overall danger level on the official 1–5 scale, when the forecast was issued, how long it stays valid and who wrote it — one tap leads to the full forecast. If the latest forecast's validity has run out and no new one has been issued yet, a notice says so. Below are the region's main partners (or an invitation to become one), the three most recent avalanche reports — each opens in place with its details — with shortcuts to see all of them or report a new one, and quick links to the forecast area, the weather stations and past forecasts.
+Each region has its own home page. It opens with the current overall danger level on the official 1–5 scale, when the forecast was issued, how long it stays valid and who wrote it. Tapping the danger level explains what it means; "Read full forecast" opens the forecast. If the latest forecast's validity has run out and no new one has been issued yet, a notice says so. A region that has never had a forecast says that we're looking for a forecaster, with a link to join. Below are the region's main partners (or an invitation to become one), the three most recent avalanche reports — each opens in place with its details — with shortcuts to see all of them or report a new one, and quick links to the forecast area, observations, the weather stations and past forecasts.
 
 ## Avalanche Forecasts
 
@@ -47,6 +55,10 @@ Anyone can report an avalanche they've witnessed — no account needed. The subm
 
 The observations page shows reports as a list and on a map of the region side by side (on phones, switch between the two). The list loads more reports as you scroll, and the map always shows every matching report, grouping nearby ones into numbered bubbles that split apart as you zoom in. Reports are grouped by date — today, yesterday, this week, then by month — and can be filtered to the last 7 or 30 days, the current season (November to May) or a custom date range, based either on when the avalanche happened or when it was reported — reports whose date the observer didn't know have their own filter — and sorted newest or largest first. Each report opens into a detail view with its photos (tap for full-screen), size, trigger, dimensions, the slopes affected, the description and the reporter's first name with last initial. From there, "Show on map" gives a close-up map with copyable coordinates and a link to open the spot in a maps app. Filtered views and individual reports have their own links that can be shared. Contact details and other personal information submitted with a report are only ever visible to forecasters.
 
+## About, Join and Contact
+
+Short pages about the organisation: who we are and what we do (with a clear note that forecasts are guidance, not a guarantee); how to get involved — becoming a member, volunteering, donating via Patreon, Wise or bank transfer, and spreading avalanche awareness; and how to reach the team, with every bank detail copyable in one tap and a reminder that we are not a rescue service (call 112).
+
 ## Partners
 
 A showcase of partner organizations supporting the Georgian avalanche forecasting program.
@@ -80,7 +92,7 @@ Forecasters and administrators can view and edit their own profile — including
 Administrators can manage the list of mountain weather stations: add, edit, delete, and reorder them via drag-and-drop. Each station has a name in English and Georgian, an altitude, and a link to its live data feed.
 
 ### Partner Benefits Management
-Administrators can manage a list of partner organizations and the exclusive discounts or perks they offer to Avalanche Georgia members. Each partner has a name, optional benefit description, logo, and website — all stored in both English and Georgian. The list can be searched by name, filtered by active / inactive and sorted by name or tier; a partner is added or edited in a side panel next to the list. Active partners are displayed to the public in a "Member Benefits" drawer accessible from the Join Us page and the member verification card.
+Administrators can manage a list of partner organizations and the exclusive discounts or perks they offer to Avalanche Georgia members. Each partner has a name, optional benefit description, logo, and website — all stored in both English and Georgian. The list can be searched by name, filtered by active / inactive and sorted by name or tier; a partner is added or edited in a side panel next to the list. Active partners are displayed to the public in a "Member Benefits" panel accessible from the Join Us page and the member verification card.
 
 ---
 

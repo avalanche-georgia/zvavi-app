@@ -1,8 +1,8 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import { Sheet } from '@components/ui'
 import type { AvalancheProblemType } from '@domain/types'
+import { Sheet } from '@ds/patterns'
 import isEqual from 'lodash/isEqual'
 
 import ProblemEditorBody from './ProblemEditorBody'

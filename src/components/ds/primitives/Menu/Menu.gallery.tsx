@@ -4,6 +4,7 @@ import { Copy, Ellipsis, Pencil, Trash2 } from 'lucide-react'
 
 import Menu from './Menu'
 import MenuItem, { MenuSeparator } from './MenuItem'
+import { Button } from '../Button'
 import { IconButton } from '../IconButton'
 
 const noop = () => undefined
@@ -27,6 +28,19 @@ const MenuGallery = () => (
       <MenuItem icon={<Trash2 />} onClick={noop} tone="danger">
         Delete
       </MenuItem>
+    </Menu>
+    <Menu
+      align="start"
+      trigger={
+        <Button size="sm" variant="secondary">
+          Links, aligned start
+        </Button>
+      }
+    >
+      <MenuItem isActive render={<a href="#current" />}>
+        Current page
+      </MenuItem>
+      <MenuItem render={<a href="#other" />}>Another page</MenuItem>
     </Menu>
   </div>
 )

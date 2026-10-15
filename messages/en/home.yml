@@ -1,0 +1,54 @@
+home:
+  hero:
+    title: 'Avalanche forecasts'
+    lede: 'Daily forecasts from our volunteer forecasters — danger, avalanche problems and travel advice.'
+    offSeason:
+      title: 'Off-season.'
+      message: 'Daily forecasts resume in December. Observations and weather data stay live.'
+    legendLabel: 'Danger scale'
+
+  regions:
+    listLabel: 'Forecast regions'
+    issued: 'Issued {time} · valid to {validUntil}'
+    expired: 'Forecast expired'
+    expiredStatus: 'Expired'
+    noForecastToday: 'No forecast issued today'
+    nextForecast: 'Next forecast in December'
+    unavailable: 'Forecast unavailable right now'
+    offSeason: 'Off-season'
+    noForecaster: 'No forecasts yet'
+    lookingForForecaster: 'Looking for a forecaster'
+
+  map:
+    manyRegions: 'Forecast regions'
+
+  partners:
+    titleOne: 'Main partner'
+    titleMany: 'Main partners'
+    seeAll: 'All partners'
+    badge: 'Main partner'
+    visitWebsite: 'Visit website'
+    empty:
+      logoSlot: 'your logo'
+      title: 'Become our main partner'
+      message: 'Your brand shown to everyone checking the avalanche forecast before heading into the mountains — and your support keeps daily forecasts free.'
+      action: 'Partner with us'
+
+  about:
+    eyebrow: 'About us'
+    title: 'Independent, volunteer-run, non-profit'
+    message: 'Avalanche Georgia is a volunteer avalanche forecasting service helping backcountry users make safer decisions in the Caucasus.'
+    action: 'Learn more'
+
+  join:
+    eyebrow: 'Join us'
+    title: 'Avalanche safety is a community effort'
+    message: 'Support our work by donating or contributing your skills.'
+    skillsLabel: 'Ways to contribute'
+    skills:
+      forecasting: 'Forecasting'
+      development: 'Development'
+      outreach: 'Outreach'
+      translation: 'Translation'
+    donate: 'Donate'
+    howToHelp: 'How to help'
