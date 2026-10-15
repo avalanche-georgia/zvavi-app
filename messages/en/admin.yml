@@ -139,6 +139,7 @@ admin:
       contact_me: 'Asked to be contacted'
       wise: 'Wise'
     genders:
+      notGiven: 'Not given'
       female: 'Female'
       male: 'Male'
       preferNotToSay: 'Prefer not to say'

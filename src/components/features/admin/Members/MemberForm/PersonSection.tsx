@@ -15,10 +15,14 @@ const placeholderKey = 'admin.members.form.placeholders'
 const PersonSection = () => {
   const t = useTranslations()
 
-  const genderOptions = memberGenders.map((gender) => ({
-    label: t(`admin.members.genders.${gender}`),
-    value: gender,
-  }))
+  // "Not given" first, so a gender set by mistake can be cleared
+  const genderOptions = [
+    { label: t('admin.members.genders.notGiven'), value: '' as const },
+    ...memberGenders.map((gender) => ({
+      label: t(`admin.members.genders.${gender}`),
+      value: gender,
+    })),
+  ]
 
   return (
     <FormCard title={t('admin.members.form.sections.person')}>
@@ -55,7 +59,7 @@ const PersonSection = () => {
           name="age"
           placeholder={t(`${placeholderKey}.age`)}
         />
-        <FormSelect<MemberFormData, string>
+        <FormSelect<MemberFormData, MemberFormData['gender']>
           label={t(`${labelKey}.gender`)}
           name="gender"
           options={genderOptions}

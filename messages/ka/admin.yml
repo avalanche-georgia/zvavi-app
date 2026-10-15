@@ -139,6 +139,7 @@ admin:
       contact_me: 'ითხოვს დაკავშირებას'
       wise: 'Wise'
     genders:
+      notGiven: 'არ არის მითითებული'
       female: 'მდედრობითი'
       male: 'მამრობითი'
       preferNotToSay: 'არ სურს მითითება'
