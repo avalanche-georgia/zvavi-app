@@ -5,12 +5,13 @@ import {
   type RecordSheetConfirm,
   RecordSheetFooter,
 } from '@components/features/admin/shared'
+import { getMemberName } from '@domain/memberName'
 import type { Member } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import type { MemberSheetMode } from './types'
 import ViewActions from './ViewActions'
-import { getMemberName, useMemberActions } from '../shared'
+import { useMemberActions } from '../shared'
 
 type MemberSheetFooterProps = {
   confirm: RecordSheetConfirm

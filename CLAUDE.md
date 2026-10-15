@@ -107,12 +107,15 @@ Import `avalancheTypes` when working with avalanche events; import `avalanchePro
 Two environments: **staging** (default, local dev) and **production**.
 
 **Development workflow (staging):**
-1. Write SQL, run it manually in the Supabase dashboard
-2. Save as `supabase/migrations/<timestamp>_name.sql`
+1. Save the SQL as `supabase/migrations/<timestamp>_name.sql`
+2. Run it on staging — in the Supabase dashboard, or (agents) through the Supabase MCP `execute_sql` with the file's exact contents. First check `get_project_url` points at the staging ref (`SUPABASE_STAGING_PROJECT_REF`), never production. Don't use MCP `apply_migration`: it records its own timestamp, so the history no longer matches the file name
 3. Mark applied so the CLI doesn't re-run it:
    ```bash
    supabase migration repair --status applied <timestamp>
    ```
+4. Regenerate types: `pnpm typegen`
+
+Agents apply staging migrations themselves once the migration is written; production only ever goes through `pnpm db:push-prod`, run by a person.
 
 **Pushing to production:**
 ```bash
@@ -185,12 +188,21 @@ Never write Supabase query logic inline inside a page or component. Extract to a
 
 Two different data-access patterns exist depending on who's on the other end, and both are intentional — don't unify them:
 
-- **Trusted (authenticated team members, admin UI)**: standard pattern — mutation hooks call `.insert()`/`.update()` directly on the table via `supabase-js`, gated by `authenticated`-only RLS policies. See any hook in `src/data/hooks/recentAvalanches/`.
+- **Trusted (authenticated team members, admin UI)**: standard pattern — mutation hooks call `.insert()`/`.update()` directly on the table via `supabase-js`, gated by staff-only RLS policies (`public.is_staff()`, see Access control below). See any hook in `src/data/hooks/recentAvalanches/`.
 - **Untrusted (anonymous public submissions/reads, e.g. observations)**: goes through a Next.js API route (`src/app/api/.../route.ts`) using a service-role Supabase client (`createServiceRoleClient()` from `src/lib/supabase/serviceRole.ts`), calling either:
   - a `SECURITY DEFINER` Postgres RPC for writes (e.g. `submit_observation`) — the RPC whitelists exactly which fields the caller can set (forces `source`, `status`, nulls `created_by_user_id`, etc.), which a plain "anon INSERT" RLS policy can't do since RLS only gates row visibility, not per-field values. `EXECUTE` on the RPC is revoked from `anon`/`authenticated` and granted only to `service_role`, so it's unreachable except through the route.
   - an explicit safe column `SELECT` for reads that must exclude PII (e.g. `submitter_contact`, `submitter_education`) — RLS is row-level only, so it can't hide columns on rows a role can otherwise see; the service-role route selects only the public-safe columns instead.
 
 Why not just use an "anon RLS insert/select" policy for public data, like the plan first proposed? Because RLS can't validate shape, run anti-spam checks (honeypot), or restrict which columns are readable — a route with server-side Zod validation and an explicit column list closes gaps RLS structurally can't. Reserve this pattern for endpoints an anonymous person on the internet can hit; don't add it to internal admin mutations where the extra indirection buys nothing.
+
+### Access control
+
+There are no public user accounts: every account is a team account, and "team" means role `admin` or `forecaster`.
+- `authenticated` never means "team". RLS policies for team-only data use `(SELECT public.is_staff())`, not `TO authenticated USING (true)`.
+- API routes under `src/app/api/admin/` and `src/app/api/notify/` start with `requireStaff()` from `@/lib/auth/requireStaff` (401 signed out, 403 not staff).
+- `SECURITY DEFINER` functions callable by `authenticated` check `public.is_staff()` themselves — they bypass RLS.
+- New tables get no `anon` grants unless a public page reads them (and then only `SELECT`).
+- Public reads and writes of untrusted data go through service-role routes (see above).
 
 ### Form Pattern
 - **All forms must use `react-hook-form` + `zodResolver` + `FormProvider`**

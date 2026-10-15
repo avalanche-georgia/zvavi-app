@@ -23,6 +23,7 @@ const sectionTitles: Record<string, SectionTitles> = {
     edit: 'admin.recentAvalanches.title.edit',
     main: 'admin.recentAvalanches.title.list',
   },
+  team: { main: 'admin.sidebar.team' },
   'weather-stations': { main: 'admin.weatherStations.title' },
 }
 

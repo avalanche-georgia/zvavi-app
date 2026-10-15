@@ -2,6 +2,10 @@ admin:
   title: 'ადმინისტრირება'
   selectSection: 'დასაწყებად აირჩიეთ სექცია გვერდითა მენიუდან.'
 
+  noAccess:
+    title: 'წვდომა არ გაქვთ'
+    description: "ადმინისტრაციის სივრცე განკუთვნილია ზვავი საქართველოს ადმინისტრატორებისა და პროგნოზისტებისთვის. თქვენს ანგარიშს ეს როლი არ აქვს. გამოდით ანგარიშიდან ან მიმართეთ ადმინისტრატორს, თუ ფიქრობთ, რომ ეს შეცდომაა."
+
   dashboard:
     title: მიმოხილვა
     metrics:
@@ -39,6 +43,7 @@ admin:
     observations: 'დაკვირვებები'
     partners: 'პარტნიორები'
     recentAvalanches: 'ბოლო ზვავები'
+    team: 'გუნდის გვერდი'
     weatherStations: 'ამინდის სადგურები'
     menuDescription: 'ადმინისტრაციული სანავიგაციო მენიუ'
     openMenu: 'მენიუს გახსნა'
@@ -354,11 +359,21 @@ admin:
         about: 'ჩემ შესახებ'
         firstName: 'სახელი'
         lastName: 'გვარი'
+        socialLink: 'ბმული {number}'
+        socialLinks: 'ბმულები'
+        teamTitle: 'როლი გუნდში'
       hints:
         avatar: 'JPG, PNG ან WebP · მაქს. 5 MB'
+        socialLinks: 'მაქს. {max}'
+        teamTitle: 'თქვენი ბეჯი გუნდის გვერდზე'
+      placeholders:
+        socialLink: 'ჩასვით ბმული, მაგ. instagram.com/your.name'
+        teamTitle: 'მაგ. წამყვანი პროგნოზისტი'
       actions:
+        addLink: 'ბმულის დამატება'
         avatarUpload: 'ფოტოს ატვირთვა'
         avatarReplace: 'ფოტოს შეცვლა'
+        removeLink: 'ბმული {number} — წაშლა'
       errors:
         avatar:
           invalidType: 'გამოიყენეთ JPG, PNG ან WebP.'
@@ -368,6 +383,12 @@ admin:
     messages:
       updated: 'პროფილი წარმატებით განახლდა.'
       avatarUpdated: 'ფოტო განახლდა.'
+
+    publicProfile:
+      title: 'გუნდის გვერდი'
+      label: 'გამოჩნდეს ჩემი პროფილი საჯარო გუნდის გვერდზე'
+      hint: 'გამოჩნდებით სექციაში „{section}“ ფოტოთი, სახელით, როლით, ტექსტით „ჩემ შესახებ“ და ბმულებით. თქვენი ელფოსტა არასოდეს ჩანს.'
+      noTeam: 'იქ გამოსაჩენად ადმინმა უნდა დაგამატოთ სექციაში (პროგნოზისტები ან პროდუქტის გუნდი).'
 
     security:
       title: 'უსაფრთხოება'
@@ -687,6 +708,19 @@ admin:
     queue:
       emptyTitle: 'განსახილველი არაფერია — {region}'
       emptyHint: ახალი საჯარო შეტყობინებები აქ გამოჩნდება.
+
+  team:
+    hint: 'გადაიტანეთ ადამიანები სექციაში და იმ რიგით, როგორც საჯარო <link>გუნდის გვერდზე</link> უნდა ჩანდნენ. ადამიანი ჩანს, თუ სექციაშია და ჩართულია „საჯარო“.'
+    public: 'საჯარო'
+    noName: 'სახელი ჯერ არ არის'
+    noSection: 'სექციის გარეშე'
+    noSectionHint: 'საჯარო გვერდზე არ ჩანს.'
+    dropHere: 'გადმოიტანეთ ადამიანები აქ'
+    dragMember: '{name} — გადატანა'
+    dragToMove: 'გადაიტანეთ'
+    empty:
+      title: 'გუნდის წევრები ჯერ არ არის'
+      hint: 'პროგნოზისტები და ადმინები აქ გამოჩნდებიან.'
 
   weatherStations:
     title: 'ამინდის სადგურები'

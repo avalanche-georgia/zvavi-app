@@ -10,7 +10,7 @@ Shows today's avalanche danger for every forecast region at a glance: a compact 
 
 ## Site Header and Footer
 
-Every public page shares the same header and footer. The header has a menu named after the region you're looking at, with that region's pages (overview, current forecast, forecast area, past forecasts, observations), a "Switch region" button when there is more than one region, plus weather stations, partners and the about pages, an EN / ქარ language switch and the team's account menu or a sign-in link. The logo always leads back to the region's home page. On phones and tablets these move into a menu. The footer repeats the region's pages, lists resources (starting with "All regions" when there is a choice) and organisation pages, the team's social channels, the emergency number 112 and the legal pages.
+Every public page shares the same header and footer. The header has a menu named after the region you're looking at, with that region's pages (overview, current forecast, forecast area, past forecasts, observations), a "Switch region" button when there is more than one region, plus weather stations, partners and the about pages, and an EN / ქარ language switch. Visitors don't need an account, so there is no sign-in link; team members sign in through the admin address, after which the header shows their account menu (admin panel, profile, sign out). The logo always leads back to the region's home page. On phones and tablets these move into a menu. The footer repeats the region's pages, lists resources (starting with "All regions" when there is a choice) and organisation pages, the team's social channels, the emergency number 112 and the legal pages.
 
 ## Region Page
 
@@ -59,6 +59,10 @@ The observations page shows reports as a list and on a map of the region side by
 
 Short pages about the organisation: who we are and what we do (with a clear note that forecasts are guidance, not a guarantee); how to get involved — becoming a member, volunteering, donating via Patreon, Wise or bank transfer, and spreading avalanche awareness; and how to reach the team, with every bank detail copyable in one tap and a reminder that we are not a rescue service (call 112).
 
+## Team
+
+A public "Our team" page, reachable from the About menu and the footer, introduces the people behind the forecasts in two groups: forecasters and the product team. Each person appears with their photo (or initials), name, their role on the team and a short bio; tapping someone opens their full profile, with links to their social profiles shown with each platform's logo. Nobody is listed by default. On a Team page in the admin panel, the team drags people into a group and into the order the public page shows them, and switches each person on or off (people can also switch themselves on their profile page). Email addresses are never shown. The page ends with an invitation to contribute — observations, code, design, translation or outreach.
+
 ## Partners
 
 A showcase of partner organizations supporting the Georgian avalanche forecasting program.
@@ -67,7 +71,7 @@ A showcase of partner organizations supporting the Georgian avalanche forecastin
 
 ## Admin Panel
 
-A password-protected back-office for the forecasting team.
+A password-protected back-office for the forecasting team. The admin area and the team's data are limited to administrators and forecasters; any other account sees a "No access" screen.
 
 ### Forecast Authoring
 Forecasters can create, edit, duplicate, and publish forecasts through a single-page form with a section index on the side. Hazard levels are set on one-tap scales for the overall danger and each elevation zone, with a live preview of the public forecast graphic and a hint when the overall level is lower than the highest zone. Avalanche problems are shown as cards and edited in a side panel (type, size, likelihood, distribution, timing and the affected slopes, which are required), and cards can be dragged to set priority or removed with an undo. Every forecast needs a summary. Recent avalanches are linked from the region's avalanche catalog rather than retyped: forecasters pick existing records (including drafts and reports still under review), create a new record without leaving the form, or edit a linked record — changes to a record show everywhere it is used. The form can be saved at any time and kept open (also with Ctrl/⌘ + S), shows when it was last saved, and asks before discarding unsaved changes. Drafts are invisible to the public until explicitly published.
@@ -86,7 +90,7 @@ Public submissions wait in a dedicated review queue, oldest first, until a forec
 Administrators can manage the team roster: add members — including people who joined before the online application existed, with the same personal details an application asks for (age, gender, location, occupation, motivation) — update their status (active, inactive, pending, suspended, expired), set membership validity dates, and generate or view their verification QR codes. The roster can be searched by name, member ID or email, filtered by status and sorted; each member opens in a side panel next to the list, where they can be viewed, edited or — for a pending application — approved with their membership dates.
 
 ### Staff Profiles
-Forecasters and administrators can view and edit their own profile — including display name, a short bio, and a profile photo. The photo and name are shown in the admin panel header. When creating a forecast, the forecaster field is automatically prefilled with the logged-in user's name.
+Forecasters and administrators can view and edit their own profile — including display name, a short role on the team (shown as their badge on the public Team page), a short bio, a profile photo and up to five links to their social profiles or website. The photo and name are shown in the admin panel header. When creating a forecast, the forecaster field is automatically prefilled with the logged-in user's name.
 
 ### Weather Station Management
 Administrators can manage the list of mountain weather stations: add, edit, delete, and reorder them via drag-and-drop. Each station has a name in English and Georgian, an altitude, and a link to its live data feed.

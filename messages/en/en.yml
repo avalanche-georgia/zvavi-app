@@ -2,7 +2,8 @@ auth:
   errors:
     invalidSession: 'Invalid or expired session. Please request a new password reset link.'
   login:
-    title: 'Login'
+    title: 'Team sign-in'
+    description: "For Avalanche Georgia administrators and forecasters. Visitors don't need an account."
     signIn: 'Sign In'
     forgotPassword: 'Forgot Your Password?'
   logout:

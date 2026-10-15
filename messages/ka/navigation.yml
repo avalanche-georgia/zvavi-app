@@ -21,5 +21,7 @@ navigation:
   openMenu: 'მენიუს გახსნა'
   overview: 'მიმოხილვა'
   partners: 'პარტნიორები'
+  profile: 'ჩემი პროფილი'
   switchRegion: 'რეგიონის შეცვლა'
+  team: 'გუნდი'
   weatherStations: 'ამინდის სადგურები'

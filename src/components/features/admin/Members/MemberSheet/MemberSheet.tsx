@@ -2,6 +2,7 @@
 
 import { useId } from 'react'
 import { useRecordSheet } from '@components/features/admin/shared'
+import { getMemberName } from '@domain/memberName'
 import type { Member } from '@domain/types'
 import { Sheet, SheetHeader } from '@ds/patterns'
 import { useTranslations } from 'next-intl'
@@ -9,7 +10,6 @@ import { useTranslations } from 'next-intl'
 import MemberSheetBody from './MemberSheetBody'
 import MemberSheetFooter from './MemberSheetFooter'
 import type { MemberSheetMode } from './types'
-import { getMemberName } from '../shared'
 
 type MemberSheetProps = {
   initialMode: MemberSheetMode

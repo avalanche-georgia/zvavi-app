@@ -71,6 +71,12 @@ export const getNavMenuItems = (regionId: string | null): NavMenuItem[] => {
           titleId: 'navigation.aboutUs',
         },
         {
+          icon: 'userRoundCheck',
+          id: 'team',
+          path: routes.about.team,
+          titleId: 'navigation.team',
+        },
+        {
           icon: 'userPlus',
           id: 'joinUs',
           path: routes.about.joinUs,
