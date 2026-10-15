@@ -10,7 +10,7 @@ Shows today's avalanche danger for every forecast region at a glance: a compact 
 
 ## Site Header and Footer
 
-Every public page shares the same header and footer. The header has a menu named after the region you're looking at, with that region's pages (overview, current forecast, forecast area, past forecasts, observations), a "Switch region" button when there is more than one region, plus weather stations, partners and the about pages, an EN / ქარ language switch and the team's account menu or a sign-in link. The logo always leads back to the region's home page. On phones and tablets these move into a menu. The footer repeats the region's pages, lists resources (starting with "All regions" when there is a choice) and organisation pages, the team's social channels, the emergency number 112 and the legal pages.
+Every public page shares the same header and footer. The header has a menu named after the region you're looking at, with that region's pages (overview, current forecast, forecast area, past forecasts, observations), a "Switch region" button when there is more than one region, plus weather stations, partners and the about pages, and an EN / ქარ language switch. Visitors don't need an account, so there is no sign-in link; team members sign in through the admin address, after which the header shows their account menu (admin panel, profile, sign out). The logo always leads back to the region's home page. On phones and tablets these move into a menu. The footer repeats the region's pages, lists resources (starting with "All regions" when there is a choice) and organisation pages, the team's social channels, the emergency number 112 and the legal pages.
 
 ## Region Page
 
@@ -67,7 +67,7 @@ A showcase of partner organizations supporting the Georgian avalanche forecastin
 
 ## Admin Panel
 
-A password-protected back-office for the forecasting team.
+A password-protected back-office for the forecasting team. The admin area and the team's data are limited to administrators and forecasters; any other account sees a "No access" screen.
 
 ### Forecast Authoring
 Forecasters can create, edit, duplicate, and publish forecasts through a single-page form with a section index on the side. Hazard levels are set on one-tap scales for the overall danger and each elevation zone, with a live preview of the public forecast graphic and a hint when the overall level is lower than the highest zone. Avalanche problems are shown as cards and edited in a side panel (type, size, likelihood, distribution, timing and the affected slopes, which are required), and cards can be dragged to set priority or removed with an undo. Every forecast needs a summary. Recent avalanches are linked from the region's avalanche catalog rather than retyped: forecasters pick existing records (including drafts and reports still under review), create a new record without leaving the form, or edit a linked record — changes to a record show everywhere it is used. The form can be saved at any time and kept open (also with Ctrl/⌘ + S), shows when it was last saved, and asks before discarding unsaved changes. Drafts are invisible to the public until explicitly published.
