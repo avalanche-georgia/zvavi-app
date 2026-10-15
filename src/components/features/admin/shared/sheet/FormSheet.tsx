@@ -23,6 +23,8 @@ type FormSheetProps = {
   children: (form: FormSheetFormProps) => React.ReactNode
   className?: string
   isRequested: boolean
+  // Wider desktop panel (see Sheet)
+  isWide?: boolean
   onClose: VoidFunction
   saveLabel?: string
   title: string
@@ -34,6 +36,7 @@ const FormSheet = ({
   children,
   className,
   isRequested,
+  isWide,
   onClose,
   saveLabel,
   title,
@@ -64,6 +67,7 @@ const FormSheet = ({
       isDismissible={!sheet.isDirty}
       isOpen={sheet.isOpen}
       isTall
+      isWide={isWide}
       onOpenChange={handleOpenChange}
     >
       <div key={sheet.formKey} className="contents">

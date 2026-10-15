@@ -71,7 +71,10 @@ const MemberView = ({ member }: { member: Member }) => {
           <p className="text-copy text-body whitespace-pre-wrap">{notes}</p>
         </DetailSection>
       )}
-      <QRCodeSection member={member} />
+      {/* The card's QR code is a separate concern from the member's details */}
+      <div className="border-rule mt-6 border-t">
+        <QRCodeSection member={member} />
+      </div>
     </div>
   )
 }

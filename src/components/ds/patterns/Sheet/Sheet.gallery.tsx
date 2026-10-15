@@ -48,6 +48,7 @@ const SheetGallery = () => {
         }
         isOpen={isOpen}
         isTall
+        isWide
         onOpenChange={setIsOpen}
         scrollKey={index}
         steps={steps}

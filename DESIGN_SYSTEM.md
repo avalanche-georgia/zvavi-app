@@ -176,6 +176,9 @@ Rules:
 - **Menus** (`primitives/Menu`): `align` picks the trigger edge (`end` for overflow menus, `start`
   for nav dropdowns). Navigation rows pass `render={<Link href=… />}` to `MenuItem`; `isActive`
   marks the current page.
+- **Sheets** (`patterns/Sheet`): bottom sheet on mobile, side panel from `lg`. `isTall` fixes the
+  mobile height; `isWide` widens the desktop panel (`w-160` instead of `w-120`) for records with more
+  to lay out side by side, e.g. a member's facts and QR code. No width overrides through `className`.
 - **Confirming a destructive action** (remove, unlink): wrap the control that asks in
   `primitives/ConfirmPopover`. It floats next to that control (no layout shift), starts focus on
   Cancel, and base-ui closes it on Esc, an outside click or when another one opens.

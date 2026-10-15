@@ -19,6 +19,9 @@ type SheetProps = {
   // Fixed near-full height on mobile instead of sizing to content (desktop
   // panels are always full height)
   isTall?: boolean
+  // Wider desktop panel for content with more columns (e.g. a record with a
+  // facts grid and a QR code); no effect on the mobile bottom sheet
+  isWide?: boolean
   isOpen: boolean
   // false while closing would lose data (e.g. a dirty form): backdrop click and
   // swipe no longer close it — only explicit actions (close button, Esc) do
@@ -43,6 +46,7 @@ const Sheet = ({
   isDismissible = true,
   isOpen,
   isTall = false,
+  isWide = false,
   onOpenChange,
   scrollKey,
   steps,
@@ -68,7 +72,8 @@ const Sheet = ({
             'rounded-t-sheet shadow-sheet',
             'ease-sheet transition-transform duration-280',
             'data-ending-style:translate-y-full data-starting-style:translate-y-full',
-            'lg:rounded-sheet lg:shadow-panel lg:inset-y-4 lg:right-4 lg:left-auto lg:max-h-none lg:w-120',
+            'lg:rounded-sheet lg:shadow-panel lg:inset-y-4 lg:right-4 lg:left-auto lg:max-h-none',
+            isWide ? 'lg:w-160' : 'lg:w-120',
             'lg:data-ending-style:translate-x-[calc(100%+24px)] lg:data-ending-style:translate-y-0',
             'lg:data-starting-style:translate-x-[calc(100%+24px)] lg:data-starting-style:translate-y-0',
             isTall && 'h-[94dvh] lg:h-auto',

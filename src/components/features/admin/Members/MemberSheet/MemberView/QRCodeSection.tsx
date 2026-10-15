@@ -20,16 +20,21 @@ const QRCodeSection = ({ member }: { member: Member }) => {
 
   return (
     <DetailSection title={t('admin.members.qrCode.title')}>
-      <div className="flex flex-col gap-3">
-        <p className="text-copy-sm text-muted">{t('admin.members.qrCode.description')}</p>
-        <div className="rounded-media border-rule bg-surface self-center border p-3">
-          <BrandedQRCode size={200} value={verificationUrl} />
+      {/* Code and its actions side by side once the panel is wide enough */}
+      <div className="@container">
+        <div className="flex flex-col gap-4 @lg:flex-row @lg:items-start">
+          <div className="rounded-media border-rule bg-surface shrink-0 self-center border p-3 @lg:self-start">
+            <BrandedQRCode size={200} value={verificationUrl} />
+          </div>
+          <div className="flex min-w-0 flex-1 flex-col gap-3">
+            <p className="text-copy-sm text-muted">{t('admin.members.qrCode.description')}</p>
+            <VerificationLink url={verificationUrl} />
+            <Button onClick={onQrDownload} size="sm" variant="secondary">
+              <Download aria-hidden className="size-4" />
+              {t('admin.members.qrCode.download')}
+            </Button>
+          </div>
         </div>
-        <VerificationLink url={verificationUrl} />
-        <Button onClick={onQrDownload} size="sm" variant="secondary">
-          <Download aria-hidden className="size-4" />
-          {t('admin.members.qrCode.download')}
-        </Button>
       </div>
     </DetailSection>
   )
