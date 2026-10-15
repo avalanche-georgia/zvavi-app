@@ -4,6 +4,7 @@ import type {
   avalancheTypes,
   confidenceLevels,
   distributionTypes,
+  memberGenders,
   sensitivityLevels,
   trends,
 } from '@domain/constants'
@@ -233,13 +234,20 @@ export type AdminForecast = Forecast & {
 
 export type MemberStatus = Enums<'member_status'>
 
-export type Member = Tables<'members'>
+export type MemberGender = (typeof memberGenders)[number]
+
+export type Member = Omit<Tables<'members'>, 'gender'> & { gender: MemberGender | null }
 
 export type MemberFormData = {
   firstName: string
   lastName: string
   email: string
   phone: string
+  age: number | null
+  gender: MemberGender | ''
+  address: string
+  occupation: string
+  motivation: string
   memberId: string
   status: MemberStatus
   joinedAt: Date | null

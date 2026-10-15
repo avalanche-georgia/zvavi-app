@@ -10,12 +10,13 @@ import { isMembershipOver, StatusBadge } from '../../shared'
 
 const emptyValue = '—'
 
-// Read-only member: status, contact and membership facts, notes, QR code
+// Read-only member: status, contact, personal and membership facts, motivation, notes, QR code
 const MemberView = ({ member }: { member: Member }) => {
   const t = useTranslations()
   const now = useNow()
   const { formatDate } = useListDates()
-  const { createdAt, email, expiresAt, joinedAt, memberId, notes, phone, status } = member
+  const { address, age, createdAt, email, expiresAt, gender, joinedAt, memberId } = member
+  const { motivation, notes, occupation, phone, status } = member
   const labelKey = 'admin.members.form.labels'
 
   const facts: Fact[] = [
@@ -24,6 +25,13 @@ const MemberView = ({ member }: { member: Member }) => {
       value: <span className="break-all">{email || emptyValue}</span>,
     },
     { label: t(`${labelKey}.phone`), value: phone || emptyValue },
+    { label: t(`${labelKey}.age`), value: age ?? emptyValue },
+    {
+      label: t(`${labelKey}.gender`),
+      value: gender ? t(`admin.members.genders.${gender}`) : emptyValue,
+    },
+    { label: t(`${labelKey}.address`), value: address || emptyValue },
+    { label: t(`${labelKey}.occupation`), value: occupation || emptyValue },
     { label: t(`${labelKey}.joinedAt`), value: formatDate(joinedAt) },
     {
       label: t(`${labelKey}.expiresAt`),
@@ -43,6 +51,11 @@ const MemberView = ({ member }: { member: Member }) => {
         <StatusBadge status={status} />
       </div>
       <FactsGrid facts={facts} />
+      {motivation && (
+        <DetailSection title={t(`${labelKey}.motivation`)}>
+          <p className="text-copy text-body whitespace-pre-wrap">{motivation}</p>
+        </DetailSection>
+      )}
       {notes && (
         <DetailSection title={t(`${labelKey}.notes`)}>
           <p className="text-copy text-body whitespace-pre-wrap">{notes}</p>

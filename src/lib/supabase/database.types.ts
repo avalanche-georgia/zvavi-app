@@ -350,48 +350,63 @@ export type Database = {
       }
       members: {
         Row: {
+          address: string | null
+          age: number | null
           auth_user_id: string | null
           created_at: string
           email: string | null
           expires_at: string | null
           first_name: string
+          gender: string | null
           id: string
           joined_at: string
           last_name: string
           member_id: string
+          motivation: string | null
           notes: string | null
+          occupation: string | null
           phone: string | null
           status: Database['public']['Enums']['member_status']
           updated_at: string
           verification_code: string
         }
         Insert: {
+          address?: string | null
+          age?: number | null
           auth_user_id?: string | null
           created_at?: string
           email?: string | null
           expires_at?: string | null
           first_name: string
+          gender?: string | null
           id?: string
           joined_at?: string
           last_name: string
           member_id: string
+          motivation?: string | null
           notes?: string | null
+          occupation?: string | null
           phone?: string | null
           status?: Database['public']['Enums']['member_status']
           updated_at?: string
           verification_code: string
         }
         Update: {
+          address?: string | null
+          age?: number | null
           auth_user_id?: string | null
           created_at?: string
           email?: string | null
           expires_at?: string | null
           first_name?: string
+          gender?: string | null
           id?: string
           joined_at?: string
           last_name?: string
           member_id?: string
+          motivation?: string | null
           notes?: string | null
+          occupation?: string | null
           phone?: string | null
           status?: Database['public']['Enums']['member_status']
           updated_at?: string
