@@ -27,6 +27,9 @@ seo:
   privacy:
     title: 'Privacy Policy'
     description: 'Learn how Avalanche Georgia collects, uses, and protects your personal data.'
+  team:
+    title: 'Our Team'
+    description: 'Meet the volunteer forecasters and product team behind Avalanche Georgia.'
   terms:
     title: 'Terms of Service'
     description: 'Terms and conditions for using Avalanche Georgia services and membership.'

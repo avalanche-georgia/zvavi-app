@@ -43,8 +43,32 @@ export type UserProfile = {
   about: string | null
   avatarUrl: string | null
   role: UserRole
+  // Public Team page: the section (admin-set) and the person's consent
+  team: TeamSection | null
+  isPublic: boolean
+  // Their own badge text (≤ 24 characters; the section name when empty)
+  teamTitle: string | null
+  // https URLs, at most five
+  socialLinks: string[]
   createdAt: string
 }
+
+export type TeamSection = Enums<'team_section'>
+
+// A staff profile on the admin Team page: what is shown publicly, and whether it is
+export type TeamProfile = Pick<
+  UserProfile,
+  'avatarUrl' | 'firstName' | 'fullName' | 'id' | 'isPublic' | 'lastName' | 'team'
+>
+
+// One person's place on the admin Team board: section (null = none) and position
+export type TeamOrderUpdate = { id: string; team: TeamSection | null; teamOrder: number | null }
+
+// A profile as the public Team page shows it — never email or role
+export type TeamMember = Pick<
+  UserProfile,
+  'about' | 'avatarUrl' | 'firstName' | 'fullName' | 'id' | 'lastName' | 'socialLinks' | 'teamTitle'
+> & { team: TeamSection }
 
 export type AvalancheSize = 1 | 2 | 3 | 4 | 5
 export type AvalancheType = keyof typeof avalancheTypes

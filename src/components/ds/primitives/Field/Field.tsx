@@ -30,7 +30,10 @@ const Field = ({
   <BaseField.Root className={cn('flex flex-col gap-2', className)} invalid={!!error}>
     <div
       className={cn(
-        'flex gap-2',
+        'flex',
+        // A hidden label (and no hint) leaves an empty row: no gap, so the control
+        // lines up with whatever sits next to the field
+        isLabelHidden && !hint ? 'gap-0' : 'gap-2',
         orientation === 'horizontal' ? 'items-center justify-between' : 'flex-col',
       )}
     >

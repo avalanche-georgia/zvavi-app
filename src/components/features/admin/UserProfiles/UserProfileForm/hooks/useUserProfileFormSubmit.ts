@@ -14,9 +14,15 @@ const useUserProfileFormSubmit = ({ onSuccess, profileId }: UseUserProfileFormSu
   const { toastError, toastSuccess } = useToast()
   const { mutateAsync: updateProfile } = useUserProfileUpdate()
 
-  const handleSubmit = async (formData: UserProfileFormSchema) => {
+  const handleSubmit = async ({ socialLinks, teamTitle, ...formData }: UserProfileFormSchema) => {
     try {
-      await updateProfile({ ...formData, id: profileId })
+      await updateProfile({
+        ...formData,
+        id: profileId,
+        // Without empty rows and repeats
+        socialLinks: [...new Set(socialLinks.map(({ url }) => url).filter(Boolean))],
+        teamTitle: teamTitle || null,
+      })
       toastSuccess(t('admin.profile.messages.updated'))
       onSuccess()
     } catch (error) {
