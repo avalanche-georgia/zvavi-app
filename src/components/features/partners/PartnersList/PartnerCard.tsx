@@ -1,9 +1,10 @@
 'use client'
 
 import type { Partner } from '@domain/types'
+import { ClampedText } from '@ds/patterns'
+import { useTranslations } from 'next-intl'
 
 import CardLogo from './CardLogo'
-import ClampedText from './ClampedText'
 import PartnerLink from './PartnerLink'
 import PerkTip from './PerkTip'
 import usePartnerFields from './usePartnerFields'
@@ -13,6 +14,7 @@ import { cn } from '@/lib/utils'
 
 // Tier 2: logo, name and link in a row, description below, perk behind a gift icon
 const PartnerCard = ({ partner }: { partner: Partner }) => {
+  const t = useTranslations()
   const { benefit, description, name } = usePartnerFields(partner)
   const { trackWebsiteClick } = usePartnerTracking(partner)
 
@@ -27,7 +29,12 @@ const PartnerCard = ({ partner }: { partner: Partner }) => {
         </div>
       </div>
       {description && (
-        <ClampedText className="text-copy" lines={2}>
+        <ClampedText
+          className="text-copy"
+          lessLabel={t('partners.page.showLess')}
+          lines={2}
+          moreLabel={t('partners.page.readMore')}
+        >
           {description}
         </ClampedText>
       )}

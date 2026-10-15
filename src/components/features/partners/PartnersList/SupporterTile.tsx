@@ -36,7 +36,7 @@ const SupporterTile = ({ onSelect, partner }: SupporterTileProps) => {
       {benefit && (
         <span
           aria-hidden
-          className="bg-success-soft text-success absolute top-1 right-1 grid size-5 place-items-center rounded-full"
+          className="bg-success-soft text-success ring-surface absolute top-1 right-1 grid size-5 place-items-center rounded-full ring-2"
         >
           <Gift className="size-3" />
         </span>

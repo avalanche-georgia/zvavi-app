@@ -4,8 +4,6 @@ import { Popover } from '@base-ui/react/popover'
 import { Gift } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
-import PerkText from './PerkText'
-
 import { cn } from '@/lib/utils'
 
 type PerkTipSize = 'md' | 'sm'
@@ -71,7 +69,7 @@ const PerkTip = ({ benefit, className, size = 'md' }: PerkTipProps) => {
                 'data-[side=bottom]:-top-1.25 data-[side=bottom]:border-t data-[side=bottom]:border-l',
               )}
             />
-            <PerkText benefit={benefit} />
+            {benefit}
           </Popover.Popup>
         </Popover.Positioner>
       </Popover.Portal>

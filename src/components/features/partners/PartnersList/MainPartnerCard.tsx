@@ -1,9 +1,10 @@
 'use client'
 
 import type { Partner } from '@domain/types'
+import { ClampedText } from '@ds/patterns'
+import { useTranslations } from 'next-intl'
 
 import CardLogo from './CardLogo'
-import ClampedText from './ClampedText'
 import MainPartnerTag from './MainPartnerTag'
 import PartnerLink from './PartnerLink'
 import PerkCallout from './PerkCallout'
@@ -12,6 +13,7 @@ import { usePartnerTracking } from '../tracking'
 
 // Tier 1: large logo beside the tag, name, description, perk and link
 const MainPartnerCard = ({ partner }: { partner: Partner }) => {
+  const t = useTranslations()
   const { benefit, description, name } = usePartnerFields(partner)
   const { trackWebsiteClick } = usePartnerTracking(partner)
 
@@ -22,7 +24,12 @@ const MainPartnerCard = ({ partner }: { partner: Partner }) => {
         <MainPartnerTag />
         <h2 className="text-title-sm md:text-title font-semibold wrap-anywhere">{name}</h2>
         {description && (
-          <ClampedText className="text-copy-lg max-w-[68ch]" lines={2}>
+          <ClampedText
+            className="text-copy-lg max-w-[68ch]"
+            lessLabel={t('partners.page.showLess')}
+            lines={2}
+            moreLabel={t('partners.page.readMore')}
+          >
             {description}
           </ClampedText>
         )}

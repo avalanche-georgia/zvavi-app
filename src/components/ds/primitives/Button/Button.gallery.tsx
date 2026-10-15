@@ -4,7 +4,15 @@ import Button, { type ButtonSize, type ButtonVariant } from './Button'
 
 import { cn } from '@/lib/utils'
 
-const variants: ButtonVariant[] = ['primary', 'secondary', 'danger', 'overlay', 'text', 'inverse']
+const variants: ButtonVariant[] = [
+  'primary',
+  'secondary',
+  'danger',
+  'overlay',
+  'text',
+  'disclosure',
+  'inverse',
+]
 const sizes: ButtonSize[] = ['lg', 'md', 'sm']
 
 const ButtonGallery = () => (

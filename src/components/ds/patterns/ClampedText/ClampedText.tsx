@@ -1,26 +1,31 @@
 'use client'
 
 import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react'
-import { Button } from '@ds/primitives'
-import { useTranslations } from 'next-intl'
+
+import { Button } from '../../primitives/Button'
 
 import { cn } from '@/lib/utils'
+
+export type ClampedTextLines = 1 | 2 | 3
 
 type ClampedTextProps = {
   children: string
   // Font size and width
   className?: string
-  lines: 1 | 2
+  // Toggle labels, e.g. "Show less" / "Read more"
+  lessLabel: string
+  lines: ClampedTextLines
+  moreLabel: string
 }
 
-const lineClampClasses: Record<ClampedTextProps['lines'], string> = {
+const lineClampClasses: Record<ClampedTextLines, string> = {
   1: 'line-clamp-1',
   2: 'line-clamp-2',
+  3: 'line-clamp-3',
 }
 
 // Text cut to a few lines; "Read more" (only when something is cut) expands it in place
-const ClampedText = ({ children, className, lines }: ClampedTextProps) => {
-  const t = useTranslations()
+const ClampedText = ({ children, className, lessLabel, lines, moreLabel }: ClampedTextProps) => {
   const textId = useId()
   const textRef = useRef<HTMLParagraphElement>(null)
   const [isExpanded, setIsExpanded] = useState(false)
@@ -80,9 +85,9 @@ const ClampedText = ({ children, className, lines }: ClampedTextProps) => {
           className="-mt-1.5 self-start"
           onClick={handleToggle}
           size="sm"
-          variant="text"
+          variant="disclosure"
         >
-          {isExpanded ? t('partners.page.showLess') : t('partners.page.readMore')}
+          {isExpanded ? lessLabel : moreLabel}
         </Button>
       )}
     </>
