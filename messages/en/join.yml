@@ -33,7 +33,7 @@ joinUs:
 
   apply:
     title: 'Membership application'
-    description: 'Tell us about yourself and choose how to pay the annual fee. We review every application and confirm your membership by email.'
+    description: 'Tell us about yourself and choose how to pay the annual fee.'
     sections:
       aboutYou: 'About you'
       agreements: 'Agreements'
@@ -80,7 +80,7 @@ joinUs:
       contactMe: 'None of the above — please contact me'
     success:
       title: 'Application submitted'
-      description: 'Thank you for applying. Your application is now under review. Once your membership is approved, your status will be updated automatically — you can check it anytime using the QR code or link below.'
+      description: 'Thank you for applying. Your application is now under review. Once it''s approved, we''ll confirm your membership by email. You can check your status anytime using the QR code or link below.'
       qrHint: 'Save this QR code — it''s your personal membership verification link.'
       downloadQR: 'Download QR code'
       verificationLink: 'Verification link'
