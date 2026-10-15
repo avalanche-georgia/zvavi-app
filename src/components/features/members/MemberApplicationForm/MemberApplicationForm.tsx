@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import { useScrollToFirstError } from '@components/features/observations/form'
 import { useToast, useUnsavedChangesWarning } from '@components/hooks'
 import { HoneypotField } from '@components/shared'
@@ -10,7 +9,6 @@ import { FormProvider, useForm } from 'react-hook-form'
 
 import AgreementsSection from './AgreementsSection'
 import ApplicantSection from './ApplicantSection'
-import ApplicationSuccess from './ApplicationSuccess'
 import FormActions from './FormActions'
 import { getInitialFormData } from './getInitialFormData'
 import PaymentSection from './PaymentSection'
@@ -21,10 +19,14 @@ import submitApplication from './submitApplication'
 
 import { reportError } from '@/lib/observability'
 
-const MemberApplicationForm = () => {
+// Calls onSubmitted with the new member's verification details
+const MemberApplicationForm = ({
+  onSubmitted,
+}: {
+  onSubmitted: (result: SubmitResult) => void
+}) => {
   const t = useTranslations()
   const { toastError } = useToast()
-  const [result, setResult] = useState<SubmitResult | null>(null)
   const { formRef, scrollToFirstError } = useScrollToFirstError()
 
   const form = useForm<MemberApplicationFormSchema, unknown, MemberApplicationFormData>({
@@ -34,22 +36,15 @@ const MemberApplicationForm = () => {
     shouldFocusError: false,
   })
 
-  useUnsavedChangesWarning(form.formState.isDirty && !result)
+  useUnsavedChangesWarning(form.formState.isDirty)
 
   const handleValid = async (data: MemberApplicationFormData) => {
     try {
-      setResult(await submitApplication(data))
-      window.scrollTo({ behavior: 'smooth', top: 0 })
+      onSubmitted(await submitApplication(data))
     } catch (error) {
       reportError(error, { scope: 'MemberApplicationForm' })
       toastError('MemberApplicationForm', { error, message: t('joinUs.apply.messages.error') })
     }
-  }
-
-  if (result) {
-    return (
-      <ApplicationSuccess memberId={result.memberId} verificationCode={result.verificationCode} />
-    )
   }
 
   return (

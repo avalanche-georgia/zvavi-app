@@ -1,7 +1,5 @@
-import { MemberApplicationForm } from '@components/features/members/MemberApplicationForm'
-import { ContentPage } from '@components/layout'
+import { MemberApplicationFlow } from '@components/features/members/MemberApplicationForm'
 import type { Metadata } from 'next'
-import { useTranslations } from 'next-intl'
 import { getLocale, getTranslations } from 'next-intl/server'
 
 import getAlternates from '@/lib/seo/getAlternates'
@@ -17,14 +15,6 @@ export const generateMetadata = async (): Promise<Metadata> => {
   }
 }
 
-const ApplyPage = () => {
-  const t = useTranslations()
-
-  return (
-    <ContentPage lede={t('joinUs.apply.description')} title={t('joinUs.apply.title')}>
-      <MemberApplicationForm />
-    </ContentPage>
-  )
-}
+const ApplyPage = () => <MemberApplicationFlow />
 
 export default ApplyPage

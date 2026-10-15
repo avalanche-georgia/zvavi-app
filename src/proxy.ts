@@ -150,7 +150,11 @@ export default async function proxy(request: NextRequest) {
   )
 
   if (!localeMatched) {
-    const redirectUrl = new URL(`/${defaultLocale}${pathname}`, request.url)
+    // Keep the query: links like ?member=<id> must still open their record
+    const redirectUrl = new URL(
+      `/${defaultLocale}${pathname}${request.nextUrl.search}`,
+      request.url,
+    )
 
     return NextResponse.redirect(redirectUrl)
   }

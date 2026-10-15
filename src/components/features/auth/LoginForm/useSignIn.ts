@@ -4,6 +4,7 @@ import { supabase } from '@data'
 import { handleSupabaseError } from '@data/helpers'
 import { useRouter } from 'src/i18n/navigation'
 
+import { getSafeReturnPath, returnPathParam } from '@/lib/auth/returnPath'
 import { routes } from '@/routes'
 
 // Resolves to whether sign-in worked; on success it moves on to the admin and
@@ -19,7 +20,12 @@ const useSignIn = () => {
 
       handleSupabaseError(error)
       setIsRedirecting(true)
-      router.push(routes.admin.root)
+      // Back to the admin page that asked for the login, e.g. a member link
+      const returnPath = getSafeReturnPath(
+        new URLSearchParams(window.location.search).get(returnPathParam),
+      )
+
+      router.push(returnPath ?? routes.admin.root)
 
       return true
     } catch (error) {

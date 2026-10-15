@@ -95,19 +95,29 @@ admin:
         membership: 'წევრობა'
         person: 'პიროვნება'
       labels:
+        address: 'მდებარეობა'
+        age: 'ასაკი'
         email: 'ელფოსტა'
         expiresAt: 'ვადა'
         firstName: 'სახელი'
+        gender: 'სქესი'
         joinedAt: 'გაწევრიანების თარიღი'
         lastName: 'გვარი'
         memberId: 'წევრის ID'
+        motivation: 'მოტივაცია'
         notes: 'შენიშვნები'
+        occupation: 'საქმიანობა'
         phone: 'ტელეფონი'
         status: 'სტატუსი'
       placeholders:
+        address: 'ქალაქი, ქვეყანა'
+        age: 'მაგ. 30'
         expiresAt: 'უვადო'
+        gender: 'აირჩიეთ სქესი'
         memberId: 'ავტომატურად'
+        motivation: 'რატომ სურს წევრობა'
         notes: 'შიდა შენიშვნები (წევრს არ ჩანს)'
+        occupation: 'მაგ. მთის გიდი, პროგრამისტი'
       hints:
         expiresAt: 'უვადო წევრობისთვის დატოვეთ ცარიელი.'
         notes: 'მხოლოდ გუნდისთვის'
@@ -123,6 +133,16 @@ admin:
       deleted: 'წევრი წარმატებით წაიშალა.'
       linkCopied: 'გადამოწმების ბმული დაკოპირდა.'
       updated: 'წევრი წარმატებით განახლდა.'
+    paymentMethods:
+      bank_foreign: 'საბანკო გადარიცხვა (USD/EUR)'
+      bank_gel: 'საბანკო გადარიცხვა (ლარი)'
+      contact_me: 'ითხოვს დაკავშირებას'
+      wise: 'Wise'
+    genders:
+      notGiven: 'არ არის მითითებული'
+      female: 'მდედრობითი'
+      male: 'მამრობითი'
+      preferNotToSay: 'არ სურს მითითება'
     statuses:
       active: 'აქტიური'
       expired: 'ვადაგასული'
@@ -130,6 +150,7 @@ admin:
       pending: 'მოლოდინში'
       suspended: 'შეჩერებული'
     view:
+      paymentMethod: 'გადახდის გზა'
       registeredAt: 'რეგისტრაცია'
       noEmail: 'ელფოსტა არ არის'
 

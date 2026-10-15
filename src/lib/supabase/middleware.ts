@@ -1,8 +1,9 @@
 import { createServerClient } from '@supabase/ssr'
 import { isAuthRetryableFetchError } from '@supabase/supabase-js'
 import { type NextRequest, NextResponse } from 'next/server'
-import { defaultLocale } from 'src/i18n/config'
+import { defaultLocale, locales } from 'src/i18n/config'
 
+import { returnPathParam } from '@/lib/auth/returnPath'
 import { reportServerError } from '@/lib/posthog/server'
 import { routes } from '@/routes'
 
@@ -56,7 +57,15 @@ export async function updateSession(request: NextRequest, response: NextResponse
   }
 
   if (!data?.claims && pathname.includes('/admin')) {
-    const loginUrl = new URL(`/${defaultLocale}${routes.auth.login}`, request.url)
+    const locale =
+      locales.find((supported) => pathname.startsWith(`/${supported}/`)) ?? defaultLocale
+    const loginUrl = new URL(`/${locale}${routes.auth.login}`, request.url)
+
+    // Back to the requested admin page after signing in (e.g. a member link from Telegram)
+    loginUrl.searchParams.set(
+      returnPathParam,
+      `${pathname.slice(locale.length + 1)}${request.nextUrl.search}`,
+    )
 
     return NextResponse.redirect(loginUrl)
   }
