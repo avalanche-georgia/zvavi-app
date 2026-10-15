@@ -17,7 +17,12 @@ const MemberCreateSheet = ({ isRequested, onClose, onCreated }: MemberCreateShee
   const t = useTranslations()
 
   return (
-    <FormSheet isRequested={isRequested} onClose={onClose} title={t('admin.members.title.create')}>
+    <FormSheet
+      isRequested={isRequested}
+      isWide
+      onClose={onClose}
+      title={t('admin.members.title.create')}
+    >
       {({ formId, onDirtyChange, onSubmittingChange, onSuccess }) => (
         <MemberForm
           formId={formId}

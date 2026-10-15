@@ -5,10 +5,12 @@ import { memberApplicationBodySchema } from './schema'
 
 import { reportServerError } from '@/lib/posthog/server'
 import { createServiceRoleClient } from '@/lib/supabase/serviceRole'
+import { routes } from '@/routes'
 
 type HoneypotCheck = { honeypot?: unknown }
 
-type SubmitResult = { memberId: string; verificationCode: string }
+// id: the member's record, for the admin link only — not returned to the applicant
+type SubmitResult = { id: string; memberId: string; verificationCode: string }
 
 // Public membership application: validated here, written by the
 // submit_member_application RPC, which only the service role may execute
@@ -55,7 +57,11 @@ export const POST = async (request: Request) => {
     return NextResponse.json({ error: 'failed to submit application', ok: false }, { status: 500 })
   }
 
-  await notifyAdmin(body)
+  const { id, memberId, verificationCode } = data as SubmitResult
+  // Same origin as this request, so staging links to staging
+  const reviewUrl = new URL(routes.admin.members.view(id), request.url).toString()
 
-  return NextResponse.json({ ...(data as SubmitResult), ok: true })
+  await notifyAdmin(body, reviewUrl)
+
+  return NextResponse.json({ memberId, ok: true, verificationCode })
 }

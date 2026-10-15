@@ -69,6 +69,7 @@ const MemberSheet = ({
       isDismissible={!sheet.hasUnsavedInput}
       isOpen={sheet.isOpen}
       isTall
+      isWide
       onOpenChange={sheet.onOpenChange}
     >
       <MemberSheetBody

@@ -95,19 +95,29 @@ admin:
         membership: 'Membership'
         person: 'Person'
       labels:
+        address: 'Location'
+        age: 'Age'
         email: 'Email'
         expiresAt: 'Expires At'
         firstName: 'First Name'
+        gender: 'Gender'
         joinedAt: 'Joined At'
         lastName: 'Last Name'
         memberId: 'Member ID'
+        motivation: 'Motivation'
         notes: 'Notes'
+        occupation: 'Occupation'
         phone: 'Phone'
         status: 'Status'
       placeholders:
+        address: 'City, Country'
+        age: 'e.g. 30'
         expiresAt: 'No expiration'
+        gender: 'Select gender'
         memberId: 'Auto-generated'
+        motivation: 'Why they want to be a member'
         notes: 'Internal notes (not visible to member)'
+        occupation: 'e.g. Mountain guide, Software engineer'
       hints:
         expiresAt: 'Leave empty for no expiration.'
         notes: 'Team only'
@@ -123,6 +133,16 @@ admin:
       deleted: 'Member deleted successfully.'
       linkCopied: 'Verification link copied.'
       updated: 'Member updated successfully.'
+    paymentMethods:
+      bank_foreign: 'Bank transfer (USD/EUR)'
+      bank_gel: 'Bank transfer (GEL)'
+      contact_me: 'Asked to be contacted'
+      wise: 'Wise'
+    genders:
+      notGiven: 'Not given'
+      female: 'Female'
+      male: 'Male'
+      preferNotToSay: 'Prefer not to say'
     statuses:
       active: 'Active'
       expired: 'Expired'
@@ -130,6 +150,7 @@ admin:
       pending: 'Pending'
       suspended: 'Suspended'
     view:
+      paymentMethod: 'Payment method'
       registeredAt: 'Registered'
       noEmail: 'No email provided'
 
