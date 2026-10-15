@@ -1,4 +1,4 @@
-import type { FontSizeToken, RadiusToken, ShadowToken } from '@/lib/designTokens'
+import type { FontSizeToken, RadiusToken, ShadowToken, TrackingToken } from '@/lib/designTokens'
 
 type ColorGroup = {
   title: string
@@ -10,6 +10,7 @@ export const colorSwatchClasses: Record<string, string> = {
   accent: 'bg-accent',
   'accent-hover': 'bg-accent-hover',
   'accent-soft': 'bg-accent-soft',
+  'alert-ink': 'bg-alert-ink',
   body: 'bg-body',
   'brand-blue': 'bg-brand-blue',
   canvas: 'bg-canvas',
@@ -48,7 +49,15 @@ export const colorGroups: ColorGroup[] = [
   { title: 'Accent', tokens: ['accent', 'accent-hover', 'accent-soft'] },
   {
     title: 'Status',
-    tokens: ['danger', 'danger-border', 'success', 'success-soft', 'warning', 'warning-soft'],
+    tokens: [
+      'danger',
+      'danger-border',
+      'success',
+      'success-soft',
+      'warning',
+      'warning-soft',
+      'alert-ink',
+    ],
   },
 ]
 
@@ -57,10 +66,12 @@ export const fontSizeClasses: Record<FontSizeToken, string> = {
   copy: 'text-copy',
   'copy-lg': 'text-copy-lg',
   'copy-sm': 'text-copy-sm',
+  display: 'text-display',
   heading: 'text-heading',
   micro: 'text-micro',
   title: 'text-title',
   'title-lg': 'text-title-lg',
+  'title-sm': 'text-title-sm',
 }
 
 export const radiusClasses: Record<RadiusToken, string> = {
@@ -80,4 +91,8 @@ export const shadowClasses: Record<ShadowToken, string> = {
   pin: 'shadow-pin',
   raised: 'shadow-raised',
   sheet: 'shadow-sheet',
+}
+
+export const trackingClasses: Record<TrackingToken, string> = {
+  eyebrow: 'tracking-eyebrow',
 }

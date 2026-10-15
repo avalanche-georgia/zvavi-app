@@ -34,7 +34,6 @@ common:
     overallDangerLevel: 'საერთო საშიშროების დონე'
     zoneDangerLevel: '{zone} საშიშროების დონე'
     summary: 'შეჯამება'
-    tapForDetails: 'დეტალების სანახავად შეეხეთ'
     validUntil: 'ძალაშია'
 
   messages:

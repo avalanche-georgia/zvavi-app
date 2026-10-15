@@ -29,7 +29,7 @@ const DangerScale = ({ level }: { level: HazardLevelScale }) => {
           />
         ))}
       </div>
-      <div aria-hidden className="text-muted flex justify-between px-4 pt-1.5 text-[11.5px]">
+      <div aria-hidden className="text-muted flex justify-between px-4 pt-1.5 text-xs">
         <span>
           {lowest} {t(hazardLevelNamesByScale[lowest])}
         </span>

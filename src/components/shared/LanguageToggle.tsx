@@ -1,28 +1,27 @@
 'use client'
 
 import { useMemo, useTransition } from 'react'
-import * as ToggleGroup from '@radix-ui/react-toggle-group'
-import clsx from 'clsx'
+import { SegmentedControl, type SegmentedControlSize } from '@ds/primitives'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { defaultLocale, type Locale, locales } from 'src/i18n/config'
-import { useEventCallback } from 'usehooks-ts'
 
-const languageLabels: Record<Locale, string> = {
-  en: '🇬🇧',
-  ka: '🇬🇪',
+// Each language in its own script, so it reads right whatever the current one is
+const languageLabels: Record<Locale, { ariaLabel: string; label: string }> = {
+  en: { ariaLabel: 'English', label: 'EN' },
+  ka: { ariaLabel: 'ქართული', label: 'ქარ' },
 }
 
-type LanguageOption = {
-  label: string
-  value: Locale
+const languageOptions = locales.map((locale) => ({ ...languageLabels[locale], value: locale }))
+
+type LanguageToggleProps = {
+  className?: string
+  size?: SegmentedControlSize
 }
 
-const languageOptions: LanguageOption[] = locales.map((locale) => ({
-  label: languageLabels[locale] ?? locale,
-  value: locale,
-}))
-
-const LanguageToggle = () => {
+// EN / ქარ switch: the same page in the other language, query kept
+const LanguageToggle = ({ className, size = 'sm' }: LanguageToggleProps) => {
+  const t = useTranslations()
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -39,8 +38,8 @@ const LanguageToggle = () => {
     }
   }, [pathname])
 
-  const handleChange = useEventCallback((value: Locale) => {
-    if (!value || value === currentLocale) return
+  const handleChange = (value: Locale) => {
+    if (value === currentLocale) return
 
     const query = searchParams?.toString()
     const nextPath = `/${value}${restPath ? `/${restPath}` : ''}${query ? `?${query}` : ''}`
@@ -49,31 +48,18 @@ const LanguageToggle = () => {
       router.replace(nextPath)
       router.refresh()
     })
-  })
+  }
 
   return (
-    <ToggleGroup.Root
-      aria-label="Select language"
-      className="inline-flex items-center overflow-hidden rounded-sm border shadow-xs backdrop-blur-sm"
+    <SegmentedControl
+      ariaLabel={t('navigation.language')}
+      className={className}
       disabled={isPending}
-      onValueChange={handleChange}
-      type="single"
+      onChange={handleChange}
+      options={languageOptions}
+      size={size}
       value={currentLocale}
-    >
-      {languageOptions.map(({ label, value }) => (
-        <ToggleGroup.Item
-          key={value}
-          aria-label={value === 'en' ? 'English' : 'Georgian'}
-          className={clsx(
-            'relative flex min-w-[44px] items-center justify-center px-1 py-0.5',
-            'data-[state=off]:hover:bg-primary/10 transition-colors data-[state=on]:bg-slate-600',
-          )}
-          value={value}
-        >
-          <span className="text-lg leading-none">{label}</span>
-        </ToggleGroup.Item>
-      ))}
-    </ToggleGroup.Root>
+    />
   )
 }
 

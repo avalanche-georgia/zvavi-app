@@ -14,6 +14,7 @@ regionHome:
     seeAll: 'ყველას ნახვა'
 
   quickLinks:
+    observations: 'ველიდან მოხსენებები'
     forecastArea: 'რუკა და საზღვრები'
     weatherStations: '{count, plural, one {# სადგური} other {# სადგური}}'
     history: 'არქივი'

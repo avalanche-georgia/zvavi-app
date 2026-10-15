@@ -34,7 +34,6 @@ common:
     overallDangerLevel: 'Overall danger level'
     zoneDangerLevel: '{zone} danger level'
     summary: 'Summary'
-    tapForDetails: 'Tap for details'
     validUntil: 'Valid Until'
 
   messages:

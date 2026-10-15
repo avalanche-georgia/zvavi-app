@@ -9,7 +9,11 @@ export type MenuItemTone = 'danger' | 'default'
 type MenuItemProps = {
   children: React.ReactNode
   icon?: React.ReactNode
-  onClick: VoidFunction
+  // Highlights the row as the current page / choice
+  isActive?: boolean
+  onClick?: VoidFunction
+  // Renders the row as another element, e.g. a router link: render={<Link href="…" />}
+  render?: React.ReactElement<Record<string, unknown>>
   tone?: MenuItemTone
 }
 
@@ -19,14 +23,23 @@ const toneClasses: Record<MenuItemTone, string> = {
 }
 
 // 38px rows; 44px on touch screens
-const MenuItem = ({ children, icon, onClick, tone = 'default' }: MenuItemProps) => (
+const MenuItem = ({
+  children,
+  icon,
+  isActive = false,
+  onClick,
+  render,
+  tone = 'default',
+}: MenuItemProps) => (
   <BaseMenu.Item
     className={cn(
       'text-copy flex h-9.5 cursor-default items-center gap-2.5 rounded-lg px-2.5 outline-hidden select-none pointer-coarse:h-11',
       '[&_svg]:size-4.5 [&_svg]:shrink-0',
       toneClasses[tone],
+      isActive && 'font-semibold',
     )}
     onClick={onClick}
+    render={render}
   >
     {icon}
     {children}

@@ -108,8 +108,9 @@ them.
 
 | Layer | Tokens | Utilities |
 |---|---|---|
-| **Semantic colour** | text `ink`, `body`, `muted`, `placeholder`, `disabled` · lines `rule`, `rule-strong` · surfaces `surface`, `canvas`, `tile`, `tile-hover`, `off`, `map` · brand `primary(-hover/-soft/-ink)`, `brand-blue` · `accent(-hover/-soft)` · status `danger`, `danger-border`, `success`, `success-soft`, `warning`, `warning-soft` · domain `hazard-*`, `size-*` | `text-ink`, `bg-surface`, `border-rule`, … |
-| **Type scale** | `title-lg` 28, `title` 24, `heading` 17, `copy-lg` 15, `copy` 14, `copy-sm` 13, `caption` 12.5, `micro` 10.5. Line-height and tracking are part of the token | `text-heading`, … |
+| **Semantic colour** | text `ink`, `body`, `muted`, `placeholder`, `disabled` · lines `rule`, `rule-strong` · surfaces `surface`, `canvas`, `tile`, `tile-hover`, `off`, `map` · brand `primary(-hover/-soft/-ink)`, `brand-blue` · `accent(-hover/-soft)` · status `danger`, `danger-border`, `success`, `success-soft`, `warning`, `warning-soft`, `alert-ink` · domain `hazard-*`, `size-*` | `text-ink`, `bg-surface`, `border-rule`, … |
+| **Type scale** | `display` 34, `title-lg` 28, `title` 24, `title-sm` 22, `heading` 17, `copy-lg` 15, `copy` 14, `copy-sm` 13, `caption` 12.5, `micro` 10.5. Line-height and tracking are part of the token | `text-heading`, … |
+| **Letter spacing** | `eyebrow` 0.06em (uppercase eyebrows and small labels) | `tracking-eyebrow` |
 | **Radii** | `card` 16, `media` 12, `field` 11, `control` 10, `badge` 5, `sheet` 20 (pills use `rounded-full`) | `rounded-card`, … |
 | **Shadows** | `raised` (segmented thumb), `overlay` (map buttons), `float` (sticky bar), `pin`, `menu`, `sheet` (bottom sheet), `panel` (desktop side panel) | `shadow-float`, … |
 | **Motion** | `sheet` easing (sheet slide in / out) | `ease-sheet` |
@@ -120,7 +121,7 @@ them.
 - **Control heights are not tokens.** Each primitive's `size` map sets them with the spacing scale
   (`h-10`, `h-11.5`, `h-12.5`), so the primitive itself is the source of truth.
 - The type scale merges near-duplicate sizes from handoffs: 13.5 → 13, 14.5 → 14, 15.5 → 15.
-- **Adding a type, radius or shadow token:** also add its name to `src/lib/designTokens.ts`.
+- **Adding a type, radius, shadow or tracking token:** also add its name to `src/lib/designTokens.ts`.
   `cn()` (tailwind-merge) needs the name there, or it treats `text-title` as a colour and drops it
   when merged with `text-ink`. The gallery lists tokens from the same file.
 
@@ -163,12 +164,18 @@ Rules:
     *asks* (a trash / unlink icon, a "Delete" that opens a confirmation) stays quiet: `IconButton
     tone="danger"` or `secondary`.
   - `text`: an inline link-style action inside content (e.g. "Set overall to 1").
+  - `inverse`: a secondary action on a dark (`bg-ink`) surface.
+  - A router link that acts as a button uses `getButtonClasses({ variant, size })` — same variants,
+    no restyling.
   - Size `md` in sheet footers and sticky action bars; `sm` inside content (section headers, cards,
     empty states, inline confirmations).
   - Dismiss before confirm, right-aligned: `[Cancel] [Primary]`. Sheet / panel footers use
     `patterns/FooterActions`: buttons always on the right, an optional note (hint or confirmation
     question) on the left — on its own line above the buttons when the footer is narrow.
   - No colour or height overrides through `className` — add a variant instead.
+- **Menus** (`primitives/Menu`): `align` picks the trigger edge (`end` for overflow menus, `start`
+  for nav dropdowns). Navigation rows pass `render={<Link href=… />}` to `MenuItem`; `isActive`
+  marks the current page.
 - **Confirming a destructive action** (remove, unlink): wrap the control that asks in
   `primitives/ConfirmPopover`. It floats next to that control (no layout shift), starts focus on
   Cancel, and base-ui closes it on Esc, an outside click or when another one opens.
@@ -258,8 +265,9 @@ Update this table when a legacy component's last consumer is migrated.
 
 Non-kit Headless UI and Radix users also block Phase 6:
 - `shared/Spoiler`
-- `Header/NavMenu/DesktopNav`
-- `shared/LanguageToggle`
+
+(`Header/NavMenu/DesktopNav` now uses `primitives/Menu`, `shared/LanguageToggle` uses
+`primitives/SegmentedControl` size `sm`.)
 
 ### Deferred
 

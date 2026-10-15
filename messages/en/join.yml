@@ -1,11 +1,4 @@
 joinUs:
-  main:
-    title: 'Join Us'
-    section:
-      description: 'Avalanche safety is a community effort. You can support our work by donating or contributing your skills — whether in forecasting, development, or outreach.'
-      description2: 'Join us in making the mountains safer!'
-      learnHowToHelp: 'Learn How to Help'
-
   page:
     description: 'Avalanche Georgia is a registered non-profit, volunteer-driven, and community-supported organization — owned and managed by its members. If you believe in safer mountain travel and want to help, there are many ways to contribute.'
     volunteer:

@@ -1,7 +1,5 @@
 'use client'
 
-import { useEffect } from 'react'
-import { regionLocalStorageKey } from '@domain/constants'
 import type { Region } from '@domain/types'
 import { useParams } from 'next/navigation'
 
@@ -13,6 +11,9 @@ type RegionContextProviderProps = {
   regions: Region[]
 }
 
+// The region the page is about: the URL's on region pages, else the one passed in
+// (remembered or the only one). Never writes the cookie — only an explicit choice
+// on the region chooser does (rememberRegion).
 const RegionContextProvider = ({
   children,
   region: serverRegion,
@@ -23,12 +24,6 @@ const RegionContextProvider = ({
   const region = urlRegionId
     ? (regions.find((r) => r.id === urlRegionId) ?? serverRegion)
     : serverRegion
-  const regionId = region?.id
-
-  useEffect(() => {
-    if (!regionId) return
-    document.cookie = `${regionLocalStorageKey}=${regionId}; path=/; max-age=31536000; SameSite=Lax`
-  }, [regionId])
 
   return <RegionContext.Provider value={{ region, regions }}>{children}</RegionContext.Provider>
 }
