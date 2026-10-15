@@ -22,12 +22,14 @@ const ApplicantSection = () => {
           autoComplete="given-name"
           label={t('joinUs.apply.labels.firstName')}
           name="firstName"
+          placeholder={t('joinUs.apply.placeholders.firstName')}
           required
         />
         <FormTextField<FormSchema>
           autoComplete="family-name"
           label={t('joinUs.apply.labels.lastName')}
           name="lastName"
+          placeholder={t('joinUs.apply.placeholders.lastName')}
           required
         />
         <FormTextField<FormSchema>
@@ -52,6 +54,7 @@ const ApplicantSection = () => {
           max={120}
           min={0}
           name="age"
+          placeholder={t('joinUs.apply.placeholders.age')}
         />
         <FormSelect<FormSchema, string>
           label={t('joinUs.apply.labels.gender')}

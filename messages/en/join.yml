@@ -57,6 +57,9 @@ joinUs:
       female: 'Female'
       preferNotToSay: 'Prefer not to say'
     placeholders:
+      firstName: 'John'
+      lastName: 'Doe'
+      age: 'e.g. 30'
       email: 'john@example.com'
       phone: '+995 ...'
       address: 'City, Country'

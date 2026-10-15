@@ -57,6 +57,9 @@ joinUs:
       female: 'მდედრობითი'
       preferNotToSay: 'არ მსურს მითითება'
     placeholders:
+      firstName: 'სახელი'
+      lastName: 'გვარი'
+      age: 'მაგ. 30'
       email: 'john@example.com'
       phone: '+995 ...'
       address: 'ქალაქი, ქვეყანა'
