@@ -17,6 +17,12 @@ const ContentCardGallery = () => (
       <p>Body text sits below the title, in the body colour.</p>
       <p>Paragraphs are spaced evenly.</p>
     </ContentCard>
+    <ContentCard title="Forecasts are guidance" tone="warning">
+      <p>A highlighted section: limits the reader must know.</p>
+    </ContentCard>
+    <ContentCard title="We do not provide rescue services" tone="danger">
+      <p>In case of an accident, call the emergency number 112.</p>
+    </ContentCard>
   </div>
 )
 

@@ -5,15 +5,14 @@ import { useTranslations } from 'next-intl'
 
 import BankAccountGroup from './BankAccountGroup'
 
-// Anchor for "Bank transfer details" links
-export const bankSectionId = 'bank'
+import { sectionIds } from '@/routes'
 
 // GEL and USD / EUR accounts, each value copyable
 const BankRequisitesSection = () => {
   const t = useTranslations()
 
   return (
-    <ContentCard id={bankSectionId} title={t('contact.bank.title')}>
+    <ContentCard id={sectionIds.bank} title={t('contact.bank.title')}>
       <p>{t('contact.bank.description')}</p>
       <BankAccountGroup title={t('contact.bank.GEL')}>
         <CopyField label={t('contact.bank.labels.bankName')} value={bankDetailsGEL.bankName} />

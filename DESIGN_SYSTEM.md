@@ -31,7 +31,7 @@ src/components/
 │   │                    # Textarea, ChipGroup, ToggleGrid, SegmentedControl, Select, Stepper, InfoTip,
 │   │                    # IconButton, RatingScale, DateField, Menu, Pagination, SearchField,
 │   │                    # StatusPill, CountBadge, Skeleton, Spinner, AvalancheLoader, Dialog
-│   ├── patterns/        # Alert, ContentCard, FormCard, StickyActionBar, SuccessState, DataTable, LoadingState,
+│   ├── patterns/        # ContentCard, FormCard, StickyActionBar, SuccessState, DataTable, LoadingState,
 │   │                    # ConfirmDialog, FooterActions, Sheet, Drawer
 │   └── form/            # react-hook-form bindings: FormTextField, FormTextarea, FormNumberField,
 │                        # FormStepper, FormChipGroup, FormCheckbox, FormSelect, FormDateField,
@@ -255,7 +255,6 @@ Update this table when a legacy component's last consumer is migrated.
 | Sheet, Drawer (bottom sheet) | base-ui / vaul | `patterns/Sheet` (+ `SheetHeader`, `SheetStepButtons`; `shared/DetailsSheet` for a sheet opened from a button) | ✅ |
 | Mobile nav menus (not in `ui/`: `Header/NavMenu/MobileNav`, `admin/sidebar/MobileDrawer`) | vaul (removed) | `patterns/Drawer` | ✅ |
 | IconButton | custom | `primitives/IconButton` | ☐ |
-| Alert | custom | `patterns/Alert` (static info / warning / danger note) | ✅ |
 | Spinner | custom | `primitives/Spinner` (inline), `primitives/AvalancheLoader` via `patterns/LoadingState` / `shared/Loading` (blocks and pages); legacy `ui/Spinner` removed | ✅ |
 | Skeleton | custom | `primitives/Skeleton` | ☐ |
 | Pagination, DataTable | custom | `primitives/Pagination`, `patterns/DataTable` | ✅ |

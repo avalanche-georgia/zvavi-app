@@ -1,1 +1,1 @@
-export { default as ContentCard } from './ContentCard'
+export { default as ContentCard, type ContentCardTone } from './ContentCard'

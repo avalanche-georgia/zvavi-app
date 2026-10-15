@@ -5,7 +5,7 @@ import { ExternalLink } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { Link } from 'src/i18n/navigation'
 
-import { routes } from '@/routes'
+import { routes, sectionIds } from '@/routes'
 
 const externalLinkClasses = getButtonClasses({ variant: 'secondary' })
 
@@ -14,7 +14,7 @@ const FinancialSection = () => {
   const t = useTranslations()
 
   return (
-    <ContentCard id="donate" title={t('joinUs.page.financialSupport.title')}>
+    <ContentCard id={sectionIds.donate} title={t('joinUs.page.financialSupport.title')}>
       <p>{t('joinUs.page.financialSupport.description')}</p>
       <div className="flex flex-wrap gap-2">
         <a className={externalLinkClasses} href={links.patreon} rel="noreferrer" target="_blank">
