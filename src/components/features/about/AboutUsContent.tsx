@@ -6,7 +6,7 @@ import { Link } from 'src/i18n/navigation'
 
 import { routes } from '@/routes'
 
-// Who we are · What we do · the forecasts' limits · how to get involved
+// Who we are (and a link to the team) · What we do · the forecasts' limits · how to get involved
 const AboutUsContent = () => {
   const t = useTranslations()
 
@@ -14,6 +14,12 @@ const AboutUsContent = () => {
     <>
       <ContentCard title={t('about.sections.who')}>
         <p>{t.rich('about.content.who', { b: richBold })}</p>
+        <Link
+          className={getButtonClasses({ className: 'self-start', variant: 'text' })}
+          href={routes.about.team}
+        >
+          {t('about.meetTheTeam')}
+        </Link>
       </ContentCard>
       <ContentCard title={t('about.sections.what')}>
         <p>{t.rich('about.content.what', { b: richBold })}</p>
