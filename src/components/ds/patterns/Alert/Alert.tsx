@@ -31,14 +31,14 @@ const Alert = ({ children, className, title, tone = 'info' }: AlertProps) => {
   return (
     <div
       className={cn(
-        'rounded-media text-copy-sm flex items-start gap-3 border px-4 py-3',
+        'rounded-media text-copy-lg flex items-start gap-3 border px-4 py-3',
         toneClasses[tone],
         className,
       )}
     >
-      <Icon aria-hidden className="mt-0.5 size-4.5 shrink-0" />
+      <Icon aria-hidden className="mt-0.5 size-5 shrink-0" />
       <div className="min-w-0">
-        {title && <p className="text-copy font-semibold">{title}</p>}
+        {title && <p className="font-semibold">{title}</p>}
         <div className={cn(title && 'mt-0.5')}>{children}</div>
       </div>
     </div>
