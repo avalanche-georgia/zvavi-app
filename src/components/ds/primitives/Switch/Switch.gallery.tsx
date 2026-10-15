@@ -19,6 +19,13 @@ const SwitchGallery = () => {
         }
         onCheckedChange={setIsOn}
       />
+      <Switch
+        checked={isOn}
+        description="Active partners are shown on the public site."
+        label="With description"
+        onCheckedChange={setIsOn}
+      />
+      <Switch checked={isOn} isLabelHidden label="Hidden label" onCheckedChange={setIsOn} />
     </div>
   )
 }
