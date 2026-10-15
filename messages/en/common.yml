@@ -49,6 +49,7 @@ common:
     invalid: 'Invalid value'
     invalidCredentials: 'Incorrect current password'
     invalid_string: 'Invalid format'
+    invalidUrl: 'Enter a link starting with https://'
     joinedAtFuture: 'Cannot be in the future'
     passwordMismatch: 'Passwords do not match'
     passwordTooShort: 'Minimum 8 characters'

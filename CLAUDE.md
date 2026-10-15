@@ -107,12 +107,15 @@ Import `avalancheTypes` when working with avalanche events; import `avalanchePro
 Two environments: **staging** (default, local dev) and **production**.
 
 **Development workflow (staging):**
-1. Write SQL, run it manually in the Supabase dashboard
-2. Save as `supabase/migrations/<timestamp>_name.sql`
+1. Save the SQL as `supabase/migrations/<timestamp>_name.sql`
+2. Run it on staging — in the Supabase dashboard, or (agents) through the Supabase MCP `execute_sql` with the file's exact contents. First check `get_project_url` points at the staging ref (`SUPABASE_STAGING_PROJECT_REF`), never production. Don't use MCP `apply_migration`: it records its own timestamp, so the history no longer matches the file name
 3. Mark applied so the CLI doesn't re-run it:
    ```bash
    supabase migration repair --status applied <timestamp>
    ```
+4. Regenerate types: `pnpm typegen`
+
+Agents apply staging migrations themselves once the migration is written; production only ever goes through `pnpm db:push-prod`, run by a person.
 
 **Pushing to production:**
 ```bash

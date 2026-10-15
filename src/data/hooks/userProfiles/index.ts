@@ -1,4 +1,7 @@
 export { default as useAvatarUpload } from './useAvatarUpload'
 export { default as useCurrentUserProfileQuery } from './useCurrentUserProfileQuery'
+export { default as useProfileVisibilityUpdate } from './useProfileVisibilityUpdate'
 export { default as useStaffNameQuery } from './useStaffNameQuery'
+export { default as useTeamProfilesQuery } from './useTeamProfilesQuery'
+export { default as useTeamProfilesReorder } from './useTeamProfilesReorder'
 export { default as useUserProfileUpdate } from './useUserProfileUpdate'

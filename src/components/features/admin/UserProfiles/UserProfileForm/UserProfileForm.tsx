@@ -9,7 +9,13 @@ import { FormProvider, useForm } from 'react-hook-form'
 
 import { useUserProfileFormSubmit } from './hooks'
 
-import { type UserProfileFormSchema, userProfileFormSchema } from './schema'
+import {
+  teamTitleMaxLength,
+  type UserProfileFormInput,
+  type UserProfileFormSchema,
+  userProfileFormSchema,
+} from './schema'
+import SocialLinksField from './SocialLinksField'
 import InlineFormActions from '../InlineFormActions'
 
 type UserProfileFormProps = {
@@ -20,10 +26,16 @@ type UserProfileFormProps = {
 
 const UserProfileForm = ({ onCancel, onSuccess, profile }: UserProfileFormProps) => {
   const t = useTranslations()
-  const { about, firstName, id, lastName } = profile
+  const { about, firstName, id, lastName, socialLinks, teamTitle } = profile
 
-  const form = useForm<UserProfileFormSchema>({
-    defaultValues: { about: about ?? '', firstName: firstName ?? '', lastName: lastName ?? '' },
+  const form = useForm<UserProfileFormInput, unknown, UserProfileFormSchema>({
+    defaultValues: {
+      about: about ?? '',
+      firstName: firstName ?? '',
+      lastName: lastName ?? '',
+      socialLinks: socialLinks.map((url) => ({ url })),
+      teamTitle: teamTitle ?? '',
+    },
     resolver: zodResolver(userProfileFormSchema),
   })
   const { isDirty, isSubmitting } = form.formState
@@ -37,23 +49,32 @@ const UserProfileForm = ({ onCancel, onSuccess, profile }: UserProfileFormProps)
     <FormProvider {...form}>
       <form className="flex flex-col gap-4" noValidate onSubmit={form.handleSubmit(handleSubmit)}>
         <div className="grid gap-4 @md:grid-cols-2">
-          <FormTextField<UserProfileFormSchema>
+          <FormTextField<UserProfileFormInput>
             autoComplete="given-name"
             label={t('admin.profile.form.labels.firstName')}
             name="firstName"
             required
           />
-          <FormTextField<UserProfileFormSchema>
+          <FormTextField<UserProfileFormInput>
             autoComplete="family-name"
             label={t('admin.profile.form.labels.lastName')}
             name="lastName"
             required
           />
         </div>
-        <FormTextarea<UserProfileFormSchema>
+        <FormTextField<UserProfileFormInput>
+          description={t('admin.profile.form.hints.teamTitle')}
+          label={t('admin.profile.form.labels.teamTitle')}
+          maxLength={teamTitleMaxLength}
+          name="teamTitle"
+          placeholder={t('admin.profile.form.placeholders.teamTitle')}
+          showCount
+        />
+        <FormTextarea<UserProfileFormInput>
           label={t('admin.profile.form.labels.about')}
           name="about"
         />
+        <SocialLinksField />
         <InlineFormActions isSaving={isSubmitting} onCancel={onCancel} />
       </form>
     </FormProvider>

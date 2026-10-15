@@ -43,6 +43,7 @@ admin:
     observations: 'Observations'
     partners: 'Partners'
     recentAvalanches: 'Recent Avalanches'
+    team: 'Team page'
     weatherStations: 'Weather Stations'
     menuDescription: 'Admin navigation menu'
     openMenu: 'Open menu'
@@ -358,11 +359,21 @@ admin:
         about: 'About'
         firstName: 'First Name'
         lastName: 'Last Name'
+        socialLink: 'Link {number}'
+        socialLinks: 'Links'
+        teamTitle: 'Role on the team'
       hints:
         avatar: 'JPG, PNG or WebP · max 5 MB'
+        socialLinks: 'Up to {max}'
+        teamTitle: 'Your badge on the Team page'
+      placeholders:
+        socialLink: 'Paste a link, e.g. instagram.com/your.name'
+        teamTitle: 'e.g. Lead forecaster'
       actions:
+        addLink: 'Add link'
         avatarUpload: 'Upload photo'
         avatarReplace: 'Replace photo'
+        removeLink: 'Remove link {number}'
       errors:
         avatar:
           invalidType: 'Use JPG, PNG or WebP only.'
@@ -372,6 +383,12 @@ admin:
     messages:
       updated: 'Profile updated successfully.'
       avatarUpdated: 'Photo updated.'
+
+    publicProfile:
+      title: 'Team page'
+      label: 'Show me on the public Team page'
+      hint: 'Listed under “{section}” with your photo, name, role, About text and links. Your email is never shown.'
+      noTeam: 'An admin needs to add you to a section (Forecasters or Product team) before you appear there.'
 
     security:
       title: 'Security'
@@ -691,6 +708,19 @@ admin:
     queue:
       emptyTitle: 'Nothing waiting for review in {region}'
       emptyHint: New public reports will show up here.
+
+  team:
+    hint: 'Drag people into a section and into the order the public <link>Team page</link> shows them. A person is listed when they are in a section and switched to Public.'
+    public: 'Public'
+    noName: 'No name yet'
+    noSection: 'No section'
+    noSectionHint: 'Not shown on the public page.'
+    dropHere: 'Drag people here'
+    dragMember: 'Move {name}'
+    dragToMove: 'Drag to move'
+    empty:
+      title: 'No team members yet'
+      hint: 'Forecasters and admins will show up here.'
 
   weatherStations:
     title: 'Weather Stations'

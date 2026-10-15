@@ -44,6 +44,7 @@ const FooterLinks = () => {
       <FooterColumn
         links={[
           { href: routes.about.aboutUs, label: t('navigation.aboutUs') },
+          { href: routes.about.team, label: t('navigation.team') },
           { href: routes.partners, label: t('navigation.partners') },
           { href: routes.about.joinUs, label: t('navigation.joinUs') },
           { href: routes.about.donate, label: t('footer.links.donate') },

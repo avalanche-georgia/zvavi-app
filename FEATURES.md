@@ -59,6 +59,10 @@ The observations page shows reports as a list and on a map of the region side by
 
 Short pages about the organisation: who we are and what we do (with a clear note that forecasts are guidance, not a guarantee); how to get involved — becoming a member, volunteering, donating via Patreon, Wise or bank transfer, and spreading avalanche awareness; and how to reach the team, with every bank detail copyable in one tap and a reminder that we are not a rescue service (call 112).
 
+## Team
+
+A public "Our team" page, reachable from the About menu and the footer, introduces the people behind the forecasts in two groups: forecasters and the product team. Each person appears with their photo (or initials), name, their role on the team and a short bio; tapping someone opens their full profile, with links to their social profiles shown with each platform's logo. Nobody is listed by default. On a Team page in the admin panel, the team drags people into a group and into the order the public page shows them, and switches each person on or off (people can also switch themselves on their profile page). Email addresses are never shown. The page ends with an invitation to contribute — observations, code, design, translation or outreach.
+
 ## Partners
 
 A showcase of partner organizations supporting the Georgian avalanche forecasting program.
@@ -86,7 +90,7 @@ Public submissions wait in a dedicated review queue, oldest first, until a forec
 Administrators can manage the team roster: add members — including people who joined before the online application existed, with the same personal details an application asks for (age, gender, location, occupation, motivation) — update their status (active, inactive, pending, suspended, expired), set membership validity dates, and generate or view their verification QR codes. The roster can be searched by name, member ID or email, filtered by status and sorted; each member opens in a side panel next to the list, where they can be viewed, edited or — for a pending application — approved with their membership dates.
 
 ### Staff Profiles
-Forecasters and administrators can view and edit their own profile — including display name, a short bio, and a profile photo. The photo and name are shown in the admin panel header. When creating a forecast, the forecaster field is automatically prefilled with the logged-in user's name.
+Forecasters and administrators can view and edit their own profile — including display name, a short role on the team (shown as their badge on the public Team page), a short bio, a profile photo and up to five links to their social profiles or website. The photo and name are shown in the admin panel header. When creating a forecast, the forecaster field is automatically prefilled with the logged-in user's name.
 
 ### Weather Station Management
 Administrators can manage the list of mountain weather stations: add, edit, delete, and reorder them via drag-and-drop. Each station has a name in English and Georgian, an altitude, and a link to its live data feed.

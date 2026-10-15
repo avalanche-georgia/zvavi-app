@@ -4,12 +4,16 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { convertCamelToSnake, handleSupabaseError } from '../../helpers'
 
+// Only the fields being changed; role and team are admin-set (RLS rejects them)
 type UpdatePayload = {
   id: string
-  firstName: string
-  lastName: string
-  about: string
+  firstName?: string
+  lastName?: string
+  about?: string
   avatarUrl?: string
+  isPublic?: boolean
+  socialLinks?: string[]
+  teamTitle?: string | null
 }
 
 const updateUserProfile = async ({ id, ...formData }: UpdatePayload): Promise<void> => {
@@ -27,9 +31,8 @@ const useUserProfileUpdate = () => {
   return useMutation<void, Error, UpdatePayload>({
     meta: { scope: 'useUserProfileUpdate' },
     mutationFn: updateUserProfile,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: userProfilesKeys.current() })
-    },
+    // Returned, so the mutation stays pending until the fresh profile is in
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: userProfilesKeys.current() }),
   })
 }
 

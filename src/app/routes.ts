@@ -19,6 +19,7 @@ export const routes = {
     // The Join us page, scrolled to its "Support financially" section
     donate: `/about/join-us#${sectionIds.donate}`,
     joinUs: '/about/join-us',
+    team: '/about/team',
   },
   admin: {
     designSystem: '/admin/ds',
@@ -70,6 +71,7 @@ export const routes = {
       view: (id: number) => `/admin/recent-avalanches/${id}`,
     },
     root: '/admin',
+    team: '/admin/team',
     weatherStations: {
       root: '/admin/weather-stations',
     },
