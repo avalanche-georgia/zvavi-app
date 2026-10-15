@@ -1,43 +1,29 @@
 import { PageContent } from '@components/features/partners'
-import { PageWrapper } from '@components/layout'
-import { convertSnakeToCamel } from '@data/helpers'
-import type { Partner } from '@domain/types'
 import type { Metadata } from 'next'
-import { getTranslations } from 'next-intl/server'
-import { createClient } from 'src/lib/supabase/server'
+import { getLocale, getTranslations } from 'next-intl/server'
 
-import { reportServerError } from '@/lib/posthog/server'
+import fetchActivePartners from './fetchActivePartners'
+
+import getAlternates from '@/lib/seo/getAlternates'
+import { routes } from '@/routes'
+
+// Never cached: the order within each tier is shuffled on every request
+export const dynamic = 'force-dynamic'
 
 export const generateMetadata = async (): Promise<Metadata> => {
-  const t = await getTranslations()
+  const [locale, t] = await Promise.all([getLocale(), getTranslations()])
 
   return {
+    alternates: getAlternates(locale, routes.partners),
     description: t('seo.partners.description'),
     title: t('seo.partners.title'),
   }
 }
 
 const PartnersPage = async () => {
-  const t = await getTranslations()
-  const supabase = await createClient()
+  const partners = await fetchActivePartners()
 
-  const { data, error } = await supabase
-    .from('partners')
-    .select('*')
-    .eq('is_active', true)
-    .order('name_en', { ascending: true })
-
-  if (error) {
-    reportServerError(new Error(error.message), { scope: 'partners page | partners' })
-  }
-
-  const initialPartners = convertSnakeToCamel(data ?? []) as Partner[]
-
-  return (
-    <PageWrapper title={t('navigation.partners')}>
-      <PageContent initialPartners={initialPartners} />
-    </PageWrapper>
-  )
+  return <PageContent partners={partners} />
 }
 
 export default PartnersPage

@@ -1,12 +1,11 @@
 'use client'
 
+import { partnerTiers } from '@domain/constants'
 import type { PartnerFormData, PartnerTier } from '@domain/types'
 import { useFormFieldError } from '@ds/form'
 import { ChipGroup, FieldGroup } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 import { useController } from 'react-hook-form'
-
-const tiers: PartnerTier[] = [1, 2, 3]
 
 // The form keeps the tier as a number; chips work with strings
 const TierField = () => {
@@ -14,7 +13,7 @@ const TierField = () => {
   const { field } = useController<PartnerFormData, 'tier'>({ name: 'tier' })
   const error = useFormFieldError<PartnerFormData>('tier')
 
-  const options = tiers.map((tier) => ({
+  const options = partnerTiers.map((tier) => ({
     label: `${tier} · ${t(`partners.levels.${tier}`)}`,
     value: String(tier),
   }))

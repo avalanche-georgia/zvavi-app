@@ -65,7 +65,7 @@ A public "Our team" page, reachable from the About menu and the footer, introduc
 
 ## Partners
 
-A showcase of partner organizations supporting the Georgian avalanche forecasting program.
+A public Partners page thanks the businesses and organisations that help pay for the free forecast. Partners appear in three levels, told apart by the size of their card: main partners get a large card, partners a medium one and supporters a small one. Every active partner is always shown — nothing scrolls or hides behind "Show all" — and within each level the order is shuffled on every visit, so no one keeps the top spot. Each card shows the partner's logo and name, a short description (with "Read more" when it is longer) and one link to their website or social page, named after where it goes (e.g. "Instagram" or "ozon.ge"). Perks for forecast users are spelled out on main partner cards and sit behind a small gift icon on the others. On phones, supporters become a grid of logos; tapping one opens its details. When there is no main partner, the top spot invites businesses to become one, and the page ends with an invitation to get in touch about becoming a partner.
 
 ---
 

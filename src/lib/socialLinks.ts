@@ -3,7 +3,9 @@ export type SocialPlatform =
   | 'github'
   | 'instagram'
   | 'linkedin'
+  | 'tiktok'
   | 'website'
+  | 'x'
   | 'youtube'
 
 export type SocialLink = {
@@ -23,6 +25,8 @@ export const socialPlatformNames: Record<Exclude<SocialPlatform, 'website'>, str
   github: 'GitHub',
   instagram: 'Instagram',
   linkedin: 'LinkedIn',
+  tiktok: 'TikTok',
+  x: 'X',
   youtube: 'YouTube',
 }
 
@@ -32,14 +36,18 @@ const platformsByHost: Record<string, Exclude<SocialPlatform, 'website'>> = {
   'github.com': 'github',
   'instagram.com': 'instagram',
   'linkedin.com': 'linkedin',
+  'tiktok.com': 'tiktok',
+  'twitter.com': 'x',
+  'x.com': 'x',
   'youtu.be': 'youtube',
   'youtube.com': 'youtube',
 }
 
 // The path segment that holds the handle: linkedin.com/in/<name>, others /<name>
+// (TikTok paths already carry the @: tiktok.com/@name)
 const getHandle = (platform: Exclude<SocialPlatform, 'website'>, segments: string[]) => {
   if (platform === 'linkedin') return segments[1] ?? segments[0]
-  if (platform === 'instagram') return segments[0] && `@${segments[0]}`
+  if (platform === 'instagram' || platform === 'x') return segments[0] && `@${segments[0]}`
 
   return segments[0]
 }

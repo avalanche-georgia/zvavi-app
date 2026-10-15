@@ -263,7 +263,8 @@ Update this table when a legacy component's last consumer is migrated.
 | Pagination, DataTable | custom | `primitives/Pagination`, `patterns/DataTable` | ✅ |
 | AspectElevationPicker | base-ui | moved to `features/observations/` | ✅ |
 | MiniCompass | custom | moved to `features/observations/` | ✅ |
-| AutoScrollList, BrandedQRCode, FallbackImage, SortableItem | custom | reviewed individually (may stay generic in ds) | ☐ |
+| AutoScrollList | embla | none — partners page shows static grids; removed with `embla-carousel-auto-scroll` | ✅ |
+| BrandedQRCode, FallbackImage, SortableItem | custom | reviewed individually (may stay generic in ds) | ☐ |
 
 Non-kit Headless UI and Radix users also block Phase 6:
 - `shared/Spoiler`

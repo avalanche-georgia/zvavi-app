@@ -1,50 +1,49 @@
-'use client'
+import type { Partner } from '@domain/types'
 
-import { AutoScrollList } from '@components/ui'
-import type { Partner, PartnerTier } from '@domain/types'
-import clsx from 'clsx'
-import type { AutoScrollOptionsType } from 'embla-carousel-auto-scroll'
+import MainPartnerCard from './MainPartnerCard'
+import MainPartnerInvite from './MainPartnerInvite'
+import PartnerCard from './PartnerCard'
+import SupportersGrid from './SupportersGrid'
+import TierSection from './TierSection'
 
-import FirstTierPartner from './FirstTierPartner'
-import PartnerBadge from './PartnerBadge'
-import SecondTierPartner from './SecondTierPartner'
-
-const cardRendererByTier: Record<PartnerTier, React.ComponentType<{ partner: Partner }>> = {
-  1: FirstTierPartner,
-  2: SecondTierPartner,
-  3: PartnerBadge,
-}
-
-type PartnersListProps = {
-  partners: Partner[]
-  scrollDirection?: AutoScrollOptionsType['direction']
-  tier: PartnerTier
-}
-
-const PartnersList = ({ partners, scrollDirection, tier }: PartnersListProps) => {
-  const PartnerComponent = cardRendererByTier[tier]
-
-  if (partners.length === 0) return null
+// All three tiers, every partner shown, in the order given. No main partner →
+// an invitation; an empty tier 2 or 3 is left out.
+const PartnersList = ({ partners }: { partners: Partner[] }) => {
+  const mainPartners = partners.filter((partner) => partner.tier === 1)
+  const tierTwoPartners = partners.filter((partner) => partner.tier === 2)
+  const supporters = partners.filter((partner) => partner.tier === 3)
 
   return (
     <>
-      <div className="space-y-3">
-        <AutoScrollList className="overflow-hidden" direction={scrollDirection}>
-          {partners.map((partner) => (
-            <li
-              key={partner.id}
-              className={clsx(
-                'max-w-md flex-none',
-                tier === 1 && (partners.length === 1 ? 'w-full' : 'w-[calc(100%-64px)]'),
-              )}
-            >
-              <PartnerComponent partner={partner} />
-            </li>
-          ))}
-        </AutoScrollList>
-      </div>
-
-      <hr />
+      <TierSection>
+        {mainPartners.length > 0 ? (
+          <ul className="flex flex-col gap-4">
+            {mainPartners.map((partner) => (
+              <li key={partner.id}>
+                <MainPartnerCard partner={partner} />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <MainPartnerInvite />
+        )}
+      </TierSection>
+      {tierTwoPartners.length > 0 && (
+        <TierSection>
+          <ul className="grid gap-4 md:grid-cols-[repeat(auto-fill,minmax(320px,1fr))]">
+            {tierTwoPartners.map((partner) => (
+              <li key={partner.id}>
+                <PartnerCard partner={partner} />
+              </li>
+            ))}
+          </ul>
+        </TierSection>
+      )}
+      {supporters.length > 0 && (
+        <TierSection>
+          <SupportersGrid partners={supporters} />
+        </TierSection>
+      )}
     </>
   )
 }
