@@ -133,6 +133,11 @@ admin:
       deleted: 'Member deleted successfully.'
       linkCopied: 'Verification link copied.'
       updated: 'Member updated successfully.'
+    paymentMethods:
+      bank_foreign: 'Bank transfer (USD/EUR)'
+      bank_gel: 'Bank transfer (GEL)'
+      contact_me: 'Asked to be contacted'
+      wise: 'Wise'
     genders:
       female: 'Female'
       male: 'Male'
@@ -144,6 +149,7 @@ admin:
       pending: 'Pending'
       suspended: 'Suspended'
     view:
+      paymentMethod: 'Payment method'
       registeredAt: 'Registered'
       noEmail: 'No email provided'
 

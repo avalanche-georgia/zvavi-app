@@ -33,7 +33,8 @@ ALTER TABLE public.members
   ADD CONSTRAINT members_gender_values
     CHECK (gender IN ('male', 'female', 'preferNotToSay')) NOT VALID;
 
--- The public application now also fills the member's details. Same signature:
+-- The public application now also fills the member's details and returns the
+-- member's id. Same signature (the return stays json):
 -- CREATE OR REPLACE keeps the service_role-only EXECUTE grant.
 CREATE OR REPLACE FUNCTION public.submit_member_application(
   p_first_name text,
@@ -74,7 +75,9 @@ BEGIN
     p_payment_method, v_member.id
   );
 
+  -- id: the route links the admin notification to the member's record
   RETURN json_build_object(
+    'id', v_member.id,
     'memberId', v_member.member_id,
     'verificationCode', v_member.verification_code
   );

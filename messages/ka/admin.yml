@@ -133,6 +133,11 @@ admin:
       deleted: 'წევრი წარმატებით წაიშალა.'
       linkCopied: 'გადამოწმების ბმული დაკოპირდა.'
       updated: 'წევრი წარმატებით განახლდა.'
+    paymentMethods:
+      bank_foreign: 'საბანკო გადარიცხვა (USD/EUR)'
+      bank_gel: 'საბანკო გადარიცხვა (ლარი)'
+      contact_me: 'ითხოვს დაკავშირებას'
+      wise: 'Wise'
     genders:
       female: 'მდედრობითი'
       male: 'მამრობითი'
@@ -144,6 +149,7 @@ admin:
       pending: 'მოლოდინში'
       suspended: 'შეჩერებული'
     view:
+      paymentMethod: 'გადახდის გზა'
       registeredAt: 'რეგისტრაცია'
       noEmail: 'ელფოსტა არ არის'
 

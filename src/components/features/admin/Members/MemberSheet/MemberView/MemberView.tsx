@@ -2,6 +2,7 @@
 
 import { useListDates } from '@components/features/admin/shared'
 import { DetailSection, type Fact, FactsGrid } from '@components/features/observations'
+import { useMemberApplicationQuery } from '@data/hooks/members'
 import type { Member } from '@domain/types'
 import { useNow, useTranslations } from 'next-intl'
 
@@ -15,6 +16,8 @@ const MemberView = ({ member }: { member: Member }) => {
   const t = useTranslations()
   const now = useNow()
   const { formatDate } = useListDates()
+  // Online applicants only: how they said they'd pay, to check before approving
+  const { data: application } = useMemberApplicationQuery(member.id)
   const { address, age, createdAt, email, expiresAt, gender, joinedAt, memberId } = member
   const { motivation, notes, occupation, phone, status } = member
   const labelKey = 'admin.members.form.labels'
@@ -42,6 +45,14 @@ const MemberView = ({ member }: { member: Member }) => {
       ),
     },
     { label: t('admin.members.view.registeredAt'), value: formatDate(createdAt) },
+    ...(application
+      ? [
+          {
+            label: t('admin.members.view.paymentMethod'),
+            value: t(`admin.members.paymentMethods.${application.paymentMethod}`),
+          },
+        ]
+      : []),
     { label: t(`${labelKey}.memberId`), value: <span className="font-mono">{memberId}</span> },
   ]
 
