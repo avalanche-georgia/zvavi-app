@@ -25,6 +25,12 @@ const CheckboxGallery = () => {
         }
         onCheckedChange={setIsChecked}
       />
+      <Checkbox
+        checked={isChecked}
+        error={isChecked ? undefined : 'Tick to agree before submitting.'}
+        label="Required agreement"
+        onCheckedChange={setIsChecked}
+      />
     </div>
   )
 }

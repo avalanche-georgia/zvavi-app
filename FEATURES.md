@@ -55,6 +55,10 @@ Anyone can report an avalanche they've witnessed — no account needed. The subm
 
 The observations page shows reports as a list and on a map of the region side by side (on phones, switch between the two). The list loads more reports as you scroll, and the map always shows every matching report, grouping nearby ones into numbered bubbles that split apart as you zoom in. Reports are grouped by date — today, yesterday, this week, then by month — and can be filtered to the last 7 or 30 days, the current season (November to May) or a custom date range, based either on when the avalanche happened or when it was reported — reports whose date the observer didn't know have their own filter — and sorted newest or largest first. Each report opens into a detail view with its photos (tap for full-screen), size, trigger, dimensions, the slopes affected, the description and the reporter's first name with last initial. From there, "Show on map" gives a close-up map with copyable coordinates and a link to open the spot in a maps app. Filtered views and individual reports have their own links that can be shared. Contact details and other personal information submitted with a report are only ever visible to forecasters.
 
+## About, Join and Contact
+
+Short pages about the organisation: who we are and what we do (with a clear note that forecasts are guidance, not a guarantee); how to get involved — becoming a member, volunteering, donating via Patreon, Wise or bank transfer, and spreading avalanche awareness; and how to reach the team, with every bank detail copyable in one tap and a reminder that we are not a rescue service (call 112).
+
 ## Partners
 
 A showcase of partner organizations supporting the Georgian avalanche forecasting program.

@@ -21,7 +21,7 @@ const submitApplication = async ({
 
   const { data: result, error } = await supabase.rpc('submit_member_application', {
     p_address: address || undefined,
-    p_age: age ? Number(age) : undefined,
+    p_age: age ?? undefined,
     p_email: rest.email,
     p_first_name: rest.firstName,
     p_gender: gender || undefined,

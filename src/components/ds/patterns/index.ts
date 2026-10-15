@@ -1,4 +1,5 @@
 export * from './ConfirmDialog'
+export * from './ContentCard'
 export * from './DataTable'
 export * from './Drawer'
 export * from './FooterActions'

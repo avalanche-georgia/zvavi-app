@@ -22,9 +22,9 @@ const PartnerBenefitsList = ({ partners }: PartnerBenefitsListProps) => {
         const benefit = localize(benefitEn ?? '', benefitKa)
 
         return (
-          <li key={id} className="rounded-md border p-4">
-            <p className="font-semibold">{name}</p>
-            {benefit && <p className="mt-1 text-sm text-gray-600">{benefit}</p>}
+          <li key={id} className="rounded-media border-rule border p-4">
+            <p className="text-ink font-semibold">{name}</p>
+            {benefit && <p className="text-body text-copy-sm mt-1">{benefit}</p>}
           </li>
         )
       })}

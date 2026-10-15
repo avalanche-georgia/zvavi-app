@@ -1,13 +1,17 @@
-import { PageWrapper } from '@components/layout'
-import { HTMLContainer } from '@components/shared'
+import { AboutUsContent } from '@components/features/about'
+import { ContentPage } from '@components/layout'
 import type { Metadata } from 'next'
 import { useTranslations } from 'next-intl'
-import { getTranslations } from 'next-intl/server'
+import { getLocale, getTranslations } from 'next-intl/server'
+
+import getAlternates from '@/lib/seo/getAlternates'
+import { routes } from '@/routes'
 
 export const generateMetadata = async (): Promise<Metadata> => {
-  const t = await getTranslations()
+  const [locale, t] = await Promise.all([getLocale(), getTranslations()])
 
   return {
+    alternates: getAlternates(locale, routes.about.aboutUs),
     description: t('seo.about.description'),
     title: t('seo.about.title'),
   }
@@ -17,32 +21,9 @@ const AboutUsPage = () => {
   const t = useTranslations()
 
   return (
-    <PageWrapper title={t('navigation.aboutUs')}>
-      <div className="space-y-3 text-justify">
-        <HTMLContainer
-          component="p"
-          content={t.rich('about.content.paragraph1', {
-            b: (chunks) => `<b>${chunks}</b>`,
-          })}
-        />
-
-        <p>{t('about.content.paragraph2')}</p>
-
-        <HTMLContainer
-          component="p"
-          content={t.rich('about.content.paragraph3', {
-            strong: (chunks) => `<strong>${chunks}</strong>`,
-          })}
-        />
-
-        <HTMLContainer
-          component="p"
-          content={t.rich('about.content.paragraph4', {
-            strong: (chunks) => `<strong>${chunks}</strong>`,
-          })}
-        />
-      </div>
-    </PageWrapper>
+    <ContentPage lede={t('about.lede')} title={t('navigation.aboutUs')}>
+      <AboutUsContent />
+    </ContentPage>
   )
 }
 

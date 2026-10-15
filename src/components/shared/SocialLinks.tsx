@@ -49,10 +49,12 @@ const SocialLinks = () => {
         <li key={labelKey}>
           <Tooltip label={t(labelKey)}>
             <a
-              aria-label={t(labelKey)}
+              aria-label={
+                isMail ? t(labelKey) : `${t(labelKey)} (${t('common.labels.opensInNewTab')})`
+              }
               className="focus-ring rounded-control hover:bg-tile grid size-11 place-items-center transition-colors"
               href={href}
-              rel={isMail ? undefined : 'noreferrer'}
+              rel={isMail ? undefined : 'noopener noreferrer'}
               // mailto opens the mail app — a new tab would stay empty
               target={isMail ? undefined : '_blank'}
             >

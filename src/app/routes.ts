@@ -6,13 +6,18 @@ export const baseUrl = 'https://avalanche.ge'
 // type error (Exclude → never), since the static route would shadow that region.
 const regionsSegment = 'regions' satisfies Exclude<'regions', RegionId>
 
+// In-page anchor ids: the section's id and the link's hash come from here
+export const sectionIds = { bank: 'bank', donate: 'donate' } as const
+
 export const routes = {
   about: {
     aboutUs: '/about/about-us',
     apply: '/about/join-us/apply',
+    // The contact page, scrolled to the bank details
+    bank: `/about/contact#${sectionIds.bank}`,
     contact: '/about/contact',
     // The Join us page, scrolled to its "Support financially" section
-    donate: '/about/join-us#donate',
+    donate: `/about/join-us#${sectionIds.donate}`,
     joinUs: '/about/join-us',
   },
   admin: {

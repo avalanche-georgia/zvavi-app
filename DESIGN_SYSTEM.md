@@ -30,11 +30,11 @@ src/components/
 │   ├── primitives/      # Button, Badge, Checkbox, Field, FieldGroup, TextField, NumberField,
 │   │                    # Textarea, ChipGroup, ToggleGrid, SegmentedControl, Select, Stepper, InfoTip,
 │   │                    # IconButton, RatingScale, DateField, Menu, Pagination, SearchField,
-│   │                    # StatusPill, CountBadge, Skeleton, Spinner, AvalancheLoader, Dialog
-│   ├── patterns/        # FormCard, StickyActionBar, SuccessState, DataTable, LoadingState,
+│   │                    # StatusPill, CountBadge, Skeleton, Spinner, AvalancheLoader, Dialog, RadioGroup
+│   ├── patterns/        # ContentCard, FormCard, StickyActionBar, SuccessState, DataTable, LoadingState,
 │   │                    # ConfirmDialog, FooterActions, Sheet, Drawer
 │   └── form/            # react-hook-form bindings: FormTextField, FormTextarea, FormNumberField,
-│                        # FormStepper, FormChipGroup, FormCheckbox, FormSelect, FormDateField,
+│                        # FormStepper, FormChipGroup, FormRadioGroup, FormCheckbox, FormSelect, FormDateField,
 │                        # useFormFieldError
 ├── ui/                  # legacy kit — frozen, deleted piece by piece
 └── features/            # domain components, built from ds
@@ -242,7 +242,7 @@ Update this table when a legacy component's last consumer is migrated.
 | ChipGroup | base-ui | `primitives/ChipGroup` | ☐ |
 | SegmentedControl | base-ui | `primitives/SegmentedControl` | ☐ |
 | RadioGroup | Headless UI | `primitives/SegmentedControl` | ✅ |
-| RadioOption | base-ui | `primitives/RadioGroup` or `ToggleGrid` | ☐ |
+| RadioOption | base-ui | `primitives/RadioGroup` (long labels, one per row) or `ToggleGrid` | ✅ |
 | Checkbox | Headless UI | `primitives/Checkbox` | ☐ |
 | Switch | base-ui | `primitives/Switch` | ✅ |
 | Select | Radix | `primitives/Select` (base-ui) | ☐ |
@@ -255,7 +255,6 @@ Update this table when a legacy component's last consumer is migrated.
 | Sheet, Drawer (bottom sheet) | base-ui / vaul | `patterns/Sheet` (+ `SheetHeader`, `SheetStepButtons`; `shared/DetailsSheet` for a sheet opened from a button) | ✅ |
 | Mobile nav menus (not in `ui/`: `Header/NavMenu/MobileNav`, `admin/sidebar/MobileDrawer`) | vaul (removed) | `patterns/Drawer` | ✅ |
 | IconButton | custom | `primitives/IconButton` | ☐ |
-| Alert | custom | — (last consumer removed with the forecast page redesign; add `patterns/Alert` when needed) | ✅ |
 | Spinner | custom | `primitives/Spinner` (inline), `primitives/AvalancheLoader` via `patterns/LoadingState` / `shared/Loading` (blocks and pages); legacy `ui/Spinner` removed | ✅ |
 | Skeleton | custom | `primitives/Skeleton` | ☐ |
 | Pagination, DataTable | custom | `primitives/Pagination`, `patterns/DataTable` | ✅ |
