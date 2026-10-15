@@ -725,6 +725,7 @@ export type Database = {
     Functions: {
       can_edit_forecasts: { Args: never; Returns: boolean }
       get_staff_name: { Args: { p_id: string }; Returns: string }
+      is_staff: { Args: never; Returns: boolean }
       reorder_weather_stations: { Args: { updates: Json }; Returns: undefined }
       save_forecast: {
         Args: { p_avalanche_ids: number[]; p_forecast: Json; p_problems: Json }

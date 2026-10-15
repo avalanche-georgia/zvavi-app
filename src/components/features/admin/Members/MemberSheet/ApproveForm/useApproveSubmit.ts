@@ -4,20 +4,14 @@ import type { Member } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import type { ApproveFormData } from './schema'
-import { getMemberName } from '../../shared'
-
-import { getVerificationUrl } from '@/lib/qrcode'
 
 // Tells the member by email. Resolves to whether it went out; a failed
-// notification must not undo the approval.
-const notifyMember = async ({ email, ...member }: Member & { email: string }) => {
+// notification must not undo the approval. The route reads recipient, name and
+// link from the member record.
+const notifyMember = async (memberId: string) => {
   try {
     const response = await fetch('/api/notify/member-approved', {
-      body: JSON.stringify({
-        email,
-        name: getMemberName(member),
-        verificationUrl: getVerificationUrl(member.verificationCode),
-      }),
+      body: JSON.stringify({ memberId }),
       headers: { 'Content-Type': 'application/json' },
       method: 'POST',
     })
@@ -35,11 +29,9 @@ const useApproveSubmit = (member: Member, onSuccess: VoidFunction) => {
 
   // Doesn't hold up the sheet: the admin hears about a failed email afterwards
   const notifyApprovedMember = () => {
-    const { email } = member
+    if (!member.email) return
 
-    if (!email) return
-
-    void notifyMember({ ...member, email }).then((isSent) => {
+    void notifyMember(member.id).then((isSent) => {
       if (!isSent) toastInfo(t('admin.members.messages.approvalEmailFailed'))
     })
   }

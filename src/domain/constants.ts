@@ -9,6 +9,7 @@ import type {
   HazardLevelScale,
   MemberStatus,
   RegionId,
+  StaffRole,
 } from './types'
 
 import { Constants } from '@/lib/supabase/types'
@@ -212,6 +213,12 @@ export const userRoles = {
   forecaster: 'forecaster',
   trainee: 'trainee',
 } as const
+
+// Roles that make an account "team" (mirrors public.is_staff() in the database)
+export const staffRoles = [userRoles.admin, userRoles.forecaster] as const
+
+export const isStaffRole = (role: string | null | undefined): role is StaffRole =>
+  staffRoles.some((staffRole) => staffRole === role)
 
 // UI/UX fallback for public read queries only. Never use in data mutations.
 export const defaultRegionId = 'gudauri'

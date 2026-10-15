@@ -1,87 +1,88 @@
+import { getMemberName } from '@domain/memberName'
 import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
+import { z } from 'zod'
 
+import { buildEmailHtml } from './buildEmailHtml'
+
+import { requireStaff } from '@/lib/auth/requireStaff'
 import { reportServerError } from '@/lib/posthog/server'
-import { createClient } from '@/lib/supabase/server'
+import { getVerificationUrl } from '@/lib/qrcode'
 
-type RequestBody = {
-  email: string
-  name: string
-  verificationUrl: string
+const scope = 'api/notify/member-approved'
+
+// Only the member id comes from the client: recipient, name and link are read
+// from the member record, so the route can't be used to email arbitrary people
+const bodySchema = z.object({ memberId: z.uuid() })
+
+const readMemberId = async (request: Request) => {
+  try {
+    const parsed = bodySchema.safeParse(await request.json())
+
+    return parsed.success ? parsed.data.memberId : null
+  } catch {
+    return null
+  }
 }
 
-const buildEmailHtml = (name: string, verificationUrl: string) => `
-<!DOCTYPE html>
-<html><head><meta charset="utf-8"/></head>
-<body style="margin:0;padding:0;background:#f4f4f5;font-family:Arial,Helvetica,sans-serif">
-<table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f5;padding:32px 0">
-<tr><td align="center">
-<table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%">
-
-<tr><td style="background:#fff;padding:24px;text-align:center;border-radius:8px 8px 0 0">
-  <img src="https://avalanche.ge/images/logo.png" alt="Avalanche Georgia" width="120" style="display:block;margin:0 auto"/>
-  <p style="margin:12px 0 0;font-size:20px;font-weight:bold;color:#FF6F00">Avalanche Georgia</p>
-</td></tr>
-
-<tr><td style="background:#fff;padding:32px 24px;border-radius:0 0 8px 8px">
-  <p style="margin:0 0 16px;font-size:16px;color:#1a1a1a">Hi ${name},</p>
-  <p style="margin:0 0 16px;font-size:16px;color:#333">Your membership application has been approved!</p>
-  <p style="margin:0 0 16px;font-size:16px;color:#333">Welcome to Avalanche Georgia.</p>
-  <p style="margin:0 0 24px;font-size:16px;color:#333">You can view your membership details below:</p>
-  <table width="100%" cellpadding="0" cellspacing="0"><tr><td align="center">
-    <a href="${verificationUrl}" style="display:inline-block;padding:14px 32px;background:#FF6F00;color:#fff;font-size:16px;font-weight:bold;text-decoration:none;border-radius:6px">View Membership</a>
-  </td></tr></table>
-  <p style="margin:24px 0 0;font-size:13px;color:#888;word-break:break-all">
-    Or copy this link: <a href="${verificationUrl}" style="color:#FF6F00">${verificationUrl}</a>
-  </p>
-</td></tr>
-
-<tr><td style="padding:24px;text-align:center">
-  <p style="margin:0 0 8px;font-size:13px;color:#888">Questions? Contact us at zvavisaqartvelo@gmail.com</p>
-  <p style="margin:0;font-size:13px;color:#888">Stay safe in the mountains! — Avalanche Georgia Team</p>
-</td></tr>
-
-</table>
-</td></tr>
-</table>
-</body></html>`
-
 export const POST = async (request: Request) => {
-  const supabase = await createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  const { error: authError, supabase } = await requireStaff()
 
-  if (!user) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (authError) return authError
+
+  const memberId = await readMemberId(request)
+
+  if (!memberId) {
+    return NextResponse.json({ error: 'invalid body', ok: false }, { status: 400 })
   }
+
+  // User-session client: RLS applies
+  const { data: member, error: memberError } = await supabase
+    .from('members')
+    .select('email, first_name, last_name, status, verification_code')
+    .eq('id', memberId)
+    .maybeSingle()
+
+  if (memberError) {
+    reportServerError(memberError, { scope })
+
+    return NextResponse.json({ ok: false }, { status: 500 })
+  }
+
+  if (!member) return NextResponse.json({ error: 'not found', ok: false }, { status: 404 })
+
+  if (member.status !== 'active') {
+    return NextResponse.json({ error: 'member not active', ok: false }, { status: 409 })
+  }
+
+  if (!member.email) return NextResponse.json({ error: 'no email', ok: false }, { status: 422 })
 
   if (!process.env.RESEND_API_KEY) {
     return NextResponse.json({ ok: true, skipped: true })
   }
 
   const resend = new Resend(process.env.RESEND_API_KEY)
-  const { email, name, verificationUrl } = (await request.json()) as RequestBody
+  const name = getMemberName({ firstName: member.first_name, lastName: member.last_name })
 
   try {
     const { error } = await resend.emails.send({
       from: process.env.RESEND_FROM_EMAIL || 'Avalanche Georgia <noreply@contact.avalanche.ge>',
-      html: buildEmailHtml(name, verificationUrl),
+      html: buildEmailHtml(name, getVerificationUrl(member.verification_code)),
       subject: 'Your Avalanche Georgia membership has been approved!',
-      to: email,
+      to: member.email,
     })
 
     // Resend returns API errors instead of throwing; only its name/status are reported (no email)
     if (error) {
       reportServerError(new Error(`Resend send failed: ${error.name}`), {
-        scope: 'api/notify/member-approved',
+        scope,
         status_code: error.statusCode,
       })
 
       return NextResponse.json({ ok: false }, { status: 502 })
     }
   } catch (error) {
-    reportServerError(error, { scope: 'api/notify/member-approved' })
+    reportServerError(error, { scope })
 
     return NextResponse.json({ ok: false }, { status: 502 })
   }
