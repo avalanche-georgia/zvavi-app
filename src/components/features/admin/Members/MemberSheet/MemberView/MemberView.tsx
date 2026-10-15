@@ -51,11 +51,10 @@ const MemberView = ({ member }: { member: Member }) => {
         <StatusBadge status={status} />
       </div>
       <FactsGrid facts={facts} />
-      {motivation && (
-        <DetailSection title={t(`${labelKey}.motivation`)}>
-          <p className="text-copy text-body whitespace-pre-wrap">{motivation}</p>
-        </DetailSection>
-      )}
+      {/* Always shown, like the other personal details: empty reads as "not given" */}
+      <DetailSection title={t(`${labelKey}.motivation`)}>
+        <p className="text-copy text-body whitespace-pre-wrap">{motivation || emptyValue}</p>
+      </DetailSection>
       {notes && (
         <DetailSection title={t(`${labelKey}.notes`)}>
           <p className="text-copy text-body whitespace-pre-wrap">{notes}</p>
