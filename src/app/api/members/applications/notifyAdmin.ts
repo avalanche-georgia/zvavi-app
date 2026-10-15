@@ -1,30 +1,30 @@
-import { NextResponse } from 'next/server'
+import type { MemberApplicationBody } from './schema'
 
 import { reportServerError } from '@/lib/posthog/server'
 
 const { TELEGRAM_ADMIN_CHAT_ID, TELEGRAM_BOT_ADMIN_TOKEN } = process.env
 
-type RequestBody = {
-  email: string
-  name: string
-  paymentMethod: string
-}
+// Telegram's HTML parse mode rejects unescaped <, >, & — and names are free text
+const escapeHtml = (value: string): string =>
+  value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
 
-export const POST = async (request: Request) => {
-  if (!TELEGRAM_BOT_ADMIN_TOKEN || !TELEGRAM_ADMIN_CHAT_ID) {
-    return NextResponse.json({ ok: true, skipped: true })
-  }
+// Sent from the route after the application is saved, so only real applications
+// reach the admin chat
+const notifyAdmin = async ({
+  email,
+  firstName,
+  lastName,
+  paymentMethod,
+}: MemberApplicationBody) => {
+  if (!TELEGRAM_BOT_ADMIN_TOKEN || !TELEGRAM_ADMIN_CHAT_ID) return
 
-  const { email, name, paymentMethod } = (await request.json()) as RequestBody
-
-  const isProduction = process.env.VERCEL_ENV === 'production'
-  const prefix = isProduction ? '' : '[Test] '
+  const prefix = process.env.VERCEL_ENV === 'production' ? '' : '[Test] '
 
   const text = [
     `<b>${prefix}New Member Application</b>`,
     '',
-    `<b>Name:</b> ${name}`,
-    `<b>Email:</b> ${email}`,
+    `<b>Name:</b> ${escapeHtml(`${firstName} ${lastName}`)}`,
+    `<b>Email:</b> ${escapeHtml(email)}`,
     `<b>Payment:</b> ${paymentMethod}`,
   ].join('\n')
 
@@ -41,13 +41,13 @@ export const POST = async (request: Request) => {
     // The response body is not reported: it can echo the message, which contains the applicant's data
     if (!response.ok) {
       reportServerError(new Error(`Telegram sendMessage failed: ${response.status}`), {
-        scope: 'api/notify/new-application',
+        scope: 'api/members/applications',
         status_code: response.status,
       })
     }
   } catch (error) {
-    reportServerError(error, { scope: 'api/notify/new-application' })
+    reportServerError(error, { scope: 'api/members/applications' })
   }
-
-  return NextResponse.json({ ok: true })
 }
+
+export default notifyAdmin

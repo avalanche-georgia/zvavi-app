@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useScrollToFirstError } from '@components/features/observations/form'
 import { useToast, useUnsavedChangesWarning } from '@components/hooks'
+import { HoneypotField } from '@components/shared'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslations } from 'next-intl'
 import { FormProvider, useForm } from 'react-hook-form'
@@ -60,6 +61,7 @@ const MemberApplicationForm = () => {
         noValidate
         onSubmit={form.handleSubmit(handleValid, scrollToFirstError)}
       >
+        <HoneypotField />
         <ApplicantSection />
         <PaymentSection />
         <AgreementsSection />

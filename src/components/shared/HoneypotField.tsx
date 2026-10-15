@@ -2,12 +2,11 @@
 
 import { Controller, useFormContext } from 'react-hook-form'
 
-import type { ObservationSubmitFormSchema } from './schema'
-
 // A bot filling every visible field also fills this one — hidden off-screen,
-// not display:none, since some bots specifically skip display:none inputs.
+// not display:none, since some bots specifically skip display:none inputs. The form
+// needs a `honeypot: string` field; its route answers a filled one with a silent success.
 const HoneypotField = () => {
-  const form = useFormContext<ObservationSubmitFormSchema>()
+  const form = useFormContext<{ honeypot: string }>()
 
   return (
     <Controller

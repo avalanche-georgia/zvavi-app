@@ -12,7 +12,7 @@ import 'server-only'
 const serverDistinctId = 'zvavi-server'
 
 export type ServerErrorContext = {
-  // Where it happened, e.g. 'api/notify/new-application' or a table/RPC name
+  // Where it happened, e.g. 'api/members/applications' or a table/RPC name
   scope: string
 } & Record<string, boolean | number | string | null | undefined>
 
