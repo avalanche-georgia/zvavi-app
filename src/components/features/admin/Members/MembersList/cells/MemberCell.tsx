@@ -1,7 +1,6 @@
+import { getMemberName } from '@domain/memberName'
 import type { Member } from '@domain/types'
 import { useTranslations } from 'next-intl'
-
-import { getMemberName } from '../../shared'
 
 import { cn } from '@/lib/utils'
 

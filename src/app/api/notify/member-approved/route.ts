@@ -1,4 +1,4 @@
-import { getMemberName } from '@components/features/admin/Members/shared/memberName'
+import { getMemberName } from '@domain/memberName'
 import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
 import { z } from 'zod'
