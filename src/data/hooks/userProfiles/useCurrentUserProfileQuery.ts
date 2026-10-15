@@ -3,7 +3,7 @@ import type { UserProfile } from '@domain/types'
 
 import { useQuery } from '@/tanstack-query/hooks'
 
-import { convertSnakeToCamel } from '../../helpers'
+import { convertSnakeToCamel, handleSupabaseError } from '../../helpers'
 import { userProfilesKeys } from '../../query-keys'
 
 const fetchCurrentUserProfile = async (): Promise<UserProfile | null> => {
@@ -15,9 +15,10 @@ const fetchCurrentUserProfile = async (): Promise<UserProfile | null> => {
     .from('user_profiles')
     .select('*')
     .eq('id', authData.user.id)
-    .single()
+    .maybeSingle()
 
-  if (error) return null
+  // A failed lookup isn't "no profile": the admin gate would lock staff out
+  handleSupabaseError(error)
   if (!data) return null
 
   const profile = convertSnakeToCamel(data) as Omit<UserProfile, 'fullName'>

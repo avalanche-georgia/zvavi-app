@@ -6,6 +6,7 @@ import type {
   distributionTypes,
   memberGenders,
   sensitivityLevels,
+  staffRoles,
   trends,
 } from '@domain/constants'
 import type { FeatureCollection } from 'geojson'
@@ -31,6 +32,7 @@ export type User = {
 }
 
 export type UserRole = 'forecaster' | 'trainee' | 'admin'
+export type StaffRole = (typeof staffRoles)[number]
 
 export type UserProfile = {
   id: string
