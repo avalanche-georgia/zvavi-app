@@ -1,6 +1,5 @@
 'use client'
 
-import { useLocalizeField } from '@components/hooks'
 import type { Partner } from '@domain/types'
 import { Sheet, SheetHeader } from '@ds/patterns'
 import { useTranslations } from 'next-intl'
@@ -36,21 +35,15 @@ type PartnerSheetProps = {
   partner: Partner | null
 }
 
-// A supporter's full details, opened from its logo tile on phones
-const PartnerSheet = ({ isOpen, onOpenChange, partner }: PartnerSheetProps) => {
-  const t = useTranslations()
-  const localizeField = useLocalizeField()
+type OpenPartnerSheetProps = Omit<PartnerSheetProps, 'partner'> & { partner: Partner }
 
-  if (!partner) return null
+const OpenPartnerSheet = ({ isOpen, onOpenChange, partner }: OpenPartnerSheetProps) => {
+  const t = useTranslations()
+  const { name } = usePartnerFields(partner)
 
   return (
     <Sheet
-      header={
-        <SheetHeader
-          closeLabel={t('common.actions.close')}
-          title={localizeField(partner.nameEn, partner.nameKa)}
-        />
-      }
+      header={<SheetHeader closeLabel={t('common.actions.close')} title={name} />}
       isOpen={isOpen}
       onOpenChange={onOpenChange}
       scrollKey={partner.id}
@@ -58,6 +51,13 @@ const PartnerSheet = ({ isOpen, onOpenChange, partner }: PartnerSheetProps) => {
       <PartnerSheetBody partner={partner} />
     </Sheet>
   )
+}
+
+// A supporter's full details, opened from its logo tile on phones
+const PartnerSheet = ({ isOpen, onOpenChange, partner }: PartnerSheetProps) => {
+  if (!partner) return null
+
+  return <OpenPartnerSheet isOpen={isOpen} onOpenChange={onOpenChange} partner={partner} />
 }
 
 export default PartnerSheet
