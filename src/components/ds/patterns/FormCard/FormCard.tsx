@@ -3,7 +3,9 @@ import { useId } from 'react'
 import { cn } from '@/lib/utils'
 
 type FormCardProps = {
-  // Buttons on the right of the header; they wrap under the title on narrow cards
+  // Buttons on the right of the header; they wrap under the title on narrow cards.
+  // Passing it at all (even `false` while they're hidden, e.g. during an edit)
+  // keeps the header at button height, so the card doesn't jump
   actions?: React.ReactNode
   children: React.ReactNode
   className?: string
@@ -52,7 +54,13 @@ const FormCard = ({
       )}
       id={sectionId}
     >
-      <header className="flex flex-wrap items-start justify-between gap-x-4 gap-y-3">
+      <header
+        className={cn(
+          'flex flex-wrap items-start justify-between gap-x-4 gap-y-3',
+          // Height of a size="sm" Button, the size header actions use
+          actions !== undefined && 'min-h-10',
+        )}
+      >
         {/* basis: keeps the title readable — actions wrap below it before it gets squeezed */}
         <div className="flex min-w-0 flex-1 basis-60 flex-col gap-1">
           <div className="flex items-baseline justify-between gap-2.5">

@@ -1,3 +1,4 @@
+import { TeamBadge } from '@components/features/team'
 import { ProfileSocialLinks } from '@components/shared'
 import type { UserProfile } from '@domain/types'
 import { useTranslations } from 'next-intl'
@@ -5,16 +6,19 @@ import { useTranslations } from 'next-intl'
 // Read-only profile: name, role and team title, the "about" text and links
 const UserProfileView = ({ profile }: { profile: UserProfile }) => {
   const t = useTranslations()
-  const { about, fullName, role, socialLinks, teamTitle } = profile
+  const { about, fullName, role, socialLinks, team, teamTitle } = profile
 
   return (
     <div className="flex flex-col gap-4">
       <div>
-        <p className="text-heading text-ink font-bold">{fullName || '—'}</p>
-        <p className="text-copy-sm text-muted">
-          <span className="capitalize">{role ?? '—'}</span>
-          {teamTitle && ` · ${teamTitle}`}
-        </p>
+        <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+          <p className="text-heading text-ink min-w-0 font-bold wrap-anywhere">{fullName || '—'}</p>
+          {(team || teamTitle) && (
+            <span className="sr-only">{`${t('admin.profile.form.labels.teamTitle')}:`}</span>
+          )}
+          <TeamBadge team={team} title={teamTitle} />
+        </div>
+        <p className="text-copy-sm text-muted capitalize">{role ?? '—'}</p>
       </div>
 
       {about && (
