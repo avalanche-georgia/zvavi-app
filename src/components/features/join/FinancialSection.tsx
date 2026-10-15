@@ -1,7 +1,7 @@
 import { links } from '@components/constants'
+import { NewTabLink } from '@components/shared'
 import { ContentCard } from '@ds/patterns'
 import { getButtonClasses } from '@ds/primitives'
-import { ExternalLink } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { Link } from 'src/i18n/navigation'
 
@@ -17,14 +17,12 @@ const FinancialSection = () => {
     <ContentCard id={sectionIds.donate} title={t('joinUs.page.financialSupport.title')}>
       <p>{t('joinUs.page.financialSupport.description')}</p>
       <div className="flex flex-wrap gap-2">
-        <a className={externalLinkClasses} href={links.patreon} rel="noreferrer" target="_blank">
+        <NewTabLink className={externalLinkClasses} hasIcon href={links.patreon}>
           {t('joinUs.page.financialSupport.patreon')}
-          <ExternalLink aria-hidden className="text-muted size-4" />
-        </a>
-        <a className={externalLinkClasses} href={links.wise} rel="noreferrer" target="_blank">
+        </NewTabLink>
+        <NewTabLink className={externalLinkClasses} hasIcon href={links.wise}>
           {t('joinUs.page.financialSupport.wise')}
-          <ExternalLink aria-hidden className="text-muted size-4" />
-        </a>
+        </NewTabLink>
       </div>
       <Link
         className={getButtonClasses({ className: 'self-start', variant: 'text' })}
