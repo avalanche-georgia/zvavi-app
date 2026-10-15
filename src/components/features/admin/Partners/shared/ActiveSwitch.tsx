@@ -12,7 +12,7 @@ const ActiveSwitch = ({ partner }: { partner: Partner }) => {
   const { toastError, toastSuccess } = useToast()
   const { isPending, mutate: updatePartner, variables } = usePartnerUpdate()
   const { id, isActive, nameEn: name } = partner
-  // Flips at once; the list catches up when the update lands
+  // Shows the new value at once, locked until the list has it
   const isChecked = isPending && variables?.isActive !== undefined ? variables.isActive : isActive
 
   const handleCheckedChange = (checked: boolean) => {
@@ -32,6 +32,7 @@ const ActiveSwitch = ({ partner }: { partner: Partner }) => {
     <Switch
       checked={isChecked}
       isLabelHidden
+      isReadOnly={isPending}
       label={t('admin.partners.actions.activeFor', { name })}
       onCheckedChange={handleCheckedChange}
     />
