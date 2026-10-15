@@ -1,13 +1,12 @@
 'use client'
 
-import { LayoutDashboard, LogIn, LogOut } from 'lucide-react'
+import { LayoutDashboard, LogOut, UserRound } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { Link } from 'src/i18n/navigation'
 
 import { routes } from '@/routes'
 
 type MobileNavAccountProps = {
-  isSignedIn: boolean
   onClose: () => void
   onSignOut: () => void
 }
@@ -15,24 +14,19 @@ type MobileNavAccountProps = {
 const iconClasses = 'text-muted size-5'
 const rowClasses = 'focus-ring text-copy-lg text-body flex w-full items-center gap-3 px-4 py-3'
 
-// Admin panel + Sign out, or Sign in
-const MobileNavAccount = ({ isSignedIn, onClose, onSignOut }: MobileNavAccountProps) => {
+// The team's account rows: Admin panel, My profile, Sign out
+const MobileNavAccount = ({ onClose, onSignOut }: MobileNavAccountProps) => {
   const t = useTranslations()
-
-  if (!isSignedIn) {
-    return (
-      <Link className={rowClasses} href={routes.auth.login} onClick={onClose}>
-        <LogIn aria-hidden className={iconClasses} />
-        {t('auth.login.signIn')}
-      </Link>
-    )
-  }
 
   return (
     <>
       <Link className={rowClasses} href={routes.admin.root} onClick={onClose}>
         <LayoutDashboard aria-hidden className={iconClasses} />
         {t('navigation.adminPanel')}
+      </Link>
+      <Link className={rowClasses} href={routes.admin.profile} onClick={onClose}>
+        <UserRound aria-hidden className={iconClasses} />
+        {t('navigation.profile')}
       </Link>
       <button className={rowClasses} onClick={onSignOut} type="button">
         <LogOut aria-hidden className={iconClasses} />

@@ -18,7 +18,7 @@ type MobileNavProps = {
   onClose: () => void
 }
 
-// Burger menu: language and region on top, then the site links and the account
+// Burger menu: language and region on top, then the site links and (signed in) the account
 const MobileNav = ({ isOpen, isSignedIn, onClose }: MobileNavProps) => {
   const t = useTranslations()
   const { signOut } = useSignOut()
@@ -58,8 +58,13 @@ const MobileNav = ({ isOpen, isSignedIn, onClose }: MobileNavProps) => {
             <MobileNavLink key={item.id} item={item} onClose={onClose} />
           ),
         )}
-        <hr className="border-rule mx-4 my-2" />
-        <MobileNavAccount isSignedIn={isSignedIn} onClose={onClose} onSignOut={handleSignOut} />
+        {/* Visitors have no accounts: only the team gets the account rows */}
+        {isSignedIn && (
+          <>
+            <hr className="border-rule mx-4 my-2" />
+            <MobileNavAccount onClose={onClose} onSignOut={handleSignOut} />
+          </>
+        )}
       </nav>
     </Drawer>
   )
