@@ -5,8 +5,10 @@ import { GET, HEAD, OPTIONS } from '../bulletins/latest/route'
 import typical from '@/lib/caaml/__fixtures__/typical.json'
 
 const fetchSources = vi.hoisted(() => vi.fn())
+const reportServerError = vi.hoisted(() => vi.fn())
 
 vi.mock('@data/queries/fetchPublicBulletinSources', () => ({ default: fetchSources }))
+vi.mock('@/lib/posthog/server', () => ({ reportServerError }))
 
 const url = 'https://avalanche.ge/api/v1/bulletins/latest'
 const candidate = (forecast: Record<string, unknown> = typical.forecast) => ({
@@ -39,6 +41,7 @@ describe('GET /api/v1/bulletins/latest', () => {
     vi.useFakeTimers({ toFake: ['Date'] })
     vi.setSystemTime(new Date(typical.now))
     fetchSources.mockReset()
+    reportServerError.mockReset()
     fetchSources.mockResolvedValue([candidate()])
     vi.spyOn(console, 'error').mockImplementation(() => {})
   })
@@ -136,6 +139,25 @@ describe('GET /api/v1/bulletins/latest', () => {
       title: 'Bulletins are temporarily unavailable',
       type: 'about:blank',
     })
+    expect(reportServerError).toHaveBeenCalledWith(
+      expect.any(Error),
+      expect.objectContaining({ scope: 'api/v1/bulletins/latest' }),
+    )
+  })
+
+  it('reports an omitted region with ids only', async () => {
+    fetchSources.mockResolvedValue([candidate({ ...typical.forecast, validUntil: null })])
+
+    await GET(request())
+
+    const [error, context] = reportServerError.mock.calls[0]
+
+    expect(context).toEqual({
+      forecastId: typical.forecast.id,
+      regionId: 'gudauri',
+      scope: 'api/v1/bulletins/latest',
+    })
+    expect(error.message).toMatch(/^invalid forecast: .*validUntil/)
   })
 
   it('serves the good region when another one fails', async () => {

@@ -3,8 +3,10 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { GET, HEAD } from '../regions/route'
 
 const fetchZones = vi.hoisted(() => vi.fn())
+const reportServerError = vi.hoisted(() => vi.fn())
 
 vi.mock('@data/queries/fetchPublicRegionZones', () => ({ default: fetchZones }))
+vi.mock('@/lib/posthog/server', () => ({ reportServerError }))
 
 const ring = [
   [44, 42],
@@ -29,6 +31,7 @@ const request = (init?: RequestInit) => new Request('https://avalanche.ge/api/v1
 describe('GET /api/v1/regions', () => {
   beforeEach(() => {
     fetchZones.mockReset()
+    reportServerError.mockReset()
     vi.spyOn(console, 'error').mockImplementation(() => {})
   })
 
@@ -60,12 +63,17 @@ describe('GET /api/v1/regions', () => {
 
     expect(response.status).toBe(500)
     expect(response.headers.get('cache-control')).toBe('no-store')
+    expect(reportServerError).toHaveBeenCalledWith(expect.any(Error), {
+      regionIds: 'gudauri',
+      scope: 'api/v1/regions',
+    })
   })
 
   it('responds 500 on a data error', async () => {
     fetchZones.mockRejectedValue(new Error('down'))
 
     expect((await GET(request())).status).toBe(500)
+    expect(reportServerError).toHaveBeenCalledWith(expect.any(Error), { scope: 'api/v1/regions' })
   })
 
   it('answers If-None-Match with 304 and HEAD without a body', async () => {

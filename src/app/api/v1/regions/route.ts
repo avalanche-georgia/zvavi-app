@@ -2,6 +2,7 @@ import fetchPublicRegionZones from '@data/queries/fetchPublicRegionZones'
 
 import { cachedResponse, optionsResponse, problemResponse } from '@/api/v1/responseHeaders'
 import buildRegionsGeoJson from '@/lib/caaml/geojson'
+import { reportServerError } from '@/lib/posthog/server'
 
 export const dynamic = 'force-dynamic'
 export const runtime = 'nodejs'
@@ -9,6 +10,7 @@ export const runtime = 'nodejs'
 const logPrefix = '[GET /api/v1/regions]'
 const cacheControl = 'public, max-age=0, s-maxage=3600, stale-while-revalidate=86400'
 const errorTitle = 'Regions are temporarily unavailable'
+const scope = 'api/v1/regions'
 
 export const GET = async (request: Request) => {
   try {
@@ -17,6 +19,10 @@ export const GET = async (request: Request) => {
 
     if (omittedRegionIds.length) {
       console.error(`${logPrefix} regions omitted (missing or invalid zone):`, omittedRegionIds)
+      reportServerError(new Error('regions omitted: missing or invalid zone'), {
+        regionIds: omittedRegionIds.join(','),
+        scope,
+      })
     }
 
     // Regions exist but none could be served: fail rather than look empty
@@ -32,6 +38,7 @@ export const GET = async (request: Request) => {
     })
   } catch (error) {
     console.error(`${logPrefix} failed:`, error)
+    reportServerError(error, { scope })
 
     return problemResponse(request, errorTitle)
   }
