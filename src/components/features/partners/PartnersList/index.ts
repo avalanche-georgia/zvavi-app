@@ -1,6 +1,5 @@
-export { default as FirstTierPartner } from './FirstTierPartner'
 export { default as PartnerBadge } from './PartnerBadge'
 export { default as PartnerInfo } from './PartnerInfo'
 export { default as PartnerLogo } from './PartnerLogo'
 export { default as PartnersList } from './PartnersList'
-export { default as SecondTierPartner } from './SecondTierPartner'
+export { default as TierSection } from './TierSection'

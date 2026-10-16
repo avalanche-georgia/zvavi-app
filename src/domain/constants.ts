@@ -8,6 +8,7 @@ import type {
   HazardLevel,
   HazardLevelScale,
   MemberStatus,
+  PartnerTier,
   RegionId,
   StaffRole,
 } from './types'
@@ -223,3 +224,6 @@ export const isStaffRole = (role: string | null | undefined): role is StaffRole 
 // UI/UX fallback for public read queries only. Never use in data mutations.
 export const defaultRegionId = 'gudauri'
 export const regionLocalStorageKey = 'zvavi.region'
+
+// Partner tiers in display order: main partners, partners, supporters
+export const partnerTiers: PartnerTier[] = [1, 2, 3]

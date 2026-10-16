@@ -22,11 +22,14 @@ const usePartnerUpdate = () => {
   return useMutation<void, Error, UpdatePayload>({
     meta: { scope: 'usePartnerUpdate' },
     mutationFn: updatePartner,
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: partnersKeys.list() })
-      queryClient.invalidateQueries({ queryKey: partnersKeys.active() })
-      queryClient.invalidateQueries({ queryKey: partnersKeys.item(variables.id) })
-    },
+    // Returned: the mutation stays pending until the lists have refetched, so an
+    // optimistic value (the row's Active switch) never flips back in between
+    onSuccess: (_, variables) =>
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: partnersKeys.list() }),
+        queryClient.invalidateQueries({ queryKey: partnersKeys.active() }),
+        queryClient.invalidateQueries({ queryKey: partnersKeys.item(variables.id) }),
+      ]),
   })
 }
 

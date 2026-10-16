@@ -1,7 +1,7 @@
 'use client'
 
 import type { PartnerFormData } from '@domain/types'
-import { FormCheckbox, FormTextarea, FormTextField, useFormFieldError } from '@ds/form'
+import { FormSwitch, FormTextarea, FormTextField, useFormFieldError } from '@ds/form'
 import { FormCard } from '@ds/patterns'
 import { useTranslations } from 'next-intl'
 
@@ -34,7 +34,7 @@ const FormFields = () => {
           required
         />
         <TierField />
-        <FormCheckbox<PartnerFormData>
+        <FormSwitch<PartnerFormData>
           description={t('admin.partners.form.hints.isActive')}
           label={t(`${labelKey}.isActive`)}
           name="isActive"

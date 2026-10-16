@@ -1,3 +1,4 @@
+export * from './ClampedText'
 export * from './ConfirmDialog'
 export * from './ContentCard'
 export * from './DataTable'
