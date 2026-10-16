@@ -166,10 +166,10 @@ admin:
       ariaLabel: 'პარტნიორები'
       columns:
         actions: 'მოქმედებები'
+        active: 'აქტიური'
         name: 'პარტნიორი'
         benefit: 'შეღავათი'
         tier: 'დონე'
-        status: 'სტატუსი'
       tierLine: 'დონე {tier} · {level}'
     empty:
       noPartnersTitle: 'პარტნიორები ჯერ არ არის'
@@ -184,10 +184,8 @@ admin:
         all: 'ყველა'
         active: 'აქტიური'
         inactive: 'არააქტიური'
-    statuses:
-      active: 'აქტიური'
-      inactive: 'არააქტიური'
     actions:
+      activeFor: 'აქტიური: {name}'
       moreForPartner: 'სხვა მოქმედებები — {name}'
       openWebsite: 'ვებსაიტის გახსნა'
     deleteConfirm: 'წავშალოთ {name} სამუდამოდ? ის გაქრება პარტნიორების საჯარო სიიდან.'
@@ -222,7 +220,9 @@ admin:
           tooLarge: 'ფაილი აღემატება 512 KB-ს.'
           uploadFailed: 'ატვირთვა ვერ მოხერხდა. სცადეთ თავიდან.'
     messages:
+      activated: '{name} ახლა ჩანს საიტზე.'
       created: 'პარტნიორი წარმატებით დაემატა.'
+      deactivated: '{name} ახლა დამალულია საიტზე.'
       deleted: 'პარტნიორი წარმატებით წაიშალა.'
       updated: 'პარტნიორი წარმატებით განახლდა.'
 

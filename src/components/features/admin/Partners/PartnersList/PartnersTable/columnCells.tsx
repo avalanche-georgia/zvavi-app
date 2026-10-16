@@ -3,13 +3,13 @@ import type { CellContext } from '@ds/patterns'
 import { useTranslations } from 'next-intl'
 
 import { usePartnersTable } from './PartnersTableContext'
-import { StatusBadge } from '../../shared'
+import { ActiveSwitch } from '../../shared'
 import PartnerCell from '../PartnerCell'
 import RowActions from '../RowActions'
 
 type RowCellProps = CellContext<Partner, unknown>
 
-export type ColumnLabelKey = 'actions' | 'benefit' | 'name' | 'status' | 'tier'
+export type ColumnLabelKey = 'actions' | 'active' | 'benefit' | 'name' | 'tier'
 
 type ColumnLabelProps = { isHidden?: boolean; labelKey: ColumnLabelKey }
 
@@ -47,9 +47,7 @@ export const TierColumnCell = ({ row }: RowCellProps) => {
   )
 }
 
-export const StatusColumnCell = ({ row }: RowCellProps) => (
-  <StatusBadge isActive={row.original.isActive} />
-)
+export const ActiveColumnCell = ({ row }: RowCellProps) => <ActiveSwitch partner={row.original} />
 
 export const ActionsColumnCell = ({ row }: RowCellProps) => {
   const { onPartnerOpen } = usePartnersTable()

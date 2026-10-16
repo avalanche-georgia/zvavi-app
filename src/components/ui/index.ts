@@ -1,4 +1,3 @@
-export { AutoScrollList } from './AutoScrollList'
 export { default as BrandedQRCode } from './BrandedQRCode'
 export { default as Button } from './Button'
 export { Calendar } from './Calendar'

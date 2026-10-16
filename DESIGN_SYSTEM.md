@@ -31,10 +31,10 @@ src/components/
 │   │                    # Textarea, ChipGroup, ToggleGrid, SegmentedControl, Select, Stepper, InfoTip,
 │   │                    # IconButton, RatingScale, DateField, Menu, Pagination, SearchField,
 │   │                    # StatusPill, CountBadge, Skeleton, Spinner, AvalancheLoader, Dialog, RadioGroup
-│   ├── patterns/        # ContentCard, FormCard, StickyActionBar, SuccessState, DataTable, LoadingState,
+│   ├── patterns/        # ClampedText, ContentCard, FormCard, StickyActionBar, SuccessState, DataTable, LoadingState,
 │   │                    # ConfirmDialog, FooterActions, Sheet, Drawer
 │   └── form/            # react-hook-form bindings: FormTextField, FormTextarea, FormNumberField,
-│                        # FormStepper, FormChipGroup, FormRadioGroup, FormCheckbox, FormSelect, FormDateField,
+│                        # FormStepper, FormChipGroup, FormRadioGroup, FormCheckbox, FormSwitch, FormSelect, FormDateField,
 │                        # useFormFieldError
 ├── ui/                  # legacy kit — frozen, deleted piece by piece
 └── features/            # domain components, built from ds
@@ -164,6 +164,9 @@ Rules:
     *asks* (a trash / unlink icon, a "Delete" that opens a confirmation) stays quiet: `IconButton
     tone="danger"` or `secondary`.
   - `text`: an inline link-style action inside content (e.g. "Set overall to 1").
+  - `disclosure`: shows or hides more of the content in place ("Read more" / "Show less"). Ink with a
+    quiet underline, so it reads as part of the text rather than a link. Use it through
+    `patterns/ClampedText`, which only shows it when the text is actually cut.
   - `inverse`: a secondary action on a dark (`bg-ink`) surface.
   - A router link that acts as a button uses `getButtonClasses({ variant, size })` — same variants,
     no restyling.
@@ -263,7 +266,8 @@ Update this table when a legacy component's last consumer is migrated.
 | Pagination, DataTable | custom | `primitives/Pagination`, `patterns/DataTable` | ✅ |
 | AspectElevationPicker | base-ui | moved to `features/observations/` | ✅ |
 | MiniCompass | custom | moved to `features/observations/` | ✅ |
-| AutoScrollList, BrandedQRCode, FallbackImage, SortableItem | custom | reviewed individually (may stay generic in ds) | ☐ |
+| AutoScrollList | embla | none — partners page shows static grids; removed with `embla-carousel-auto-scroll` | ✅ |
+| BrandedQRCode, FallbackImage, SortableItem | custom | reviewed individually (may stay generic in ds) | ☐ |
 
 Non-kit Headless UI and Radix users also block Phase 6:
 - `shared/Spoiler`

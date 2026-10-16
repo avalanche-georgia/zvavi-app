@@ -65,7 +65,7 @@ A public "Our team" page, reachable from the About menu and the footer, introduc
 
 ## Partners
 
-A showcase of partner organizations supporting the Georgian avalanche forecasting program.
+A public Partners page thanks the businesses and organisations that help pay for the free forecast. Partners appear in three levels, told apart by the size of their card: main partners get a large card, partners a medium one and supporters a small one. Every active partner is always shown — nothing scrolls or hides behind "Show all" — and within each level the order is shuffled on every visit, so no one keeps the top spot. Each card shows the partner's logo and name, a short description (with "Read more" when it is longer) and one link to their website or social page, named after where it goes (e.g. "Instagram" or "ozon.ge"). Perks for forecast users are spelled out on main partner cards and sit behind a small gift icon on the others. On phones, supporters become a grid of logos; tapping one opens its details. When there is no main partner, the top spot invites businesses to become one, and the page ends with an invitation to get in touch about becoming a partner.
 
 ---
 
@@ -96,7 +96,7 @@ Forecasters and administrators can view and edit their own profile — including
 Administrators can manage the list of mountain weather stations: add, edit, delete, and reorder them via drag-and-drop. Each station has a name in English and Georgian, an altitude, and a link to its live data feed.
 
 ### Partner Benefits Management
-Administrators can manage a list of partner organizations and the exclusive discounts or perks they offer to Avalanche Georgia members. Each partner has a name, optional benefit description, logo, and website — all stored in both English and Georgian. The list can be searched by name, filtered by active / inactive and sorted by name or tier; a partner is added or edited in a side panel next to the list. Active partners are displayed to the public in a "Member Benefits" panel accessible from the Join Us page and the member verification card.
+Administrators can manage a list of partner organizations and the exclusive discounts or perks they offer to Avalanche Georgia members. Each partner has a name, optional benefit description, logo, and website — all stored in both English and Georgian. The list can be searched by name, filtered by active / inactive and sorted by name or tier; each row has an Active switch that shows or hides the partner on the public site at once; a partner is added or edited in a side panel next to the list. Active partners are displayed to the public in a "Member Benefits" panel accessible from the Join Us page and the member verification card.
 
 ---
 

@@ -10,14 +10,29 @@ partners:
     placeholder:
       title: 'Your logo could be here'
 
-  description: 'We proudly collaborate with organizations that support mountain safety, education, and adventure.'
   levels:
     1: 'Summit'
     2: 'Fresh Tracks'
     3: 'Snow Base'
-  becomePartner:
-    title: 'Want to become a Partner?'
-    description: 'We’re always open to collaboration with organizations and individuals who share our mission of mountain safety and education. Let’s make the mountains safer — together.'
+
+  page:
+    lede: 'The forecast is free and run by volunteers. These businesses and organisations help pay for it — some also offer perks to people who use it.'
+    mainPartnerTag: 'Main partner'
+    perk: '<b>Perk:</b> {benefit}'
+    perkLabel: 'Perk: {benefit}'
+    readMore: 'Read more'
+    showLess: 'Show less'
+    linkLabel: '{name} on {site}'
+    aboutPartner: 'About {name}'
+    invite:
+      logoSlot: 'Your logo'
+      title: 'This spot is open'
+      message: 'Fund the daily forecast and get your logo on every forecast and on the home page.'
+      action: 'Become our main partner'
+    become:
+      eyebrow: 'Become a partner'
+      title: 'Help keep the forecast free'
+      message: 'Businesses and organisations of any size can support the forecast. Get in touch and we’ll find a way that suits you.'
 
   drawer:
     descriptionLabel: 'About'

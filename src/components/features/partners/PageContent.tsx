@@ -1,41 +1,32 @@
-'use client'
-
-import { ButtonLink } from '@components/shared'
-import { usePartnersQuery } from '@data/hooks/partners'
-import type { Partner, PartnerTier } from '@domain/types'
+import type { Partner } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
-import { PartnersList } from './PartnersList'
+import BecomePartnerBlock from './BecomePartnerBlock'
+import { PartnersList, TierSection } from './PartnersList'
 import { PartnersTracking } from './tracking'
 
-import { routes } from '@/routes'
-
-type PageContentProps = {
-  initialPartners?: Partner[]
-}
-
-const PageContent = ({ initialPartners }: PageContentProps) => {
+// Title and lede, the three tiers, then how to become a partner. Partners come
+// straight from the server, already shuffled — no client refetch, which would
+// reorder them (and share that order with the forecast's partner list).
+const PageContent = ({ partners }: { partners: Partner[] }) => {
   const t = useTranslations()
-  const { data: partners = [] } = usePartnersQuery(initialPartners)
-
-  const byTier = (tier: PartnerTier) => partners.filter((partner) => partner.tier === tier)
 
   return (
-    <div className="flex flex-col gap-8">
-      <p>{t('partners.description')}</p>
-
-      <PartnersTracking partners={partners} placement="partners_page">
-        <PartnersList partners={byTier(1)} scrollDirection="backward" tier={1} />
-        <PartnersList partners={byTier(2)} tier={2} />
-        <PartnersList partners={byTier(3)} scrollDirection="backward" tier={3} />
-      </PartnersTracking>
-
-      <section className="space-y-3">
-        <h3 className="text-xl font-semibold">{t('partners.becomePartner.title')}</h3>
-        <p className="text-justify">{t('partners.becomePartner.description')}</p>
-
-        <ButtonLink href={routes.about.contact}>{t('common.actions.getInTouch')}</ButtonLink>
-      </section>
+    <div className="bg-canvas text-ink">
+      <div className="mx-auto max-w-310 px-4 md:px-5 xl:px-8">
+        <header className="pt-5.5 pb-5 sm:pt-8 sm:pb-7">
+          <h1 className="text-title-lg sm:text-display font-bold">{t('navigation.partners')}</h1>
+          <p className="text-body text-copy-lg mt-2 max-w-[62ch] text-pretty">
+            {t('partners.page.lede')}
+          </p>
+        </header>
+        <PartnersTracking partners={partners} placement="partners_page">
+          <PartnersList partners={partners} />
+        </PartnersTracking>
+        <TierSection>
+          <BecomePartnerBlock />
+        </TierSection>
+      </div>
     </div>
   )
 }
