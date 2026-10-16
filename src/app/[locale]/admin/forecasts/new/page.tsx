@@ -6,6 +6,7 @@ import {
   getInitialFormValues,
 } from '@components/features/admin/Forecasts/ForecastForm'
 import { Loading } from '@components/features/admin/shared'
+import AdminPageBoundary from '@components/features/admin/shared/AdminPageBoundary'
 import { RequireRegionId } from '@components/shared'
 import { useAdminGetForecast } from '@data/hooks/forecasts'
 import { useCurrentUserProfileQuery } from '@data/hooks/userProfiles'
@@ -73,10 +74,14 @@ const NewForecastContent = ({ regionId }: { regionId: RegionId }) => {
   return <ForecastForm initialValues={initialValues} onClose={handleClose} regionId={regionId} />
 }
 
+// The boundary: the profile query is shared with the admin layout, so it can
+// resolve before this page hydrates
 const NewForecastPage = () => (
-  <RequireRegionId fallbackRoute={routes.admin.forecasts.root}>
-    {(regionId) => <NewForecastContent regionId={regionId} />}
-  </RequireRegionId>
+  <AdminPageBoundary>
+    <RequireRegionId fallbackRoute={routes.admin.forecasts.root}>
+      {(regionId) => <NewForecastContent regionId={regionId} />}
+    </RequireRegionId>
+  </AdminPageBoundary>
 )
 
 export default NewForecastPage

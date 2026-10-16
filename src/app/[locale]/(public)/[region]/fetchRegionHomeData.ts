@@ -60,15 +60,23 @@ const fetchWeatherStationsCount = async (regionId: RegionId) => {
   }
 }
 
-const fetchRegionHomeData = async (regionId: RegionId): Promise<RegionHomeData> => {
-  const [forecast, partners, recentAvalanches, weatherStationsCount] = await Promise.all([
-    fetchLatestPublishedForecast(regionId),
-    fetchTier1Partners(),
-    fetchRecentAvalanches(regionId),
-    fetchWeatherStationsCount(regionId),
-  ])
-  // Needs the forecast first
+// The forecast, then its forecaster's profile — chained so the other lookups
+// don't wait for it
+const fetchForecastWithForecaster = async (regionId: RegionId) => {
+  const forecast = await fetchLatestPublishedForecast(regionId)
   const forecasterProfile = forecast ? await fetchForecasterProfile(forecast) : null
+
+  return { forecast, forecasterProfile }
+}
+
+const fetchRegionHomeData = async (regionId: RegionId): Promise<RegionHomeData> => {
+  const [{ forecast, forecasterProfile }, partners, recentAvalanches, weatherStationsCount] =
+    await Promise.all([
+      fetchForecastWithForecaster(regionId),
+      fetchTier1Partners(),
+      fetchRecentAvalanches(regionId),
+      fetchWeatherStationsCount(regionId),
+    ])
 
   return {
     forecast,

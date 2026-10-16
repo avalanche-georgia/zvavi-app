@@ -18,10 +18,10 @@ export const selectPublicTeamMembers = () =>
     .not('team', 'is', null)
     .in('role', staffRoles)
 
-type PublicTeamMemberRow = Awaited<ReturnType<typeof selectPublicTeamMembers>>['data'] & {}
+type PublicTeamMemberRows = NonNullable<Awaited<ReturnType<typeof selectPublicTeamMembers>>['data']>
 
 // A listed profile without a name has nothing to show
-export const toTeamMembers = (rows: PublicTeamMemberRow): TeamMember[] =>
+export const toTeamMembers = (rows: PublicTeamMemberRows): TeamMember[] =>
   rows.flatMap((row) => {
     const { team, ...profile } = convertSnakeToCamel(row) as Omit<TeamMember, 'fullName'> & {
       team: TeamMember['team'] | null

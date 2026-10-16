@@ -12,11 +12,13 @@ import type { ForecastFormSchema } from '../schema'
 const ForecasterField = () => {
   const t = useTranslations()
   const key = 'admin.forecast.editor.general'
-  const { setValue } = useFormContext<ForecastFormSchema>()
-  const [forecaster, forecasterId] = useWatch<ForecastFormSchema, ['forecaster', 'forecasterId']>({
-    name: ['forecaster', 'forecasterId'],
+  const { formState, setValue } = useFormContext<ForecastFormSchema>()
+  const forecasterId = useWatch<ForecastFormSchema, 'forecasterId'>({ name: 'forecasterId' })
+  const { defaultValues } = formState
+  const { getName, isLoading, options } = useForecasterOptions({
+    savedForecaster: defaultValues?.forecaster ?? '',
+    savedForecasterId: defaultValues?.forecasterId ?? null,
   })
-  const { getName, isLoading, options } = useForecasterOptions({ forecaster, forecasterId })
   const isOther = forecasterId === null
 
   const handleForecasterChange = (value: string) => {
