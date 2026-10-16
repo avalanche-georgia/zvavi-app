@@ -35,6 +35,7 @@ admin:
       observationSubmittedNoRegion: ახალი დაკვირვება
 
   sidebar:
+    dashboard: 'მართვის დაფა'
     designSystem: 'დიზაინ-სისტემა'
     forecasts: 'პროგნოზები'
     home: 'მთავარი'

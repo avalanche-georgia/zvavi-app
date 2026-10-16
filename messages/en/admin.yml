@@ -35,6 +35,7 @@ admin:
       observationSubmittedNoRegion: New observation
 
   sidebar:
+    dashboard: 'Dashboard'
     designSystem: 'Design system'
     forecasts: 'Forecasts'
     home: 'Home'
