@@ -1,9 +1,8 @@
+import type { ElevationThresholds } from '@domain/elevation'
 import type { ElevationZone } from '@domain/types'
 
 import { InvalidForecastError } from './errors'
 import type { CaamlElevation } from './types'
-
-export type ElevationThresholds = { high: number; low: number }
 
 type BandBounds = { lower?: number; upper?: number }
 

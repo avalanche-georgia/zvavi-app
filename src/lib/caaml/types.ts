@@ -1,5 +1,7 @@
 import type { AvalancheType, Confidence, ElevationZone, Trend } from '@domain/types'
 
+import type { customDataNamespace } from './config'
+
 // The subset of the CAAML v6 EAWS bulletin schema we emit
 // (schema/CAAMLv6_BulletinEAWS.json is the source of truth).
 
@@ -40,7 +42,7 @@ export type CaamlDangerRating = {
 }
 
 export type CaamlProblemCustomData = {
-  avalancheGeorgia: {
+  [customDataNamespace]: {
     bands: ElevationZone[]
     confidence?: Confidence
     priority: number
@@ -66,7 +68,7 @@ export type CaamlBulletin = {
   avalancheProblems: CaamlAvalancheProblem[]
   bulletinID: string
   customData: {
-    avalancheGeorgia: { expired: boolean; forecastId: number }
+    [customDataNamespace]: { expired: boolean; forecastId: number }
   }
   dangerRatings: CaamlDangerRating[]
   lang: 'en'
@@ -88,6 +90,6 @@ export type CaamlBulletin = {
 
 export type CaamlBulletinCollection = {
   bulletins: CaamlBulletin[]
-  customData: { avalancheGeorgia: { apiVersion: number } }
+  customData: { [customDataNamespace]: { apiVersion: number } }
   metaData: { extFiles: CaamlExtFile[] }
 }

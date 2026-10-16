@@ -1,7 +1,7 @@
+import type { ElevationThresholds } from '@domain/elevation'
 import type { ElevationZone } from '@domain/types'
 
 import { customDataNamespace } from './config'
-import type { ElevationThresholds } from './elevation'
 import { elevationForBands } from './elevation'
 import type { BulletinProblem } from './input'
 import {

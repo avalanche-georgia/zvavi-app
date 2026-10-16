@@ -69,7 +69,8 @@ const regionSchema = z.object({
   elevationHighM: z.number().int(),
   elevationLowM: z.number().int(),
   id: z.string().min(1),
-  nameEn: z.string().trim().min(1),
+  // Not trimmed: /regions serves the same value as is
+  nameEn: z.string().refine((name) => name.trim().length > 0),
 })
 
 const bulletinSourceSchema = z.object({ forecast: forecastSchema, region: regionSchema })

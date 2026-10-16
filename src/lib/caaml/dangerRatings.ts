@@ -1,4 +1,5 @@
-import type { ElevationThresholds } from './elevation'
+import type { ElevationThresholds } from '@domain/elevation'
+
 import { elevationForBand } from './elevation'
 import type { BulletinForecast } from './input'
 import { bandsTopDown, hazardLevelToDangerRating } from './mappings'
