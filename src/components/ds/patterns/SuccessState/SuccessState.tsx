@@ -7,6 +7,8 @@ import { cn } from '@/lib/utils'
 
 type SuccessStateProps = {
   actions?: React.ReactNode
+  // Extra content under the description, e.g. a QR code
+  children?: React.ReactNode
   className?: string
   description?: React.ReactNode
   title: React.ReactNode
@@ -15,7 +17,7 @@ type SuccessStateProps = {
 // Confirmation that replaces a finished flow (e.g. a submitted form). The control
 // that triggered it is gone, so focus moves to the title — screen readers
 // announce it, and keyboard users continue from here instead of from <body>.
-const SuccessState = ({ actions, className, description, title }: SuccessStateProps) => {
+const SuccessState = ({ actions, children, className, description, title }: SuccessStateProps) => {
   const titleRef = useRef<HTMLHeadingElement>(null)
 
   useEffect(() => {
@@ -36,6 +38,7 @@ const SuccessState = ({ actions, className, description, title }: SuccessStatePr
         {title}
       </h2>
       {description && <p className="text-copy text-body max-w-md text-pretty">{description}</p>}
+      {children}
       {actions && <div className="mt-3 flex flex-wrap justify-center gap-2.5">{actions}</div>}
     </div>
   )

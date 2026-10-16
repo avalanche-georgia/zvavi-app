@@ -2,6 +2,7 @@
 
 import { useReportFormState } from '@components/features/admin/shared'
 import { serverDateFormat } from '@domain/constants'
+import { getMemberName } from '@domain/memberName'
 import type { Member } from '@domain/types'
 import { FormDateField } from '@ds/form'
 import { FormCard } from '@ds/patterns'
@@ -12,7 +13,6 @@ import { FormProvider, useForm, useWatch } from 'react-hook-form'
 
 import { type ApproveFormData, approveFormSchema } from './schema'
 import useApproveSubmit from './useApproveSubmit'
-import { getMemberName } from '../../shared'
 
 type ApproveFormProps = {
   formId: string

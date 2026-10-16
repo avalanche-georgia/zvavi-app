@@ -2,8 +2,7 @@
 
 import { Suspense } from 'react'
 import { useIsClient } from '@components/hooks'
-
-import Loading from './Loading'
+import { Loading } from '@components/shared'
 
 // Wraps a page's client container. Queries start only in the browser, and the
 // sidebar shares some of them (pending counts), so their data can land before

@@ -9,7 +9,9 @@ import { format } from 'date-fns'
 import { useTranslations } from 'next-intl'
 import { useFormContext, useWatch } from 'react-hook-form'
 
-const fieldGridClasses = 'grid gap-4 @sm:grid-cols-2'
+import { fieldGridClasses } from './constants'
+
+import PersonSection from './PersonSection'
 
 const FormFields = () => {
   const t = useTranslations()
@@ -30,32 +32,7 @@ const FormFields = () => {
 
   return (
     <>
-      <FormCard title={t('admin.members.form.sections.person')}>
-        <div className={fieldGridClasses}>
-          <FormTextField<MemberFormData>
-            autoComplete="off"
-            label={t('admin.members.form.labels.firstName')}
-            name="firstName"
-            required
-          />
-          <FormTextField<MemberFormData>
-            autoComplete="off"
-            label={t('admin.members.form.labels.lastName')}
-            name="lastName"
-            required
-          />
-          <FormTextField<MemberFormData>
-            autoComplete="off"
-            label={t('admin.members.form.labels.email')}
-            name="email"
-          />
-          <FormTextField<MemberFormData>
-            autoComplete="off"
-            label={t('admin.members.form.labels.phone')}
-            name="phone"
-          />
-        </div>
-      </FormCard>
+      <PersonSection />
 
       <FormCard title={t('admin.members.form.sections.membership')}>
         <div className={fieldGridClasses}>

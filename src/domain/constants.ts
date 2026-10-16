@@ -8,7 +8,12 @@ import type {
   HazardLevel,
   HazardLevelScale,
   MemberStatus,
+  PartnerTier,
+  RegionId,
+  StaffRole,
 } from './types'
+
+import { Constants } from '@/lib/supabase/types'
 
 export const hazardLevelNames: Record<HazardLevel, string> = {
   considerable: 'forecast.hazardLevels.considerable',
@@ -70,6 +75,19 @@ export const avalancheStatuses: Record<AvalancheStatus, AvalancheStatus> = {
 // Field rules shared by the public submit form, the admin avalanche form and
 // the submit API (authoritative). Number inputs clamp to these ranges; the
 // schemas reject anything outside them.
+// Membership application: enum values and column sizes (member_applications), shared
+// by the form (client checks) and POST /api/members/applications (authoritative)
+export const memberPaymentMethods = ['bank_gel', 'bank_foreign', 'wise', 'contact_me'] as const
+export const memberGenders = ['male', 'female', 'preferNotToSay'] as const
+
+export const memberApplicationLimits = {
+  age: { max: 120, min: 0 },
+  emailMaxLength: 255,
+  nameMaxLength: 100,
+  phoneMaxLength: 50,
+  textMaxLength: 2000,
+} as const
+
 export const avalancheFieldLimits = {
   descriptionMaxLength: 2000,
   involvementMaxLength: 2000,
@@ -188,9 +206,8 @@ export const memberStatuses: Record<MemberStatus, MemberStatus> = {
   suspended: 'suspended',
 }
 
-export const regionIds = {
-  gudauri: 'gudauri',
-} as const
+// Every region the database knows (the region_id enum) — active or not
+export const allRegionIds: readonly RegionId[] = Constants.public.Enums.region_id
 
 export const userRoles = {
   admin: 'admin',
@@ -198,6 +215,15 @@ export const userRoles = {
   trainee: 'trainee',
 } as const
 
+// Roles that make an account "team" (mirrors public.is_staff() in the database)
+export const staffRoles = [userRoles.admin, userRoles.forecaster] as const
+
+export const isStaffRole = (role: string | null | undefined): role is StaffRole =>
+  staffRoles.some((staffRole) => staffRole === role)
+
 // UI/UX fallback for public read queries only. Never use in data mutations.
 export const defaultRegionId = 'gudauri'
 export const regionLocalStorageKey = 'zvavi.region'
+
+// Partner tiers in display order: main partners, partners, supporters
+export const partnerTiers: PartnerTier[] = [1, 2, 3]

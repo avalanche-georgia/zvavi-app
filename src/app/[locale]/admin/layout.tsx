@@ -6,16 +6,21 @@ import {
   AdminPageHeader,
   AdminSidebar,
   MobileDrawer,
+  NoAccess,
 } from '@components/layout/admin'
 import { useCurrentUserProfileQuery } from '@data/hooks/userProfiles'
+import { isStaffRole } from '@domain/constants'
 
 type LayoutProps = {
   children: React.ReactNode
 }
 
 const AdminLayout = ({ children }: Readonly<LayoutProps>) => {
-  useCurrentUserProfileQuery()
+  const { data: profile, isSuccess } = useCurrentUserProfileQuery()
   const [isMenuOpen, { setFalse: closeMenu, setTrue: openMenu }] = useBoolean(false)
+
+  // Loading or failed lookup: keep the shell (RLS is the real guard)
+  if (isSuccess && !isStaffRole(profile?.role)) return <NoAccess />
 
   return (
     <div className="flex h-svh">

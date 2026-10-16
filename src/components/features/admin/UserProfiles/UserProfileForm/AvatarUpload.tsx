@@ -1,7 +1,8 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import { useDiceBearAvatar, useToast } from '@components/hooks'
+import { useToast } from '@components/hooks'
+import useDiceBearAvatar from '@components/hooks/useDiceBearAvatar'
 import { useAvatarUpload } from '@data/hooks/userProfiles'
 import type { UserProfile } from '@domain/types'
 import { Button } from '@ds/primitives'

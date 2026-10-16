@@ -1,3 +1,4 @@
+import { getMemberName } from '@domain/memberName'
 import type { Member } from '@domain/types'
 import { type ColumnDef, createColumnHelper } from '@ds/patterns'
 
@@ -11,7 +12,6 @@ import {
   MemberIdColumnCell,
   StatusColumnCell,
 } from './columnCells'
-import { getMemberName } from '../../shared'
 
 const columnHelper = createColumnHelper<Member>()
 

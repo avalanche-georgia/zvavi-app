@@ -14,6 +14,7 @@ regionHome:
     seeAll: 'See all'
 
   quickLinks:
+    observations: 'Field reports'
     forecastArea: 'Map & boundaries'
     weatherStations: '{count, plural, one {# station} other {# stations}}'
     history: 'Archive'

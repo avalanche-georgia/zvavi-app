@@ -1,1 +1,1 @@
-export { default as MemberApplicationForm } from './MemberApplicationForm'
+export { default as MemberApplicationFlow } from './MemberApplicationFlow'

@@ -5,6 +5,7 @@ import type { MemberFormData } from '@domain/types'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { format } from 'date-fns'
 
+import toPersonalDetailsColumns from './toPersonalDetailsColumns'
 import { convertCamelToSnake, handleSupabaseError } from '../../helpers'
 
 type UpdatePayload = Partial<MemberFormData> & { id: string }
@@ -12,6 +13,7 @@ type UpdatePayload = Partial<MemberFormData> & { id: string }
 const updateMember = async ({ id, ...formData }: UpdatePayload): Promise<void> => {
   const payload = {
     ...formData,
+    ...toPersonalDetailsColumns(formData),
     expiresAt: formData.expiresAt ? format(formData.expiresAt, serverDateFormat) : null,
     joinedAt: formData.joinedAt ? format(formData.joinedAt, serverDateFormat) : null,
   }

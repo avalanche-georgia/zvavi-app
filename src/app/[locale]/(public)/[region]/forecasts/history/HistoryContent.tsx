@@ -1,17 +1,15 @@
 'use client'
 
 import { HistoryList } from '@components/features/history'
-import { Spinner } from '@components/ui'
+import { Loading } from '@components/shared'
 import { useHistoryListQuery } from '@data/hooks/forecasts'
 import { useRegionContext } from '@domain/context/RegionContext'
-import { useTranslations } from 'next-intl'
 
 const HistoryContent = () => {
-  const t = useTranslations()
   const { region } = useRegionContext()
   const { data: forecasts, isPending } = useHistoryListQuery(region!.id)
 
-  if (isPending) return <Spinner label={t('common.labels.wait')} size="lg" />
+  if (isPending) return <Loading isPage />
 
   if (!forecasts) return null
 

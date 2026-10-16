@@ -1,7 +1,6 @@
 'use client'
 
 import type { ColumnDef, RowData } from '@tanstack/react-table'
-import { LoaderIcon } from 'lucide-react'
 
 import DataTableBody from './DataTableBody'
 import DataTableCards from './DataTableCards'
@@ -11,6 +10,7 @@ import type { DataTableLabels, DataTableSort } from './types'
 import useCardMode from './useCardMode'
 import useDataTable from './useDataTable'
 import useElementWidth from './useElementWidth'
+import { LoadingState } from '../LoadingState'
 
 import { cn } from '@/lib/utils'
 
@@ -63,11 +63,7 @@ const DataTable = <TData extends RowData>(props: DataTableProps<TData>) => {
       role="region"
       tabIndex={-1}
     >
-      {isLoading && (
-        <div className="grid h-60 place-items-center">
-          <LoaderIcon aria-hidden className="text-muted size-6 animate-spin" />
-        </div>
-      )}
+      {isLoading && <LoadingState className="h-60 py-0" label={labels.loading} />}
       {!isLoading && data.length === 0 && empty}
       {!isLoading && data.length > 0 && (
         <>

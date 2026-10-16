@@ -1,62 +1,28 @@
 'use client'
 
-import { useCallback } from 'react'
-import Logo from '@assets/images/logo.png'
-import { useAuth, useToast } from '@components/hooks'
-import { LanguageToggle, RegionSelect } from '@components/shared'
-import { Button } from '@components/ui'
-import { supabase } from '@data'
-import Image from 'next/image'
-import { useTranslations } from 'next-intl'
-import { Link, useRouter } from 'src/i18n/navigation'
+import { useAuth } from '@components/hooks'
+import { LanguageToggle, RegionSwitcher } from '@components/shared'
 
+import AccountButton from './AccountButton'
+import HeaderLogo from './HeaderLogo'
 import { DesktopNav, MobileMenuButton } from './NavMenu'
 
-import { reportError } from '@/lib/observability'
-import { routes } from '@/routes'
-
+// Site header on every public page. Stays the first <header> in the DOM —
+// useHeaderHeight measures it.
 const Header = () => {
-  const router = useRouter()
-  const t = useTranslations()
-  const { isAuthenticated } = useAuth()
-  const { toastError } = useToast()
-
-  const handleLogOutClick = useCallback(async () => {
-    try {
-      await supabase.auth.signOut()
-      router.push(routes.auth.login)
-    } catch (error) {
-      reportError(error, { scope: 'Header | handleLogOutClick' })
-      toastError('Header | handleLogOutClick', { error, message: 'Error logging out' })
-    }
-  }, [router, toastError])
+  const { isAuthenticated, user } = useAuth()
 
   return (
-    <header className="sticky inset-0 z-40 bg-white shadow-md">
-      <div className="mx-auto flex max-w-(--breakpoint-xl) items-center justify-between gap-4 px-4 py-3">
-        <Link className="flex shrink-0 items-center gap-2" href="/">
-          <Image alt="Logo" height={32} src={Logo} width={32} />
-          <h1 className="text-primary text-xl font-semibold md:text-2xl">Avalanche.ge</h1>
-        </Link>
-
+    <header className="border-rule bg-surface/92 sticky inset-x-0 top-0 z-40 border-b backdrop-blur-md">
+      <div className="mx-auto flex h-16 max-w-310 items-center gap-2 px-4 md:px-5 xl:px-8">
+        <HeaderLogo isPriority />
         <DesktopNav />
 
-        <div className="flex shrink-0 items-center gap-4">
-          <div className="hidden lg:block">
-            <LanguageToggle />
-          </div>
-
-          <div className="hidden lg:block">
-            <RegionSelect />
-          </div>
-
-          <MobileMenuButton />
-
-          {isAuthenticated && (
-            <Button className="hidden md:flex" onClick={handleLogOutClick}>
-              {t('auth.logout.button')}
-            </Button>
-          )}
+        <div className="ml-auto flex shrink-0 items-center gap-2">
+          <LanguageToggle className="hidden xl:flex" />
+          <RegionSwitcher className="hidden sm:flex" />
+          <AccountButton user={user} />
+          <MobileMenuButton isSignedIn={isAuthenticated} />
         </div>
       </div>
     </header>

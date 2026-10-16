@@ -1,4 +1,3 @@
-import { regionIds, regionLocalStorageKey } from '@domain/constants'
 import { createServerClient } from '@supabase/ssr'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
@@ -8,9 +7,13 @@ import { defaultLocale, locales } from './i18n/config'
 
 import { posthogHosts, posthogProxyPath } from '@/lib/posthog/config'
 import { reportServerError } from '@/lib/posthog/server'
+import {
+  getActiveRegionIds,
+  isKnownRegion,
+  regionRedirect,
+  toRegionHome,
+} from '@/lib/regionRouting'
 import { updateSession } from '@/lib/supabase/middleware'
-
-const knownRegions = new Set<string>(Object.values(regionIds))
 
 // Log suspicious requests to old forecast URL formats (non-integer IDs)
 const logSuspiciousRequest = async (request: NextRequest) => {
@@ -117,6 +120,20 @@ export default async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL(`/${localeFileMatch[2]}`, request.url))
   }
 
+  // Entry URLs ("/" and "/{locale}" have no page): one hop straight to the final page.
+  // Bare "/" takes the locale from next-intl's cookie — never Accept-Language, so
+  // crawlers always get one consistent answer.
+  if (pathname === '/') {
+    const cookieLocale = request.cookies.get('NEXT_LOCALE')?.value
+    const locale = locales.find((supported) => supported === cookieLocale) ?? defaultLocale
+
+    return regionRedirect(request, toRegionHome, locale)
+  }
+
+  const entryLocale = locales.find((locale) => pathname === `/${locale}`)
+
+  if (entryLocale) return regionRedirect(request, toRegionHome, entryLocale)
+
   // Skip Next.js internals, API routes and root public metadata files
   if (
     pathname.startsWith('/_next') ||
@@ -133,7 +150,11 @@ export default async function proxy(request: NextRequest) {
   )
 
   if (!localeMatched) {
-    const redirectUrl = new URL(`/${defaultLocale}${pathname}`, request.url)
+    // Keep the query: links like ?member=<id> must still open their record
+    const redirectUrl = new URL(
+      `/${defaultLocale}${pathname}${request.nextUrl.search}`,
+      request.url,
+    )
 
     return NextResponse.redirect(redirectUrl)
   }
@@ -145,14 +166,33 @@ export default async function proxy(request: NextRequest) {
   if (bareForecastsMatch) {
     const locale = bareForecastsMatch[1]
     const rest = bareForecastsMatch[2] ?? ''
-    const cookieRegion = request.cookies.get(regionLocalStorageKey)?.value
-    const regionId = cookieRegion && knownRegions.has(cookieRegion) ? cookieRegion : null
 
-    if (!regionId) {
-      return NextResponse.redirect(new URL(`/${locale}`, request.url))
+    return regionRedirect(request, (regionId) => `/${regionId}/forecasts${rest}`, locale)
+  }
+
+  // The region chooser with nothing to choose: straight to the only region (temporary —
+  // it changes when another region opens). The page itself never redirects.
+  const regionsPageMatch = pathname.match(new RegExp(`^/(${localePattern})/regions$`))
+
+  if (regionsPageMatch) {
+    const activeIds = await getActiveRegionIds()
+
+    if (activeIds?.size === 1) {
+      return regionRedirect(request, toRegionHome, regionsPageMatch[1])
     }
+  }
 
-    return NextResponse.redirect(new URL(`/${locale}/${regionId}/forecasts${rest}`, request.url))
+  // A region that exists but is inactive: a real 404 status for crawlers. The [region]
+  // layout renders the not-found screen, but the public loading boundary would stream
+  // it with a 200.
+  const regionSegment = pathname.split('/')[2]
+
+  if (regionSegment && isKnownRegion(regionSegment)) {
+    const activeIds = await getActiveRegionIds()
+
+    if (activeIds && !activeIds.has(regionSegment)) {
+      return NextResponse.rewrite(request.nextUrl, { status: 404 })
+    }
   }
 
   // Update the request locale

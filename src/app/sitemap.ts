@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next'
-import { locales } from 'src/i18n/config'
+import { defaultLocale, locales } from 'src/i18n/config'
 
 import { reportServerError } from '@/lib/posthog/server'
 import { createClient } from '@/lib/supabase/server'
@@ -14,6 +14,7 @@ type StaticEntry = {
 const staticEntries: StaticEntry[] = [
   { changeFrequency: 'monthly', path: routes.weatherStations, priority: 0.8 },
   { changeFrequency: 'monthly', path: routes.about.aboutUs, priority: 0.7 },
+  { changeFrequency: 'monthly', path: routes.about.team, priority: 0.6 },
   { changeFrequency: 'monthly', path: routes.partners, priority: 0.7 },
   { changeFrequency: 'monthly', path: routes.about.contact, priority: 0.6 },
   { changeFrequency: 'monthly', path: routes.about.joinUs, priority: 0.5 },
@@ -28,7 +29,7 @@ type RegionForecastEntry = {
 const regionForecastEntries: RegionForecastEntry[] = [
   {
     changeFrequency: 'daily',
-    getPath: (regionId) => routes.forecastsByRegion(regionId).root,
+    getPath: (regionId) => routes.regionHome(regionId),
     priority: 1,
   },
   {
@@ -40,6 +41,16 @@ const regionForecastEntries: RegionForecastEntry[] = [
     changeFrequency: 'weekly',
     getPath: (regionId) => routes.forecastsByRegion(regionId).history,
     priority: 0.8,
+  },
+  {
+    changeFrequency: 'monthly',
+    getPath: (regionId) => routes.forecastsByRegion(regionId).forecastArea,
+    priority: 0.6,
+  },
+  {
+    changeFrequency: 'daily',
+    getPath: (regionId) => routes.observationsByRegion(regionId).root,
+    priority: 0.7,
   },
 ]
 
@@ -64,7 +75,10 @@ const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
 
         return {
           alternates: {
-            languages: Object.fromEntries(locales.map((l) => [l, `${baseUrl}/${l}${path}`])),
+            languages: {
+              ...Object.fromEntries(locales.map((l) => [l, `${baseUrl}/${l}${path}`])),
+              'x-default': `${baseUrl}/${defaultLocale}${path}`,
+            },
           },
           changeFrequency,
           lastModified: new Date(),
@@ -75,11 +89,21 @@ const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
     ),
   )
 
-  const staticSitemapEntries: MetadataRoute.Sitemap = staticEntries.flatMap(
+  // "/" only redirects and is never listed; the region chooser only while there is a
+  // choice (with one region it redirects to that region's home)
+  const chooserEntries: StaticEntry[] =
+    activeRegionIds.length > 1
+      ? [{ changeFrequency: 'daily', path: routes.regions, priority: 1 }]
+      : []
+
+  const staticSitemapEntries: MetadataRoute.Sitemap = [...chooserEntries, ...staticEntries].flatMap(
     ({ changeFrequency, path, priority }) =>
       locales.map((locale) => ({
         alternates: {
-          languages: Object.fromEntries(locales.map((l) => [l, `${baseUrl}/${l}${path}`])),
+          languages: {
+            ...Object.fromEntries(locales.map((l) => [l, `${baseUrl}/${l}${path}`])),
+            'x-default': `${baseUrl}/${defaultLocale}${path}`,
+          },
         },
         changeFrequency,
         lastModified: new Date(),

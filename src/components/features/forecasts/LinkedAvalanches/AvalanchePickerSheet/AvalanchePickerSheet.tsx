@@ -1,10 +1,8 @@
 'use client'
 
-import { Sheet, SheetClose, SheetIconButton, SheetTitle } from '@components/ui'
 import type { LinkableAvalanche } from '@data/hooks/recentAvalanches'
-import { FooterActions } from '@ds/patterns'
+import { FooterActions, Sheet, SheetHeader } from '@ds/patterns'
 import { Button } from '@ds/primitives'
-import { X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 import PickerResults from './PickerResults'
@@ -58,17 +56,11 @@ const AvalanchePickerSheet = (props: AvalanchePickerSheetProps) => {
     <Sheet
       footer={footer}
       header={
-        <>
-          <SheetClose render={<SheetIconButton aria-label={t('common.actions.close')} />}>
-            <X className="size-4.5" />
-          </SheetClose>
-          <div className="flex min-w-0 flex-1 flex-col">
-            <SheetTitle className="m-0 truncate text-[15px] font-semibold">
-              {t(`${key}.title`)}
-            </SheetTitle>
-            <span className="text-caption text-muted">{catalogName}</span>
-          </div>
-        </>
+        <SheetHeader
+          closeLabel={t('common.actions.close')}
+          subtitle={catalogName}
+          title={t(`${key}.title`)}
+        />
       }
       isOpen={isOpen}
       isTall

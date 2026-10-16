@@ -1,14 +1,10 @@
 'use client'
 
-import { Spinner } from '@components/ui'
+import { Loading } from '@components/shared'
 import dynamic from 'next/dynamic'
 
 const ForecastAreaMapClient = dynamic(() => import('./ForecastAreaMapClient'), {
-  loading: () => (
-    <div className="relative flex h-[400px] w-full items-center justify-center rounded-xl bg-gray-100">
-      <Spinner />
-    </div>
-  ),
+  loading: () => <Loading className="h-[400px] w-full rounded-xl bg-gray-100 py-0" />,
   ssr: false,
 })
 

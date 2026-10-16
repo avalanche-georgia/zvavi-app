@@ -1,25 +1,29 @@
 'use client'
 
 import { useState } from 'react'
-import { Icon } from '@components/icons'
+import { IconButton } from '@ds/primitives'
+import { Menu } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 import MobileNav from './MobileNav'
 
-const MobileMenuButton = () => {
+// The burger: shown below xl, where the desktop nav doesn't fit
+const MobileMenuButton = ({ isSignedIn }: { isSignedIn: boolean }) => {
+  const t = useTranslations()
   const [isOpen, setIsOpen] = useState(false)
 
   return (
     <>
-      <button
-        aria-label="Open menu"
-        className="size-6 cursor-pointer lg:hidden"
+      <IconButton
+        aria-label={t('navigation.openMenu')}
+        className="xl:hidden"
         onClick={() => setIsOpen(true)}
-        type="button"
+        size="md"
       >
-        <Icon icon="menu" size="lg" />
-      </button>
+        <Menu aria-hidden className="size-5.5" />
+      </IconButton>
 
-      <MobileNav isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      <MobileNav isOpen={isOpen} isSignedIn={isSignedIn} onClose={() => setIsOpen(false)} />
     </>
   )
 }

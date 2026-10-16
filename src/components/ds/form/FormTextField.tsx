@@ -8,7 +8,10 @@ import { Field, TextField } from '../primitives'
 
 type FormTextFieldProps<TFieldValues extends FieldValues> = FormFieldProps<TFieldValues> & {
   autoComplete?: string
+  leading?: React.ReactNode
+  maxLength?: number
   placeholder?: string
+  showCount?: boolean
   type?: 'email' | 'password' | 'tel' | 'text' | 'url'
   unit?: string
 }
@@ -20,10 +23,13 @@ const FormTextField = <TFieldValues extends FieldValues>({
   hint,
   isLabelHidden,
   label,
+  leading,
+  maxLength,
   name,
   placeholder,
   required,
   requiredMessage,
+  showCount,
   type,
   unit,
 }: FormTextFieldProps<TFieldValues>) => {
@@ -42,11 +48,14 @@ const FormTextField = <TFieldValues extends FieldValues>({
     >
       <TextField
         autoComplete={autoComplete}
+        leading={leading}
+        maxLength={maxLength}
         name={field.name}
         onBlur={field.onBlur}
         onValueChange={field.onChange}
         placeholder={placeholder}
         required={required}
+        showCount={showCount}
         type={type}
         unit={unit}
         value={field.value ?? ''}

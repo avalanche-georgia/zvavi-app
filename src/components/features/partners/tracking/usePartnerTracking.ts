@@ -23,13 +23,33 @@ const usePartnerTracking = (partner: Partner) => {
     }
   }
 
+  // A logo that always opens the details sheet (partners page tiles)
+  const trackDetailsOpen = () => {
+    if (!placement) return
+
+    trackPartnerBadgeClick({ hasDetails, partner, placement })
+  }
+
   const trackDrawerWebsiteClick = () => {
     if (!placement) return
 
     trackPartnerWebsiteClick({ isFromDrawer: true, partner, placement })
   }
 
-  return { hasDetails, trackBadgeClick, trackDrawerWebsiteClick }
+  // A card that links straight to the website (no details step)
+  const trackWebsiteClick = () => {
+    if (!placement) return
+
+    trackPartnerWebsiteClick({ isFromDrawer: false, partner, placement })
+  }
+
+  return {
+    hasDetails,
+    trackBadgeClick,
+    trackDetailsOpen,
+    trackDrawerWebsiteClick,
+    trackWebsiteClick,
+  }
 }
 
 export default usePartnerTracking

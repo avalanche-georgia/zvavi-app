@@ -1,15 +1,19 @@
 import { ForecastAreaMap } from '@components/features/forecast'
 import { PageWrapper } from '@components/layout'
 import type { Metadata } from 'next'
-import { getTranslations } from 'next-intl/server'
+import { getLocale, getTranslations } from 'next-intl/server'
+
+import getAlternates from '@/lib/seo/getAlternates'
+import { routes } from '@/routes'
 
 type PageProps = { params: Promise<{ region: string }> }
 
 export const generateMetadata = async ({ params }: PageProps): Promise<Metadata> => {
   const { region: regionId } = await params
-  const t = await getTranslations()
+  const [locale, t] = await Promise.all([getLocale(), getTranslations()])
 
   return {
+    alternates: getAlternates(locale, routes.forecastsByRegion(regionId).forecastArea),
     description: t('seo.forecastArea.description', { regionName: t(`regions.names.${regionId}`) }),
     title: t('seo.forecastArea.title', { regionName: t(`regions.names.${regionId}`) }),
   }

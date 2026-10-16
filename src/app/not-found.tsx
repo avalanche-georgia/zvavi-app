@@ -1,6 +1,7 @@
 import avalancheGIF from '@assets/images/avalanche.gif'
 import { PageWrapper } from '@components/layout'
 import { ButtonLink } from '@components/shared'
+import fetchActiveRegions from '@data/queries/fetchActiveRegions'
 import { regionLocalStorageKey } from '@domain/constants'
 import { cookies } from 'next/headers'
 import Image from 'next/image'
@@ -10,9 +11,12 @@ import { routes } from '@/routes'
 
 const NotFound = async () => {
   const t = await getTranslations()
-  const cookieStore = await cookies()
-  const regionId = cookieStore.get(regionLocalStorageKey)?.value
-  const href = regionId ? routes.forecastsByRegion(regionId).current : routes.home
+  const [cookieStore, regions] = await Promise.all([cookies(), fetchActiveRegions()])
+  const cookieRegionId = cookieStore.get(regionLocalStorageKey)?.value
+  // The remembered region if still active, else the only one — never a redirecting URL
+  const region =
+    regions.find(({ id }) => id === cookieRegionId) ?? (regions.length === 1 ? regions[0] : null)
+  const href = region ? routes.regionHome(region.id) : routes.regions
 
   return (
     <PageWrapper>

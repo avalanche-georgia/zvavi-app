@@ -33,7 +33,7 @@ const LoginForm = () => {
   }
 
   return (
-    <AuthCard title={t('auth.login.title')}>
+    <AuthCard description={t('auth.login.description')} title={t('auth.login.title')}>
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <FormProvider {...form}>
         <form className="flex flex-col gap-4" noValidate onSubmit={form.handleSubmit(handleSubmit)}>

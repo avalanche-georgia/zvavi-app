@@ -30,11 +30,11 @@ src/components/
 │   ├── primitives/      # Button, Badge, Checkbox, Field, FieldGroup, TextField, NumberField,
 │   │                    # Textarea, ChipGroup, ToggleGrid, SegmentedControl, Select, Stepper, InfoTip,
 │   │                    # IconButton, RatingScale, DateField, Menu, Pagination, SearchField,
-│   │                    # StatusPill, CountBadge, Skeleton, Spinner, Dialog
-│   ├── patterns/        # FormCard, StickyActionBar, SuccessState, DataTable, LoadingState,
-│   │                    # ConfirmDialog
+│   │                    # StatusPill, CountBadge, Skeleton, Spinner, AvalancheLoader, Dialog, RadioGroup
+│   ├── patterns/        # ClampedText, ContentCard, FormCard, StickyActionBar, SuccessState, DataTable, LoadingState,
+│   │                    # ConfirmDialog, FooterActions, Sheet, Drawer
 │   └── form/            # react-hook-form bindings: FormTextField, FormTextarea, FormNumberField,
-│                        # FormStepper, FormChipGroup, FormCheckbox, FormSelect, FormDateField,
+│                        # FormStepper, FormChipGroup, FormRadioGroup, FormCheckbox, FormSwitch, FormSelect, FormDateField,
 │                        # useFormFieldError
 ├── ui/                  # legacy kit — frozen, deleted piece by piece
 └── features/            # domain components, built from ds
@@ -73,8 +73,9 @@ in `features`.
   Dialog, Popover, Select, Menu, and so on.
 - No new Headless UI or Radix usage.
 - Existing exceptions stay until their migration phase:
-  - vaul (Drawer). Base-ui portals inside a vaul Drawer break on mobile; see memory
-    `feedback_vaul_baseui_portal`.
+- Legacy Radix popups (`ui/Select`, `ui/Popover`, `ui/DatePicker`, `InfoIcon`) portal to `body`: never
+  put them inside a ds `Sheet` or `Dialog` — the focus trap and outside-press handling break them.
+  Use the ds primitives there.
   - react-day-picker (Calendar)
   - @dnd-kit (sortable lists)
   - sonner (toasts)
@@ -107,10 +108,12 @@ them.
 
 | Layer | Tokens | Utilities |
 |---|---|---|
-| **Semantic colour** | text `ink`, `body`, `muted`, `placeholder`, `disabled` · lines `rule`, `rule-strong` · surfaces `surface`, `canvas`, `tile`, `tile-hover`, `off`, `map` · brand `primary(-hover/-soft/-ink)`, `brand-blue` · `accent(-hover/-soft)` · status `danger`, `danger-border`, `success`, `success-soft`, `warning`, `warning-soft` · domain `hazard-*`, `size-*` | `text-ink`, `bg-surface`, `border-rule`, … |
-| **Type scale** | `title-lg` 28, `title` 24, `heading` 17, `copy-lg` 15, `copy` 14, `copy-sm` 13, `caption` 12.5, `micro` 10.5. Line-height and tracking are part of the token | `text-heading`, … |
-| **Radii** | `card` 16, `media` 12, `field` 11, `control` 10, `badge` 5 (pills use `rounded-full`) | `rounded-card`, … |
-| **Shadows** | `raised` (segmented thumb), `overlay` (map buttons), `float` (sticky bar), `pin` | `shadow-float`, … |
+| **Semantic colour** | text `ink`, `body`, `muted`, `placeholder`, `disabled` · lines `rule`, `rule-strong` · surfaces `surface`, `canvas`, `tile`, `tile-hover`, `off`, `map` · brand `primary(-hover/-soft/-ink)`, `brand-blue` · `accent(-hover/-soft)` · status `danger`, `danger-border`, `success`, `success-soft`, `warning`, `warning-soft`, `alert-ink` · domain `hazard-*`, `size-*` | `text-ink`, `bg-surface`, `border-rule`, … |
+| **Type scale** | `display` 34, `title-lg` 28, `title` 24, `title-sm` 22, `heading` 17, `copy-lg` 15, `copy` 14, `copy-sm` 13, `caption` 12.5, `micro` 10.5. Line-height and tracking are part of the token | `text-heading`, … |
+| **Letter spacing** | `eyebrow` 0.06em (uppercase eyebrows and small labels) | `tracking-eyebrow` |
+| **Radii** | `card` 16, `media` 12, `field` 11, `control` 10, `badge` 5, `sheet` 20 (pills use `rounded-full`) | `rounded-card`, … |
+| **Shadows** | `raised` (segmented thumb), `overlay` (map buttons), `float` (sticky bar), `pin`, `menu`, `sheet` (bottom sheet), `panel` (desktop side panel) | `shadow-float`, … |
+| **Motion** | `sheet` easing (sheet slide in / out) | `ease-sheet` |
 | **Focus** | `focus-ring` utility: 2px accent outline, 2px offset, on `:focus-visible` | `focus-ring` |
 
 - **There is no raw-palette layer yet.** Semantic tokens hold the hex values directly. A primitive
@@ -118,7 +121,7 @@ them.
 - **Control heights are not tokens.** Each primitive's `size` map sets them with the spacing scale
   (`h-10`, `h-11.5`, `h-12.5`), so the primitive itself is the source of truth.
 - The type scale merges near-duplicate sizes from handoffs: 13.5 → 13, 14.5 → 14, 15.5 → 15.
-- **Adding a type, radius or shadow token:** also add its name to `src/lib/designTokens.ts`.
+- **Adding a type, radius, shadow or tracking token:** also add its name to `src/lib/designTokens.ts`.
   `cn()` (tailwind-merge) needs the name there, or it treats `text-title` as a colour and drops it
   when merged with `text-ink`. The gallery lists tokens from the same file.
 
@@ -161,18 +164,41 @@ Rules:
     *asks* (a trash / unlink icon, a "Delete" that opens a confirmation) stays quiet: `IconButton
     tone="danger"` or `secondary`.
   - `text`: an inline link-style action inside content (e.g. "Set overall to 1").
+  - `disclosure`: shows or hides more of the content in place ("Read more" / "Show less"). Ink with a
+    quiet underline, so it reads as part of the text rather than a link. Use it through
+    `patterns/ClampedText`, which only shows it when the text is actually cut.
+  - `inverse`: a secondary action on a dark (`bg-ink`) surface.
+  - A router link that acts as a button uses `getButtonClasses({ variant, size })` — same variants,
+    no restyling.
   - Size `md` in sheet footers and sticky action bars; `sm` inside content (section headers, cards,
     empty states, inline confirmations).
   - Dismiss before confirm, right-aligned: `[Cancel] [Primary]`. Sheet / panel footers use
     `patterns/FooterActions`: buttons always on the right, an optional note (hint or confirmation
     question) on the left — on its own line above the buttons when the footer is narrow.
   - No colour or height overrides through `className` — add a variant instead.
+- **Menus** (`primitives/Menu`): `align` picks the trigger edge (`end` for overflow menus, `start`
+  for nav dropdowns). Navigation rows pass `render={<Link href=… />}` to `MenuItem`; `isActive`
+  marks the current page.
+- **Sheets** (`patterns/Sheet`): bottom sheet on mobile, side panel from `lg`. `isTall` fixes the
+  mobile height; `isWide` widens the desktop panel (`w-160` instead of `w-120`) for records with more
+  to lay out side by side, e.g. a member's facts and QR code. No width overrides through `className`.
 - **Confirming a destructive action** (remove, unlink): wrap the control that asks in
   `primitives/ConfirmPopover`. It floats next to that control (no layout shift), starts focus on
   Cancel, and base-ui closes it on Esc, an outside click or when another one opens.
 - **Icon-only buttons** (`primitives/IconButton`) always show their label as a `Tooltip` on hover and
   keyboard focus (pass `tooltip` for a shorter label than the accessible name). Tooltips don't show
   on touch, so the icon must be clear without it.
+- **Loading indicators** — pick by what is loading, never invent another:
+  - A page, route fallback or any block (map, list, panel, sheet body, table): the mountain loader.
+    In features use `Loading` from `@components/shared` (translated, `isPage` for a whole page); in
+    `ds/` use `patterns/LoadingState`. Both render `primitives/AvalancheLoader` (sizes `sm` 40px, `md`
+    64px, `lg` 112px). Fit it to the space with `className` (e.g. `h-60 py-0`), never by restyling the
+    loader.
+  - Inline and tiny (button busy state, menu row, "load more" trigger, a link pending): `primitives/Spinner`,
+    or `Button`'s `isBusy`. The mountain is unreadable below ~40px.
+  - The final layout is known (cards, rows, metrics): `primitives/Skeleton`.
+  - Measurable progress (an upload): a progress ring, not either of the above.
+  - No bare `LoaderIcon` + `animate-spin` for a block. Colours are the `snow-*` / `rock-*` tokens.
 - **i18n:** components take their strings as props, and callers translate them with the project rules.
   `ds/` primitives never call `useTranslations()` themselves.
 - **Keep files under ~100 lines.** Split sub-parts into their own files.
@@ -204,7 +230,7 @@ Rules:
 | **2. Primitives for submit** | Button, Badge, Field / FieldGroup, TextField, NumberField, Textarea, ChipGroup, ToggleGrid, SegmentedControl, Stepper. Patterns FormCard, StickyActionBar, SuccessState. Form bindings. Gallery demos | ✅ |
 | **3. Submit page redesign** | `local/observations/design_handoff_submit_observation/` built on ds | ✅ |
 | **4. Rest of observations** | List toolbar, detail views, aspect/elevation picker moved to `features/` with a bare variant | ☐ |
-| **5. Legacy, by screen area** | Public pages (auth, forecasts, about) → admin forms → admin tables, modals and drawers. Admin lists, forms and the overview are done; what's left in admin: `Sheet`, the vaul mobile menu drawer, and the shared `BrandedQRCode` / `SortableItem` / `FallbackImage` | ☐ |
+| **5. Legacy, by screen area** | Public pages (auth, forecasts, about) → admin forms → admin tables, modals and drawers. Admin lists, forms, the overview, every sheet and the mobile menus are done; what's left in admin: the shared `BrandedQRCode` / `SortableItem` / `FallbackImage` | ☐ |
 | **6. Cleanup** | Delete `ui/`. Remove `@headlessui/react`, `@radix-ui/*` and `clsx` | ☐ |
 
 ### Component tracker
@@ -222,7 +248,7 @@ Update this table when a legacy component's last consumer is migrated.
 | ChipGroup | base-ui | `primitives/ChipGroup` | ☐ |
 | SegmentedControl | base-ui | `primitives/SegmentedControl` | ☐ |
 | RadioGroup | Headless UI | `primitives/SegmentedControl` | ✅ |
-| RadioOption | base-ui | `primitives/RadioGroup` or `ToggleGrid` | ☐ |
+| RadioOption | base-ui | `primitives/RadioGroup` (long labels, one per row) or `ToggleGrid` | ✅ |
 | Checkbox | Headless UI | `primitives/Checkbox` | ☐ |
 | Switch | base-ui | `primitives/Switch` | ✅ |
 | Select | Radix | `primitives/Select` (base-ui) | ☐ |
@@ -232,20 +258,22 @@ Update this table when a legacy component's last consumer is migrated.
 | Popover | Radix | `primitives/Popover` (base-ui) | ☐ |
 | Tooltip, InfoIcon | Radix | `primitives/Tooltip` (base-ui Tooltip; hover/focus labels), `primitives/InfoTip` (base-ui Popover; explanations) | ☐ |
 | DropdownMenu | base-ui | `primitives/Menu` | ✅ |
-| Drawer, Sheet | vaul / base-ui | `patterns/Sheet` (TBD) | ☐ |
+| Sheet, Drawer (bottom sheet) | base-ui / vaul | `patterns/Sheet` (+ `SheetHeader`, `SheetStepButtons`; `shared/DetailsSheet` for a sheet opened from a button) | ✅ |
+| Mobile nav menus (not in `ui/`: `Header/NavMenu/MobileNav`, `admin/sidebar/MobileDrawer`) | vaul (removed) | `patterns/Drawer` | ✅ |
 | IconButton | custom | `primitives/IconButton` | ☐ |
-| Alert | custom | — (last consumer removed with the forecast page redesign; add `patterns/Alert` when needed) | ✅ |
-| Spinner | custom | `primitives/Spinner`, `patterns/LoadingState` (admin migrated) | ☐ |
+| Spinner | custom | `primitives/Spinner` (inline), `primitives/AvalancheLoader` via `patterns/LoadingState` / `shared/Loading` (blocks and pages); legacy `ui/Spinner` removed | ✅ |
 | Skeleton | custom | `primitives/Skeleton` | ☐ |
 | Pagination, DataTable | custom | `primitives/Pagination`, `patterns/DataTable` | ✅ |
 | AspectElevationPicker | base-ui | moved to `features/observations/` | ✅ |
 | MiniCompass | custom | moved to `features/observations/` | ✅ |
-| AutoScrollList, BrandedQRCode, FallbackImage, SortableItem | custom | reviewed individually (may stay generic in ds) | ☐ |
+| AutoScrollList | embla | none — partners page shows static grids; removed with `embla-carousel-auto-scroll` | ✅ |
+| BrandedQRCode, FallbackImage, SortableItem | custom | reviewed individually (may stay generic in ds) | ☐ |
 
 Non-kit Headless UI and Radix users also block Phase 6:
 - `shared/Spoiler`
-- `Header/NavMenu/DesktopNav`
-- `shared/LanguageToggle`
+
+(`Header/NavMenu/DesktopNav` now uses `primitives/Menu`, `shared/LanguageToggle` uses
+`primitives/SegmentedControl` size `sm`.)
 
 ### Deferred
 

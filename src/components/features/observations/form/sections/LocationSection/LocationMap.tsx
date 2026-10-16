@@ -1,19 +1,12 @@
 'use client'
 
-import { Spinner } from '@ds/primitives'
+import { Loading } from '@components/shared'
 import dynamic from 'next/dynamic'
-import { useTranslations } from 'next-intl'
 
 import type { LocationMapClientProps } from './LocationMapClient'
 
 const MapLoading = () => {
-  const t = useTranslations()
-
-  return (
-    <div className="bg-map rounded-media -mx-1 flex h-65 items-center justify-center md:mx-0 md:h-80">
-      <Spinner label={t('common.messages.loading')} />
-    </div>
-  )
+  return <Loading className="bg-map rounded-media -mx-1 h-65 py-0 md:mx-0 md:h-80" />
 }
 
 // Leaflet touches `window` on import — load the map on the client only

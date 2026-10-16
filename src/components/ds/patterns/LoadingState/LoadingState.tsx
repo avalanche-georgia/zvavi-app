@@ -1,4 +1,4 @@
-import { Spinner } from '../../primitives'
+import { AvalancheLoader } from '../../primitives'
 
 import { cn } from '@/lib/utils'
 
@@ -9,7 +9,7 @@ type LoadingStateProps = {
   label: string
 }
 
-// Centred spinner standing in for a block (page, panel, section) that is loading
+// Centred mountain loader standing in for a block (page, panel, section) that is loading
 const LoadingState = ({ className, isPage = false, label }: LoadingStateProps) => (
   <div
     className={cn(
@@ -18,7 +18,7 @@ const LoadingState = ({ className, isPage = false, label }: LoadingStateProps) =
       className,
     )}
   >
-    <Spinner label={label} size={isPage ? 'lg' : 'md'} />
+    <AvalancheLoader label={label} size={isPage ? 'lg' : 'md'} />
   </div>
 )
 

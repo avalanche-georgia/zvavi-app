@@ -1,14 +1,15 @@
 'use client'
 
 import { useId } from 'react'
-import { SheetHeader, useRecordSheet } from '@components/features/admin/shared'
-import { Sheet } from '@components/ui'
+import { useRecordSheet } from '@components/features/admin/shared'
+import { getMemberName } from '@domain/memberName'
 import type { Member } from '@domain/types'
+import { Sheet, SheetHeader } from '@ds/patterns'
+import { useTranslations } from 'next-intl'
 
 import MemberSheetBody from './MemberSheetBody'
 import MemberSheetFooter from './MemberSheetFooter'
 import type { MemberSheetMode } from './types'
-import { getMemberName } from '../shared'
 
 type MemberSheetProps = {
   initialMode: MemberSheetMode
@@ -29,6 +30,7 @@ const MemberSheet = ({
   onReopen,
   selectedId,
 }: MemberSheetProps) => {
+  const t = useTranslations()
   const formId = useId()
   const sheet = useRecordSheet<Member, MemberSheetMode>({
     initialMode,
@@ -58,10 +60,16 @@ const MemberSheet = ({
           />
         )
       }
-      header={<SheetHeader title={record ? getMemberName(record) : ''} />}
+      header={
+        <SheetHeader
+          closeLabel={t('common.actions.close')}
+          title={record ? getMemberName(record) : ''}
+        />
+      }
       isDismissible={!sheet.hasUnsavedInput}
       isOpen={sheet.isOpen}
       isTall
+      isWide
       onOpenChange={sheet.onOpenChange}
     >
       <MemberSheetBody

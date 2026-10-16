@@ -1,13 +1,14 @@
 'use client'
 
 import { RecordMenu } from '@components/features/admin/shared'
+import { getMemberName } from '@domain/memberName'
 import type { Member } from '@domain/types'
 import { IconButton, MenuItem } from '@ds/primitives'
 import { Download, Link2, Pencil, UserRoundCheck } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 import type { MemberSheetMode } from '../MemberSheet'
-import { getMemberName, useMemberActions } from '../shared'
+import { useMemberActions } from '../shared'
 
 type RowActionsProps = {
   // Card layout: ⋯ only

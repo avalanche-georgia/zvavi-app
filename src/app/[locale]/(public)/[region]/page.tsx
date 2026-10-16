@@ -1,10 +1,30 @@
 import { RegionHome } from '@components/features/regionHome'
 import fetchActiveRegions from '@data/queries/fetchActiveRegions'
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { getLocale, getTranslations } from 'next-intl/server'
 
 import fetchRegionHomeData from './fetchRegionHomeData'
 
+import getAlternates from '@/lib/seo/getAlternates'
+import { routes } from '@/routes'
+
 type RegionHomePageProps = { params: Promise<{ region: string }> }
+
+export const generateMetadata = async ({ params }: RegionHomePageProps): Promise<Metadata> => {
+  const [{ region: regionId }, locale, t] = await Promise.all([
+    params,
+    getLocale(),
+    getTranslations(),
+  ])
+  const regionName = t(`regions.names.${regionId}`)
+
+  return {
+    alternates: getAlternates(locale, routes.regionHome(regionId)),
+    description: t('seo.regionHome.description', { regionName }),
+    title: t('seo.regionHome.title', { regionName }),
+  }
+}
 
 const RegionHomePage = async ({ params }: RegionHomePageProps) => {
   const { region: regionParam } = await params
@@ -23,6 +43,7 @@ const RegionHomePage = async ({ params }: RegionHomePageProps) => {
       partners={data.partners}
       recentAvalanches={data.recentAvalanches}
       regionId={region.id}
+      state={data.state}
       weatherStationsCount={data.weatherStationsCount}
     />
   )

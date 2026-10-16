@@ -19,5 +19,8 @@ export const navItems: NavItem[] = [
     : []),
 ]
 
-// Back to the public site, pinned to the bottom of the sidebar
+// Pinned to the bottom of the sidebar: who is shown on the public Team page,
+// and back to the public site
+export const teamItem: NavItem = { href: routes.admin.team, icon: 'userRoundCheck', label: 'team' }
+
 export const homeItem: NavItem = { href: routes.home, icon: 'home', label: 'home' }

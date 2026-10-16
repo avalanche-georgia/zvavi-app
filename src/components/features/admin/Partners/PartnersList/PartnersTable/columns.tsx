@@ -3,10 +3,10 @@ import { type ColumnDef, createColumnHelper } from '@ds/patterns'
 
 import {
   ActionsColumnCell,
+  ActiveColumnCell,
   BenefitColumnCell,
   ColumnLabel,
   PartnerColumnCell,
-  StatusColumnCell,
   TierColumnCell,
 } from './columnCells'
 
@@ -39,10 +39,10 @@ export const partnerColumns: ColumnDef<Partner, any>[] = [
     sortDescFirst: false,
   }),
   columnHelper.display({
-    cell: StatusColumnCell,
-    header: () => <ColumnLabel labelKey="status" />,
-    id: 'status',
-    meta: { cellClassName: 'w-28' },
+    cell: ActiveColumnCell,
+    header: () => <ColumnLabel labelKey="active" />,
+    id: 'active',
+    meta: { cellClassName: 'w-24' },
   }),
   columnHelper.display({
     cell: ActionsColumnCell,

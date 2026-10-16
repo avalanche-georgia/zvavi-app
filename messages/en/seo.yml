@@ -27,9 +27,18 @@ seo:
   privacy:
     title: 'Privacy Policy'
     description: 'Learn how Avalanche Georgia collects, uses, and protects your personal data.'
+  team:
+    title: 'Our Team'
+    description: 'Meet the volunteer forecasters and product team behind Avalanche Georgia.'
   terms:
     title: 'Terms of Service'
     description: 'Terms and conditions for using Avalanche Georgia services and membership.'
   weatherStations:
     title: 'Weather Stations'
     description: 'Real-time weather data from stations across Georgian mountains.'
+  regions:
+    title: 'Avalanche Forecast Regions — Georgia'
+    description: 'Choose a forecast region in Georgia and see today’s avalanche danger, forecasts and conditions.'
+  regionHome:
+    title: 'Avalanche Forecast — {regionName}'
+    description: 'Today’s avalanche danger, forecast, recent avalanches and conditions for {regionName}.'

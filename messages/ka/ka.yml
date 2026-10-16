@@ -1,25 +1,9 @@
-navigation:
-  about: 'შესახებ'
-  aboutUs: 'ჩვენ შესახებ'
-  closeMenu: 'მენიუს დახურვა'
-  contact: 'კონტაქტი'
-  currentForecast: 'მიმდინარე პროგნოზი'
-  forecastArea: 'პროგნოზის ტერიტორია'
-  forecasts: 'პროგნოზები'
-  history: 'წინა პროგნოზები'
-  home: 'მთავარი'
-  joinUs: 'შემოგვიერთდი'
-  menu: 'მენიუ'
-  menuDescription: 'საიტის სანავიგაციო მენიუ'
-  observations: 'დაკვირვებები'
-  partners: 'პარტნიორები'
-  weatherStations: 'ამინდის სადგურები'
-
 auth:
   errors:
     invalidSession: 'სესია არასწორია ან ვადაგასულია. გთხოვთ მოითხოვოთ პაროლის აღდგენის ახალი ბმული.'
   login:
-    title: 'შესვლა'
+    title: 'გუნდის წევრების შესვლა'
+    description: "განკუთვნილია ზვავი საქართველოს ადმინისტრატორებისა და პროგნოზისტებისთვის. ვიზიტორებს ანგარიში არ სჭირდებათ."
     signIn: 'შესვლა'
     forgotPassword: 'დაგავიწყდათ პაროლი?'
   logout:

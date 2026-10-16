@@ -1,12 +1,6 @@
 import { useTranslations } from 'next-intl'
 
-const getInitials = (name: string) =>
-  name
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((part) => part.charAt(0).toLocaleUpperCase())
-    .join('')
+import getInitials from '@/lib/getInitials'
 
 // Full-width fact: initials avatar + the forecaster's name
 const ForecasterRow = ({ name }: { name: string }) => {
