@@ -1,6 +1,6 @@
 import OffSeasonNote from '@components/features/home/hero/OffSeasonNote'
 import type { RegionForecastState } from '@domain/forecastState'
-import type { Forecast, Partner, PublicObservation, RegionId } from '@domain/types'
+import type { Forecast, Partner, PublicObservation, RegionId, TeamMember } from '@domain/types'
 
 import ExpiredNote from './ExpiredNote'
 import MainPartnersCard from './MainPartnersCard'
@@ -13,6 +13,7 @@ import RegionHead from './RegionHead'
 type RegionHomeProps = {
   // null: the region has no published forecast
   forecast: Forecast | null
+  forecasterProfile: TeamMember | null
   partners: Partner[]
   // null: the lookup failed
   recentAvalanches: PublicObservation[] | null
@@ -27,7 +28,15 @@ const columnClasses = 'flex min-w-0 flex-col gap-3'
 // The region's landing page: today's danger and main partners on the left,
 // recent avalanches and shortcuts on the right (one column on mobile)
 const RegionHome = (props: RegionHomeProps) => {
-  const { forecast, partners, recentAvalanches, regionId, state, weatherStationsCount } = props
+  const {
+    forecast,
+    forecasterProfile,
+    partners,
+    recentAvalanches,
+    regionId,
+    state,
+    weatherStationsCount,
+  } = props
 
   return (
     <div className="bg-canvas text-ink min-h-full">
@@ -42,7 +51,11 @@ const RegionHome = (props: RegionHomeProps) => {
                 {forecast.hazardLevels.overall !== '0' && (
                   <ExpiredNote validUntil={forecast.validUntil} />
                 )}
-                <RegionDangerCard forecast={forecast} regionId={regionId} />
+                <RegionDangerCard
+                  forecast={forecast}
+                  forecasterProfile={forecasterProfile}
+                  regionId={regionId}
+                />
               </>
             ) : (
               <NoForecasterCard />

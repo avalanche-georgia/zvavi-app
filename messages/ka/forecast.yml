@@ -2,6 +2,7 @@ forecast:
   pageTitle: '{regionName} ზვავის პროგნოზი'
   forecastAreaPageTitle: '{regionName} პროგნოზის ტერიტორია'
   historyPageTitle: '{regionName} პროგნოზების ისტორია'
+  forecasterProfile: '{name} — პროფილი'
 
   history:
     emptyTitle: 'პროგნოზები ჯერ არ არის'

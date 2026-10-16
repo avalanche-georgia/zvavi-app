@@ -66,6 +66,7 @@ const NewForecastContent = ({ regionId }: { regionId: RegionId }) => {
   const initialValues = {
     ...getInitialFormValues(sourceForecast ?? null),
     forecaster: currentProfile?.fullName ?? '',
+    forecasterId: currentProfile?.fullName ? currentProfile.id : null,
     validUntil: null,
   }
 

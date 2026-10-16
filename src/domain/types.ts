@@ -89,6 +89,8 @@ export type Forecast = {
   additionalHazards: string
   createdAt: string
   forecaster: string
+  // The forecaster's profile; null for a guest name or a legacy row
+  forecasterId: string | null
   hazardLevels: HazardLevels
   id: number
   publishedAt: string | null
