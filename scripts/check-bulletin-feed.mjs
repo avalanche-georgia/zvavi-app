@@ -25,8 +25,6 @@ const ajv = new Ajv({ allErrors: true })
 addFormats(ajv)
 
 const validate = ajv.compile(schema)
-// Keep in sync with contactEmail in src/lib/caaml/config.ts
-const publicContactEmail = 'zvavisaqartvelo@gmail.com'
 const bypassSecret = process.env.VERCEL_AUTOMATION_BYPASS_SECRET
 const failures = []
 
@@ -104,15 +102,9 @@ const checkEndpoint = async ({ cacheControl, contentType, path }) => {
     `${path} OPTIONS allows GET, HEAD, OPTIONS`,
   )
 
-  // No personal data: forecaster names never leave the database. The provider's
-  // public contact email (src/lib/caaml/config.ts) is the only address allowed.
-  const emails = body.match(/[\w.+-]+@[\w-]+\.[\w.-]+/g) ?? []
-
+  // No personal data: forecaster names never leave the database, no emails
   check(!/forecaster/i.test(body), `${path} contains no "forecaster"`)
-  check(
-    emails.every((email) => email === publicContactEmail),
-    `${path} contains no email-like string besides the contact email`,
-  )
+  check(!/[\w.+-]+@[\w-]+\.[\w.-]+/.test(body), `${path} contains no email-like string`)
   check(!/"overall(DangerLevel)?"\s*:/i.test(body), `${path} contains no overall danger level`)
 
   return body

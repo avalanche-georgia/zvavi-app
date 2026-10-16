@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest'
 import { loadFixture, rawFixture } from './fixtures'
 import buildBulletin from '../buildBulletin'
 import bulletinId from '../bulletinId'
-import { contactEmail, contactPersonName } from '../config'
+import { contactPersonName } from '../config'
 import { InvalidForecastError } from '../errors'
 import { parseBulletinSource } from '../input'
 
@@ -221,11 +221,10 @@ describe('bulletinId', () => {
 })
 
 describe('provider', () => {
-  it('names the contact person and carries the contact email in customData', () => {
+  it('names the contact person and emits no email', () => {
     expect(buildBulletin(loadFixture('nullable')).source).toEqual({
       provider: {
         contactPerson: { name: contactPersonName },
-        customData: { avalancheGeorgia: { contactEmail } },
         name: 'Avalanche Georgia',
         website: 'https://avalanche.ge',
       },
@@ -248,8 +247,7 @@ describe('privacy', () => {
       forecast.createdByUserId = 'nino@example.org'
       forecast.avalancheProblems[0].forecaster = 'nino@example.org'
     })
-    // The provider's public contact email is the only address allowed
-    const serialized = JSON.stringify(buildFromRaw(raw)).replaceAll(contactEmail, '')
+    const serialized = JSON.stringify(buildFromRaw(raw))
 
     expect(serialized).not.toMatch(/Forecasterishvili|forecaster|createdBy/i)
     expect(serialized).not.toMatch(/[\w.+-]+@[\w-]+\.[\w.]+/)

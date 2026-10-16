@@ -1,11 +1,5 @@
 import bulletinId from './bulletinId'
-import {
-  contactEmail,
-  contactPersonName,
-  customDataNamespace,
-  providerName,
-  providerWebsite,
-} from './config'
+import { contactPersonName, customDataNamespace, providerName, providerWebsite } from './config'
 import buildDangerRatings from './dangerRatings'
 import { assertValidThresholds } from './elevation'
 import { InvalidForecastError } from './errors'
@@ -97,7 +91,6 @@ const buildBulletin = ({ forecast, now, region }: BuildBulletinParams): CaamlBul
     source: {
       provider: {
         contactPerson: { name: contactPersonName },
-        customData: { [customDataNamespace]: { contactEmail } },
         name: providerName,
         website: providerWebsite,
       },

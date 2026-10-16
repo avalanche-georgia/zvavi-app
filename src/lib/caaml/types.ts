@@ -77,7 +77,6 @@ export type CaamlBulletin = {
   source: {
     provider: {
       contactPerson: { name: string }
-      customData: { avalancheGeorgia: { contactEmail: string } }
       name: string
       website: string
     }
