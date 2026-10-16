@@ -8,10 +8,11 @@ import { createAnonymousClient } from '@/lib/supabase/anonymous'
 
 // Explicit column lists only: never `*`, never `forecaster` or created-by data
 const regionColumns = 'id, caaml_region_id, name_en, elevation_low_m, elevation_high_m'
+// The problems are embedded so the forecast and its problems come from one
+// statement: a forecast unpublished between two queries can't yield a bulletin
+// without problems
 const forecastColumns =
-  'id, region_id, created_at, published_at, valid_until, hazard_levels, summary, snowpack, weather, additional_hazards'
-const problemColumns =
-  'order, type, avalanche_size, sensitivity, distribution, confidence, trend, aspects, description, time_of_day, is_all_day'
+  'id, region_id, created_at, published_at, valid_until, hazard_levels, summary, snowpack, weather, additional_hazards, avalanche_problems(order, type, avalanche_size, sensitivity, distribution, confidence, trend, aspects, description, time_of_day, is_all_day)'
 
 type Supabase = ReturnType<typeof createAnonymousClient>
 type RegionRow = BulletinRows['region']
@@ -28,24 +29,19 @@ const fetchRegionCandidate = async (supabase: Supabase, region: RegionRow) => {
     .eq('status', 'published')
     .order('created_at', { ascending: false })
     .order('id', { ascending: false })
+    .order('order', { referencedTable: 'avalanche_problems' })
+    .order('id', { referencedTable: 'avalanche_problems' })
     .limit(1)
 
   handleSupabaseError(forecastError)
 
-  const forecast = forecasts?.[0]
+  const row = forecasts?.[0]
 
-  if (!forecast) return null
+  if (!row) return null
 
-  const { data: problems, error: problemsError } = await supabase
-    .from('avalanche_problems')
-    .select(problemColumns)
-    .eq('forecast_id', forecast.id)
-    .order('order')
-    .order('id')
+  const { avalanche_problems: problems, ...forecast } = row
 
-  handleSupabaseError(problemsError)
-
-  return toBulletinCandidate({ forecast, problems: problems ?? [], region })
+  return toBulletinCandidate({ forecast, problems, region })
 }
 
 // Active regions with complete API metadata, each with its current published
@@ -63,8 +59,12 @@ const fetchPublicBulletinSources = async (): Promise<BulletinCandidate[]> => {
 
   handleSupabaseError(error)
 
+  // Gudauri always has metadata, so no rows means the read itself went wrong
+  // (e.g. an RLS change hides them): fail rather than serve an empty feed
+  if (!regions?.length) throw new Error('no active region with API metadata is readable')
+
   const candidates = await Promise.all(
-    (regions ?? []).map((region) => fetchRegionCandidate(supabase, region)),
+    regions.map((region) => fetchRegionCandidate(supabase, region)),
   )
 
   return candidates.filter((candidate) => candidate !== null)

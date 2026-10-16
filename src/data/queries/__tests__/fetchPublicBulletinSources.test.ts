@@ -36,8 +36,7 @@ describe('fetchPublicBulletinSources', () => {
   beforeEach(() => {
     calls.length = 0
     results = {
-      avalanche_problems: { data: [], error: null },
-      forecasts: { data: [{ hazard_levels: {}, id: 7 }], error: null },
+      forecasts: { data: [{ avalanche_problems: [], hazard_levels: {}, id: 7 }], error: null },
       regions: { data: [{ id: 'gudauri' }], error: null },
     }
   })
@@ -49,7 +48,7 @@ describe('fetchPublicBulletinSources', () => {
       .filter((call) => call.method === 'select')
       .map((call) => String(call.args[0]))
 
-    expect(selected).toHaveLength(3)
+    expect(selected).toHaveLength(2)
     selected.forEach((columns) => {
       expect(columns).not.toMatch(/\*|forecaster|created_by|email/)
     })
@@ -59,7 +58,32 @@ describe('fetchPublicBulletinSources', () => {
     expect(callsOf('forecasts', 'limit')).toEqual([[1]])
     expect(callsOf('regions', 'eq')).toContainEqual(['is_active', true])
     expect(callsOf('regions', 'not')).toContainEqual(['caaml_region_id', 'is', null])
-    expect(callsOf('avalanche_problems', 'eq')).toContainEqual(['forecast_id', 7])
+    // Problems are embedded: one statement, one consistent snapshot
+    expect(selected[1]).toMatch(/avalanche_problems\(order, type/)
+    expect(callsOf('forecasts', 'order')).toContainEqual([
+      'order',
+      { referencedTable: 'avalanche_problems' },
+    ])
+    expect(calls.some((call) => call.table === 'avalanche_problems')).toBe(false)
+  })
+
+  it('hands the embedded problems to the candidate, not as a forecast column', async () => {
+    results.forecasts = {
+      data: [{ avalanche_problems: [{ order: 0, type: 'windSlab' }], hazard_levels: {}, id: 7 }],
+      error: null,
+    }
+
+    const [candidate] = await fetchPublicBulletinSources()
+
+    expect(candidate.forecast).toMatchObject({
+      avalancheProblems: [{ order: 0, type: 'windSlab' }],
+    })
+  })
+
+  it('fails instead of serving an empty feed when no region is readable', async () => {
+    results.regions = { data: [], error: null }
+
+    await expect(fetchPublicBulletinSources()).rejects.toThrow('no active region')
   })
 
   it('leaves out regions without a published forecast', async () => {

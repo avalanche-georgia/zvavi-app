@@ -17,7 +17,11 @@ const fetchPublicRegionZones = async (): Promise<RegionZoneSource[]> => {
 
   handleSupabaseError(error)
 
-  return (data ?? []).flatMap(
+  // Gudauri always has metadata, so no rows means the read itself went wrong
+  // (e.g. an RLS change hides them): fail rather than serve an empty collection
+  if (!data?.length) throw new Error('no active region with API metadata is readable')
+
+  return data.flatMap(
     ({ caaml_region_id: caamlRegionId, forecast_zone: forecastZone, id, name_en: nameEn }) =>
       caamlRegionId && nameEn ? [{ caamlRegionId, forecastZone, id, nameEn }] : [],
   )
