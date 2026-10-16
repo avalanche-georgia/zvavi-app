@@ -55,7 +55,9 @@ const ForecasterRow = ({ name, profile }: ForecasterRowProps) => {
           <div className={personClasses}>{person}</div>
         )}
       </dd>
-      <TeamMemberSheet isOpen={isSheetOpen} member={profile} onOpenChange={setIsSheetOpen} />
+      {profile && (
+        <TeamMemberSheet isOpen={isSheetOpen} member={profile} onOpenChange={setIsSheetOpen} />
+      )}
     </div>
   )
 }

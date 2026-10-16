@@ -10,7 +10,7 @@ ALTER TABLE public.forecasts
   ADD COLUMN IF NOT EXISTS forecaster_id uuid
     REFERENCES public.user_profiles (id) ON DELETE SET NULL;
 
--- Filtering forecasts by forecaster and per-person counts
+-- Backs the foreign key (ON DELETE SET NULL looks rows up by forecaster_id)
 CREATE INDEX IF NOT EXISTS forecasts_forecaster_id_idx ON public.forecasts (forecaster_id);
 
 -- Existing forecasts: link a name that matches exactly one staff member

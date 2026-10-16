@@ -1,6 +1,6 @@
 import { useCurrentUserProfileQuery, useTeamProfilesQuery } from '@data/hooks/userProfiles'
 import type { SelectOption } from '@ds/primitives'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 
 export const otherForecasterValue = 'other'
 
@@ -18,6 +18,7 @@ const useForecasterOptions = ({
   savedForecasterId,
 }: UseForecasterOptionsParams) => {
   const t = useTranslations()
+  const locale = useLocale()
   const key = 'admin.forecast.editor.general'
   const { data: profiles = [], isLoading } = useTeamProfilesQuery()
   const { data: currentProfile } = useCurrentUserProfileQuery()
@@ -27,7 +28,7 @@ const useForecasterOptions = ({
   const choiceOptions = profiles
     .filter(({ fullName, role }) => fullName && (isAdmin || role === 'forecaster'))
     .map((profile) => ({ label: profile.fullName, value: profile.id }))
-    .sort((first, second) => first.label.localeCompare(second.label))
+    .sort((first, second) => first.label.localeCompare(second.label, locale))
 
   // Not in the list: still loading, failed, an admin (hidden from forecasters)
   // or no longer staff. Kept as an option by the saved name — the select never

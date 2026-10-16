@@ -74,8 +74,6 @@ const NewForecastContent = ({ regionId }: { regionId: RegionId }) => {
   return <ForecastForm initialValues={initialValues} onClose={handleClose} regionId={regionId} />
 }
 
-// The boundary: the profile query is shared with the admin layout, so it can
-// resolve before this page hydrates
 const NewForecastPage = () => (
   <AdminPageBoundary>
     <RequireRegionId fallbackRoute={routes.admin.forecasts.root}>
