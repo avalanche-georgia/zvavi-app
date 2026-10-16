@@ -15,6 +15,7 @@ const SummaryCard = ({ sectionId }: { sectionId: string }) => {
     >
       <FormTextarea
         className="[&_textarea]:min-h-30"
+        hint={t('admin.forecast.form.general.formattingHint')}
         isLabelHidden
         label={t('admin.forecast.form.general.labels.summary')}
         name="summary"

@@ -40,7 +40,10 @@ const ProblemEditorBody = ({ draft, errors, setField, takenTypes }: ProblemEdito
             value={draft.aspects}
           />
         </FieldGroup>
-        <Field label={t('admin.forecast.form.problems.labels.description')}>
+        <Field
+          hint={t('admin.forecast.form.general.formattingHint')}
+          label={t('admin.forecast.form.problems.labels.description')}
+        >
           <Textarea
             onValueChange={(description) => setField('description', description)}
             value={draft.description}
