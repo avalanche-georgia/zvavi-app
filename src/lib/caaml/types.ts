@@ -66,7 +66,7 @@ export type CaamlBulletin = {
   avalancheProblems: CaamlAvalancheProblem[]
   bulletinID: string
   customData: {
-    avalancheGeorgia: { expired: boolean; forecastId: number; overallDangerLevel?: string }
+    avalancheGeorgia: { expired: boolean; forecastId: number }
   }
   dangerRatings: CaamlDangerRating[]
   lang: 'en'
@@ -74,7 +74,14 @@ export type CaamlBulletin = {
   publicationTime: string
   regions: { name: string; regionID: string }[]
   snowpackStructure?: CaamlText
-  source: { provider: { name: string; website: string } }
+  source: {
+    provider: {
+      contactPerson: { name: string }
+      customData: { avalancheGeorgia: { contactEmail: string } }
+      name: string
+      website: string
+    }
+  }
   travelAdvisory?: CaamlText
   validTime: { endTime: string; startTime: string }
   weatherForecast?: CaamlText

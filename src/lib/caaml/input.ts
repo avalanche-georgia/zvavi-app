@@ -54,7 +54,6 @@ const forecastSchema = z.object({
   hazardLevels: z.object({
     alpine: hazardLevel,
     highAlpine: hazardLevel,
-    overall: hazardLevel.nullish(),
     subAlpine: hazardLevel,
   }),
   id: z.number().int(),

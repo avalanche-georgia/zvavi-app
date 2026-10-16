@@ -5,7 +5,7 @@ import { bandsTopDown, hazardLevelToDangerRating } from './mappings'
 import type { CaamlDangerRating } from './types'
 
 // Always all three bands, top → bottom. The schema expects a rating for every
-// elevation once one is constrained. `overall` has no EAWS equivalent.
+// elevation once one is constrained.
 const buildDangerRatings = (
   hazardLevels: BulletinForecast['hazardLevels'],
   thresholds: ElevationThresholds,

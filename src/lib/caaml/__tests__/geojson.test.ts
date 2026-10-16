@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest'
 
 import buildRegionsGeoJson from '../geojson'
 
-const region = { caamlRegionId: 'GE-MM-01', id: 'gudauri', nameEn: 'Gudauri' }
+const region = { caamlRegionId: 'GE-MM-01', id: 'gudauri', nameEn: 'Gudauri Backcountry' }
 
 const square = (offset = 0) => [
   [
@@ -44,7 +44,7 @@ describe('buildRegionsGeoJson', () => {
     const [feature] = featureCollection.features
 
     expect(featureCollection.features).toHaveLength(1)
-    expect(feature.properties).toEqual({ name: 'Gudauri', regionID: 'GE-MM-01' })
+    expect(feature.properties).toEqual({ name: 'Gudauri Backcountry', regionID: 'GE-MM-01' })
     expect(feature.geometry.coordinates).toHaveLength(2)
     expect(feature.geometry.coordinates[0][0][0]).toEqual([44.12346, 42.12346])
   })

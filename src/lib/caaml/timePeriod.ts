@@ -29,7 +29,7 @@ const localMinutesOfDay = (timestamp: string) => {
   return (valueOf('hour') % 24) * 60 + valueOf('minute')
 }
 
-// TBD (T3). Only the local time of day matters, not the date. Anything that
+// Only the local time of day matters, not the date. Anything that
 // isn't clearly a morning or afternoon window is sent as all day (conservative).
 export const toValidTimePeriod = ({ isAllDay, timeOfDay }: ProblemTiming): CaamlValidTimePeriod => {
   if (isAllDay || !timeOfDay?.start || !timeOfDay.end) return 'all_day'

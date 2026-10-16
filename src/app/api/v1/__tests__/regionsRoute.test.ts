@@ -18,7 +18,12 @@ const zone = {
   ],
   type: 'FeatureCollection',
 }
-const region = { caamlRegionId: 'GE-MM-01', forecastZone: zone, id: 'gudauri', nameEn: 'Gudauri' }
+const region = {
+  caamlRegionId: 'GE-MM-01',
+  forecastZone: zone,
+  id: 'gudauri',
+  nameEn: 'Gudauri Backcountry',
+}
 const request = (init?: RequestInit) => new Request('https://avalanche.ge/api/v1/regions', init)
 
 describe('GET /api/v1/regions', () => {
@@ -42,7 +47,7 @@ describe('GET /api/v1/regions', () => {
     expect(body.features).toEqual([
       {
         geometry: { coordinates: [[ring]], type: 'MultiPolygon' },
-        properties: { name: 'Gudauri', regionID: 'GE-MM-01' },
+        properties: { name: 'Gudauri Backcountry', regionID: 'GE-MM-01' },
         type: 'Feature',
       },
     ])

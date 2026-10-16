@@ -10,7 +10,7 @@ const region = {
   elevation_high_m: 2600,
   elevation_low_m: 2000,
   id: 'gudauri' as const,
-  name_en: 'Gudauri',
+  name_en: 'Gudauri Backcountry',
 }
 
 const forecast = {
@@ -52,14 +52,11 @@ describe('toBulletinCandidate', () => {
       elevationHighM: 2600,
       elevationLowM: 2000,
       id: 'gudauri',
-      nameEn: 'Gudauri',
+      nameEn: 'Gudauri Backcountry',
     })
-    expect(source.forecast.hazardLevels).toEqual({
-      alpine: '3',
-      highAlpine: '4',
-      overall: '4',
-      subAlpine: '2',
-    })
+    // The authored overall level never enters the API
+    expect(source.forecast.hazardLevels).toEqual({ alpine: '3', highAlpine: '4', subAlpine: '2' })
+    expect(JSON.stringify(candidate)).not.toMatch(/overall/i)
     expect(source.forecast.avalancheProblems[0]).toMatchObject({
       aspects: { alpine: ['n'], highAlpine: ['n', 'ne'], subAlpine: [] },
       avalancheSize: 3,
@@ -101,6 +98,6 @@ describe('toBulletinCandidate', () => {
       }),
     )
 
-    expect(source.forecast.hazardLevels.overall).toBeUndefined()
+    expect(source.forecast.hazardLevels).toEqual({ alpine: '1', highAlpine: '1', subAlpine: '0' })
   })
 })

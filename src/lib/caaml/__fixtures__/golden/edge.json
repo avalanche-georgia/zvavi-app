@@ -10,13 +10,21 @@
       },
       "source": {
         "provider": {
+          "contactPerson": {
+            "name": "Manu Greer"
+          },
+          "customData": {
+            "avalancheGeorgia": {
+              "contactEmail": "zvavisaqartvelo@gmail.com"
+            }
+          },
           "name": "Avalanche Georgia",
           "website": "https://avalanche.ge"
         }
       },
       "regions": [
         {
-          "name": "Gudauri",
+          "name": "Gudauri Backcountry",
           "regionID": "GE-MM-01"
         }
       ],
@@ -161,8 +169,7 @@
       "customData": {
         "avalancheGeorgia": {
           "expired": true,
-          "forecastId": 413,
-          "overallDangerLevel": "2"
+          "forecastId": 413
         }
       }
     }

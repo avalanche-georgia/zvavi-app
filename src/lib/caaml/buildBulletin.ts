@@ -1,5 +1,11 @@
 import bulletinId from './bulletinId'
-import { customDataNamespace, providerName, providerWebsite } from './config'
+import {
+  contactEmail,
+  contactPersonName,
+  customDataNamespace,
+  providerName,
+  providerWebsite,
+} from './config'
 import buildDangerRatings from './dangerRatings'
 import { assertValidThresholds } from './elevation'
 import { InvalidForecastError } from './errors'
@@ -61,7 +67,6 @@ const buildBulletin = ({ forecast, now, region }: BuildBulletinParams): CaamlBul
   const texts = {
     avalancheActivity: textBlock(forecast.summary),
     snowpackStructure: textBlock(forecast.snowpack),
-    // TBD (T6): additional hazards are sent as travel advisory
     travelAdvisory: textBlock(forecast.additionalHazards),
     weatherForecast: textBlock(forecast.weather),
   }
@@ -74,7 +79,6 @@ const buildBulletin = ({ forecast, now, region }: BuildBulletinParams): CaamlBul
       [customDataNamespace]: {
         expired: now.getTime() > new Date(validUntil).getTime(),
         forecastId: id,
-        ...(hazardLevels.overall && { overallDangerLevel: hazardLevels.overall }),
       },
     },
     dangerRatings: buildDangerRatings(hazardLevels, thresholds),
@@ -90,8 +94,15 @@ const buildBulletin = ({ forecast, now, region }: BuildBulletinParams): CaamlBul
     },
     publicationTime: toUtcSeconds(publishedAt),
     regions: [{ name: region.nameEn, regionID: region.caamlRegionId }],
-    source: { provider: { name: providerName, website: providerWebsite } },
-    // TBD (T4): validity starts at publication
+    source: {
+      provider: {
+        contactPerson: { name: contactPersonName },
+        customData: { [customDataNamespace]: { contactEmail } },
+        name: providerName,
+        website: providerWebsite,
+      },
+    },
+    // Validity starts at publication
     validTime: { endTime: toUtcSeconds(validUntil), startTime: toUtcSeconds(publishedAt) },
     ...Object.fromEntries(Object.entries(texts).filter(([, block]) => block)),
   }
