@@ -1,3 +1,4 @@
+import FormattingInfo from '@components/features/forecasts/FormattingInfo'
 import { FormTextarea } from '@ds/form'
 import { FormCard } from '@ds/patterns'
 import { useTranslations } from 'next-intl'
@@ -11,11 +12,14 @@ const SummaryCard = ({ sectionId }: { sectionId: string }) => {
       required
       requiredText={t('common.validation.required')}
       sectionId={sectionId}
-      title={t('admin.forecast.form.general.labels.summary')}
+      title={
+        <>
+          {t('admin.forecast.form.general.labels.summary')} <FormattingInfo />
+        </>
+      }
     >
       <FormTextarea
         className="[&_textarea]:min-h-30"
-        hint={t('admin.forecast.form.general.formattingHint')}
         isLabelHidden
         label={t('admin.forecast.form.general.labels.summary')}
         name="summary"

@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl'
 import ProblemEditorFields from './ProblemEditorFields'
 import type { ProblemDraft } from './problemSchema'
 import type { ProblemDraftErrors, SetProblemDraftField } from './useProblemDraft'
+import FormattingInfo from '../FormattingInfo'
 
 type ProblemEditorBodyProps = {
   draft: ProblemDraft
@@ -41,8 +42,8 @@ const ProblemEditorBody = ({ draft, errors, setField, takenTypes }: ProblemEdito
           />
         </FieldGroup>
         <Field
-          hint={t('admin.forecast.form.general.formattingHint')}
           label={t('admin.forecast.form.problems.labels.description')}
+          labelAside={<FormattingInfo />}
         >
           <Textarea
             onValueChange={(description) => setField('description', description)}

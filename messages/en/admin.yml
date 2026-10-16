@@ -542,6 +542,7 @@ admin:
       general:
         title: 'General Info'
         formattingHint: 'Formatting: **bold** · *italic*'
+        formattingInfo: 'Text formatting'
         labels:
           additionalHazards: 'Additional Hazards'
           forecaster: 'Forecaster'

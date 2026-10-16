@@ -542,6 +542,7 @@ admin:
       general:
         title: 'ზოგადი ინფორმაცია'
         formattingHint: 'ფორმატირება: **სქელი** · *დახრილი*'
+        formattingInfo: 'ტექსტის ფორმატირება'
         labels:
           additionalHazards: 'დამატებითი საფრთხეები'
           forecaster: 'პროგნოზის ავტორი'
