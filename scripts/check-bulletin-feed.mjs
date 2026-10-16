@@ -85,6 +85,14 @@ const checkEndpoint = async ({ cacheControl, contentType, path }) => {
   check(notModified.status === 304, `${path} If-None-Match → 304 (got ${notModified.status})`)
   check((await notModified.text()) === '', `${path} 304 has no body`)
 
+  // The CDN must not hand the conditional request's 304 to a plain request
+  const plainAfterConditional = await request(path)
+
+  check(
+    plainAfterConditional.status === 200 && (await plainAfterConditional.text()).length > 0,
+    `${path} plain GET after If-None-Match → 200 with a body (got ${plainAfterConditional.status})`,
+  )
+
   const head = await request(path, {}, 'HEAD')
 
   const withoutWeakPrefix = (tag) => (tag ?? '').replace(/^W\//, '')
@@ -102,10 +110,15 @@ const checkEndpoint = async ({ cacheControl, contentType, path }) => {
     `${path} OPTIONS allows GET, HEAD, OPTIONS`,
   )
 
-  // No personal data: forecaster names never leave the database, no emails
-  check(!/forecaster/i.test(body), `${path} contains no "forecaster"`)
-  check(!/[\w.+-]+@[\w-]+\.[\w.-]+/.test(body), `${path} contains no email-like string`)
-  check(!/"overall(DangerLevel)?"\s*:/i.test(body), `${path} contains no overall danger level`)
+  // No personal data or internals in the structure. Forecast texts are left
+  // out: what a forecaster writes there ("Forecasters advise…") is public content.
+  const structure = JSON.stringify(JSON.parse(body), (key, value) =>
+    key === 'comment' ? undefined : value,
+  )
+
+  check(!/"(forecaster|createdBy\w*)"\s*:/i.test(structure), `${path} has no forecaster or created-by field`)
+  check(!/[\w.+-]+@[\w-]+\.[\w.-]+/.test(structure), `${path} contains no email-like string outside texts`)
+  check(!/"overall(DangerLevel)?"\s*:/i.test(structure), `${path} contains no overall danger level`)
 
   return body
 }
