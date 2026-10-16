@@ -1,9 +1,6 @@
 import { baseUrl } from '../../app/routes'
 
-export type TextFormat = 'html' | 'plain'
-
-// Public API settings. Items marked TBD are pending answers from the lead
-// forecaster / chairman or from partners — changing them is a one-line edit here.
+// Public API settings
 export const apiVersion = 1
 
 export const providerName = 'Avalanche Georgia'
@@ -24,6 +21,3 @@ export const localTimeZone = 'Asia/Tbilisi'
 
 // Rating for a band with level '0'.
 export const noSnowRating: 'no_rating' | 'no_snow' = 'no_rating'
-
-// TBD (T7): format of the `comment` texts, pending PeakVisor.
-export const textFormat: TextFormat = 'html'

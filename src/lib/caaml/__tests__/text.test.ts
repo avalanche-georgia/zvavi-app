@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import markdownToCaamlText from '../text'
 
-describe('markdownToCaamlText (html)', () => {
+describe('markdownToCaamlText', () => {
   it.each([
     ['escapes &, < and >', 'a < b & c > d', 'a &lt; b &amp; c &gt; d'],
     ['turns bold into <b>', 'Danger **above 2000 m**.', 'Danger <b>above 2000 m</b>.'],
@@ -27,16 +27,10 @@ describe('markdownToCaamlText (html)', () => {
       'See map.<br/><br/>https://example.org/map',
     ],
   ])('%s', (_label, markdown, expected) => {
-    expect(markdownToCaamlText(markdown, 'html')).toBe(expected)
+    expect(markdownToCaamlText(markdown)).toBe(expected)
   })
 
   it.each(['', '   ', '\n\n'])('returns empty for blank input %j', (markdown) => {
-    expect(markdownToCaamlText(markdown, 'html')).toBe('')
-  })
-})
-
-describe('markdownToCaamlText (plain)', () => {
-  it('emits no tags and no escaping', () => {
-    expect(markdownToCaamlText('**Bold** a < b\nc\n\npara', 'plain')).toBe('Bold a < b\nc\n\npara')
+    expect(markdownToCaamlText(markdown)).toBe('')
   })
 })
