@@ -771,6 +771,7 @@ export type Database = {
           id: string
           is_public: boolean
           last_name: string
+          role: Database['public']['Enums']['user_role']
           team: Database['public']['Enums']['team_section']
           team_order: number
         }[]

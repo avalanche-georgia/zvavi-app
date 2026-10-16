@@ -1,4 +1,4 @@
-import { useTeamProfilesQuery } from '@data/hooks/userProfiles'
+import { useCurrentUserProfileQuery, useTeamProfilesQuery } from '@data/hooks/userProfiles'
 import type { SelectOption } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 
@@ -10,41 +10,40 @@ type UseForecasterOptionsParams = {
   savedForecasterId: string | null
 }
 
-// Staff A–Z (nameless profiles left out), the saved forecaster when they aren't
-// among them, then "Other person". A failed team list leaves just the latter
-// two — it never blocks saving.
+// Forecasters A–Z (admins too, for an admin; nameless profiles left out), the
+// saved forecaster when they aren't among them, then "Other person". A failed
+// list leaves just the latter two — it never blocks saving.
 const useForecasterOptions = ({
   savedForecaster,
   savedForecasterId,
 }: UseForecasterOptionsParams) => {
   const t = useTranslations()
   const key = 'admin.forecast.editor.general'
-  const { data: profiles = [], isLoading, isSuccess } = useTeamProfilesQuery()
+  const { data: profiles = [], isLoading } = useTeamProfilesQuery()
+  const { data: currentProfile } = useCurrentUserProfileQuery()
+  // Admin accounts are for development — forecasters don't need them in the list
+  const isAdmin = currentProfile?.role === 'admin'
 
-  const staffOptions = profiles
-    .filter((profile) => profile.fullName)
+  const choiceOptions = profiles
+    .filter(({ fullName, role }) => fullName && (isAdmin || role === 'forecaster'))
     .map((profile) => ({ label: profile.fullName, value: profile.id }))
     .sort((first, second) => first.label.localeCompare(second.label))
 
-  // Not in the list: still loading, failed, or they've left the team. Kept as an
-  // option by the saved name — the select never shows the raw id, and switching
-  // to "Other person" and back doesn't lose the link.
+  // Not in the list: still loading, failed, an admin (hidden from forecasters)
+  // or no longer staff. Kept as an option by the saved name — the select never
+  // shows the raw id, and switching to "Other person" and back keeps the link.
   const isSavedUnlisted =
-    savedForecasterId !== null && !staffOptions.some(({ value }) => value === savedForecasterId)
-  // Only a loaded list can tell they've left the team
-  const unlistedLabel = isSuccess
-    ? t(`${key}.formerStaff`, { name: savedForecaster })
-    : savedForecaster
+    savedForecasterId !== null && !choiceOptions.some(({ value }) => value === savedForecasterId)
 
   const options: SelectOption<string>[] = [
-    ...staffOptions,
-    ...(isSavedUnlisted ? [{ label: unlistedLabel, value: savedForecasterId }] : []),
+    ...choiceOptions,
+    ...(isSavedUnlisted ? [{ label: savedForecaster, value: savedForecasterId }] : []),
     { label: t(`${key}.otherForecaster`), value: otherForecasterValue },
   ]
 
   // The name saved with a picked profile
   const getName = (profileId: string) =>
-    staffOptions.find(({ value }) => value === profileId)?.label ?? savedForecaster
+    choiceOptions.find(({ value }) => value === profileId)?.label ?? savedForecaster
 
   return { getName, isLoading, options }
 }
