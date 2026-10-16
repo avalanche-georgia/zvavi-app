@@ -43,7 +43,7 @@ alter table public.regions
 
 update public.regions
 set caaml_region_id = 'GE-MM-01',
-    name_en = 'Gudauri',
+    name_en = 'Gudauri Backcountry',
     elevation_low_m = 2000,
     elevation_high_m = 2600
 where id = 'gudauri' and caaml_region_id is null;
