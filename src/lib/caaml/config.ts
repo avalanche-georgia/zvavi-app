@@ -1,0 +1,23 @@
+import { baseUrl } from '../../app/routes'
+
+// Public API settings
+export const apiVersion = 1
+
+export const providerName = 'Avalanche Georgia'
+
+export const providerWebsite = baseUrl
+
+// Emitted as source.provider.contactPerson.name
+export const contactPersonName = 'Manu Greer'
+
+// Never change: bulletinID values are derived from it and partners key on them.
+export const bulletinIdNamespace = '6f0f3b7e-5d0a-4c0e-9a55-2f1d7a8c4b31'
+
+// Key of our block inside every CAAML `customData` object.
+export const customDataNamespace = 'avalancheGeorgia'
+
+// Problem time windows are evaluated in local time (Georgia has no DST).
+export const localTimeZone = 'Asia/Tbilisi'
+
+// Rating for a band with level '0'.
+export const noSnowRating: 'no_rating' | 'no_snow' = 'no_rating'
