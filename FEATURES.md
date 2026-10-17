@@ -39,7 +39,7 @@ Full history of past forecasts, browsable by date, so users can track how condit
 
 ## Weather Stations
 
-Links to real-time data from mountain weather stations in the forecast area.
+Mountain weather stations — ours and our partners' — listed next to a map of Georgia showing where each one is. Tapping a station on the map or in the list shows its name, altitude and a link to its real-time data. On phones a switch flips between the list and the map.
 
 ## Member Verification
 
@@ -93,7 +93,7 @@ Administrators can manage the team roster: add members — including people who 
 Forecasters and administrators can view and edit their own profile — including display name, a short role on the team (shown as their badge on the public Team page), a short bio, a profile photo and up to five links to their social profiles or website. The photo and name are shown in the admin panel header. When creating a forecast, the forecaster field is automatically prefilled with the logged-in user's name.
 
 ### Weather Station Management
-Administrators can manage the list of mountain weather stations: add, edit, delete, and reorder them via drag-and-drop. Each station has a name in English and Georgian, an altitude, and a link to its live data feed.
+Administrators can manage the list of mountain weather stations: add, edit, delete, and reorder them via drag-and-drop. Each station has a name in English and Georgian, an altitude, a location picked on a map (or typed as coordinates), and a link to its live data feed. Stations still missing a location are marked in the list.
 
 ### Partner Benefits Management
 Administrators can manage a list of partner organizations and the exclusive discounts or perks they offer to Avalanche Georgia members. Each partner has a name, optional benefit description, logo, and website — all stored in both English and Georgian. The list can be searched by name, filtered by active / inactive and sorted by name or tier; each row has an Active switch that shows or hides the partner on the public site at once; a partner is added or edited in a side panel next to the list. Active partners are displayed to the public in a "Member Benefits" panel accessible from the Join Us page and the member verification card.
