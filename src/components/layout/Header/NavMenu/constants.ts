@@ -26,16 +26,16 @@ export const getNavMenuItems = (regionId: string | null): NavMenuItem[] => {
           titleId: 'navigation.currentForecast',
         },
         {
-          icon: 'mapPinned',
-          id: 'forecastArea',
-          path: forecastRoutes.forecastArea,
-          titleId: 'navigation.forecastArea',
-        },
-        {
           icon: 'cloudSnow',
           id: 'history',
           path: forecastRoutes.history,
           titleId: 'navigation.archive',
+        },
+        {
+          icon: 'mapPinned',
+          id: 'forecastArea',
+          path: forecastRoutes.forecastArea,
+          titleId: 'navigation.forecastArea',
         },
         {
           icon: 'telescope',

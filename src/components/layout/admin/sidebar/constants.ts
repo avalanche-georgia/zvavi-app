@@ -3,6 +3,7 @@ import { routes } from 'src/app/routes'
 import type { NavItem } from './types'
 
 export const navItems: NavItem[] = [
+  { href: routes.admin.root, icon: 'layoutDashboard', label: 'dashboard' },
   { href: routes.admin.forecasts.root, icon: 'cloudSnow', label: 'forecasts' },
   { href: routes.admin.recentAvalanches.root, icon: 'mountainSnow', label: 'recentAvalanches' },
   { href: routes.admin.observations.root, icon: 'telescope', label: 'observations' },

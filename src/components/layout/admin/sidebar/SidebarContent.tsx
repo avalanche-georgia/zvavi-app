@@ -24,6 +24,10 @@ const SidebarContent = ({ onItemClick }: { onItemClick?: VoidFunction }) => {
     observations: pendingObservationsCount,
   }
 
+  // The dashboard is the admin root — every admin path starts with it
+  const isItemActive = (href: string) =>
+    href === routes.admin.root ? pathname === href : pathname.startsWith(href)
+
   return (
     <div className="flex h-full flex-col">
       <div className="border-rule flex h-14 shrink-0 items-center border-b px-4">
@@ -36,18 +40,14 @@ const SidebarContent = ({ onItemClick }: { onItemClick?: VoidFunction }) => {
           <NavLink
             key={item.href}
             badge={badges[item.label]}
-            isActive={pathname.startsWith(item.href)}
+            isActive={isItemActive(item.href)}
             item={item}
             onClick={onItemClick}
           />
         ))}
       </nav>
       <div className="border-rule flex flex-col gap-1 border-t p-3">
-        <NavLink
-          isActive={pathname.startsWith(teamItem.href)}
-          item={teamItem}
-          onClick={onItemClick}
-        />
+        <NavLink isActive={isItemActive(teamItem.href)} item={teamItem} onClick={onItemClick} />
         <NavLink item={homeItem} onClick={onItemClick} />
       </div>
     </div>

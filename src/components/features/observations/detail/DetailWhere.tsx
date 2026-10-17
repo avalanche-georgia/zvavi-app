@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl'
 
 import AspectsOverview from '../AspectsOverview'
 import DetailSection from '../DetailSection'
+import ElevationZonesInfo from '../ElevationZonesInfo'
 import hasCoordinates from '../hasCoordinates'
 
 type DetailWhereProps = {
@@ -15,7 +16,13 @@ const DetailWhere = ({ observation, onShowOnMap }: DetailWhereProps) => {
   const t = useTranslations()
 
   return (
-    <DetailSection title={t('observations.detail.where')}>
+    <DetailSection
+      title={
+        <>
+          {t('observations.detail.where')} <ElevationZonesInfo />
+        </>
+      }
+    >
       <AspectsOverview aspects={observation.aspects} />
 
       {/* Legacy observations may have no coordinates — new ones always do */}
