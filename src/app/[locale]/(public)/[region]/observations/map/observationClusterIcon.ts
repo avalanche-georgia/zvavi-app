@@ -10,7 +10,8 @@ const getDiameter = (count: number) => {
   return 44
 }
 
-// A group of nearby observations: its count on a dark circle with a soft halo.
+// A group of nearby observations: its count on a dark circle with a soft halo —
+// brand blue while it holds the hovered card's observation (useClusterHighlight).
 // Zooming in splits it up.
 const observationClusterIcon = (cluster: MarkerCluster) => {
   const count = cluster.getChildCount()
@@ -18,7 +19,7 @@ const observationClusterIcon = (cluster: MarkerCluster) => {
 
   return divIcon({
     className: markerClassName,
-    html: `<span class="grid size-full place-items-center rounded-full bg-[#2c2e33] text-[13px] font-semibold text-white shadow-[0_0_0_2px_#fff,0_0_0_6px_rgb(44_46_51/.25),0_1px_4px_rgb(0_0_0/.3)]">${count}</span>`,
+    html: `<span class="grid size-full place-items-center rounded-full bg-[#2c2e33] in-[.is-highlighted]:bg-brand-blue text-[13px] font-semibold text-white shadow-[0_0_0_2px_#fff,0_0_0_6px_rgb(44_46_51/.25),0_1px_4px_rgb(0_0_0/.3)]">${count}</span>`,
     iconAnchor: [diameter / 2, diameter / 2],
     iconSize: [diameter, diameter],
   })

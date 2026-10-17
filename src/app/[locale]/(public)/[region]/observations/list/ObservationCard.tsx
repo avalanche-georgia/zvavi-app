@@ -13,6 +13,9 @@ type ObservationCardProps = {
   dateBasis: ObservationDateBasis
   isSelected?: boolean
   observation: PublicObservation
+  // Lights up its pin (or the cluster holding it) on the map. A mobile tap fires
+  // mouseenter too, so the page clears the hover when the list unmounts.
+  onHover?: (id: number | null) => void
   onOpen: (id: number) => void
 }
 
@@ -21,6 +24,7 @@ const ObservationCard = ({
   dateBasis,
   isSelected = false,
   observation,
+  onHover,
   onOpen,
 }: ObservationCardProps) => {
   const t = useTranslations()
@@ -41,6 +45,8 @@ const ObservationCard = ({
         className,
       )}
       onClick={() => onOpen(id)}
+      onMouseEnter={onHover && (() => onHover(id))}
+      onMouseLeave={onHover && (() => onHover(null))}
       type="button"
     >
       <SizeTile size={size} />
