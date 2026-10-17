@@ -1,3 +1,4 @@
+import { TeamMemberPhoto } from '@components/features/team'
 import { Badge } from '@ds/primitives'
 import { Users } from 'lucide-react'
 import { useTranslations } from 'next-intl'
@@ -5,14 +6,15 @@ import { useTranslations } from 'next-intl'
 import DetailSection from '../DetailSection'
 
 type DetailReporterProps = {
+  avatarUrl: string | null
   isTeam: boolean
   // Already shortened by the API; '' when unknown
   name: string
 }
 
 // Name only — contact and training are never public. A team record shows the
-// staff member who logged it (when known) with a Team badge.
-const DetailReporter = ({ isTeam, name }: DetailReporterProps) => {
+// staff member who logged it (when known) with their photo and a Team badge.
+const DetailReporter = ({ avatarUrl, isTeam, name }: DetailReporterProps) => {
   const t = useTranslations()
 
   if (!name && !isTeam) return null
@@ -20,13 +22,18 @@ const DetailReporter = ({ isTeam, name }: DetailReporterProps) => {
   return (
     <DetailSection title={t('observations.detail.reportedBy')}>
       <div className="flex items-center gap-3">
-        <div className="bg-primary-soft text-primary-ink grid size-10 place-items-center rounded-full font-bold">
-          {name ? (
-            Array.from(name)[0].toLocaleUpperCase()
-          ) : (
+        {name ? (
+          <TeamMemberPhoto
+            avatarUrl={avatarUrl}
+            className="size-10 rounded-full"
+            initialsClassName="text-sm"
+            name={name}
+          />
+        ) : (
+          <span className="bg-primary-soft text-primary-ink grid size-10 place-items-center rounded-full">
             <Users aria-hidden className="size-5" />
-          )}
-        </div>
+          </span>
+        )}
         {name && <b className="text-[15px]">{name}</b>}
         {isTeam && <Badge>{t('common.avalancheSources.team')}</Badge>}
       </div>
