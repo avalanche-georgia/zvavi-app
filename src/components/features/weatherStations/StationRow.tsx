@@ -51,7 +51,7 @@ const StationRow = ({ isSelected, locale, onHover, onSelect, station }: StationR
     >
       {hasLocation ? (
         <button
-          aria-label={t('weatherStations.showOnMap', { name })}
+          aria-label={t('weatherStations.selectStation', { name })}
           aria-pressed={isSelected}
           className="focus-ring flex min-w-0 flex-1 items-center gap-2.5 self-stretch rounded-[inherit] py-2 pl-3 text-left"
           onClick={() => onSelect(id)}

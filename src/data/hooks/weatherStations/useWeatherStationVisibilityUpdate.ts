@@ -26,7 +26,8 @@ const useWeatherStationVisibilityUpdate = () => {
     meta: { scope: 'useWeatherStationVisibilityUpdate' },
     mutationFn: updateVisibility,
     onError: (_error, _payload, context) => {
-      queryClient.setQueryData(listKey, context?.previous)
+      // Nothing cached before the toggle: leave it to the refetch below
+      if (context?.previous) queryClient.setQueryData(listKey, context.previous)
     },
     onMutate: async ({ id, isPublic }) => {
       await queryClient.cancelQueries({ queryKey: listKey })

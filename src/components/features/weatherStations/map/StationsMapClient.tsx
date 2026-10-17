@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useRef } from 'react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
 import { BaseMapLayers, baseMapMaxZoom, countryBounds, FitInCountry } from '@components/shared/map'
 import type { WeatherStation } from '@domain/types'
 import { latLngBounds, type MarkerClusterGroup as LeafletClusterGroup } from 'leaflet'
@@ -41,6 +41,26 @@ const StationsMapClient = ({
     [stations],
   )
   const clusterRef = useRef<LeafletClusterGroup>(null)
+  const isUnmountingRef = useRef(false)
+
+  // Leaving the map (List view, narrow window) closes the open popup, and its
+  // popupclose would clear the selection the list should keep
+  useEffect(() => {
+    isUnmountingRef.current = false
+
+    return () => {
+      isUnmountingRef.current = true
+    }
+  }, [])
+
+  const handleSelect = useCallback(
+    (id: string | null) => {
+      if (id === null && isUnmountingRef.current) return
+
+      onSelect(id)
+    },
+    [onSelect],
+  )
   // Memoised: a new bounds object would refit the map on every selection
   const bounds = useMemo(
     () =>
@@ -78,7 +98,7 @@ const StationsMapClient = ({
             latitude={latitude}
             locale={locale}
             longitude={longitude}
-            onSelect={onSelect}
+            onSelect={handleSelect}
             station={station}
           />
         ))}

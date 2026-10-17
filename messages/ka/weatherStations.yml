@@ -1,7 +1,7 @@
 weatherStations:
   description: 'რეალურ დროში მონაცემები ჩვენი და ჩვენი პარტნიორების ამინდის სადგურებიდან'
   noLocation: 'ჯერ არ არის რუკაზე'
-  showOnMap: '{name} — რუკაზე ჩვენება'
+  selectStation: '{name} — არჩევა'
   view:
     label: 'ხედი'
     list: 'სია'
