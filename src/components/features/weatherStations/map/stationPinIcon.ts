@@ -1,4 +1,4 @@
-import { markerClassName } from '@components/features/observations/map/observationPinIcon'
+import { markerClassName } from '@components/shared/map/markerClassName'
 import { type DivIcon, divIcon } from 'leaflet'
 
 // lucide's ThermometerSnowflake (the Weather Stations nav icon) as plain SVG —
