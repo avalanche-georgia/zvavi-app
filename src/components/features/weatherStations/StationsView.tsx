@@ -23,18 +23,19 @@ const StationsView = ({ locale, stations }: StationsViewProps) => {
   // Matches the server render (no media queries there) on the first pass
   const isDesktop = useMediaQuery(desktopMediaQuery, { initializeWithValue: false })
   // Mobile map view fills the screen under the header
-  const headerRef = useRef<HTMLDivElement>(null)
-  const { height: headerHeight = 0 } = useResizeObserver({
-    box: 'border-box',
-    ref: headerRef as React.RefObject<HTMLDivElement>,
-  })
+  const headerRef = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>
+  const { height: headerHeight = 0 } = useResizeObserver({ box: 'border-box', ref: headerRef })
 
   const isMapView = view === 'map' && !isDesktop
 
-  // On mobile the list hides the map, so a row switches to the map first
+  // On mobile the list hides the map, so a row switches to the map first. A tap
+  // also fires mouseenter, and the unmounted row never fires mouseleave — drop it.
   const handleRowSelect = (id: string) => {
     setSelectedId(id)
-    if (!isDesktop) setView('map')
+    if (isDesktop) return
+
+    setHoveredId(null)
+    setView('map')
   }
 
   return (

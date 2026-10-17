@@ -750,6 +750,7 @@ admin:
         tapHint: 'Tap where the station is'
         dragHint: 'Drag the pin to adjust'
         outsideGeorgia: "You're outside Georgia. Tap the map where the station is."
+        mustBeInGeorgia: 'The location must be in Georgia.'
       labels:
         altitude: 'Altitude'
         nameEn: 'Name (EN)'

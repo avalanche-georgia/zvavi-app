@@ -15,7 +15,16 @@ const useStationCoordinates = () => {
   const [panTarget, setPanTarget] = useState<[number, number] | null>(null)
 
   const requiredMessage = t('admin.weatherStations.form.location.required')
-  const latitudeError = useFormFieldError<WeatherStationFormValues>('latitude', requiredMessage)
+  const latitudeMessage = form.formState.errors.latitude?.message
+  const latitudeFieldError = useFormFieldError<WeatherStationFormValues>(
+    'latitude',
+    requiredMessage,
+  )
+  // Set by the schema's whole-object check, not a field rule
+  const latitudeError =
+    latitudeMessage === 'outsideGeorgia'
+      ? t('admin.weatherStations.form.location.mustBeInGeorgia')
+      : latitudeFieldError
   const longitudeError = useFormFieldError<WeatherStationFormValues>('longitude', requiredMessage)
 
   // Re-validates only after a submit attempt, so the error clears as soon as a
