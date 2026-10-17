@@ -9,6 +9,8 @@ const fetchWeatherStations = cache(async (): Promise<WeatherStation[]> => {
   const { data, error } = await supabase
     .from('weather_stations')
     .select()
+    // Public pages only — staff would otherwise also get hidden stations here
+    .eq('is_public', true)
     .order('sort_order', { ascending: true })
 
   handleSupabaseError(error)

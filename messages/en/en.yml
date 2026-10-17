@@ -20,9 +20,6 @@ auth:
     messages:
       resetSuccessfully: 'Password reset successfully. You can now log in with your new password.'
 
-weatherStations:
-  description: 'Real-time data from our network of weather stations'
-
 verify:
   card:
     expiresAt: 'Expires'

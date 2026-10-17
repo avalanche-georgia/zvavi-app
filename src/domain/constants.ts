@@ -227,3 +227,7 @@ export const regionLocalStorageKey = 'zvavi.region'
 
 // Partner tiers in display order: main partners, partners, supporters
 export const partnerTiers: PartnerTier[] = [1, 2, 3]
+
+// Georgia with a margin — maps stop zooming out here, and station coordinates
+// must fall inside. Plain numbers so forms can use it without Leaflet.
+export const georgiaBounds = { east: 46.9, north: 43.7, south: 40.9, west: 39.8 }

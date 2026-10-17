@@ -2,9 +2,12 @@
 
 import { RecordMenu } from '@components/features/admin/shared'
 import { useToast } from '@components/hooks'
-import { useWeatherStationDelete } from '@data/hooks/weatherStations'
+import {
+  useWeatherStationDelete,
+  useWeatherStationVisibilityUpdate,
+} from '@data/hooks/weatherStations'
 import type { WeatherStation } from '@domain/types'
-import { IconButton, MenuItem } from '@ds/primitives'
+import { Badge, IconButton, MenuItem, Switch } from '@ds/primitives'
 import { ExternalLink, GripVertical, Pencil } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
@@ -18,7 +21,8 @@ const StationRow = ({ dragHandleRef, onEdit, station }: StationRowProps) => {
   const t = useTranslations()
   const { toastError, toastSuccess } = useToast()
   const { mutateAsync: deleteStation } = useWeatherStationDelete()
-  const { altitude, id, nameEn, nameKa, url } = station
+  const { mutate: updateVisibility } = useWeatherStationVisibilityUpdate()
+  const { altitude, id, isPublic, latitude, nameEn, nameKa, url } = station
 
   const handleDelete = async () => {
     try {
@@ -27,6 +31,13 @@ const StationRow = ({ dragHandleRef, onEdit, station }: StationRowProps) => {
     } catch (error) {
       toastError('StationRow | handleDelete', { error })
     }
+  }
+
+  const handleVisibilityChange = (checked: boolean) => {
+    updateVisibility(
+      { id, isPublic: checked },
+      { onError: (error) => toastError('StationRow | visibility', { error }) },
+    )
   }
 
   return (
@@ -51,9 +62,25 @@ const StationRow = ({ dragHandleRef, onEdit, station }: StationRowProps) => {
         {nameKa && <p className="text-caption text-muted max-w-full truncate">{nameKa}</p>}
       </div>
 
+      {latitude == null && (
+        <Badge className="shrink-0">{t('admin.weatherStations.noLocation')}</Badge>
+      )}
+
       <span className="text-copy text-body shrink-0 px-2 tabular-nums">
         {t('common.units.meters', { value: altitude })}
       </span>
+
+      <Switch
+        checked={isPublic}
+        className="shrink-0"
+        label={
+          <>
+            {t('admin.weatherStations.public')}
+            <span className="sr-only">{` — ${nameEn}`}</span>
+          </>
+        }
+        onCheckedChange={handleVisibilityChange}
+      />
 
       <RecordMenu
         deleteMessage={t('admin.weatherStations.deleteConfirm', { name: nameEn })}

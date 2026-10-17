@@ -1,7 +1,5 @@
 import { PageContent } from '@components/features/weatherStations'
-import { PageWrapper } from '@components/layout'
 import type { Metadata } from 'next'
-import { useTranslations } from 'next-intl'
 import { getTranslations } from 'next-intl/server'
 
 export const generateMetadata = async (): Promise<Metadata> => {
@@ -13,14 +11,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
   }
 }
 
-const Page = () => {
-  const t = useTranslations()
-
-  return (
-    <PageWrapper title={t('navigation.weatherStations')}>
-      <PageContent />
-    </PageWrapper>
-  )
-}
+// Full-height split layout (list | map) — the page renders its own heading
+const Page = () => <PageContent />
 
 export default Page
