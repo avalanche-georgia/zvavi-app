@@ -9,7 +9,7 @@ import { Constants } from '@/lib/supabase/types'
 
 const { avalanche_trigger, avalanche_type } = Constants.public.Enums
 
-const { descriptionMaxLength, latitude, longitude, quantity, slabDepth, width } =
+const { descriptionMaxLength, latitude, locationMaxLength, longitude, quantity, slabDepth, width } =
   avalancheFieldLimits
 
 const aspectSchema = z.enum(sortedAspects)
@@ -84,6 +84,8 @@ export const observationFieldsSchema = z.object({
   description: z.string().max(descriptionMaxLength, { message: 'tooLong' }).nullable(),
   isDateUnknown: z.boolean(),
   latitude: coordinateSchema(latitude),
+  // Optional place name, next to the pin
+  location: z.string().max(locationMaxLength, { message: 'tooLong' }).nullable(),
   longitude: coordinateSchema(longitude),
   photos: photosSchema,
   quantity: rangeSchema(quantity).int(),

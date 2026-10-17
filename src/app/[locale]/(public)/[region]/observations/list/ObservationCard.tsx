@@ -1,8 +1,9 @@
-import { MiniCompass, SizeTile, useCardDateLabel } from '@components/features/observations'
-import { getAllAspects, getZonesWithAspects } from '@domain/aspects'
+import { SizeTile } from '@components/features/observations'
+import { getZonesWithAspects } from '@domain/aspects'
 import type { ObservationDateBasis, PublicObservation } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
+import CardMeta from './CardMeta'
 import CardThumbnail from './CardThumbnail'
 
 import { cn } from '@/lib/utils'
@@ -23,12 +24,10 @@ const ObservationCard = ({
   onOpen,
 }: ObservationCardProps) => {
   const t = useTranslations()
-  const getDateLabel = useCardDateLabel()
-
-  const { aspects, description, id, photos, quantity, size, submitterName, trigger, type } =
-    observation
-  const zones = getZonesWithAspects(aspects)
-  const zoneLabels = zones.map((zone) => t(`common.elevationZones.${zone}`)).join(', ')
+  const { aspects, description, id, photos, quantity, size, trigger, type } = observation
+  const zoneLabels = getZonesWithAspects(aspects)
+    .map((zone) => t(`common.elevationZones.${zone}`))
+    .join(', ')
 
   return (
     <button
@@ -64,11 +63,7 @@ const ObservationCard = ({
             {description}
           </p>
         )}
-        <div className="text-muted mt-2 flex flex-wrap items-center gap-2.5 text-[12.5px]">
-          {zones.length > 0 && <MiniCompass aspects={getAllAspects(aspects)} />}
-          {submitterName && <span>{submitterName}</span>}
-          <span>{getDateLabel(observation, dateBasis)}</span>
-        </div>
+        <CardMeta dateBasis={dateBasis} observation={observation} />
       </div>
 
       {photos.length > 0 ? <CardThumbnail photos={photos} /> : <div />}

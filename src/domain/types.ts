@@ -194,11 +194,13 @@ export type PublicObservation = Pick<
   | 'description'
   | 'isDateUnknown'
   | 'latitude'
+  | 'location'
   | 'longitude'
   | 'quantity'
   | 'regionId'
   | 'size'
   | 'slabDepth'
+  | 'source'
   | 'trigger'
   | 'type'
   | 'width'
@@ -206,6 +208,7 @@ export type PublicObservation = Pick<
   createdAt: string
   id: number
   photos: PhotoUrls[]
+  // Shortened; on a team record, the staff member who logged it ('' when unknown)
   submitterName: string
 }
 
