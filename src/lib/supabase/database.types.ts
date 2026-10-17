@@ -727,6 +727,7 @@ export type Database = {
           altitude: number
           created_at: string | null
           id: string
+          is_public: boolean
           latitude: number | null
           longitude: number | null
           name_en: string
@@ -739,6 +740,7 @@ export type Database = {
           altitude: number
           created_at?: string | null
           id?: string
+          is_public?: boolean
           latitude?: number | null
           longitude?: number | null
           name_en: string
@@ -751,6 +753,7 @@ export type Database = {
           altitude?: number
           created_at?: string | null
           id?: string
+          is_public?: boolean
           latitude?: number | null
           longitude?: number | null
           name_en?: string

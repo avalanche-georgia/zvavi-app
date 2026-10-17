@@ -735,6 +735,7 @@ admin:
     moreForStation: 'More actions for {name}'
     openStation: 'Open station page'
     deleteConfirm: 'Delete {name} permanently? It disappears from the public weather stations page.'
+    public: 'Public'
     noLocation: 'No location'
     empty:
       title: 'No weather stations yet'
