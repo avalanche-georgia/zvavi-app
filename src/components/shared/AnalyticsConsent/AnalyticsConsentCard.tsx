@@ -20,10 +20,11 @@ const AnalyticsConsentCard = () => {
   const handleDismiss = () => setConsent(false)
 
   return (
-    // Above everything, including sticky action bars, floating buttons and map controls (z-1000)
+    // Above the header, sticky bars, floating buttons and sheets/dialogs (z-50); below tooltips and
+    // menus (z-60), so the close button's tooltip stays visible
     <aside
       aria-label={t('common.analyticsConsent.title')}
-      className="pointer-events-none fixed inset-x-0 bottom-0 z-1100 flex justify-center p-4"
+      className="pointer-events-none fixed inset-x-0 bottom-0 z-55 flex justify-center p-4"
     >
       <div className="rounded-card bg-surface shadow-panel border-accent pointer-events-auto flex w-full max-w-(--breakpoint-sm) flex-col gap-4 border-t-4 p-5">
         <header className="flex items-center gap-3">
