@@ -1,10 +1,11 @@
 import { useMemo, useRef } from 'react'
 import observationPinIcon from '@components/features/observations/map/observationPinIcon'
-import useClusterHighlight from '@components/shared/map/useClusterHighlight'
+import panToOffset from '@components/features/observations/map/panToOffset'
+import useClusterMarker from '@components/shared/map/useClusterMarker'
 import type { ObservationPoint } from '@domain/types'
 import type { Marker as LeafletMarker, MarkerClusterGroup } from 'leaflet'
 import { useTranslations } from 'next-intl'
-import { Marker, Tooltip } from 'react-leaflet'
+import { Marker, Tooltip, useMap } from 'react-leaflet'
 
 type ObservationMarkerProps = {
   // The cluster group the marker lives in
@@ -14,6 +15,7 @@ type ObservationMarkerProps = {
   isSelected: boolean
   point: ObservationPoint
   onClick: (id: number) => void
+  revealOffsetX: number | null
 }
 
 const ObservationMarker = ({
@@ -22,8 +24,10 @@ const ObservationMarker = ({
   isSelected,
   onClick,
   point,
+  revealOffsetX,
 }: ObservationMarkerProps) => {
   const t = useTranslations()
+  const map = useMap()
   const markerRef = useRef<LeafletMarker>(null)
   const isLit = isSelected || isHighlighted
 
@@ -32,7 +36,14 @@ const ObservationMarker = ({
   // of its cluster and back on every list hover
   const position = useMemo<[number, number]>(() => [latitude, longitude], [latitude, longitude])
 
-  useClusterHighlight({ clusterRef, isActive: isHighlighted, markerRef })
+  useClusterMarker({
+    clusterRef,
+    isHighlighted,
+    isSelected,
+    markerRef,
+    onRevealed: (marker) =>
+      revealOffsetX !== null && panToOffset(map, marker.getLatLng(), revealOffsetX),
+  })
 
   const eventHandlers = { click: () => onClick(id) }
   const label = t('observations.labels.typeAndSize', {

@@ -58,12 +58,13 @@ const ObservationsMapClient = ({
       <BaseMapLayers />
       <ZoomControl position="topright" />
       <RegionBoundary bounds={bounds} region={region} />
-      {/* Keeps the focused marker clear of the detail panel (480px + 16px inset) */}
-      <MapBehavior focus={focus} focusOffsetX={detailPanelOffset} onMapClick={onMapClick} />
+      <MapBehavior onMapClick={onMapClick} />
       <ObservationMarkers
         hoveredId={hoveredId}
         onMarkerClick={onMarkerClick}
         points={points}
+        // Keeps the picked pin clear of the detail panel (480px + 16px inset)
+        revealOffsetX={focus ? detailPanelOffset : null}
         selectedId={selectedId}
       />
     </MapContainer>

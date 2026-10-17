@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useRef } from 'react'
-import useClusterHighlight from '@components/shared/map/useClusterHighlight'
+import { useMemo, useRef } from 'react'
+import useClusterMarker from '@components/shared/map/useClusterMarker'
 import type { WeatherStation } from '@domain/types'
 import type { LeafletEventHandlerFnMap, Marker as LeafletMarker, MarkerClusterGroup } from 'leaflet'
 import { Marker, Popup } from 'react-leaflet'
@@ -20,6 +20,9 @@ type StationMarkerProps = {
   onSelect: (id: string | null) => void
   station: WeatherStation
 }
+
+// Opening an already open popup is a no-op (selected by a tap on the pin)
+const openPopup = (marker: LeafletMarker) => marker.openPopup()
 
 // The popup is the selection: opening it (tap on the pin) selects the station,
 // closing it clears the selection. Selected from outside (its list row), the
@@ -51,21 +54,7 @@ const StationMarker = ({
     [id, onSelect],
   )
 
-  useClusterHighlight({ clusterRef, isActive: isSelected || isHighlighted, markerRef })
-
-  useEffect(() => {
-    const marker = markerRef.current
-
-    if (!isSelected || !marker || marker.isPopupOpen()) return
-
-    // Next tick: on mount (selected in the list before the map opened) the cluster
-    // group only joins the map after this effect, and zoomToShowLayer needs it there
-    const timeout = setTimeout(() =>
-      clusterRef.current?.zoomToShowLayer(marker, () => marker.openPopup()),
-    )
-
-    return () => clearTimeout(timeout)
-  }, [clusterRef, isSelected])
+  useClusterMarker({ clusterRef, isHighlighted, isSelected, markerRef, onRevealed: openPopup })
 
   return (
     <Marker

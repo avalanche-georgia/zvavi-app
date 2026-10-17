@@ -1,4 +1,5 @@
 import logoMark from '@assets/images/logo-mark.svg'
+import { markerClassName } from '@components/shared/map/markerClassName'
 import type { AvalancheSize } from '@domain/types'
 import { type DivIcon, divIcon } from 'leaflet'
 
@@ -10,10 +11,6 @@ const shadeClassNames: Record<AvalancheSize, string> = {
   4: 'bg-[#2c2e33]',
   5: 'bg-[#111]',
 }
-
-// Leaflet adds the icon's className to its own marker element. Drops the
-// browser's square focus ring after a tap (keyboard focus still shows one).
-export const markerClassName = 'focus:not-focus-visible:outline-hidden'
 
 // Radius grows with avalanche size; the selected pin is a bit larger still
 const getDiameter = (size: AvalancheSize, isSelected: boolean) =>
