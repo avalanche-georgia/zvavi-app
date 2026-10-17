@@ -32,6 +32,7 @@ const useObservationSubmitFormSubmit = ({
           honeypot: formData.honeypot,
           isDateUnknown: formData.isDateUnknown,
           latitude: formData.latitude,
+          location: formData.location?.trim() || null,
           longitude: formData.longitude,
           photoKeys: formData.photos,
           quantity: formData.quantity,

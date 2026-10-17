@@ -10,7 +10,7 @@ import {
 } from '@components/features/observations/form'
 import { avalancheFieldLimits } from '@domain/constants'
 import type { Avalanche, Region } from '@domain/types'
-import { FormTextarea, FormTextField } from '@ds/form'
+import { FormTextarea } from '@ds/form'
 import { useTranslations } from 'next-intl'
 
 import useStoredPhotoUrls from './hooks/useStoredPhotoUrls'
@@ -34,13 +34,7 @@ const FormFields = ({ avalanche, region }: FormFieldsProps) => {
     <div className="grid grid-cols-1 items-start gap-3 @4xl:grid-cols-2">
       <div className="flex min-w-0 flex-col gap-3">
         <WhenSection />
-        <LocationSection region={region}>
-          <FormTextField<AvalancheFormSchema>
-            hint={t('admin.recentAvalanches.form.hints.location')}
-            label={t('admin.recentAvalanches.form.labels.location')}
-            name="location"
-          />
-        </LocationSection>
+        <LocationSection region={region} />
         <AspectsSection />
       </div>
 

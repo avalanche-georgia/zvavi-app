@@ -18,7 +18,6 @@ const optionalText = (maxLength: number) =>
 export const avalancheFormSchema = withDateOrUnknown(
   observationFieldsSchema.extend({
     involvement: optionalText(avalancheFieldLimits.involvementMaxLength),
-    location: optionalText(avalancheFieldLimits.locationMaxLength),
     // Saved photos the form opened with stay unless removed; new uploads are added
     photos: photosSchema.transform((photos) => ({
       add: photos.flatMap((photo) => (photo.file && photo.key ? [photo.key] : [])),

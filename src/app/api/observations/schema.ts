@@ -33,8 +33,7 @@ const aspectsSchema = z.object({
 // avalanche_trigger / avalanche_type already include 'unknown' at the DB level.
 // involvement is deliberately not exposed here — treated as internal-only
 // across the app (see its "(internal)" label on the forecast-nested avalanche
-// form); location (free text) is out of scope for the public form by product
-// decision.
+// form).
 const dayInMs = 24 * 60 * 60 * 1000
 
 // Avalanche fields every write path accepts (public submit, admin create/edit)
@@ -52,6 +51,10 @@ export const observationBodyFieldsSchema = z.object({
     .number()
     .min(avalancheFieldLimits.latitude.min)
     .max(avalancheFieldLimits.latitude.max),
+  // Place name, free text. Optional key: clients built before the field existed
+  // don't send it. No null-transform: on the admin PATCH an absent key must
+  // stay absent (a status toggle would otherwise clear it).
+  location: z.string().trim().max(avalancheFieldLimits.locationMaxLength).nullish(),
   longitude: z
     .number()
     .min(avalancheFieldLimits.longitude.min)

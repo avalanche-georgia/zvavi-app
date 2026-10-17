@@ -3,14 +3,15 @@ import type { ObservationDateBasis, RegionId } from '@domain/types'
 import { createServiceRoleClient } from '@/lib/supabase/serviceRole'
 
 // Explicit column lists — never `select('*')` here. submitter_contact,
-// submitter_education, created_by_user_id, and involvement (internal-only,
-// see its "(internal)" label on the admin form) must never reach these
-// public-facing endpoints (see recent_avalanches RLS: anon can't read
-// external rows directly, these routes are the only path to them).
+// submitter_education and involvement (internal-only, see its "(internal)"
+// label on the admin form) must never reach these public-facing endpoints
+// (anon can't read recent_avalanches at all, these routes are the only path).
+// created_by_user_id is read only to look up a team record's reporter name —
+// toPublicObservations drops it from the response.
 export const publicColumns =
   'id, region_id, date, is_date_unknown, description, size, quantity, latitude, ' +
-  'longitude, type, trigger, aspects, width, slab_depth, photo_keys, ' +
-  'submitter_name, created_at'
+  'longitude, location, type, trigger, aspects, width, slab_depth, photo_keys, ' +
+  'source, submitter_name, created_by_user_id, created_at'
 
 export const pointColumns = 'id, latitude, longitude, size, type'
 
@@ -33,7 +34,7 @@ type QueryOptions = {
   isCounted?: boolean
 }
 
-// Published public observations of a region, narrowed by the date filter.
+// Published observations of a region — public reports and team records alike, narrowed by the date filter.
 // Callers add ordering / paging.
 export const queryPublicObservations = (
   { dateBasis, dateFrom, dateTo, isDateUnknown, regionId }: PublicObservationFilters,
@@ -44,7 +45,6 @@ export const queryPublicObservations = (
   let query = createServiceRoleClient()
     .from('recent_avalanches')
     .select(columns, isCounted ? { count: 'exact' } : undefined)
-    .eq('source', 'external')
     .eq('status', 'published')
     .eq('region_id', regionId)
 

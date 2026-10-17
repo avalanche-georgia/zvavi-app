@@ -6,7 +6,6 @@ import {
   PhotoStrip,
 } from '@components/features/observations'
 import type { PublicAvalanche } from '@domain/types'
-import { MapPin } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 import { emptyAspects } from '../model/aspects'
@@ -18,10 +17,10 @@ type AvalancheBodyProps = {
 }
 
 // A linked avalanche record in full — the same blocks as an observation's
-// detail, without the reporter (never public for linked records)
+// detail, without the reporter (the forecast speaks for the team here)
 const AvalancheBody = ({ avalanche, onShowOnMap }: AvalancheBodyProps) => {
   const t = useTranslations()
-  const { description, location, photos } = avalanche
+  const { description, photos } = avalanche
   // Old records may have no aspects at all
   const record = { ...avalanche, aspects: avalanche.aspects ?? emptyAspects }
 
@@ -29,12 +28,6 @@ const AvalancheBody = ({ avalanche, onShowOnMap }: AvalancheBodyProps) => {
     <div className="pb-[calc(32px+env(safe-area-inset-bottom))]">
       {photos.length > 0 && <PhotoStrip photos={photos} />}
       <DetailTitle observation={record} />
-      {location && (
-        <p className="text-body text-copy-sm flex items-center gap-1.5 px-4 pt-1.5">
-          <MapPin aria-hidden className="size-4 shrink-0" />
-          {location}
-        </p>
-      )}
       <DetailFacts observation={record} />
       <DetailWhere observation={record} onShowOnMap={onShowOnMap} />
       {description && (

@@ -169,6 +169,10 @@ observations:
         denied: 'Location access is blocked. Allow it in your browser settings, or tap the map instead.'
         unavailable: "Couldn't get your location. Tap the map instead."
         outsideRegion: "You're outside {regionName}. Tap the map where the avalanche is."
+    placeName:
+      label: 'Place name'
+      hint: 'Optional · shown with the report'
+      placeholder: 'e.g. Kudebi, Sadzele valley'
     what:
       encyclopedia: 'Encyclopedia'
       typeRequired: 'Pick a type — “Unknown” is fine.'

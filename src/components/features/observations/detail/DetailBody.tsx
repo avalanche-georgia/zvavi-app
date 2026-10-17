@@ -15,7 +15,7 @@ type DetailBodyProps = {
 
 const DetailBody = ({ observation, onShowOnMap }: DetailBodyProps) => {
   const t = useTranslations()
-  const { description, photos, submitterName } = observation
+  const { description, photos, source, submitterName } = observation
 
   return (
     <div className="pb-8">
@@ -32,7 +32,7 @@ const DetailBody = ({ observation, onShowOnMap }: DetailBodyProps) => {
         </DetailSection>
       )}
 
-      <DetailReporter name={submitterName} />
+      <DetailReporter isTeam={source === 'team'} name={submitterName} />
     </div>
   )
 }

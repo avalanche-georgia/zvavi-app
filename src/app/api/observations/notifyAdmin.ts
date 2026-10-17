@@ -34,6 +34,7 @@ const notifyAdmin = async (body: SubmitObservationBody, reviewUrl: string): Prom
     `<b>Region:</b> ${capitalize(body.regionId)}`,
     `<b>Type:</b> ${humanize(body.type)}`,
     `<b>Date:</b> ${body.isDateUnknown || !body.date ? 'Unknown' : format(new Date(body.date), dateFormat)}`,
+    ...(body.location ? [`<b>Place:</b> ${escapeHtml(body.location)}`] : []),
     `<b>Submitted by:</b> ${escapeHtml(body.submitterName)}`,
     '',
     `<a href="${escapeHtml(reviewUrl)}">Review</a>`,
