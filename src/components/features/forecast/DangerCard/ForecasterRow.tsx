@@ -34,14 +34,24 @@ const ForecasterRow = ({ name, profile }: ForecasterRowProps) => {
   )
 
   return (
-    <div className="bg-surface col-span-full px-4 py-2.5">
+    <div
+      className={cn(
+        'bg-surface col-span-full px-4 py-2.5',
+        // With a profile the whole cell is the button's target (stretched below)
+        profile && 'hover:bg-tile group relative transition-colors',
+      )}
+    >
       <dt className="text-muted text-xs">{t('common.labels.forecaster')}</dt>
       <dd>
         {profile ? (
           <button
             aria-haspopup="dialog"
             aria-label={t('forecast.forecasterProfile', { name })}
-            className={cn(personClasses, 'focus-ring group rounded-control text-left')}
+            className={cn(
+              personClasses,
+              'text-left outline-hidden after:absolute after:inset-0',
+              'focus-visible:after:outline-accent focus-visible:after:outline-2 focus-visible:after:-outline-offset-2',
+            )}
             onClick={() => setIsSheetOpen(true)}
             type="button"
           >
