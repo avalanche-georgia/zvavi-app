@@ -1,6 +1,7 @@
 import { convertSnakeToCamel, isNoRowsError } from '@data/helpers'
+import fetchForecasterProfile from '@data/queries/fetchForecasterProfile'
 import fetchPublicForecastAvalanches from '@data/queries/fetchPublicForecastAvalanches'
-import type { FullForecast, RegionId } from '@domain/types'
+import type { FullForecast, RegionId, TeamMember } from '@domain/types'
 
 import { reportServerError } from '@/lib/posthog/server'
 import { createClient } from '@/lib/supabase/server'
@@ -52,6 +53,8 @@ const fetchAdjacentForecastId = async (
 }
 
 export type ForecastPageData = {
+  // Kept out of the forecast: the client refetches that without it
+  forecasterProfile: TeamMember | null
   initialForecast: FullForecast
   // No published forecast was created after this one
   isCurrentForecast: boolean
@@ -104,14 +107,16 @@ export const fetchForecastPageData = async (
   // The forecast's own region — a link with the wrong region in the URL still
   // compares against the right neighbours
   const { created_at: createdAt, region_id: regionId } = forecastResult.data
-  const [previousForecastId, nextForecastId] = await Promise.all([
+  const [previousForecastId, nextForecastId, forecasterProfile] = await Promise.all([
     fetchAdjacentForecastId(supabase, { createdAt, direction: 'previous', forecastId, regionId }),
     isKnownCurrent
       ? null
       : fetchAdjacentForecastId(supabase, { createdAt, direction: 'next', forecastId, regionId }),
+    fetchForecasterProfile(forecastWithProblems),
   ])
 
   return {
+    forecasterProfile,
     initialForecast: { ...forecastWithProblems, recentAvalanches },
     // A failed lookup counts as "not current": better a needless "past forecast"
     // banner than an old forecast passing for today's

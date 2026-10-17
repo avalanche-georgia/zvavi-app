@@ -412,6 +412,9 @@ admin:
       general:
         title: 'General'
         forecasterRequired: 'Add the forecaster''s name.'
+        otherForecaster: 'Other person'
+        forecasterName: 'Forecaster''s name'
+        forecasterNamePlaceholder: 'First and last name'
         validUntilRequired: 'Pick when this forecast expires.'
         time: 'Time'
         quickDates: 'Quick dates'

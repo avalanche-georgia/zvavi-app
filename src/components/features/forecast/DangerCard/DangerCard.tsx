@@ -1,4 +1,4 @@
-import type { Forecast } from '@domain/types'
+import type { Forecast, TeamMember } from '@domain/types'
 
 import DangerBand from './DangerBand'
 import DangerFacts from './DangerFacts'
@@ -10,6 +10,8 @@ import { cn } from '@/lib/utils'
 type DangerCardProps = {
   className?: string
   forecast: Forecast
+  // Their public Team profile — the name opens it
+  forecasterProfile: TeamMember | null
   // Adds a "Read full forecast" row leading here (outside the forecast page)
   forecastHref?: string
   isCurrentForecast: boolean
@@ -23,6 +25,7 @@ const DangerCard = ({
   className,
   forecast,
   forecastHref,
+  forecasterProfile,
   isCurrentForecast,
   onInfoOpen,
 }: DangerCardProps) => {
@@ -34,7 +37,11 @@ const DangerCard = ({
     >
       <DangerBand level={level} onInfoOpen={onInfoOpen} />
       {level !== '0' && <DangerScale level={level} />}
-      <DangerFacts forecast={forecast} isCurrentForecast={isCurrentForecast} />
+      <DangerFacts
+        forecast={forecast}
+        forecasterProfile={forecasterProfile}
+        isCurrentForecast={isCurrentForecast}
+      />
       {forecastHref && <ReadForecastLink href={forecastHref} />}
     </section>
   )

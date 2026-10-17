@@ -9,6 +9,8 @@ export const forecastFormSchema = z
     additionalHazards: z.string(),
     avalancheProblems: z.array(problemSchema),
     forecaster: z.string().trim().min(1, required),
+    // null: a name typed in (no profile)
+    forecasterId: z.uuid().nullable(),
     // Stored as the strings '0'–'5' (see save_forecast)
     hazardLevels: z.object({
       alpine: hazardLevelScale,

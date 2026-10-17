@@ -2,6 +2,7 @@ forecast:
   pageTitle: '{regionName} Avalanche Forecast'
   forecastAreaPageTitle: '{regionName} Forecast Area'
   historyPageTitle: '{regionName} Forecasts History'
+  forecasterProfile: 'Profile of {name}'
 
   history:
     emptyTitle: 'No Forecasts Yet'

@@ -90,6 +90,7 @@ const ForecastPage = async (props: ForecastPageProps) => {
 
   return (
     <ForecastContainer
+      forecasterProfile={data.forecasterProfile}
       initialForecast={data.initialForecast}
       isCurrentForecast={data.isCurrentForecast}
       nextForecastId={data.nextForecastId}

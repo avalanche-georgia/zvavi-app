@@ -58,7 +58,7 @@ export type TeamSection = Enums<'team_section'>
 // A staff profile on the admin Team page: what is shown publicly, and whether it is
 export type TeamProfile = Pick<
   UserProfile,
-  'avatarUrl' | 'firstName' | 'fullName' | 'id' | 'isPublic' | 'lastName' | 'team'
+  'avatarUrl' | 'firstName' | 'fullName' | 'id' | 'isPublic' | 'lastName' | 'role' | 'team'
 >
 
 // One person's place on the admin Team board: section (null = none) and position
@@ -89,6 +89,8 @@ export type Forecast = {
   additionalHazards: string
   createdAt: string
   forecaster: string
+  // The forecaster's profile; null for a guest name or a legacy row
+  forecasterId: string | null
   hazardLevels: HazardLevels
   id: number
   publishedAt: string | null
