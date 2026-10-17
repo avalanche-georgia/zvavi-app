@@ -5,6 +5,7 @@ import { Marker, Popup } from 'react-leaflet'
 
 import stationPinIcon from './stationPinIcon'
 import StationPopup from './StationPopup'
+import useClusterHighlight from './useClusterHighlight'
 import getStationName from '../getStationName'
 
 type StationMarkerProps = {
@@ -49,6 +50,8 @@ const StationMarker = ({
     }),
     [id, onSelect],
   )
+
+  useClusterHighlight({ clusterRef, isActive: isSelected || isHighlighted, markerRef })
 
   useEffect(() => {
     const marker = markerRef.current
