@@ -1,12 +1,8 @@
 footer:
   description: 'Avalanche forecasts and observations for the mountains of Georgia.'
-  social: 'Follow us'
+  social: 'Follow Us'
   columns:
     resources: 'Resources'
     organisation: 'Organisation'
-  links:
-    archive: 'Forecast archive'
-    donate: 'Donate'
-    submitObservation: 'Submit observation'
   emergency: 'Emergency:'
   copyright: '© {year} Avalanche Georgia'

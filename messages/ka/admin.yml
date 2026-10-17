@@ -35,6 +35,7 @@ admin:
       observationSubmittedNoRegion: ახალი დაკვირვება
 
   sidebar:
+    dashboard: 'მართვის დაფა'
     designSystem: 'დიზაინ-სისტემა'
     forecasts: 'პროგნოზები'
     home: 'მთავარი'
@@ -541,6 +542,7 @@ admin:
       general:
         title: 'ზოგადი ინფორმაცია'
         formattingHint: 'ფორმატირება: **სქელი** · *დახრილი*'
+        formattingInfo: 'ტექსტის ფორმატირება'
         labels:
           additionalHazards: 'დამატებითი საფრთხეები'
           forecaster: 'პროგნოზის ავტორი'

@@ -24,7 +24,7 @@ const FooterLinks = () => {
           { href: routes.regionHome(regionId), label: t('navigation.overview') },
           { href: forecastRoutes.current, label: t('navigation.currentForecast') },
           { href: forecastRoutes.forecastArea, label: t('navigation.forecastArea') },
-          { href: forecastRoutes.history, label: t('footer.links.archive') },
+          { href: forecastRoutes.history, label: t('navigation.archive') },
           { href: observationRoutes.root, label: t('navigation.observations') },
         ]
       : []
@@ -32,7 +32,7 @@ const FooterLinks = () => {
   const resourceLinks: FooterLink[] = [
     ...allRegionsLinks,
     ...(observationRoutes
-      ? [{ href: observationRoutes.submit, label: t('footer.links.submitObservation') }]
+      ? [{ href: observationRoutes.submit, label: t('navigation.submitObservation') }]
       : []),
     { href: routes.weatherStations, label: t('navigation.weatherStations') },
   ]
@@ -47,7 +47,7 @@ const FooterLinks = () => {
           { href: routes.about.team, label: t('navigation.team') },
           { href: routes.partners, label: t('navigation.partners') },
           { href: routes.about.joinUs, label: t('navigation.joinUs') },
-          { href: routes.about.donate, label: t('footer.links.donate') },
+          { href: routes.about.donate, label: t('navigation.donate') },
           { href: routes.about.contact, label: t('navigation.contact') },
         ]}
         title={t('footer.columns.organisation')}

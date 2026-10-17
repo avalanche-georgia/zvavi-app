@@ -4,8 +4,8 @@ import { FormCard } from '@ds/patterns'
 import { useTranslations } from 'next-intl'
 import { Controller, useFormContext } from 'react-hook-form'
 
-import ElevationZonesInfo from './ElevationZonesInfo'
 import AspectElevationPicker from '../../AspectElevationPicker'
+import ElevationZonesInfo from '../../ElevationZonesInfo'
 import type { ObservationFormFields } from '../schema'
 
 const AspectsSection = () => {

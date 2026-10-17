@@ -22,6 +22,7 @@ export type IconName =
   | 'home'
   | 'image'
   | 'info'
+  | 'layoutDashboard'
   | 'link'
   | 'logOut'
   | 'mail'

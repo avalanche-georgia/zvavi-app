@@ -9,6 +9,9 @@ import { cn } from '@/lib/utils'
 
 type FieldProps = FieldChromeProps & {
   children: React.ReactNode
+  // Next to the label but outside the <label>, e.g. an InfoTip — so tapping it
+  // doesn't focus the control
+  labelAside?: React.ReactNode
   // 'horizontal' puts the label and a compact control (e.g. a stepper) on one row
   orientation?: 'horizontal' | 'vertical'
 }
@@ -24,6 +27,7 @@ const Field = ({
   hint,
   isLabelHidden,
   label,
+  labelAside,
   orientation = 'vertical',
   required,
 }: FieldProps) => (
@@ -43,10 +47,13 @@ const Field = ({
           hint && <BaseField.Description render={<span />}>{hint}</BaseField.Description>
         }
       >
-        <BaseField.Label className={cn(fieldLabelClasses, isLabelHidden && 'sr-only')}>
-          {label}
-          {required && <RequiredMark />}
-        </BaseField.Label>
+        <div className="flex items-center gap-1.5">
+          <BaseField.Label className={cn(fieldLabelClasses, isLabelHidden && 'sr-only')}>
+            {label}
+            {required && <RequiredMark />}
+          </BaseField.Label>
+          {labelAside}
+        </div>
       </FieldLabelRow>
       {children}
     </div>
