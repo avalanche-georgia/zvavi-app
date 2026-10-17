@@ -2,13 +2,17 @@
 
 import { useRef, useState } from 'react'
 import { desktopMediaQuery } from '@components/features/observations/map/mapConfig'
+import { useHeaderHeight } from '@components/hooks'
 import { SplitPageWrapper } from '@components/layout'
 import type { WeatherStation } from '@domain/types'
-import { useMediaQuery, useResizeObserver } from 'usehooks-ts'
+import { useMediaQuery, useResizeObserver, useWindowSize } from 'usehooks-ts'
 
 import StationsMap from './map/StationsMap'
 import StationsHeader, { type StationsViewMode } from './StationsHeader'
 import StationsList from './StationsList'
+import useFooterHeight from './useFooterHeight'
+
+const minDesktopMapHeight = 480
 
 type StationsViewProps = {
   locale: string
@@ -25,6 +29,16 @@ const StationsView = ({ locale, stations }: StationsViewProps) => {
   // Mobile map view fills the screen under the header
   const headerRef = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>
   const { height: headerHeight = 0 } = useResizeObserver({ box: 'border-box', ref: headerRef })
+
+  // Desktop fits header, list | map and footer on one screen — unless that would
+  // squeeze the map below minDesktopMapHeight; then the page scrolls a little
+  const footerHeight = useFooterHeight()
+  const siteHeaderHeight = useHeaderHeight()
+  const { height: windowHeight = 0 } = useWindowSize()
+  const bottomOffset = Math.max(
+    0,
+    Math.min(footerHeight, windowHeight - siteHeaderHeight - minDesktopMapHeight),
+  )
 
   const isMapView = view === 'map' && !isDesktop
 
@@ -49,6 +63,7 @@ const StationsView = ({ locale, stations }: StationsViewProps) => {
           />
         )
       }
+      desktopBottomOffset={bottomOffset}
       isAsideShownOnMobile={isMapView}
       mobileAsideOffset={headerHeight}
     >
