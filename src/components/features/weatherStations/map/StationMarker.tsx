@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useRef } from 'react'
+import useClusterHighlight from '@components/shared/map/useClusterHighlight'
 import type { WeatherStation } from '@domain/types'
 import type { LeafletEventHandlerFnMap, Marker as LeafletMarker, MarkerClusterGroup } from 'leaflet'
 import { Marker, Popup } from 'react-leaflet'
 
 import stationPinIcon from './stationPinIcon'
 import StationPopup from './StationPopup'
-import useClusterHighlight from './useClusterHighlight'
 import getStationName from '../getStationName'
 
 type StationMarkerProps = {

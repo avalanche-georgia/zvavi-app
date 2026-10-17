@@ -7,12 +7,12 @@ type UseClusterHighlightParams = {
   markerRef: React.RefObject<Marker | null>
 }
 
-// stationClusterIcon turns brand blue inside this class
+// Cluster icons style themselves inside this class (`in-[.is-highlighted]:…`)
 export const highlightedClusterClassName = 'is-highlighted'
 
-// A hovered or selected station whose pin is grouped into a cluster lights up
-// that cluster instead. Re-applied after every re-clustering (zoom), which
-// rebuilds the cluster icons.
+// A highlighted marker (e.g. its list row is hovered) that is grouped into a
+// cluster lights up that cluster instead. Re-applied after every re-clustering
+// (zoom), which rebuilds the cluster icons.
 const useClusterHighlight = ({ clusterRef, isActive, markerRef }: UseClusterHighlightParams) => {
   useEffect(() => {
     const marker = markerRef.current
