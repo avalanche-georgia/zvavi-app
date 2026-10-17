@@ -412,6 +412,9 @@ admin:
       general:
         title: 'ზოგადი'
         forecasterRequired: 'მიუთითეთ პროგნოზის ავტორი.'
+        otherForecaster: 'სხვა პირი'
+        forecasterName: 'პროგნოზის ავტორის სახელი'
+        forecasterNamePlaceholder: 'სახელი და გვარი'
         validUntilRequired: 'აირჩიეთ, როდემდე მოქმედებს პროგნოზი.'
         time: 'დრო'
         quickDates: 'სწრაფი არჩევა'

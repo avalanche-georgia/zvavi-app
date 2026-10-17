@@ -5,6 +5,7 @@ type ForecastSaveFields = {
   id?: Forecast['id']
   additionalHazards: string
   forecaster: string
+  forecasterId: string | null
   hazardLevels: HazardLevels
   regionId: RegionId
   snowpack: string

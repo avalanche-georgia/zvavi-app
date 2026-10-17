@@ -2,7 +2,7 @@
 
 import { useHeaderHeight } from '@components/hooks'
 import { hazardLevelNamesByScale } from '@domain/constants'
-import type { FullForecast } from '@domain/types'
+import type { FullForecast, TeamMember } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import { AvalancheSheet } from './AvalancheSheet'
@@ -17,6 +17,7 @@ import useStableScroll from './useStableScroll'
 
 export type ForecastPageProps = {
   forecast: FullForecast
+  forecasterProfile: TeamMember | null
   isCurrentForecast: boolean
   nextForecastId: number | null
   previousForecastId: number | null
@@ -24,7 +25,8 @@ export type ForecastPageProps = {
 
 // The public forecast: one column on mobile, a sticky rail + main column on desktop
 const ForecastPage = (props: ForecastPageProps) => {
-  const { forecast, isCurrentForecast, nextForecastId, previousForecastId } = props
+  const { forecast, forecasterProfile, isCurrentForecast, nextForecastId, previousForecastId } =
+    props
   const t = useTranslations()
   const headerHeight = useHeaderHeight()
 
@@ -49,6 +51,7 @@ const ForecastPage = (props: ForecastPageProps) => {
         <div className="flex flex-col gap-3 lg:grid lg:grid-cols-[360px_minmax(0,1fr)] lg:items-start lg:gap-6">
           <ForecastRail
             forecast={forecast}
+            forecasterProfile={forecasterProfile}
             isCurrentForecast={isCurrentForecast}
             onDangerInfoOpen={sheets.openDangerInfo}
           />

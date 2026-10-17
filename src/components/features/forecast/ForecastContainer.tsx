@@ -2,20 +2,19 @@
 
 import { Loading } from '@components/shared'
 import { useGetForecast } from '@data/hooks/forecasts'
-import type { FullForecast } from '@domain/types'
+import type { ForecastPageData } from '@data/queries/fetchForecastPageData'
 
 import ForecastPage from './ForecastPage'
 
-type ForecastContainerProps = {
-  initialForecast: FullForecast
-  isCurrentForecast: boolean
-  nextForecastId: number | null
-  previousForecastId: number | null
-}
-
 // Renders the server-loaded forecast at once and keeps it fresh in the browser
-const ForecastContainer = (props: ForecastContainerProps) => {
-  const { initialForecast, isCurrentForecast, nextForecastId, previousForecastId } = props
+const ForecastContainer = (props: ForecastPageData) => {
+  const {
+    forecasterProfile,
+    initialForecast,
+    isCurrentForecast,
+    nextForecastId,
+    previousForecastId,
+  } = props
   const { data: forecast, isPending } = useGetForecast({
     forecastId: initialForecast.id,
     initialData: initialForecast,
@@ -30,6 +29,7 @@ const ForecastContainer = (props: ForecastContainerProps) => {
   return (
     <ForecastPage
       forecast={forecast}
+      forecasterProfile={forecasterProfile}
       isCurrentForecast={isCurrentForecast}
       nextForecastId={nextForecastId}
       previousForecastId={previousForecastId}

@@ -206,6 +206,7 @@ export type Database = {
           additional_hazards: string | null
           created_at: string
           forecaster: string | null
+          forecaster_id: string | null
           hazard_levels: Json
           id: number
           published_at: string | null
@@ -221,6 +222,7 @@ export type Database = {
           additional_hazards?: string | null
           created_at?: string
           forecaster?: string | null
+          forecaster_id?: string | null
           hazard_levels?: Json
           id?: number
           published_at?: string | null
@@ -236,6 +238,7 @@ export type Database = {
           additional_hazards?: string | null
           created_at?: string
           forecaster?: string | null
+          forecaster_id?: string | null
           hazard_levels?: Json
           id?: number
           published_at?: string | null
@@ -248,6 +251,13 @@ export type Database = {
           weather?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: 'forecasts_forecaster_id_fkey'
+            columns: ['forecaster_id']
+            isOneToOne: false
+            referencedRelation: 'user_profiles'
+            referencedColumns: ['id']
+          },
           {
             foreignKeyName: 'forecasts_region_id_fkey'
             columns: ['region_id']
@@ -761,11 +771,13 @@ export type Database = {
           id: string
           is_public: boolean
           last_name: string
+          role: Database['public']['Enums']['user_role']
           team: Database['public']['Enums']['team_section']
           team_order: number
         }[]
       }
       is_staff: { Args: never; Returns: boolean }
+      is_staff_profile: { Args: { p_id: string }; Returns: boolean }
       reorder_team_profiles: { Args: { updates: Json }; Returns: undefined }
       reorder_weather_stations: { Args: { updates: Json }; Returns: undefined }
       save_forecast: {

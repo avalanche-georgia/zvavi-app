@@ -1,9 +1,8 @@
 import { TeamPageContent } from '@components/features/team'
 import { ContentPage } from '@components/layout'
+import fetchTeamMembers from '@data/queries/fetchTeamMembers'
 import type { Metadata } from 'next'
 import { getLocale, getTranslations } from 'next-intl/server'
-
-import fetchTeamMembers from './fetchTeamMembers'
 
 import getAlternates from '@/lib/seo/getAlternates'
 import { routes } from '@/routes'

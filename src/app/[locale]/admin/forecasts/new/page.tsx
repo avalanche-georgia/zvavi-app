@@ -6,6 +6,7 @@ import {
   getInitialFormValues,
 } from '@components/features/admin/Forecasts/ForecastForm'
 import { Loading } from '@components/features/admin/shared'
+import AdminPageBoundary from '@components/features/admin/shared/AdminPageBoundary'
 import { RequireRegionId } from '@components/shared'
 import { useAdminGetForecast } from '@data/hooks/forecasts'
 import { useCurrentUserProfileQuery } from '@data/hooks/userProfiles'
@@ -66,6 +67,7 @@ const NewForecastContent = ({ regionId }: { regionId: RegionId }) => {
   const initialValues = {
     ...getInitialFormValues(sourceForecast ?? null),
     forecaster: currentProfile?.fullName ?? '',
+    forecasterId: currentProfile?.fullName ? currentProfile.id : null,
     validUntil: null,
   }
 
@@ -73,9 +75,11 @@ const NewForecastContent = ({ regionId }: { regionId: RegionId }) => {
 }
 
 const NewForecastPage = () => (
-  <RequireRegionId fallbackRoute={routes.admin.forecasts.root}>
-    {(regionId) => <NewForecastContent regionId={regionId} />}
-  </RequireRegionId>
+  <AdminPageBoundary>
+    <RequireRegionId fallbackRoute={routes.admin.forecasts.root}>
+      {(regionId) => <NewForecastContent regionId={regionId} />}
+    </RequireRegionId>
+  </AdminPageBoundary>
 )
 
 export default NewForecastPage
