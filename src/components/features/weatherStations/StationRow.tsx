@@ -44,7 +44,9 @@ const StationRow = ({ isSelected, locale, onHover, onSelect, station }: StationR
     <li
       className={cn(
         'rounded-media flex min-h-16 items-center gap-2 border pr-3 transition-colors',
-        isSelected ? 'border-accent bg-accent-soft' : 'border-rule bg-surface',
+        isSelected
+          ? 'border-accent bg-accent-soft'
+          : 'border-rule bg-surface hover:border-rule-strong',
       )}
       onMouseEnter={hasLocation ? () => onHover(id) : undefined}
       onMouseLeave={hasLocation ? () => onHover(null) : undefined}
