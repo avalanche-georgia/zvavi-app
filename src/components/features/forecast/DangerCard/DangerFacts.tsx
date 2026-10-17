@@ -1,4 +1,4 @@
-import type { Forecast } from '@domain/types'
+import type { Forecast, TeamMember } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import ForecasterRow from './ForecasterRow'
@@ -7,6 +7,7 @@ import useForecastDates from '../model/useForecastDates'
 
 type DangerFactsProps = {
   forecast: Forecast
+  forecasterProfile: TeamMember | null
   isCurrentForecast: boolean
 }
 
@@ -17,10 +18,13 @@ const noteClasses = 'text-muted text-caption block font-normal'
 
 // Issued · Valid until · Forecaster. The 1px gaps over a rule-coloured
 // background draw the dividers.
-const DangerFacts = ({ forecast, isCurrentForecast }: DangerFactsProps) => {
+const DangerFacts = ({ forecast, forecasterProfile, isCurrentForecast }: DangerFactsProps) => {
   const t = useTranslations()
   const { formatDate, formatTime } = useForecastDates()
-  const { createdAt, forecaster, publishedAt, validUntil } = forecast
+  const { createdAt, forecaster, forecasterId, publishedAt, validUntil } = forecast
+  // The profile was loaded with the page — a forecast edited since may name someone else
+  const profile = forecasterProfile?.id === forecasterId ? forecasterProfile : null
+  const forecasterName = profile?.fullName ?? forecaster
   const issuedAt = publishedAt ?? createdAt
 
   return (
@@ -41,7 +45,7 @@ const DangerFacts = ({ forecast, isCurrentForecast }: DangerFactsProps) => {
           </span>
         </dd>
       </div>
-      {forecaster && <ForecasterRow name={forecaster} />}
+      {forecasterName && <ForecasterRow name={forecasterName} profile={profile} />}
     </dl>
   )
 }
