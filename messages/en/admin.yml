@@ -735,6 +735,8 @@ admin:
     moreForStation: 'More actions for {name}'
     openStation: 'Open station page'
     deleteConfirm: 'Delete {name} permanently? It disappears from the public weather stations page.'
+    public: 'Public'
+    noLocation: 'No location'
     empty:
       title: 'No weather stations yet'
       hint: 'Use Add Station above to add the first one.'
@@ -742,6 +744,13 @@ admin:
       section: 'Station'
       optional: 'Optional'
       altitudeUnit: 'm'
+      locationSection: 'Location'
+      location:
+        required: 'Drop a pin or enter coordinates.'
+        tapHint: 'Tap where the station is'
+        dragHint: 'Drag the pin to adjust'
+        outsideGeorgia: "You're outside Georgia. Tap the map where the station is."
+        mustBeInGeorgia: 'The location must be in Georgia.'
       labels:
         altitude: 'Altitude'
         nameEn: 'Name (EN)'

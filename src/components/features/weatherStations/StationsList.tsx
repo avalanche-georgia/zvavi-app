@@ -1,45 +1,31 @@
-import { Icon } from '@components/icons'
+'use client'
+
 import type { WeatherStation } from '@domain/types'
-import { getTranslations } from 'next-intl/server'
-import { Link } from 'src/i18n/navigation'
+
+import StationRow from './StationRow'
 
 type StationsListProps = {
   locale: string
+  onHover: (id: string | null) => void
+  onSelect: (id: string) => void
+  selectedId: string | null
   stations: WeatherStation[]
 }
 
-const StationsList = async ({ locale, stations }: StationsListProps) => {
-  const t = await getTranslations()
-
+const StationsList = ({ locale, onHover, onSelect, selectedId, stations }: StationsListProps) => {
   if (!stations.length) return null
 
   return (
-    <ul className="space-y-3">
+    <ul className="flex flex-col gap-2 px-4 pb-6">
       {stations.map((station) => (
-        <li
+        <StationRow
           key={station.id}
-          className="flex h-20 items-center justify-between gap-3 rounded-lg bg-gray-100 px-3"
-        >
-          <div className="flex items-center gap-2">
-            <Icon icon="mapPin" />
-            <div>
-              <div className="font-medium">
-                {locale === 'ka' && station.nameKa ? station.nameKa : station.nameEn}
-              </div>
-              {station.altitude && <div className="text-sm text-gray-500">{station.altitude}m</div>}
-            </div>
-          </div>
-
-          <Link
-            className="active:text-primary lg:hover:text-primary flex items-center gap-2 transition-colors lg:hover:underline"
-            href={station.url}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <span>{t('common.actions.open')}</span>
-            <Icon icon="externalLink" size="sm" />
-          </Link>
-        </li>
+          isSelected={station.id === selectedId}
+          locale={locale}
+          onHover={onHover}
+          onSelect={onSelect}
+          station={station}
+        />
       ))}
     </ul>
   )

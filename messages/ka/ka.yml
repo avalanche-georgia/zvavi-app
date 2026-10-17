@@ -20,9 +20,6 @@ auth:
     messages:
       resetSuccessfully: 'პაროლი წარმატებით აღდგენილია. ახლა შეგიძლიათ შეხვიდეთ ახალი პაროლით.'
 
-weatherStations:
-  description: 'რეალურ დროში მონაცემები ჩვენი ამინდის სადგურების ქსელიდან'
-
 verify:
   card:
     expiresAt: 'ვადა'
