@@ -61,3 +61,8 @@ export const trackPartnerWebsiteClick = ({
     { transport: 'sendBeacon' },
   )
 }
+
+// Chromium only: iOS has no install event
+export const trackPwaInstalled = () => {
+  capture('pwa_installed', {})
+}

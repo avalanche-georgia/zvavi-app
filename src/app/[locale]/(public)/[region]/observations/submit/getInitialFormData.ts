@@ -12,6 +12,7 @@ const getInitialFormData = (): ObservationSubmitFormSchema => ({
   honeypot: '',
   isDateUnknown: false,
   latitude: null,
+  location: null,
   longitude: null,
   photos: [],
   quantity: 1,

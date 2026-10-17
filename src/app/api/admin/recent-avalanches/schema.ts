@@ -15,7 +15,6 @@ const optionalText = (maxLength: number) => z.string().max(maxLength).nullable()
 // Team-only fields on top of what the public form sends
 const adminFieldsSchema = observationBodyFieldsSchema.extend({
   involvement: optionalText(avalancheFieldLimits.involvementMaxLength),
-  location: optionalText(avalancheFieldLimits.locationMaxLength),
   status: z.enum(avalanche_status),
 })
 

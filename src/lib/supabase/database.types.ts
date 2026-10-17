@@ -810,6 +810,7 @@ export type Database = {
           p_description?: string
           p_is_date_unknown?: boolean
           p_latitude?: number
+          p_location?: string
           p_longitude?: number
           p_photo_keys?: string[]
           p_quantity?: number

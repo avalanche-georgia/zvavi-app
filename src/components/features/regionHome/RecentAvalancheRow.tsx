@@ -14,9 +14,13 @@ const RecentAvalancheRow = ({ avalanche, onOpen }: RecentAvalancheRowProps) => {
   const t = useTranslations()
   const { getSummary } = useAspectSummary()
   const getDateLabel = useCardDateLabel()
-  const { aspects, size, submitterName, trigger, type } = avalanche
-
-  const details = [getSummary(aspects), getDateLabel(avalanche, 'occurred'), submitterName]
+  const { aspects, location, size, source, submitterName, trigger, type } = avalanche
+  const details = [
+    location || getSummary(aspects),
+    getDateLabel(avalanche, 'occurred'),
+    submitterName,
+    source === 'team' && t('common.avalancheSources.team'),
+  ]
 
   return (
     <button
