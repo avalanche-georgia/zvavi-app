@@ -1,4 +1,4 @@
-import { Button } from '@components/ui'
+import { Button } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 
 import { cn } from '@/lib/utils'
@@ -15,16 +15,18 @@ const AnalyticsConsentActions = ({ className, onConsentChoose }: AnalyticsConsen
   return (
     <div className={cn('flex gap-2', className)}>
       <Button
-        className="flex-1 justify-center"
+        className="flex-1"
         onClick={() => onConsentChoose(false)}
-        variant="outline"
+        size="sm"
+        variant="secondary"
       >
         {t('common.analyticsConsent.decline')}
       </Button>
       <Button
-        className="flex-1 justify-center"
+        className="flex-1"
         onClick={() => onConsentChoose(true)}
-        variant="outline"
+        size="sm"
+        variant="secondary"
       >
         {t('common.analyticsConsent.allow')}
       </Button>
