@@ -13,6 +13,7 @@ import { cn } from '@/lib/utils'
 type ObservationsListPaneProps = {
   dateBasis: ObservationDateBasis
   list: ObservationsListState
+  onHover: (id: number | null) => void
   onOpen: (id: number) => void
   selectedId: number | null
   sort: ObservationsSort
@@ -21,6 +22,7 @@ type ObservationsListPaneProps = {
 const ObservationsListPane = ({
   dateBasis,
   list,
+  onHover,
   onOpen,
   selectedId,
   sort,
@@ -50,6 +52,7 @@ const ObservationsListPane = ({
           dateBasis={dateBasis}
           hasMore={hasNextPage}
           observations={observations}
+          onHover={onHover}
           onOpen={onOpen}
           selectedId={selectedId}
           sort={sort}

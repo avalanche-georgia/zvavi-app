@@ -19,6 +19,8 @@ const detailPanelOffset = (480 + 16) / 2
 
 export type ObservationsMapClientProps = {
   focus: [number, number] | null
+  // Observation whose list card is hovered
+  hoveredId: number | null
   // Every observation matching the filter, not just the loaded list pages
   points: ObservationPoint[]
   onMapClick: VoidFunction
@@ -29,6 +31,7 @@ export type ObservationsMapClientProps = {
 
 const ObservationsMapClient = ({
   focus,
+  hoveredId,
   onMapClick,
   onMarkerClick,
   points,
@@ -55,9 +58,15 @@ const ObservationsMapClient = ({
       <BaseMapLayers />
       <ZoomControl position="topright" />
       <RegionBoundary bounds={bounds} region={region} />
-      {/* Keeps the focused marker clear of the detail panel (480px + 16px inset) */}
-      <MapBehavior focus={focus} focusOffsetX={detailPanelOffset} onMapClick={onMapClick} />
-      <ObservationMarkers onMarkerClick={onMarkerClick} points={points} selectedId={selectedId} />
+      <MapBehavior onMapClick={onMapClick} />
+      <ObservationMarkers
+        hoveredId={hoveredId}
+        onMarkerClick={onMarkerClick}
+        points={points}
+        // Keeps the picked pin clear of the detail panel (480px + 16px inset)
+        revealOffsetX={focus ? detailPanelOffset : undefined}
+        selectedId={selectedId}
+      />
     </MapContainer>
   )
 }

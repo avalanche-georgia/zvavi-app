@@ -1,13 +1,15 @@
 'use client'
 
 import { useState } from 'react'
-import { hasCoordinates, ObservationDetailSheet } from '@components/features/observations'
+import { ObservationDetailSheet } from '@components/features/observations'
 import { desktopMediaQuery } from '@components/features/observations/map/mapConfig'
 import { SplitPageWrapper } from '@components/layout'
+import useListHover from '@components/shared/map/useListHover'
 import { useRegionContext } from '@domain/context/RegionContext'
 import { useTranslations } from 'next-intl'
 import { useMediaQuery } from 'usehooks-ts'
 
+import getMapFocus from './helpers/getMapFocus'
 import useMobileMapOffset from './hooks/useMobileMapOffset'
 import useObservationLookup from './hooks/useObservationLookup'
 import useObservationsPage from './hooks/useObservationsPage'
@@ -37,10 +39,8 @@ const ObservationsContent = () => {
   })
 
   const isMapView = view === 'map' && !isDesktop
-  const mapFocus =
-    isDesktop && selectedObservation && hasCoordinates(selectedObservation)
-      ? ([selectedObservation.latitude, selectedObservation.longitude] as [number, number])
-      : null
+  const mapFocus = getMapFocus(isDesktop, selectedObservation)
+  const [hoveredId, setHoveredId] = useListHover<number>(!isMapView)
 
   const handleOpen = (id: number) => setParams({ selectedId: id })
   const handleClose = () => setParams({ selectedId: null })
@@ -62,6 +62,7 @@ const ObservationsContent = () => {
           <ObservationsMap
             dateBasis={params.dateBasis}
             focus={mapFocus}
+            hoveredId={hoveredId}
             onMapClick={() => setPeekId(null)}
             onMarkerClick={handleMarkerClick}
             onOpen={handleOpen}
@@ -92,6 +93,7 @@ const ObservationsContent = () => {
         <ObservationsListPane
           dateBasis={params.dateBasis}
           list={list}
+          onHover={setHoveredId}
           onOpen={handleOpen}
           selectedId={selectedObservation?.id ?? null}
           sort={params.sort}

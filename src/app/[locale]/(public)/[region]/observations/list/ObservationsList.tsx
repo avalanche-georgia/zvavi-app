@@ -11,6 +11,7 @@ type ObservationsListProps = {
   // More pages to load — the last group may still grow, so its count is hidden
   hasMore: boolean
   observations: PublicObservation[]
+  onHover: (id: number | null) => void
   onOpen: (id: number) => void
   selectedId: number | null
   sort: ObservationsSort
@@ -21,6 +22,7 @@ const ObservationsList = ({
   dateBasis,
   hasMore,
   observations,
+  onHover,
   onOpen,
   selectedId,
   sort,
@@ -35,6 +37,7 @@ const ObservationsList = ({
       dateBasis={dateBasis}
       isSelected={observation.id === selectedId}
       observation={observation}
+      onHover={onHover}
       onOpen={onOpen}
     />
   )

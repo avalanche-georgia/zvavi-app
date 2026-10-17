@@ -2,12 +2,12 @@
 
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 import { BaseMapLayers, baseMapMaxZoom, countryBounds, FitInCountry } from '@components/shared/map'
+import clusterIcon from '@components/shared/map/clusterIcon'
 import type { WeatherStation } from '@domain/types'
 import { latLngBounds, type MarkerClusterGroup as LeafletClusterGroup } from 'leaflet'
 import { MapContainer, ZoomControl } from 'react-leaflet'
 import MarkerClusterGroup from 'react-leaflet-cluster'
 
-import stationClusterIcon from './stationClusterIcon'
 import StationMarker from './StationMarker'
 
 import 'leaflet/dist/leaflet.css'
@@ -85,7 +85,7 @@ const StationsMapClient = ({
       {/* Clustered like the observation map; zooming in splits the groups */}
       <MarkerClusterGroup
         ref={clusterRef}
-        iconCreateFunction={stationClusterIcon}
+        iconCreateFunction={clusterIcon}
         maxClusterRadius={32}
         showCoverageOnHover={false}
       >

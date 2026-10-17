@@ -2,16 +2,14 @@ import { useEffect } from 'react'
 import { useMap, useMapEvents } from 'react-leaflet'
 
 type MapBehaviorProps = {
-  // Pan here when it changes (e.g. the opened observation)
-  focus: [number, number] | null
-  // Horizontal px to shift the focus point left of centre — keeps it clear of
-  // a panel floating over the right side of the map
-  focusOffsetX?: number
+  // Pan here when it changes (e.g. the opened observation). Leave out on a
+  // clustered map — its markers reveal themselves (useClusterMarker).
+  focus?: [number, number] | null
   onMapClick: VoidFunction
 }
 
 // Imperative bits that need the map instance
-const MapBehavior = ({ focus, focusOffsetX = 0, onMapClick }: MapBehaviorProps) => {
+const MapBehavior = ({ focus, onMapClick }: MapBehaviorProps) => {
   const map = useMap()
   const [focusLat, focusLng] = focus ?? []
 
@@ -30,10 +28,8 @@ const MapBehavior = ({ focus, focusOffsetX = 0, onMapClick }: MapBehaviorProps) 
   useEffect(() => {
     if (focusLat === undefined || focusLng === undefined) return
 
-    const point = map.project([focusLat, focusLng], map.getZoom()).add([focusOffsetX, 0])
-
-    map.panTo(map.unproject(point, map.getZoom()))
-  }, [map, focusLat, focusLng, focusOffsetX])
+    map.panTo([focusLat, focusLng])
+  }, [map, focusLat, focusLng])
 
   return null
 }
