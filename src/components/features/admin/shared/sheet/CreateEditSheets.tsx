@@ -8,6 +8,8 @@ type CreateEditSheetsProps<TRecord> = {
   createTitle: string
   getEditTitle: (record: TRecord) => string
   isCreateRequested: boolean
+  // Wider desktop panel for both sheets (see Sheet)
+  isWide?: boolean
   onCreateClose: VoidFunction
   onEditClose: VoidFunction
   // The record being edited, once found in the list
@@ -21,6 +23,7 @@ const CreateEditSheets = <TRecord,>({
   createTitle,
   getEditTitle,
   isCreateRequested,
+  isWide,
   onCreateClose,
   onEditClose,
   record,
@@ -33,11 +36,17 @@ const CreateEditSheets = <TRecord,>({
 
   return (
     <>
-      <FormSheet isRequested={isCreateRequested} onClose={onCreateClose} title={createTitle}>
+      <FormSheet
+        isRequested={isCreateRequested}
+        isWide={isWide}
+        onClose={onCreateClose}
+        title={createTitle}
+      >
         {(form) => renderForm(form)}
       </FormSheet>
       <FormSheet
         isRequested={record !== null}
+        isWide={isWide}
         onClose={onEditClose}
         title={shownRecord ? getEditTitle(shownRecord) : ''}
       >

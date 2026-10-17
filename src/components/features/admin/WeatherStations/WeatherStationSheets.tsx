@@ -34,6 +34,8 @@ const WeatherStationSheets = ({
       createTitle={t('admin.weatherStations.new')}
       getEditTitle={getEditTitle}
       isCreateRequested={isCreateRequested}
+      // Room for the location map
+      isWide
       onCreateClose={onCreateClose}
       onEditClose={onEditClose}
       record={station}
