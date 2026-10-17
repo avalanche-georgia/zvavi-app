@@ -7,6 +7,7 @@ import useFormFieldError from './useFormFieldError'
 import { Field, Textarea } from '../primitives'
 
 type FormTextareaProps<TFieldValues extends FieldValues> = FormFieldProps<TFieldValues> & {
+  labelAside?: React.ReactNode
   maxLength?: number
   placeholder?: string
 }
@@ -17,6 +18,7 @@ const FormTextarea = <TFieldValues extends FieldValues>({
   hint,
   isLabelHidden,
   label,
+  labelAside,
   maxLength,
   name,
   placeholder,
@@ -34,6 +36,7 @@ const FormTextarea = <TFieldValues extends FieldValues>({
       hint={hint}
       isLabelHidden={isLabelHidden}
       label={label}
+      labelAside={labelAside}
       required={required}
     >
       <Textarea

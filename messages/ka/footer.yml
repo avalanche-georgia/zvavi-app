@@ -4,9 +4,5 @@ footer:
   columns:
     resources: 'რესურსები'
     organisation: 'ორგანიზაცია'
-  links:
-    archive: 'პროგნოზების არქივი'
-    donate: 'შემოწირულობა'
-    submitObservation: 'დაკვირვების გაგზავნა'
   emergency: 'გადაუდებელი დახმარება:'
   copyright: '© {year} ზვავი საქართველო'
