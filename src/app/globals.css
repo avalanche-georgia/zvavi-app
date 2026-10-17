@@ -258,3 +258,27 @@ button {
     outline-offset: 2px;
   }
 }
+
+/* Weather station map popup — Leaflet's popup chrome in ds tokens. Scoped to
+   the popup's own className, so other Leaflet maps keep their defaults. */
+.station-popup .leaflet-popup-content-wrapper {
+  border-radius: var(--radius-control);
+  box-shadow: var(--shadow-menu);
+  color: var(--color-ink);
+}
+
+.station-popup .leaflet-popup-content {
+  margin: 12px 36px 12px 14px;
+  font: inherit;
+  line-height: inherit;
+}
+
+.station-popup .leaflet-popup-tip {
+  box-shadow: none;
+}
+
+.station-popup a.leaflet-popup-close-button {
+  top: 6px;
+  right: 6px;
+  color: var(--color-muted);
+}
