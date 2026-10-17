@@ -208,6 +208,8 @@ export type PublicObservation = Pick<
   createdAt: string
   id: number
   photos: PhotoUrls[]
+  // Team records only: the photo of the staff member who logged them
+  submitterAvatarUrl: string | null
   // Shortened; on a team record, the staff member who logged it ('' when unknown)
   submitterName: string
 }
