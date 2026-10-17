@@ -1,5 +1,8 @@
 import { useEffect, useRef } from 'react'
 import type { Marker, MarkerClusterGroup } from 'leaflet'
+import { useMap } from 'react-leaflet'
+
+import revealMarker from './revealMarker'
 
 type UseClusterMarkerParams = {
   clusterRef: React.RefObject<MarkerClusterGroup | null>
@@ -8,8 +11,10 @@ type UseClusterMarkerParams = {
   // Picked (list row or pin) — zooms in until the marker leaves its cluster
   isSelected: boolean
   markerRef: React.RefObject<Marker | null>
-  // Runs once a picked marker is on screen (straight away when not clustered)
+  // Runs once a picked marker is on screen (straight away when already there)
   onRevealed?: (marker: Marker) => void
+  // Px left of centre to land a picked marker at (clear of a side panel); 0 centres it
+  revealOffsetX?: number
 }
 
 // Cluster icons style themselves inside this class (see clusterIcon)
@@ -23,7 +28,9 @@ const useClusterMarker = ({
   isSelected,
   markerRef,
   onRevealed,
+  revealOffsetX = 0,
 }: UseClusterMarkerParams) => {
+  const map = useMap()
   const isActive = isHighlighted || isSelected
   // Latest callback without re-running the reveal when the caller re-renders
   const onRevealedRef = useRef(onRevealed)
@@ -60,18 +67,28 @@ const useClusterMarker = ({
   }, [clusterRef, isActive, markerRef])
 
   // Reveal. Next tick: on mount (picked before the map opened) the cluster group
-  // only joins the map after this effect, and zoomToShowLayer needs it there.
+  // only joins the map after this effect, and the cluster tree needs it there.
   useEffect(() => {
     const marker = markerRef.current
 
     if (!isSelected || !marker) return undefined
 
-    const timeout = setTimeout(() =>
-      clusterRef.current?.zoomToShowLayer(marker, () => onRevealedRef.current?.(marker)),
-    )
+    const timeout = setTimeout(() => {
+      const group = clusterRef.current
+
+      if (!group) return
+
+      revealMarker({
+        group,
+        map,
+        marker,
+        offsetX: revealOffsetX,
+        onRevealed: (revealed) => onRevealedRef.current?.(revealed),
+      })
+    })
 
     return () => clearTimeout(timeout)
-  }, [clusterRef, isSelected, markerRef])
+  }, [clusterRef, isSelected, map, markerRef, revealOffsetX])
 }
 
 export default useClusterMarker
