@@ -36,6 +36,9 @@ const StationMarker = ({
   const markerRef = useRef<LeafletMarker>(null)
   const { altitude, id, url } = station
   const name = getStationName(station, locale)
+  // Stable: a new array makes react-leaflet move the marker, which re-lays out
+  // (blinks) the open popup on every list hover
+  const position = useMemo<[number, number]>(() => [latitude, longitude], [latitude, longitude])
 
   // Opening another station's popup closes this one first (popupclose, then the
   // other's popupopen), so the selection always ends on the open one
@@ -66,7 +69,7 @@ const StationMarker = ({
       ref={markerRef}
       eventHandlers={eventHandlers}
       icon={stationPinIcon(isSelected || isHighlighted)}
-      position={[latitude, longitude]}
+      position={position}
       // Accessible name for the focusable pin
       title={name}
       zIndexOffset={isSelected || isHighlighted ? 1000 : 0}
