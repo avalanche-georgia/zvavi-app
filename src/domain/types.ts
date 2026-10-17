@@ -309,6 +309,8 @@ export type WeatherStation = Tables<'weather_stations'>
 
 export type WeatherStationFormData = {
   altitude: number
+  latitude: number
+  longitude: number
   nameEn: string
   nameKa: string
   url: string
