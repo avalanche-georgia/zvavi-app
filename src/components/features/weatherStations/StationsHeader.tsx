@@ -34,10 +34,8 @@ const StationsHeader = ({ onViewChange, ref, view }: StationsHeaderProps) => {
   return (
     <div ref={ref} className="flex items-start justify-between gap-3 px-4 pt-4.5 pb-3">
       <div className="min-w-0">
-        <h1 className="m-0 text-2xl leading-[1.1] font-bold tracking-[-.02em]">
-          {t('navigation.weatherStations')}
-        </h1>
-        <p className="text-muted mt-1 text-[13px]">{t('weatherStations.description')}</p>
+        <h1 className="text-title m-0 font-bold">{t('navigation.weatherStations')}</h1>
+        <p className="text-copy-sm text-muted mt-1">{t('weatherStations.description')}</p>
       </div>
       <SegmentedControl
         ariaLabel={t('weatherStations.view.label')}

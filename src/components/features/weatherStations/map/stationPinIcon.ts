@@ -26,8 +26,8 @@ const stationPinIcon = (isSelected = false): DivIcon => {
 
   const diameter = isSelected ? 36 : 30
   const circleClassName = isSelected
-    ? 'bg-brand-blue shadow-[0_0_0_3px_#fff,0_2px_6px_rgb(0_0_0/.35)]'
-    : 'bg-ink shadow-[0_0_0_2px_#fff,0_1px_3px_rgb(0_0_0/.3)]'
+    ? 'bg-brand-blue shadow-marker-selected'
+    : 'bg-ink shadow-marker'
 
   const icon = divIcon({
     className: markerClassName,

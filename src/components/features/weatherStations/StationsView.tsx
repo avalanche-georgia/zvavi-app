@@ -28,14 +28,11 @@ const StationsView = ({ locale, stations }: StationsViewProps) => {
 
   const isMapView = view === 'map' && !isDesktop
 
-  // On mobile the list hides the map, so a row switches to the map first. A tap
-  // also fires mouseenter, and the unmounted row never fires mouseleave — drop it.
-  const handleRowSelect = (id: string) => {
-    setSelectedId(id)
-    if (isDesktop) return
-
+  // A tap on mobile also fires mouseenter, and the row unmounted by the switch
+  // never fires mouseleave — drop the hover with the list
+  const handleViewChange = (nextView: StationsViewMode) => {
     setHoveredId(null)
-    setView('map')
+    setView(nextView)
   }
 
   return (
@@ -55,12 +52,12 @@ const StationsView = ({ locale, stations }: StationsViewProps) => {
       isAsideShownOnMobile={isMapView}
       mobileAsideOffset={headerHeight}
     >
-      <StationsHeader ref={headerRef} onViewChange={setView} view={view} />
+      <StationsHeader ref={headerRef} onViewChange={handleViewChange} view={view} />
       {!isMapView && (
         <StationsList
           locale={locale}
           onHover={setHoveredId}
-          onSelect={handleRowSelect}
+          onSelect={setSelectedId}
           selectedId={selectedId}
           stations={stations}
         />

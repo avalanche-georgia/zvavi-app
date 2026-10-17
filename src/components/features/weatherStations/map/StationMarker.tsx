@@ -1,13 +1,15 @@
 import { useEffect, useMemo, useRef } from 'react'
 import type { WeatherStation } from '@domain/types'
-import type { LeafletEventHandlerFnMap, Marker as LeafletMarker } from 'leaflet'
-import { Marker, Popup, useMap } from 'react-leaflet'
+import type { LeafletEventHandlerFnMap, Marker as LeafletMarker, MarkerClusterGroup } from 'leaflet'
+import { Marker, Popup } from 'react-leaflet'
 
 import stationPinIcon from './stationPinIcon'
 import StationPopup from './StationPopup'
 import getStationName from '../getStationName'
 
 type StationMarkerProps = {
+  // The cluster group the marker lives in
+  clusterRef: React.RefObject<MarkerClusterGroup | null>
   // Its list row is hovered
   isHighlighted: boolean
   isSelected: boolean
@@ -20,8 +22,9 @@ type StationMarkerProps = {
 
 // The popup is the selection: opening it (tap on the pin) selects the station,
 // closing it clears the selection. Selected from outside (its list row), the
-// map pans to the pin and opens the popup.
+// map zooms in until the pin leaves its cluster, then opens the popup.
 const StationMarker = ({
+  clusterRef,
   isHighlighted,
   isSelected,
   latitude,
@@ -30,7 +33,6 @@ const StationMarker = ({
   onSelect,
   station,
 }: StationMarkerProps) => {
-  const map = useMap()
   const markerRef = useRef<LeafletMarker>(null)
   const { altitude, id, url } = station
   const name = getStationName(station, locale)
@@ -50,9 +52,14 @@ const StationMarker = ({
 
     if (!isSelected || !marker || marker.isPopupOpen()) return
 
-    map.panTo([latitude, longitude])
-    marker.openPopup()
-  }, [isSelected, latitude, longitude, map])
+    // Next tick: on mount (selected in the list before the map opened) the cluster
+    // group only joins the map after this effect, and zoomToShowLayer needs it there
+    const timeout = setTimeout(() =>
+      clusterRef.current?.zoomToShowLayer(marker, () => marker.openPopup()),
+    )
+
+    return () => clearTimeout(timeout)
+  }, [clusterRef, isSelected])
 
   return (
     <Marker

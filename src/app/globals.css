@@ -139,6 +139,10 @@
   --shadow-float: 0 6px 24px -8px rgb(0 0 0 / 0.12);
   --shadow-menu: 0 12px 32px -8px rgb(0 0 0 / 0.18);
   --shadow-pin: 0 2px 6px rgb(0 0 0 / 0.35);
+  --shadow-marker: 0 0 0 2px var(--color-surface), 0 1px 3px rgb(0 0 0 / 0.3);
+  --shadow-marker-selected: 0 0 0 3px var(--color-surface), 0 2px 6px rgb(0 0 0 / 0.35);
+  --shadow-marker-cluster:
+    0 0 0 2px var(--color-surface), 0 0 0 6px rgb(27 26 30 / 0.25), 0 1px 4px rgb(0 0 0 / 0.3);
   --shadow-sheet: 0 -10px 40px rgb(0 0 0 / 0.12);
   --shadow-panel: 0 12px 40px rgb(0 0 0 / 0.2), 0 0 0 1px rgb(0 0 0 / 0.04);
 
@@ -268,7 +272,8 @@ button {
 }
 
 .station-popup .leaflet-popup-content {
-  margin: 12px 36px 12px 14px;
+  margin: calc(var(--spacing) * 3) calc(var(--spacing) * 9) calc(var(--spacing) * 3)
+    calc(var(--spacing) * 3.5);
   font: inherit;
   line-height: inherit;
 }
@@ -278,7 +283,7 @@ button {
 }
 
 .station-popup a.leaflet-popup-close-button {
-  top: 6px;
-  right: 6px;
+  top: calc(var(--spacing) * 1.5);
+  right: calc(var(--spacing) * 1.5);
   color: var(--color-muted);
 }

@@ -1,14 +1,17 @@
 'use client'
 
-import { useMemo } from 'react'
+import { useMemo, useRef } from 'react'
 import { BaseMapLayers, baseMapMaxZoom, countryBounds, FitInCountry } from '@components/shared/map'
 import type { WeatherStation } from '@domain/types'
-import { latLngBounds } from 'leaflet'
+import { latLngBounds, type MarkerClusterGroup as LeafletClusterGroup } from 'leaflet'
 import { MapContainer, ZoomControl } from 'react-leaflet'
+import MarkerClusterGroup from 'react-leaflet-cluster'
 
+import stationClusterIcon from './stationClusterIcon'
 import StationMarker from './StationMarker'
 
 import 'leaflet/dist/leaflet.css'
+import 'react-leaflet-cluster/dist/assets/MarkerCluster.css'
 
 export type StationsMapClientProps = {
   // Station whose list row is hovered
@@ -37,6 +40,7 @@ const StationsMapClient = ({
       ),
     [stations],
   )
+  const clusterRef = useRef<LeafletClusterGroup>(null)
   // Memoised: a new bounds object would refit the map on every selection
   const bounds = useMemo(
     () =>
@@ -58,18 +62,27 @@ const StationsMapClient = ({
       <BaseMapLayers />
       <ZoomControl position="topright" />
       <FitInCountry bounds={bounds} />
-      {located.map(({ latitude, longitude, station }) => (
-        <StationMarker
-          key={station.id}
-          isHighlighted={station.id === hoveredId}
-          isSelected={station.id === selectedId}
-          latitude={latitude}
-          locale={locale}
-          longitude={longitude}
-          onSelect={onSelect}
-          station={station}
-        />
-      ))}
+      {/* Clustered like the observation map; zooming in splits the groups */}
+      <MarkerClusterGroup
+        ref={clusterRef}
+        iconCreateFunction={stationClusterIcon}
+        maxClusterRadius={32}
+        showCoverageOnHover={false}
+      >
+        {located.map(({ latitude, longitude, station }) => (
+          <StationMarker
+            key={station.id}
+            clusterRef={clusterRef}
+            isHighlighted={station.id === hoveredId}
+            isSelected={station.id === selectedId}
+            latitude={latitude}
+            locale={locale}
+            longitude={longitude}
+            onSelect={onSelect}
+            station={station}
+          />
+        ))}
+      </MarkerClusterGroup>
     </MapContainer>
   )
 }
