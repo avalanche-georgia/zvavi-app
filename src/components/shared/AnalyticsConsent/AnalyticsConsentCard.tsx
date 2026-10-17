@@ -1,20 +1,22 @@
 'use client'
 
 import { useAnalyticsConsent } from '@components/hooks'
-import { IconButton } from '@components/ui'
+import { IconButton } from '@ds/primitives'
+import { ChartColumn, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 import AnalyticsConsentActions from './AnalyticsConsentActions'
 import PrivacyPolicyLink from './PrivacyPolicyLink'
 
-// One-time, non-blocking ask for visitors who accepted the disclaimer before analytics existed
+// Non-blocking ask for visitors past the disclaimer: shown until they answer, and again each time
+// a "No thanks" expires
 const AnalyticsConsentCard = () => {
   const t = useTranslations()
-  const { setConsent, status } = useAnalyticsConsent()
+  const { setConsent, shouldAsk } = useAnalyticsConsent()
 
-  if (status !== 'pending') return null
+  if (!shouldAsk) return null
 
-  // Closing without answering counts as "No thanks", so the card never comes back
+  // Closing without answering counts as "No thanks"
   const handleDismiss = () => setConsent(false)
 
   return (
@@ -22,18 +24,23 @@ const AnalyticsConsentCard = () => {
       aria-label={t('common.analyticsConsent.title')}
       className="pointer-events-none fixed inset-x-0 bottom-0 z-10 flex justify-center p-4"
     >
-      <div className="pointer-events-auto flex w-full max-w-(--breakpoint-sm) flex-col gap-3 rounded-xl bg-white p-4 shadow-lg ring-1 ring-black/10">
-        <header className="flex items-center gap-2">
-          <h2 className="flex-1 text-sm font-semibold">{t('common.analyticsConsent.title')}</h2>
+      <div className="rounded-card bg-surface shadow-panel border-accent pointer-events-auto flex w-full max-w-(--breakpoint-sm) flex-col gap-4 border-t-4 p-5">
+        <header className="flex items-center gap-3">
+          <span className="bg-accent-soft text-accent grid size-10 shrink-0 place-items-center rounded-full">
+            <ChartColumn aria-hidden className="size-5" />
+          </span>
+          <h2 className="text-heading text-ink flex-1 font-semibold">
+            {t('common.analyticsConsent.title')}
+          </h2>
           <IconButton
             aria-label={t('common.analyticsConsent.closeAndDecline')}
-            iconProps={{ icon: 'xMark' }}
             onClick={handleDismiss}
-            size="sm"
-          />
+          >
+            <X aria-hidden className="size-4.5" />
+          </IconButton>
         </header>
 
-        <p className="text-xs text-gray-600">
+        <p className="text-copy text-body">
           {t('common.analyticsConsent.description')}{' '}
           <PrivacyPolicyLink>{t('common.analyticsConsent.privacyLink')}</PrivacyPolicyLink>
         </p>

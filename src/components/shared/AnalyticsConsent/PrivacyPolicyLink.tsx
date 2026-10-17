@@ -4,7 +4,7 @@ import { routes } from '@/routes'
 
 // Opens in a new tab so the consent choice in progress isn't lost
 const PrivacyPolicyLink = ({ children }: { children: React.ReactNode }) => (
-  <Link className="text-primary underline" href={routes.privacy} target="_blank">
+  <Link className="text-accent underline" href={routes.privacy} target="_blank">
     {children}
   </Link>
 )

@@ -1,8 +1,10 @@
 import posthog from 'posthog-js'
 
 import { posthogProjectToken } from './config'
+import { isDeclineExpired, recordConsentChoice } from './declineExpiry'
 
-// PostHog's own consent state is the source of truth; no separate storage key
+// PostHog's own consent state is the source of truth; declineExpiry only stores when a
+// "No thanks" was given
 export type AnalyticsConsentStatus = 'denied' | 'granted' | 'pending'
 
 const listeners = new Set<VoidFunction>()
@@ -33,6 +35,13 @@ const clearSessionStorageLeftovers = () => {
   }
 }
 
+// Not answered yet, or a "No thanks" that has expired; an "Allow" is never asked again
+export const shouldAskForAnalyticsConsent = () => {
+  const status = getAnalyticsConsent()
+
+  return status === 'pending' || (status === 'denied' && isDeclineExpired())
+}
+
 export const setAnalyticsConsent = (isGranted: boolean) => {
   if (!isAnalyticsEnabled()) return
 
@@ -47,6 +56,8 @@ export const setAnalyticsConsent = (isGranted: boolean) => {
   }
 
   if (!isGranted) clearSessionStorageLeftovers()
+
+  recordConsentChoice(isGranted)
 
   listeners.forEach((listener) => listener())
 }
