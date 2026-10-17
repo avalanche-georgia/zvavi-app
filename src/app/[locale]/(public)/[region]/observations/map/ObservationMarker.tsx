@@ -12,9 +12,9 @@ type ObservationMarkerProps = {
   // Its list card is hovered
   isHighlighted: boolean
   isSelected: boolean
-  point: ObservationPoint
   onClick: (id: number) => void
-  revealOffsetX: number | null
+  point: ObservationPoint
+  revealOffsetX?: number
 }
 
 const ObservationMarker = ({
@@ -39,7 +39,7 @@ const ObservationMarker = ({
     isHighlighted,
     isSelected,
     markerRef,
-    revealOffsetX: revealOffsetX ?? 0,
+    revealOffsetX,
   })
 
   const eventHandlers = { click: () => onClick(id) }

@@ -64,7 +64,7 @@ const ObservationsMapClient = ({
         onMarkerClick={onMarkerClick}
         points={points}
         // Keeps the picked pin clear of the detail panel (480px + 16px inset)
-        revealOffsetX={focus ? detailPanelOffset : null}
+        revealOffsetX={focus ? detailPanelOffset : undefined}
         selectedId={selectedId}
       />
     </MapContainer>

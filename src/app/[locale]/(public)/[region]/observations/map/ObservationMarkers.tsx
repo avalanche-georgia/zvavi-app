@@ -10,11 +10,10 @@ import 'react-leaflet-cluster/dist/assets/MarkerCluster.css'
 
 type ObservationMarkersProps = {
   hoveredId: number | null
-  // Desktop: once a picked pin is out of its cluster, pan it this far left of
-  // centre, clear of the detail panel
-  revealOffsetX: number | null
   onMarkerClick: (id: number) => void
   points: ObservationPoint[]
+  // Desktop: px left of centre a picked pin lands at, clear of the detail panel
+  revealOffsetX?: number
   selectedId: number | null
 }
 

@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import type { Marker, MarkerClusterGroup } from 'leaflet'
 import { useMap } from 'react-leaflet'
 
+import highlightCluster from './highlightCluster'
 import revealMarker from './revealMarker'
 
 type UseClusterMarkerParams = {
@@ -16,9 +17,6 @@ type UseClusterMarkerParams = {
   // Px left of centre to land a picked marker at (clear of a side panel); 0 centres it
   revealOffsetX?: number
 }
-
-// Cluster icons style themselves inside this class (see clusterIcon)
-const highlightedClusterClassName = 'is-highlighted'
 
 // The one list ↔ map mechanism for a marker inside a MarkerClusterGroup, shared
 // by every list + map page (see useListHover for the list side)
@@ -39,46 +37,30 @@ const useClusterMarker = ({
     onRevealedRef.current = onRevealed
   })
 
-  // Highlight: the visible parent cluster gets the class. Re-applied after every
-  // re-clustering (zoom), which rebuilds the cluster icons.
   useEffect(() => {
     const marker = markerRef.current
     const group = clusterRef.current
 
     if (!isActive || !marker || !group) return undefined
 
-    let highlighted: HTMLElement | undefined
+    return highlightCluster(map, group, marker)
+  }, [clusterRef, isActive, map, markerRef])
 
-    const apply = () => {
-      highlighted?.classList.remove(highlightedClusterClassName)
-      const parent = group.getVisibleParent(marker) as Marker | null
-
-      highlighted = parent && parent !== marker ? parent.getElement() : undefined
-      highlighted?.classList.add(highlightedClusterClassName)
-    }
-
-    apply()
-    group.on('animationend', apply)
-
-    return () => {
-      group.off('animationend', apply)
-      highlighted?.classList.remove(highlightedClusterClassName)
-    }
-  }, [clusterRef, isActive, markerRef])
-
-  // Reveal. Next tick: on mount (picked before the map opened) the cluster group
-  // only joins the map after this effect, and the cluster tree needs it there.
+  // Next tick: on mount (picked before the map opened) the cluster group only
+  // joins the map after this effect, and the cluster tree needs it there.
+  // Deselecting (or a newer pick) cancels a reveal still on its way.
   useEffect(() => {
     const marker = markerRef.current
 
     if (!isSelected || !marker) return undefined
 
+    let cancelReveal: VoidFunction | undefined
     const timeout = setTimeout(() => {
       const group = clusterRef.current
 
       if (!group) return
 
-      revealMarker({
+      cancelReveal = revealMarker({
         group,
         map,
         marker,
@@ -87,7 +69,10 @@ const useClusterMarker = ({
       })
     })
 
-    return () => clearTimeout(timeout)
+    return () => {
+      clearTimeout(timeout)
+      cancelReveal?.()
+    }
   }, [clusterRef, isSelected, map, markerRef, revealOffsetX])
 }
 

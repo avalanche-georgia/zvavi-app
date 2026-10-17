@@ -1,5 +1,7 @@
 /// <reference types="leaflet.markercluster" />
-import type { Map as LeafletMap, Marker, MarkerClusterGroup } from 'leaflet'
+import type { LeafletEventHandlerFn, Map as LeafletMap, Marker, MarkerClusterGroup } from 'leaflet'
+
+import offsetCenter from './offsetCenter'
 
 type RevealMarkerParams = {
   group: MarkerClusterGroup
@@ -10,49 +12,89 @@ type RevealMarkerParams = {
   onRevealed: (marker: Marker) => void
 }
 
-// markercluster's own tree: the deepest cluster holding the marker. The marker
-// shows on its own from the zoom after that cluster's.
+// markercluster's tree: the deepest cluster holding the marker — it shows on its
+// own from the zoom after that cluster's. `_animatingZoom`: Leaflet ignores a
+// zooming setView while a zoom animation runs.
 type ClusteredMarker = Marker & { __parent?: { _zoom: number } }
+type AnimatedMap = LeafletMap & { _animatingZoom?: boolean }
 
 // Brings a marker out of its cluster in ONE move — straight to the zoom where it
-// splits out and the centre that puts it `offsetX` left of centre. (zoomToShowLayer
-// centres first, so an offset needed a second, visible slide.)
+// splits out and the centre that puts it `offsetX` left of centre. Returns a
+// cancel: a newer pick (or unmount) drops this reveal and its listeners.
 const revealMarker = ({ group, map, marker, offsetX, onRevealed }: RevealMarkerParams) => {
-  const clusterZoom = (marker as ClusteredMarker).__parent?._zoom ?? -Infinity
-  const zoom = Math.max(map.getZoom(), clusterZoom + 1)
+  let isActive = true
+  const listeners: [LeafletMap | MarkerClusterGroup, string, LeafletEventHandlerFn][] = []
 
-  // Still clustered at max zoom (same spot): markercluster fans it out instead
-  if (zoom > map.getMaxZoom()) {
-    group.zoomToShowLayer(marker, () => onRevealed(marker))
-
-    return
+  const listen = (
+    target: LeafletMap | MarkerClusterGroup,
+    event: string,
+    handler: LeafletEventHandlerFn,
+  ) => {
+    target.on(event, handler)
+    listeners.push([target, event, handler])
   }
 
-  const target = map.unproject(map.project(marker.getLatLng(), zoom).add([offsetX, 0]), zoom)
-  // No offset: a marker already on screen stays put. With one, it must sit there.
-  const isInPlace =
-    offsetX === 0
-      ? map.getBounds().contains(marker.getLatLng())
-      : map.project(target).distanceTo(map.project(map.getCenter())) < 1
-
-  if (zoom === map.getZoom() && isInPlace && map.hasLayer(marker)) {
-    onRevealed(marker)
-
-    return
+  const cancel = () => {
+    isActive = false
+    listeners.forEach(([target, event, handler]) => target.off(event, handler))
   }
 
-  // The marker joins the map with the re-clustering after the move
-  const handleShown = () => {
-    if (!map.hasLayer(marker)) return
+  const finish = () => {
+    if (!isActive) return
 
-    group.off('animationend', handleShown)
-    map.off('moveend', handleShown)
+    cancel()
     onRevealed(marker)
   }
 
-  group.on('animationend', handleShown)
-  map.on('moveend', handleShown)
-  map.setView(target, zoom)
+  const start = () => {
+    const clusterZoom = (marker as ClusteredMarker).__parent?._zoom ?? -Infinity
+    const zoom = Math.max(map.getZoom(), clusterZoom + 1)
+
+    // Still clustered at max zoom (same spot): markercluster fans it out instead
+    if (zoom > map.getMaxZoom()) {
+      group.zoomToShowLayer(marker, () => {
+        if (!isActive) return
+        if (offsetX) map.panTo(offsetCenter(map, marker.getLatLng(), offsetX))
+        finish()
+      })
+
+      return
+    }
+
+    const target = offsetCenter(map, marker.getLatLng(), offsetX, zoom)
+    // No offset: a marker already on screen stays put. With one, it must sit there.
+    const isInPlace =
+      offsetX === 0
+        ? map.getBounds().contains(marker.getLatLng())
+        : map.project(target).distanceTo(map.project(map.getCenter())) < 1
+
+    if (zoom === map.getZoom() && isInPlace && map.hasLayer(marker)) {
+      finish()
+
+      return
+    }
+
+    // The marker joins the map with the re-clustering after the move
+    const handleShown = () => map.hasLayer(marker) && finish()
+
+    listen(group, 'animationend', handleShown)
+    listen(map, 'moveend', handleShown)
+    map.setView(target, zoom)
+  }
+
+  // A zoom already running (a previous pick): start once it lands
+  if ((map as AnimatedMap)._animatingZoom) {
+    const handleZoomEnd = () => {
+      map.off('zoomend', handleZoomEnd)
+      if (isActive) start()
+    }
+
+    listen(map, 'zoomend', handleZoomEnd)
+  } else {
+    start()
+  }
+
+  return cancel
 }
 
 export default revealMarker
