@@ -7,6 +7,8 @@ import { fieldControlClasses } from '../Field'
 
 import { cn } from '@/lib/utils'
 
+export type SelectSize = 'md' | 'sm'
+
 export type SelectOption<TValue extends string> = {
   label: string
   value: TValue
@@ -15,10 +17,19 @@ export type SelectOption<TValue extends string> = {
 type SelectProps<TValue extends string> = {
   className?: string
   disabled?: boolean
+  // Accent border while it narrows something down, e.g. an applied filter
+  isActive?: boolean
   onValueChange: (value: TValue) => void
   options: SelectOption<TValue>[]
   placeholder?: string
+  // md: form fields. sm: toolbars and filter bars, next to sm Buttons
+  size?: SelectSize
   value: TValue | null
+}
+
+const sizeClasses: Record<SelectSize, string> = {
+  md: 'h-11.5 px-3',
+  sm: 'h-10 rounded-control px-3 text-copy',
 }
 
 // Single choice from a short list, in a dropdown. Put it inside <Field> — base-ui
@@ -27,9 +38,11 @@ type SelectProps<TValue extends string> = {
 const Select = <TValue extends string>({
   className,
   disabled,
+  isActive = false,
   onValueChange,
   options,
   placeholder,
+  size = 'md',
   value,
 }: SelectProps<TValue>) => {
   const handleValueChange = (nextValue: TValue | null) => {
@@ -46,8 +59,10 @@ const Select = <TValue extends string>({
       <BaseSelect.Trigger
         className={cn(
           fieldControlClasses,
-          'focus-ring flex h-11.5 cursor-pointer items-center justify-between gap-2 px-3 text-left',
+          'focus-ring flex cursor-pointer items-center justify-between gap-2 text-left',
           'data-popup-open:border-rule-strong',
+          sizeClasses[size],
+          isActive && 'border-accent hover:border-accent data-popup-open:border-accent',
           className,
         )}
       >

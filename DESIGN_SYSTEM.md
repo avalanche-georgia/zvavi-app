@@ -30,7 +30,8 @@ src/components/
 │   ├── primitives/      # Button, Badge, Checkbox, Field, FieldGroup, TextField, NumberField,
 │   │                    # Textarea, ChipGroup, ToggleGrid, SegmentedControl, Select, Stepper, InfoTip,
 │   │                    # IconButton, RatingScale, DateField, Menu, Pagination, SearchField,
-│   │                    # StatusPill, CountBadge, Skeleton, Spinner, AvalancheLoader, Dialog, RadioGroup
+│   │                    # StatusPill, CountBadge, Skeleton, Spinner, AvalancheLoader, Dialog, RadioGroup,
+│   │                    # Popover, Calendar
 │   ├── patterns/        # ClampedText, ContentCard, FormCard, StickyActionBar, SuccessState, DataTable, LoadingState,
 │   │                    # ConfirmDialog, FooterActions, Sheet, Drawer
 │   └── form/            # react-hook-form bindings: FormTextField, FormTextarea, FormNumberField,
@@ -72,11 +73,13 @@ in `features`.
 - **base-ui (`@base-ui/react`)** for all interactive behaviour: Field, ToggleGroup, NumberField, Tabs,
   Dialog, Popover, Select, Menu, and so on.
 - No new Headless UI or Radix usage.
-- Existing exceptions stay until their migration phase:
+- **react-day-picker** for the month grid, only behind ds `primitives/Calendar`. base-ui has no
+  calendar yet; when it ships, only that component changes. Pass `locale` from
+  `react-day-picker/locale` (it carries translated aria labels, Georgian included).
 - Legacy Radix popups (`ui/Select`, `ui/Popover`, `ui/DatePicker`, `InfoIcon`) portal to `body`: never
   put them inside a ds `Sheet` or `Dialog` — the focus trap and outside-press handling break them.
   Use the ds primitives there.
-  - react-day-picker (Calendar)
+- Existing exceptions stay until their migration phase:
   - @dnd-kit (sortable lists)
   - sonner (toasts)
   - react-leaflet (maps)
@@ -176,6 +179,11 @@ Rules:
     `patterns/FooterActions`: buttons always on the right, an optional note (hint or confirmation
     question) on the left — on its own line above the buttons when the footer is narrow.
   - No colour or height overrides through `className` — add a variant instead.
+- **Selects** (`primitives/Select`): size `md` in forms, `sm` in toolbars and filter bars (next to
+  `sm` Buttons). `isActive` gives the accent border while the select narrows a list down. "All …"
+  options use a sentinel value (e.g. `'all'`); `onValueChange` never passes `null`.
+- **Popovers** (`primitives/Popover`): for content that needs more room than a menu — a `Calendar`,
+  a short form. Pass `isOpen` / `onOpenChange` when a Done button inside closes it.
 - **Menus** (`primitives/Menu`): `align` picks the trigger edge (`end` for overflow menus, `start`
   for nav dropdowns). Navigation rows pass `render={<Link href=… />}` to `MenuItem`; `isActive`
   marks the current page.
@@ -252,7 +260,7 @@ Update this table when a legacy component's last consumer is migrated.
 | Checkbox | Headless UI | `primitives/Checkbox` | ☐ |
 | Switch | base-ui | `primitives/Switch` | ✅ |
 | Select | Radix | `primitives/Select` (base-ui) | ☐ |
-| DatePicker, Calendar, TimeInput, DatePickerTimeInput | Headless UI + react-day-picker | `primitives/DateField` | ☐ |
+| DatePicker, Calendar, TimeInput, DatePickerTimeInput | Headless UI + react-day-picker | `primitives/DateField` (form fields), `primitives/Calendar` (month grid, e.g. in a `Popover`) | ☐ |
 | TimePicker | Headless UI | `primitives/DateField` (`withTime`) | ✅ |
 | Modal (+ `shared/ConfirmationDialog`, removed) | Headless UI | `primitives/Dialog` (base-ui), `patterns/ConfirmDialog` | ☐ |
 | Popover | Radix | `primitives/Popover` (base-ui) | ☐ |
