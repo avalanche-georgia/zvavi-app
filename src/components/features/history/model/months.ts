@@ -1,8 +1,6 @@
 import { parseMonthId } from './days'
 import type { ArchiveForecast, ArchiveMonth, ArchiveSort } from './types'
 
-const pad = (value: number) => String(value).padStart(2, '0')
-
 // Nov–Apr: when forecasts are written. Months are 0-based.
 const mainMonths = [10, 11, 0, 1, 2, 3]
 
@@ -27,19 +25,6 @@ export const getActiveMonths = (forecasts: ArchiveForecast[]) =>
     })
     .map(([monthId]) => monthId)
     .sort()
-
-// Nov–Apr of the season (whether or not they have forecasts), then any other
-// active month, in calendar order
-export const getPresetMonths = (seasonStartYear: number, activeMonths: string[]) => {
-  const main = mainMonths.map((month) => {
-    const year = month >= mainMonths[0] ? seasonStartYear : seasonStartYear + 1
-
-    return `${year}-${pad(month + 1)}`
-  })
-  const extra = activeMonths.filter((monthId) => !main.includes(monthId))
-
-  return [...main, ...extra].sort()
-}
 
 export const sortForecasts = (forecasts: ArchiveForecast[], sort: ArchiveSort) =>
   [...forecasts].sort((forecastA, forecastB) => {

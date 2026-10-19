@@ -54,14 +54,16 @@ const DateRangePanel = ({
 
   return (
     <div className="flex w-80 max-w-full flex-col gap-3">
-      <MonthPresets
-        activeMonths={activeMonths}
-        from={from}
-        onMonthSelect={handleMonthSelect}
-        seasonStartYear={season.startYear}
-        to={to}
-      />
+      {activeMonths.length > 0 && (
+        <MonthPresets
+          activeMonths={activeMonths}
+          from={from}
+          onMonthSelect={handleMonthSelect}
+          to={to}
+        />
+      )}
       <Calendar
+        captionLayout="dropdown-years"
         className="mx-auto"
         disabled={[{ before: firstDay }, { after: lastDay }]}
         endMonth={lastDay}
