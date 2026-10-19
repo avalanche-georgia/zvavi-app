@@ -3,6 +3,7 @@
 import { useState } from 'react'
 
 import ChipGroup from './ChipGroup'
+import MultiChipGroup from './MultiChipGroup'
 import FieldGroup from '../Field/FieldGroup'
 
 const options = ['Natural', 'Rider', 'Explosives', 'Vehicle', 'Unknown'].map((label) => ({
@@ -13,6 +14,7 @@ const options = ['Natural', 'Rider', 'Explosives', 'Vehicle', 'Unknown'].map((la
 const ChipGroupGallery = () => {
   const [trigger, setTrigger] = useState<string | null>(null)
   const [when, setWhen] = useState<string | null>('today')
+  const [triggers, setTriggers] = useState<string[]>(['rider'])
 
   return (
     <div className="flex flex-col gap-5">
@@ -29,6 +31,9 @@ const ChipGroupGallery = () => {
           ]}
           value={when}
         />
+      </FieldGroup>
+      <FieldGroup label="Multi-select (MultiChipGroup)">
+        <MultiChipGroup onChange={setTriggers} options={options} value={triggers} />
       </FieldGroup>
     </div>
   )

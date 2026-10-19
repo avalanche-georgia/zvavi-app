@@ -3,6 +3,7 @@
 import { Toggle } from '@base-ui/react/toggle'
 import { ToggleGroup } from '@base-ui/react/toggle-group'
 
+import { chipClasses } from './chipClasses'
 import type { ToggleOption } from '../toggle/types'
 import useSingleToggle from '../toggle/useSingleToggle'
 
@@ -39,12 +40,7 @@ const ChipGroup = <T extends string>({
         <Toggle
           key={option.value}
           aria-label={option.ariaLabel}
-          className={cn(
-            'focus-ring border-rule bg-surface text-copy text-ink flex min-h-10.5 items-center gap-1.5 rounded-full border px-3.5',
-            'hover:border-rule-strong font-medium transition-colors',
-            'data-pressed:border-accent data-pressed:bg-accent data-pressed:text-white',
-            'data-disabled:text-disabled data-disabled:cursor-not-allowed',
-          )}
+          className={chipClasses}
           disabled={option.disabled}
           value={option.value}
         >

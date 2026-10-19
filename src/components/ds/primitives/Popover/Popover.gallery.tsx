@@ -36,7 +36,7 @@ const PopoverGallery = () => {
         isOpen={isOpen}
         onOpenChange={setIsOpen}
         trigger={
-          <Button className="gap-2" size="sm" variant="secondary">
+          <Button isActive={range !== undefined} size="sm" variant="secondary">
             <CalendarDays aria-hidden className="size-4" />
             Dates
           </Button>
