@@ -1,4 +1,5 @@
 import { Suspense } from 'react'
+import { Loading } from '@components/shared'
 import type { Metadata } from 'next'
 import { getLocale, getTranslations } from 'next-intl/server'
 
@@ -28,7 +29,7 @@ const HistoryPage = async () => {
       <div className="mx-auto max-w-240 px-4 pt-5 pb-12 sm:px-6 sm:pt-7">
         <h1 className="text-title-lg font-bold">{t('navigation.archive')}</h1>
         {/* The selected season lives in the URL (useSearchParams) */}
-        <Suspense>
+        <Suspense fallback={<Loading />}>
           <HistoryContent />
         </Suspense>
       </div>

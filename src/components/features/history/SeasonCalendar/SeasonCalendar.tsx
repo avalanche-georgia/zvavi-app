@@ -5,7 +5,13 @@ import { useTranslations } from 'next-intl'
 
 import CalendarCaption from './CalendarCaption'
 import CalendarMonthRow from './CalendarMonthRow'
-import { type ArchiveFilters, type ArchiveForecast, toggleMonthRange, toTbilisiDay } from '../model'
+import {
+  type ArchiveFilters,
+  type ArchiveForecast,
+  toggleMonthRange,
+  toMonthId,
+  toTbilisiDay,
+} from '../model'
 
 type SeasonCalendarProps = {
   activeMonths: string[]
@@ -30,6 +36,11 @@ const SeasonCalendar = ({
   const [hoveredDay, setHoveredDay] = useState<string | null>(null)
   const today = toTbilisiDay(new Date())
 
+  // Only days in a shown row — off-season spill-over has no cells to count
+  const daysCovered = [...dayMap.keys()].filter((day) =>
+    activeMonths.includes(toMonthId(day)),
+  ).length
+
   const handleMonthToggle = (monthId: string) =>
     onFiltersChange(toggleMonthRange(filters.from, filters.to, monthId))
 
@@ -38,7 +49,7 @@ const SeasonCalendar = ({
       <header className="mb-3 flex items-baseline justify-between gap-3">
         <h2 className="text-copy-lg font-semibold">{t('forecast.history.glance.title')}</h2>
         <span className="text-copy-sm text-muted">
-          {t('forecast.history.glance.daysCovered', { count: dayMap.size })}
+          {t('forecast.history.glance.daysCovered', { count: daysCovered })}
         </span>
       </header>
       <div className="grid grid-cols-[2.5rem_repeat(31,minmax(0,1fr))] gap-0.75">

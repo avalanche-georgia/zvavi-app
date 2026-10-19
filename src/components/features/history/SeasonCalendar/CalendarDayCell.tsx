@@ -51,6 +51,9 @@ const CalendarDayCell = ({
       onFocus={() => onDayHover(day)}
       onMouseEnter={() => onDayHover(day)}
       onMouseLeave={() => onDayHover(null)}
+      // ~190 days would bury the filters for keyboard users; the list below
+      // holds the same forecasts
+      tabIndex={-1}
       type="button"
     />
   )

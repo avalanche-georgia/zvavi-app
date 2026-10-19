@@ -15,7 +15,9 @@ type SeasonTabsProps = {
 // The latest seasons as chips (2 on phones, 3 wider), older ones in "Earlier"
 const SeasonTabs = ({ onSeasonChange, season, seasons }: SeasonTabsProps) => {
   const t = useTranslations()
-  const isWide = useMediaQuery('(min-width: 40rem)', { initializeWithValue: false })
+  // Client-only (it renders after the list query), so reading the query
+  // up front avoids a 2 → 3 chip flash
+  const isWide = useMediaQuery('(min-width: 40rem)')
 
   const chipSeasons = seasons.slice(0, isWide ? 3 : 2)
   const earlierSeasons = seasons.slice(chipSeasons.length)
@@ -51,6 +53,7 @@ const SeasonTabs = ({ onSeasonChange, season, seasons }: SeasonTabsProps) => {
       />
       {earlierSeasons.length > 0 && (
         <Select
+          ariaLabel={t('forecast.history.earlierSeasons')}
           className="w-auto shrink-0"
           isActive={isEarlier}
           onValueChange={handleSeasonChange}

@@ -8,6 +8,7 @@ forecast:
     ledeEmpty: 'Every published avalanche forecast for {regionName} will appear here.'
     seasons: 'Seasons'
     earlier: 'Earlier'
+    earlierSeasons: 'Earlier seasons'
     seasonOption: '{season} · {count}'
     elevationScale: 'Danger by elevation'
     elevationLevel: '{zone}: {level}'
@@ -19,6 +20,7 @@ forecast:
     filters:
       label: 'Filter forecasts'
       levels: 'Danger level'
+      problem: 'Avalanche problem'
       dates: 'Dates'
       dateRange: 'Date range'
       clearDates: 'Clear dates'

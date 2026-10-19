@@ -8,6 +8,7 @@ forecast:
     ledeEmpty: '{regionName}: ზვავის ყველა გამოქვეყნებული პროგნოზი აქ გამოჩნდება.'
     seasons: 'სეზონები'
     earlier: 'ადრინდელი'
+    earlierSeasons: 'ადრინდელი სეზონები'
     seasonOption: '{season} · {count}'
     elevationScale: 'საფრთხე სიმაღლის მიხედვით'
     elevationLevel: '{zone}: {level}'
@@ -19,6 +20,7 @@ forecast:
     filters:
       label: 'პროგნოზების ფილტრი'
       levels: 'საფრთხის დონე'
+      problem: 'ზვავის პრობლემა'
       dates: 'თარიღები'
       dateRange: 'თარიღების დიაპაზონი'
       clearDates: 'თარიღების გასუფთავება'

@@ -7,7 +7,7 @@ type ForecastMetaProps = {
   forecaster: string | null
   // The problem filter, highlighted among the tags
   problem: AvalancheProblemType | null
-  problems: Pick<Problem, 'type'>[]
+  problems: Pick<Problem, 'order' | 'type'>[]
 }
 
 // Avalanche problem tags, then "· forecaster"
@@ -18,9 +18,9 @@ const ForecastMeta = ({ forecaster, problem, problems }: ForecastMetaProps) => {
 
   return (
     <div className="mt-2 flex flex-wrap items-center gap-1.5">
-      {problems.map(({ type }) => (
+      {problems.map(({ order, type }) => (
         <span
-          key={type}
+          key={order}
           className={cn(
             'rounded-badge text-caption inline-flex h-6 items-center px-2',
             type === problem

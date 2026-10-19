@@ -39,15 +39,18 @@ export const eachDay = (from: string, to: string) =>
     format(date, 'yyyy-MM-dd'),
   )
 
-// Unpublished rows (no publishedAt) can't be placed in time, so they're dropped
+// Unpublished rows (no publishedAt) can't be placed in time, so they're dropped.
+// A validity ending before publication (bad data) shrinks to the publish day,
+// so the list, filters and calendar all see the same one-day range.
 export const toArchiveForecast = (forecast: HistoryListItem): ArchiveForecast | null => {
   if (!forecast.publishedAt) return null
 
   const startDay = toTbilisiDay(forecast.publishedAt)
+  const validUntilDay = toTbilisiDay(forecast.validUntil)
 
   return {
     ...forecast,
-    endDay: toTbilisiDay(forecast.validUntil),
+    endDay: validUntilDay < startDay ? startDay : validUntilDay,
     monthId: toMonthId(startDay),
     publishedAt: forecast.publishedAt,
     startDay,

@@ -1,19 +1,17 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Button, IconButton, Popover } from '@ds/primitives'
 import { CalendarDays, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 import DateRangePanel from './DateRangePanel'
 import useDateFilterLabel from './useDateFilterLabel'
-import type { ArchiveSeason } from '../model'
+import { type ArchiveDateRange, type ArchiveSeason, emptyDateRange } from '../model'
 
-type DateRange = { from: string | null; to: string | null }
-
-type DateRangeFilterProps = DateRange & {
+type DateRangeFilterProps = ArchiveDateRange & {
   activeMonths: string[]
-  onRangeChange: (range: DateRange) => void
+  onRangeChange: (range: ArchiveDateRange) => void
   season: ArchiveSeason
 }
 
@@ -27,16 +25,22 @@ const DateRangeFilter = ({
   to,
 }: DateRangeFilterProps) => {
   const t = useTranslations()
+  const panelRef = useRef<HTMLDivElement>(null)
   const [isOpen, setIsOpen] = useState(false)
   const label = useDateFilterLabel(from, to)
   const isActive = from !== null || to !== null
 
-  const handleClear = () => onRangeChange({ from: null, to: null })
+  // Keyboard users land on the calendar's focusable day, not the month arrows
+  const getInitialFocus = () =>
+    panelRef.current?.querySelector<HTMLElement>('button[data-day][tabindex="0"]') ?? true
+
+  const handleClear = () => onRangeChange(emptyDateRange)
 
   return (
     <div className="flex items-center gap-0.5">
       <Popover
         ariaLabel={t('forecast.history.filters.dateRange')}
+        initialFocus={getInitialFocus}
         isOpen={isOpen}
         onOpenChange={setIsOpen}
         trigger={
@@ -47,9 +51,10 @@ const DateRangeFilter = ({
         }
       >
         <DateRangePanel
+          ref={panelRef}
           activeMonths={activeMonths}
           from={from}
-          onClose={() => setIsOpen(false)}
+          onPanelClose={() => setIsOpen(false)}
           onRangeChange={onRangeChange}
           season={season}
           to={to}

@@ -28,12 +28,15 @@ const HistoryForecastRow = ({ forecast, problem, regionId }: HistoryForecastRowP
   const { formatRange } = useArchiveFormat()
   const { avalancheProblems, endDay, forecaster, hazardLevels, id, startDay } = forecast
   const summary = toPlainText(forecast.summary)
+  const rowId = getForecastRowId(id)
 
   return (
+    // Named by level + dates only; the summary and tags would make a long link name
     <Link
+      aria-labelledby={`${rowId}-label`}
       className="group focus-ring hover:bg-canvas @container block transition-colors"
       href={routes.forecastsByRegion(regionId).view(id)}
-      id={getForecastRowId(id)}
+      id={rowId}
     >
       <div className="grid grid-cols-[auto_minmax(0,1fr)_auto] gap-x-3 gap-y-0.5 py-3.5 pr-3 pl-3.5 @min-[720px]:grid-cols-[3rem_10.5rem_minmax(0,1fr)_auto] @min-[720px]:items-center @min-[720px]:gap-x-4 @min-[720px]:py-4 @min-[720px]:pr-4 @min-[720px]:pl-4.5">
         <HazardTile
@@ -42,7 +45,7 @@ const HistoryForecastRow = ({ forecast, problem, regionId }: HistoryForecastRowP
           palette="public"
           size="lg"
         />
-        <div className="min-w-0">
+        <div className="min-w-0" id={`${rowId}-label`}>
           <p className="text-copy-lg font-semibold">
             {t(hazardLevelNamesByScale[hazardLevels.overall])}
           </p>

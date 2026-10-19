@@ -1,7 +1,9 @@
 import { eachDay, getMonthRange } from './days'
-import type { ArchiveFilters, ArchiveForecast } from './types'
+import type { ArchiveDateRange, ArchiveFilters, ArchiveForecast } from './types'
 
 export const emptyFilters: ArchiveFilters = { from: null, levels: [], problem: null, to: null }
+
+export const emptyDateRange: ArchiveDateRange = { from: null, to: null }
 
 export const hasActiveFilters = ({ from, levels, problem, to }: ArchiveFilters) =>
   levels.length > 0 || problem !== null || from !== null || to !== null
@@ -23,8 +25,11 @@ export const isWholeMonth = (from: string | null, to: string | null, monthId: st
 }
 
 // One tap picks the whole month, a second one clears it
-export const toggleMonthRange = (from: string | null, to: string | null, monthId: string) =>
-  isWholeMonth(from, to, monthId) ? { from: null, to: null } : getMonthRange(monthId)
+export const toggleMonthRange = (
+  from: string | null,
+  to: string | null,
+  monthId: string,
+): ArchiveDateRange => (isWholeMonth(from, to, monthId) ? emptyDateRange : getMonthRange(monthId))
 
 // Day → the forecast covering it. Where ranges overlap, the later-published one wins.
 export const buildDayMap = (forecasts: ArchiveForecast[]) => {
@@ -34,9 +39,7 @@ export const buildDayMap = (forecasts: ArchiveForecast[]) => {
   )
 
   for (const forecast of oldestFirst) {
-    const endDay = forecast.endDay < forecast.startDay ? forecast.startDay : forecast.endDay
-
-    for (const day of eachDay(forecast.startDay, endDay)) dayMap.set(day, forecast)
+    for (const day of eachDay(forecast.startDay, forecast.endDay)) dayMap.set(day, forecast)
   }
 
   return dayMap

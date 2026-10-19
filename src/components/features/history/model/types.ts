@@ -32,3 +32,5 @@ export type ArchiveFilters = {
 }
 
 export type ArchiveSort = 'asc' | 'desc'
+
+export type ArchiveDateRange = Pick<ArchiveFilters, 'from' | 'to'>

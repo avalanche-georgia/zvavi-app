@@ -3,8 +3,8 @@ import { formatSeasonLabel, getSeasonStartYear, isSeasonMonth } from '@domain/se
 import { parseMonthId, toMonthId } from './days'
 import type { ArchiveForecast, ArchiveSeason } from './types'
 
-const getForecastSeason = (forecast: ArchiveForecast) => {
-  const { month, year } = parseMonthId(forecast.monthId)
+const getMonthSeason = (monthId: string) => {
+  const { month, year } = parseMonthId(monthId)
 
   return getSeasonStartYear(year, month)
 }
@@ -24,15 +24,17 @@ export const groupBySeason = (forecasts: ArchiveForecast[], today: string): Arch
   const bySeason = new Map<number, ArchiveForecast[]>()
 
   for (const forecast of forecasts) {
-    const startYear = getForecastSeason(forecast)
+    const startYear = getMonthSeason(forecast.monthId)
 
     bySeason.set(startYear, [...(bySeason.get(startYear) ?? []), forecast])
   }
 
-  const { month, year } = parseMonthId(toMonthId(today))
-  const currentSeason = getSeasonStartYear(year, month)
+  const todayMonth = toMonthId(today)
+  const currentSeason = getMonthSeason(todayMonth)
 
-  if (isSeasonMonth(month) && !bySeason.has(currentSeason)) bySeason.set(currentSeason, [])
+  if (isSeasonMonth(parseMonthId(todayMonth).month) && !bySeason.has(currentSeason)) {
+    bySeason.set(currentSeason, [])
+  }
 
   return [...bySeason.entries()]
     .sort(([yearA], [yearB]) => yearB - yearA)

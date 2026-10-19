@@ -43,6 +43,7 @@ const ProblemSelect = ({ forecasts, onProblemChange, problem }: ProblemSelectPro
 
   return (
     <Select
+      ariaLabel={t('forecast.history.filters.problem')}
       className="w-auto max-w-65 min-w-0 flex-1 sm:flex-none"
       isActive={problem !== null}
       onValueChange={handleValueChange}

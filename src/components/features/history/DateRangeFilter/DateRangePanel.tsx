@@ -7,16 +7,22 @@ import { useLocale, useTranslations } from 'next-intl'
 import type { DateRange as DayPickerRange } from 'react-day-picker'
 
 import MonthPresets from './MonthPresets'
-import { type ArchiveSeason, getSeasonBounds, toggleMonthRange } from '../model'
+import {
+  type ArchiveDateRange,
+  type ArchiveSeason,
+  emptyDateRange,
+  getSeasonBounds,
+  toggleMonthRange,
+  toTbilisiDay,
+} from '../model'
 
 import { getDayPickerLocale } from '@/lib/dayPickerLocale'
 
-type DateRange = { from: string | null; to: string | null }
-
-type DateRangePanelProps = DateRange & {
+type DateRangePanelProps = ArchiveDateRange & {
   activeMonths: string[]
-  onClose: VoidFunction
-  onRangeChange: (range: DateRange) => void
+  onPanelClose: VoidFunction
+  onRangeChange: (range: ArchiveDateRange) => void
+  ref?: React.Ref<HTMLDivElement>
   season: ArchiveSeason
 }
 
@@ -26,8 +32,9 @@ const toDay = (date: Date | undefined) => (date ? format(date, 'yyyy-MM-dd') : n
 const DateRangePanel = ({
   activeMonths,
   from,
-  onClose,
+  onPanelClose,
   onRangeChange,
+  ref,
   season,
   to,
 }: DateRangePanelProps) => {
@@ -53,7 +60,7 @@ const DateRangePanel = ({
   }
 
   return (
-    <div className="flex w-80 max-w-full flex-col gap-3">
+    <div ref={ref} className="flex w-80 max-w-full flex-col gap-3">
       {activeMonths.length > 0 && (
         <MonthPresets
           activeMonths={activeMonths}
@@ -74,16 +81,14 @@ const DateRangePanel = ({
         onSelect={handleSelect}
         selected={selected}
         startMonth={firstDay}
+        // Georgian "today", like the rest of the archive
+        today={parseISO(toTbilisiDay(new Date()))}
       />
       <div className="border-rule flex justify-end gap-2 border-t pt-3">
-        <Button
-          onClick={() => onRangeChange({ from: null, to: null })}
-          size="sm"
-          variant="secondary"
-        >
+        <Button onClick={() => onRangeChange(emptyDateRange)} size="sm" variant="secondary">
           {t('forecast.history.filters.reset')}
         </Button>
-        <Button onClick={onClose} size="sm" variant="primary">
+        <Button onClick={onPanelClose} size="sm" variant="primary">
           {t('forecast.history.filters.done')}
         </Button>
       </div>
