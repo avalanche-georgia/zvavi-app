@@ -44,7 +44,7 @@ const SeasonTabs = ({ onSeasonChange, season, seasons }: SeasonTabsProps) => {
     <div className="scrollbar-hide -mx-4 mt-4.5 flex gap-1.5 overflow-x-auto px-4 sm:-mx-6 sm:px-6">
       <ChipGroup
         ariaLabel={t('forecast.history.seasons')}
-        className="flex-nowrap"
+        className="flex-nowrap *:shrink-0 *:whitespace-nowrap"
         onChange={handleSeasonChange}
         options={chipOptions}
         value={isEarlier ? null : String(season.startYear)}

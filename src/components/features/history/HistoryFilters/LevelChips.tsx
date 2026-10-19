@@ -43,7 +43,7 @@ const LevelChips = ({ forecasts, levels, onLevelsChange }: LevelChipsProps) => {
   return (
     <MultiChipGroup
       ariaLabel={t('forecast.history.filters.levels')}
-      className="scrollbar-hide -mx-4 flex-nowrap overflow-x-auto px-4 sm:mx-0 sm:flex-wrap sm:px-0"
+      className="scrollbar-hide -mx-4 flex-nowrap overflow-x-auto px-4 *:shrink-0 *:whitespace-nowrap sm:mx-0 sm:flex-wrap sm:px-0"
       onChange={onLevelsChange}
       options={options}
       value={levels}
