@@ -3,7 +3,7 @@
 'use client'
 
 import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from 'lucide-react'
-import { type ChevronProps, DayPicker } from 'react-day-picker'
+import { type ChevronProps, DayPicker, type Locale } from 'react-day-picker'
 
 import { calendarClasses } from './calendarClasses'
 import CalendarDayButton from './CalendarDayButton'
@@ -11,7 +11,9 @@ import CalendarNavButton from './CalendarNavButton'
 
 import { cn } from '@/lib/utils'
 
-export type CalendarProps = React.ComponentProps<typeof DayPicker>
+// locale is required: left out, a Georgian page would get English month names
+// and aria labels
+export type CalendarProps = React.ComponentProps<typeof DayPicker> & { locale: Locale }
 
 const chevrons = { down: ChevronDown, left: ChevronLeft, right: ChevronRight, up: ChevronUp }
 

@@ -22,13 +22,14 @@ const CalendarDayButton = ({ className, day, modifiers, ...props }: DayButtonPro
       {...props}
       ref={ref}
       className={cn(
-        'focus-ring rounded-control text-copy relative inline-grid size-10 place-items-center transition-colors',
-        'disabled:text-disabled disabled:cursor-not-allowed',
-        modifiers.today && 'font-semibold',
-        isFilled
-          ? 'bg-accent hover:bg-accent-hover text-white'
-          : 'text-ink enabled:hover:bg-tile-hover',
-        modifiers.today && !isFilled && 'text-accent',
+        'focus-ring rounded-control text-copy text-ink relative inline-grid size-10 place-items-center transition-colors',
+        modifiers.today && 'text-accent font-semibold',
+        modifiers.outside && 'text-muted',
+        isFilled && 'bg-accent hover:bg-accent-hover text-white',
+        !isFilled && !modifiers.disabled && 'hover:bg-tile-hover',
+        // From modifiers, not :disabled — react-day-picker drops the attribute
+        // while a disabled day has keyboard focus
+        modifiers.disabled && 'text-disabled cursor-not-allowed',
         className,
       )}
       data-day={day.isoDate}

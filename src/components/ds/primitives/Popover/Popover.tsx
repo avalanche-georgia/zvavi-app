@@ -6,9 +6,12 @@ export type PopoverAlign = 'center' | 'end' | 'start'
 
 type PopoverProps = {
   align?: PopoverAlign
-  // Accessible name of the popup when no heading inside names it
-  ariaLabel?: string
+  // Accessible name of the popup (a dialog)
+  ariaLabel: string
   children: React.ReactNode
+  // What gets focus on open; by default the first focusable element. A calendar
+  // passes its focusable day, so keyboard users land on the grid.
+  initialFocus?: React.ComponentProps<typeof BasePopover.Popup>['initialFocus']
   isOpen?: boolean
   onOpenChange?: (isOpen: boolean) => void
   // The control that opens it, e.g. a filter Button
@@ -22,6 +25,7 @@ const Popover = ({
   align = 'start',
   ariaLabel,
   children,
+  initialFocus,
   isOpen,
   onOpenChange,
   trigger,
@@ -33,6 +37,7 @@ const Popover = ({
         <BasePopover.Popup
           aria-label={ariaLabel}
           className="rounded-card border-rule bg-surface shadow-menu max-w-(--available-width) origin-(--transform-origin) border p-3 outline-hidden transition-[opacity,scale] duration-150 data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0"
+          initialFocus={initialFocus}
         >
           {children}
         </BasePopover.Popup>
