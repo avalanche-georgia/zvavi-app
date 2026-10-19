@@ -25,6 +25,7 @@
   --animate-tooltip-in: tooltipIn 0.15s ease-out;
   --animate-tooltip-out: tooltipOut 0.1s ease-in;
   --animate-copy-pop: copyPop 0.35s ease-out;
+  --animate-row-flash: rowFlash 1.6s ease-out;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -179,6 +180,15 @@
     }
     to {
       transform: scale(0.95);
+    }
+  }
+  /* A list row the page just scrolled to */
+  @keyframes rowFlash {
+    from {
+      background-color: var(--color-accent-soft);
+    }
+    to {
+      background-color: var(--color-surface);
     }
   }
   @keyframes copyPop {

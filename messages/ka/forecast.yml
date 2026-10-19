@@ -1,14 +1,46 @@
 forecast:
   pageTitle: '{regionName} ზვავის პროგნოზი'
   forecastAreaPageTitle: '{regionName} პროგნოზის ტერიტორია'
-  historyPageTitle: '{regionName} პროგნოზების ისტორია'
   forecasterProfile: '{name} — პროფილი'
 
   history:
-    emptyTitle: 'პროგნოზები ჯერ არ არის'
-    empty: 'ამ რეგიონში ზვავის პროგნოზი ჯერ არ გამოქვეყნებულა.'
-    winterSeason: 'ზამთარი'
-    hazardIconAlt: 'საფრთხის დონე'
+    lede: '{regionName}: ზვავის ყველა გამოქვეყნებული პროგნოზი — სულ {total}, {since}-დან.'
+    ledeEmpty: '{regionName}: ზვავის ყველა გამოქვეყნებული პროგნოზი აქ გამოჩნდება.'
+    seasons: 'სეზონები'
+    earlier: 'ადრინდელი'
+    seasonOption: '{season} · {count}'
+    elevationScale: 'საფრთხე სიმაღლის მიხედვით'
+    elevationLevel: '{zone}: {level}'
+    glance:
+      title: 'სეზონი ერთი შეხედვით'
+      daysCovered: 'დაფარულია {count} დღე'
+      hint: 'დააჭირეთ დღეს მის პროგნოზზე გადასასვლელად'
+      dayLabel: '{date}: {level}'
+    filters:
+      label: 'პროგნოზების ფილტრი'
+      levels: 'საფრთხის დონე'
+      dates: 'თარიღები'
+      dateRange: 'თარიღების დიაპაზონი'
+      clearDates: 'თარიღების გასუფთავება'
+      months: 'თვეები'
+      reset: 'გასუფთავება'
+      done: 'მზადაა'
+      allProblems: 'ზვავის ყველა პრობლემა'
+      problemOption: '{problem} ({count})'
+      newest: 'ჯერ ახალი'
+      oldest: 'ჯერ ძველი'
+      count: '{count} პროგნოზი'
+      shown: '{shown} / {total}'
+      clear: 'გასუფთავება'
+    empty:
+      noneTitle: 'პროგნოზები ჯერ არ არის'
+      noneText: 'ამ რეგიონში ზვავის პროგნოზი ჯერ არ გამოქვეყნებულა.'
+      seasonTitle: 'ამ სეზონში პროგნოზები ჯერ არ არის'
+      seasonText: 'პროგნოზები, როგორც წესი, დეკემბერში იწყება, როცა საკმარისი თოვლი მოვა.'
+      seeLatest: 'ბოლო პროგნოზის ნახვა'
+      filtersTitle: 'შესაბამისი პროგნოზები ვერ მოიძებნა'
+      filtersText: 'სცადეთ სხვა თარიღები, საფრთხის დონე ან ზვავის პრობლემა.'
+      clearFilters: 'ფილტრების გასუფთავება'
 
   staleBanner:
     message: 'ეს ძველი პროგნოზია.'
@@ -23,9 +55,6 @@ forecast:
     title: 'პროგნოზები ჯერ არ არის'
     message: 'ვეძებთ ადამიანს, რომელიც ამ რეგიონისთვის პროგნოზებს დაწერს.'
     action: 'გახდით პროგნოზისტი'
-
-  noForecast:
-    backToHome: 'მთავარ გვერდზე დაბრუნება'
 
   hazardLevels:
     considerable: 'მნიშვნელოვანი'

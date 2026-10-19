@@ -1,6 +1,6 @@
+import { Suspense } from 'react'
 import type { Metadata } from 'next'
 import { getLocale, getTranslations } from 'next-intl/server'
-import { PageWrapper } from 'src/components/layout'
 
 import HistoryContent from './HistoryContent'
 
@@ -20,16 +20,19 @@ export const generateMetadata = async ({ params }: HistoryPageProps): Promise<Me
   }
 }
 
-const HistoryPage = async ({ params }: HistoryPageProps) => {
-  const { region: regionId } = await params
+const HistoryPage = async () => {
   const t = await getTranslations()
 
   return (
-    <PageWrapper
-      title={t('forecast.historyPageTitle', { regionName: t(`regions.names.${regionId}`) })}
-    >
-      <HistoryContent />
-    </PageWrapper>
+    <div className="bg-canvas text-ink">
+      <div className="mx-auto max-w-240 px-4 pt-5 pb-12 sm:px-6 sm:pt-7">
+        <h1 className="text-title-lg font-bold">{t('navigation.archive')}</h1>
+        {/* The selected season lives in the URL (useSearchParams) */}
+        <Suspense>
+          <HistoryContent />
+        </Suspense>
+      </div>
+    </div>
   )
 }
 
