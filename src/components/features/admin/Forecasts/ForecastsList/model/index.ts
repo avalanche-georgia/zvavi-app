@@ -1,4 +1,3 @@
 export * from './dateRange'
 export * from './filterForecasts'
 export * from './listParams'
-export * from './plainText'
