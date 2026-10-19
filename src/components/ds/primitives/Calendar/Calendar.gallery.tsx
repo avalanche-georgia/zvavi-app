@@ -9,6 +9,7 @@ import Calendar from './Calendar'
 const today = new Date()
 const seasonStart = new Date(today.getFullYear(), today.getMonth() - 1, 5)
 const seasonEnd = new Date(today.getFullYear(), today.getMonth() + 1, 20)
+const twoYearsAgo = new Date(today.getFullYear() - 2, 0, 1)
 
 const GalleryCell = ({ children, title }: { children: React.ReactNode; title: string }) => (
   <div className="flex flex-col gap-2">
@@ -21,6 +22,7 @@ const CalendarGallery = () => {
   const [day, setDay] = useState<Date | undefined>(today)
   const [range, setRange] = useState<DateRange | undefined>()
   const [boundedRange, setBoundedRange] = useState<DateRange | undefined>()
+  const [pastDay, setPastDay] = useState<Date | undefined>()
 
   return (
     <div className="flex flex-wrap gap-6">
@@ -39,6 +41,17 @@ const CalendarGallery = () => {
           onSelect={setBoundedRange}
           selected={boundedRange}
           startMonth={seasonStart}
+        />
+      </GalleryCell>
+      <GalleryCell title="Year dropdown (captionLayout dropdown-years)">
+        <Calendar
+          captionLayout="dropdown-years"
+          endMonth={today}
+          locale={enUS}
+          mode="single"
+          onSelect={setPastDay}
+          selected={pastDay}
+          startMonth={twoYearsAgo}
         />
       </GalleryCell>
     </div>
