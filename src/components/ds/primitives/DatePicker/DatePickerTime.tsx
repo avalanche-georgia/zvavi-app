@@ -19,7 +19,8 @@ type DatePickerTimeProps = {
 // The time beside a DatePicker, always 24-hour (a native time input follows the
 // browser's 12 / 24-hour setting, not the page). Typing is free; leaving the
 // field or pressing Enter applies it, and anything that isn't a time goes back.
-// A plain <input>, not Field.Control: the <Field> label keeps naming the date.
+// A plain <input>, not Field.Control: the <Field> label keeps naming the date, so
+// the Field's error reaches it through the `in-data-invalid` variant.
 const DatePickerTime = ({
   ariaLabel,
   disabled,
@@ -28,7 +29,14 @@ const DatePickerTime = ({
   value,
 }: DatePickerTimeProps) => {
   const [draft, setDraft] = useState<string | null>(null)
+  const [shownValue, setShownValue] = useState(value)
   const isInvalid = draft !== null && draft.trim() !== '' && parseTime(draft) === null
+
+  // A new value from outside (a form reset, a date shortcut) drops a half-typed time
+  if (value !== shownValue) {
+    setShownValue(value)
+    setDraft(null)
+  }
 
   const commit = () => {
     const time = draft === null ? null : parseTime(draft)
@@ -40,7 +48,12 @@ const DatePickerTime = ({
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => setDraft(event.target.value)
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') commit()
+    if (event.key === 'Enter') {
+      // Applies the time; inside a form it must not submit it too
+      event.preventDefault()
+      commit()
+    }
+
     if (event.key === 'Escape') setDraft(null)
   }
 
@@ -52,7 +65,7 @@ const DatePickerTime = ({
       className={cn(
         fieldControlClasses,
         controlSizeClasses[size],
-        'focus-ring placeholder:text-placeholder aria-invalid:border-danger w-24 shrink-0 tabular-nums',
+        'focus-ring placeholder:text-placeholder aria-invalid:border-danger in-data-invalid:border-danger w-24 shrink-0 tabular-nums',
       )}
       data-disabled={disabled ? '' : undefined}
       disabled={disabled}

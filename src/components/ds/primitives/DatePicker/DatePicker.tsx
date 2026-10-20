@@ -1,13 +1,11 @@
 'use client'
 
-import { X } from 'lucide-react'
-
+import DatePickerClearButton from './DatePickerClearButton'
 import DatePickerPanel from './DatePickerPanel'
 import DatePickerTime from './DatePickerTime'
 import DatePickerTrigger from './DatePickerTrigger'
 import type { DatePickerProps } from './types'
 import useDatePicker from './useDatePicker'
-import { IconButton } from '../IconButton'
 import { Popover } from '../Popover'
 
 import { cn } from '@/lib/utils'
@@ -25,66 +23,75 @@ const DatePicker = ({
   locale,
   max,
   min,
+  onBlur,
   onValueChange,
   placeholder,
+  ref,
+  required = false,
   size = 'md',
   timeLabel,
+  today = new Date(),
   todayLabel,
   value,
   withTime = false,
 }: DatePickerProps) => {
   const {
     bounds,
-    getInitialFocus,
     handleClear,
     handleDaySelect,
     handleTimeChange,
     isOpen,
-    isTodayAllowed,
-    panelRef,
     setIsOpen,
+    setTriggerRef,
     timeText,
-  } = useDatePicker({ defaultTime, max, min, onValueChange, value, withTime })
-  const isClearable = !!clearLabel && !!value && !disabled
+  } = useDatePicker({
+    defaultTime,
+    max,
+    min,
+    onValueChange,
+    ref,
+    today,
+    value,
+    withTime,
+  })
+  // Only while there is a value to clear
+  const activeClearLabel = value && !disabled ? clearLabel : undefined
 
   return (
     <div className={cn('flex gap-2', className)}>
       <div className="relative min-w-0 flex-1">
         <Popover
           ariaLabel={calendarLabel}
-          initialFocus={getInitialFocus}
+          // The calendar focuses its day itself (autoFocus)
+          initialFocus={false}
           isOpen={isOpen}
           onOpenChange={setIsOpen}
           trigger={
             <DatePickerTrigger
+              ref={setTriggerRef}
               ariaLabel={ariaLabel}
               disabled={disabled}
-              hasClearButton={isClearable}
+              hasClearButton={!!activeClearLabel}
               locale={locale}
+              onBlur={onBlur}
               placeholder={placeholder}
+              required={required}
               size={size}
               value={value}
             />
           }
         >
           <DatePickerPanel
-            ref={panelRef}
             bounds={bounds}
-            isTodayAllowed={isTodayAllowed}
             locale={locale}
             onDaySelect={handleDaySelect}
+            today={today}
             todayLabel={todayLabel}
             value={value}
           />
         </Popover>
-        {isClearable && (
-          <IconButton
-            aria-label={clearLabel}
-            className="absolute top-1/2 right-1 -translate-y-1/2"
-            onClick={handleClear}
-          >
-            <X aria-hidden className="size-4" />
-          </IconButton>
+        {activeClearLabel && (
+          <DatePickerClearButton label={activeClearLabel} onClear={handleClear} />
         )}
       </div>
       {withTime && (

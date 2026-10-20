@@ -1,33 +1,33 @@
 'use client'
 
-import type { Locale, Matcher } from 'react-day-picker'
+import { dateMatchModifiers, type Locale, type Matcher } from 'react-day-picker'
 
 import { Button } from '../Button'
 import { Calendar } from '../Calendar'
 
 type DatePickerPanelProps = {
   bounds: { disabled: Matcher[]; endMonth: Date; startMonth: Date }
-  isTodayAllowed: boolean
   locale: Locale
   onDaySelect: (day: Date) => void
-  ref: React.Ref<HTMLDivElement>
+  today: Date
   todayLabel?: string
   value: Date | null
 }
 
 // The popup of a DatePicker: a month grid with month and year selects, and an
-// optional "Today" shortcut
+// optional "Today" shortcut. It opens with focus on the picked day (or today),
+// so keyboard users land on the grid, not the month select.
 const DatePickerPanel = ({
   bounds,
-  isTodayAllowed,
   locale,
   onDaySelect,
-  ref,
+  today,
   todayLabel,
   value,
 }: DatePickerPanelProps) => (
-  <div ref={ref} className="flex flex-col gap-3">
+  <div className="flex flex-col gap-3">
     <Calendar
+      autoFocus
       captionLayout="dropdown"
       defaultMonth={value ?? undefined}
       disabled={bounds.disabled}
@@ -39,12 +39,13 @@ const DatePickerPanel = ({
       required
       selected={value ?? undefined}
       startMonth={bounds.startMonth}
+      today={today}
     />
     {todayLabel && (
       <div className="border-rule flex justify-end border-t pt-3">
         <Button
-          disabled={!isTodayAllowed}
-          onClick={() => onDaySelect(new Date())}
+          disabled={dateMatchModifiers(today, bounds.disabled)}
+          onClick={() => onDaySelect(today)}
           size="sm"
           variant="secondary"
         >

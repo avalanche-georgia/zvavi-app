@@ -41,6 +41,7 @@ const DatePickerGallery = () => {
           min={isoDay(today)}
           onValueChange={setDateTime}
           placeholder={strings.placeholder}
+          required
           timeLabel="Time"
           value={dateTime}
           withTime

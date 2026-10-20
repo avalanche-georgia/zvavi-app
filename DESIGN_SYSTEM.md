@@ -186,9 +186,11 @@ Rules:
   a short form. Pass `isOpen` / `onOpenChange` when a Done button inside closes it.
 - **Dates** (`primitives/DatePicker`): every date or date + time field, in forms and filter bars. It shows
   the date in the page's language, `min` / `max` bound the calendar, `clearLabel` adds a ×, `todayLabel` a
-  "Today" shortcut, `withTime` a time input (a new date starts at `defaultTime`). `DateField` (native
-  inputs) is deprecated. A bare `Calendar` is for custom panels, e.g. a range filter with presets;
-  "today" there is the browser's day, so pass `today` when the page counts days in Tbilisi time.
+  "Today" shortcut, `withTime` (with `timeLabel`) a 24-hour time input (a new date starts at `defaultTime`).
+  Get `locale` from `useDayPickerLocale()` (`@components/hooks`). Form bindings pass `ref` and `onBlur`
+  through, so react-hook-form can focus it on an error. `DateField` (native inputs) is deprecated.
+  "Today" is the browser's day in both `DatePicker` and a bare `Calendar` (for custom panels, e.g. a
+  range filter with presets): pass `today` when the page counts days in Tbilisi time.
 - **Menus** (`primitives/Menu`): `align` picks the trigger edge (`end` for overflow menus, `start`
   for nav dropdowns). Navigation rows pass `render={<Link href=… />}` to `MenuItem`; `isActive`
   marks the current page.
@@ -227,8 +229,15 @@ Rules:
   - **Our look**: tokens only, the shared `Field` classes for anything field-like, sizes that match
     its neighbours (e.g. `sm` next to `sm` Buttons).
   - **Tests**: `<Name>.test.tsx` next to it (Vitest + Testing Library), covering its behaviour,
-    each state, keyboard use and accessible names. `pnpm test` runs them; `pnpm build` runs them
+    each state and basic keyboard use. `pnpm test` runs them; `pnpm build` runs them
     first, so a failing test fails the Vercel build and the PR check.
+- **Accessibility is a low priority.** Take what base-ui and plain HTML give for free (real buttons
+  and inputs, labels, focus rings, Esc to close), and don't spend effort beyond that:
+  - **Admin:** basic keyboard use is the ceiling — Tab reaches controls, Enter / Space act, Esc
+    closes, focus is visible. Nothing more.
+  - **Public pages:** most readers are mountain people; very few use assistive technology.
+  - So no extra ARIA work, screen-reader-only flows or accessibility-only tests, and an accessibility
+    finding in review is a nit, never a reason to block or redesign.
 
 ---
 
@@ -276,7 +285,7 @@ Update this table when a legacy component's last consumer is migrated.
 | Select | Radix | `primitives/Select` (base-ui) | ☐ |
 | DatePicker, Calendar, TimeInput, DatePickerTimeInput | Headless UI + react-day-picker | `primitives/DatePicker` (date and date + time fields), `primitives/Calendar` (month grid, e.g. in a `Popover`) | ☐ |
 | DateField (ds, native inputs) | — | `primitives/DatePicker` | ☐ |
-| TimePicker | Headless UI | `primitives/DatePicker` (`withTime`) | ✅ |
+| TimePicker | Headless UI | `primitives/DateField` (`withTime`); next `primitives/DatePicker` (`withTime`), tracked on the DateField row | ✅ |
 | Modal (+ `shared/ConfirmationDialog`, removed) | Headless UI | `primitives/Dialog` (base-ui), `patterns/ConfirmDialog` | ☐ |
 | Popover | Radix | `primitives/Popover` (base-ui) | ☐ |
 | Tooltip, InfoIcon | Radix | `primitives/Tooltip` (base-ui Tooltip; hover/focus labels), `primitives/InfoTip` (base-ui Popover; explanations) | ☐ |

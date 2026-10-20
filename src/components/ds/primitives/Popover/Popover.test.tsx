@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { render, screen, waitFor } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
@@ -111,7 +111,7 @@ describe('Popover', () => {
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
   })
 
-  it('does not open from a disabled trigger', async () => {
+  it('does not open from a disabled trigger', () => {
     renderPopover({
       trigger: (
         <button disabled type="button">
@@ -120,7 +120,8 @@ describe('Popover', () => {
       ),
     })
 
-    await userEvent.click(screen.getByRole('button', { name: 'Dates' }))
+    // user-event skips disabled elements; a raw click checks the Popover ignores it
+    fireEvent.click(screen.getByRole('button', { name: 'Dates' }))
 
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
   })

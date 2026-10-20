@@ -5,8 +5,6 @@ import {
   addYears,
   endOfYear,
   format,
-  isAfter,
-  isBefore,
   min as earliest,
   parseISO,
   setHours,
@@ -15,6 +13,8 @@ import {
   startOfYear,
   subYears,
 } from 'date-fns'
+
+import { assignRef } from '@/lib/assignRef'
 
 const timeFormat = 'HH:mm'
 
@@ -33,6 +33,8 @@ type UseDatePickerParams = {
   max?: string
   min?: string
   onValueChange: (value: Date | null) => void
+  ref?: React.Ref<HTMLButtonElement>
+  today: Date
   value: Date | null
   withTime: boolean
 }
@@ -44,18 +46,16 @@ const useDatePicker = ({
   max,
   min,
   onValueChange,
+  ref,
+  today,
   value,
   withTime,
 }: UseDatePickerParams) => {
   const [isOpen, setIsOpen] = useState(false)
-  const panelRef = useRef<HTMLDivElement>(null)
-  const today = new Date()
+  const triggerRef = useRef<HTMLButtonElement>(null)
   const firstDay = min ? parseISO(min) : undefined
   const lastDay = max ? parseISO(max) : undefined
   const timeText = value ? format(value, timeFormat) : defaultTime
-
-  const isAllowed = (day: Date) =>
-    !(firstDay && isBefore(day, firstDay)) && !(lastDay && isAfter(startOfDay(day), lastDay))
 
   const bounds = {
     disabled: [
@@ -78,22 +78,26 @@ const useDatePicker = ({
     onValueChange(atTime(value, time))
   }
 
-  const handleClear = () => onValueChange(null)
+  // The × disappears with the value; focus moves to the trigger instead of the page
+  const handleClear = () => {
+    onValueChange(null)
+    triggerRef.current?.focus()
+  }
 
-  // Keyboard users land on the picked day (or today), not the month select
-  const getInitialFocus = () =>
-    panelRef.current?.querySelector<HTMLElement>('button[data-day][tabindex="0"]') ?? true
+  // Ours (focus after clearing) and the caller's (e.g. react-hook-form)
+  const setTriggerRef = (node: HTMLButtonElement | null) => {
+    triggerRef.current = node
+    assignRef(ref, node)
+  }
 
   return {
     bounds,
-    getInitialFocus,
     handleClear,
     handleDaySelect,
     handleTimeChange,
     isOpen,
-    isTodayAllowed: isAllowed(today),
-    panelRef,
     setIsOpen,
+    setTriggerRef,
     timeText,
   }
 }

@@ -6,8 +6,6 @@ import { defineConfig } from 'vitest/config'
 process.env.NODE_ENV = 'test'
 
 export default defineConfig({
-  // Next compiles JSX itself (tsconfig "preserve"); tests need the React 17+ runtime
-  esbuild: { jsx: 'automatic' },
   plugins: [tsconfigPaths()],
   test: {
     environment: 'jsdom',
