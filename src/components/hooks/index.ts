@@ -3,6 +3,7 @@ export { default as useAspectSummary } from './useAspectSummary'
 export { default as useAuth } from './useAuth'
 export { default as useBoolean } from './useBoolean'
 export { default as useCopyWithFeedback } from './useCopyWithFeedback'
+export { default as useDatePickerText } from './useDatePickerText'
 export { default as useDayPickerLocale } from './useDayPickerLocale'
 // useDiceBearAvatar is not re-exported: its avatar library would land in every page that
 // imports this barrel. Import it by path.

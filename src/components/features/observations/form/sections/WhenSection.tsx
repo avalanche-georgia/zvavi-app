@@ -1,11 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-import { useIsClient } from '@components/hooks'
+import { useDatePickerText, useIsClient } from '@components/hooks'
 import { useFormFieldError } from '@ds/form'
 import { FormCard } from '@ds/patterns'
-import { ChipGroup, FieldGroup, TextField } from '@ds/primitives'
-import { format, isToday, isYesterday, parse, startOfToday, startOfYesterday } from 'date-fns'
+import { ChipGroup, DatePicker, FieldGroup } from '@ds/primitives'
+import { format, isToday, isYesterday, startOfToday, startOfYesterday } from 'date-fns'
 import { useLocale, useTranslations } from 'next-intl'
 import { useFormContext, useWatch } from 'react-hook-form'
 
@@ -31,6 +31,7 @@ const getInitialChoice = (date: Date | null, isDateUnknown: boolean): DateChoice
 const WhenSection = () => {
   const t = useTranslations()
   const locale = useLocale()
+  const { calendarLabel, locale: dayPickerLocale, placeholder } = useDatePickerText()
   const form = useFormContext<ObservationFormFields>()
   // "Today" depends on the device's timezone — the server may be on another day
   const isClient = useIsClient()
@@ -58,8 +59,7 @@ const WhenSection = () => {
     if (nextChoice === 'unknown') setDate(null, true)
   }
 
-  const handleDateInputChange = (value: string) =>
-    setDate(value ? parse(value, inputDateFormat, new Date()) : null, false)
+  const handleDatePick = (nextDate: Date | null) => setDate(nextDate, false)
 
   const hint =
     choice === 'unknown'
@@ -83,13 +83,15 @@ const WhenSection = () => {
           value={choice}
         />
         {choice === 'pick' && (
-          <TextField
-            aria-label={t('observations.form.date.label')}
+          <DatePicker
+            ariaLabel={t('observations.form.date.label')}
+            calendarLabel={calendarLabel}
             className="max-w-60"
+            locale={dayPickerLocale}
             max={format(new Date(), inputDateFormat)}
-            onValueChange={handleDateInputChange}
-            type="date"
-            value={date ? format(date, inputDateFormat) : ''}
+            onValueChange={handleDatePick}
+            placeholder={placeholder}
+            value={date}
           />
         )}
       </FieldGroup>

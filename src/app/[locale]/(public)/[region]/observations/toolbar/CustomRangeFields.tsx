@@ -1,4 +1,5 @@
-import { DatePicker } from '@components/ui'
+import { useDatePickerText } from '@components/hooks'
+import { DatePicker, Field } from '@ds/primitives'
 import { format, parseISO } from 'date-fns'
 import { useTranslations } from 'next-intl'
 
@@ -8,43 +9,47 @@ type CustomRangeFieldsProps = {
   to: string | null
 }
 
-const toDate = (day: string | null) => (day ? parseISO(day) : null)
-const toDay = (date: Date | null) => (date ? format(date, 'yyyy-MM-dd') : null)
+const dayFormat = 'yyyy-MM-dd'
 
+const toDate = (day: string | null) => (day ? parseISO(day) : null)
+const toDay = (date: Date | null) => (date ? format(date, dayFormat) : null)
+
+// From / To pickers for the "Custom" period; each end is optional and clearable
 const CustomRangeFields = ({ from, onChange, to }: CustomRangeFieldsProps) => {
   const t = useTranslations()
-  const today = new Date()
-  const fromDate = toDate(from)
-  const toDateValue = toDate(to)
+  const { calendarLabel, clearLabel, locale } = useDatePickerText()
+  const today = format(new Date(), dayFormat)
 
   const handleFromChange = (date: Date | null) => onChange({ from: toDay(date), to })
   const handleToChange = (date: Date | null) => onChange({ from, to: toDay(date) })
 
   return (
     <div className="grid grid-cols-2 gap-2">
-      <label className="text-muted flex flex-col gap-1 text-xs">
-        {t('common.words.from')}
+      <Field label={t('common.words.from')}>
         <DatePicker
-          className="border-rule h-10.5 w-full rounded-[10px] border bg-white"
-          isClearable
-          maxDate={toDateValue ?? today}
-          onChange={handleFromChange}
+          calendarLabel={calendarLabel}
+          clearLabel={clearLabel}
+          locale={locale}
+          max={to ?? today}
+          onValueChange={handleFromChange}
           placeholder={t('observations.filters.anyDate')}
-          value={fromDate}
+          size="sm"
+          value={toDate(from)}
         />
-      </label>
-      <label className="text-muted flex flex-col gap-1 text-xs">
-        {t('common.words.to')}
+      </Field>
+      <Field label={t('common.words.to')}>
         <DatePicker
-          className="border-rule h-10.5 w-full rounded-[10px] border bg-white"
-          isClearable
-          maxDate={today}
-          minDate={fromDate ?? undefined}
-          onChange={handleToChange}
+          calendarLabel={calendarLabel}
+          clearLabel={clearLabel}
+          locale={locale}
+          max={today}
+          min={from ?? undefined}
+          onValueChange={handleToChange}
           placeholder={t('observations.filters.anyDate')}
-          value={toDateValue}
+          size="sm"
+          value={toDate(to)}
         />
-      </label>
+      </Field>
     </div>
   )
 }

@@ -17,7 +17,6 @@ import CheckboxGallery from '@ds/primitives/Checkbox/Checkbox.gallery'
 import ChipGroupGallery from '@ds/primitives/ChipGroup/ChipGroup.gallery'
 import ConfirmPopoverGallery from '@ds/primitives/ConfirmPopover/ConfirmPopover.gallery'
 import CountBadgeGallery from '@ds/primitives/CountBadge/CountBadge.gallery'
-import DateFieldGallery from '@ds/primitives/DateField/DateField.gallery'
 import DatePickerGallery from '@ds/primitives/DatePicker/DatePicker.gallery'
 import FieldGallery from '@ds/primitives/Field/Field.gallery'
 import IconButtonGallery from '@ds/primitives/IconButton/IconButton.gallery'
@@ -73,7 +72,6 @@ export const galleryEntries: GalleryEntry[] = [
   { Demo: TooltipGallery, id: 'tooltip', title: 'Tooltip' },
   { Demo: FieldGallery, id: 'field', title: 'Field & inputs' },
   { Demo: StepperGallery, id: 'stepper', title: 'Stepper' },
-  { Demo: DateFieldGallery, id: 'date-field', title: 'DateField' },
   { Demo: DatePickerGallery, id: 'date-picker', title: 'DatePicker' },
   { Demo: CalendarGallery, id: 'calendar', title: 'Calendar' },
   { Demo: CheckboxGallery, id: 'checkbox', title: 'Checkbox' },

@@ -1,6 +1,7 @@
 import { parseIsoDay, toIsoDay } from '@components/features/admin/shared'
+import { useDatePickerText } from '@components/hooks'
 import type { DateMode } from '@data/hooks/recentAvalanches'
-import { DateField, SegmentedControl } from '@ds/primitives'
+import { DatePicker, SegmentedControl } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 
 import type { AvalanchesListPage } from '../hooks/useAvalanchesListPage'
@@ -16,6 +17,7 @@ type DateFilterProps = {
 // Which date to filter by (when it happened / when it was logged) and the range
 const DateFilter = ({ page }: DateFilterProps) => {
   const t = useTranslations()
+  const { calendarLabel, clearLabel, locale } = useDatePickerText()
   const { dateFrom, dateMode, dateTo } = page
   const today = toIsoDay(new Date()) ?? undefined
 
@@ -37,22 +39,30 @@ const DateFilter = ({ page }: DateFilterProps) => {
         value={dateMode}
       />
       <div className="flex items-center gap-2">
-        <DateField
+        <DatePicker
           ariaLabel={t('common.words.from')}
-          className="w-37.5"
+          calendarLabel={calendarLabel}
+          className="w-44"
+          clearLabel={clearLabel}
+          locale={locale}
           max={dateTo ?? today}
           onValueChange={handleFromChange}
+          placeholder={t('common.words.from')}
           value={parseIsoDay(dateFrom)}
         />
         <span aria-hidden className="text-muted">
           –
         </span>
-        <DateField
+        <DatePicker
           ariaLabel={t('common.words.to')}
-          className="w-37.5"
+          calendarLabel={calendarLabel}
+          className="w-44"
+          clearLabel={clearLabel}
+          locale={locale}
           max={today}
           min={dateFrom ?? undefined}
           onValueChange={handleToChange}
+          placeholder={t('common.words.to')}
           value={parseIsoDay(dateTo)}
         />
       </div>

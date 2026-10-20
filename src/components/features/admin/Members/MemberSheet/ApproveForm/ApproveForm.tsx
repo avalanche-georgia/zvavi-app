@@ -1,6 +1,7 @@
 'use client'
 
 import { useReportFormState } from '@components/features/admin/shared'
+import { useDatePickerText } from '@components/hooks'
 import { serverDateFormat } from '@domain/constants'
 import { getMemberName } from '@domain/memberName'
 import type { Member } from '@domain/types'
@@ -38,6 +39,7 @@ const ApproveForm = ({
   onSuccess,
 }: ApproveFormProps) => {
   const t = useTranslations()
+  const { calendarLabel, clearLabel, locale, placeholder, todayLabel } = useDatePickerText()
   const form = useForm<ApproveFormData>({
     defaultValues: getDefaultValues(),
     resolver: zodResolver(approveFormSchema),
@@ -62,16 +64,24 @@ const ApproveForm = ({
           title={t('admin.members.approve.title')}
         >
           <FormDateField<ApproveFormData>
+            calendarLabel={calendarLabel}
             label={t('admin.members.form.labels.joinedAt')}
+            locale={locale}
             max={format(new Date(), serverDateFormat)}
             name="joinedAt"
+            placeholder={placeholder}
             required
+            todayLabel={todayLabel}
           />
           <FormDateField<ApproveFormData>
+            calendarLabel={calendarLabel}
+            clearLabel={clearLabel}
             description={t('admin.members.form.hints.expiresAt')}
             label={t('admin.members.form.labels.expiresAt')}
+            locale={locale}
             min={joinedAt ? format(joinedAt, serverDateFormat) : undefined}
             name="expiresAt"
+            placeholder={placeholder}
           />
         </FormCard>
       </form>

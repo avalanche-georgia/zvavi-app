@@ -1,6 +1,7 @@
 import { parseIsoDay, toIsoDay } from '@components/features/admin/shared'
+import { useDatePickerText } from '@components/hooks'
 import { getSeasonLabel } from '@domain/season'
-import { DateField, SegmentedControl } from '@ds/primitives'
+import { DatePicker, SegmentedControl } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 
 import type { ForecastsListState } from '../hooks'
@@ -17,6 +18,7 @@ type DateRangeFilterProps = {
 // Filters by the created date
 const DateRangeFilter = ({ list, now }: DateRangeFilterProps) => {
   const t = useTranslations()
+  const { calendarLabel, clearLabel, locale } = useDatePickerText()
   const { dateFrom, dateTo, range } = list
 
   const options = dateRanges.map((value: DateRange) => ({
@@ -41,20 +43,29 @@ const DateRangeFilter = ({ list, now }: DateRangeFilterProps) => {
       />
       {range === 'custom' && (
         <div className="flex items-center gap-2">
-          <DateField
+          <DatePicker
             ariaLabel={t('admin.forecasts.filters.range.from')}
-            className="w-37.5"
+            calendarLabel={calendarLabel}
+            className="w-44"
+            clearLabel={clearLabel}
+            locale={locale}
+            max={dateTo ?? undefined}
             onValueChange={handleFromChange}
+            placeholder={t('admin.forecasts.filters.range.from')}
             value={parseIsoDay(dateFrom)}
           />
           <span aria-hidden className="text-muted">
             –
           </span>
-          <DateField
+          <DatePicker
             ariaLabel={t('admin.forecasts.filters.range.to')}
-            className="w-37.5"
+            calendarLabel={calendarLabel}
+            className="w-44"
+            clearLabel={clearLabel}
+            locale={locale}
             min={dateFrom ?? undefined}
             onValueChange={handleToChange}
+            placeholder={t('admin.forecasts.filters.range.to')}
             value={parseIsoDay(dateTo)}
           />
         </div>

@@ -1,7 +1,8 @@
 'use client'
 
+import { useDatePickerText } from '@components/hooks'
 import { useFormFieldError } from '@ds/form'
-import { ChipGroup, DateField, Field } from '@ds/primitives'
+import { ChipGroup, DatePicker, Field } from '@ds/primitives'
 import { addDays, format, isSameDay, startOfDay } from 'date-fns'
 import { useFormatter, useNow, useTranslations } from 'next-intl'
 import { useController } from 'react-hook-form'
@@ -16,12 +17,14 @@ const ValidUntilField = () => {
   const formatter = useFormatter()
   // Re-renders every minute so "in 22 hours" stays current
   const now = useNow({ updateInterval: 60_000 })
-  const { field } = useController<ForecastFormSchema, 'validUntil'>({ name: 'validUntil' })
+  const {
+    field: { onBlur, onChange, ref, value },
+  } = useController<ForecastFormSchema, 'validUntil'>({ name: 'validUntil' })
+  const { calendarLabel, locale, placeholder } = useDatePickerText()
   const error = useFormFieldError<ForecastFormSchema>(
     'validUntil',
     t('admin.forecast.editor.general.validUntilRequired'),
   )
-  const value = field.value
   const time = value ? format(value, 'HH:mm') : '18:00'
   const [hours, minutes] = time.split(':').map(Number)
 
@@ -34,14 +37,19 @@ const ValidUntilField = () => {
     const date = startOfDay(addDays(new Date(), Number(days)))
 
     date.setHours(hours, minutes)
-    field.onChange(date)
+    onChange(date)
   }
 
   return (
     <Field error={error} label={t('admin.forecast.form.general.labels.validUntil')} required>
-      <DateField
+      <DatePicker
+        ref={ref}
+        calendarLabel={calendarLabel}
+        locale={locale}
         min={format(new Date(), 'yyyy-MM-dd')}
-        onValueChange={field.onChange}
+        onBlur={onBlur}
+        onValueChange={onChange}
+        placeholder={placeholder}
         required
         timeLabel={t('admin.forecast.editor.general.time')}
         value={value}

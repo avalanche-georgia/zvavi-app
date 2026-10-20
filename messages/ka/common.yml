@@ -144,6 +144,12 @@ common:
     to: 'მდე'
     unknown: 'უცნობი'
 
+  datePicker:
+    calendar: 'აირჩიეთ თარიღი'
+    clear: 'თარიღის გასუფთავება'
+    placeholder: 'აირჩიეთ თარიღი'
+    today: 'დღეს'
+
   photoViewer:
     open: 'ფოტო {index}-ის გახსნა'
     previous: 'წინა ფოტო'
