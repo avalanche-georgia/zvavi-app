@@ -1,15 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
 
 import { Field as BaseField } from '@base-ui/react/field'
-import { format } from 'date-fns'
 import { CalendarDays } from 'lucide-react'
-import type { Locale } from 'react-day-picker'
 
 import { type ControlSize, controlSizeClasses, fieldControlClasses } from '../Field'
 
 import { cn } from '@/lib/utils'
-
-const displayFormat = 'd MMM yyyy'
 
 // Popover.Trigger adds its own props (onClick, aria-expanded, ref, …) at runtime
 type DatePickerTriggerProps = Omit<
@@ -18,25 +14,27 @@ type DatePickerTriggerProps = Omit<
 > & {
   ariaLabel?: string
   hasClearButton: boolean
-  locale: Locale
+  // Accent border while it narrows something down, e.g. an applied filter
+  isActive?: boolean
   placeholder?: string
   ref?: React.Ref<HTMLButtonElement>
   size: ControlSize
-  value: Date | null
+  // The picked date(s), formatted; null shows the placeholder
+  text: string | null
 }
 
-// The field-like button of a DatePicker. Field.Control links the <Field> label,
+// The field-like button of a DatePicker or DateRangePicker. Field.Control links the <Field> label,
 // error and disabled state to it; Popover.Trigger passes its props through. A
 // combobox, like a select: the label names it and the date is read as its value.
 const DatePickerTrigger = ({
   ariaLabel,
   hasClearButton,
-  locale,
+  isActive = false,
   placeholder,
   ref,
   required,
   size,
-  value,
+  text,
   ...props
 }: DatePickerTriggerProps) => (
   <BaseField.Control
@@ -51,14 +49,13 @@ const DatePickerTrigger = ({
       controlSizeClasses[size],
       'focus-ring data-popup-open:border-rule-strong flex cursor-pointer items-center gap-2 text-left',
       hasClearButton && 'pr-11',
+      isActive && 'border-accent hover:border-accent data-popup-open:border-accent',
     )}
     // eslint-disable-next-line jsx-a11y/role-has-required-aria-props
     render={<button role="combobox" type="button" />}
   >
     <CalendarDays aria-hidden className="text-muted size-4.5 shrink-0" />
-    <span className={cn('truncate', !value && 'text-placeholder')}>
-      {value ? format(value, displayFormat, { locale }) : placeholder}
-    </span>
+    <span className={cn('truncate', !text && 'text-placeholder')}>{text ?? placeholder}</span>
   </BaseField.Control>
 )
 

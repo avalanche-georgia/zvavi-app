@@ -31,7 +31,7 @@ src/components/
 │   │                    # Textarea, ChipGroup, ToggleGrid, SegmentedControl, Select, Stepper, InfoTip,
 │   │                    # IconButton, RatingScale, Menu, Pagination, SearchField,
 │   │                    # StatusPill, CountBadge, Skeleton, Spinner, AvalancheLoader, Dialog, RadioGroup,
-│   │                    # Popover, Calendar, DatePicker, MultiChipGroup
+│   │                    # Popover, Calendar, DatePicker, DateRangePicker, MultiChipGroup
 │   ├── patterns/        # ClampedText, ContentCard, FormCard, StickyActionBar, SuccessState, DataTable, LoadingState,
 │   │                    # ConfirmDialog, FooterActions, Sheet, Drawer
 │   └── form/            # react-hook-form bindings: FormTextField, FormTextarea, FormNumberField,
@@ -184,14 +184,20 @@ Rules:
   options use a sentinel value (e.g. `'all'`); `onValueChange` never passes `null`.
 - **Popovers** (`primitives/Popover`): for content that needs more room than a menu — a `Calendar`,
   a short form. Pass `isOpen` / `onOpenChange` when a Done button inside closes it.
-- **Dates** (`primitives/DatePicker`): every date or date + time field, in forms and filter bars. It shows
-  the date in the page's language, `min` / `max` bound the calendar, `clearLabel` adds a ×, `todayLabel` a
-  "Today" shortcut, `withTime` (with `timeLabel`) a 24-hour time input (a new date starts at `defaultTime`).
-  Get `locale` from `useDayPickerLocale()` (`@components/hooks`). Form bindings pass `ref` and `onBlur`
-  through, so react-hook-form can focus it on an error; `useDatePickerText()` gives the translated
-  labels. Weeks start on Monday.
-  "Today" is the browser's day in both `DatePicker` and a bare `Calendar` (for custom panels, e.g. a
-  range filter with presets): pass `today` when the page counts days in Tbilisi time.
+- **Dates** (`primitives/DatePicker`): every single date or date + time field. It shows the date in the
+  page's language, `min` / `max` bound the calendar, `clearLabel` adds a ×, `todayLabel` a "Today"
+  shortcut, `withTime` (with `timeLabel`) a 24-hour time input (a new date starts at `defaultTime`).
+  Form bindings pass `ref` and `onBlur` through, so react-hook-form can focus it on an error;
+  `useDatePickerText()` (`@components/hooks`) gives the translated labels and the `locale`.
+- **Date ranges** (`primitives/DateRangePicker`): every from–to filter, one field instead of two. The
+  value is `{ from, to }` as `yyyy-MM-dd` (either may be `null`). The popup shows quick ranges
+  (`presets`; tapping the active one clears it), the From and To ends (the highlighted one is set by
+  the next click; tap the other to switch; each clears on its own, so "from a date" and "up to a date"
+  need no extra mode) and a range calendar (two months from 640px). `isActive` while it filters,
+  `formatValue` for the page's own text (e.g. a month's name). `useDateRangePickerText()` gives the
+  labels and `locale`.
+- **Calendar** (`primitives/Calendar`): weeks start on Monday. A bare `Calendar` is for custom panels.
+  "Today" is the browser's day in all three: pass `today` where the page counts days in Tbilisi time.
 - **Menus** (`primitives/Menu`): `align` picks the trigger edge (`end` for overflow menus, `start`
   for nav dropdowns). Navigation rows pass `render={<Link href=… />}` to `MenuItem`; `isActive`
   marks the current page.

@@ -150,6 +150,14 @@ common:
     placeholder: 'აირჩიეთ თარიღი'
     today: 'დღეს'
 
+  dateRangePicker:
+    anyDates: 'ნებისმიერი თარიღი'
+    calendar: 'აირჩიეთ თარიღები'
+    clear: 'თარიღების გასუფთავება'
+    done: 'მზადაა'
+    label: 'თარიღები'
+    presets: 'სწრაფი შუალედები'
+
   photoViewer:
     open: 'ფოტო {index}-ის გახსნა'
     previous: 'წინა ფოტო'

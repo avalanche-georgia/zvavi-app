@@ -1,5 +1,7 @@
 'use client'
 
+import { format } from 'date-fns'
+
 import DatePickerClearButton from './DatePickerClearButton'
 import DatePickerPanel from './DatePickerPanel'
 import DatePickerTime from './DatePickerTime'
@@ -72,12 +74,11 @@ const DatePicker = ({
               ariaLabel={ariaLabel}
               disabled={disabled}
               hasClearButton={!!activeClearLabel}
-              locale={locale}
               onBlur={onBlur}
               placeholder={placeholder}
               required={required}
               size={size}
-              value={value}
+              text={value ? format(value, 'd MMM yyyy', { locale }) : null}
             />
           }
         >

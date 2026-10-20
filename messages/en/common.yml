@@ -150,6 +150,14 @@ common:
     placeholder: 'Select date'
     today: 'Today'
 
+  dateRangePicker:
+    anyDates: 'Any dates'
+    calendar: 'Choose dates'
+    clear: 'Clear dates'
+    done: 'Done'
+    label: 'Dates'
+    presets: 'Quick ranges'
+
   photoViewer:
     open: 'Open photo {index}'
     previous: 'Previous photo'
