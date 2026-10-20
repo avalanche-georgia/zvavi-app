@@ -1,13 +1,19 @@
 'use client'
 
-import { useRef, useState } from 'react'
-import { Button, IconButton, Popover } from '@ds/primitives'
-import { CalendarDays, X } from 'lucide-react'
+import { useDateRangePickerText } from '@components/hooks'
+import { DateRangePicker } from '@ds/primitives'
+import { parseISO } from 'date-fns'
 import { useTranslations } from 'next-intl'
 
-import DateRangePanel from './DateRangePanel'
-import useDateFilterLabel from './useDateFilterLabel'
-import { type ArchiveDateRange, type ArchiveSeason, emptyDateRange } from '../model'
+import useDateFilterFormat from './useDateFilterFormat'
+import useArchiveFormat from '../hooks/useArchiveFormat'
+import {
+  type ArchiveDateRange,
+  type ArchiveSeason,
+  getMonthRange,
+  getSeasonBounds,
+  toTbilisiDay,
+} from '../model'
 
 type DateRangeFilterProps = ArchiveDateRange & {
   activeMonths: string[]
@@ -15,8 +21,8 @@ type DateRangeFilterProps = ArchiveDateRange & {
   season: ArchiveSeason
 }
 
-// "Dates" button opening a calendar + month presets. Once set, a × beside it
-// clears the dates without opening the popover.
+// The season's dates: the months with forecasts as quick ranges, then any range
+// within the season. Days count in Tbilisi time, like the rest of the archive.
 const DateRangeFilter = ({
   activeMonths,
   from,
@@ -25,47 +31,37 @@ const DateRangeFilter = ({
   to,
 }: DateRangeFilterProps) => {
   const t = useTranslations()
-  const panelRef = useRef<HTMLDivElement>(null)
-  const [isOpen, setIsOpen] = useState(false)
-  const label = useDateFilterLabel(from, to)
-  const isActive = from !== null || to !== null
+  const { calendarLabel, doneLabel, fromLabel, locale, toLabel } = useDateRangePickerText()
+  const { formatMonthShort } = useArchiveFormat()
+  const formatValue = useDateFilterFormat()
+  const { firstDay, lastDay } = getSeasonBounds(season)
 
-  // Keyboard users land on the calendar's focusable day, not the month arrows
-  const getInitialFocus = () =>
-    panelRef.current?.querySelector<HTMLElement>('button[data-day][tabindex="0"]') ?? true
-
-  const handleClear = () => onRangeChange(emptyDateRange)
+  const presets = activeMonths.map((monthId) => ({
+    label: formatMonthShort(monthId),
+    range: getMonthRange(monthId),
+  }))
 
   return (
-    <div className="flex items-center gap-0.5">
-      <Popover
-        ariaLabel={t('forecast.history.filters.dateRange')}
-        initialFocus={getInitialFocus}
-        isOpen={isOpen}
-        onOpenChange={setIsOpen}
-        trigger={
-          <Button isActive={isActive} size="sm" variant="secondary">
-            <CalendarDays aria-hidden className="size-4" />
-            {label ?? t('forecast.history.filters.dates')}
-          </Button>
-        }
-      >
-        <DateRangePanel
-          ref={panelRef}
-          activeMonths={activeMonths}
-          from={from}
-          onPanelClose={() => setIsOpen(false)}
-          onRangeChange={onRangeChange}
-          season={season}
-          to={to}
-        />
-      </Popover>
-      {isActive && (
-        <IconButton aria-label={t('forecast.history.filters.clearDates')} onClick={handleClear}>
-          <X aria-hidden className="size-4" />
-        </IconButton>
-      )}
-    </div>
+    <DateRangePicker
+      ariaLabel={t('forecast.history.filters.dateRange')}
+      calendarLabel={calendarLabel}
+      clearLabel={t('forecast.history.filters.clearDates')}
+      doneLabel={doneLabel}
+      formatValue={formatValue}
+      fromLabel={fromLabel}
+      isActive={from !== null || to !== null}
+      locale={locale}
+      max={lastDay}
+      min={firstDay}
+      onValueChange={onRangeChange}
+      placeholder={t('forecast.history.filters.dates')}
+      presets={presets}
+      presetsLabel={t('forecast.history.filters.months')}
+      size="sm"
+      toLabel={toLabel}
+      today={parseISO(toTbilisiDay(new Date()))}
+      value={{ from, to }}
+    />
   )
 }
 

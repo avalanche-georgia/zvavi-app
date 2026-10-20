@@ -5,6 +5,7 @@ import { parseIsoDay, useUrlListState } from '@components/features/admin/shared'
 import type { DateMode, ListFilterParams } from '@data/hooks/recentAvalanches'
 import { useRecentAvalanchesPaginatedQuery } from '@data/hooks/recentAvalanches'
 import type { AvalancheSource, RegionId } from '@domain/types'
+import type { DayRange } from '@ds/primitives'
 import { endOfDay, startOfDay } from 'date-fns'
 
 import { type CatalogStatus, readListParams, serializeListParams } from '../model'
@@ -60,9 +61,8 @@ const useAvalanchesListPage = (variant: AvalanchesListVariant, regionId: RegionI
     dateTo,
     hasFilters: !!dateFrom || !!dateTo || (isCatalog && (isUnlinked || !!source || !!status)),
     isUnlinked,
-    onDateFromChange: (day: string | null) => setFilters({ dateFrom: day }),
     onDateModeChange: (mode: DateMode) => setFilters({ dateMode: mode }),
-    onDateToChange: (day: string | null) => setFilters({ dateTo: day }),
+    onDatesChange: ({ from, to }: DayRange) => setFilters({ dateFrom: from, dateTo: to }),
     onFiltersClear: () =>
       setFilters({ dateFrom: null, dateTo: null, isUnlinked: false, source: null, status: null }),
     onPageChange: (nextPageIndex: number) => setParams({ pageIndex: nextPageIndex }),

@@ -1,7 +1,6 @@
-import { parseIsoDay, toIsoDay } from '@components/features/admin/shared'
-import { useDatePickerText } from '@components/hooks'
+import { useDateRangePickerText } from '@components/hooks'
 import { getSeasonLabel } from '@domain/season'
-import { DatePicker, SegmentedControl } from '@ds/primitives'
+import { DateRangePicker, SegmentedControl } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 
 import type { ForecastsListState } from '../hooks'
@@ -10,15 +9,16 @@ import { type DateRange, dateRanges } from '../model'
 type DateRangeFilterProps = {
   list: Pick<
     ForecastsListState,
-    'dateFrom' | 'dateTo' | 'onDateFromChange' | 'onDateToChange' | 'onRangeChange' | 'range'
+    'dateFrom' | 'dateTo' | 'onDatesChange' | 'onRangeChange' | 'range'
   >
   now: Date
 }
 
-// Filters by the created date
+// Filters by the created date: a quick range, or Custom with a range picker
 const DateRangeFilter = ({ list, now }: DateRangeFilterProps) => {
   const t = useTranslations()
-  const { calendarLabel, clearLabel, locale } = useDatePickerText()
+  const { calendarLabel, clearLabel, doneLabel, fromLabel, locale, toLabel } =
+    useDateRangePickerText()
   const { dateFrom, dateTo, range } = list
 
   const options = dateRanges.map((value: DateRange) => ({
@@ -28,9 +28,6 @@ const DateRangeFilter = ({ list, now }: DateRangeFilterProps) => {
         : t(`admin.forecasts.filters.range.${value}`),
     value,
   }))
-
-  const handleFromChange = (date: Date | null) => list.onDateFromChange(toIsoDay(date))
-  const handleToChange = (date: Date | null) => list.onDateToChange(toIsoDay(date))
 
   return (
     <div className="flex max-w-full min-w-0 flex-wrap items-center gap-2">
@@ -42,33 +39,20 @@ const DateRangeFilter = ({ list, now }: DateRangeFilterProps) => {
         value={range}
       />
       {range === 'custom' && (
-        <div className="flex items-center gap-2">
-          <DatePicker
-            ariaLabel={t('admin.forecasts.filters.range.from')}
-            calendarLabel={calendarLabel}
-            className="w-44"
-            clearLabel={clearLabel}
-            locale={locale}
-            max={dateTo ?? undefined}
-            onValueChange={handleFromChange}
-            placeholder={t('admin.forecasts.filters.range.from')}
-            value={parseIsoDay(dateFrom)}
-          />
-          <span aria-hidden className="text-muted">
-            –
-          </span>
-          <DatePicker
-            ariaLabel={t('admin.forecasts.filters.range.to')}
-            calendarLabel={calendarLabel}
-            className="w-44"
-            clearLabel={clearLabel}
-            locale={locale}
-            min={dateFrom ?? undefined}
-            onValueChange={handleToChange}
-            placeholder={t('admin.forecasts.filters.range.to')}
-            value={parseIsoDay(dateTo)}
-          />
-        </div>
+        <DateRangePicker
+          ariaLabel={t('admin.forecasts.filters.range.dates')}
+          calendarLabel={calendarLabel}
+          className="w-64"
+          clearLabel={clearLabel}
+          doneLabel={doneLabel}
+          fromLabel={fromLabel}
+          isActive={!!(dateFrom || dateTo)}
+          locale={locale}
+          onValueChange={list.onDatesChange}
+          placeholder={t('common.dateRangePicker.anyDates')}
+          toLabel={toLabel}
+          value={{ from: dateFrom, to: dateTo }}
+        />
       )}
     </div>
   )
