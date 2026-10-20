@@ -23,7 +23,7 @@ const PartnerSheetBody = ({ partner }: { partner: Partner }) => {
       {description && (
         <p className="text-copy text-body text-pretty whitespace-pre-line">{description}</p>
       )}
-      {benefit && <PerkCallout benefit={benefit} hasLabel={false} />}
+      {benefit && <PerkCallout benefit={benefit} />}
     </div>
   )
 }
