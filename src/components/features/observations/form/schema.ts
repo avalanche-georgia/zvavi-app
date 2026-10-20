@@ -1,8 +1,11 @@
 import { avalancheFieldLimits, observationPhotoLimits, sortedAspects } from '@domain/constants'
-import { endOfToday } from 'date-fns'
+import { startOfDay } from 'date-fns'
 import { z } from 'zod'
 
+import toObservationDate from './toObservationDate'
+
 import { Constants } from '@/lib/supabase/types'
+import { getTbilisiToday } from '@/lib/tbilisiTime'
 
 // Fields shared by the public submit form and the admin create/edit form. Each
 // form extends this with its own fields (and its own `photos` output shape).
@@ -76,10 +79,10 @@ export const photosSchema = z
 
 export const observationFieldsSchema = z.object({
   aspects: aspectsSchema,
-  // Date-only: anything up to the end of today is fine (never in the future)
+  // A calendar day up to today in Georgia (never in the future)
   date: z
     .date()
-    .refine((date) => date <= endOfToday(), { message: 'futureDate' })
+    .refine((date) => startOfDay(date) <= getTbilisiToday(), { message: 'futureDate' })
     .nullable(),
   description: z.string().max(descriptionMaxLength, { message: 'tooLong' }).nullable(),
   isDateUnknown: z.boolean(),
@@ -96,6 +99,11 @@ export const observationFieldsSchema = z.object({
     .refine((value) => value !== null, { message: 'required' })
     .pipe(z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)])),
   slabDepth: rangeSchema(slabDepth).nullable(),
+  // Optional time of day, HH:mm; null when not given
+  time: z
+    .string()
+    .regex(/^\d{2}:\d{2}$/)
+    .nullable(),
   trigger: requiredEnum(avalanche_trigger),
   type: requiredEnum(avalanche_type),
   width: rangeSchema(width).nullable(),
@@ -106,15 +114,25 @@ export const observationFieldsSchema = z.object({
 // later submit. Applied to each form's final schema (a refined object can't be
 // extended any more).
 export const withDateOrUnknown = <
-  T extends z.ZodType<{ date: Date | null; isDateUnknown: boolean }>,
+  T extends z.ZodType<{ date: Date | null; isDateUnknown: boolean; time: string | null }>,
 >(
   schema: T,
 ) =>
-  schema.refine((data) => data.isDateUnknown || data.date !== null, {
-    message: 'required',
-    path: ['date'],
-    when: () => true,
-  })
+  schema
+    .refine((data) => data.isDateUnknown || data.date !== null, {
+      message: 'required',
+      path: ['date'],
+      when: () => true,
+    })
+    // Today at a later hour is still in the future
+    .refine(
+      (data) => !data.date || !data.time || toObservationDate(data.date, data.time) <= new Date(),
+      {
+        message: 'futureDate',
+        path: ['date'],
+        when: () => true,
+      },
+    )
 
 export type ObservationFormFields = z.input<typeof observationFieldsSchema>
 export type PhotoUpload = z.input<typeof photoUploadSchema>

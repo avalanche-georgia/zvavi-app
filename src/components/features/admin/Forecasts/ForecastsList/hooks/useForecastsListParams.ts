@@ -2,6 +2,7 @@
 
 import { useUrlListState } from '@components/features/admin/shared'
 import type { DataTableSort } from '@ds/patterns'
+import type { DayRange } from '@ds/primitives'
 
 import {
   type DateRange,
@@ -28,8 +29,7 @@ const useForecastsListParams = () => {
 
   return {
     ...params,
-    onDateFromChange: (dateFrom: string | null) => setFilters({ dateFrom }),
-    onDateToChange: (dateTo: string | null) => setFilters({ dateTo }),
+    onDatesChange: ({ from, to }: DayRange) => setFilters({ dateFrom: from, dateTo: to }),
     onFiltersClear: () =>
       setFilters({ dateFrom: null, dateTo: null, query: '', range: 'all', status: 'all' }),
     onPageChange: (pageIndex: number) => setParams({ pageIndex }),

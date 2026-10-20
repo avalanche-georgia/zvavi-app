@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
+import { useDatePickerText } from '@components/hooks'
 import { memberStatuses, serverDateFormat } from '@domain/constants'
 import type { MemberFormData } from '@domain/types'
 import { FormDateField, FormSelect, FormTextarea, FormTextField } from '@ds/form'
@@ -13,8 +14,11 @@ import { fieldGridClasses } from './constants'
 
 import PersonSection from './PersonSection'
 
+import { getTbilisiTodayIso } from '@/lib/tbilisiTime'
+
 const FormFields = () => {
   const t = useTranslations()
+  const { calendarLabel, clearLabel, locale, placeholder, todayLabel } = useDatePickerText()
   const { control, formState, trigger } = useFormContext<MemberFormData>()
   const [joinedAt, expiresAt] = useWatch({ control, name: ['joinedAt', 'expiresAt'] })
   const isExpiryEdited = !!formState.dirtyFields.expiresAt
@@ -48,16 +52,24 @@ const FormFields = () => {
             options={statusOptions}
           />
           <FormDateField<MemberFormData>
+            calendarLabel={calendarLabel}
             label={t('admin.members.form.labels.joinedAt')}
-            max={format(new Date(), serverDateFormat)}
+            locale={locale}
+            max={getTbilisiTodayIso()}
             name="joinedAt"
+            placeholder={placeholder}
             required
+            todayLabel={todayLabel}
           />
           <FormDateField<MemberFormData>
+            calendarLabel={calendarLabel}
+            clearLabel={clearLabel}
             description={t('admin.members.form.hints.expiresAt')}
             label={t('admin.members.form.labels.expiresAt')}
+            locale={locale}
             min={joinedAt ? format(joinedAt, serverDateFormat) : undefined}
             name="expiresAt"
+            placeholder={placeholder}
           />
         </div>
       </FormCard>

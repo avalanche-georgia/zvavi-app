@@ -1,13 +1,13 @@
-import { startOfToday } from 'date-fns'
-
 import type { ObservationSubmitFormSchema } from './schema'
+
+import { getTbilisiToday } from '@/lib/tbilisiTime'
 
 const emptyAspects = { alpine: [], highAlpine: [], subAlpine: [] }
 
 // Most reports are about today — "Today" is preselected
 const getInitialFormData = (): ObservationSubmitFormSchema => ({
   aspects: emptyAspects,
-  date: startOfToday(),
+  date: getTbilisiToday(),
   description: null,
   honeypot: '',
   isDateUnknown: false,
@@ -22,6 +22,7 @@ const getInitialFormData = (): ObservationSubmitFormSchema => ({
   submitterContact: null,
   submitterEducation: null,
   submitterName: '',
+  time: null,
   trigger: '',
   type: '',
   width: null,

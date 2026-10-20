@@ -1,7 +1,8 @@
-import { setHours, startOfDay } from 'date-fns'
+import { atTbilisiTime } from '@/lib/tbilisiTime'
 
-// A date-only choice is stored at local noon, so the calendar day survives any
-// viewer's timezone offset (local midnight in UTC+4 is the previous day in UTC)
-const toDateOnlyIso = (date: Date) => setHours(startOfDay(date), 12).toISOString()
+// A date-only choice is stored at noon in Georgia, so the calendar day reads the
+// same everywhere it's shown (in Georgian time), whatever the reporter's device
+// zone: device noon in Los Angeles is already the next day in Tbilisi
+const toDateOnlyIso = (date: Date) => atTbilisiTime(date, '12:00').toISOString()
 
 export default toDateOnlyIso

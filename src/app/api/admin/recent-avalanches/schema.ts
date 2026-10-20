@@ -35,14 +35,16 @@ const photoChangesSchema = z
   .refine(({ add, keep }) => add.length + keep.length <= observationPhotoLimits.maxCount)
 
 // Any subset of fields (a status toggle sends only `status`). Photos untouched
-// unless `photos` is sent.
+// unless `photos` is sent. `isTimeKnown` has no default here (a partial update
+// would reset it) and travels with `date`, so the two always agree.
 export const updateAvalancheSchema = adminFieldsSchema
   .partial()
-  .extend({ photos: photoChangesSchema.optional() })
+  .extend({ isTimeKnown: z.boolean().optional(), photos: photoChangesSchema.optional() })
   .refine(
     (body) =>
       (body.date === undefined && body.isDateUnknown === undefined) || hasDateOrUnknown(body),
   )
+  .refine((body) => (body.date === undefined) === (body.isTimeKnown === undefined))
 
 export type CreateAvalancheBody = z.infer<typeof createAvalancheSchema>
 export type UpdateAvalancheBody = z.infer<typeof updateAvalancheSchema>

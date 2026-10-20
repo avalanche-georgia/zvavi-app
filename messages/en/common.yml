@@ -144,6 +144,19 @@ common:
     to: 'To'
     unknown: 'Unknown'
 
+  datePicker:
+    calendar: 'Choose a date'
+    clear: 'Clear date'
+    placeholder: 'Select date'
+    today: 'Today'
+
+  dateRangePicker:
+    anyDates: 'Any dates'
+    calendar: 'Choose dates'
+    clear: 'Clear dates'
+    done: 'Done'
+    label: 'Dates'
+
   photoViewer:
     open: 'Open photo {index}'
     previous: 'Previous photo'

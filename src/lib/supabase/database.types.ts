@@ -517,6 +517,7 @@ export type Database = {
           id: number
           involvement: string | null
           is_date_unknown: boolean
+          is_time_known: boolean
           latitude: number | null
           location: string | null
           longitude: number | null
@@ -543,6 +544,7 @@ export type Database = {
           id?: number
           involvement?: string | null
           is_date_unknown?: boolean
+          is_time_known?: boolean
           latitude?: number | null
           location?: string | null
           longitude?: number | null
@@ -569,6 +571,7 @@ export type Database = {
           id?: number
           involvement?: string | null
           is_date_unknown?: boolean
+          is_time_known?: boolean
           latitude?: number | null
           location?: string | null
           longitude?: number | null
@@ -818,6 +821,7 @@ export type Database = {
           p_date?: string
           p_description?: string
           p_is_date_unknown?: boolean
+          p_is_time_known?: boolean
           p_latitude?: number
           p_location?: string
           p_longitude?: number

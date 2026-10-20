@@ -260,8 +260,7 @@ admin:
         last30: 'Last 30 days'
         season: 'Season {season}'
         custom: 'Custom'
-        from: 'Created from'
-        to: 'Created to'
+        dates: 'Created between'
       search:
         label: 'Search forecasts'
         placeholder: 'Search ID, forecaster or summary'

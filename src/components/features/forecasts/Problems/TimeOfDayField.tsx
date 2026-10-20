@@ -1,31 +1,31 @@
 'use client'
 
-import { Checkbox, Field, TextField } from '@ds/primitives'
-import { format, parse } from 'date-fns'
+import { Checkbox, Field, TimeField } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 
 import type { ProblemDraft } from './problemSchema'
 import type { SetProblemDraftField } from './useProblemDraft'
+
+import { atTbilisiTime, formatTbilisi, getTbilisiToday } from '@/lib/tbilisiTime'
 
 type TimeOfDayFieldProps = {
   draft: ProblemDraft
   setField: SetProblemDraftField
 }
 
-const timeFormat = 'HH:mm'
+// Times of day in Georgian time, like the public forecast shows them
+const toTimeText = (value: Date | null) => (value ? formatTbilisi(value, 'HH:mm') : null)
+const toTime = (text: string | null) => (text ? atTbilisiTime(getTbilisiToday(), text) : null)
 
-const toTimeText = (value: Date | null) => (value ? format(value, timeFormat) : '')
-const toTime = (text: string) => (text ? parse(text, timeFormat, new Date()) : null)
-
-// "All day", or a From–To window (same data as before: two times of day)
+// "All day", or a From–To window of two 24-hour times (same data as before)
 const TimeOfDayField = ({ draft, setField }: TimeOfDayFieldProps) => {
   const t = useTranslations()
   const { isAllDay, timeOfDay } = draft
 
-  const handleStartChange = (text: string) =>
+  const handleStartChange = (text: string | null) =>
     setField('timeOfDay', { ...timeOfDay, start: toTime(text) })
 
-  const handleEndChange = (text: string) =>
+  const handleEndChange = (text: string | null) =>
     setField('timeOfDay', { ...timeOfDay, end: toTime(text) })
 
   return (
@@ -41,16 +41,16 @@ const TimeOfDayField = ({ draft, setField }: TimeOfDayFieldProps) => {
       {!isAllDay && (
         <div className="grid grid-cols-2 gap-3">
           <Field label={t('common.words.from')}>
-            <TextField
+            <TimeField
+              className="w-full"
               onValueChange={handleStartChange}
-              type="time"
               value={toTimeText(timeOfDay.start)}
             />
           </Field>
           <Field label={t('common.words.to')}>
-            <TextField
+            <TimeField
+              className="w-full"
               onValueChange={handleEndChange}
-              type="time"
               value={toTimeText(timeOfDay.end)}
             />
           </Field>

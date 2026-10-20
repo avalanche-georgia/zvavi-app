@@ -1,7 +1,8 @@
-import { format } from 'date-fns'
 import { useTranslations } from 'next-intl'
 
 import type { ProblemValues } from './problemSchema'
+
+import { formatTbilisi } from '@/lib/tbilisiTime'
 
 const optionsKey = 'admin.forecast.form.problems.options'
 const labelsKey = 'admin.forecast.form.problems.labels'
@@ -11,7 +12,7 @@ const ProblemFacts = ({ problem }: { problem: ProblemValues }) => {
   const t = useTranslations()
   const { confidence, distribution, isAllDay, sensitivity, timeOfDay, trend } = problem
 
-  const formatTime = (value: Date | null) => (value ? format(value, 'HH:mm') : '…')
+  const formatTime = (value: Date | null) => (value ? formatTbilisi(value, 'HH:mm') : '…')
   const timeText = isAllDay
     ? t(`${labelsKey}.allDay`)
     : `${formatTime(timeOfDay.start)}–${formatTime(timeOfDay.end)}`

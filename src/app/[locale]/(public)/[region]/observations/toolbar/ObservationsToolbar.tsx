@@ -2,8 +2,9 @@
 
 import { useRef } from 'react'
 import { useIsStuck } from '@components/hooks'
-import { ChipGroup, SegmentedControl, type ToggleOption } from '@components/ui'
+import { SegmentedControl, type ToggleOption } from '@components/ui'
 import type { ObservationDateBasis } from '@domain/types'
+import { ChipGroup } from '@ds/primitives'
 import { List, Map as MapIcon } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
@@ -65,6 +66,10 @@ const ObservationsToolbar = ({
       ...(dateBasis === 'reported' && filters.period === 'unknown' && { period: 'all' }),
     })
 
+  const handlePeriodChange = (period: ObservationsPeriod | null) => {
+    if (period) onFiltersChange({ period })
+  }
+
   return (
     <>
       <div ref={sentinelRef} aria-hidden="true" className="h-px" />
@@ -95,9 +100,10 @@ const ObservationsToolbar = ({
 
         <ChipGroup
           ariaLabel={t('observations.filters.periods.label')}
-          // Bleeds to the screen edges so it can scroll sideways when chips overflow
-          className="-mx-4 px-4"
-          onChange={(period) => onFiltersChange({ period })}
+          // One row that bleeds to the screen edges and scrolls sideways when chips
+          // overflow; compact chips for the toolbar
+          className="scrollbar-hide *:text-copy-sm -mx-4 flex-nowrap overflow-x-auto px-4 *:h-8.5 *:min-h-0 *:shrink-0 *:whitespace-nowrap"
+          onChange={handlePeriodChange}
           options={periodOptions}
           value={filters.period}
         />

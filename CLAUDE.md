@@ -256,6 +256,8 @@ Key v4 syntax differences from v3:
 
 **Accessibility is a low priority.** Admin needs basic keyboard use at most (Tab, Enter/Space, Esc, visible focus); public users are mostly mountain people, and very few use assistive technology. Keep what base-ui and plain HTML give for free; no extra ARIA work, screen-reader-only flows or accessibility-only tests. In reviews, accessibility findings are nits, not blockers.
 
+**Dates and times are Georgian.** Everything the app records happens in Georgia, so dates and times are entered and shown in Georgian time (UTC+4, no daylight saving), whatever the device's or server's zone. Use `src/lib/tbilisiTime.ts`: `formatTbilisi`, `atTbilisiTime`, `getTbilisiToday` / `getTbilisiTodayIso`, `startOfTbilisiDay` / `endOfTbilisiDay`. next-intl's formatter is set to Asia/Tbilisi too. Never `format(date, 'HH:mm')`, `new Date()` as "today" or `startOfDay` on a moment without them. A calendar day with no time (a member's join date, a filter day) is just a day; a date-only observation is stored at noon in Georgia.
+
 ### Modal / Sheet / Drawer Dismissal
 - **Data-loss risk** (dirty form, unsaved edits): never close on backdrop click or swipe. Only explicit actions close it (close button, Cancel, Esc) — and those ask for confirmation while there are unsaved changes.
 - **No data-loss risk** (read-only views, simple confirmations): closing on backdrop click/swipe is fine.

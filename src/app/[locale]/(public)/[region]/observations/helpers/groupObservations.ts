@@ -1,7 +1,9 @@
 import type { ObservationDateBasis, PublicObservation } from '@domain/types'
-import { differenceInCalendarDays, format } from 'date-fns'
+import { differenceInCalendarDays } from 'date-fns'
 
 import getObservationDate from './getObservationDate'
+
+import { formatTbilisi, toTbilisiWallClock } from '@/lib/tbilisiTime'
 
 export type ObservationGroupKey = 'today' | 'yesterday' | 'thisWeek' | 'unknown' | `month:${string}`
 
@@ -10,16 +12,17 @@ export type ObservationGroup = {
   observations: PublicObservation[]
 }
 
+// By Georgia's calendar days, like the cards' "Yesterday" labels
 const getGroupKey = (date: Date | null, now: Date): ObservationGroupKey => {
   if (!date) return 'unknown'
 
-  const daysAgo = differenceInCalendarDays(now, date)
+  const daysAgo = differenceInCalendarDays(toTbilisiWallClock(now), toTbilisiWallClock(date))
 
   if (daysAgo <= 0) return 'today'
   if (daysAgo === 1) return 'yesterday'
   if (daysAgo < 7) return 'thisWeek'
 
-  return `month:${format(date, 'yyyy-MM')}`
+  return `month:${formatTbilisi(date, 'yyyy-MM')}`
 }
 
 // Groups in order of first appearance — the API returns newest first, so that's

@@ -4,6 +4,9 @@ import { defineConfig } from 'vitest/config'
 // Vercel builds with NODE_ENV=production, and Vitest keeps a value that's already
 // set. React's production build has no act(), so every render would fail there.
 process.env.NODE_ENV = 'test'
+// Far from Georgia, so every test proves dates don't depend on the machine's zone
+// (the app works in Georgian time, see src/lib/tbilisiTime.ts)
+process.env.TZ = 'America/Los_Angeles'
 
 export default defineConfig({
   plugins: [tsconfigPaths()],

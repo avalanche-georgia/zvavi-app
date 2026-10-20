@@ -67,6 +67,7 @@ export const POST = async (request: Request) => {
         p_date: body.isDateUnknown ? undefined : (body.date ?? undefined),
         p_description: body.description ?? undefined,
         p_is_date_unknown: body.isDateUnknown,
+        p_is_time_known: body.isTimeKnown,
         p_latitude: roundCoordinate(body.latitude),
         p_location: body.location || undefined,
         p_longitude: roundCoordinate(body.longitude),
