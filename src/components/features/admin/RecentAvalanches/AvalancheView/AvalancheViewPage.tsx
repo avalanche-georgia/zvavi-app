@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { BackLink, FooterConfirm } from '@components/features/admin/shared'
+import { BackLink, DeleteDialog } from '@components/features/admin/shared'
 import type { AvalancheListItem } from '@data/hooks/recentAvalanches'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'src/i18n/navigation'
@@ -25,12 +25,16 @@ const AvalancheViewPage = ({ avalanche }: { avalanche: AvalancheListItem }) => {
   const router = useRouter()
   const listHref = getListHref(avalanche)
 
-  // Asked in the footer, like in the side panel
   const [isConfirmingDelete, setIsConfirmingDelete] = useState(false)
+
+  const handleDeleted = () => {
+    setIsConfirmingDelete(false)
+    router.push(listHref)
+  }
 
   const { handleDelete, isDeleting } = useAvalancheDelete({
     id: avalanche.id,
-    onSuccess: () => router.push(listHref),
+    onSuccess: handleDeleted,
     regionId: avalanche.regionId,
   })
 
@@ -47,20 +51,16 @@ const AvalancheViewPage = ({ avalanche }: { avalanche: AvalancheListItem }) => {
       <div className="rounded-card border-rule bg-surface overflow-hidden border">
         <AvalancheView avalanche={avalanche} />
         <footer className="border-rule border-t px-4 py-3">
-          {isConfirmingDelete ? (
-            <FooterConfirm
-              cancelLabel={t('common.actions.cancel')}
-              confirmLabel={t('common.actions.delete')}
-              isBusy={isDeleting}
-              message={t('admin.recentAvalanches.sheet.deleteConfirm')}
-              onCancel={handleDeleteCancel}
-              onConfirm={handleDelete}
-            />
-          ) : (
-            <ViewActions avalanche={avalanche} onDelete={handleDeleteRequest} onEdit={handleEdit} />
-          )}
+          <ViewActions avalanche={avalanche} onDelete={handleDeleteRequest} onEdit={handleEdit} />
         </footer>
       </div>
+      <DeleteDialog
+        isBusy={isDeleting}
+        isOpen={isConfirmingDelete}
+        message={t('admin.recentAvalanches.sheet.deleteConfirm')}
+        onCancel={handleDeleteCancel}
+        onConfirm={handleDelete}
+      />
     </>
   )
 }

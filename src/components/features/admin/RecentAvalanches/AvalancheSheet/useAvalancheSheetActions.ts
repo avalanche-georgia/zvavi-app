@@ -46,6 +46,7 @@ const useAvalancheSheetActions = ({
 
   const handleDeleted = () => {
     if (avalanche) onDeleted?.(avalanche.id)
+    setConfirm(null)
     leave()
   }
 

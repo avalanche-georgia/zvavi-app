@@ -1,7 +1,5 @@
-import { useTranslations } from 'next-intl'
-
-import DiscardConfirm from './DiscardConfirm'
-import FooterConfirm from './FooterConfirm'
+import DeleteDialog from './DeleteDialog'
+import DiscardDialog from './DiscardDialog'
 import type { RecordSheetConfirm } from './useRecordSheet'
 
 type RecordSheetFooterProps = {
@@ -15,8 +13,8 @@ type RecordSheetFooterProps = {
   onDiscard: VoidFunction
 }
 
-// Footer of a record sheet. A pending question (delete? discard?) takes it over —
-// a second modal stacked on the sheet would fight its focus trap.
+// Footer of a record sheet. A pending question (delete? discard?) opens a dialog
+// over the sheet — rendered inside it, so it nests.
 const RecordSheetFooter = ({
   children,
   confirm,
@@ -25,25 +23,22 @@ const RecordSheetFooter = ({
   onConfirmCancel,
   onDelete,
   onDiscard,
-}: RecordSheetFooterProps) => {
-  const t = useTranslations()
-
-  if (confirm === 'delete') {
-    return (
-      <FooterConfirm
-        cancelLabel={t('common.actions.cancel')}
-        confirmLabel={t('common.actions.delete')}
-        isBusy={isDeleting}
-        message={deleteMessage}
-        onCancel={onConfirmCancel}
-        onConfirm={onDelete}
-      />
-    )
-  }
-
-  if (confirm) return <DiscardConfirm onCancel={onConfirmCancel} onConfirm={onDiscard} />
-
-  return children
-}
+}: RecordSheetFooterProps) => (
+  <>
+    {children}
+    <DeleteDialog
+      isBusy={isDeleting}
+      isOpen={confirm === 'delete'}
+      message={deleteMessage}
+      onCancel={onConfirmCancel}
+      onConfirm={onDelete}
+    />
+    <DiscardDialog
+      isOpen={confirm === 'close' || confirm === 'leave'}
+      onCancel={onConfirmCancel}
+      onConfirm={onDiscard}
+    />
+  </>
+)
 
 export default RecordSheetFooter

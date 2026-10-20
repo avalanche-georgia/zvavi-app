@@ -1,7 +1,8 @@
 'use client'
 
-import { useRef, useState } from 'react'
-import { Button, ConfirmPopover } from '@ds/primitives'
+import { useState } from 'react'
+import { ConfirmDialog } from '@ds/patterns'
+import { Button } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 import { useFormState } from 'react-hook-form'
 import { useRouter } from 'src/i18n/navigation'
@@ -13,7 +14,6 @@ const FormActions = () => {
   const t = useTranslations()
   const router = useRouter()
   const { isDirty, isSubmitting } = useFormState()
-  const cancelRef = useRef<HTMLButtonElement>(null)
   const [isConfirmOpen, setIsConfirmOpen] = useState(false)
 
   const leave = () => router.push(routes.about.joinUs)
@@ -26,17 +26,17 @@ const FormActions = () => {
 
   return (
     <div className="flex justify-end gap-2.5 pt-1">
-      <Button ref={cancelRef} onClick={handleCancel} variant="secondary">
+      <Button onClick={handleCancel} variant="secondary">
         {t('common.actions.cancel')}
       </Button>
-      <ConfirmPopover
-        anchor={cancelRef}
+      <ConfirmDialog
         cancelLabel={t('joinUs.apply.leave.stay')}
         confirmLabel={t('joinUs.apply.leave.confirm')}
         isOpen={isConfirmOpen}
-        message={t('joinUs.apply.leave.message')}
         onConfirm={leave}
         onOpenChange={setIsConfirmOpen}
+        title={t('joinUs.apply.leave.message')}
+        tone="danger"
       />
       <Button isBusy={isSubmitting} type="submit">
         {t('common.actions.submit')}

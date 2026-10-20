@@ -6,22 +6,29 @@ import { Button, Dialog } from '../../primitives'
 
 type ConfirmDialogProps = {
   cancelLabel: string
-  // What the confirmation is about: a sentence, or a summary of what goes out
-  children: React.ReactNode
+  // More about what happens, e.g. a summary of what goes out. Left out when the
+  // question says it all.
+  children?: React.ReactNode
   confirmLabel: string
+  // The confirmed action is running. Passing it at all means the caller closes
+  // the dialog once the action is done; until then it can't be dismissed.
+  isBusy?: boolean
   isOpen: boolean
   onConfirm: VoidFunction
   onOpenChange: (isOpen: boolean) => void
+  // The question
   title: string
   tone?: 'danger' | 'default'
 }
 
-// "Are you sure?" with room for a summary. Prefer ConfirmPopover when one
-// sentence is enough. Focus starts on Cancel so a stray Enter never confirms.
+// "Are you sure?" in a centred modal, for anything that can't be taken back.
+// Inside a Sheet, render it within the sheet so it nests: Esc closes only the
+// dialog. Focus starts on Cancel so a stray Enter never confirms.
 const ConfirmDialog = ({
   cancelLabel,
   children,
   confirmLabel,
+  isBusy,
   isOpen,
   onConfirm,
   onOpenChange,
@@ -29,20 +36,34 @@ const ConfirmDialog = ({
   tone = 'default',
 }: ConfirmDialogProps) => {
   const cancelRef = useRef<HTMLButtonElement>(null)
+  const closesItself = isBusy === undefined
 
-  const handleCancel = () => onOpenChange(false)
+  const handleOpenChange = (nextIsOpen: boolean) => {
+    if (isBusy) return
 
+    onOpenChange(nextIsOpen)
+  }
+
+  const handleCancel = () => handleOpenChange(false)
+
+  // The action runs first: closing reports through onOpenChange, which callers
+  // often treat as "cancelled"
   const handleConfirm = () => {
-    onOpenChange(false)
     onConfirm()
+
+    if (closesItself) onOpenChange(false)
   }
 
   const footer = (
     <>
-      <Button ref={cancelRef} onClick={handleCancel} variant="secondary">
+      <Button ref={cancelRef} disabled={isBusy} onClick={handleCancel} variant="secondary">
         {cancelLabel}
       </Button>
-      <Button onClick={handleConfirm} variant={tone === 'danger' ? 'danger' : 'primary'}>
+      <Button
+        isBusy={isBusy}
+        onClick={handleConfirm}
+        variant={tone === 'danger' ? 'danger' : 'primary'}
+      >
         {confirmLabel}
       </Button>
     </>
@@ -52,8 +73,9 @@ const ConfirmDialog = ({
     <Dialog
       footer={footer}
       initialFocus={cancelRef}
+      isDismissible={!isBusy}
       isOpen={isOpen}
-      onOpenChange={onOpenChange}
+      onOpenChange={handleOpenChange}
       title={title}
     >
       {children}

@@ -5,7 +5,8 @@ import { Dialog as BaseDialog } from '@base-ui/react/dialog'
 import { cn } from '@/lib/utils'
 
 type DialogProps = {
-  children: React.ReactNode
+  // Left out when the title says it all
+  children?: React.ReactNode
   className?: string
   // Buttons, right-aligned: [Cancel] [Primary]
   footer: React.ReactNode
@@ -18,8 +19,7 @@ type DialogProps = {
   title: string
 }
 
-// Centred modal for a decision that needs more room than a ConfirmPopover
-// (e.g. a summary of what is about to go out). Esc and Cancel close it.
+// Centred modal for a decision. Esc and Cancel close it.
 const Dialog = ({
   children,
   className,
@@ -36,7 +36,11 @@ const Dialog = ({
     open={isOpen}
   >
     <BaseDialog.Portal>
-      <BaseDialog.Backdrop className="bg-scrim fixed inset-0 z-50 transition-opacity duration-200 data-ending-style:opacity-0 data-starting-style:opacity-0" />
+      {/* Rendered even when nested in a Sheet, so the sheet dims too */}
+      <BaseDialog.Backdrop
+        className="bg-scrim fixed inset-0 z-50 transition-opacity duration-200 data-ending-style:opacity-0 data-starting-style:opacity-0"
+        forceRender
+      />
       <BaseDialog.Popup
         className={cn(
           'rounded-card bg-surface shadow-menu text-ink fixed top-1/2 left-1/2 z-50 flex max-h-[calc(100dvh-2rem)] w-[calc(100vw-2rem)] max-w-md -translate-1/2 flex-col outline-hidden',
@@ -45,8 +49,12 @@ const Dialog = ({
         )}
         initialFocus={initialFocus}
       >
-        <BaseDialog.Title className="text-heading px-5 pt-5 font-bold">{title}</BaseDialog.Title>
-        <div className="text-copy text-body overflow-y-auto px-5 pt-3 pb-5">{children}</div>
+        <BaseDialog.Title className={cn('text-heading px-5 pt-5 font-bold', !children && 'pb-5')}>
+          {title}
+        </BaseDialog.Title>
+        {children && (
+          <div className="text-copy text-body overflow-y-auto px-5 pt-3 pb-5">{children}</div>
+        )}
         <div className="border-rule flex justify-end gap-2 border-t px-5 py-3">{footer}</div>
       </BaseDialog.Popup>
     </BaseDialog.Portal>

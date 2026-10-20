@@ -8,26 +8,51 @@ import { Button } from '../../primitives'
 const noop = () => undefined
 
 const ConfirmDialogGallery = () => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isPublishOpen, setIsPublishOpen] = useState(false)
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false)
 
-  const handleOpen = () => setIsOpen(true)
+  const handlePublishOpen = () => setIsPublishOpen(true)
+  const handleDeleteOpen = () => setIsDeleteOpen(true)
+
+  // Busy for a moment, then done: the caller closes the dialog
+  const handleDelete = () => {
+    setIsDeleting(true)
+    setTimeout(() => {
+      setIsDeleting(false)
+      setIsDeleteOpen(false)
+    }, 1500)
+  }
 
   return (
-    <>
-      <Button onClick={handleOpen} variant="secondary">
+    <div className="flex gap-2">
+      <Button onClick={handlePublishOpen} variant="secondary">
         Publish…
+      </Button>
+      <Button onClick={handleDeleteOpen} variant="secondary">
+        Delete…
       </Button>
       <ConfirmDialog
         cancelLabel="Cancel"
         confirmLabel="Publish"
-        isOpen={isOpen}
+        isOpen={isPublishOpen}
         onConfirm={noop}
-        onOpenChange={setIsOpen}
+        onOpenChange={setIsPublishOpen}
         title="Publish forecast #180?"
       >
         It goes live on the website and in partner apps right away.
       </ConfirmDialog>
-    </>
+      <ConfirmDialog
+        cancelLabel="Cancel"
+        confirmLabel="Delete"
+        isBusy={isDeleting}
+        isOpen={isDeleteOpen}
+        onConfirm={handleDelete}
+        onOpenChange={setIsDeleteOpen}
+        title="Delete this record permanently?"
+        tone="danger"
+      />
+    </div>
   )
 }
 

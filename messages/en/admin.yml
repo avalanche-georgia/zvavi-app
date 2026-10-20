@@ -492,9 +492,6 @@ admin:
         savedAt: 'Saved · {time}'
         save: 'Save'
         saveAndClose: 'Save & close'
-        discardConfirm: 'Discard unsaved changes?'
-        keepEditing: 'Keep editing'
-        discard: 'Discard'
       save:
         created: 'Forecast created'
         updated: 'Forecast updated'

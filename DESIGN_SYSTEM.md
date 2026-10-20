@@ -174,10 +174,10 @@ Rules:
   - A router link that acts as a button uses `getButtonClasses({ variant, size })` — same variants,
     no restyling.
   - Size `md` in sheet footers and sticky action bars; `sm` inside content (section headers, cards,
-    empty states, inline confirmations).
+    empty states, confirmation popovers).
   - Dismiss before confirm, right-aligned: `[Cancel] [Primary]`. Sheet / panel footers use
-    `patterns/FooterActions`: buttons always on the right, an optional note (hint or confirmation
-    question) on the left — on its own line above the buttons when the footer is narrow.
+    `patterns/FooterActions`: buttons always on the right, an optional hint on the left — on its own
+    line above the buttons when the footer is narrow.
   - No colour or height overrides through `className` — add a variant instead.
 - **Selects** (`primitives/Select`): size `md` in forms, `sm` in toolbars and filter bars (next to
   `sm` Buttons). `isActive` gives the accent border while the select narrows a list down. "All …"
@@ -215,9 +215,16 @@ Rules:
 - **Sheets** (`patterns/Sheet`): bottom sheet on mobile, side panel from `lg`. `isTall` fixes the
   mobile height; `isWide` widens the desktop panel (`w-160` instead of `w-120`) for records with more
   to lay out side by side, e.g. a member's facts and QR code. No width overrides through `className`.
-- **Confirming a destructive action** (remove, unlink): wrap the control that asks in
-  `primitives/ConfirmPopover`. It floats next to that control (no layout shift), starts focus on
-  Cancel, and base-ui closes it on Esc, an outside click or when another one opens.
+- **Confirming a destructive action** (delete, remove, unlink, discard unsaved input) — always asked,
+  never replaced by an Undo, never swapped inline into a footer or action bar:
+  - An icon button that asks (trash / unlink on a card): wrap it in `primitives/ConfirmPopover`. It
+    opens right at the click, starts focus on Cancel; Esc, an outside click or another one closes it.
+  - Anything else (menu items, text buttons, a sheet's ✕ / Cancel / Esc / Back with unsaved input):
+    `patterns/ConfirmDialog` with `tone="danger"` — centred, so it can't be missed. The question is
+    the `title`; `children` only when there's more to say. Inside a Sheet render it within the sheet
+    (e.g. in its footer) so it nests: Esc closes only the dialog. Pass `isBusy` for an async action —
+    the dialog then stays open, undismissable, until the caller closes it. Admin sheets use
+    `DiscardDialog` / `DeleteDialog` from `features/admin/shared`.
 - **Icon-only buttons** (`primitives/IconButton`) always show their label as a `Tooltip` on hover and
   keyboard focus (pass `tooltip` for a shorter label than the accessible name). Tooltips don't show
   on touch, so the icon must be clear without it.

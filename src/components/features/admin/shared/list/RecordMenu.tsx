@@ -1,7 +1,8 @@
 'use client'
 
 import { useRef } from 'react'
-import { ConfirmPopover, IconButton, Menu, MenuItem, MenuSeparator } from '@ds/primitives'
+import { ConfirmDialog } from '@ds/patterns'
+import { IconButton, Menu, MenuItem, MenuSeparator } from '@ds/primitives'
 import { Ellipsis, LoaderIcon, Trash2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
@@ -23,7 +24,7 @@ type RecordMenuProps = {
 }
 
 // The ⋯ menu of a record, in its table row or on its page. Delete asks first,
-// in a popover anchored to ⋯.
+// in a dialog.
 const RecordMenu = ({
   children,
   deleteMessage,
@@ -66,14 +67,14 @@ const RecordMenu = ({
         </MenuItem>
       </Menu>
 
-      <ConfirmPopover
-        anchor={menuTriggerRef}
+      <ConfirmDialog
         cancelLabel={t('common.actions.cancel')}
         confirmLabel={t('common.actions.delete')}
         isOpen={deleteConfirm.isConfirmOpen}
-        message={deleteMessage}
         onConfirm={handleDeleteConfirm}
         onOpenChange={deleteConfirm.onConfirmOpenChange}
+        title={deleteMessage}
+        tone="danger"
       />
     </>
   )

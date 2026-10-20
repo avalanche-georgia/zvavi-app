@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
+import { DiscardDialog } from '@components/features/admin/shared'
 import type { AvalancheProblemType } from '@domain/types'
 import { Sheet } from '@ds/patterns'
 import isEqual from 'lodash/isEqual'
@@ -48,6 +49,8 @@ const ProblemEditor = ({
   const requestClose = () => (isDirty ? setIsConfirmingDiscard(true) : onCancel())
   const handleOpenChange = (nextIsOpen: boolean) => !nextIsOpen && requestClose()
 
+  const handleKeepEditing = () => setIsConfirmingDiscard(false)
+
   const handleDiscard = () => {
     setIsConfirmingDiscard(false)
     onCancel()
@@ -70,13 +73,15 @@ const ProblemEditor = ({
     <Sheet
       className="lg:w-200"
       footer={
-        <ProblemEditorFooter
-          isConfirmingDiscard={isConfirmingDiscard}
-          onCancel={requestClose}
-          onDiscard={handleDiscard}
-          onDone={handleDone}
-          onKeepEditing={() => setIsConfirmingDiscard(false)}
-        />
+        <>
+          <ProblemEditorFooter onCancel={requestClose} onDone={handleDone} />
+          {/* Inside the sheet, so it nests: Esc closes only the dialog */}
+          <DiscardDialog
+            isOpen={isConfirmingDiscard}
+            onCancel={handleKeepEditing}
+            onConfirm={handleDiscard}
+          />
+        </>
       }
       header={<ProblemEditorHeader isNew={isNew} number={number} />}
       isDismissible={!isDirty}

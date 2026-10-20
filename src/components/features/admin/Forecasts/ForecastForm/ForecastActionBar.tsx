@@ -1,5 +1,6 @@
 'use client'
 
+import { DiscardDialog } from '@components/features/admin/shared'
 import { StickyActionBar } from '@ds/patterns'
 import { Button } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
@@ -42,17 +43,7 @@ const ForecastActionBar = (props: ForecastActionBarProps) => {
     }
   })()
 
-  const actions = isConfirmingCancel ? (
-    <div className="flex items-center gap-2 transition-[opacity,translate] duration-200 ease-out motion-reduce:transition-none starting:-translate-y-1 starting:opacity-0">
-      <span className="text-copy-sm text-ink font-semibold">{t(`${key}.discardConfirm`)}</span>
-      <Button onClick={props.onCancelDismiss} variant="secondary">
-        {t(`${key}.keepEditing`)}
-      </Button>
-      <Button onClick={props.onCancelConfirm} variant="danger">
-        {t(`${key}.discard`)}
-      </Button>
-    </div>
-  ) : (
+  const actions = (
     <div className="flex w-full items-center gap-2 min-[560px]:w-auto">
       <Button onClick={props.onCancel} variant="secondary">
         {t('common.actions.cancel')}
@@ -72,6 +63,11 @@ const ForecastActionBar = (props: ForecastActionBarProps) => {
       >
         {t(`${key}.saveAndClose`)}
       </Button>
+      <DiscardDialog
+        isOpen={isConfirmingCancel}
+        onCancel={props.onCancelDismiss}
+        onConfirm={props.onCancelConfirm}
+      />
     </div>
   )
 

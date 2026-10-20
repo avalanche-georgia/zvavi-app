@@ -1,4 +1,4 @@
-import { DiscardConfirm, FooterConfirm } from '@components/features/admin/shared'
+import { DeleteDialog, DiscardDialog } from '@components/features/admin/shared'
 import type { AvalancheListItem } from '@data/hooks/recentAvalanches'
 import { FooterActions } from '@ds/patterns'
 import { Button } from '@ds/primitives'
@@ -38,37 +38,41 @@ const AvalancheSheetFooter = ({
 }: AvalancheSheetFooterProps) => {
   const t = useTranslations()
 
-  if (confirm === 'delete') {
-    return (
-      <FooterConfirm
-        cancelLabel={t('common.actions.cancel')}
-        confirmLabel={t('common.actions.delete')}
+  // Inside the sheet, so they nest: Esc closes only the dialog
+  const dialogs = (
+    <>
+      <DeleteDialog
         isBusy={isDeleting}
+        isOpen={confirm === 'delete'}
         message={t('admin.recentAvalanches.sheet.deleteConfirm')}
         onCancel={onConfirmCancel}
         onConfirm={onConfirm}
       />
-    )
-  }
-
-  if (confirm) {
-    return <DiscardConfirm onCancel={onConfirmCancel} onConfirm={onConfirm} />
-  }
-
-  if (mode === 'view') {
-    return <ViewActions avalanche={avalanche} onDelete={onDelete} onEdit={onEdit} />
-  }
+      <DiscardDialog
+        isOpen={confirm === 'close' || confirm === 'view'}
+        onCancel={onConfirmCancel}
+        onConfirm={onConfirm}
+      />
+    </>
+  )
 
   return (
-    <FooterActions>
-      <Button onClick={onEditCancel} variant="secondary">
-        {t('common.actions.cancel')}
-      </Button>
-      {/* Also disabled while a save waits for photo uploads to finish */}
-      <Button disabled={isSaving} form={formId} type="submit">
-        {saveLabel ?? t('common.actions.save')}
-      </Button>
-    </FooterActions>
+    <>
+      {mode === 'view' ? (
+        <ViewActions avalanche={avalanche} onDelete={onDelete} onEdit={onEdit} />
+      ) : (
+        <FooterActions>
+          <Button onClick={onEditCancel} variant="secondary">
+            {t('common.actions.cancel')}
+          </Button>
+          {/* Also disabled while a save waits for photo uploads to finish */}
+          <Button disabled={isSaving} form={formId} type="submit">
+            {saveLabel ?? t('common.actions.save')}
+          </Button>
+        </FooterActions>
+      )}
+      {dialogs}
+    </>
   )
 }
 

@@ -492,9 +492,6 @@ admin:
         savedAt: 'შენახულია · {time}'
         save: 'შენახვა'
         saveAndClose: 'შენახვა და დახურვა'
-        discardConfirm: 'გავაუქმოთ შეუნახავი ცვლილებები?'
-        keepEditing: 'რედაქტირების გაგრძელება'
-        discard: 'გაუქმება'
       save:
         created: 'პროგნოზი შეიქმნა'
         updated: 'პროგნოზი განახლდა'
