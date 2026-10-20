@@ -1,4 +1,6 @@
 import type { HazardLevelScale } from '@domain/types'
+import { readFileSync } from 'fs'
+import { join } from 'path'
 
 export const hazardColors: Record<HazardLevelScale, string> = {
   0: '#9ca3af',
@@ -27,15 +29,7 @@ export const hazardIconFiles: Record<HazardLevelScale, string> = {
   5: 'high',
 }
 
-export async function loadFont(): Promise<ArrayBuffer> {
-  const css = await fetch('https://fonts.googleapis.com/css2?family=Inter:wght@600', {
-    headers: { 'User-Agent': 'Mozilla/5.0 (compatible; Googlebot/2.1)' },
-    next: { revalidate: 86400 },
-  }).then((response) => response.text())
-
-  const url = css.match(/url\((https:\/\/fonts\.gstatic\.com\/[^)]+)\)/)?.[1]
-
-  if (!url) throw new Error('Could not parse font URL from Google Fonts')
-
-  return fetch(url, { next: { revalidate: 86400 } }).then((response) => response.arrayBuffer())
-}
+// Inter SemiBold, self-hosted like the site font: next/og reads woff, not woff2.
+// From @fontsource/inter 5.3.0; licence in public/og/Inter-OFL.txt.
+export const loadFont = () =>
+  readFileSync(join(process.cwd(), 'public/og/inter-latin-600-normal.woff'))
