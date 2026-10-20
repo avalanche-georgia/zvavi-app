@@ -6,11 +6,14 @@ import type { DayButtonProps } from 'react-day-picker'
 import { cn } from '@/lib/utils'
 
 // A day of the grid. Single picks and range ends fill with accent; days inside
-// a range stay transparent over the cell's soft strip.
+// a range stay transparent over the cell's soft strip. A selected day outside
+// the allowed dates (e.g. a saved value older than `startMonth`) stays marked,
+// in the soft accent, but can't be picked again.
 const CalendarDayButton = ({ className, day, modifiers, ...props }: DayButtonProps) => {
   const ref = useRef<HTMLButtonElement>(null)
   const isRangeEnd = modifiers.range_start || modifiers.range_end
-  const isFilled = modifiers.selected && (isRangeEnd || !modifiers.range_middle)
+  const isMarked = modifiers.selected && (isRangeEnd || !modifiers.range_middle)
+  const isFilled = isMarked && !modifiers.disabled
 
   // Keyboard navigation moves focus between days (react-day-picker's own button does the same)
   useEffect(() => {
@@ -30,6 +33,7 @@ const CalendarDayButton = ({ className, day, modifiers, ...props }: DayButtonPro
         // From modifiers, not :disabled — react-day-picker drops the attribute
         // while a disabled day has keyboard focus
         modifiers.disabled && 'text-disabled cursor-not-allowed',
+        isMarked && modifiers.disabled && 'bg-accent-soft text-accent',
         className,
       )}
       data-day={day.isoDate}

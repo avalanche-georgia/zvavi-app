@@ -1,10 +1,6 @@
-export type SelectSize = 'md' | 'sm'
+import type { ControlSize } from '../Field'
 
-// md: form fields. sm: toolbars and filter bars, next to sm Buttons
-export const triggerSizeClasses: Record<SelectSize, string> = {
-  md: 'h-11.5 px-3',
-  sm: 'h-10 rounded-control px-3 text-copy',
-}
+export type SelectSize = ControlSize
 
 export const itemSizeClasses: Record<SelectSize, string> = {
   md: 'py-2.5 text-copy-lg',

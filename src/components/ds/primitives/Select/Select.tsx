@@ -3,8 +3,8 @@
 import { Select as BaseSelect } from '@base-ui/react/select'
 import { Check, ChevronDown } from 'lucide-react'
 
-import { itemSizeClasses, type SelectSize, triggerSizeClasses } from './selectClasses'
-import { fieldControlClasses } from '../Field'
+import { itemSizeClasses, type SelectSize } from './selectClasses'
+import { controlSizeClasses, fieldControlClasses } from '../Field'
 
 import { cn } from '@/lib/utils'
 
@@ -60,7 +60,7 @@ const Select = <TValue extends string>({
           fieldControlClasses,
           'focus-ring flex cursor-pointer items-center justify-between gap-2 text-left',
           'data-popup-open:border-rule-strong',
-          triggerSizeClasses[size],
+          controlSizeClasses[size],
           isActive && 'border-accent hover:border-accent data-popup-open:border-accent',
           className,
         )}

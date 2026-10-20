@@ -31,7 +31,7 @@ src/components/
 │   │                    # Textarea, ChipGroup, ToggleGrid, SegmentedControl, Select, Stepper, InfoTip,
 │   │                    # IconButton, RatingScale, DateField, Menu, Pagination, SearchField,
 │   │                    # StatusPill, CountBadge, Skeleton, Spinner, AvalancheLoader, Dialog, RadioGroup,
-│   │                    # Popover, Calendar
+│   │                    # Popover, Calendar, DatePicker
 │   ├── patterns/        # ClampedText, ContentCard, FormCard, StickyActionBar, SuccessState, DataTable, LoadingState,
 │   │                    # ConfirmDialog, FooterActions, Sheet, Drawer
 │   └── form/            # react-hook-form bindings: FormTextField, FormTextarea, FormNumberField,
@@ -184,6 +184,11 @@ Rules:
   options use a sentinel value (e.g. `'all'`); `onValueChange` never passes `null`.
 - **Popovers** (`primitives/Popover`): for content that needs more room than a menu — a `Calendar`,
   a short form. Pass `isOpen` / `onOpenChange` when a Done button inside closes it.
+- **Dates** (`primitives/DatePicker`): every date or date + time field, in forms and filter bars. It shows
+  the date in the page's language, `min` / `max` bound the calendar, `clearLabel` adds a ×, `todayLabel` a
+  "Today" shortcut, `withTime` a time input (a new date starts at `defaultTime`). `DateField` (native
+  inputs) is deprecated. A bare `Calendar` is for custom panels, e.g. a range filter with presets;
+  "today" there is the browser's day, so pass `today` when the page counts days in Tbilisi time.
 - **Menus** (`primitives/Menu`): `align` picks the trigger edge (`end` for overflow menus, `start`
   for nav dropdowns). Navigation rows pass `render={<Link href=… />}` to `MenuItem`; `isActive`
   marks the current page.
@@ -215,6 +220,15 @@ Rules:
   and states (default, hover, focus, selected, disabled, error). Register it in
   `src/components/features/admin/DesignSystemGallery/entries.ts`. The gallery is at `/admin/ds`, linked
   from the admin sidebar in local dev. Demo copy is English-only fixture text; it's developer tooling.
+- **A new ds component ships complete**, before any screen uses it:
+  - **Every state it can be in**: idle / empty (placeholder), filled, hover, focus-visible, open or
+    active, selected, disabled, error (invalid inside a `Field`), and loading or busy when it waits
+    on something. Leave a state out only when it can't happen, and say why in the PR.
+  - **Our look**: tokens only, the shared `Field` classes for anything field-like, sizes that match
+    its neighbours (e.g. `sm` next to `sm` Buttons).
+  - **Tests**: `<Name>.test.tsx` next to it (Vitest + Testing Library), covering its behaviour,
+    each state, keyboard use and accessible names. `pnpm test` runs them; `pnpm build` runs them
+    first, so a failing test fails the Vercel build and the PR check.
 
 ---
 
@@ -260,8 +274,9 @@ Update this table when a legacy component's last consumer is migrated.
 | Checkbox | Headless UI | `primitives/Checkbox` | ☐ |
 | Switch | base-ui | `primitives/Switch` | ✅ |
 | Select | Radix | `primitives/Select` (base-ui) | ☐ |
-| DatePicker, Calendar, TimeInput, DatePickerTimeInput | Headless UI + react-day-picker | `primitives/DateField` (form fields), `primitives/Calendar` (month grid, e.g. in a `Popover`) | ☐ |
-| TimePicker | Headless UI | `primitives/DateField` (`withTime`) | ✅ |
+| DatePicker, Calendar, TimeInput, DatePickerTimeInput | Headless UI + react-day-picker | `primitives/DatePicker` (date and date + time fields), `primitives/Calendar` (month grid, e.g. in a `Popover`) | ☐ |
+| DateField (ds, native inputs) | — | `primitives/DatePicker` | ☐ |
+| TimePicker | Headless UI | `primitives/DatePicker` (`withTime`) | ✅ |
 | Modal (+ `shared/ConfirmationDialog`, removed) | Headless UI | `primitives/Dialog` (base-ui), `patterns/ConfirmDialog` | ☐ |
 | Popover | Radix | `primitives/Popover` (base-ui) | ☐ |
 | Tooltip, InfoIcon | Radix | `primitives/Tooltip` (base-ui Tooltip; hover/focus labels), `primitives/InfoTip` (base-ui Popover; explanations) | ☐ |

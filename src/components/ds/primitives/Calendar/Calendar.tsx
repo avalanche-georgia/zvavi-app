@@ -34,6 +34,8 @@ const CalendarChevron = ({ className, orientation = 'right' }: ChevronProps) => 
 // `startMonth` / `endMonth` / `disabled` to bound it, `captionLayout="dropdown-years"`
 // (or "dropdown") for a year (and month) select. Pass `locale` from
 // `react-day-picker/locale` — it also carries the translated aria labels.
+// "Today" is the browser's day: a page that counts days in Tbilisi time passes
+// `today` too, so the highlight agrees with its data.
 const Calendar = ({ classNames, components, ...props }: CalendarProps) => (
   <DayPicker
     classNames={{ ...calendarClasses, ...classNames }}
