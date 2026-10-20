@@ -1,6 +1,6 @@
-export { default as HazardTile } from './HazardTile'
 export { type ForecastListStatus, getForecastListStatus } from './listStatus'
 export { default as PublishConfirmDialog } from './PublishConfirmDialog'
 export { default as StatusBadge } from './StatusBadge'
 export { getHoursLeft, default as useTimeLeft } from './timeLeft'
 export { type ForecastRowActions, default as useForecastRowActions } from './useForecastRowActions'
+export { default as HazardTile } from '@components/features/forecasts/HazardTile'

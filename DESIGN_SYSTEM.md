@@ -31,7 +31,7 @@ src/components/
 │   │                    # Textarea, ChipGroup, ToggleGrid, SegmentedControl, Select, Stepper, InfoTip,
 │   │                    # IconButton, RatingScale, DateField, Menu, Pagination, SearchField,
 │   │                    # StatusPill, CountBadge, Skeleton, Spinner, AvalancheLoader, Dialog, RadioGroup,
-│   │                    # Popover, Calendar, DatePicker
+│   │                    # Popover, Calendar, DatePicker, MultiChipGroup
 │   ├── patterns/        # ClampedText, ContentCard, FormCard, StickyActionBar, SuccessState, DataTable, LoadingState,
 │   │                    # ConfirmDialog, FooterActions, Sheet, Drawer
 │   └── form/            # react-hook-form bindings: FormTextField, FormTextarea, FormNumberField,
@@ -301,11 +301,9 @@ Update this table when a legacy component's last consumer is migrated.
 | AutoScrollList | embla | none — partners page shows static grids; removed with `embla-carousel-auto-scroll` | ✅ |
 | BrandedQRCode, FallbackImage, SortableItem | custom | reviewed individually (may stay generic in ds) | ☐ |
 
-Non-kit Headless UI and Radix users also block Phase 6:
-- `shared/Spoiler`
-
-(`Header/NavMenu/DesktopNav` now uses `primitives/Menu`, `shared/LanguageToggle` uses
-`primitives/SegmentedControl` size `sm`.)
+No non-kit Headless UI or Radix users are left (`Header/NavMenu/DesktopNav` uses `primitives/Menu`,
+`shared/LanguageToggle` uses `primitives/SegmentedControl` size `sm`, and `shared/Spoiler` was removed
+with the forecast archive redesign).
 
 ### Deferred
 
