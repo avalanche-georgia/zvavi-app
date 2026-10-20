@@ -44,6 +44,8 @@ const useTimeField = ({ onValueChange, value }: UseTimeFieldParams) => {
 
   const handleTextChange = (text: string, reason: string) => {
     if (reason === 'item-press') apply(text)
+    // With the list closed, base-ui empties the field on Escape: put the last time back
+    else if (reason === 'escape-key') setDraft(null)
     else setDraft(formatTimeInput(text, draft ?? value ?? ''))
   }
 

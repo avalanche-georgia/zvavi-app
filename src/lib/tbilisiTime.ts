@@ -7,7 +7,9 @@ import { endOfDay, format, parseISO, startOfDay } from 'date-fns'
 export const tbilisiOffsetMs = 4 * 60 * 60 * 1000
 
 // A local Date whose fields read Georgia's wall-clock time for a moment, so
-// date-fns (`format`, `startOfDay`, …) works in Georgian time
+// date-fns (`format`, `startOfDay`, …) works in Georgian time. Known limit: a
+// wall-clock time inside the device's own daylight-saving gap (one hour a year,
+// devices outside Georgia only) comes out an hour off.
 export const toTbilisiWallClock = (value: Date | string) => {
   const shifted = new Date(new Date(value).getTime() + tbilisiOffsetMs)
 

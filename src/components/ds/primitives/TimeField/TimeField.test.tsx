@@ -172,6 +172,19 @@ describe('TimeField', () => {
     expect(getInput()).toHaveValue('18:00')
   })
 
+  it('keeps the time on Escape with the list closed', async () => {
+    const onChange = vi.fn()
+
+    render(<Harness onChange={onChange} />)
+    await userEvent.tab()
+    await userEvent.keyboard('{Escape}')
+    await userEvent.keyboard('{Escape}')
+    await userEvent.tab()
+
+    expect(getInput()).toHaveValue('18:00')
+    expect(onChange).not.toHaveBeenCalled()
+  })
+
   it('clears when emptied', async () => {
     const onChange = vi.fn()
 

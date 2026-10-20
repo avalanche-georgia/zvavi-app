@@ -56,7 +56,11 @@ const WhenSection = () => {
     if (isUnknown) form.setValue('time', null, options)
   }
 
-  const handleTimeChange = (nextTime: string | null) => form.setValue('time', nextTime, options)
+  // The future-time check reports on the date: re-check it too after a submit
+  const handleTimeChange = (nextTime: string | null) => {
+    form.setValue('time', nextTime, options)
+    if (form.formState.isSubmitted) void form.trigger('date')
+  }
 
   const handleQuickDate = (quickDate: string) => {
     if (quickDate === 'today') setDate(getTbilisiToday(), false)

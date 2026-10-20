@@ -16,7 +16,6 @@ const useDateRangePickerText = () => {
     doneLabel: t('common.dateRangePicker.done'),
     fromLabel: t('common.words.from'),
     locale,
-    presetsLabel: t('common.dateRangePicker.presets'),
     toLabel: t('common.words.to'),
   }
 }

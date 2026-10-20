@@ -2,7 +2,6 @@ import { ForecastContainer } from '@components/features/forecast'
 import { isNoRowsError } from '@data/helpers'
 import { fetchForecastPageData } from '@data/queries/fetchForecastPageData'
 import type { HazardLevelScale } from '@domain/types'
-import { format } from 'date-fns'
 import type { Metadata } from 'next'
 import { headers } from 'next/headers'
 import { notFound } from 'next/navigation'
@@ -10,6 +9,7 @@ import { notFound } from 'next/navigation'
 import { reportServerError } from '@/lib/posthog/server'
 import getAlternates from '@/lib/seo/getAlternates'
 import { createClient } from '@/lib/supabase/server'
+import { formatTbilisi } from '@/lib/tbilisiTime'
 import { routes } from '@/routes'
 
 const hazardLevelLabels: Record<HazardLevelScale, string> = {
@@ -53,7 +53,7 @@ export const generateMetadata = async (props: ForecastPageProps): Promise<Metada
   const level = ((data.hazard_levels as Record<string, string> | null)?.overall ??
     0) as HazardLevelScale
   const levelName = hazardLevelLabels[level]
-  const validUntil = data.valid_until ? format(new Date(data.valid_until), 'dd MMM yyyy') : null
+  const validUntil = data.valid_until ? formatTbilisi(data.valid_until, 'dd MMM yyyy') : null
   const title = `${levelName} Avalanche Hazard${validUntil ? ` · Valid until ${validUntil}` : ''}`
   const description = `Avalanche forecast for Georgia. Overall hazard level: ${levelName}.${validUntil ? ` Valid until ${validUntil}.` : ''}`
 

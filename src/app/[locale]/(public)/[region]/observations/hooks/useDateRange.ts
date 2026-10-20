@@ -24,7 +24,7 @@ const useDateRange = ({ from, period, to }: ObservationsFilters) => {
     }
 
     if (period === 'season') {
-      const { end, start } = getSeasonRange(parseISO(today))
+      const { end, start } = getSeasonRange(new Date())
 
       return { dateFrom: start.toISOString(), dateTo: end.toISOString() }
     }

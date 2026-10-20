@@ -32,8 +32,7 @@ export type DateRangePickerProps = {
   // Accessible name of the presets group
   presetsLabel?: string
   size?: ControlSize
-  // The day counted as today; the browser's by default. Pass the Tbilisi day
-  // where the page counts days in Tbilisi time.
+  // The day counted as today; Georgia's by default
   today?: Date
   toLabel: string
   value: DayRange

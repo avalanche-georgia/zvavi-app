@@ -2,18 +2,11 @@
 
 import { useDateRangePickerText } from '@components/hooks'
 import { DateRangePicker } from '@ds/primitives'
-import { parseISO } from 'date-fns'
 import { useTranslations } from 'next-intl'
 
 import useDateFilterFormat from './useDateFilterFormat'
 import useArchiveFormat from '../hooks/useArchiveFormat'
-import {
-  type ArchiveDateRange,
-  type ArchiveSeason,
-  getMonthRange,
-  getSeasonBounds,
-  toTbilisiDay,
-} from '../model'
+import { type ArchiveDateRange, type ArchiveSeason, getMonthRange, getSeasonBounds } from '../model'
 
 type DateRangeFilterProps = ArchiveDateRange & {
   activeMonths: string[]
@@ -22,7 +15,7 @@ type DateRangeFilterProps = ArchiveDateRange & {
 }
 
 // The season's dates: the months with forecasts as quick ranges, then any range
-// within the season. Days count in Tbilisi time, like the rest of the archive.
+// within the season. Days count in Georgia (the picker's default), like the rest of the archive.
 const DateRangeFilter = ({
   activeMonths,
   from,
@@ -59,7 +52,6 @@ const DateRangeFilter = ({
       presetsLabel={t('forecast.history.filters.months')}
       size="sm"
       toLabel={toLabel}
-      today={parseISO(toTbilisiDay(new Date()))}
       value={{ from, to }}
     />
   )

@@ -62,7 +62,8 @@ const getTrigger = () => screen.getByRole('combobox', { name: 'Valid until' })
 describe('QuickDateField', () => {
   beforeEach(() => {
     vi.useFakeTimers({ toFake: ['Date'] })
-    vi.setSystemTime(new Date(2026, 9, 20, 12, 0))
+    // 12:00 on 20 Oct in Georgia, whatever the machine's zone
+    vi.setSystemTime(new Date('2026-10-20T08:00:00.000Z'))
   })
 
   afterEach(() => vi.useRealTimers())

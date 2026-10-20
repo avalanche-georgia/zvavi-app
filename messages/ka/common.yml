@@ -156,7 +156,6 @@ common:
     clear: 'თარიღების გასუფთავება'
     done: 'მზადაა'
     label: 'თარიღები'
-    presets: 'სწრაფი შუალედები'
 
   photoViewer:
     open: 'ფოტო {index}-ის გახსნა'

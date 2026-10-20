@@ -48,7 +48,7 @@ export const observationBodyFieldsSchema = z.object({
   description: z.string().max(avalancheFieldLimits.descriptionMaxLength).nullable(),
   isDateUnknown: z.boolean(),
   // Whether `date` carries a real time of day (else only its day counts)
-  isTimeKnown: z.boolean(),
+  isTimeKnown: z.boolean().default(false),
   latitude: z
     .number()
     .min(avalancheFieldLimits.latitude.min)
