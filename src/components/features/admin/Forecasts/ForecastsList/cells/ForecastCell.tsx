@@ -3,8 +3,7 @@ import type { ForecastListItem } from '@domain/types'
 import { useTranslations } from 'next-intl'
 import { Link } from 'src/i18n/navigation'
 
-import { toPlainText } from '../model'
-
+import { toPlainText } from '@/lib/toPlainText'
 import { cn } from '@/lib/utils'
 import { routes } from '@/routes'
 

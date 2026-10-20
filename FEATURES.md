@@ -35,7 +35,7 @@ Interactive map showing the forecast area boundary for each region, giving users
 
 ## Forecast Archive
 
-Full history of past forecasts, browsable by date, so users can track how conditions evolved through the season.
+Every past forecast for a region, season by season. A calendar shows the whole season at a glance, coloured by danger level, and a tap on a day jumps to its forecast. Forecasts can be filtered by danger level, date range or month, and avalanche problem, and each one shows its danger by elevation, a short summary, its avalanche problems and who wrote it.
 
 ## Weather Stations
 

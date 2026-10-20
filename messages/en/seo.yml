@@ -13,8 +13,8 @@ seo:
     description: 'View the avalanche forecast zone map for {regionName}.'
 
   history:
-    title: 'Forecast History — {regionName}'
-    description: 'Browse past avalanche forecasts for {regionName}.'
+    title: 'Forecast Archive — {regionName}'
+    description: 'Every published avalanche forecast for {regionName}, season by season.'
   joinUs:
     title: 'Join Us'
     description: 'Join the Avalanche Georgia team. Help us improve avalanche safety in Georgian backcountry.'

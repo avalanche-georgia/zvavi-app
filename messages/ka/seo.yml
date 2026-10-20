@@ -13,8 +13,8 @@ seo:
     description: 'ნახეთ ზვავის პროგნოზის ზონის რუკა {regionName}-სთვის.'
 
   history:
-    title: 'პროგნოზების ისტორია — {regionName}'
-    description: 'დაათვალიერეთ წარსული ზვავის პროგნოზები {regionName}-სთვის.'
+    title: 'პროგნოზების არქივი — {regionName}'
+    description: '{regionName}: ზვავის ყველა გამოქვეყნებული პროგნოზი, სეზონების მიხედვით.'
   joinUs:
     title: 'შემოგვიერთდით'
     description: 'შემოუერთდით Avalanche Georgia-ს გუნდს. დაგვეხმარეთ ზვავის უსაფრთხოების გაუმჯობესებაში.'

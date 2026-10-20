@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef } from 'react'
+import { useIsStuck } from '@components/hooks'
 import { ChipGroup, SegmentedControl, type ToggleOption } from '@components/ui'
 import type { ObservationDateBasis } from '@domain/types'
 import { List, Map as MapIcon } from 'lucide-react'
@@ -8,7 +9,6 @@ import { useTranslations } from 'next-intl'
 
 import CustomRangeFields from './CustomRangeFields'
 import SortSelect from './SortSelect'
-import useIsStuck from './useIsStuck'
 import {
   type ObservationsFilters,
   type ObservationsPeriod,

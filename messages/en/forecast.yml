@@ -1,14 +1,48 @@
 forecast:
   pageTitle: '{regionName} Avalanche Forecast'
   forecastAreaPageTitle: '{regionName} Forecast Area'
-  historyPageTitle: '{regionName} Forecasts History'
   forecasterProfile: 'Profile of {name}'
 
   history:
-    emptyTitle: 'No Forecasts Yet'
-    empty: 'There are no avalanche forecasts published for this region.'
-    winterSeason: 'Winter'
-    hazardIconAlt: 'Danger level'
+    lede: 'Every published avalanche forecast for {regionName} — {total, plural, one {# forecast} other {# forecasts}} since {since}.'
+    ledeEmpty: 'Every published avalanche forecast for {regionName} will appear here.'
+    seasons: 'Seasons'
+    earlier: 'Earlier'
+    earlierSeasons: 'Earlier seasons'
+    seasonOption: '{season} · {count}'
+    elevationScale: 'Danger by elevation'
+    elevationLevel: '{zone}: {level}'
+    glance:
+      title: 'Season at a glance'
+      daysCovered: '{count, plural, one {# day} other {# days}} covered'
+      hint: 'Tap a day to jump to its forecast'
+      dayLabel: '{date}: {level}'
+    filters:
+      label: 'Filter forecasts'
+      levels: 'Danger level'
+      problem: 'Avalanche problem'
+      dates: 'Dates'
+      dateRange: 'Date range'
+      clearDates: 'Clear dates'
+      months: 'Months'
+      reset: 'Reset'
+      done: 'Done'
+      allProblems: 'All avalanche problems'
+      problemOption: '{problem} ({count})'
+      newest: 'Newest first'
+      oldest: 'Oldest first'
+      count: '{count, plural, one {# forecast} other {# forecasts}}'
+      shown: '{shown} of {total}'
+      clear: 'Clear'
+    empty:
+      noneTitle: 'No forecasts yet'
+      noneText: 'There are no avalanche forecasts published for this region.'
+      seasonTitle: 'No forecasts yet this season'
+      seasonText: "Forecasts usually start in December, once there's enough snow."
+      seeLatest: 'See latest forecast'
+      filtersTitle: 'No forecasts match'
+      filtersText: 'Try another date range, danger level or avalanche problem.'
+      clearFilters: 'Clear filters'
 
   staleBanner:
     message: "You're viewing a past forecast."
@@ -23,9 +57,6 @@ forecast:
     title: 'No forecasts yet'
     message: 'We are looking for someone who can write forecasts for this region.'
     action: 'Become a forecaster'
-
-  noForecast:
-    backToHome: 'Back to Home'
 
   hazardLevels:
     considerable: 'Considerable'
