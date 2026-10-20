@@ -36,8 +36,7 @@ export type DatePickerProps = DatePickerTimeOptions & {
   ref?: React.Ref<HTMLButtonElement>
   required?: boolean
   size?: ControlSize
-  // The day counted as today (highlight, Today shortcut); the browser's by default.
-  // Pass the Tbilisi day where the page counts days in Tbilisi time.
+  // The day counted as today (highlight, Today shortcut); Georgia's by default
   today?: Date
   // Shows a "Today" shortcut under the calendar
   todayLabel?: string

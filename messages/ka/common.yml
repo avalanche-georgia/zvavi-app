@@ -144,6 +144,19 @@ common:
     to: 'მდე'
     unknown: 'უცნობი'
 
+  datePicker:
+    calendar: 'აირჩიეთ თარიღი'
+    clear: 'თარიღის გასუფთავება'
+    placeholder: 'აირჩიეთ თარიღი'
+    today: 'დღეს'
+
+  dateRangePicker:
+    anyDates: 'ნებისმიერი თარიღი'
+    calendar: 'აირჩიეთ თარიღები'
+    clear: 'თარიღების გასუფთავება'
+    done: 'მზადაა'
+    label: 'თარიღები'
+
   photoViewer:
     open: 'ფოტო {index}-ის გახსნა'
     previous: 'წინა ფოტო'

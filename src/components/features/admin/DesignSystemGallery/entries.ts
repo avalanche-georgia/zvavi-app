@@ -6,6 +6,7 @@ import DrawerGallery from '@ds/patterns/Drawer/Drawer.gallery'
 import FooterActionsGallery from '@ds/patterns/FooterActions/FooterActions.gallery'
 import FormCardGallery from '@ds/patterns/FormCard/FormCard.gallery'
 import LoadingStateGallery from '@ds/patterns/LoadingState/LoadingState.gallery'
+import QuickDateFieldGallery from '@ds/patterns/QuickDateField/QuickDateField.gallery'
 import SheetGallery from '@ds/patterns/Sheet/Sheet.gallery'
 import StickyActionBarGallery from '@ds/patterns/StickyActionBar/StickyActionBar.gallery'
 import SuccessStateGallery from '@ds/patterns/SuccessState/SuccessState.gallery'
@@ -17,8 +18,8 @@ import CheckboxGallery from '@ds/primitives/Checkbox/Checkbox.gallery'
 import ChipGroupGallery from '@ds/primitives/ChipGroup/ChipGroup.gallery'
 import ConfirmPopoverGallery from '@ds/primitives/ConfirmPopover/ConfirmPopover.gallery'
 import CountBadgeGallery from '@ds/primitives/CountBadge/CountBadge.gallery'
-import DateFieldGallery from '@ds/primitives/DateField/DateField.gallery'
 import DatePickerGallery from '@ds/primitives/DatePicker/DatePicker.gallery'
+import DateRangePickerGallery from '@ds/primitives/DateRangePicker/DateRangePicker.gallery'
 import FieldGallery from '@ds/primitives/Field/Field.gallery'
 import IconButtonGallery from '@ds/primitives/IconButton/IconButton.gallery'
 import InfoTipGallery from '@ds/primitives/InfoTip/InfoTip.gallery'
@@ -34,6 +35,7 @@ import SpinnerGallery from '@ds/primitives/Spinner/Spinner.gallery'
 import StatusPillGallery from '@ds/primitives/StatusPill/StatusPill.gallery'
 import StepperGallery from '@ds/primitives/Stepper/Stepper.gallery'
 import SwitchGallery from '@ds/primitives/Switch/Switch.gallery'
+import TimeFieldGallery from '@ds/primitives/TimeField/TimeField.gallery'
 import ToggleGridGallery from '@ds/primitives/ToggleGrid/ToggleGrid.gallery'
 import TooltipGallery from '@ds/primitives/Tooltip/Tooltip.gallery'
 
@@ -73,8 +75,9 @@ export const galleryEntries: GalleryEntry[] = [
   { Demo: TooltipGallery, id: 'tooltip', title: 'Tooltip' },
   { Demo: FieldGallery, id: 'field', title: 'Field & inputs' },
   { Demo: StepperGallery, id: 'stepper', title: 'Stepper' },
-  { Demo: DateFieldGallery, id: 'date-field', title: 'DateField' },
   { Demo: DatePickerGallery, id: 'date-picker', title: 'DatePicker' },
+  { Demo: DateRangePickerGallery, id: 'date-range-picker', title: 'DateRangePicker' },
+  { Demo: TimeFieldGallery, id: 'time-field', title: 'TimeField' },
   { Demo: CalendarGallery, id: 'calendar', title: 'Calendar' },
   { Demo: CheckboxGallery, id: 'checkbox', title: 'Checkbox' },
   { Demo: SwitchGallery, id: 'switch', title: 'Switch' },
@@ -87,6 +90,7 @@ export const galleryEntries: GalleryEntry[] = [
   { Demo: PaginationGallery, id: 'pagination', title: 'Pagination' },
   { Demo: FooterActionsGallery, id: 'footer-actions', title: 'FooterActions' },
   { Demo: FormCardGallery, id: 'form-card', title: 'FormCard' },
+  { Demo: QuickDateFieldGallery, id: 'quick-date-field', title: 'QuickDateField' },
   { Demo: ContentCardGallery, id: 'content-card', title: 'ContentCard' },
   { Demo: ClampedTextGallery, id: 'clamped-text', title: 'ClampedText' },
   { Demo: StickyActionBarGallery, id: 'sticky-action-bar', title: 'StickyActionBar' },

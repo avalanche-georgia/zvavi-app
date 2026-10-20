@@ -2,12 +2,14 @@ import { memberApplicationLimits, memberGenders } from '@domain/constants'
 import { startOfDay } from 'date-fns'
 import { z } from 'zod'
 
-// Required, and not later than today
+import { getTbilisiToday } from '@/lib/tbilisiTime'
+
+// Required, and not later than today in Georgia
 export const joinedAtSchema = z
   .date({ error: () => ({ message: 'required' }) })
   .nullable()
   .refine((value) => value !== null, { message: 'required' })
-  .refine((value) => value === null || startOfDay(value) <= startOfDay(new Date()), {
+  .refine((value) => value === null || startOfDay(value) <= getTbilisiToday(), {
     message: 'joinedAtFuture',
   })
 
@@ -46,7 +48,7 @@ export const memberFormSchema = z
   .refine(isExpiryAfterJoin, { message: 'expiresAtBeforeJoined', path: ['expiresAt'] })
   .refine(
     ({ expiresAt, status }) =>
-      status !== 'active' || !expiresAt || startOfDay(expiresAt) >= startOfDay(new Date()),
+      status !== 'active' || !expiresAt || startOfDay(expiresAt) >= getTbilisiToday(),
     { message: 'activeWithExpiredDate', path: ['status'] },
   )
 

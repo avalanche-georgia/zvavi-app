@@ -1,26 +1,30 @@
 import { useMemo } from 'react'
 import { getSeasonRange } from '@domain/season'
-import { endOfDay, format, parseISO, startOfDay, subDays } from 'date-fns'
+import { format, parseISO, subDays } from 'date-fns'
 
 import type { ObservationsFilters } from '../helpers/searchParams'
+
+import { endOfTbilisiDay, getTbilisiTodayIso, startOfTbilisiDay } from '@/lib/tbilisiTime'
 
 // Calendar days including today — "7 days" is today and the 6 before it
 const periodDays = { '30d': 30, '7d': 7 } as const
 
-// Period filter → ISO bounds for the API. Computed per calendar day, so the
-// query key (and the cache) stays stable while the page is open.
+// Period filter → ISO bounds for the API, by Georgia's calendar days. Computed per
+// day, so the query key (and the cache) stays stable while the page is open.
 const useDateRange = ({ from, period, to }: ObservationsFilters) => {
-  const today = format(new Date(), 'yyyy-MM-dd')
+  const today = getTbilisiTodayIso()
 
   return useMemo(() => {
     if (period === '7d' || period === '30d') {
       return {
-        dateFrom: startOfDay(subDays(parseISO(today), periodDays[period] - 1)).toISOString(),
+        dateFrom: startOfTbilisiDay(
+          format(subDays(parseISO(today), periodDays[period] - 1), 'yyyy-MM-dd'),
+        ).toISOString(),
       }
     }
 
     if (period === 'season') {
-      const { end, start } = getSeasonRange(parseISO(today))
+      const { end, start } = getSeasonRange(new Date())
 
       return { dateFrom: start.toISOString(), dateTo: end.toISOString() }
     }
@@ -29,8 +33,8 @@ const useDateRange = ({ from, period, to }: ObservationsFilters) => {
 
     if (period === 'custom') {
       return {
-        dateFrom: from ? startOfDay(parseISO(from)).toISOString() : undefined,
-        dateTo: to ? endOfDay(parseISO(to)).toISOString() : undefined,
+        dateFrom: from ? startOfTbilisiDay(from).toISOString() : undefined,
+        dateTo: to ? endOfTbilisiDay(to).toISOString() : undefined,
       }
     }
 

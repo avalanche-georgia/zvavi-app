@@ -9,7 +9,7 @@ import { createServiceRoleClient } from '@/lib/supabase/serviceRole'
 // created_by_user_id is read only to look up a team record's reporter name —
 // toPublicObservations drops it from the response.
 export const publicColumns =
-  'id, region_id, date, is_date_unknown, description, size, quantity, latitude, ' +
+  'id, region_id, date, is_date_unknown, is_time_known, description, size, quantity, latitude, ' +
   'longitude, location, type, trigger, aspects, width, slab_depth, photo_keys, ' +
   'source, submitter_name, created_by_user_id, created_at'
 

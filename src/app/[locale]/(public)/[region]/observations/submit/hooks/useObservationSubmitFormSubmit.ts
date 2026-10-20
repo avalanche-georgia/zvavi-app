@@ -1,5 +1,8 @@
 import { useCallback } from 'react'
-import { getPhotoSubmitErrorKey, toDateOnlyIso } from '@components/features/observations/form'
+import {
+  getPhotoSubmitErrorKey,
+  toObservationDateIso,
+} from '@components/features/observations/form'
 import { useToast } from '@components/hooks'
 import { useObservationCreate } from '@data/hooks/observations'
 import type { RegionId } from '@domain/types'
@@ -27,10 +30,14 @@ const useObservationSubmitFormSubmit = ({
       try {
         const { id } = await createObservation({
           aspects: formData.aspects,
-          date: formData.date && !formData.isDateUnknown ? toDateOnlyIso(formData.date) : null,
+          date:
+            formData.date && !formData.isDateUnknown
+              ? toObservationDateIso(formData.date, formData.time)
+              : null,
           description: formData.description,
           honeypot: formData.honeypot,
           isDateUnknown: formData.isDateUnknown,
+          isTimeKnown: !!formData.time && !formData.isDateUnknown,
           latitude: formData.latitude,
           location: formData.location?.trim() || null,
           longitude: formData.longitude,

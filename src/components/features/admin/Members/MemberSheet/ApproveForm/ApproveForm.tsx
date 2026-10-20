@@ -1,18 +1,21 @@
 'use client'
 
 import { useReportFormState } from '@components/features/admin/shared'
+import { useDatePickerText } from '@components/hooks'
 import { serverDateFormat } from '@domain/constants'
 import { getMemberName } from '@domain/memberName'
 import type { Member } from '@domain/types'
 import { FormDateField } from '@ds/form'
 import { FormCard } from '@ds/patterns'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { addYears, format, startOfDay } from 'date-fns'
+import { addYears, format } from 'date-fns'
 import { useTranslations } from 'next-intl'
 import { FormProvider, useForm, useWatch } from 'react-hook-form'
 
 import { type ApproveFormData, approveFormSchema } from './schema'
 import useApproveSubmit from './useApproveSubmit'
+
+import { getTbilisiToday, getTbilisiTodayIso } from '@/lib/tbilisiTime'
 
 type ApproveFormProps = {
   formId: string
@@ -24,7 +27,7 @@ type ApproveFormProps = {
 
 // A year from today, unless the admin picks other dates
 const getDefaultValues = (): ApproveFormData => {
-  const today = startOfDay(new Date())
+  const today = getTbilisiToday()
 
   return { expiresAt: addYears(today, 1), joinedAt: today }
 }
@@ -38,6 +41,7 @@ const ApproveForm = ({
   onSuccess,
 }: ApproveFormProps) => {
   const t = useTranslations()
+  const { calendarLabel, clearLabel, locale, placeholder, todayLabel } = useDatePickerText()
   const form = useForm<ApproveFormData>({
     defaultValues: getDefaultValues(),
     resolver: zodResolver(approveFormSchema),
@@ -62,16 +66,24 @@ const ApproveForm = ({
           title={t('admin.members.approve.title')}
         >
           <FormDateField<ApproveFormData>
+            calendarLabel={calendarLabel}
             label={t('admin.members.form.labels.joinedAt')}
-            max={format(new Date(), serverDateFormat)}
+            locale={locale}
+            max={getTbilisiTodayIso()}
             name="joinedAt"
+            placeholder={placeholder}
             required
+            todayLabel={todayLabel}
           />
           <FormDateField<ApproveFormData>
+            calendarLabel={calendarLabel}
+            clearLabel={clearLabel}
             description={t('admin.members.form.hints.expiresAt')}
             label={t('admin.members.form.labels.expiresAt')}
+            locale={locale}
             min={joinedAt ? format(joinedAt, serverDateFormat) : undefined}
             name="expiresAt"
+            placeholder={placeholder}
           />
         </FormCard>
       </form>

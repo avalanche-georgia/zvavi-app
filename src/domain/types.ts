@@ -133,6 +133,8 @@ export type Avalanche = {
   description: string
   involvement: string | null
   isDateUnknown: boolean
+  // Whether `date` carries a real time of day; otherwise only its day counts
+  isTimeKnown: boolean
   latitude: number | null
   location: string | null
   longitude: number | null
@@ -193,6 +195,7 @@ export type PublicObservation = Pick<
   | 'date'
   | 'description'
   | 'isDateUnknown'
+  | 'isTimeKnown'
   | 'latitude'
   | 'location'
   | 'longitude'

@@ -47,12 +47,16 @@ const Harness = ({
           {...props}
         />
       </Field>
-      <button onClick={() => setValue(new Date(2026, 9, 1, 8, 15))} type="button">
+      <button onClick={() => setValue(tbilisi(1, 8, 15))} type="button">
         Set from outside
       </button>
     </>
   )
 }
+
+// A moment at a wall-clock time in Georgia (UTC+4), whatever the test machine's zone
+const tbilisi = (day: number, hours: number, minutes: number) =>
+  new Date(Date.UTC(2026, 9, day, hours - 4, minutes))
 
 const getTrigger = () => screen.getByRole('combobox', { name: 'Joined' })
 const getDay = (isoDate: string) =>
@@ -62,7 +66,8 @@ const openPicker = () => userEvent.click(getTrigger())
 describe('DatePicker', () => {
   beforeEach(() => {
     vi.useFakeTimers({ toFake: ['Date'] })
-    vi.setSystemTime(new Date(2026, 9, 20, 12, 0))
+    // 12:00 on 20 Oct in Georgia, whatever the machine's zone
+    vi.setSystemTime(new Date('2026-10-20T08:00:00.000Z'))
   })
 
   afterEach(() => vi.useRealTimers())
@@ -302,7 +307,7 @@ describe('DatePicker', () => {
       await openPicker()
       await userEvent.click(getDay('2026-10-14'))
 
-      expect(onChange).toHaveBeenLastCalledWith(new Date(2026, 9, 14, 18, 0))
+      expect(onChange).toHaveBeenLastCalledWith(tbilisi(14, 18, 0))
       expect(screen.getByLabelText('Time')).toBeEnabled()
       expect(screen.getByLabelText('Time')).toHaveValue('18:00')
     })
@@ -310,7 +315,7 @@ describe('DatePicker', () => {
     it('applies a typed time on leaving the field, and keeps it on a new day', async () => {
       const onChange = vi.fn()
 
-      render(<Harness initialValue={new Date(2026, 9, 14, 18, 0)} onChange={onChange} withTime />)
+      render(<Harness initialValue={tbilisi(14, 18, 0)} onChange={onChange} withTime />)
 
       const time = screen.getByLabelText('Time')
 
@@ -321,13 +326,13 @@ describe('DatePicker', () => {
 
       await userEvent.tab()
 
-      expect(onChange).toHaveBeenLastCalledWith(new Date(2026, 9, 14, 9, 30))
+      expect(onChange).toHaveBeenLastCalledWith(tbilisi(14, 9, 30))
       expect(time).toHaveValue('09:30')
 
       await openPicker()
       await userEvent.click(getDay('2026-10-16'))
 
-      expect(onChange).toHaveBeenLastCalledWith(new Date(2026, 9, 16, 9, 30))
+      expect(onChange).toHaveBeenLastCalledWith(tbilisi(16, 9, 30))
     })
 
     it('applies on Enter without submitting the form, and shows 24-hour time', async () => {
@@ -336,7 +341,7 @@ describe('DatePicker', () => {
 
       render(
         <form onSubmit={onSubmit}>
-          <Harness initialValue={new Date(2026, 9, 14, 18, 0)} onChange={onChange} withTime />
+          <Harness initialValue={tbilisi(14, 18, 0)} onChange={onChange} withTime />
           <button type="submit">Save</button>
         </form>,
       )
@@ -348,19 +353,19 @@ describe('DatePicker', () => {
       await userEvent.clear(time)
       await userEvent.type(time, '2130{Enter}')
 
-      expect(onChange).toHaveBeenLastCalledWith(new Date(2026, 9, 14, 21, 30))
+      expect(onChange).toHaveBeenLastCalledWith(tbilisi(14, 21, 30))
       expect(onSubmit).not.toHaveBeenCalled()
     })
 
     it('marks a wrong time, then puts the old one back on leaving or Escape', async () => {
       const onChange = vi.fn()
 
-      render(<Harness initialValue={new Date(2026, 9, 14, 18, 0)} onChange={onChange} withTime />)
+      render(<Harness initialValue={tbilisi(14, 18, 0)} onChange={onChange} withTime />)
 
       const time = screen.getByLabelText('Time')
 
       await userEvent.clear(time)
-      await userEvent.type(time, '25:00')
+      await userEvent.type(time, '1875')
 
       expect(time).toHaveAttribute('aria-invalid', 'true')
 
@@ -377,13 +382,13 @@ describe('DatePicker', () => {
     })
 
     it('drops a half-typed time when the value changes from outside', async () => {
-      render(<Harness initialValue={new Date(2026, 9, 14, 18, 0)} withTime />)
+      render(<Harness initialValue={tbilisi(14, 18, 0)} withTime />)
 
       const time = screen.getByLabelText('Time')
 
       await userEvent.clear(time)
       await userEvent.type(time, '07')
-      fireEvent.click(screen.getByRole('button', { name: 'Set from outside' }))
+      fireEvent.click(screen.getByText('Set from outside'))
 
       expect(time).toHaveValue('08:15')
     })

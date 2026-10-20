@@ -34,7 +34,7 @@ const fetchLinkableAvalanches = async (regionId: RegionId): Promise<LinkableAval
   const { data, error } = await supabase
     .from('recent_avalanches')
     .select(
-      'id, aspects, created_at, date, is_date_unknown, location, quantity, size, status, trigger, type, forecast_avalanche(forecast_id)',
+      'id, aspects, created_at, date, is_date_unknown, is_time_known, location, quantity, size, status, trigger, type, forecast_avalanche(forecast_id)',
     )
     .eq('region_id', regionId)
     .neq('status', 'archived')

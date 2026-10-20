@@ -2,6 +2,8 @@ import { endOfDay, startOfDay } from 'date-fns'
 
 import { avalancheSeason } from './constants'
 
+import { fromTbilisiWallClock, toTbilisiWallClock } from '@/lib/tbilisiTime'
+
 // The season a calendar month belongs to, as its start year. A season runs
 // 1 Nov – 31 May; between seasons (June–October) it's the one that just ended.
 // Month is 0-based (Date convention).
@@ -12,14 +14,21 @@ export const getSeasonStartYear = (year: number, month: number) =>
 export const isSeasonMonth = (month: number) =>
   month >= avalancheSeason.start.month || month <= avalancheSeason.end.month
 
-// The current avalanche season
-export const getSeasonRange = (today: Date): { end: Date; start: Date } => {
+// The season a moment falls in, by Georgia's calendar (seasons are Georgian)
+const getSeasonStartYearAt = (moment: Date) => {
+  const wallClock = toTbilisiWallClock(moment)
+
+  return getSeasonStartYear(wallClock.getFullYear(), wallClock.getMonth())
+}
+
+// The season `now` falls in, from its first to its last moment in Georgia
+export const getSeasonRange = (now: Date): { end: Date; start: Date } => {
   const { end, start } = avalancheSeason
-  const startYear = getSeasonStartYear(today.getFullYear(), today.getMonth())
+  const startYear = getSeasonStartYearAt(now)
 
   return {
-    end: endOfDay(new Date(startYear + 1, end.month, end.day)),
-    start: startOfDay(new Date(startYear, start.month, start.day)),
+    end: fromTbilisiWallClock(endOfDay(new Date(startYear + 1, end.month, end.day))),
+    start: fromTbilisiWallClock(startOfDay(new Date(startYear, start.month, start.day))),
   }
 }
 
@@ -27,5 +36,4 @@ export const getSeasonRange = (today: Date): { end: Date; start: Date } => {
 export const formatSeasonLabel = (startYear: number) =>
   `${startYear}–${String((startYear + 1) % 100).padStart(2, '0')}`
 
-export const getSeasonLabel = (today: Date) =>
-  formatSeasonLabel(getSeasonStartYear(today.getFullYear(), today.getMonth()))
+export const getSeasonLabel = (now: Date) => formatSeasonLabel(getSeasonStartYearAt(now))

@@ -1,6 +1,8 @@
 import type { Member, MemberFormData } from '@domain/types'
 import { parseISO } from 'date-fns'
 
+import { getTbilisiToday } from '@/lib/tbilisiTime'
+
 // Stored dates are date-only: parseISO keeps them on the same calendar day locally
 const getInitialFormData = (member: Member | null): MemberFormData => {
   if (!member) {
@@ -11,7 +13,7 @@ const getInitialFormData = (member: Member | null): MemberFormData => {
       expiresAt: null,
       firstName: '',
       gender: '',
-      joinedAt: new Date(),
+      joinedAt: getTbilisiToday(),
       lastName: '',
       memberId: '',
       motivation: '',

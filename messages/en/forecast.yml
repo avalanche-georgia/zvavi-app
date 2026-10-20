@@ -25,8 +25,6 @@ forecast:
       dateRange: 'Date range'
       clearDates: 'Clear dates'
       months: 'Months'
-      reset: 'Reset'
-      done: 'Done'
       allProblems: 'All avalanche problems'
       problemOption: '{problem} ({count})'
       newest: 'Newest first'

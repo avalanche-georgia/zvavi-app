@@ -35,8 +35,9 @@ const CalendarChevron = ({ className, orientation = 'right' }: ChevronProps) => 
 // (or "dropdown") for a year (and month) select. Pass `locale` from
 // `react-day-picker/locale` — it also carries the translated aria labels.
 // "Today" is the browser's day: a page that counts days in Tbilisi time passes
-// `today` too, so the highlight agrees with its data.
-const Calendar = ({ classNames, components, ...props }: CalendarProps) => (
+// `today` too, so the highlight agrees with its data. Weeks start on Monday in
+// every language (English's locale would start them on Sunday).
+const Calendar = ({ classNames, components, weekStartsOn = 1, ...props }: CalendarProps) => (
   <DayPicker
     classNames={{ ...calendarClasses, ...classNames }}
     components={{
@@ -46,6 +47,7 @@ const Calendar = ({ classNames, components, ...props }: CalendarProps) => (
       PreviousMonthButton: CalendarNavButton,
       ...components,
     }}
+    weekStartsOn={weekStartsOn}
     {...props}
   />
 )
