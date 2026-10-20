@@ -1,7 +1,6 @@
 export { default as BrandedQRCode } from './BrandedQRCode'
 export { default as Button } from './Button'
 export { default as Checkbox } from './Checkbox'
-export { default as ChipGroup } from './ChipGroup'
 export { default as FallbackImage } from './FallbackImage'
 export { IconButton } from './IconButton'
 export { default as InfoIcon } from './InfoIcon'

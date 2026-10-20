@@ -18,6 +18,7 @@ const CustomRangeFields = ({ from, onChange, to }: CustomRangeFieldsProps) => {
     <DateRangePicker
       ariaLabel={t('common.dateRangePicker.label')}
       calendarLabel={calendarLabel}
+      className="w-64 max-w-full"
       clearLabel={clearLabel}
       doneLabel={doneLabel}
       fromLabel={fromLabel}

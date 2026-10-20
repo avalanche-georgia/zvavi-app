@@ -294,7 +294,7 @@ Update this table when a legacy component's last consumer is migrated.
 | SearchInput | Headless UI | `primitives/SearchField` | ✅ |
 | Textarea | Headless UI | `primitives/Textarea` | ☐ |
 | NumberInput | base-ui | `primitives/Stepper` / `NumberField` | ✅ |
-| ChipGroup | base-ui | `primitives/ChipGroup` | ☐ |
+| ChipGroup | base-ui | `primitives/ChipGroup` | ✅ |
 | SegmentedControl | base-ui | `primitives/SegmentedControl` | ☐ |
 | RadioGroup | Headless UI | `primitives/SegmentedControl` | ✅ |
 | RadioOption | base-ui | `primitives/RadioGroup` (long labels, one per row) or `ToggleGrid` | ✅ |
