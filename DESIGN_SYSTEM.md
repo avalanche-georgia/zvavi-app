@@ -29,11 +29,11 @@ src/components/
 ├── ds/                  # new kit — the only place new generic UI goes
 │   ├── primitives/      # Button, Badge, Checkbox, Field, FieldGroup, TextField, NumberField,
 │   │                    # Textarea, ChipGroup, ToggleGrid, SegmentedControl, Select, Stepper, InfoTip,
-│   │                    # IconButton, RatingScale, DateField, Menu, Pagination, SearchField,
+│   │                    # IconButton, RatingScale, Menu, Pagination, SearchField,
 │   │                    # StatusPill, CountBadge, Skeleton, Spinner, AvalancheLoader, Dialog, RadioGroup,
-│   │                    # Popover, Calendar, DatePicker, MultiChipGroup
+│   │                    # Popover, Calendar, DatePicker, DateRangePicker, TimeField, MultiChipGroup
 │   ├── patterns/        # ClampedText, ContentCard, FormCard, StickyActionBar, SuccessState, DataTable, LoadingState,
-│   │                    # ConfirmDialog, FooterActions, Sheet, Drawer
+│   │                    # ConfirmDialog, FooterActions, Sheet, Drawer, QuickDateField
 │   └── form/            # react-hook-form bindings: FormTextField, FormTextarea, FormNumberField,
 │                        # FormStepper, FormChipGroup, FormRadioGroup, FormCheckbox, FormSwitch, FormSelect, FormDateField,
 │                        # useFormFieldError
@@ -76,7 +76,7 @@ in `features`.
 - **react-day-picker** for the month grid, only behind ds `primitives/Calendar`. base-ui has no
   calendar yet; when it ships, only that component changes. Pass `locale` from
   `react-day-picker/locale` (it carries translated aria labels, Georgian included).
-- Legacy Radix popups (`ui/Select`, `ui/Popover`, `ui/DatePicker`, `InfoIcon`) portal to `body`: never
+- Legacy Radix popups (`ui/Select`, `InfoIcon`) portal to `body`: never
   put them inside a ds `Sheet` or `Dialog` — the focus trap and outside-press handling break them.
   Use the ds primitives there.
 - Existing exceptions stay until their migration phase:
@@ -184,13 +184,31 @@ Rules:
   options use a sentinel value (e.g. `'all'`); `onValueChange` never passes `null`.
 - **Popovers** (`primitives/Popover`): for content that needs more room than a menu — a `Calendar`,
   a short form. Pass `isOpen` / `onOpenChange` when a Done button inside closes it.
-- **Dates** (`primitives/DatePicker`): every date or date + time field, in forms and filter bars. It shows
-  the date in the page's language, `min` / `max` bound the calendar, `clearLabel` adds a ×, `todayLabel` a
-  "Today" shortcut, `withTime` (with `timeLabel`) a 24-hour time input (a new date starts at `defaultTime`).
-  Get `locale` from `useDayPickerLocale()` (`@components/hooks`). Form bindings pass `ref` and `onBlur`
-  through, so react-hook-form can focus it on an error. `DateField` (native inputs) is deprecated.
-  "Today" is the browser's day in both `DatePicker` and a bare `Calendar` (for custom panels, e.g. a
-  range filter with presets): pass `today` when the page counts days in Tbilisi time.
+- **Dates** (`primitives/DatePicker`): every single date or date + time field. It shows the date in the
+  page's language, `min` / `max` bound the calendar, `clearLabel` adds a ×, `todayLabel` a "Today"
+  shortcut, `withTime` (with `timeLabel`) a 24-hour time input (a new date starts at `defaultTime`).
+  Form bindings pass `ref` and `onBlur` through, so react-hook-form can focus it on an error;
+  `useDatePickerText()` (`@components/hooks`) gives the translated labels and the `locale`.
+- **Date ranges** (`primitives/DateRangePicker`): every from–to filter, one field instead of two. The
+  value is `{ from, to }` as `yyyy-MM-dd` (either may be `null`). The popup shows quick ranges
+  (`presets`; tapping the active one clears it), the From and To ends (the highlighted one is set by
+  the next click; tap the other to switch; each clears on its own, so "from a date" and "up to a date"
+  need no extra mode) and a range calendar (two months from 640px). `isActive` while it filters,
+  `formatValue` for the page's own text (e.g. a month's name). `useDateRangePickerText()` gives the
+  labels and `locale`.
+- **Times** (`primitives/TimeField`): every time input, always 24-hour. A list in `step`-minute steps
+  (30 by default) that narrows as you type; the colon goes in as the hour is complete ("1234" reads
+  "12:34", "930" reads "9:30"), and the typed time applies on Enter or leaving the field. The DatePicker's `withTime` uses it. Never a native `type="time"` input: it
+  follows the browser's 12 / 24-hour setting.
+- **"When" fields** (`patterns/QuickDateField`): a date (+ time) with shortcuts under it and the
+  picked date in words (`useDateSummary()`), e.g. a forecast's valid-until (Tomorrow / In 2 days)
+  and an observation's date (Today / Yesterday / Not sure). `withTime` makes the time required;
+  the `time` slot takes an optional `TimeField` instead. New "when" questions use it too.
+- **Georgian time**: `DatePicker` with `withTime` holds a moment and shows / sets it in Georgian time; without
+  a time it holds a calendar day. `DatePicker` and `DateRangePicker` default "today" to Georgia's
+  (`getTbilisiToday`); pass `max={getTbilisiTodayIso()}` for "not in the future". See CLAUDE.md.
+- **Calendar** (`primitives/Calendar`): weeks start on Monday. A bare `Calendar` is for custom panels;
+  its "today" is the browser's, so pass `today={getTbilisiToday()}`.
 - **Menus** (`primitives/Menu`): `align` picks the trigger edge (`end` for overflow menus, `start`
   for nav dropdowns). Navigation rows pass `render={<Link href=… />}` to `MenuItem`; `isActive`
   marks the current page.
@@ -276,18 +294,18 @@ Update this table when a legacy component's last consumer is migrated.
 | SearchInput | Headless UI | `primitives/SearchField` | ✅ |
 | Textarea | Headless UI | `primitives/Textarea` | ☐ |
 | NumberInput | base-ui | `primitives/Stepper` / `NumberField` | ✅ |
-| ChipGroup | base-ui | `primitives/ChipGroup` | ☐ |
+| ChipGroup | base-ui | `primitives/ChipGroup` | ✅ |
 | SegmentedControl | base-ui | `primitives/SegmentedControl` | ☐ |
 | RadioGroup | Headless UI | `primitives/SegmentedControl` | ✅ |
 | RadioOption | base-ui | `primitives/RadioGroup` (long labels, one per row) or `ToggleGrid` | ✅ |
 | Checkbox | Headless UI | `primitives/Checkbox` | ☐ |
 | Switch | base-ui | `primitives/Switch` | ✅ |
 | Select | Radix | `primitives/Select` (base-ui) | ☐ |
-| DatePicker, Calendar, TimeInput, DatePickerTimeInput | Headless UI + react-day-picker | `primitives/DatePicker` (date and date + time fields), `primitives/Calendar` (month grid, e.g. in a `Popover`) | ☐ |
-| DateField (ds, native inputs) | — | `primitives/DatePicker` | ☐ |
-| TimePicker | Headless UI | `primitives/DateField` (`withTime`); next `primitives/DatePicker` (`withTime`), tracked on the DateField row | ✅ |
+| DatePicker, Calendar, TimeInput, DatePickerTimeInput | Headless UI + react-day-picker | `primitives/DatePicker` (date and date + time fields), `primitives/Calendar` (month grid, e.g. in a `Popover`) | ✅ |
+| DateField (ds, native inputs) | — | `primitives/DatePicker` | ✅ |
+| TimePicker | Headless UI | `primitives/DatePicker` (`withTime`) | ✅ |
 | Modal (+ `shared/ConfirmationDialog`, removed) | Headless UI | `primitives/Dialog` (base-ui), `patterns/ConfirmDialog` | ☐ |
-| Popover | Radix | `primitives/Popover` (base-ui) | ☐ |
+| Popover | Radix | `primitives/Popover` (base-ui) | ✅ |
 | Tooltip, InfoIcon | Radix | `primitives/Tooltip` (base-ui Tooltip; hover/focus labels), `primitives/InfoTip` (base-ui Popover; explanations) | ☐ |
 | DropdownMenu | base-ui | `primitives/Menu` | ✅ |
 | Sheet, Drawer (bottom sheet) | base-ui / vaul | `patterns/Sheet` (+ `SheetHeader`, `SheetStepButtons`; `shared/DetailsSheet` for a sheet opened from a button) | ✅ |

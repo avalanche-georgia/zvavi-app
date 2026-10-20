@@ -4,29 +4,36 @@ import { type FieldValues, useController } from 'react-hook-form'
 
 import type { FormFieldProps } from './types'
 import useFormFieldError from './useFormFieldError'
-import { DateField, Field } from '../primitives'
+import { DatePicker, type DatePickerProps, Field } from '../primitives'
 
-type FormDateFieldProps<TFieldValues extends FieldValues> = FormFieldProps<TFieldValues> & {
-  // yyyy-MM-dd
-  max?: string
-  // yyyy-MM-dd
-  min?: string
-}
+type FormDateFieldProps<TFieldValues extends FieldValues> = FormFieldProps<TFieldValues> &
+  Pick<
+    DatePickerProps,
+    'calendarLabel' | 'clearLabel' | 'locale' | 'max' | 'min' | 'placeholder' | 'todayLabel'
+  >
 
-// The field value is a Date, or null when empty
+// The field value is a Date, or null when empty. react-hook-form gets the trigger
+// as its ref, so it can focus the field on an error.
 const FormDateField = <TFieldValues extends FieldValues>({
+  calendarLabel,
   className,
+  clearLabel,
   description,
   hint,
   isLabelHidden,
   label,
+  locale,
   max,
   min,
   name,
+  placeholder,
   required,
   requiredMessage,
+  todayLabel,
 }: FormDateFieldProps<TFieldValues>) => {
-  const { field } = useController<TFieldValues>({ name })
+  const {
+    field: { onBlur, onChange, ref, value },
+  } = useController<TFieldValues>({ name })
   const error = useFormFieldError<TFieldValues>(name, requiredMessage)
 
   return (
@@ -39,12 +46,19 @@ const FormDateField = <TFieldValues extends FieldValues>({
       label={label}
       required={required}
     >
-      <DateField
+      <DatePicker
+        ref={ref}
+        calendarLabel={calendarLabel}
+        clearLabel={clearLabel}
+        locale={locale}
         max={max}
         min={min}
-        onValueChange={field.onChange}
+        onBlur={onBlur}
+        onValueChange={onChange}
+        placeholder={placeholder}
         required={required}
-        value={field.value ?? null}
+        todayLabel={todayLabel}
+        value={value ?? null}
       />
     </Field>
   )

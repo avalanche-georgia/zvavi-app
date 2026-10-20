@@ -2,9 +2,9 @@
 
 import { StickyActionBar } from '@ds/patterns'
 import { Button } from '@ds/primitives'
-import { format } from 'date-fns'
 import { useTranslations } from 'next-intl'
 
+import { formatTbilisi } from '@/lib/tbilisiTime'
 import { cn } from '@/lib/utils'
 
 type ForecastActionBarProps = {
@@ -24,7 +24,7 @@ const ForecastActionBar = (props: ForecastActionBarProps) => {
   const { isConfirmingCancel, isDirty, isNew, isSaving, lastSavedAt } = props
   const t = useTranslations()
   const key = 'admin.forecast.editor.actionBar'
-  const savedTime = lastSavedAt && format(lastSavedAt, 'HH:mm')
+  const savedTime = lastSavedAt && formatTbilisi(lastSavedAt, 'HH:mm')
 
   const status = (() => {
     if (isNew && !isDirty) return { dot: null, text: t(`${key}.new`) }

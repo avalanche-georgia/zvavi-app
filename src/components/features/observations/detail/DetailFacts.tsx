@@ -1,3 +1,4 @@
+import { useFormatTimeOfDay } from '@components/hooks'
 import type { PublicObservation } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
@@ -6,7 +7,14 @@ import useFormatDay from '../useFormatDay'
 
 type FactsRecord = Pick<
   PublicObservation,
-  'createdAt' | 'date' | 'isDateUnknown' | 'quantity' | 'slabDepth' | 'trigger' | 'width'
+  | 'createdAt'
+  | 'date'
+  | 'isDateUnknown'
+  | 'isTimeKnown'
+  | 'quantity'
+  | 'slabDepth'
+  | 'trigger'
+  | 'width'
 >
 
 // Shown for facts the reporter left empty — the grid keeps its shape
@@ -16,12 +24,14 @@ const emptyValue = '—'
 const DetailFacts = ({ observation }: { observation: FactsRecord }) => {
   const t = useTranslations()
   const formatDay = useFormatDay()
+  const { withTime } = useFormatTimeOfDay()
   const { createdAt, date, isDateUnknown, quantity, slabDepth, trigger, width } = observation
 
   const facts: Fact[] = [
     {
       label: t('observations.detail.facts.occurred'),
-      value: isDateUnknown || !date ? t('common.words.unknown') : formatDay(date),
+      value:
+        isDateUnknown || !date ? t('common.words.unknown') : withTime(formatDay(date), observation),
     },
     { label: t('observations.detail.facts.reported'), value: formatDay(createdAt) },
     { label: t('observations.labels.trigger'), value: t(`common.avalancheTriggers.${trigger}`) },

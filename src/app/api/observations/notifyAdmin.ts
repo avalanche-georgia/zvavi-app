@@ -1,6 +1,3 @@
-import { dateFormat } from '@domain/constants'
-import { format } from 'date-fns'
-
 import type { SubmitObservationBody } from './schema'
 
 const { TELEGRAM_ADMIN_CHAT_ID, TELEGRAM_BOT_ADMIN_TOKEN } = process.env
@@ -18,6 +15,29 @@ const capitalize = (value: string): string => value.charAt(0).toUpperCase() + va
 // English regardless of the submitter's locale) — split "deepSlab" into "Deep Slab".
 const humanize = (value: string): string => capitalize(value.replace(/([a-z])([A-Z])/g, '$1 $2'))
 
+// The server runs in UTC: days and times are shown in Tbilisi time
+const tbilisiDay = new Intl.DateTimeFormat('en-GB', {
+  day: '2-digit',
+  month: 'short',
+  timeZone: 'Asia/Tbilisi',
+  year: 'numeric',
+})
+const tbilisiTime = new Intl.DateTimeFormat('en-GB', {
+  hour: '2-digit',
+  hourCycle: 'h23',
+  minute: '2-digit',
+  timeZone: 'Asia/Tbilisi',
+})
+
+// "15 Oct 2026", plus " · 14:30" when a time was given
+const formatDate = ({ date, isDateUnknown, isTimeKnown }: SubmitObservationBody) => {
+  if (isDateUnknown || !date) return 'Unknown'
+
+  const day = tbilisiDay.format(new Date(date))
+
+  return isTimeKnown ? `${day} · ${tbilisiTime.format(new Date(date))}` : day
+}
+
 // Called server-side right after submit_observation succeeds — there's already a
 // server hop here (client -> this route -> RPC), so a second client-triggered
 // fetch would just be a less reliable way to do the same thing.
@@ -33,7 +53,7 @@ const notifyAdmin = async (body: SubmitObservationBody, reviewUrl: string): Prom
     '',
     `<b>Region:</b> ${capitalize(body.regionId)}`,
     `<b>Type:</b> ${humanize(body.type)}`,
-    `<b>Date:</b> ${body.isDateUnknown || !body.date ? 'Unknown' : format(new Date(body.date), dateFormat)}`,
+    `<b>Date:</b> ${formatDate(body)}`,
     ...(body.location ? [`<b>Place:</b> ${escapeHtml(body.location)}`] : []),
     `<b>Submitted by:</b> ${escapeHtml(body.submitterName)}`,
     '',

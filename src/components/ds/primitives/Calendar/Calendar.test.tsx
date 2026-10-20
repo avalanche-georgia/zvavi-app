@@ -16,6 +16,18 @@ const getDay = (isoDate: string) => {
 }
 
 describe('Calendar', () => {
+  it('starts the week on Monday in every language', () => {
+    const { rerender } = render(<Calendar defaultMonth={october} locale={enUS} mode="single" />)
+    const firstWeekday = () => document.querySelector('th[scope="col"]')
+
+    expect(firstWeekday()).toHaveAttribute('aria-label', 'Monday')
+    // 1 Oct 2026 is a Thursday: Mon–Wed of that week stay empty
+    expect(getDay('2026-10-05').closest('td')).toBe(getDay('2026-10-05').closest('tr')?.firstChild)
+
+    rerender(<Calendar defaultMonth={october} locale={ka} mode="single" />)
+    expect(firstWeekday()).toHaveAttribute('aria-label', 'ორშაბათი')
+  })
+
   it('names months and navigation in the given locale', () => {
     const { rerender } = render(<Calendar defaultMonth={october} locale={enUS} />)
 

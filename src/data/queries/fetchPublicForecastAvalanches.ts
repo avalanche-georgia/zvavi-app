@@ -9,7 +9,7 @@ import { createServiceRoleClient } from '@/lib/supabase/serviceRole'
 // involvement must not reach public pages
 // (one literal, so supabase-js can type the rows)
 const publicColumns =
-  'id, region_id, date, is_date_unknown, description, size, quantity, latitude, longitude, location, type, trigger, aspects, width, slab_depth, photo_keys, created_at, forecast_avalanche!inner(forecast_id, forecasts!inner(status))'
+  'id, region_id, date, is_date_unknown, is_time_known, description, size, quantity, latitude, longitude, location, type, trigger, aspects, width, slab_depth, photo_keys, created_at, forecast_avalanche!inner(forecast_id, forecasts!inner(status))'
 
 // One signing pass for all records. A failure costs the photos, not the page.
 const signRecordPhotos = async (forecastId: number, keys: string[]) => {

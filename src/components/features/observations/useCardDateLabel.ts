@@ -1,12 +1,15 @@
+import { useFormatTimeOfDay } from '@components/hooks'
 import type { ObservationDateBasis, PublicObservation } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import useRelativeDate from './useRelativeDate'
 
-// "Yesterday" / "3 weeks ago", or "Reported 2 days ago" in the Reported view
+// "Yesterday" / "3 weeks ago" ("Yesterday · 14:30" with a time), or "Reported 2 days
+// ago" in the Reported view
 const useCardDateLabel = () => {
   const t = useTranslations()
   const formatRelativeDate = useRelativeDate()
+  const { withTime } = useFormatTimeOfDay()
 
   return (observation: PublicObservation, dateBasis: ObservationDateBasis): string => {
     if (dateBasis === 'reported') {
@@ -17,7 +20,7 @@ const useCardDateLabel = () => {
 
     if (observation.isDateUnknown || !observation.date) return t('observations.labels.dateUnknown')
 
-    return formatRelativeDate(observation.date, { isCapitalized: true })
+    return withTime(formatRelativeDate(observation.date, { isCapitalized: true }), observation)
   }
 }
 

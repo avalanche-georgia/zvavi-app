@@ -1,69 +1,77 @@
 'use client'
 
+import { useDatePickerText, useDateSummary } from '@components/hooks'
 import { useFormFieldError } from '@ds/form'
-import { ChipGroup, DateField, Field } from '@ds/primitives'
-import { addDays, format, isSameDay, startOfDay } from 'date-fns'
-import { useFormatter, useNow, useTranslations } from 'next-intl'
+import { QuickDateField } from '@ds/patterns'
+import { addDays, isSameDay, startOfDay } from 'date-fns'
+import { useTranslations } from 'next-intl'
 import { useController } from 'react-hook-form'
 
 import type { ForecastFormSchema } from '../schema'
 
-const quickDays = ['1', '2', '3'] as const
+import {
+  atTbilisiTime,
+  formatTbilisi,
+  getTbilisiToday,
+  getTbilisiTodayIso,
+  toTbilisiWallClock,
+} from '@/lib/tbilisiTime'
+
+const quickDays = ['1', '2', '3']
+const defaultTime = '18:00'
 
 // Date + time (default 18:00), with Tomorrow / In 2 days / In 3 days shortcuts
 const ValidUntilField = () => {
   const t = useTranslations()
-  const formatter = useFormatter()
-  // Re-renders every minute so "in 22 hours" stays current
-  const now = useNow({ updateInterval: 60_000 })
-  const { field } = useController<ForecastFormSchema, 'validUntil'>({ name: 'validUntil' })
+  const {
+    field: { onBlur, onChange, ref, value },
+  } = useController<ForecastFormSchema, 'validUntil'>({ name: 'validUntil' })
+  const { calendarLabel, locale, placeholder } = useDatePickerText()
+  const summary = useDateSummary(value, { withTime: true })
   const error = useFormFieldError<ForecastFormSchema>(
     'validUntil',
     t('admin.forecast.editor.general.validUntilRequired'),
   )
-  const value = field.value
-  const time = value ? format(value, 'HH:mm') : '18:00'
-  const [hours, minutes] = time.split(':').map(Number)
 
+  // Days count in Georgia, like everything about a forecast
+  const valueDay = value && startOfDay(toTbilisiWallClock(value))
   const selectedQuickDay =
-    quickDays.find((days) => value && isSameDay(value, addDays(new Date(), Number(days)))) ?? null
+    quickDays.find(
+      (days) => valueDay && isSameDay(valueDay, addDays(getTbilisiToday(), Number(days))),
+    ) ?? null
 
-  const handleQuickDay = (days: (typeof quickDays)[number] | null) => {
-    if (!days) return
+  // Keeps the time already set (or 18:00)
+  const handleQuickDay = (days: string) => {
+    const time = value ? formatTbilisi(value, 'HH:mm') : defaultTime
 
-    const date = startOfDay(addDays(new Date(), Number(days)))
-
-    date.setHours(hours, minutes)
-    field.onChange(date)
+    onChange(atTbilisiTime(addDays(getTbilisiToday(), Number(days)), time))
   }
 
   return (
-    <Field error={error} label={t('admin.forecast.form.general.labels.validUntil')} required>
-      <DateField
-        min={format(new Date(), 'yyyy-MM-dd')}
-        onValueChange={field.onChange}
-        required
-        timeLabel={t('admin.forecast.editor.general.time')}
-        value={value}
-        withTime
-      />
-      <ChipGroup
-        ariaLabel={t('admin.forecast.editor.general.quickDates')}
-        className="[&>*]:text-copy-sm [&>*]:h-8"
-        onChange={handleQuickDay}
-        options={quickDays.map((days) => ({
-          label: t(`admin.forecast.editor.general.inDays.${days}`),
-          value: days,
-        }))}
-        value={selectedQuickDay}
-      />
-      {value && (
-        <p className="text-caption text-muted">
-          {formatter.dateTime(value, { day: 'numeric', month: 'short', weekday: 'short' })} · {time}{' '}
-          · {formatter.relativeTime(value, now)}
-        </p>
-      )}
-    </Field>
+    <QuickDateField
+      ref={ref}
+      calendarLabel={calendarLabel}
+      defaultTime={defaultTime}
+      error={error}
+      label={t('admin.forecast.form.general.labels.validUntil')}
+      locale={locale}
+      min={getTbilisiTodayIso()}
+      onBlur={onBlur}
+      onQuickDateChange={handleQuickDay}
+      onValueChange={onChange}
+      placeholder={placeholder}
+      quickDates={quickDays.map((days) => ({
+        label: t(`admin.forecast.editor.general.inDays.${days}`),
+        value: days,
+      }))}
+      quickDatesLabel={t('admin.forecast.editor.general.quickDates')}
+      required
+      selectedQuickDate={selectedQuickDay}
+      summary={summary}
+      timeLabel={t('admin.forecast.editor.general.time')}
+      value={value}
+      withTime
+    />
   )
 }
 

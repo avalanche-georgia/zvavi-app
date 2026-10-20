@@ -1,7 +1,6 @@
 import { isNoRowsError } from '@data/helpers'
 import type { HazardLevelScale } from '@domain/types'
 import { createClient } from '@supabase/supabase-js'
-import { format } from 'date-fns'
 import { readFileSync } from 'fs'
 import { ImageResponse } from 'next/og'
 import type { NextRequest } from 'next/server'
@@ -12,6 +11,7 @@ import { hazardColors, hazardIconFiles, hazardLevelLabels, loadFont } from './he
 import ForecastCard from './ForecastCard'
 
 import { reportServerError } from '@/lib/posthog/server'
+import { formatTbilisi } from '@/lib/tbilisiTime'
 
 export async function GET(request: NextRequest) {
   const id = request.nextUrl.searchParams.get('id')
@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
   const textColor = isLight ? '#1a1a1a' : '#ffffff'
   const mutedColor = isLight ? '#555555' : '#aaaaaa'
   const validUntil = forecast.valid_until
-    ? format(new Date(forecast.valid_until), 'dd MMM yyyy')
+    ? formatTbilisi(forecast.valid_until, 'dd MMM yyyy')
     : null
 
   const logoData = readFileSync(join(process.cwd(), 'public/images/logo.png'))

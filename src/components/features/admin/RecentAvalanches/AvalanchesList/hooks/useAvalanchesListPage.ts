@@ -1,14 +1,16 @@
 'use client'
 
 import { useEffect } from 'react'
-import { parseIsoDay, useUrlListState } from '@components/features/admin/shared'
+import { useUrlListState } from '@components/features/admin/shared'
 import type { DateMode, ListFilterParams } from '@data/hooks/recentAvalanches'
 import { useRecentAvalanchesPaginatedQuery } from '@data/hooks/recentAvalanches'
 import type { AvalancheSource, RegionId } from '@domain/types'
-import { endOfDay, startOfDay } from 'date-fns'
+import type { DayRange } from '@ds/primitives'
 
 import { type CatalogStatus, readListParams, serializeListParams } from '../model'
 import type { AvalanchesListVariant } from '../types'
+
+import { endOfTbilisiDay, startOfTbilisiDay } from '@/lib/tbilisiTime'
 
 export const pageSize = 15
 
@@ -26,17 +28,16 @@ const useAvalanchesListPage = (variant: AvalanchesListVariant, regionId: RegionI
     serialize: serializeListParams,
   })
   const { dateFrom, dateMode, dateTo, isUnlinked, pageIndex, source, status } = params
-  const from = parseIsoDay(dateFrom)
-  const to = parseIsoDay(dateTo)
   const isCatalog = variant === 'catalog'
   const catalogFilters = isCatalog
     ? { isUnlinked, source: source ?? undefined, status: status ?? undefined }
     : {}
 
   const query = useRecentAvalanchesPaginatedQuery({
-    dateFrom: from ? startOfDay(from).toISOString() : undefined,
+    // Georgia's calendar days
+    dateFrom: dateFrom ? startOfTbilisiDay(dateFrom).toISOString() : undefined,
     dateMode,
-    dateTo: to ? endOfDay(to).toISOString() : undefined,
+    dateTo: dateTo ? endOfTbilisiDay(dateTo).toISOString() : undefined,
     page: pageIndex + 1,
     pageSize,
     regionId,
@@ -60,9 +61,8 @@ const useAvalanchesListPage = (variant: AvalanchesListVariant, regionId: RegionI
     dateTo,
     hasFilters: !!dateFrom || !!dateTo || (isCatalog && (isUnlinked || !!source || !!status)),
     isUnlinked,
-    onDateFromChange: (day: string | null) => setFilters({ dateFrom: day }),
     onDateModeChange: (mode: DateMode) => setFilters({ dateMode: mode }),
-    onDateToChange: (day: string | null) => setFilters({ dateTo: day }),
+    onDatesChange: ({ from, to }: DayRange) => setFilters({ dateFrom: from, dateTo: to }),
     onFiltersClear: () =>
       setFilters({ dateFrom: null, dateTo: null, isUnlinked: false, source: null, status: null }),
     onPageChange: (nextPageIndex: number) => setParams({ pageIndex: nextPageIndex }),

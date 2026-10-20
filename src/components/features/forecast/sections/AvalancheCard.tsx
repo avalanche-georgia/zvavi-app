@@ -1,5 +1,5 @@
 import { SizeTile } from '@components/features/observations'
-import { useAspectSummary } from '@components/hooks'
+import { useAspectSummary, useFormatTimeOfDay } from '@components/hooks'
 import { getZonesWithAspects } from '@domain/aspects'
 import type { PublicAvalanche } from '@domain/types'
 import { useTranslations } from 'next-intl'
@@ -24,13 +24,17 @@ const AvalancheCard = ({ avalanche, isSelected, onOpen }: AvalancheCardProps) =>
   const t = useTranslations()
   const { getSummary } = useAspectSummary()
   const { formatDate } = useForecastDates()
+  const { withTime } = useFormatTimeOfDay()
   const { date, description, isDateUnknown, location, quantity, size, trigger, type } = avalanche
   // Old records may have no aspects at all
   const aspects = avalanche.aspects ?? emptyAspects
 
   const zoneLabels = getZonesWithAspects(aspects).map((zone) => t(`common.elevationZones.${zone}`))
   const aspectSummary = getSummary(aspects)
-  const dateLabel = isDateUnknown || !date ? t('observations.labels.dateUnknown') : formatDate(date)
+  const dateLabel =
+    isDateUnknown || !date
+      ? t('observations.labels.dateUnknown')
+      : withTime(formatDate(date), avalanche)
   const details = [dateLabel, location].filter(Boolean)
 
   return (

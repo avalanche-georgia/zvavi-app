@@ -1,6 +1,8 @@
 import type { MemberStatus } from '@domain/types'
 import { isAfter, parseISO, startOfDay } from 'date-fns'
 
+import { getTbilisiToday } from '@/lib/tbilisiTime'
+
 type MemberWithExpiration = {
   status: MemberStatus
   expiresAt: string | null
@@ -18,7 +20,8 @@ const getEffectiveStatus = (member: MemberWithExpiration): MemberStatus => {
     return member.status
   }
 
-  const today = startOfDay(new Date())
+  // Georgia's day, on the server (UTC) and in any browser
+  const today = getTbilisiToday()
   const expirationDate = startOfDay(parseISO(member.expiresAt))
   const isExpired = isAfter(today, expirationDate)
 

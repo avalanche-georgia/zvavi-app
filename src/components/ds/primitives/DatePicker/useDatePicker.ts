@@ -4,50 +4,48 @@ import { useRef, useState } from 'react'
 import {
   addYears,
   endOfYear,
-  format,
   min as earliest,
   parseISO,
-  setHours,
-  setMinutes,
   startOfDay,
   startOfYear,
   subYears,
 } from 'date-fns'
 
 import { assignRef } from '@/lib/assignRef'
-
-const timeFormat = 'HH:mm'
+import {
+  atTbilisiTime,
+  formatTbilisi,
+  getTbilisiToday,
+  toTbilisiWallClock,
+} from '@/lib/tbilisiTime'
 
 // Without min / max the month and year selects still need an end
 const yearsBack = 20
 const yearsAhead = 5
 
-const atTime = (day: Date, time: string) => {
-  const [hours, minutes] = time.split(':').map(Number)
-
-  return setMinutes(setHours(startOfDay(day), hours), minutes)
-}
-
 type UseDatePickerParams = {
-  defaultTime: string
+  // HH:mm a newly picked date starts at
+  defaultTime?: string
   max?: string
   min?: string
   onValueChange: (value: Date | null) => void
   ref?: React.Ref<HTMLButtonElement>
-  today: Date
+  // Georgia's today by default
+  today?: Date
   value: Date | null
   withTime: boolean
 }
 
-// Open state, the allowed days and the value updates of a DatePicker. A picked
-// day keeps the time already set (or `defaultTime`); without a time it's midnight.
+// Open state, the allowed days and the value updates of a DatePicker. With a time
+// the value is a moment, read and set in Georgian time (a picked day keeps the
+// time already set, or `defaultTime`); without one it's a calendar day at midnight.
 const useDatePicker = ({
-  defaultTime,
+  defaultTime = '18:00',
   max,
   min,
   onValueChange,
   ref,
-  today,
+  today = getTbilisiToday(),
   value,
   withTime,
 }: UseDatePickerParams) => {
@@ -55,7 +53,9 @@ const useDatePicker = ({
   const triggerRef = useRef<HTMLButtonElement>(null)
   const firstDay = min ? parseISO(min) : undefined
   const lastDay = max ? parseISO(max) : undefined
-  const timeText = value ? format(value, timeFormat) : defaultTime
+  // The calendar day shown and picked: Georgia's day of a moment, or the day itself
+  const day = value && withTime ? startOfDay(toTbilisiWallClock(value)) : value
+  const timeText = value && withTime ? formatTbilisi(value, 'HH:mm') : defaultTime
 
   const bounds = {
     disabled: [
@@ -64,18 +64,18 @@ const useDatePicker = ({
     ],
     endMonth: lastDay ?? endOfYear(addYears(today, yearsAhead)),
     // A saved value older than the default range stays reachable
-    startMonth: firstDay ?? earliest([startOfYear(subYears(today, yearsBack)), value ?? today]),
+    startMonth: firstDay ?? earliest([startOfYear(subYears(today, yearsBack)), day ?? today]),
   }
 
-  const handleDaySelect = (day: Date) => {
-    onValueChange(withTime ? atTime(day, timeText) : startOfDay(day))
+  const handleDaySelect = (pickedDay: Date) => {
+    onValueChange(withTime ? atTbilisiTime(pickedDay, timeText) : startOfDay(pickedDay))
     setIsOpen(false)
   }
 
-  const handleTimeChange = (time: string) => {
-    if (!value || !time) return
+  const handleTimeChange = (time: string | null) => {
+    if (!day || !time) return
 
-    onValueChange(atTime(value, time))
+    onValueChange(atTbilisiTime(day, time))
   }
 
   // The × disappears with the value; focus moves to the trigger instead of the page
@@ -92,6 +92,7 @@ const useDatePicker = ({
 
   return {
     bounds,
+    day,
     handleClear,
     handleDaySelect,
     handleTimeChange,
@@ -99,6 +100,7 @@ const useDatePicker = ({
     setIsOpen,
     setTriggerRef,
     timeText,
+    today,
   }
 }
 
