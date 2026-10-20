@@ -220,11 +220,36 @@ Rules:
   - An icon button that asks (trash / unlink on a card): wrap it in `primitives/ConfirmPopover`. It
     opens right at the click, starts focus on Cancel; Esc, an outside click or another one closes it.
   - Anything else (menu items, text buttons, a sheet's ✕ / Cancel / Esc / Back with unsaved input):
-    `patterns/ConfirmDialog` with `tone="danger"` — centred, so it can't be missed. The question is
-    the `title`; `children` only when there's more to say. Inside a Sheet render it within the sheet
-    (e.g. in its footer) so it nests: Esc closes only the dialog. Pass `isBusy` for an async action —
-    the dialog then stays open, undismissable, until the caller closes it. Admin sheets use
-    `DiscardDialog` / `DeleteDialog` from `features/admin/shared`.
+    `ConfirmationDialog` from `@components/shared` — centred, so it can't be missed. Pass a `type`
+    and the handlers; texts only to be more specific than the defaults
+    (`common.confirmation.<type>`):
+    ```tsx
+    <ConfirmationDialog
+      isOpen={isOpen}
+      message={t('admin.forecasts.deleteMessage', { id })}
+      onCancel={close}
+      onConfirm={remove}
+      title={t('admin.forecasts.deleteTitle', { id })}
+      type="delete"
+    />
+    ```
+    | `type` | Icon / tone | For |
+    |---|---|---|
+    | `delete` | trash, danger | deleting a saved record |
+    | `discard` | warning triangle, warning | dropping unsaved input (sheet close, form Cancel) |
+    | `leave` | exit, warning | leaving a page with a filled-in form |
+    | `publish` | send, info | making something public |
+    | `confirm` | info, info | anything else weighty (the default) |
+
+    Texts: the **title is the action** ("Delete forecast #180", no question mark), the **message its
+    consequence** (end irreversible ones with "This can't be undone."), the confirm button the
+    **verb** ("Delete"). `children` replace the message for rich content (e.g. a publish summary).
+    Inside a Sheet render it within the sheet (e.g. in its footer) so it nests: Esc closes only the
+    dialog. For an async action, return its promise from `onConfirm`: Confirm spins and the dialog
+    can't be dismissed until it settles, then closes (stays open if it rejects — so delete handlers
+    toast the error, then rethrow). A new kind of confirmation is a new `type` in
+    `confirmationTypes.ts`, not a one-off. It's built on `patterns/ConfirmDialog` (tone, icon, all
+    labels as props), which stays translation-free.
 - **Icon-only buttons** (`primitives/IconButton`) always show their label as a `Tooltip` on hover and
   keyboard focus (pass `tooltip` for a shorter label than the accessible name). Tooltips don't show
   on touch, so the icon must be clear without it.
@@ -311,7 +336,7 @@ Update this table when a legacy component's last consumer is migrated.
 | DatePicker, Calendar, TimeInput, DatePickerTimeInput | Headless UI + react-day-picker | `primitives/DatePicker` (date and date + time fields), `primitives/Calendar` (month grid, e.g. in a `Popover`) | ✅ |
 | DateField (ds, native inputs) | — | `primitives/DatePicker` | ✅ |
 | TimePicker | Headless UI | `primitives/DatePicker` (`withTime`) | ✅ |
-| Modal (+ `shared/ConfirmationDialog`, removed) | Headless UI | `primitives/Dialog` (base-ui), `patterns/ConfirmDialog` | ☐ |
+| Modal (+ legacy `shared/ConfirmationDialog`) | Headless UI | `primitives/Dialog` (base-ui), `patterns/ConfirmDialog` + new translated `@components/shared` `ConfirmationDialog` | ☐ |
 | Popover | Radix | `primitives/Popover` (base-ui) | ✅ |
 | Tooltip, InfoIcon | Radix | `primitives/Tooltip` (base-ui Tooltip; hover/focus labels), `primitives/InfoTip` (base-ui Popover; explanations) | ☐ |
 | DropdownMenu | base-ui | `primitives/Menu` | ✅ |

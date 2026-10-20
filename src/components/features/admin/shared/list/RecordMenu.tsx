@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef } from 'react'
-import { ConfirmDialog } from '@ds/patterns'
+import { ConfirmationDialog } from '@components/shared'
 import { IconButton, Menu, MenuItem, MenuSeparator } from '@ds/primitives'
 import { Ellipsis, LoaderIcon, Trash2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
@@ -13,6 +13,8 @@ type RecordMenuProps = {
   // The row's own items; Delete is added below them
   children: React.ReactNode
   deleteMessage: string
+  // "Delete forecast #180"
+  deleteTitle: string
   // An action of the menu is still running (e.g. navigating to the editor)
   isBusy?: boolean
   // Accessible name of ⋯, naming the record: "More actions for forecast #180"
@@ -28,6 +30,7 @@ type RecordMenuProps = {
 const RecordMenu = ({
   children,
   deleteMessage,
+  deleteTitle,
   isBusy = false,
   label,
   onDelete,
@@ -45,10 +48,13 @@ const RecordMenu = ({
     onOpenChangeComplete?.(isOpen)
   }
 
+  const handleDeleteCancel = () => deleteConfirm.onConfirmOpenChange(false)
+
   // In a table the row (and ⋯ with it) leaves the list — keep focus in the table
   const handleDeleteConfirm = () => {
     keepFocusInTable(menuTriggerRef.current)
-    void onDelete()
+
+    return onDelete()
   }
 
   const trigger = (
@@ -67,14 +73,13 @@ const RecordMenu = ({
         </MenuItem>
       </Menu>
 
-      <ConfirmDialog
-        cancelLabel={t('common.actions.cancel')}
-        confirmLabel={t('common.actions.delete')}
+      <ConfirmationDialog
         isOpen={deleteConfirm.isConfirmOpen}
+        message={deleteMessage}
+        onCancel={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
-        onOpenChange={deleteConfirm.onConfirmOpenChange}
-        title={deleteMessage}
-        tone="danger"
+        title={deleteTitle}
+        type="delete"
       />
     </>
   )

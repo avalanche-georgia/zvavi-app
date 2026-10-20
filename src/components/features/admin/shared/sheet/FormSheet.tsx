@@ -1,10 +1,10 @@
 'use client'
 
 import { useId } from 'react'
+import { ConfirmationDialog } from '@components/shared'
 import { Sheet, SheetHeader } from '@ds/patterns'
 import { useTranslations } from 'next-intl'
 
-import DiscardDialog from './DiscardDialog'
 import FormSheetActions from './FormSheetActions'
 import useFormSheet from './useFormSheet'
 
@@ -57,10 +57,11 @@ const FormSheet = ({
         onCancel={sheet.requestClose}
         saveLabel={saveLabel}
       />
-      <DiscardDialog
+      <ConfirmationDialog
         isOpen={sheet.isConfirmingClose}
         onCancel={sheet.cancelConfirm}
         onConfirm={sheet.close}
+        type="discard"
       />
     </>
   )

@@ -42,7 +42,8 @@ const RowActions = ({ avalanche, isCompact = false, onOpen, regionId }: RowActio
         </IconButton>
       )}
       <RecordMenu
-        deleteMessage={t('admin.recentAvalanches.sheet.deleteConfirm')}
+        deleteMessage={t('admin.recentAvalanches.sheet.deleteMessage')}
+        deleteTitle={t('admin.recentAvalanches.sheet.deleteTitle')}
         label={t('admin.recentAvalanches.actions.moreForRecord', { id: recordId })}
         onDelete={handleDelete}
       >

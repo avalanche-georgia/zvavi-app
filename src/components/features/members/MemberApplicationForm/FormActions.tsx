@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { ConfirmDialog } from '@ds/patterns'
+import { ConfirmationDialog } from '@components/shared'
 import { Button } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 import { useFormState } from 'react-hook-form'
@@ -17,6 +17,7 @@ const FormActions = () => {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false)
 
   const leave = () => router.push(routes.about.joinUs)
+  const handleConfirmCancel = () => setIsConfirmOpen(false)
 
   const handleCancel = () => {
     if (!isDirty) return leave()
@@ -29,14 +30,11 @@ const FormActions = () => {
       <Button onClick={handleCancel} variant="secondary">
         {t('common.actions.cancel')}
       </Button>
-      <ConfirmDialog
-        cancelLabel={t('joinUs.apply.leave.stay')}
-        confirmLabel={t('joinUs.apply.leave.confirm')}
+      <ConfirmationDialog
         isOpen={isConfirmOpen}
+        onCancel={handleConfirmCancel}
         onConfirm={leave}
-        onOpenChange={setIsConfirmOpen}
-        title={t('joinUs.apply.leave.message')}
-        tone="danger"
+        type="leave"
       />
       <Button isBusy={isSubmitting} type="submit">
         {t('common.actions.submit')}

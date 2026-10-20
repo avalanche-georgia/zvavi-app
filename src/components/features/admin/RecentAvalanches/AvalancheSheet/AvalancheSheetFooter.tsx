@@ -1,4 +1,4 @@
-import { DeleteDialog, DiscardDialog } from '@components/features/admin/shared'
+import { ConfirmationDialog } from '@components/shared'
 import type { AvalancheListItem } from '@data/hooks/recentAvalanches'
 import { FooterActions } from '@ds/patterns'
 import { Button } from '@ds/primitives'
@@ -11,10 +11,10 @@ type AvalancheSheetFooterProps = {
   avalanche: AvalancheListItem
   confirm: AvalancheSheetConfirm
   formId: string
-  isDeleting: boolean
   isSaving: boolean
   mode: AvalancheSheetMode
-  onConfirm: VoidFunction
+  // Returns the delete request, so the dialog spins until it's done
+  onConfirm: () => Promise<unknown> | void
   onConfirmCancel: VoidFunction
   onDelete: VoidFunction
   onEdit: VoidFunction
@@ -26,7 +26,6 @@ const AvalancheSheetFooter = ({
   avalanche,
   confirm,
   formId,
-  isDeleting,
   isSaving,
   mode,
   onConfirm,
@@ -41,17 +40,19 @@ const AvalancheSheetFooter = ({
   // Inside the sheet, so they nest: Esc closes only the dialog
   const dialogs = (
     <>
-      <DeleteDialog
-        isBusy={isDeleting}
+      <ConfirmationDialog
         isOpen={confirm === 'delete'}
-        message={t('admin.recentAvalanches.sheet.deleteConfirm')}
+        message={t('admin.recentAvalanches.sheet.deleteMessage')}
         onCancel={onConfirmCancel}
         onConfirm={onConfirm}
+        title={t('admin.recentAvalanches.sheet.deleteTitle')}
+        type="delete"
       />
-      <DiscardDialog
+      <ConfirmationDialog
         isOpen={confirm === 'close' || confirm === 'view'}
         onCancel={onConfirmCancel}
         onConfirm={onConfirm}
+        type="discard"
       />
     </>
   )

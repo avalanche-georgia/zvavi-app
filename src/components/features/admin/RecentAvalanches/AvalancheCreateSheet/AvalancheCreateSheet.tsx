@@ -1,7 +1,8 @@
 'use client'
 
 import { useId } from 'react'
-import { DiscardDialog, useFormSheet } from '@components/features/admin/shared'
+import { useFormSheet } from '@components/features/admin/shared'
+import { ConfirmationDialog } from '@components/shared'
 import type { RegionId } from '@domain/types'
 import { FooterActions, Sheet, SheetHeader } from '@ds/patterns'
 import { Button } from '@ds/primitives'
@@ -52,10 +53,11 @@ const AvalancheCreateSheet = ({
       <Button disabled={sheet.isSaving} form={formId} type="submit">
         {submitLabel ?? t('common.actions.save')}
       </Button>
-      <DiscardDialog
+      <ConfirmationDialog
         isOpen={sheet.isConfirmingClose}
         onCancel={sheet.cancelConfirm}
         onConfirm={sheet.close}
+        type="discard"
       />
     </FooterActions>
   )

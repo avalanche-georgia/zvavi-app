@@ -38,10 +38,6 @@ joinUs:
       aboutYou: 'თქვენ შესახებ'
       agreements: 'თანხმობები'
     agreementRequired: 'გაგზავნამდე მონიშნეთ თანხმობა.'
-    leave:
-      message: 'დატოვებთ ფორმას? შეყვანილი მონაცემები დაიკარგება.'
-      confirm: 'დატოვება'
-      stay: 'რედაქტირების გაგრძელება'
     labels:
       firstName: 'სახელი'
       lastName: 'გვარი'

@@ -21,7 +21,8 @@ const RowActions = ({ onOpen, partner }: RowActionsProps) => {
   return (
     <div className="flex items-center justify-end">
       <RecordMenu
-        deleteMessage={t('admin.partners.deleteConfirm', { name })}
+        deleteMessage={t('admin.partners.deleteMessage', { name })}
+        deleteTitle={t('admin.partners.deleteTitle', { name })}
         label={t('admin.partners.actions.moreForPartner', { name })}
         onDelete={actions.onDelete}
       >

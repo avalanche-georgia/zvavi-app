@@ -1,6 +1,6 @@
 'use client'
 
-import { DiscardDialog } from '@components/features/admin/shared'
+import { ConfirmationDialog } from '@components/shared'
 import { StickyActionBar } from '@ds/patterns'
 import { Button } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
@@ -63,10 +63,11 @@ const ForecastActionBar = (props: ForecastActionBarProps) => {
       >
         {t(`${key}.saveAndClose`)}
       </Button>
-      <DiscardDialog
+      <ConfirmationDialog
         isOpen={isConfirmingCancel}
         onCancel={props.onCancelDismiss}
         onConfirm={props.onCancelConfirm}
+        type="discard"
       />
     </div>
   )

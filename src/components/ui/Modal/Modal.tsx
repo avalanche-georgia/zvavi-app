@@ -13,7 +13,7 @@ export type ModalProps = {
   titleClassName?: string
 }
 
-/** @deprecated Use `Dialog` from `@ds/primitives` or `ConfirmDialog` from `@ds/patterns` — see DESIGN_SYSTEM.md */
+/** @deprecated Use `Dialog` from `@ds/primitives` or, for confirmations, `ConfirmationDialog` from `@components/shared` — see DESIGN_SYSTEM.md */
 const Modal = ({
   children,
   className,

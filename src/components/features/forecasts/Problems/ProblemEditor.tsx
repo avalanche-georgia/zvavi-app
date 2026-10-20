@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import { DiscardDialog } from '@components/features/admin/shared'
+import { ConfirmationDialog } from '@components/shared'
 import type { AvalancheProblemType } from '@domain/types'
 import { Sheet } from '@ds/patterns'
 import isEqual from 'lodash/isEqual'
@@ -76,10 +76,11 @@ const ProblemEditor = ({
         <>
           <ProblemEditorFooter onCancel={requestClose} onDone={handleDone} />
           {/* Inside the sheet, so it nests: Esc closes only the dialog */}
-          <DiscardDialog
+          <ConfirmationDialog
             isOpen={isConfirmingDiscard}
             onCancel={handleKeepEditing}
             onConfirm={handleDiscard}
+            type="discard"
           />
         </>
       }

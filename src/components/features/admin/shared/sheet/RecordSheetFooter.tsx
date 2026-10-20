@@ -1,5 +1,5 @@
-import DeleteDialog from './DeleteDialog'
-import DiscardDialog from './DiscardDialog'
+import { ConfirmationDialog } from '@components/shared'
+
 import type { RecordSheetConfirm } from './useRecordSheet'
 
 type RecordSheetFooterProps = {
@@ -7,9 +7,10 @@ type RecordSheetFooterProps = {
   children: React.ReactNode
   confirm: RecordSheetConfirm
   deleteMessage: string
-  isDeleting: boolean
+  deleteTitle: string
   onConfirmCancel: VoidFunction
-  onDelete: VoidFunction
+  // Returns the request, so the dialog spins until it's done
+  onDelete: () => Promise<unknown> | void
   onDiscard: VoidFunction
 }
 
@@ -19,24 +20,26 @@ const RecordSheetFooter = ({
   children,
   confirm,
   deleteMessage,
-  isDeleting,
+  deleteTitle,
   onConfirmCancel,
   onDelete,
   onDiscard,
 }: RecordSheetFooterProps) => (
   <>
     {children}
-    <DeleteDialog
-      isBusy={isDeleting}
+    <ConfirmationDialog
       isOpen={confirm === 'delete'}
       message={deleteMessage}
       onCancel={onConfirmCancel}
       onConfirm={onDelete}
+      title={deleteTitle}
+      type="delete"
     />
-    <DiscardDialog
+    <ConfirmationDialog
       isOpen={confirm === 'close' || confirm === 'leave'}
       onCancel={onConfirmCancel}
       onConfirm={onDiscard}
+      type="discard"
     />
   </>
 )
