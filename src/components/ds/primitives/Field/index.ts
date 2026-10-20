@@ -1,4 +1,4 @@
-export { fieldControlClasses } from './controlClasses'
+export { type ControlSize, controlSizeClasses, fieldControlClasses } from './controlClasses'
 export { default as Field } from './Field'
 export { default as FieldGroup } from './FieldGroup'
 export { default as InputUnit } from './InputUnit'

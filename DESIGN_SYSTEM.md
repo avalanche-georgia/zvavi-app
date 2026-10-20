@@ -30,7 +30,8 @@ src/components/
 │   ├── primitives/      # Button, Badge, Checkbox, Field, FieldGroup, TextField, NumberField,
 │   │                    # Textarea, ChipGroup, ToggleGrid, SegmentedControl, Select, Stepper, InfoTip,
 │   │                    # IconButton, RatingScale, DateField, Menu, Pagination, SearchField,
-│   │                    # StatusPill, CountBadge, Skeleton, Spinner, AvalancheLoader, Dialog, RadioGroup
+│   │                    # StatusPill, CountBadge, Skeleton, Spinner, AvalancheLoader, Dialog, RadioGroup,
+│   │                    # Popover, Calendar, DatePicker
 │   ├── patterns/        # ClampedText, ContentCard, FormCard, StickyActionBar, SuccessState, DataTable, LoadingState,
 │   │                    # ConfirmDialog, FooterActions, Sheet, Drawer
 │   └── form/            # react-hook-form bindings: FormTextField, FormTextarea, FormNumberField,
@@ -72,11 +73,13 @@ in `features`.
 - **base-ui (`@base-ui/react`)** for all interactive behaviour: Field, ToggleGroup, NumberField, Tabs,
   Dialog, Popover, Select, Menu, and so on.
 - No new Headless UI or Radix usage.
-- Existing exceptions stay until their migration phase:
+- **react-day-picker** for the month grid, only behind ds `primitives/Calendar`. base-ui has no
+  calendar yet; when it ships, only that component changes. Pass `locale` from
+  `react-day-picker/locale` (it carries translated aria labels, Georgian included).
 - Legacy Radix popups (`ui/Select`, `ui/Popover`, `ui/DatePicker`, `InfoIcon`) portal to `body`: never
   put them inside a ds `Sheet` or `Dialog` — the focus trap and outside-press handling break them.
   Use the ds primitives there.
-  - react-day-picker (Calendar)
+- Existing exceptions stay until their migration phase:
   - @dnd-kit (sortable lists)
   - sonner (toasts)
   - react-leaflet (maps)
@@ -176,6 +179,18 @@ Rules:
     `patterns/FooterActions`: buttons always on the right, an optional note (hint or confirmation
     question) on the left — on its own line above the buttons when the footer is narrow.
   - No colour or height overrides through `className` — add a variant instead.
+- **Selects** (`primitives/Select`): size `md` in forms, `sm` in toolbars and filter bars (next to
+  `sm` Buttons). `isActive` gives the accent border while the select narrows a list down. "All …"
+  options use a sentinel value (e.g. `'all'`); `onValueChange` never passes `null`.
+- **Popovers** (`primitives/Popover`): for content that needs more room than a menu — a `Calendar`,
+  a short form. Pass `isOpen` / `onOpenChange` when a Done button inside closes it.
+- **Dates** (`primitives/DatePicker`): every date or date + time field, in forms and filter bars. It shows
+  the date in the page's language, `min` / `max` bound the calendar, `clearLabel` adds a ×, `todayLabel` a
+  "Today" shortcut, `withTime` (with `timeLabel`) a 24-hour time input (a new date starts at `defaultTime`).
+  Get `locale` from `useDayPickerLocale()` (`@components/hooks`). Form bindings pass `ref` and `onBlur`
+  through, so react-hook-form can focus it on an error. `DateField` (native inputs) is deprecated.
+  "Today" is the browser's day in both `DatePicker` and a bare `Calendar` (for custom panels, e.g. a
+  range filter with presets): pass `today` when the page counts days in Tbilisi time.
 - **Menus** (`primitives/Menu`): `align` picks the trigger edge (`end` for overflow menus, `start`
   for nav dropdowns). Navigation rows pass `render={<Link href=… />}` to `MenuItem`; `isActive`
   marks the current page.
@@ -207,6 +222,22 @@ Rules:
   and states (default, hover, focus, selected, disabled, error). Register it in
   `src/components/features/admin/DesignSystemGallery/entries.ts`. The gallery is at `/admin/ds`, linked
   from the admin sidebar in local dev. Demo copy is English-only fixture text; it's developer tooling.
+- **A new ds component ships complete**, before any screen uses it:
+  - **Every state it can be in**: idle / empty (placeholder), filled, hover, focus-visible, open or
+    active, selected, disabled, error (invalid inside a `Field`), and loading or busy when it waits
+    on something. Leave a state out only when it can't happen, and say why in the PR.
+  - **Our look**: tokens only, the shared `Field` classes for anything field-like, sizes that match
+    its neighbours (e.g. `sm` next to `sm` Buttons).
+  - **Tests**: `<Name>.test.tsx` next to it (Vitest + Testing Library), covering its behaviour,
+    each state and basic keyboard use. `pnpm test` runs them; `pnpm build` runs them
+    first, so a failing test fails the Vercel build and the PR check.
+- **Accessibility is a low priority.** Take what base-ui and plain HTML give for free (real buttons
+  and inputs, labels, focus rings, Esc to close), and don't spend effort beyond that:
+  - **Admin:** basic keyboard use is the ceiling — Tab reaches controls, Enter / Space act, Esc
+    closes, focus is visible. Nothing more.
+  - **Public pages:** most readers are mountain people; very few use assistive technology.
+  - So no extra ARIA work, screen-reader-only flows or accessibility-only tests, and an accessibility
+    finding in review is a nit, never a reason to block or redesign.
 
 ---
 
@@ -252,8 +283,9 @@ Update this table when a legacy component's last consumer is migrated.
 | Checkbox | Headless UI | `primitives/Checkbox` | ☐ |
 | Switch | base-ui | `primitives/Switch` | ✅ |
 | Select | Radix | `primitives/Select` (base-ui) | ☐ |
-| DatePicker, Calendar, TimeInput, DatePickerTimeInput | Headless UI + react-day-picker | `primitives/DateField` | ☐ |
-| TimePicker | Headless UI | `primitives/DateField` (`withTime`) | ✅ |
+| DatePicker, Calendar, TimeInput, DatePickerTimeInput | Headless UI + react-day-picker | `primitives/DatePicker` (date and date + time fields), `primitives/Calendar` (month grid, e.g. in a `Popover`) | ☐ |
+| DateField (ds, native inputs) | — | `primitives/DatePicker` | ☐ |
+| TimePicker | Headless UI | `primitives/DateField` (`withTime`); next `primitives/DatePicker` (`withTime`), tracked on the DateField row | ✅ |
 | Modal (+ `shared/ConfirmationDialog`, removed) | Headless UI | `primitives/Dialog` (base-ui), `patterns/ConfirmDialog` | ☐ |
 | Popover | Radix | `primitives/Popover` (base-ui) | ☐ |
 | Tooltip, InfoIcon | Radix | `primitives/Tooltip` (base-ui Tooltip; hover/focus labels), `primitives/InfoTip` (base-ui Popover; explanations) | ☐ |

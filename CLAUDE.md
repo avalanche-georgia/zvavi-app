@@ -22,8 +22,9 @@ Global tools required — install once:
 
 ```bash
 pnpm dev              # dev server at http://localhost:3000
-pnpm build            # convert-messages + production build
+pnpm build            # convert-messages + tests + production build
 pnpm lint             # ESLint check only (no auto-fix; formatting is applied by lint-staged on pre-commit)
+pnpm test             # Vitest unit / component tests (also run by pnpm build)
 pnpm convert-messages # compile messages/en/*.yml + messages/ka/*.yml → JSON
 pnpm export-translations # export en.json + ka.json → messages/translations.csv
 pnpm typegen          # regenerate src/lib/supabase/database.types.ts from staging Supabase schema (requires SUPABASE_STAGING_PROJECT_REF)
@@ -250,6 +251,10 @@ Key v4 syntax differences from v3:
 
 ### UI Components
 **Read [`DESIGN_SYSTEM.md`](DESIGN_SYSTEM.md) before any UI task.** New generic UI goes in `src/components/ds/` (base-ui + tokens); legacy `src/components/ui/` is frozen and migrated screen by screen. The doc holds the architecture, token rules, legacy policy and the migration tracker — update the tracker when a legacy component is removed.
+
+**A new ds component ships complete:** every state it can be in (idle/empty, filled, hover, focus, open, selected, disabled, error, loading), our look (tokens, shared Field classes), and a `<Name>.test.tsx` next to it covering behaviour, states and basic keyboard use. Details in DESIGN_SYSTEM.md → Component rules.
+
+**Accessibility is a low priority.** Admin needs basic keyboard use at most (Tab, Enter/Space, Esc, visible focus); public users are mostly mountain people, and very few use assistive technology. Keep what base-ui and plain HTML give for free; no extra ARIA work, screen-reader-only flows or accessibility-only tests. In reviews, accessibility findings are nits, not blockers.
 
 ### Modal / Sheet / Drawer Dismissal
 - **Data-loss risk** (dirty form, unsaved edits): never close on backdrop click or swipe. Only explicit actions close it (close button, Cancel, Esc) — and those ask for confirmation while there are unsaved changes.

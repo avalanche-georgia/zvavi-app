@@ -3,9 +3,12 @@
 import { Select as BaseSelect } from '@base-ui/react/select'
 import { Check, ChevronDown } from 'lucide-react'
 
-import { fieldControlClasses } from '../Field'
+import { itemSizeClasses, type SelectSize } from './selectClasses'
+import { controlSizeClasses, fieldControlClasses } from '../Field'
 
 import { cn } from '@/lib/utils'
+
+export type { SelectSize } from './selectClasses'
 
 export type SelectOption<TValue extends string> = {
   label: string
@@ -13,11 +16,16 @@ export type SelectOption<TValue extends string> = {
 }
 
 type SelectProps<TValue extends string> = {
+  // Accessible name when no <Field> label names it (e.g. in a filter bar)
+  ariaLabel?: string
   className?: string
   disabled?: boolean
+  // Accent border while it narrows something down, e.g. an applied filter
+  isActive?: boolean
   onValueChange: (value: TValue) => void
   options: SelectOption<TValue>[]
   placeholder?: string
+  size?: SelectSize
   value: TValue | null
 }
 
@@ -25,11 +33,14 @@ type SelectProps<TValue extends string> = {
 // links the label to the trigger. For a handful of options that fit on screen,
 // prefer ChipGroup or SegmentedControl (every option visible at once).
 const Select = <TValue extends string>({
+  ariaLabel,
   className,
   disabled,
+  isActive = false,
   onValueChange,
   options,
   placeholder,
+  size = 'md',
   value,
 }: SelectProps<TValue>) => {
   const handleValueChange = (nextValue: TValue | null) => {
@@ -44,10 +55,13 @@ const Select = <TValue extends string>({
       value={value}
     >
       <BaseSelect.Trigger
+        aria-label={ariaLabel}
         className={cn(
           fieldControlClasses,
-          'focus-ring flex h-11.5 cursor-pointer items-center justify-between gap-2 px-3 text-left',
+          'focus-ring flex cursor-pointer items-center justify-between gap-2 text-left',
           'data-popup-open:border-rule-strong',
+          controlSizeClasses[size],
+          isActive && 'border-accent hover:border-accent data-popup-open:border-accent',
           className,
         )}
       >
@@ -70,7 +84,10 @@ const Select = <TValue extends string>({
             {options.map((option) => (
               <BaseSelect.Item
                 key={option.value}
-                className="rounded-control text-copy-lg text-ink data-highlighted:bg-tile flex cursor-pointer items-center justify-between gap-3 px-3 py-2.5 outline-hidden select-none"
+                className={cn(
+                  'rounded-control text-ink data-highlighted:bg-tile flex cursor-pointer items-center justify-between gap-3 px-3 outline-hidden select-none',
+                  itemSizeClasses[size],
+                )}
                 value={option.value}
               >
                 <BaseSelect.ItemText>{option.label}</BaseSelect.ItemText>
