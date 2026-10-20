@@ -11,6 +11,7 @@ export { default as useDayPickerLocale } from './useDayPickerLocale'
 // imports this barrel. Import it by path.
 export { default as useElevationRanges } from './useElevationRanges'
 export { default as useFieldError } from './useFieldError'
+export { default as useFormatTimeOfDay } from './useFormatTimeOfDay'
 export { default as useHeaderHeight } from './useHeaderHeight'
 export { default as useIsClient } from './useIsClient'
 export { default as useIsStuck } from './useIsStuck'

@@ -152,6 +152,8 @@ observations:
       today: 'Today'
       yesterday: 'Yesterday'
       quickDates: 'Quick dates'
+      time: 'Time'
+      timeLabel: 'Time (optional)'
       unknown: 'Not sure'
       unknownHint: "That's fine — describe roughly when below if you can."
       pickRequired: 'Pick a date.'

@@ -202,7 +202,8 @@ Rules:
   follows the browser's 12 / 24-hour setting.
 - **"When" fields** (`patterns/QuickDateField`): a date (+ time) with shortcuts under it and the
   picked date in words (`useDateSummary()`), e.g. a forecast's valid-until (Tomorrow / In 2 days)
-  and an observation's date (Today / Yesterday / Not sure). New "when" questions use it too.
+  and an observation's date (Today / Yesterday / Not sure). `withTime` makes the time required;
+  the `time` slot takes an optional `TimeField` instead. New "when" questions use it too.
 - **Calendar** (`primitives/Calendar`): weeks start on Monday. A bare `Calendar` is for custom panels.
   "Today" is the browser's day in all three: pass `today` where the page counts days in Tbilisi time.
 - **Menus** (`primitives/Menu`): `align` picks the trigger edge (`end` for overflow menus, `start`

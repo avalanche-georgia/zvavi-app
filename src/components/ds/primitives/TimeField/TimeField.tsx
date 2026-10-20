@@ -17,6 +17,8 @@ type TimeFieldProps = {
   disabled?: boolean
   // HH:mm; null when the field is emptied
   onValueChange: (time: string | null) => void
+  // Shown while empty, e.g. "Time" for an optional time
+  placeholder?: string
   size?: ControlSize
   // Minutes between the listed times
   step?: number
@@ -31,6 +33,7 @@ const TimeField = ({
   className,
   disabled = false,
   onValueChange,
+  placeholder = 'HH:mm',
   size = 'md',
   step = 30,
   value,
@@ -74,7 +77,7 @@ const TimeField = ({
           maxLength={5}
           onBlur={commit}
           onKeyDown={handleKeyDown}
-          placeholder="HH:mm"
+          placeholder={placeholder}
         />
         <Clock
           aria-hidden

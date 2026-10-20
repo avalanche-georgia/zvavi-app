@@ -1,8 +1,8 @@
 'use client'
 
-import { ChipGroup, DatePicker, type DatePickerProps, Field } from '../../primitives'
+import { Field as BaseField } from '@base-ui/react/field'
 
-import { cn } from '@/lib/utils'
+import { ChipGroup, DatePicker, type DatePickerProps, Field } from '../../primitives'
 
 export type QuickDate = { label: string; value: string }
 
@@ -28,6 +28,9 @@ type QuickDateFieldProps = PickerProps & {
   selectedQuickDate: string | null
   // The picked date in words, e.g. "Wed, 21 Oct · 18:00 · in 1 day"
   summary?: React.ReactNode
+  // A control beside the date, e.g. an optional TimeField (`withTime` makes the
+  // time required instead)
+  time?: React.ReactNode
 }
 
 // One date (+ time) field with shortcuts: the picker, a row of quick picks and the
@@ -42,6 +45,7 @@ const QuickDateField = ({
   quickDatesLabel,
   selectedQuickDate,
   summary,
+  time,
   ...pickerProps
 }: QuickDateFieldProps) => {
   const handleQuickDateChange = (value: string | null) => {
@@ -56,16 +60,23 @@ const QuickDateField = ({
       label={label}
       required={pickerProps.required}
     >
-      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-      <DatePicker {...pickerProps} />
-      <ChipGroup
-        ariaLabel={quickDatesLabel}
-        className="*:text-copy-sm *:h-8"
-        onChange={handleQuickDateChange}
-        options={quickDates}
-        value={selectedQuickDate}
-      />
-      <p className={cn('text-caption text-muted', !summary && 'hidden')}>{summary}</p>
+      {/* Own gaps: Field drops its gap when the label is hidden */}
+      <div className="flex flex-col gap-2">
+        <div className="flex max-w-96 gap-2">
+          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+          <DatePicker {...pickerProps} className="min-w-0 flex-1" />
+          {/* Its own Field root, so the label keeps naming the date */}
+          {time && <BaseField.Root className="shrink-0">{time}</BaseField.Root>}
+        </div>
+        <ChipGroup
+          ariaLabel={quickDatesLabel}
+          className="*:text-copy-sm *:h-8"
+          onChange={handleQuickDateChange}
+          options={quickDates}
+          value={selectedQuickDate}
+        />
+        {summary && <p className="text-caption text-muted">{summary}</p>}
+      </div>
     </Field>
   )
 }

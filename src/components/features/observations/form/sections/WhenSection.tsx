@@ -3,11 +3,13 @@
 import { useDatePickerText, useDateSummary } from '@components/hooks'
 import { useFormFieldError } from '@ds/form'
 import { FormCard, QuickDateField } from '@ds/patterns'
+import { TimeField } from '@ds/primitives'
 import { format, isToday, isYesterday, startOfToday, startOfYesterday } from 'date-fns'
 import { useTranslations } from 'next-intl'
 import { useFormContext, useWatch } from 'react-hook-form'
 
 import type { ObservationFormFields } from '../schema'
+import toObservationDate from '../toObservationDate'
 
 type QuickDate = 'today' | 'unknown' | 'yesterday'
 
@@ -22,25 +24,34 @@ const getQuickDate = (date: Date | null, isDateUnknown: boolean): QuickDate | nu
   return null
 }
 
-// When the avalanche happened: a date (past only) with Today / Yesterday / Not sure,
-// the same field as a forecast's "valid until"
+// When the avalanche happened: a date (past only) and an optional time, with
+// Today / Yesterday / Not sure — the same field as a forecast's "valid until"
 const WhenSection = () => {
   const t = useTranslations()
   const form = useFormContext<ObservationFormFields>()
-  const [date, isDateUnknown] = useWatch({ control: form.control, name: ['date', 'isDateUnknown'] })
+  const [date, isDateUnknown, time] = useWatch({
+    control: form.control,
+    name: ['date', 'isDateUnknown', 'time'],
+  })
   const { calendarLabel, locale, placeholder } = useDatePickerText()
-  const summary = useDateSummary(date)
+  const summary = useDateSummary(date && time ? toObservationDate(date, time) : date, {
+    withTime: !!time,
+  })
   const error = useFormFieldError<ObservationFormFields>(
     'date',
     t('observations.form.date.pickRequired'),
   )
 
-  const setDate = (nextDate: Date | null, isUnknown: boolean) => {
-    const options = { shouldDirty: true, shouldValidate: form.formState.isSubmitted }
+  const options = { shouldDirty: true, shouldValidate: form.formState.isSubmitted }
 
+  const setDate = (nextDate: Date | null, isUnknown: boolean) => {
     form.setValue('date', nextDate, options)
     form.setValue('isDateUnknown', isUnknown, options)
+    // No day, no time
+    if (isUnknown) form.setValue('time', null, options)
   }
+
+  const handleTimeChange = (nextTime: string | null) => form.setValue('time', nextTime, options)
 
   const handleQuickDate = (quickDate: string) => {
     if (quickDate === 'today') setDate(startOfToday(), false)
@@ -69,6 +80,15 @@ const WhenSection = () => {
         quickDatesLabel={t('observations.form.date.quickDates')}
         selectedQuickDate={getQuickDate(date, isDateUnknown)}
         summary={isDateUnknown ? t('observations.form.date.unknownHint') : summary}
+        time={
+          <TimeField
+            ariaLabel={t('observations.form.date.timeLabel')}
+            disabled={!date}
+            onValueChange={handleTimeChange}
+            placeholder={t('observations.form.date.time')}
+            value={time}
+          />
+        }
         value={date}
       />
     </FormCard>

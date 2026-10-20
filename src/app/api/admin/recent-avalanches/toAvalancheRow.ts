@@ -18,7 +18,7 @@ const toAvalancheRow = ({
   ...(latitude !== undefined && { latitude: roundCoordinate(latitude) }),
   ...(longitude !== undefined && { longitude: roundCoordinate(longitude) }),
   // "Unknown" wins over a date picked before it was chosen
-  ...(fields.isDateUnknown && { date: null }),
+  ...(fields.isDateUnknown && { date: null, is_time_known: false }),
 })
 
 export default toAvalancheRow

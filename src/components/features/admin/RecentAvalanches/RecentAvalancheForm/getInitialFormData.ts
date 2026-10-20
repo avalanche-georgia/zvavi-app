@@ -1,6 +1,6 @@
 import type { PhotoUpload } from '@components/features/observations/form'
 import type { Avalanche } from '@domain/types'
-import { startOfToday } from 'date-fns'
+import { format, startOfToday } from 'date-fns'
 
 import type { AvalancheFormSchema } from './schema'
 
@@ -32,6 +32,8 @@ const getInitialFormData = (avalanche: Avalanche | undefined): AvalancheFormSche
   size: avalanche?.size ?? null,
   slabDepth: avalanche?.slabDepth ?? null,
   status: avalanche?.status ?? 'published',
+  // HH:mm when the record has a time of day
+  time: avalanche?.isTimeKnown && avalanche.date ? format(new Date(avalanche.date), 'HH:mm') : null,
   trigger: avalanche?.trigger ?? '',
   type: avalanche?.type ?? '',
   width: avalanche?.width ?? null,

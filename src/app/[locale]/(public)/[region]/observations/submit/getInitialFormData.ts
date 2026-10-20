@@ -22,6 +22,7 @@ const getInitialFormData = (): ObservationSubmitFormSchema => ({
   submitterContact: null,
   submitterEducation: null,
   submitterName: '',
+  time: null,
   trigger: '',
   type: '',
   width: null,
