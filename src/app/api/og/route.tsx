@@ -56,7 +56,7 @@ export async function GET(request: NextRequest) {
   const iconData = readFileSync(join(process.cwd(), `public/og/${iconFile}.svg`))
   const iconBase64 = `data:image/svg+xml;base64,${iconData.toString('base64')}`
 
-  const fontData = await loadFont()
+  const fontData = loadFont()
 
   return new ImageResponse(
     (
