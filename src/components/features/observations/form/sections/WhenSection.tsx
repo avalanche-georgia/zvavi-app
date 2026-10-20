@@ -1,42 +1,35 @@
 'use client'
 
-import { useState } from 'react'
-import { useDatePickerText, useIsClient } from '@components/hooks'
+import { useDatePickerText, useDateSummary } from '@components/hooks'
 import { useFormFieldError } from '@ds/form'
-import { FormCard } from '@ds/patterns'
-import { ChipGroup, DatePicker, FieldGroup } from '@ds/primitives'
+import { FormCard, QuickDateField } from '@ds/patterns'
 import { format, isToday, isYesterday, startOfToday, startOfYesterday } from 'date-fns'
-import { useLocale, useTranslations } from 'next-intl'
+import { useTranslations } from 'next-intl'
 import { useFormContext, useWatch } from 'react-hook-form'
 
 import type { ObservationFormFields } from '../schema'
 
-import { getDateFnsLocale } from '@/lib/dateFnsLocale'
+type QuickDate = 'today' | 'unknown' | 'yesterday'
 
-type DateChoice = 'pick' | 'today' | 'unknown' | 'yesterday'
+const quickDates: QuickDate[] = ['today', 'yesterday', 'unknown']
 
-const dateChoices: DateChoice[] = ['today', 'yesterday', 'pick', 'unknown']
-const inputDateFormat = 'yyyy-MM-dd'
-
-// Which chip matches the value the form opens with — an existing record's older
-// date opens on "Pick a date" showing it, not on "Today"
-const getInitialChoice = (date: Date | null, isDateUnknown: boolean): DateChoice => {
+// The shortcut matching the form's value; an older date matches none
+const getQuickDate = (date: Date | null, isDateUnknown: boolean): QuickDate | null => {
   if (isDateUnknown) return 'unknown'
   if (date && isToday(date)) return 'today'
   if (date && isYesterday(date)) return 'yesterday'
 
-  return 'pick'
+  return null
 }
 
+// When the avalanche happened: a date (past only) with Today / Yesterday / Not sure,
+// the same field as a forecast's "valid until"
 const WhenSection = () => {
   const t = useTranslations()
-  const locale = useLocale()
-  const { calendarLabel, locale: dayPickerLocale, placeholder } = useDatePickerText()
   const form = useFormContext<ObservationFormFields>()
-  // "Today" depends on the device's timezone — the server may be on another day
-  const isClient = useIsClient()
   const [date, isDateUnknown] = useWatch({ control: form.control, name: ['date', 'isDateUnknown'] })
-  const [choice, setChoice] = useState<DateChoice>(() => getInitialChoice(date, isDateUnknown))
+  const { calendarLabel, locale, placeholder } = useDatePickerText()
+  const summary = useDateSummary(date)
   const error = useFormFieldError<ObservationFormFields>(
     'date',
     t('observations.form.date.pickRequired'),
@@ -49,52 +42,35 @@ const WhenSection = () => {
     form.setValue('isDateUnknown', isUnknown, options)
   }
 
-  const handleChoiceChange = (nextChoice: DateChoice | null) => {
-    if (!nextChoice) return
-
-    setChoice(nextChoice)
-    if (nextChoice === 'today') setDate(startOfToday(), false)
-    if (nextChoice === 'yesterday') setDate(startOfYesterday(), false)
-    if (nextChoice === 'pick') setDate(date, false)
-    if (nextChoice === 'unknown') setDate(null, true)
+  const handleQuickDate = (quickDate: string) => {
+    if (quickDate === 'today') setDate(startOfToday(), false)
+    if (quickDate === 'yesterday') setDate(startOfYesterday(), false)
+    if (quickDate === 'unknown') setDate(null, true)
   }
 
   const handleDatePick = (nextDate: Date | null) => setDate(nextDate, false)
 
-  const hint =
-    choice === 'unknown'
-      ? t('observations.form.date.unknownHint')
-      : isClient && date && format(date, 'EEE, d MMMM', { locale: getDateFnsLocale(locale) })
-
   return (
     <FormCard title={t('observations.form.sections.when')}>
-      <FieldGroup
-        description={hint}
+      <QuickDateField
+        calendarLabel={calendarLabel}
         error={error}
         isLabelHidden
         label={t('observations.form.date.label')}
-      >
-        <ChipGroup
-          onChange={handleChoiceChange}
-          options={dateChoices.map((value) => ({
-            label: t(`observations.form.date.${value}`),
-            value,
-          }))}
-          value={choice}
-        />
-        {choice === 'pick' && (
-          <DatePicker
-            ariaLabel={t('observations.form.date.label')}
-            calendarLabel={calendarLabel}
-            className="max-w-60"
-            locale={dayPickerLocale}
-            max={format(new Date(), inputDateFormat)}
-            onValueChange={handleDatePick}
-            placeholder={placeholder}
-            value={date}
-          />
-        )}
-      </FieldGroup>
+        locale={locale}
+        max={format(new Date(), 'yyyy-MM-dd')}
+        onQuickDateChange={handleQuickDate}
+        onValueChange={handleDatePick}
+        placeholder={isDateUnknown ? t('observations.form.date.unknown') : placeholder}
+        quickDates={quickDates.map((value) => ({
+          label: t(`observations.form.date.${value}`),
+          value,
+        }))}
+        quickDatesLabel={t('observations.form.date.quickDates')}
+        selectedQuickDate={getQuickDate(date, isDateUnknown)}
+        summary={isDateUnknown ? t('observations.form.date.unknownHint') : summary}
+        value={date}
+      />
     </FormCard>
   )
 }

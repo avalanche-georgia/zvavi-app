@@ -31,9 +31,9 @@ src/components/
 │   │                    # Textarea, ChipGroup, ToggleGrid, SegmentedControl, Select, Stepper, InfoTip,
 │   │                    # IconButton, RatingScale, Menu, Pagination, SearchField,
 │   │                    # StatusPill, CountBadge, Skeleton, Spinner, AvalancheLoader, Dialog, RadioGroup,
-│   │                    # Popover, Calendar, DatePicker, DateRangePicker, MultiChipGroup
+│   │                    # Popover, Calendar, DatePicker, DateRangePicker, TimeField, MultiChipGroup
 │   ├── patterns/        # ClampedText, ContentCard, FormCard, StickyActionBar, SuccessState, DataTable, LoadingState,
-│   │                    # ConfirmDialog, FooterActions, Sheet, Drawer
+│   │                    # ConfirmDialog, FooterActions, Sheet, Drawer, QuickDateField
 │   └── form/            # react-hook-form bindings: FormTextField, FormTextarea, FormNumberField,
 │                        # FormStepper, FormChipGroup, FormRadioGroup, FormCheckbox, FormSwitch, FormSelect, FormDateField,
 │                        # useFormFieldError
@@ -196,6 +196,13 @@ Rules:
   need no extra mode) and a range calendar (two months from 640px). `isActive` while it filters,
   `formatValue` for the page's own text (e.g. a month's name). `useDateRangePickerText()` gives the
   labels and `locale`.
+- **Times** (`primitives/TimeField`): every time input, always 24-hour. A list in `step`-minute steps
+  (30 by default) that narrows as you type, and any typed time ("1745", "9", "18:30") applies on Enter
+  or leaving the field. The DatePicker's `withTime` uses it. Never a native `type="time"` input: it
+  follows the browser's 12 / 24-hour setting.
+- **"When" fields** (`patterns/QuickDateField`): a date (+ time) with shortcuts under it and the
+  picked date in words (`useDateSummary()`), e.g. a forecast's valid-until (Tomorrow / In 2 days)
+  and an observation's date (Today / Yesterday / Not sure). New "when" questions use it too.
 - **Calendar** (`primitives/Calendar`): weeks start on Monday. A bare `Calendar` is for custom panels.
   "Today" is the browser's day in all three: pass `today` where the page counts days in Tbilisi time.
 - **Menus** (`primitives/Menu`): `align` picks the trigger edge (`end` for overflow menus, `start`

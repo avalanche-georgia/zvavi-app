@@ -383,7 +383,7 @@ describe('DatePicker', () => {
 
       await userEvent.clear(time)
       await userEvent.type(time, '07')
-      fireEvent.click(screen.getByRole('button', { name: 'Set from outside' }))
+      fireEvent.click(screen.getByText('Set from outside'))
 
       expect(time).toHaveValue('08:15')
     })

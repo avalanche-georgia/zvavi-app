@@ -151,7 +151,7 @@ observations:
       label: 'თარიღი'
       today: 'დღეს'
       yesterday: 'გუშინ'
-      pick: 'თარიღის არჩევა'
+      quickDates: 'სწრაფი თარიღები'
       unknown: 'არ ვიცი'
       unknownHint: 'არაუშავს — თუ შეგიძლიათ, ქვემოთ მიახლოებით აღწერეთ, როდის.'
       pickRequired: 'აირჩიეთ თარიღი.'

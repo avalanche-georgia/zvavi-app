@@ -1,83 +1,36 @@
-'use client'
+import { Field as BaseField } from '@base-ui/react/field'
 
-import { useState } from 'react'
-
-import { parseTime } from './parseTime'
-import { type ControlSize, controlSizeClasses, fieldControlClasses } from '../Field'
-
-import { cn } from '@/lib/utils'
+import type { ControlSize } from '../Field'
+import { TimeField } from '../TimeField'
 
 type DatePickerTimeProps = {
   ariaLabel?: string
   disabled: boolean
-  onTimeChange: (time: string) => void
+  onTimeChange: (time: string | null) => void
   size: ControlSize
   // HH:mm
   value: string
 }
 
-// The time beside a DatePicker, always 24-hour (a native time input follows the
-// browser's 12 / 24-hour setting, not the page). Typing is free; leaving the
-// field or pressing Enter applies it, and anything that isn't a time goes back.
-// A plain <input>, not Field.Control: the <Field> label keeps naming the date, so
-// the Field's error reaches it through the `in-data-invalid` variant.
+// The time beside a DatePicker. Its own Field root, so the outer <Field> label
+// keeps naming the date; the outer error still reaches the border
+// (`in-data-invalid`).
 const DatePickerTime = ({
   ariaLabel,
   disabled,
   onTimeChange,
   size,
   value,
-}: DatePickerTimeProps) => {
-  const [draft, setDraft] = useState<string | null>(null)
-  const [shownValue, setShownValue] = useState(value)
-  const isInvalid = draft !== null && draft.trim() !== '' && parseTime(draft) === null
-
-  // A new value from outside (a form reset, a date shortcut) drops a half-typed time
-  if (value !== shownValue) {
-    setShownValue(value)
-    setDraft(null)
-  }
-
-  const commit = () => {
-    const time = draft === null ? null : parseTime(draft)
-
-    if (time && time !== value) onTimeChange(time)
-    setDraft(null)
-  }
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => setDraft(event.target.value)
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      // Applies the time; inside a form it must not submit it too
-      event.preventDefault()
-      commit()
-    }
-
-    if (event.key === 'Escape') setDraft(null)
-  }
-
-  return (
-    <input
-      aria-invalid={isInvalid || undefined}
-      aria-label={ariaLabel}
-      autoComplete="off"
-      className={cn(
-        fieldControlClasses,
-        controlSizeClasses[size],
-        'focus-ring placeholder:text-placeholder aria-invalid:border-danger in-data-invalid:border-danger w-24 shrink-0 tabular-nums',
-      )}
-      data-disabled={disabled ? '' : undefined}
+}: DatePickerTimeProps) => (
+  <BaseField.Root className="shrink-0">
+    <TimeField
+      ariaLabel={ariaLabel}
       disabled={disabled}
-      inputMode="numeric"
-      maxLength={5}
-      onBlur={commit}
-      onChange={handleChange}
-      onKeyDown={handleKeyDown}
-      placeholder="HH:mm"
-      value={draft ?? value}
+      onValueChange={onTimeChange}
+      size={size}
+      value={value}
     />
-  )
-}
+  </BaseField.Root>
+)
 
 export default DatePickerTime

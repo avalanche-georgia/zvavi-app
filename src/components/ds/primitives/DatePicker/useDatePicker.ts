@@ -72,7 +72,7 @@ const useDatePicker = ({
     setIsOpen(false)
   }
 
-  const handleTimeChange = (time: string) => {
+  const handleTimeChange = (time: string | null) => {
     if (!value || !time) return
 
     onValueChange(atTime(value, time))
