@@ -360,7 +360,7 @@ describe('DatePicker', () => {
       const time = screen.getByLabelText('Time')
 
       await userEvent.clear(time)
-      await userEvent.type(time, '25:00')
+      await userEvent.type(time, '1875')
 
       expect(time).toHaveAttribute('aria-invalid', 'true')
 

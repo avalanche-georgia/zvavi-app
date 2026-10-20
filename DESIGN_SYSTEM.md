@@ -197,8 +197,8 @@ Rules:
   `formatValue` for the page's own text (e.g. a month's name). `useDateRangePickerText()` gives the
   labels and `locale`.
 - **Times** (`primitives/TimeField`): every time input, always 24-hour. A list in `step`-minute steps
-  (30 by default) that narrows as you type, and any typed time ("1745", "9", "18:30") applies on Enter
-  or leaving the field. The DatePicker's `withTime` uses it. Never a native `type="time"` input: it
+  (30 by default) that narrows as you type; the colon goes in as the hour is complete ("1234" reads
+  "12:34", "930" reads "9:30"), and the typed time applies on Enter or leaving the field. The DatePicker's `withTime` uses it. Never a native `type="time"` input: it
   follows the browser's 12 / 24-hour setting.
 - **"When" fields** (`patterns/QuickDateField`): a date (+ time) with shortcuts under it and the
   picked date in words (`useDateSummary()`), e.g. a forecast's valid-until (Tomorrow / In 2 days)

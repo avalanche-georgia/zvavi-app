@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 
+import { formatTimeInput } from './formatTimeInput'
 import { parseTime } from './parseTime'
 import { matchesTime } from './timeOptions'
 
@@ -10,7 +11,7 @@ type UseTimeFieldParams = {
   value: string | null
 }
 
-// The text being typed into a TimeField. Picking a listed time applies it at once;
+// The text being typed into a TimeField, with the colon put in as it's typed. Picking a listed time applies it at once;
 // typed text applies on Enter or when the field loses focus, and anything that
 // isn't a time goes back to the last value. An emptied field clears it.
 const useTimeField = ({ onValueChange, value }: UseTimeFieldParams) => {
@@ -43,7 +44,7 @@ const useTimeField = ({ onValueChange, value }: UseTimeFieldParams) => {
 
   const handleTextChange = (text: string, reason: string) => {
     if (reason === 'item-press') apply(text)
-    else setDraft(text)
+    else setDraft(formatTimeInput(text, draft ?? value ?? ''))
   }
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {

@@ -103,6 +103,30 @@ describe('TimeField', () => {
     expect(onSubmit).not.toHaveBeenCalled()
   })
 
+  it('puts the colon in while typing, and lets it be deleted', async () => {
+    const onChange = vi.fn()
+
+    render(<Harness onChange={onChange} />)
+    await userEvent.clear(getInput())
+    await userEvent.type(getInput(), '1234')
+
+    expect(getInput()).toHaveValue('12:34')
+    expect(onChange).not.toHaveBeenCalled()
+
+    await userEvent.type(getInput(), '{Backspace}{Backspace}{Backspace}')
+
+    expect(getInput()).toHaveValue('12')
+
+    await userEvent.clear(getInput())
+    await userEvent.type(getInput(), '930')
+
+    expect(getInput()).toHaveValue('9:30')
+
+    await userEvent.tab()
+
+    expect(onChange).toHaveBeenLastCalledWith('09:30')
+  })
+
   it('applies typed text on leaving the field, not on every key', async () => {
     const onChange = vi.fn()
 
@@ -133,7 +157,7 @@ describe('TimeField', () => {
 
     render(<Harness onChange={onChange} />)
     await userEvent.clear(getInput())
-    await userEvent.type(getInput(), '25:00')
+    await userEvent.type(getInput(), '1875')
 
     expect(getInput()).toHaveAttribute('aria-invalid', 'true')
 
