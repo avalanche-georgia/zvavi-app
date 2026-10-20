@@ -44,19 +44,34 @@ const DateRangePanel = ({
   const firstDay = parseISO(bounds.firstDay)
   const lastDay = parseISO(bounds.lastDay)
   const [month, setMonth] = useState(from ? parseISO(from) : lastDay)
+  // A started range shows open here but filters as one day until its end is picked
+  const [pendingFrom, setPendingFrom] = useState<string | null>(null)
 
-  const selected: DayPickerRange | undefined = from
-    ? { from: parseISO(from), to: to ? parseISO(to) : undefined }
-    : undefined
+  const selected: DayPickerRange | undefined = pendingFrom
+    ? { from: parseISO(pendingFrom), to: undefined }
+    : from
+      ? { from: parseISO(from), to: to ? parseISO(to) : undefined }
+      : undefined
 
-  const handleSelect = (range: DayPickerRange | undefined) =>
-    onRangeChange({ from: toDay(range?.from), to: toDay(range?.to) })
+  const handleSelect = (range: DayPickerRange | undefined) => {
+    const start = toDay(range?.from)
+    const end = toDay(range?.to)
+
+    setPendingFrom(end ? null : start)
+    onRangeChange({ from: start, to: end ?? start })
+  }
 
   const handleMonthSelect = (monthId: string) => {
     const range = toggleMonthRange(from, to, monthId)
 
+    setPendingFrom(null)
     onRangeChange(range)
     if (range.from) setMonth(parseISO(range.from))
+  }
+
+  const handleReset = () => {
+    setPendingFrom(null)
+    onRangeChange(emptyDateRange)
   }
 
   return (
@@ -79,13 +94,14 @@ const DateRangePanel = ({
         month={month}
         onMonthChange={setMonth}
         onSelect={handleSelect}
+        resetOnSelect
         selected={selected}
         startMonth={firstDay}
         // Georgian "today", like the rest of the archive
         today={parseISO(toTbilisiDay(new Date()))}
       />
       <div className="border-rule flex justify-end gap-2 border-t pt-3">
-        <Button onClick={() => onRangeChange(emptyDateRange)} size="sm" variant="secondary">
+        <Button onClick={handleReset} size="sm" variant="secondary">
           {t('forecast.history.filters.reset')}
         </Button>
         <Button onClick={onPanelClose} size="sm" variant="primary">
