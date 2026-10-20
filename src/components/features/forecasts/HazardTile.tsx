@@ -1,9 +1,12 @@
 import { backgroundColorByHazardLevel } from '@components/constants'
-import { isDarkHazard } from '@components/features/forecasts/HazardLevels/constants'
+import { hazardTextClass } from '@components/features/forecast/model/hazard'
 import type { HazardLevelScale } from '@domain/types'
+
+import { isDarkHazard } from './HazardLevels/constants'
 
 import { cn } from '@/lib/utils'
 
+export type HazardTilePalette = 'admin' | 'public'
 export type HazardTileSize = 'lg' | 'md' | 'sm'
 
 const sizeClasses: Record<HazardTileSize, string> = {
@@ -20,17 +23,32 @@ type HazardTileProps = {
   // Screen-reader text for the level (the number alone means little)
   label?: string
   level: HazardLevelScale
+  // public: only level 5 gets white text (forecasters' request); admin: 4 and 5
+  palette?: HazardTilePalette
   size: HazardTileSize
   title?: string
 }
 
+const getTextClass = (level: HazardLevelScale, palette: HazardTilePalette) => {
+  if (palette === 'public') return hazardTextClass(level)
+
+  return isDarkHazard(level) ? 'text-white' : 'text-ink'
+}
+
 // Coloured square with the level number; 0 (no rating) shows a dash
-const HazardTile = ({ className, label, level, size, title }: HazardTileProps) => (
+const HazardTile = ({
+  className,
+  label,
+  level,
+  palette = 'admin',
+  size,
+  title,
+}: HazardTileProps) => (
   <span
     className={cn(
       'grid shrink-0 place-items-center font-bold tabular-nums',
       backgroundColorByHazardLevel[level],
-      isDarkHazard(level) ? 'text-white' : 'text-ink',
+      getTextClass(level, palette),
       sizeClasses[size],
       className,
     )}

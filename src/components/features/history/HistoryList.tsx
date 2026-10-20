@@ -1,48 +1,51 @@
 'use client'
 
-import { Spoiler } from '@components/shared'
-import { useLocale, useTranslations } from 'next-intl'
+import type { HistoryListItem } from '@data/hooks/forecasts'
+import type { RegionId } from '@domain/types'
+import { useTranslations } from 'next-intl'
 
-import type { ForecastItem } from './groupForecastsBySeasonAndMonth'
-import { groupForecastsBySeasonAndMonth } from './groupForecastsBySeasonAndMonth'
+import useArchiveFormat from './hooks/useArchiveFormat'
+import useArchiveSeason from './hooks/useArchiveSeason'
+
 import HistoryEmptyState from './HistoryEmptyState'
-import HistoryForecastRow from './HistoryForecastRow'
+import SeasonTabs from './SeasonTabs'
+import SeasonView from './SeasonView'
 
 type HistoryListProps = {
-  forecasts: ForecastItem[]
-  regionId: string
+  forecasts: HistoryListItem[]
+  regionId: RegionId
 }
 
-const HistoryList = ({ forecasts, regionId }: HistoryListProps) => {
+const HistoryList = ({ forecasts: items, regionId }: HistoryListProps) => {
   const t = useTranslations()
-  const locale = useLocale()
-  const groups = groupForecastsBySeasonAndMonth(
-    forecasts,
-    locale,
-    t('forecast.history.winterSeason'),
-  )
+  const { formatMonth } = useArchiveFormat()
+  const { forecasts, season, seasons, selectSeason } = useArchiveSeason(items)
 
-  if (forecasts.length === 0) return <HistoryEmptyState regionId={regionId} />
+  const regionName = t(`regions.names.${regionId}`)
+  // The list comes newest first
+  const oldest = forecasts.at(-1)
 
   return (
-    <div className="flex flex-col gap-2">
-      {groups.map((season) => (
-        <Spoiler key={season.seasonLabel} title={`${season.seasonLabel} · ${season.count}`}>
-          {season.months.map((monthGroup) => (
-            <div key={monthGroup.monthLabel} className="mb-1">
-              <div className="px-2 py-2 text-xs font-semibold tracking-wide text-gray-400 uppercase">
-                {monthGroup.monthLabel}
-              </div>
-              <div className="flex flex-col gap-0.5">
-                {monthGroup.forecasts.map((forecast) => (
-                  <HistoryForecastRow key={forecast.id} forecast={forecast} regionId={regionId} />
-                ))}
-              </div>
-            </div>
-          ))}
-        </Spoiler>
-      ))}
-    </div>
+    <>
+      <p className="text-body text-copy mt-1.5 max-w-2xl text-pretty">
+        {oldest
+          ? t('forecast.history.lede', {
+              regionName,
+              since: formatMonth(oldest.monthId),
+              total: forecasts.length,
+            })
+          : t('forecast.history.ledeEmpty', { regionName })}
+      </p>
+      {season ? (
+        <>
+          <SeasonTabs onSeasonChange={selectSeason} season={season} seasons={seasons} />
+          {/* Keyed so a new season starts with clear filters */}
+          <SeasonView key={season.startYear} regionId={regionId} season={season} />
+        </>
+      ) : (
+        <HistoryEmptyState className="mt-6" regionId={regionId} variant="none" />
+      )}
+    </>
   )
 }
 

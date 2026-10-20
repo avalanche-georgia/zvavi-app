@@ -13,6 +13,8 @@ export type ButtonVariant =
 export type ButtonSize = 'lg' | 'md' | 'sm'
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  // secondary: accent border while it narrows something down, e.g. an applied filter
+  isActive?: boolean
   isBusy?: boolean
   ref?: React.Ref<HTMLButtonElement>
   size?: ButtonSize
@@ -53,6 +55,7 @@ const textSizeClasses: Record<ButtonSize, string> = {
 
 type ButtonClassesOptions = {
   className?: string
+  isActive?: boolean
   size?: ButtonSize
   variant?: ButtonVariant
 }
@@ -60,6 +63,7 @@ type ButtonClassesOptions = {
 // The button look for elements that aren't <button>, e.g. a router link that reads as a call to action
 export const getButtonClasses = ({
   className,
+  isActive = false,
   size = 'md',
   variant = 'primary',
 }: ButtonClassesOptions = {}) =>
@@ -68,6 +72,7 @@ export const getButtonClasses = ({
     'disabled:cursor-not-allowed disabled:opacity-50',
     inlineVariants.includes(variant) ? textSizeClasses[size] : boxSizeClasses[size],
     variantClasses[variant],
+    isActive && 'border-accent',
     className,
   )
 
@@ -75,6 +80,7 @@ const Button = ({
   children,
   className,
   disabled,
+  isActive,
   isBusy = false,
   size = 'md',
   type = 'button',
@@ -84,7 +90,7 @@ const Button = ({
   <button
     {...props}
     aria-busy={isBusy || undefined}
-    className={getButtonClasses({ className, size, variant })}
+    className={getButtonClasses({ className, isActive, size, variant })}
     disabled={disabled || isBusy}
     type={type}
   >

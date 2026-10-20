@@ -2,7 +2,8 @@ import type { ForecastListItem } from '@domain/types'
 
 import type { CreatedBounds } from './dateRange'
 import type { ListStatusFilter } from './listParams'
-import { toPlainText } from './plainText'
+
+import { toPlainText } from '@/lib/toPlainText'
 
 type ForecastFilters = { bounds: CreatedBounds; query: string; status: ListStatusFilter }
 

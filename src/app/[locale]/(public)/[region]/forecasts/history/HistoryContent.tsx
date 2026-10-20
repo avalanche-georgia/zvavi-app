@@ -1,17 +1,17 @@
 'use client'
 
 import { HistoryList } from '@components/features/history'
-import { Loading } from '@components/shared'
+import { LoadError, Loading } from '@components/shared'
 import { useHistoryListQuery } from '@data/hooks/forecasts'
 import { useRegionContext } from '@domain/context/RegionContext'
 
 const HistoryContent = () => {
   const { region } = useRegionContext()
-  const { data: forecasts, isPending } = useHistoryListQuery(region!.id)
+  const { data: forecasts, isError, isPending, refetch } = useHistoryListQuery(region!.id)
 
-  if (isPending) return <Loading isPage />
+  if (isPending) return <Loading />
 
-  if (!forecasts) return null
+  if (isError || !forecasts) return <LoadError onRetry={refetch} />
 
   return <HistoryList forecasts={forecasts} regionId={region!.id} />
 }
