@@ -2,26 +2,27 @@
 
 /* eslint-disable react/jsx-props-no-spreading */
 
-import clsx from 'clsx'
 import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react'
 import type { ComponentProps } from 'react'
 import type { DropdownProps } from 'react-day-picker'
 import { DayPicker } from 'react-day-picker'
 
+import { cn } from '@/lib/utils'
+
 type CalendarProps = ComponentProps<typeof DayPicker>
 
-const navButtonStyles = clsx(
+const navButtonStyles = cn(
   'inline-flex size-7 items-center justify-center rounded-md border border-gray-200',
   'bg-white hover:bg-gray-100 disabled:pointer-events-none disabled:opacity-50',
 )
 
-const dropdownStyles = clsx(
+const dropdownStyles = cn(
   'h-8 cursor-pointer appearance-none rounded-md border border-gray-200 bg-white',
   'px-3 pr-7 text-sm font-medium',
   'focus:outline-hidden focus:ring-2 focus:ring-blue-500',
 )
 
-const dayButtonStyles = clsx(
+const dayButtonStyles = cn(
   'inline-flex size-9 items-center justify-center rounded-md p-0 text-sm font-normal',
   'hover:bg-gray-100 hover:text-gray-900',
   'focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-500',
@@ -47,13 +48,14 @@ const Dropdown = ({ 'aria-label': ariaLabel, onChange, options, value }: Dropdow
   </div>
 )
 
+/** @deprecated Use `Calendar` from `@ds/primitives` — see DESIGN_SYSTEM.md */
 const Calendar = ({ className, classNames, showOutsideDays = true, ...props }: CalendarProps) => (
   <DayPicker
     captionLayout="dropdown"
-    className={clsx('p-3', className)}
+    className={cn('p-3', className)}
     classNames={{
-      button_next: clsx(navButtonStyles, 'absolute right-4 top-8 z-10'),
-      button_previous: clsx(navButtonStyles, 'absolute left-4 top-8 z-10'),
+      button_next: cn(navButtonStyles, 'absolute right-4 top-8 z-10'),
+      button_previous: cn(navButtonStyles, 'absolute left-4 top-8 z-10'),
       caption_label: 'hidden',
       day: 'size-9 p-0 text-center text-sm',
       day_button: dayButtonStyles,

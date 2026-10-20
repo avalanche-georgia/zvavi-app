@@ -168,4 +168,12 @@ export default [
       ],
     },
   },
+  {
+    // A test file lists one case after another; a test harness passes props through
+    files: ['**/*.test.{ts,tsx}'],
+    rules: {
+      'max-lines': 'off',
+      'react/jsx-props-no-spreading': 'off',
+    },
+  },
 ]

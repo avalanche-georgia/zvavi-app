@@ -10,6 +10,7 @@ import { stopEscapePropagation } from '../stopEscapePropagation'
 
 import { cn } from '@/lib/utils'
 
+/** @deprecated Use `Popover` from `@ds/primitives` — see DESIGN_SYSTEM.md */
 const Popover = PopoverPrimitive.Root
 
 const PopoverTrigger = PopoverPrimitive.Trigger

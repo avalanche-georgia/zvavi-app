@@ -12,9 +12,12 @@ const statusOptions = [
   { label: 'Archived', value: 'archived' },
 ]
 
+const filterOptions = [{ label: 'All statuses', value: 'all' }, ...statusOptions]
+
 const SelectGallery = () => {
   const [status, setStatus] = useState<string | null>('published')
   const [empty, setEmpty] = useState<string | null>(null)
+  const [filter, setFilter] = useState<string>('all')
 
   return (
     <div className="grid gap-5 md:grid-cols-2">
@@ -34,6 +37,16 @@ const SelectGallery = () => {
       </Field>
       <Field label="Disabled">
         <Select disabled onValueChange={setStatus} options={statusOptions} value={status} />
+      </Field>
+      <Field label="Size sm, active while filtering (filter bars)">
+        <Select
+          className="max-w-64"
+          isActive={filter !== 'all'}
+          onValueChange={setFilter}
+          options={filterOptions}
+          size="sm"
+          value={filter}
+        />
       </Field>
     </div>
   )
