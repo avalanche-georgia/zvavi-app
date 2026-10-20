@@ -1,6 +1,6 @@
 'use client'
 
-import { differenceInCalendarDays, format } from 'date-fns'
+import { differenceInCalendarDays } from 'date-fns'
 import { useFormatter, useLocale, useNow } from 'next-intl'
 
 import useIsClient from './useIsClient'
@@ -31,7 +31,11 @@ const useDateSummary = (value: Date | null, { withTime = false }: DateSummaryOpt
         'day',
       )
 
-  return [day, withTime && format(value, 'HH:mm'), relative].filter(Boolean).join(' · ')
+  // Tbilisi time, like everywhere the date is shown later
+  const time =
+    withTime && formatter.dateTime(value, { hour: '2-digit', hourCycle: 'h23', minute: '2-digit' })
+
+  return [day, time, relative].filter(Boolean).join(' · ')
 }
 
 export default useDateSummary

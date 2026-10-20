@@ -1,22 +1,31 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { observationFieldsSchema, withDateOrUnknown } from './schema'
-import toObservationDate, { toObservationDateIso } from './toObservationDate'
+import toObservationDate, { fromObservationDate, toObservationDateIso } from './toObservationDate'
 
 describe('toObservationDate', () => {
-  it('puts the time on the picked day', () => {
-    expect(toObservationDate(new Date(2026, 9, 15, 12), '14:30')).toEqual(
-      new Date(2026, 9, 15, 14, 30),
+  // Tbilisi is UTC+4, whatever time zone the device is in
+  it('reads the time as Tbilisi time on the picked day', () => {
+    expect(toObservationDate(new Date(2026, 9, 15, 12), '14:30').toISOString()).toBe(
+      '2026-10-15T10:30:00.000Z',
+    )
+    expect(toObservationDate(new Date(2026, 9, 15), '02:00').toISOString()).toBe(
+      '2026-10-14T22:00:00.000Z',
     )
   })
 
   it('sends the exact moment with a time, local noon without one', () => {
-    expect(toObservationDateIso(new Date(2026, 9, 15), '14:30')).toBe(
-      new Date(2026, 9, 15, 14, 30).toISOString(),
-    )
+    expect(toObservationDateIso(new Date(2026, 9, 15), '14:30')).toBe('2026-10-15T10:30:00.000Z')
     expect(toObservationDateIso(new Date(2026, 9, 15), null)).toBe(
       new Date(2026, 9, 15, 12).toISOString(),
     )
+  })
+
+  it('reads a stored moment back as the Tbilisi day and time', () => {
+    expect(fromObservationDate(new Date('2026-10-14T22:00:00.000Z'))).toEqual({
+      day: new Date(2026, 9, 15),
+      time: '02:00',
+    })
   })
 })
 
@@ -27,7 +36,8 @@ describe('the date check', () => {
 
   beforeEach(() => {
     vi.useFakeTimers({ toFake: ['Date'] })
-    vi.setSystemTime(new Date(2026, 9, 20, 12, 0))
+    // 14:00 in Tbilisi
+    vi.setSystemTime(new Date('2026-10-20T10:00:00.000Z'))
   })
 
   afterEach(() => vi.useRealTimers())
