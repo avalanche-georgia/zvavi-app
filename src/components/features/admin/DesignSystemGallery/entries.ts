@@ -12,16 +12,19 @@ import SuccessStateGallery from '@ds/patterns/SuccessState/SuccessState.gallery'
 import AvalancheLoaderGallery from '@ds/primitives/AvalancheLoader/AvalancheLoader.gallery'
 import BadgeGallery from '@ds/primitives/Badge/Badge.gallery'
 import ButtonGallery from '@ds/primitives/Button/Button.gallery'
+import CalendarGallery from '@ds/primitives/Calendar/Calendar.gallery'
 import CheckboxGallery from '@ds/primitives/Checkbox/Checkbox.gallery'
 import ChipGroupGallery from '@ds/primitives/ChipGroup/ChipGroup.gallery'
 import ConfirmPopoverGallery from '@ds/primitives/ConfirmPopover/ConfirmPopover.gallery'
 import CountBadgeGallery from '@ds/primitives/CountBadge/CountBadge.gallery'
 import DateFieldGallery from '@ds/primitives/DateField/DateField.gallery'
+import DatePickerGallery from '@ds/primitives/DatePicker/DatePicker.gallery'
 import FieldGallery from '@ds/primitives/Field/Field.gallery'
 import IconButtonGallery from '@ds/primitives/IconButton/IconButton.gallery'
 import InfoTipGallery from '@ds/primitives/InfoTip/InfoTip.gallery'
 import MenuGallery from '@ds/primitives/Menu/Menu.gallery'
 import PaginationGallery from '@ds/primitives/Pagination/Pagination.gallery'
+import PopoverGallery from '@ds/primitives/Popover/Popover.gallery'
 import RadioGroupGallery from '@ds/primitives/RadioGroup/RadioGroup.gallery'
 import RatingScaleGallery from '@ds/primitives/RatingScale/RatingScale.gallery'
 import SegmentedControlGallery from '@ds/primitives/SegmentedControl/SegmentedControl.gallery'
@@ -65,11 +68,14 @@ export const galleryEntries: GalleryEntry[] = [
   { Demo: DrawerGallery, id: 'drawer', title: 'Drawer' },
   { Demo: MenuGallery, id: 'menu', title: 'Menu' },
   { Demo: IconButtonGallery, id: 'icon-button', title: 'IconButton' },
+  { Demo: PopoverGallery, id: 'popover', title: 'Popover' },
   { Demo: InfoTipGallery, id: 'info-tip', title: 'InfoTip' },
   { Demo: TooltipGallery, id: 'tooltip', title: 'Tooltip' },
   { Demo: FieldGallery, id: 'field', title: 'Field & inputs' },
   { Demo: StepperGallery, id: 'stepper', title: 'Stepper' },
   { Demo: DateFieldGallery, id: 'date-field', title: 'DateField' },
+  { Demo: DatePickerGallery, id: 'date-picker', title: 'DatePicker' },
+  { Demo: CalendarGallery, id: 'calendar', title: 'Calendar' },
   { Demo: CheckboxGallery, id: 'checkbox', title: 'Checkbox' },
   { Demo: SwitchGallery, id: 'switch', title: 'Switch' },
   { Demo: ChipGroupGallery, id: 'chip-group', title: 'ChipGroup' },

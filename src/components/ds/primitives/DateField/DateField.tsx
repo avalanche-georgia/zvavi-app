@@ -28,7 +28,11 @@ type DateFieldProps = {
   defaultTime?: string
 }
 
-// Native date (+ time) inputs. Put it inside <Field> for the label and error wiring.
+/**
+ * Native date (+ time) inputs. Put it inside <Field> for the label and error wiring.
+ * @deprecated Use `DatePicker`: dates in the page's language and the same look in
+ * every browser. Callers move over screen by screen.
+ */
 const DateField = ({
   ariaLabel,
   className,
