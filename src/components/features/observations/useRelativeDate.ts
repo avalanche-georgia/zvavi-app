@@ -1,6 +1,8 @@
 import { differenceInCalendarDays } from 'date-fns'
 import { useLocale } from 'next-intl'
 
+import { toTbilisiWallClock } from '@/lib/tbilisiTime'
+
 // Scripts without letter case in running text — Georgian has capital
 // (Mtavruli) letters, but they're never used to start a sentence
 const caselessLocales = new Set(['ka'])
@@ -29,7 +31,9 @@ const useRelativeDate = () => {
     date: Date | string,
     { isCapitalized = false, now = new Date() }: RelativeDateOptions = {},
   ) => {
-    const text = formatDays(Math.max(0, differenceInCalendarDays(now, new Date(date))))
+    // Days count in Georgia
+    const daysAgo = differenceInCalendarDays(toTbilisiWallClock(now), toTbilisiWallClock(date))
+    const text = formatDays(Math.max(0, daysAgo))
 
     if (!isCapitalized || caselessLocales.has(locale)) return text
 

@@ -20,25 +20,21 @@ const DatePicker = ({
   calendarLabel,
   className,
   clearLabel,
-  defaultTime = '18:00',
   disabled = false,
   locale,
-  max,
-  min,
   onBlur,
-  onValueChange,
   placeholder,
-  ref,
   required = false,
   size = 'md',
   timeLabel,
-  today = new Date(),
   todayLabel,
-  value,
   withTime = false,
+  // defaultTime, max, min, onValueChange, ref, today, value
+  ...valueProps
 }: DatePickerProps) => {
   const {
     bounds,
+    day,
     handleClear,
     handleDaySelect,
     handleTimeChange,
@@ -46,18 +42,10 @@ const DatePicker = ({
     setIsOpen,
     setTriggerRef,
     timeText,
-  } = useDatePicker({
-    defaultTime,
-    max,
-    min,
-    onValueChange,
-    ref,
     today,
-    value,
-    withTime,
-  })
+  } = useDatePicker({ ...valueProps, withTime })
   // Only while there is a value to clear
-  const activeClearLabel = value && !disabled ? clearLabel : undefined
+  const activeClearLabel = valueProps.value && !disabled ? clearLabel : undefined
 
   return (
     <div className={cn('flex gap-2', className)}>
@@ -78,7 +66,7 @@ const DatePicker = ({
               placeholder={placeholder}
               required={required}
               size={size}
-              text={value ? format(value, 'd MMM yyyy', { locale }) : null}
+              text={day ? format(day, 'd MMM yyyy', { locale }) : null}
             />
           }
         >
@@ -88,7 +76,7 @@ const DatePicker = ({
             onDaySelect={handleDaySelect}
             today={today}
             todayLabel={todayLabel}
-            value={value}
+            value={day}
           />
         </Popover>
         {activeClearLabel && (
@@ -98,7 +86,7 @@ const DatePicker = ({
       {withTime && (
         <DatePickerTime
           ariaLabel={timeLabel}
-          disabled={disabled || !value}
+          disabled={disabled || !valueProps.value}
           onTimeChange={handleTimeChange}
           size={size}
           value={timeText}

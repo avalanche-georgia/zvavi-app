@@ -3,11 +3,19 @@
 import { useDatePickerText, useDateSummary } from '@components/hooks'
 import { useFormFieldError } from '@ds/form'
 import { QuickDateField } from '@ds/patterns'
-import { addDays, format, isSameDay, startOfDay } from 'date-fns'
+import { addDays, isSameDay, startOfDay } from 'date-fns'
 import { useTranslations } from 'next-intl'
 import { useController } from 'react-hook-form'
 
 import type { ForecastFormSchema } from '../schema'
+
+import {
+  atTbilisiTime,
+  formatTbilisi,
+  getTbilisiToday,
+  getTbilisiTodayIso,
+  toTbilisiWallClock,
+} from '@/lib/tbilisiTime'
 
 const quickDays = ['1', '2', '3']
 const defaultTime = '18:00'
@@ -25,16 +33,18 @@ const ValidUntilField = () => {
     t('admin.forecast.editor.general.validUntilRequired'),
   )
 
+  // Days count in Georgia, like everything about a forecast
+  const valueDay = value && startOfDay(toTbilisiWallClock(value))
   const selectedQuickDay =
-    quickDays.find((days) => value && isSameDay(value, addDays(new Date(), Number(days)))) ?? null
+    quickDays.find(
+      (days) => valueDay && isSameDay(valueDay, addDays(getTbilisiToday(), Number(days))),
+    ) ?? null
 
   // Keeps the time already set (or 18:00)
   const handleQuickDay = (days: string) => {
-    const [hours, minutes] = (value ? format(value, 'HH:mm') : defaultTime).split(':').map(Number)
-    const date = startOfDay(addDays(new Date(), Number(days)))
+    const time = value ? formatTbilisi(value, 'HH:mm') : defaultTime
 
-    date.setHours(hours, minutes)
-    onChange(date)
+    onChange(atTbilisiTime(addDays(getTbilisiToday(), Number(days)), time))
   }
 
   return (
@@ -45,7 +55,7 @@ const ValidUntilField = () => {
       error={error}
       label={t('admin.forecast.form.general.labels.validUntil')}
       locale={locale}
-      min={format(new Date(), 'yyyy-MM-dd')}
+      min={getTbilisiTodayIso()}
       onBlur={onBlur}
       onQuickDateChange={handleQuickDay}
       onValueChange={onChange}

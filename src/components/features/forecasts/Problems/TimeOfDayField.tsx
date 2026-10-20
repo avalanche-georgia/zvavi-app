@@ -1,21 +1,21 @@
 'use client'
 
 import { Checkbox, Field, TimeField } from '@ds/primitives'
-import { format, parse } from 'date-fns'
 import { useTranslations } from 'next-intl'
 
 import type { ProblemDraft } from './problemSchema'
 import type { SetProblemDraftField } from './useProblemDraft'
+
+import { atTbilisiTime, formatTbilisi, getTbilisiToday } from '@/lib/tbilisiTime'
 
 type TimeOfDayFieldProps = {
   draft: ProblemDraft
   setField: SetProblemDraftField
 }
 
-const timeFormat = 'HH:mm'
-
-const toTimeText = (value: Date | null) => (value ? format(value, timeFormat) : null)
-const toTime = (text: string | null) => (text ? parse(text, timeFormat, new Date()) : null)
+// Times of day in Georgian time, like the public forecast shows them
+const toTimeText = (value: Date | null) => (value ? formatTbilisi(value, 'HH:mm') : null)
+const toTime = (text: string | null) => (text ? atTbilisiTime(getTbilisiToday(), text) : null)
 
 // "All day", or a From–To window of two 24-hour times (same data as before)
 const TimeOfDayField = ({ draft, setField }: TimeOfDayFieldProps) => {

@@ -1,7 +1,8 @@
 import { useDateRangePickerText } from '@components/hooks'
 import { DateRangePicker, type DayRange } from '@ds/primitives'
-import { format } from 'date-fns'
 import { useTranslations } from 'next-intl'
+
+import { getTbilisiTodayIso } from '@/lib/tbilisiTime'
 
 type CustomRangeFieldsProps = DayRange & {
   onChange: (range: DayRange) => void
@@ -22,7 +23,7 @@ const CustomRangeFields = ({ from, onChange, to }: CustomRangeFieldsProps) => {
       fromLabel={fromLabel}
       isActive={!!(from || to)}
       locale={locale}
-      max={format(new Date(), 'yyyy-MM-dd')}
+      max={getTbilisiTodayIso()}
       onValueChange={onChange}
       placeholder={t('observations.filters.anyDate')}
       size="sm"

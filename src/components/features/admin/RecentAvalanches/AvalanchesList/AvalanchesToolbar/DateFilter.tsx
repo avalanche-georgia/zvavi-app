@@ -1,4 +1,3 @@
-import { toIsoDay } from '@components/features/admin/shared'
 import { useDateRangePickerText } from '@components/hooks'
 import type { DateMode } from '@data/hooks/recentAvalanches'
 import { DateRangePicker, SegmentedControl } from '@ds/primitives'
@@ -6,6 +5,8 @@ import { useTranslations } from 'next-intl'
 
 import type { AvalanchesListPage } from '../hooks/useAvalanchesListPage'
 import { dateModes } from '../model'
+
+import { getTbilisiTodayIso } from '@/lib/tbilisiTime'
 
 type DateFilterProps = {
   page: Pick<
@@ -44,7 +45,7 @@ const DateFilter = ({ page }: DateFilterProps) => {
         fromLabel={fromLabel}
         isActive={!!(dateFrom || dateTo)}
         locale={locale}
-        max={toIsoDay(new Date()) ?? undefined}
+        max={getTbilisiTodayIso()}
         onValueChange={page.onDatesChange}
         placeholder={t('common.dateRangePicker.anyDates')}
         toLabel={toLabel}

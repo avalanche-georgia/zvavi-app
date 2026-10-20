@@ -2,8 +2,9 @@ import { type Fact, FactsGrid } from '@components/features/observations'
 import { useFormatTimeOfDay } from '@components/hooks'
 import type { AvalancheListItem } from '@data/hooks/recentAvalanches'
 import { dateFormat, dateTimeFormat } from '@domain/constants'
-import { format } from 'date-fns'
 import { useTranslations } from 'next-intl'
+
+import { formatTbilisi } from '@/lib/tbilisiTime'
 
 const emptyValue = '—'
 
@@ -18,9 +19,12 @@ const ViewFacts = ({ avalanche }: { avalanche: AvalancheListItem }) => {
       value:
         isDateUnknown || !date
           ? t('common.words.unknown')
-          : withTime(format(date, dateFormat), avalanche),
+          : withTime(formatTbilisi(date, dateFormat), avalanche),
     },
-    { label: t('admin.recentAvalanches.view.logged'), value: format(createdAt, dateTimeFormat) },
+    {
+      label: t('admin.recentAvalanches.view.logged'),
+      value: formatTbilisi(createdAt, dateTimeFormat),
+    },
     {
       label: t('admin.recentAvalanches.form.labels.trigger'),
       value: t(`common.avalancheTriggers.${trigger}`),

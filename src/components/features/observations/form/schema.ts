@@ -1,10 +1,11 @@
 import { avalancheFieldLimits, observationPhotoLimits, sortedAspects } from '@domain/constants'
-import { endOfToday } from 'date-fns'
+import { startOfDay } from 'date-fns'
 import { z } from 'zod'
 
 import toObservationDate from './toObservationDate'
 
 import { Constants } from '@/lib/supabase/types'
+import { getTbilisiToday } from '@/lib/tbilisiTime'
 
 // Fields shared by the public submit form and the admin create/edit form. Each
 // form extends this with its own fields (and its own `photos` output shape).
@@ -78,10 +79,10 @@ export const photosSchema = z
 
 export const observationFieldsSchema = z.object({
   aspects: aspectsSchema,
-  // Date-only: anything up to the end of today is fine (never in the future)
+  // A calendar day up to today in Georgia (never in the future)
   date: z
     .date()
-    .refine((date) => date <= endOfToday(), { message: 'futureDate' })
+    .refine((date) => startOfDay(date) <= getTbilisiToday(), { message: 'futureDate' })
     .nullable(),
   description: z.string().max(descriptionMaxLength, { message: 'tooLong' }).nullable(),
   isDateUnknown: z.boolean(),

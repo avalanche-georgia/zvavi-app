@@ -2,9 +2,7 @@ import type { Day, Month } from 'date-fns'
 import { useLocale } from 'next-intl'
 
 import { getDateFnsLocale } from '@/lib/dateFnsLocale'
-
-// Georgia is UTC+4 all year (no daylight saving)
-const tbilisiOffsetMs = 4 * 60 * 60 * 1000
+import { tbilisiOffsetMs } from '@/lib/tbilisiTime'
 
 const pad = (value: number) => String(value).padStart(2, '0')
 

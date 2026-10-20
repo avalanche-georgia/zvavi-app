@@ -40,7 +40,7 @@ const dayInMs = 24 * 60 * 60 * 1000
 export const observationBodyFieldsSchema = z.object({
   aspects: aspectsSchema.nullable(),
   // Not in the future — a day of slack covers any client timezone (date-only
-  // values are sent at local noon)
+  // values are sent at noon in Georgia)
   date: z.iso
     .datetime({ offset: true })
     .refine((date) => Date.parse(date) <= Date.now() + dayInMs)

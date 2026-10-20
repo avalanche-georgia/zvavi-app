@@ -1,8 +1,9 @@
 import { fromObservationDate, type PhotoUpload } from '@components/features/observations/form'
 import type { Avalanche } from '@domain/types'
-import { startOfToday } from 'date-fns'
 
 import type { AvalancheFormSchema } from './schema'
+
+import { getTbilisiToday } from '@/lib/tbilisiTime'
 
 const emptyAspects = { alpine: [], highAlpine: [], subAlpine: [] }
 
@@ -17,16 +18,14 @@ const toStoredPhoto = (key: string): PhotoUpload => ({
   status: 'uploaded',
 })
 
-// A record with a time of day: its day and HH:mm in Tbilisi time
-const getTimed = (avalanche: Avalanche | undefined) =>
-  avalanche?.isTimeKnown && avalanche.date ? fromObservationDate(new Date(avalanche.date)) : null
+// A saved record's calendar day and HH:mm, in Georgian time
+const getStoredDate = (avalanche: Avalanche | undefined) =>
+  avalanche?.date ? fromObservationDate(new Date(avalanche.date)) : null
 
 // A new record starts like the public form: dated today, nothing else picked
 const getInitialFormData = (avalanche: Avalanche | undefined): AvalancheFormSchema => ({
   aspects: avalanche?.aspects ?? emptyAspects,
-  date: avalanche
-    ? (getTimed(avalanche)?.day ?? (avalanche.date ? new Date(avalanche.date) : null))
-    : startOfToday(),
+  date: avalanche ? (getStoredDate(avalanche)?.day ?? null) : getTbilisiToday(),
   description: avalanche?.description || null,
   involvement: avalanche?.involvement ?? null,
   isDateUnknown: avalanche?.isDateUnknown ?? false,
@@ -38,7 +37,7 @@ const getInitialFormData = (avalanche: Avalanche | undefined): AvalancheFormSche
   size: avalanche?.size ?? null,
   slabDepth: avalanche?.slabDepth ?? null,
   status: avalanche?.status ?? 'published',
-  time: getTimed(avalanche)?.time ?? null,
+  time: avalanche?.isTimeKnown ? (getStoredDate(avalanche)?.time ?? null) : null,
   trigger: avalanche?.trigger ?? '',
   type: avalanche?.type ?? '',
   width: avalanche?.width ?? null,

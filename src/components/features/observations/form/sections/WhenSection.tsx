@@ -4,22 +4,27 @@ import { useDatePickerText, useDateSummary } from '@components/hooks'
 import { useFormFieldError } from '@ds/form'
 import { FormCard, QuickDateField } from '@ds/patterns'
 import { TimeField } from '@ds/primitives'
-import { format, isToday, isYesterday, startOfToday, startOfYesterday } from 'date-fns'
+import { isSameDay, subDays } from 'date-fns'
 import { useTranslations } from 'next-intl'
 import { useFormContext, useWatch } from 'react-hook-form'
 
 import type { ObservationFormFields } from '../schema'
 import toObservationDate from '../toObservationDate'
 
+import { getTbilisiToday, getTbilisiTodayIso } from '@/lib/tbilisiTime'
+
 type QuickDate = 'today' | 'unknown' | 'yesterday'
 
 const quickDates: QuickDate[] = ['today', 'yesterday', 'unknown']
 
-// The shortcut matching the form's value; an older date matches none
+// The shortcut matching the form's value; an older date matches none. Today and
+// yesterday are Georgia's days.
 const getQuickDate = (date: Date | null, isDateUnknown: boolean): QuickDate | null => {
+  const today = getTbilisiToday()
+
   if (isDateUnknown) return 'unknown'
-  if (date && isToday(date)) return 'today'
-  if (date && isYesterday(date)) return 'yesterday'
+  if (date && isSameDay(date, today)) return 'today'
+  if (date && isSameDay(date, subDays(today, 1))) return 'yesterday'
 
   return null
 }
@@ -54,8 +59,8 @@ const WhenSection = () => {
   const handleTimeChange = (nextTime: string | null) => form.setValue('time', nextTime, options)
 
   const handleQuickDate = (quickDate: string) => {
-    if (quickDate === 'today') setDate(startOfToday(), false)
-    if (quickDate === 'yesterday') setDate(startOfYesterday(), false)
+    if (quickDate === 'today') setDate(getTbilisiToday(), false)
+    if (quickDate === 'yesterday') setDate(subDays(getTbilisiToday(), 1), false)
     if (quickDate === 'unknown') setDate(null, true)
   }
 
@@ -69,7 +74,7 @@ const WhenSection = () => {
         isLabelHidden
         label={t('observations.form.date.label')}
         locale={locale}
-        max={format(new Date(), 'yyyy-MM-dd')}
+        max={getTbilisiTodayIso()}
         onQuickDateChange={handleQuickDate}
         onValueChange={handleDatePick}
         placeholder={isDateUnknown ? t('observations.form.date.unknown') : placeholder}

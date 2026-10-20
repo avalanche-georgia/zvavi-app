@@ -8,12 +8,14 @@ import type { Member } from '@domain/types'
 import { FormDateField } from '@ds/form'
 import { FormCard } from '@ds/patterns'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { addYears, format, startOfDay } from 'date-fns'
+import { addYears, format } from 'date-fns'
 import { useTranslations } from 'next-intl'
 import { FormProvider, useForm, useWatch } from 'react-hook-form'
 
 import { type ApproveFormData, approveFormSchema } from './schema'
 import useApproveSubmit from './useApproveSubmit'
+
+import { getTbilisiToday, getTbilisiTodayIso } from '@/lib/tbilisiTime'
 
 type ApproveFormProps = {
   formId: string
@@ -25,7 +27,7 @@ type ApproveFormProps = {
 
 // A year from today, unless the admin picks other dates
 const getDefaultValues = (): ApproveFormData => {
-  const today = startOfDay(new Date())
+  const today = getTbilisiToday()
 
   return { expiresAt: addYears(today, 1), joinedAt: today }
 }
@@ -67,7 +69,7 @@ const ApproveForm = ({
             calendarLabel={calendarLabel}
             label={t('admin.members.form.labels.joinedAt')}
             locale={locale}
-            max={format(new Date(), serverDateFormat)}
+            max={getTbilisiTodayIso()}
             name="joinedAt"
             placeholder={placeholder}
             required

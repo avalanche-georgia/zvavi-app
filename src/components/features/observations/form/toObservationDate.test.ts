@@ -14,11 +14,9 @@ describe('toObservationDate', () => {
     )
   })
 
-  it('sends the exact moment with a time, local noon without one', () => {
+  it('sends the exact moment with a time, Tbilisi noon without one', () => {
     expect(toObservationDateIso(new Date(2026, 9, 15), '14:30')).toBe('2026-10-15T10:30:00.000Z')
-    expect(toObservationDateIso(new Date(2026, 9, 15), null)).toBe(
-      new Date(2026, 9, 15, 12).toISOString(),
-    )
+    expect(toObservationDateIso(new Date(2026, 9, 15), null)).toBe('2026-10-15T08:00:00.000Z')
   })
 
   it('reads a stored moment back as the Tbilisi day and time', () => {

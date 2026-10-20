@@ -8,6 +8,7 @@ import DatePickerClearButton from '../DatePicker/DatePickerClearButton'
 import DatePickerTrigger from '../DatePicker/DatePickerTrigger'
 import { Popover } from '../Popover'
 
+import { getTbilisiToday } from '@/lib/tbilisiTime'
 import { cn } from '@/lib/utils'
 
 // A date range in one field: from–to, from only, or up to a date. The popup has
@@ -30,7 +31,7 @@ const DateRangePicker = ({
   presetsLabel,
   size = 'md',
   toLabel,
-  today = new Date(),
+  today = getTbilisiToday(),
   value,
 }: DateRangePickerProps) => {
   const {

@@ -14,6 +14,8 @@ import { fieldGridClasses } from './constants'
 
 import PersonSection from './PersonSection'
 
+import { getTbilisiTodayIso } from '@/lib/tbilisiTime'
+
 const FormFields = () => {
   const t = useTranslations()
   const { calendarLabel, clearLabel, locale, placeholder, todayLabel } = useDatePickerText()
@@ -53,7 +55,7 @@ const FormFields = () => {
             calendarLabel={calendarLabel}
             label={t('admin.members.form.labels.joinedAt')}
             locale={locale}
-            max={format(new Date(), serverDateFormat)}
+            max={getTbilisiTodayIso()}
             name="joinedAt"
             placeholder={placeholder}
             required

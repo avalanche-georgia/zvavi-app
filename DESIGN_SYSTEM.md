@@ -204,8 +204,11 @@ Rules:
   picked date in words (`useDateSummary()`), e.g. a forecast's valid-until (Tomorrow / In 2 days)
   and an observation's date (Today / Yesterday / Not sure). `withTime` makes the time required;
   the `time` slot takes an optional `TimeField` instead. New "when" questions use it too.
-- **Calendar** (`primitives/Calendar`): weeks start on Monday. A bare `Calendar` is for custom panels.
-  "Today" is the browser's day in all three: pass `today` where the page counts days in Tbilisi time.
+- **Georgian time**: `DatePicker` with `withTime` holds a moment and shows / sets it in Georgian time; without
+  a time it holds a calendar day. `DatePicker` and `DateRangePicker` default "today" to Georgia's
+  (`getTbilisiToday`); pass `max={getTbilisiTodayIso()}` for "not in the future". See CLAUDE.md.
+- **Calendar** (`primitives/Calendar`): weeks start on Monday. A bare `Calendar` is for custom panels;
+  its "today" is the browser's, so pass `today={getTbilisiToday()}`.
 - **Menus** (`primitives/Menu`): `align` picks the trigger edge (`end` for overflow menus, `start`
   for nav dropdowns). Navigation rows pass `render={<Link href=… />}` to `MenuItem`; `isActive`
   marks the current page.
