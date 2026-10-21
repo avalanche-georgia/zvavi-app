@@ -62,7 +62,7 @@ src/components/
 |---|---|---|
 | **Primitive** (`ds/primitives`) | A single generic control, always controlled: `value` + `onValueChange` for inputs (`onChange` for choice groups, `onCheckedChange` for Checkbox). base-ui provides the behaviour. | Tokens only |
 | **Pattern** (`ds/patterns`) | A generic arrangement of primitives (a card with header, a sticky action bar) | Primitives |
-| **Form binding** (`ds/form`) | A thin `useController` wrapper around a primitive + its `Field`: wires `value`/`onChange` and the translated error (via `useFieldError`) | react-hook-form, app hooks |
+| **Form binding** (`ds/form`) | A thin `useController` wrapper around a primitive + its `Field`: wires `value`/`onChange` and the translated error (via `useFormFieldError`, which wraps `@components/hooks` `useFieldError`) | react-hook-form, app hooks |
 | **Domain component** (`features/*`) | Anything that knows about avalanches, regions or observations (SizePicker, aspect/elevation picker, LocationMap, PhotoGrid) | Everything above |
 
 Rule of thumb: if a component would make sense in an unrelated app, it goes in `ds`. Otherwise it goes
@@ -283,6 +283,19 @@ Rules:
   `src/components/features/admin/DesignSystemGallery/entries.ts` with its `group` (`groups.ts`); the
   page groups the entries and sorts them by title. The gallery is at `/admin/ds`, linked
   from the admin sidebar in local dev. Demo copy is English-only fixture text; it's developer tooling.
+- **Definition of done** for a ds component (the audit checklist; `node scripts/ds-audit.mjs` checks the
+  mechanical parts):
+  - **Code:** tier API (`value` + `onValueChange` for inputs, `onChange` for choice groups,
+    `onCheckedChange` for Checkbox / Switch); strings as props; variants and sizes as `Record` maps
+    merged with `cn()`; no colour / height overrides through `className` inside ds; files ≤ ~100
+    logical lines; `index.ts` exports exactly the public surface.
+  - **Look:** tokens only (no palette, hex, `rgb()`, Tailwind default radii / font sizes); sizes sm 40 /
+    md 46 / lg 50 for boxed controls; `rounded-field` (md) / `rounded-control` (sm); the shared Field
+    classes for anything field-like; `focus-ring` on every interactive element.
+  - **States:** every one it can be in (list below), shown in its gallery entry.
+  - **UX:** ≥ 44×44 hit target on touch (`pointer-coarse:`); Tab / Enter / Space / Esc work and overlays
+    return focus; no information only on hover; long and Georgian labels wrap or clamp on purpose.
+  - **Proof:** a `<Name>.gallery.tsx` registered in `entries.ts` with its group, and a `<Name>.test.tsx`.
 - **A new ds component ships complete**, before any screen uses it:
   - **Every state it can be in**: idle / empty (placeholder), filled, hover, focus-visible, open or
     active, selected, disabled, error (invalid inside a `Field`), and loading or busy when it waits
@@ -327,15 +340,16 @@ Rules:
 
 ### Component tracker
 
-Update this table when a legacy component's last consumer is migrated.
+Update this table when a legacy component's last consumer is migrated. "Removed" means the file is gone
+from `ui/`; *no consumers* marks a legacy file that nothing imports any more and can be deleted.
 
 | Legacy (`ui/`) | Library | ds replacement | Removed |
 |---|---|---|---|
 | Button (+ `shared/ButtonLink`) | Headless UI | `primitives/Button` | ☐ |
-| InputBlock | — | `primitives/Field` | ☐ |
-| TextInput | Headless UI | `primitives/TextField` | ☐ |
+| InputBlock | — | `primitives/Field` | ☐ *no consumers* |
+| TextInput | Headless UI | `primitives/TextField` | ☐ *no consumers* |
 | SearchInput | Headless UI | `primitives/SearchField` | ✅ |
-| Textarea | Headless UI | `primitives/Textarea` | ☐ |
+| Textarea | Headless UI | `primitives/Textarea` | ☐ *no consumers* |
 | NumberInput | base-ui | `primitives/Stepper` / `NumberField` | ✅ |
 | ChipGroup | base-ui | `primitives/ChipGroup` | ✅ |
 | SegmentedControl | base-ui | `primitives/SegmentedControl` | ☐ |
@@ -343,17 +357,17 @@ Update this table when a legacy component's last consumer is migrated.
 | RadioOption | base-ui | `primitives/RadioGroup` (long labels, one per row) or `ToggleGrid` | ✅ |
 | Checkbox | Headless UI | `primitives/Checkbox` | ☐ |
 | Switch | base-ui | `primitives/Switch` | ✅ |
-| Select | Radix | `primitives/Select` (base-ui) | ☐ |
+| Select | Radix | `primitives/Select` (base-ui) | ☐ *no consumers* |
 | DatePicker, Calendar, TimeInput, DatePickerTimeInput | Headless UI + react-day-picker | `primitives/DatePicker` (date and date + time fields), `primitives/Calendar` (month grid, e.g. in a `Popover`) | ✅ |
 | DateField (ds, native inputs) | — | `primitives/DatePicker` | ✅ |
 | TimePicker | Headless UI | `primitives/DatePicker` (`withTime`) | ✅ |
 | Modal (+ legacy `shared/ConfirmationDialog`) | Headless UI | `primitives/Dialog` (base-ui), `patterns/ConfirmDialog` + new translated `@components/shared` `ConfirmationDialog` | ☐ |
 | Popover | Radix | `primitives/Popover` (base-ui) | ✅ |
-| Tooltip, InfoIcon | Radix | `primitives/Tooltip` (base-ui Tooltip; hover/focus labels), `primitives/InfoTip` (base-ui Popover; explanations) | ☐ |
+| Tooltip, InfoIcon | Radix | `primitives/Tooltip` (base-ui Tooltip; hover/focus labels), `primitives/InfoTip` (base-ui Popover; explanations) | ☐ InfoIcon *no consumers*; `TooltipProvider` still wraps the app in `app/layout.tsx` |
 | DropdownMenu | base-ui | `primitives/Menu` | ✅ |
 | Sheet, Drawer (bottom sheet) | base-ui / vaul | `patterns/Sheet` (+ `SheetHeader`, `SheetStepButtons`; `shared/DetailsSheet` for a sheet opened from a button) | ✅ |
 | Mobile nav menus (not in `ui/`: `Header/NavMenu/MobileNav`, `admin/sidebar/MobileDrawer`) | vaul (removed) | `patterns/Drawer` | ✅ |
-| IconButton | custom | `primitives/IconButton` | ☐ |
+| IconButton | custom | `primitives/IconButton` | ☐ *no consumers* |
 | Spinner | custom | `primitives/Spinner` (inline), `primitives/AvalancheLoader` via `patterns/LoadingState` / `shared/Loading` (blocks and pages); legacy `ui/Spinner` removed | ✅ |
 | Skeleton | custom | `primitives/Skeleton` | ☐ |
 | Pagination, DataTable | custom | `primitives/Pagination`, `patterns/DataTable` | ✅ |
