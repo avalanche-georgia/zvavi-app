@@ -644,39 +644,6 @@ export type Database = {
         }
         Relationships: []
       }
-      suspicious_requests: {
-        Row: {
-          city: string | null
-          country: string | null
-          created_at: string | null
-          id: string
-          ip_address: string | null
-          path: string
-          referer: string | null
-          user_agent: string | null
-        }
-        Insert: {
-          city?: string | null
-          country?: string | null
-          created_at?: string | null
-          id?: string
-          ip_address?: string | null
-          path: string
-          referer?: string | null
-          user_agent?: string | null
-        }
-        Update: {
-          city?: string | null
-          country?: string | null
-          created_at?: string | null
-          id?: string
-          ip_address?: string | null
-          path?: string
-          referer?: string | null
-          user_agent?: string | null
-        }
-        Relationships: []
-      }
       user_profiles: {
         Row: {
           about: string | null
