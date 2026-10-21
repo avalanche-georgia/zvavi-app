@@ -1,6 +1,6 @@
 ---
 name: plan-auditor
-description: Use before implementing any feature plan from local/observations, local/ROADMAP.md, or any other local/*.md spec. Cross-checks the plan against the actual current codebase state and lists gaps before any code is written. Does not write code.
+description: Use before implementing any feature plan from a local/*.md spec. Cross-checks the plan against the actual current codebase state and lists gaps before any code is written. Does not write code.
 tools: Read, Grep, Glob, Bash
 ---
 

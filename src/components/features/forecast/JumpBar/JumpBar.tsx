@@ -57,7 +57,7 @@ const JumpBar = ({ chips, className }: JumpBarProps) => {
             'focus-ring text-copy-sm relative flex h-8.5 shrink-0 items-center gap-1.5 rounded-full border px-3.25 font-semibold whitespace-nowrap transition-colors',
             'after:absolute pointer-coarse:after:inset-x-0 pointer-coarse:after:-inset-y-1.5',
             activeSection === id
-              ? 'border-ink bg-ink text-white'
+              ? 'border-accent bg-accent text-white'
               : 'border-rule bg-surface text-ink hover:border-rule-strong',
           )}
           href={`#${id}`}

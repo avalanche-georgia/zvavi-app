@@ -24,9 +24,7 @@ const MainPartnerInvite = () => {
         <h2 className="text-title-sm md:text-title font-semibold">
           {t('partners.page.invite.title')}
         </h2>
-        <p className="text-body text-copy-lg max-w-[68ch] text-pretty">
-          {t('partners.page.invite.message')}
-        </p>
+        <p className="text-body text-copy-lg text-pretty">{t('partners.page.invite.message')}</p>
         <Link className={partnerLinkClasses} href={routes.about.contact}>
           {t('partners.page.invite.action')}
           <ArrowRight aria-hidden className="size-3.5 shrink-0" />

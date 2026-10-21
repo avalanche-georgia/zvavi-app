@@ -18,14 +18,14 @@ const MainPartnerCard = ({ partner }: { partner: Partner }) => {
   const { trackWebsiteClick } = usePartnerTracking(partner)
 
   return (
-    <article className="rounded-card border-rule bg-surface flex flex-col items-start gap-4.5 border p-5 md:flex-row md:items-center md:gap-7 md:p-7">
+    <article className="rounded-card border-rule bg-surface flex h-full flex-col items-start gap-4.5 border p-5 md:flex-row md:items-center md:gap-7 md:p-7">
       <CardLogo className="rounded-card size-28 md:size-42" logoUrl={partner.logoUrl} />
       <div className="flex min-w-0 flex-1 flex-col gap-3">
         <MainPartnerTag />
         <h2 className="text-title-sm md:text-title font-semibold wrap-anywhere">{name}</h2>
         {description && (
           <ClampedText
-            className="text-copy-lg max-w-[68ch]"
+            className="text-copy-lg"
             lessLabel={t('partners.page.showLess')}
             lines={2}
             moreLabel={t('partners.page.readMore')}

@@ -12,17 +12,23 @@ import { navItemClasses } from './navItemClasses'
 import type { NavMenuGroup } from './types'
 import useNavMenuItems from './useNavMenuItems'
 
+import { cn } from '@/lib/utils'
+
 const NavDropdown = ({ item }: { item: NavMenuGroup }) => {
   const t = useTranslations()
   const pathname = usePathname()
+  const isActive = isNavItemActive(item, pathname)
 
   return (
     <Menu
       align="start"
       trigger={
-        <button className={navItemClasses(isNavItemActive(item, pathname))} type="button">
+        <button className={navItemClasses(isActive)} type="button">
           {t(item.titleId)}
-          <ChevronDown aria-hidden className="text-muted size-3.5" />
+          <ChevronDown
+            aria-hidden
+            className={cn('size-3.5', isActive ? 'text-accent' : 'text-muted')}
+          />
         </button>
       }
     >

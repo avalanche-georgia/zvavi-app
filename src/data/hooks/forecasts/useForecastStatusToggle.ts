@@ -13,9 +13,10 @@ type ToggleContext = {
   previousRow?: Pick<ForecastListItem, 'publishedAt' | 'status'>
 }
 
-// Any cached single-forecast query for this id: [all, regionId?, 'item', { forecastId }]
+// Any cached admin single-forecast query for this id: [all, regionId?, 'adminItem', { forecastId }].
+// The public `item` shape differs — it just refetches on settle.
 const isItemOf = (forecastId: number) => (query: Query) =>
-  query.queryKey[2] === 'item' &&
+  query.queryKey[2] === 'adminItem' &&
   (query.queryKey[3] as { forecastId?: number } | undefined)?.forecastId === forecastId
 
 const toggleStatus = async ({ forecastId, status }: ForecastStatusToggleVariables) => {

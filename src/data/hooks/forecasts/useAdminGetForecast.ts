@@ -7,7 +7,7 @@ import { useQuery } from '@/tanstack-query/hooks'
 import { convertSnakeToCamel, handleSupabaseError } from '../../helpers'
 import { forecastsKeys } from '../../query-keys'
 
-type QueryKey = ReturnType<typeof forecastsKeys.item>
+type QueryKey = ReturnType<typeof forecastsKeys.adminItem>
 type Response = AdminForecast | null
 
 type QueryOptions = Omit<
@@ -59,7 +59,7 @@ const fetchForecast = async (forecastId: number, regionId?: RegionId): Promise<R
 const useAdminGetForecast = ({ forecastId, regionId, ...options }: QueryOptions) =>
   useQuery({
     queryFn: () => fetchForecast(forecastId, regionId),
-    queryKey: forecastsKeys.item(regionId, { forecastId }),
+    queryKey: forecastsKeys.adminItem(regionId, { forecastId }),
     ...options,
   })
 
