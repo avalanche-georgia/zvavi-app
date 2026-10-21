@@ -30,8 +30,8 @@ src/components/
 │   ├── primitives/      # Button, Badge, Checkbox, Field, FieldGroup, TextField, NumberField,
 │   │                    # Textarea, ChipGroup, ToggleGrid, SegmentedControl, Select, Stepper, InfoTip,
 │   │                    # IconButton, RatingScale, Menu, Pagination, SearchField,
-│   │                    # StatusPill, CountBadge, Skeleton, Spinner, AvalancheLoader, Dialog, RadioGroup,
-│   │                    # Popover, Calendar, DatePicker, DateRangePicker, TimeField, MultiChipGroup
+│   │                    # StatusPill, CountBadge, Skeleton, Spinner, AvalancheLoader, Dialog (+ DialogList),
+│   │                    # RadioGroup, Popover, Calendar, DatePicker, DateRangePicker, TimeField, MultiChipGroup
 │   ├── patterns/        # ClampedText, ContentCard, FormCard, StickyActionBar, SuccessState, DataTable, LoadingState,
 │   │                    # ConfirmDialog, FooterActions, Sheet, Drawer, QuickDateField
 │   └── form/            # react-hook-form bindings: FormTextField, FormTextarea, FormNumberField,
@@ -174,10 +174,10 @@ Rules:
   - A router link that acts as a button uses `getButtonClasses({ variant, size })` — same variants,
     no restyling.
   - Size `md` in sheet footers and sticky action bars; `sm` inside content (section headers, cards,
-    empty states, inline confirmations).
+    empty states, confirmation popovers).
   - Dismiss before confirm, right-aligned: `[Cancel] [Primary]`. Sheet / panel footers use
-    `patterns/FooterActions`: buttons always on the right, an optional note (hint or confirmation
-    question) on the left — on its own line above the buttons when the footer is narrow.
+    `patterns/FooterActions`: buttons always on the right, an optional hint on the left — on its own
+    line above the buttons when the footer is narrow.
   - No colour or height overrides through `className` — add a variant instead.
 - **Selects** (`primitives/Select`): size `md` in forms, `sm` in toolbars and filter bars (next to
   `sm` Buttons). `isActive` gives the accent border while the select narrows a list down. "All …"
@@ -215,9 +215,51 @@ Rules:
 - **Sheets** (`patterns/Sheet`): bottom sheet on mobile, side panel from `lg`. `isTall` fixes the
   mobile height; `isWide` widens the desktop panel (`w-160` instead of `w-120`) for records with more
   to lay out side by side, e.g. a member's facts and QR code. No width overrides through `className`.
-- **Confirming a destructive action** (remove, unlink): wrap the control that asks in
-  `primitives/ConfirmPopover`. It floats next to that control (no layout shift), starts focus on
-  Cancel, and base-ui closes it on Esc, an outside click or when another one opens.
+- **Confirming a destructive action** (delete, remove, unlink, discard unsaved input) — always asked,
+  never replaced by an Undo, never swapped inline into a footer or action bar:
+  - An icon button that asks (trash / unlink on a card): wrap it in `primitives/ConfirmPopover`. It
+    opens right at the click, starts focus on Cancel; Esc, an outside click or another one closes it.
+  - Anything else (menu items, text buttons, a sheet's ✕ / Cancel / Esc / Back with unsaved input):
+    `ConfirmationDialog` from `@components/shared` — centred, so it can't be missed. Pass a `type`
+    and the handlers; texts only to be more specific than the defaults
+    (`common.confirmation.<type>`):
+    ```tsx
+    <ConfirmationDialog
+      isOpen={isOpen}
+      message={t('admin.forecasts.deleteMessage', { id })}
+      onCancel={close}
+      onConfirm={remove}
+      title={t('admin.forecasts.deleteTitle', { id })}
+      type="delete"
+    />
+    ```
+    | `type` | Tone | For |
+    |---|---|---|
+    | `delete` | danger | deleting a saved record |
+    | `discard` | warning | dropping unsaved input (sheet close, form Cancel) |
+    | `leave` | warning | leaving a page with a filled-in form |
+    | `publish` | info | making something public |
+    | `confirm` | info | anything else weighty (the default) |
+
+    Look (`patterns/ConfirmDialog` on `primitives/Dialog`): a white header with the tone tile, the
+    title and ×; the body on `bg-canvas` between rules; a white footer with [Cancel] [Confirm]. The
+    tile names the dialog's **type, never the action** — danger octagon, warning triangle, info
+    circle. Danger is any destructive or irreversible step (delete, unpublish, revoke), with a
+    danger button; warning and info use the primary button. Focus starts on Cancel for danger and
+    warning, on Confirm for info. Below `sm` it's a bottom sheet with full-width stacked buttons,
+    primary on top.
+
+    Texts: the **title is the action** ("Delete forecast #180"; a "?" only for warning questions —
+    "Discard unsaved changes?"), the **body its consequence** (end irreversible ones with "This
+    can't be undone."; names and counts in `<b>`), the confirm button the **verb** ("Delete").
+    `children` replace the message for rich content: several paragraphs, a `ConfirmationList` of the
+    records the action touches (links + muted meta, five shown, then "+N more"), or a summary.
+    Inside a Sheet render it within the sheet (e.g. in its footer) so it nests: Esc closes only the
+    dialog. For an async action, return its promise from `onConfirm`: Confirm spins with its "…ing"
+    label and nothing dismisses the dialog until it settles; resolved → closes, rejected → stays
+    open (delete handlers toast the reason, then rethrow). A new kind of confirmation is a new
+    `type` in `confirmationTypes.ts`, not a one-off. `patterns/ConfirmDialog` takes every label as a
+    prop and stays translation-free.
 - **Icon-only buttons** (`primitives/IconButton`) always show their label as a `Tooltip` on hover and
   keyboard focus (pass `tooltip` for a shorter label than the accessible name). Tooltips don't show
   on touch, so the icon must be clear without it.
@@ -304,7 +346,7 @@ Update this table when a legacy component's last consumer is migrated.
 | DatePicker, Calendar, TimeInput, DatePickerTimeInput | Headless UI + react-day-picker | `primitives/DatePicker` (date and date + time fields), `primitives/Calendar` (month grid, e.g. in a `Popover`) | ✅ |
 | DateField (ds, native inputs) | — | `primitives/DatePicker` | ✅ |
 | TimePicker | Headless UI | `primitives/DatePicker` (`withTime`) | ✅ |
-| Modal (+ `shared/ConfirmationDialog`, removed) | Headless UI | `primitives/Dialog` (base-ui), `patterns/ConfirmDialog` | ☐ |
+| Modal (+ legacy `shared/ConfirmationDialog`) | Headless UI | `primitives/Dialog` (base-ui), `patterns/ConfirmDialog` + new translated `@components/shared` `ConfirmationDialog` | ☐ |
 | Popover | Radix | `primitives/Popover` (base-ui) | ✅ |
 | Tooltip, InfoIcon | Radix | `primitives/Tooltip` (base-ui Tooltip; hover/focus labels), `primitives/InfoTip` (base-ui Popover; explanations) | ☐ |
 | DropdownMenu | base-ui | `primitives/Menu` | ✅ |

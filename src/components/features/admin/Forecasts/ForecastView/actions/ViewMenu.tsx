@@ -18,7 +18,8 @@ const ViewMenu = ({ actions, forecastId, isPublished }: ViewMenuProps) => {
 
   return (
     <RecordMenu
-      deleteMessage={t('admin.forecasts.deleteConfirm', { id: forecastId })}
+      deleteMessage={t('admin.forecasts.deleteMessage', { id: forecastId })}
+      deleteTitle={t('admin.forecasts.deleteTitle', { id: forecastId })}
       isBusy={actions.isDeleting || actions.isNavigating}
       label={t('admin.shared.actions.more')}
       onDelete={actions.onDelete}

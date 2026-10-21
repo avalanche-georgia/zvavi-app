@@ -81,6 +81,8 @@ const useForecastRowActions = (
       onDeleted?.()
     } catch (error) {
       toastWriteError('useForecastRowActions | handleDelete', error)
+      // Keeps the confirmation open, so it can be tried again
+      throw error
     }
   }
 

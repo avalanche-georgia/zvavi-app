@@ -39,7 +39,8 @@ const RowMenu = ({ actions, forecastId, isPublished, triggerRef, withPublish }: 
 
   return (
     <RecordMenu
-      deleteMessage={t('admin.forecasts.deleteConfirm', { id: forecastId })}
+      deleteMessage={t('admin.forecasts.deleteMessage', { id: forecastId })}
+      deleteTitle={t('admin.forecasts.deleteTitle', { id: forecastId })}
       isBusy={actions.isNavigating}
       label={t('admin.forecasts.actions.moreForForecast', { id: forecastId })}
       onDelete={actions.onDelete}

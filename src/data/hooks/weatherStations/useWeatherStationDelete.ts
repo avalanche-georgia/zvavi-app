@@ -17,9 +17,10 @@ const useWeatherStationDelete = () => {
   return useMutation<void, Error, WeatherStation['id']>({
     meta: { scope: 'useWeatherStationDelete' },
     mutationFn: deleteWeatherStation,
-    onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: weatherStationsKeys.list() })
-    },
+    onSuccess: () =>
+      // Returned, so the delete resolves only once the list is fresh: its confirmation
+      // spins until then, and the toast lands as the row goes
+      queryClient.invalidateQueries({ queryKey: weatherStationsKeys.list() }),
   })
 }
 

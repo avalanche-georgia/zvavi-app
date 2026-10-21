@@ -30,6 +30,8 @@ const StationRow = ({ dragHandleRef, onEdit, station }: StationRowProps) => {
       toastSuccess(t('admin.weatherStations.form.messages.deleted'))
     } catch (error) {
       toastError('StationRow | handleDelete', { error })
+      // Keeps the confirmation open, so it can be tried again
+      throw error
     }
   }
 
@@ -83,7 +85,8 @@ const StationRow = ({ dragHandleRef, onEdit, station }: StationRowProps) => {
       />
 
       <RecordMenu
-        deleteMessage={t('admin.weatherStations.deleteConfirm', { name: nameEn })}
+        deleteMessage={t('admin.weatherStations.deleteMessage', { name: nameEn })}
+        deleteTitle={t('admin.weatherStations.deleteTitle', { name: nameEn })}
         label={t('admin.weatherStations.moreForStation', { name: nameEn })}
         onDelete={handleDelete}
       >

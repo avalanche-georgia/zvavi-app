@@ -1,7 +1,5 @@
-import { useTranslations } from 'next-intl'
+import { ConfirmationDialog } from '@components/shared'
 
-import DiscardConfirm from './DiscardConfirm'
-import FooterConfirm from './FooterConfirm'
 import type { RecordSheetConfirm } from './useRecordSheet'
 
 type RecordSheetFooterProps = {
@@ -9,41 +7,41 @@ type RecordSheetFooterProps = {
   children: React.ReactNode
   confirm: RecordSheetConfirm
   deleteMessage: string
-  isDeleting: boolean
+  deleteTitle: string
   onConfirmCancel: VoidFunction
-  onDelete: VoidFunction
+  // Returns the request, so the dialog spins until it's done
+  onDelete: () => Promise<unknown> | void
   onDiscard: VoidFunction
 }
 
-// Footer of a record sheet. A pending question (delete? discard?) takes it over —
-// a second modal stacked on the sheet would fight its focus trap.
+// Footer of a record sheet. A pending question (delete? discard?) opens a dialog
+// over the sheet — rendered inside it, so it nests.
 const RecordSheetFooter = ({
   children,
   confirm,
   deleteMessage,
-  isDeleting,
+  deleteTitle,
   onConfirmCancel,
   onDelete,
   onDiscard,
-}: RecordSheetFooterProps) => {
-  const t = useTranslations()
-
-  if (confirm === 'delete') {
-    return (
-      <FooterConfirm
-        cancelLabel={t('common.actions.cancel')}
-        confirmLabel={t('common.actions.delete')}
-        isBusy={isDeleting}
-        message={deleteMessage}
-        onCancel={onConfirmCancel}
-        onConfirm={onDelete}
-      />
-    )
-  }
-
-  if (confirm) return <DiscardConfirm onCancel={onConfirmCancel} onConfirm={onDiscard} />
-
-  return children
-}
+}: RecordSheetFooterProps) => (
+  <>
+    {children}
+    <ConfirmationDialog
+      isOpen={confirm === 'delete'}
+      message={deleteMessage}
+      onCancel={onConfirmCancel}
+      onConfirm={onDelete}
+      title={deleteTitle}
+      type="delete"
+    />
+    <ConfirmationDialog
+      isOpen={confirm === 'close' || confirm === 'leave'}
+      onCancel={onConfirmCancel}
+      onConfirm={onDiscard}
+      type="discard"
+    />
+  </>
+)
 
 export default RecordSheetFooter

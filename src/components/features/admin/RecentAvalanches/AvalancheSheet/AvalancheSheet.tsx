@@ -60,7 +60,6 @@ const AvalancheSheet = ({
             avalanche={avalanche}
             confirm={confirm}
             formId={formId}
-            isDeleting={isDeleting}
             isSaving={sheet.isSaving}
             mode={mode}
             onConfirm={handleConfirm}

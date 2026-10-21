@@ -2,58 +2,86 @@
 
 import { useRef } from 'react'
 
+import { type ConfirmDialogTone, confirmDialogTones } from './confirmDialogTones'
+import useConfirmAction from './useConfirmAction'
 import { Button, Dialog } from '../../primitives'
+
+import { cn } from '@/lib/utils'
 
 type ConfirmDialogProps = {
   cancelLabel: string
-  // What the confirmation is about: a sentence, or a summary of what goes out
-  children: React.ReactNode
+  // The body: the consequence, maybe a DialogList of what it touches
+  children?: React.ReactNode
+  closeLabel: string
+  // The verb from the title: "Delete", "Publish", "Discard"
   confirmLabel: string
   isOpen: boolean
-  onConfirm: VoidFunction
+  // Return a promise for an async action (a request): Confirm spins and nothing
+  // can dismiss the dialog until it settles; resolved → closes, rejected → stays
+  // open, the caller says why (a toast). A plain function closes it right away.
+  onConfirm: () => Promise<unknown> | void
   onOpenChange: (isOpen: boolean) => void
+  // Confirm's label while the action runs: "Deleting…"
+  pendingLabel?: string
+  // The action, e.g. "Delete forecast #180" ("?" only for warning questions)
   title: string
-  tone?: 'danger' | 'default'
+  tone?: ConfirmDialogTone
 }
 
-// "Are you sure?" with room for a summary. Prefer ConfirmPopover when one
-// sentence is enough. Focus starts on Cancel so a stray Enter never confirms.
+// "Are you sure?" with the action as the title, its consequence in the body,
+// [Cancel] [Confirm] below. The tone sets the icon, the confirm button and where
+// focus starts. Inside a Sheet, render it within the sheet so it nests: Esc
+// closes only the dialog.
 const ConfirmDialog = ({
   cancelLabel,
   children,
+  closeLabel,
   confirmLabel,
   isOpen,
   onConfirm,
   onOpenChange,
+  pendingLabel,
   title,
-  tone = 'default',
+  tone = 'info',
 }: ConfirmDialogProps) => {
   const cancelRef = useRef<HTMLButtonElement>(null)
+  const confirmRef = useRef<HTMLButtonElement>(null)
+  const { button, focusesCancel, icon: Icon, role, tile } = confirmDialogTones[tone]
+  const { handleConfirm, handleOpenChange, isBusy } = useConfirmAction({
+    onConfirm,
+    onOpenChange,
+  })
 
-  const handleCancel = () => onOpenChange(false)
-
-  const handleConfirm = () => {
-    onOpenChange(false)
-    onConfirm()
-  }
+  const handleCancel = () => handleOpenChange(false)
 
   const footer = (
     <>
-      <Button ref={cancelRef} onClick={handleCancel} variant="secondary">
+      <Button ref={cancelRef} disabled={isBusy} onClick={handleCancel} variant="secondary">
         {cancelLabel}
       </Button>
-      <Button onClick={handleConfirm} variant={tone === 'danger' ? 'danger' : 'primary'}>
-        {confirmLabel}
+      <Button ref={confirmRef} isBusy={isBusy} onClick={handleConfirm} variant={button}>
+        {isBusy && pendingLabel ? pendingLabel : confirmLabel}
       </Button>
     </>
   )
 
   return (
     <Dialog
+      closeLabel={closeLabel}
       footer={footer}
-      initialFocus={cancelRef}
+      icon={
+        <span
+          aria-hidden
+          className={cn('rounded-control grid size-9 shrink-0 place-items-center', tile)}
+        >
+          <Icon className="size-5" />
+        </span>
+      }
+      initialFocus={focusesCancel ? cancelRef : confirmRef}
+      isDismissible={!isBusy}
       isOpen={isOpen}
-      onOpenChange={onOpenChange}
+      onOpenChange={handleOpenChange}
+      role={role}
       title={title}
     >
       {children}

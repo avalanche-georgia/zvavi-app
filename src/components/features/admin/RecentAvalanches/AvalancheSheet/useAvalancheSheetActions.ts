@@ -46,6 +46,7 @@ const useAvalancheSheetActions = ({
 
   const handleDeleted = () => {
     if (avalanche) onDeleted?.(avalanche.id)
+    setConfirm(null)
     leave()
   }
 
@@ -78,9 +79,8 @@ const useAvalancheSheetActions = ({
 
   const confirmActions = { close: closeWithoutSaving, delete: handleDelete, view: finishEdit }
 
-  const handleConfirm = () => {
-    if (confirm) confirmActions[confirm]()
-  }
+  // Returns the delete request, so the dialog spins until it's done
+  const handleConfirm = () => (confirm ? confirmActions[confirm]() : undefined)
 
   return {
     handleConfirm,

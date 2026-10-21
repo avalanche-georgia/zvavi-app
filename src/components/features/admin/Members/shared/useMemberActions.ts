@@ -21,7 +21,7 @@ const useMemberActions = (
   const t = useTranslations()
   const { toastError, toastSuccess } = useToast()
   const [, copyToClipboard] = useCopyToClipboard()
-  const { isPending: isDeleting, mutateAsync: deleteMember } = useMemberDelete()
+  const { mutateAsync: deleteMember } = useMemberDelete()
 
   const handleDelete = async () => {
     try {
@@ -30,6 +30,8 @@ const useMemberActions = (
       onDeleted?.()
     } catch (error) {
       toastError('useMemberActions | handleDelete', { error })
+      // Keeps the confirmation open, so it can be tried again
+      throw error
     }
   }
 
@@ -49,7 +51,6 @@ const useMemberActions = (
   }
 
   return {
-    isDeleting,
     onDelete: handleDelete,
     onLinkCopy: handleLinkCopy,
     onQrDownload: handleQrDownload,
