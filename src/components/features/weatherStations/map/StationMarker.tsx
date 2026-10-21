@@ -14,9 +14,7 @@ type StationMarkerProps = {
   // Its list row is hovered
   isHighlighted: boolean
   isSelected: boolean
-  latitude: number
   locale: string
-  longitude: number
   onSelect: (id: string | null) => void
   station: WeatherStation
 }
@@ -31,14 +29,12 @@ const StationMarker = ({
   clusterRef,
   isHighlighted,
   isSelected,
-  latitude,
   locale,
-  longitude,
   onSelect,
   station,
 }: StationMarkerProps) => {
   const markerRef = useRef<LeafletMarker>(null)
-  const { altitude, id, url } = station
+  const { altitude, id, latitude, longitude, url } = station
   const name = getStationName(station, locale)
   // Stable: a new array makes react-leaflet move the marker, which re-lays out
   // (blinks) the open popup on every list hover

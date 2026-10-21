@@ -7,7 +7,7 @@ import {
   useWeatherStationVisibilityUpdate,
 } from '@data/hooks/weatherStations'
 import type { WeatherStation } from '@domain/types'
-import { Badge, IconButton, MenuItem, Switch } from '@ds/primitives'
+import { IconButton, MenuItem, Switch } from '@ds/primitives'
 import { ExternalLink, GripVertical, Pencil } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
@@ -22,7 +22,7 @@ const StationRow = ({ dragHandleRef, onEdit, station }: StationRowProps) => {
   const { toastError, toastSuccess } = useToast()
   const { mutateAsync: deleteStation } = useWeatherStationDelete()
   const { mutate: updateVisibility } = useWeatherStationVisibilityUpdate()
-  const { altitude, id, isPublic, latitude, nameEn, nameKa, url } = station
+  const { altitude, id, isPublic, nameEn, nameKa, url } = station
 
   const handleDelete = async () => {
     try {
@@ -63,10 +63,6 @@ const StationRow = ({ dragHandleRef, onEdit, station }: StationRowProps) => {
         </button>
         {nameKa && <p className="text-caption text-muted max-w-full truncate">{nameKa}</p>}
       </div>
-
-      {latitude == null && (
-        <Badge className="shrink-0">{t('admin.weatherStations.noLocation')}</Badge>
-      )}
 
       <span className="text-copy text-body shrink-0 px-2 tabular-nums">
         {t('common.units.meters', { value: altitude })}

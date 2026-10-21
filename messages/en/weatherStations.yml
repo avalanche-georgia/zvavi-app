@@ -1,6 +1,5 @@
 weatherStations:
   description: 'Real-time data from weather stations run by us and our partners'
-  noLocation: 'Not on the map yet'
   selectStation: 'Select {name}'
   view:
     label: 'View'

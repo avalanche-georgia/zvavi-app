@@ -22,8 +22,8 @@ export type StationsMapClientProps = {
   stations: WeatherStation[]
 }
 
-// Every station with a location; opens fitted to them (Georgia when none has
-// one) and never zooms or pans out past Georgia
+// Every station; opens fitted to them (Georgia when there are none) and never
+// zooms or pans out past Georgia
 const StationsMapClient = ({
   hoveredId,
   locale,
@@ -31,15 +31,6 @@ const StationsMapClient = ({
   selectedId,
   stations,
 }: StationsMapClientProps) => {
-  const located = useMemo(
-    () =>
-      stations.flatMap(({ latitude, longitude, ...station }) =>
-        latitude != null && longitude != null
-          ? [{ latitude, longitude, station: { ...station, latitude, longitude } }]
-          : [],
-      ),
-    [stations],
-  )
   const clusterRef = useRef<LeafletClusterGroup>(null)
   const isUnmountingRef = useRef(false)
 
@@ -64,10 +55,10 @@ const StationsMapClient = ({
   // Memoised: a new bounds object would refit the map on every selection
   const bounds = useMemo(
     () =>
-      located.length
-        ? latLngBounds(located.map(({ latitude, longitude }) => [latitude, longitude]))
+      stations.length
+        ? latLngBounds(stations.map(({ latitude, longitude }) => [latitude, longitude]))
         : null,
-    [located],
+    [stations],
   )
 
   return (
@@ -89,15 +80,13 @@ const StationsMapClient = ({
         maxClusterRadius={32}
         showCoverageOnHover={false}
       >
-        {located.map(({ latitude, longitude, station }) => (
+        {stations.map((station) => (
           <StationMarker
             key={station.id}
             clusterRef={clusterRef}
             isHighlighted={station.id === hoveredId}
             isSelected={station.id === selectedId}
-            latitude={latitude}
             locale={locale}
-            longitude={longitude}
             onSelect={handleSelect}
             station={station}
           />
