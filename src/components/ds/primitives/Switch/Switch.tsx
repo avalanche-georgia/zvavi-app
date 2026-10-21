@@ -37,6 +37,14 @@ const Switch = ({
 }: SwitchProps) => {
   const descriptionId = `${useId()}-description`
 
+  // base-ui's readOnly only stops clicks on the track; the wrapping <label> still
+  // activates its hidden input and reports a change
+  const handleCheckedChange = (nextChecked: boolean) => {
+    if (isReadOnly) return
+
+    onCheckedChange(nextChecked)
+  }
+
   return (
     <div className={cn('flex flex-col', className)}>
       <div className="flex items-center gap-1.5">
@@ -58,7 +66,7 @@ const Switch = ({
               !isReadOnly &&
                 'hover:bg-tile-hover data-checked:hover:border-accent-hover data-checked:hover:bg-accent-hover',
             )}
-            onCheckedChange={onCheckedChange}
+            onCheckedChange={handleCheckedChange}
             readOnly={isReadOnly}
           >
             <BaseSwitch.Thumb className="bg-muted data-checked:bg-surface size-4 rounded-full transition-[translate,background-color] data-checked:translate-x-4" />

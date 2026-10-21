@@ -187,7 +187,10 @@ const checkFile = (file) => {
   if (isTest(file)) return
 
   forEachLine(file, lines, 'raw-palette', rawPalette, 'raw Tailwind palette class')
-  forEachLine(file, lines, 'colour-literal', colourLiteral, 'hex / rgb() / hsl() colour literal')
+  // Gallery fixture text is full of record numbers ("#180 · 12 Jan"); ESLint still bans `[#hex]` there
+  if (!isGallery(file)) {
+    forEachLine(file, lines, 'colour-literal', colourLiteral, 'hex / rgb() / hsl() colour literal')
+  }
   forEachLine(file, lines, 'arbitrary-value', arbitraryValue, (match) => `arbitrary value \`${match[0]}\``)
   forEachLine(file, lines, 'dark-theme', tokenBypass, (match) => `\`${match[1]}\` bypasses tokens`)
   forEachLine(file, lines, 'dark-theme', opacityOnToken, (match) => `opacity on a token \`${match[0].trim()}\``)
