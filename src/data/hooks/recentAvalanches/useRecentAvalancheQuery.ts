@@ -21,7 +21,7 @@ const fetchRecentAvalanche = async (
 ): Promise<AvalancheListItem | null> => {
   let query = supabase
     .from('recent_avalanches')
-    .select('*, forecast_avalanche(forecast_id)')
+    .select('*, forecast_avalanche(forecast_id, forecasts(valid_until))')
     .eq('id', id)
 
   if (regionId) {

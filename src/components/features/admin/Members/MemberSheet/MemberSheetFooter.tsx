@@ -41,13 +41,13 @@ const MemberSheetFooter = ({
   onModeChange,
 }: MemberSheetFooterProps) => {
   const t = useTranslations()
-  const { isDeleting, onDelete } = useMemberActions(member, { onDeleted })
+  const { onDelete } = useMemberActions(member, { onDeleted })
 
   return (
     <RecordSheetFooter
       confirm={confirm}
-      deleteMessage={t('admin.members.deleteConfirm', { name: getMemberName(member) })}
-      isDeleting={isDeleting}
+      deleteMessage={t('admin.members.deleteMessage', { name: getMemberName(member) })}
+      deleteTitle={t('admin.members.deleteTitle', { name: getMemberName(member) })}
       onConfirmCancel={onConfirmCancel}
       onDelete={onDelete}
       onDiscard={onDiscard}

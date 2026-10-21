@@ -1,7 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { BackLink, FooterConfirm } from '@components/features/admin/shared'
+import { BackLink } from '@components/features/admin/shared'
+import { formatAvalancheId } from '@components/features/observations'
+import { ConfirmationDialog } from '@components/shared'
 import type { AvalancheListItem } from '@data/hooks/recentAvalanches'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'src/i18n/navigation'
@@ -9,6 +11,7 @@ import { useRouter } from 'src/i18n/navigation'
 import AvalancheView from './AvalancheView'
 import ViewActions from './ViewActions'
 import { useAvalancheDelete } from '../hooks'
+import { AvalancheDeleteMessage } from '../shared'
 
 import { routes } from '@/routes'
 
@@ -25,12 +28,16 @@ const AvalancheViewPage = ({ avalanche }: { avalanche: AvalancheListItem }) => {
   const router = useRouter()
   const listHref = getListHref(avalanche)
 
-  // Asked in the footer, like in the side panel
   const [isConfirmingDelete, setIsConfirmingDelete] = useState(false)
 
-  const { handleDelete, isDeleting } = useAvalancheDelete({
+  const handleDeleted = () => {
+    setIsConfirmingDelete(false)
+    router.push(listHref)
+  }
+
+  const { handleDelete } = useAvalancheDelete({
     id: avalanche.id,
-    onSuccess: () => router.push(listHref),
+    onSuccess: handleDeleted,
     regionId: avalanche.regionId,
   })
 
@@ -47,20 +54,20 @@ const AvalancheViewPage = ({ avalanche }: { avalanche: AvalancheListItem }) => {
       <div className="rounded-card border-rule bg-surface overflow-hidden border">
         <AvalancheView avalanche={avalanche} />
         <footer className="border-rule border-t px-4 py-3">
-          {isConfirmingDelete ? (
-            <FooterConfirm
-              cancelLabel={t('common.actions.cancel')}
-              confirmLabel={t('common.actions.delete')}
-              isBusy={isDeleting}
-              message={t('admin.recentAvalanches.sheet.deleteConfirm')}
-              onCancel={handleDeleteCancel}
-              onConfirm={handleDelete}
-            />
-          ) : (
-            <ViewActions avalanche={avalanche} onDelete={handleDeleteRequest} onEdit={handleEdit} />
-          )}
+          <ViewActions avalanche={avalanche} onDelete={handleDeleteRequest} onEdit={handleEdit} />
         </footer>
       </div>
+      <ConfirmationDialog
+        isOpen={isConfirmingDelete}
+        onCancel={handleDeleteCancel}
+        onConfirm={handleDelete}
+        title={t('admin.recentAvalanches.sheet.deleteTitle', {
+          id: formatAvalancheId(avalanche.id),
+        })}
+        type="delete"
+      >
+        <AvalancheDeleteMessage avalanche={avalanche} />
+      </ConfirmationDialog>
     </>
   )
 }

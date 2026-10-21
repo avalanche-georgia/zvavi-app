@@ -1,8 +1,9 @@
 import { useState } from 'react'
 
-// Delete lives in a menu but confirms in a popover anchored to the menu trigger.
-// Open the popover only once the menu has fully closed and handed focus back to
-// the trigger — otherwise the closing menu's focus return closes the popover again.
+// Delete lives in a menu but confirms in a dialog. Open the dialog only once the
+// menu has fully closed and handed focus back to its trigger — so the closing
+// menu's focus return doesn't fight the dialog, and closing the dialog returns
+// focus to the trigger.
 const useDeleteAfterMenuClose = () => {
   const [isDeleteRequested, setIsDeleteRequested] = useState(false)
   const [isConfirmOpen, setIsConfirmOpen] = useState(false)

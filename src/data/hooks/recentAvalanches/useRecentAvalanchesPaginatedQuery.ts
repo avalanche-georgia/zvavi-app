@@ -34,7 +34,7 @@ export const fetchPaginatedAvalanches = async (params: QueryParams): Promise<Pag
 
   let avalanchesQuery = supabase
     .from('recent_avalanches')
-    .select('*, forecast_avalanche(forecast_id)', { count: 'exact' })
+    .select('*, forecast_avalanche(forecast_id, forecasts(valid_until))', { count: 'exact' })
     .eq('region_id', regionId)
     .order('created_at', { ascending: isOldestFirst })
 

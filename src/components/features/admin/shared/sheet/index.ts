@@ -1,6 +1,4 @@
 export { default as CreateEditSheets } from './CreateEditSheets'
-export { default as DiscardConfirm } from './DiscardConfirm'
-export { default as FooterConfirm } from './FooterConfirm'
 export { default as FormSheet, type FormSheetFormProps } from './FormSheet'
 export { default as FormSheetActions } from './FormSheetActions'
 export { default as RecordSheetFooter } from './RecordSheetFooter'

@@ -22,6 +22,8 @@ const useAvalancheDelete = ({ id, onSuccess, regionId }: UseAvalancheDeleteParam
       onSuccess?.()
     } catch (error) {
       toastError('useAvalancheDelete | handleDelete', { error })
+      // Keeps the confirmation open, so it can be tried again
+      throw error
     }
   }
 

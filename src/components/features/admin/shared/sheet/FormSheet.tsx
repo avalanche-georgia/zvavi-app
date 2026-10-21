@@ -1,10 +1,10 @@
 'use client'
 
 import { useId } from 'react'
+import { ConfirmationDialog } from '@components/shared'
 import { Sheet, SheetHeader } from '@ds/patterns'
 import { useTranslations } from 'next-intl'
 
-import DiscardConfirm from './DiscardConfirm'
 import FormSheetActions from './FormSheetActions'
 import useFormSheet from './useFormSheet'
 
@@ -31,7 +31,7 @@ type FormSheetProps = {
 }
 
 // A sheet that holds one form (create a record, edit a simple one). Closing with
-// unsaved input asks first, in the footer.
+// unsaved input asks first, in a dialog.
 const FormSheet = ({
   children,
   className,
@@ -48,15 +48,22 @@ const FormSheet = ({
   const handleOpenChange = (isOpen: boolean) => !isOpen && sheet.requestClose()
   const handleSuccess = (leave?: VoidFunction) => (leave ? sheet.closeTo(leave) : sheet.close())
 
-  const footer = sheet.isConfirmingClose ? (
-    <DiscardConfirm onCancel={sheet.cancelConfirm} onConfirm={sheet.close} />
-  ) : (
-    <FormSheetActions
-      formId={formId}
-      isSaving={sheet.isSaving}
-      onCancel={sheet.requestClose}
-      saveLabel={saveLabel}
-    />
+  // The dialog sits inside the sheet, so it nests: Esc closes only the dialog
+  const footer = (
+    <>
+      <FormSheetActions
+        formId={formId}
+        isSaving={sheet.isSaving}
+        onCancel={sheet.requestClose}
+        saveLabel={saveLabel}
+      />
+      <ConfirmationDialog
+        isOpen={sheet.isConfirmingClose}
+        onCancel={sheet.cancelConfirm}
+        onConfirm={sheet.close}
+        type="discard"
+      />
+    </>
   )
 
   return (
