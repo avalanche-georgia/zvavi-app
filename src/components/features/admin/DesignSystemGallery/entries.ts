@@ -39,6 +39,7 @@ import TimeFieldGallery from '@ds/primitives/TimeField/TimeField.gallery'
 import ToggleGridGallery from '@ds/primitives/ToggleGrid/ToggleGrid.gallery'
 import TooltipGallery from '@ds/primitives/Tooltip/Tooltip.gallery'
 
+import type { GalleryGroupId } from './groups'
 import ColorTokens from './tokens/ColorTokens'
 import RadiusTokens from './tokens/RadiusTokens'
 import ShadowTokens from './tokens/ShadowTokens'
@@ -46,54 +47,81 @@ import TypeScaleTokens from './tokens/TypeScaleTokens'
 
 export type GalleryEntry = {
   Demo: React.ComponentType
+  group: GalleryGroupId
   id: string
   title: string
 }
 
-// Register every ds component here (its demo lives next to it as `<Name>.gallery.tsx`)
+// Register every ds component here with its group (its demo lives next to it as `<Name>.gallery.tsx`);
+// the page sorts and groups them
 export const galleryEntries: GalleryEntry[] = [
-  { Demo: ColorTokens, id: 'colors', title: 'Colours' },
-  { Demo: TypeScaleTokens, id: 'typography', title: 'Typography' },
-  { Demo: RadiusTokens, id: 'radii', title: 'Radii' },
-  { Demo: ShadowTokens, id: 'shadows', title: 'Shadows' },
-  { Demo: ButtonGallery, id: 'button', title: 'Button' },
-  { Demo: BadgeGallery, id: 'badge', title: 'Badge' },
-  { Demo: StatusPillGallery, id: 'status-pill', title: 'StatusPill' },
-  { Demo: CountBadgeGallery, id: 'count-badge', title: 'CountBadge' },
-  { Demo: SkeletonGallery, id: 'skeleton', title: 'Skeleton' },
-  { Demo: SpinnerGallery, id: 'spinner', title: 'Spinner' },
-  { Demo: AvalancheLoaderGallery, id: 'avalanche-loader', title: 'AvalancheLoader' },
-  { Demo: LoadingStateGallery, id: 'loading-state', title: 'LoadingState' },
-  { Demo: ConfirmPopoverGallery, id: 'confirm-popover', title: 'ConfirmPopover' },
-  { Demo: ConfirmDialogGallery, id: 'confirm-dialog', title: 'ConfirmDialog' },
-  { Demo: SheetGallery, id: 'sheet', title: 'Sheet' },
-  { Demo: DrawerGallery, id: 'drawer', title: 'Drawer' },
-  { Demo: MenuGallery, id: 'menu', title: 'Menu' },
-  { Demo: IconButtonGallery, id: 'icon-button', title: 'IconButton' },
-  { Demo: PopoverGallery, id: 'popover', title: 'Popover' },
-  { Demo: InfoTipGallery, id: 'info-tip', title: 'InfoTip' },
-  { Demo: TooltipGallery, id: 'tooltip', title: 'Tooltip' },
-  { Demo: FieldGallery, id: 'field', title: 'Field & inputs' },
-  { Demo: StepperGallery, id: 'stepper', title: 'Stepper' },
-  { Demo: DatePickerGallery, id: 'date-picker', title: 'DatePicker' },
-  { Demo: DateRangePickerGallery, id: 'date-range-picker', title: 'DateRangePicker' },
-  { Demo: TimeFieldGallery, id: 'time-field', title: 'TimeField' },
-  { Demo: CalendarGallery, id: 'calendar', title: 'Calendar' },
-  { Demo: CheckboxGallery, id: 'checkbox', title: 'Checkbox' },
-  { Demo: SwitchGallery, id: 'switch', title: 'Switch' },
-  { Demo: ChipGroupGallery, id: 'chip-group', title: 'ChipGroup' },
-  { Demo: RadioGroupGallery, id: 'radio-group', title: 'RadioGroup' },
-  { Demo: ToggleGridGallery, id: 'toggle-grid', title: 'ToggleGrid' },
-  { Demo: SegmentedControlGallery, id: 'segmented-control', title: 'SegmentedControl' },
-  { Demo: RatingScaleGallery, id: 'rating-scale', title: 'RatingScale' },
-  { Demo: SelectGallery, id: 'select', title: 'Select' },
-  { Demo: PaginationGallery, id: 'pagination', title: 'Pagination' },
-  { Demo: FooterActionsGallery, id: 'footer-actions', title: 'FooterActions' },
-  { Demo: FormCardGallery, id: 'form-card', title: 'FormCard' },
-  { Demo: QuickDateFieldGallery, id: 'quick-date-field', title: 'QuickDateField' },
-  { Demo: ContentCardGallery, id: 'content-card', title: 'ContentCard' },
-  { Demo: ClampedTextGallery, id: 'clamped-text', title: 'ClampedText' },
-  { Demo: StickyActionBarGallery, id: 'sticky-action-bar', title: 'StickyActionBar' },
-  { Demo: SuccessStateGallery, id: 'success-state', title: 'SuccessState' },
-  { Demo: DataTableGallery, id: 'data-table', title: 'DataTable' },
+  { Demo: ColorTokens, group: 'foundations', id: 'colors', title: 'Colours' },
+  { Demo: TypeScaleTokens, group: 'foundations', id: 'typography', title: 'Typography' },
+  { Demo: RadiusTokens, group: 'foundations', id: 'radii', title: 'Radii' },
+  { Demo: ShadowTokens, group: 'foundations', id: 'shadows', title: 'Shadows' },
+  { Demo: ButtonGallery, group: 'actions', id: 'button', title: 'Button' },
+  { Demo: BadgeGallery, group: 'feedback', id: 'badge', title: 'Badge' },
+  { Demo: StatusPillGallery, group: 'feedback', id: 'status-pill', title: 'StatusPill' },
+  { Demo: CountBadgeGallery, group: 'feedback', id: 'count-badge', title: 'CountBadge' },
+  { Demo: SkeletonGallery, group: 'feedback', id: 'skeleton', title: 'Skeleton' },
+  { Demo: SpinnerGallery, group: 'feedback', id: 'spinner', title: 'Spinner' },
+  {
+    Demo: AvalancheLoaderGallery,
+    group: 'feedback',
+    id: 'avalanche-loader',
+    title: 'AvalancheLoader',
+  },
+  { Demo: LoadingStateGallery, group: 'feedback', id: 'loading-state', title: 'LoadingState' },
+  {
+    Demo: ConfirmPopoverGallery,
+    group: 'overlays',
+    id: 'confirm-popover',
+    title: 'ConfirmPopover',
+  },
+  { Demo: ConfirmDialogGallery, group: 'overlays', id: 'confirm-dialog', title: 'ConfirmDialog' },
+  { Demo: SheetGallery, group: 'overlays', id: 'sheet', title: 'Sheet' },
+  { Demo: DrawerGallery, group: 'overlays', id: 'drawer', title: 'Drawer' },
+  { Demo: MenuGallery, group: 'actions', id: 'menu', title: 'Menu' },
+  { Demo: IconButtonGallery, group: 'actions', id: 'icon-button', title: 'IconButton' },
+  { Demo: PopoverGallery, group: 'overlays', id: 'popover', title: 'Popover' },
+  { Demo: InfoTipGallery, group: 'overlays', id: 'info-tip', title: 'InfoTip' },
+  { Demo: TooltipGallery, group: 'overlays', id: 'tooltip', title: 'Tooltip' },
+  { Demo: FieldGallery, group: 'inputs', id: 'field', title: 'Field & inputs' },
+  { Demo: StepperGallery, group: 'inputs', id: 'stepper', title: 'Stepper' },
+  { Demo: DatePickerGallery, group: 'dates', id: 'date-picker', title: 'DatePicker' },
+  {
+    Demo: DateRangePickerGallery,
+    group: 'dates',
+    id: 'date-range-picker',
+    title: 'DateRangePicker',
+  },
+  { Demo: TimeFieldGallery, group: 'dates', id: 'time-field', title: 'TimeField' },
+  { Demo: CalendarGallery, group: 'dates', id: 'calendar', title: 'Calendar' },
+  { Demo: CheckboxGallery, group: 'inputs', id: 'checkbox', title: 'Checkbox' },
+  { Demo: SwitchGallery, group: 'inputs', id: 'switch', title: 'Switch' },
+  { Demo: ChipGroupGallery, group: 'inputs', id: 'chip-group', title: 'ChipGroup' },
+  { Demo: RadioGroupGallery, group: 'inputs', id: 'radio-group', title: 'RadioGroup' },
+  { Demo: ToggleGridGallery, group: 'inputs', id: 'toggle-grid', title: 'ToggleGrid' },
+  {
+    Demo: SegmentedControlGallery,
+    group: 'inputs',
+    id: 'segmented-control',
+    title: 'SegmentedControl',
+  },
+  { Demo: RatingScaleGallery, group: 'inputs', id: 'rating-scale', title: 'RatingScale' },
+  { Demo: SelectGallery, group: 'inputs', id: 'select', title: 'Select' },
+  { Demo: PaginationGallery, group: 'actions', id: 'pagination', title: 'Pagination' },
+  { Demo: FooterActionsGallery, group: 'actions', id: 'footer-actions', title: 'FooterActions' },
+  { Demo: FormCardGallery, group: 'inputs', id: 'form-card', title: 'FormCard' },
+  { Demo: QuickDateFieldGallery, group: 'dates', id: 'quick-date-field', title: 'QuickDateField' },
+  { Demo: ContentCardGallery, group: 'content', id: 'content-card', title: 'ContentCard' },
+  { Demo: ClampedTextGallery, group: 'content', id: 'clamped-text', title: 'ClampedText' },
+  {
+    Demo: StickyActionBarGallery,
+    group: 'actions',
+    id: 'sticky-action-bar',
+    title: 'StickyActionBar',
+  },
+  { Demo: SuccessStateGallery, group: 'feedback', id: 'success-state', title: 'SuccessState' },
+  { Demo: DataTableGallery, group: 'content', id: 'data-table', title: 'DataTable' },
 ]

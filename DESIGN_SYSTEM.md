@@ -280,7 +280,8 @@ Rules:
 - **Gallery:** every ds component is covered by a `<Name>.gallery.tsx` demo next to it (the text-like
   inputs share `Field.gallery.tsx`), covering all variants
   and states (default, hover, focus, selected, disabled, error). Register it in
-  `src/components/features/admin/DesignSystemGallery/entries.ts`. The gallery is at `/admin/ds`, linked
+  `src/components/features/admin/DesignSystemGallery/entries.ts` with its `group` (`groups.ts`); the
+  page groups the entries and sorts them by title. The gallery is at `/admin/ds`, linked
   from the admin sidebar in local dev. Demo copy is English-only fixture text; it's developer tooling.
 - **A new ds component ships complete**, before any screen uses it:
   - **Every state it can be in**: idle / empty (placeholder), filled, hover, focus-visible, open or
