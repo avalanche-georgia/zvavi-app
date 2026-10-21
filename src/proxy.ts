@@ -1,4 +1,3 @@
-import { createServerClient } from '@supabase/ssr'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import createMiddleware from 'next-intl/middleware'
@@ -6,7 +5,6 @@ import createMiddleware from 'next-intl/middleware'
 import { defaultLocale, locales } from './i18n/config'
 
 import { posthogHosts, posthogProxyPath } from '@/lib/posthog/config'
-import { reportServerError } from '@/lib/posthog/server'
 import {
   getActiveRegionIds,
   isKnownRegion,
@@ -14,34 +12,6 @@ import {
   toRegionHome,
 } from '@/lib/regionRouting'
 import { updateSession } from '@/lib/supabase/middleware'
-
-// Log suspicious requests to old forecast URL formats (non-integer IDs)
-const logSuspiciousRequest = async (request: NextRequest) => {
-  try {
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      { cookies: { getAll: () => [], setAll: () => {} } },
-    )
-
-    const { error } = await supabase.from('suspicious_requests').insert({
-      city: request.headers.get('x-vercel-ip-city') || null,
-      country: request.headers.get('x-vercel-ip-country') || null,
-      ip_address: request.headers.get('x-forwarded-for')?.split(',')[0] || null,
-      path: request.nextUrl.pathname,
-      referer: request.headers.get('referer') || null,
-      user_agent: request.headers.get('user-agent') || null,
-    })
-
-    if (error) {
-      reportServerError(new Error(error.message), {
-        scope: 'proxy | logSuspiciousRequest',
-      })
-    }
-  } catch (error) {
-    reportServerError(error, { scope: 'proxy | logSuspiciousRequest' })
-  }
-}
 
 const intlMiddleware = createMiddleware({
   defaultLocale,
@@ -62,10 +32,9 @@ const publicRootFiles = [
 
 const publicRootFilesSet = new Set(publicRootFiles.map((f) => `/${f}`))
 
-// Regex to detect the old forecast URL format: /forecasts/Gudauri_*
-// Matches: /en/forecasts/Gudauri_2024-03-27T08%3A00_MG%09
+// Forecast links from the old site, e.g. /en/forecasts/Gudauri_2024-03-27T08%3A00_MG%09
 // Does NOT match: /en/forecasts/123, /en/forecasts/current, /en/forecasts/history
-const oldForecastPattern = /^\/(en|ka)\/forecasts\/Gudauri_.*$/
+const legacyForecastPattern = /^\/(en|ka)\/forecasts\/Gudauri_/
 
 const isPosthogProxyPath = (pathname: string) =>
   pathname === posthogProxyPath || pathname.startsWith(`${posthogProxyPath}/`)
@@ -105,9 +74,14 @@ export default async function proxy(request: NextRequest) {
     return NextResponse.redirect(url, 308)
   }
 
-  // Log suspicious requests to old forecast URL formats
-  if (oldForecastPattern.test(pathname)) {
-    await logSuspiciousRequest(request)
+  // Old links are still requested, almost only by crawlers. A permanent redirect replaces them
+  // in search indexes and still takes a person with an old link to the current forecast.
+  const legacyForecastMatch = pathname.match(legacyForecastPattern)
+
+  if (legacyForecastMatch) {
+    const url = new URL(`/${legacyForecastMatch[1]}${toRegionHome('gudauri')}`, request.url)
+
+    return NextResponse.redirect(url, 308)
   }
 
   // If someone requests a locale-prefixed metadata file, redirect to the root one
