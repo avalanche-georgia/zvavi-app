@@ -18,7 +18,18 @@ export const trackingTokens = ['eyebrow'] as const
 
 export const radiusTokens = ['card', 'media', 'field', 'control', 'badge', 'sheet'] as const
 
-export const shadowTokens = ['raised', 'overlay', 'float', 'pin', 'menu', 'sheet', 'panel'] as const
+export const shadowTokens = [
+  'raised',
+  'overlay',
+  'float',
+  'pin',
+  'marker',
+  'marker-selected',
+  'marker-cluster',
+  'menu',
+  'sheet',
+  'panel',
+] as const
 
 export type FontSizeToken = (typeof fontSizeTokens)[number]
 export type RadiusToken = (typeof radiusTokens)[number]

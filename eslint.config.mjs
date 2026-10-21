@@ -14,8 +14,20 @@ const __dirname = path.dirname(__filename)
 // Raw Tailwind palette classes (`bg-gray-100`, `text-red-500`, …) — banned in the design system
 const rawPaletteClass =
   '/\\b(bg|text|border|ring|outline|fill|stroke|from|via|to|divide|placeholder|decoration|shadow|caret)-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-\\d/'
-// Arbitrary values that should be tokens: hex colours, font sizes, radii, shadows
-const arbitraryTokenValue = '/(\\[#[0-9a-fA-F]{3,8}\\]|\\b(text|rounded|shadow)-\\[)/'
+// Arbitrary values that should be tokens: hex colours, font sizes, radii, shadows, fixed control
+// sizes (`h-[42px]`). Viewport / safe-area maths (`h-[94dvh]`) has no token and stays allowed
+const arbitraryTokenValue =
+  '/(\\[#[0-9a-fA-F]{3,8}\\]|\\b(text|rounded|shadow)-\\[|\\b(w|h|size|min-w|min-h|max-w|max-h)-\\[\\d+(\\.\\d+)?(px|rem)\\])/'
+// Colour functions in class strings or styles — colours come from tokens
+const colourFunction = '/\\b(rgba?|hsla?|oklch)\\(/'
+// Shared by both ds import blocks below (a later block replaces the rule's options, not merges them)
+const dsImportPatterns = [
+  {
+    group: ['@components/ui', '@components/ui/*', '@components/features/*', '**/ui/*'],
+    message: 'ds must not depend on the legacy kit or on features.',
+  },
+  { group: ['clsx'], message: 'Use cn() from @/lib/utils.' },
+]
 
 const compat = new FlatCompat({
   allConfig: js.configs.all,
@@ -140,19 +152,18 @@ export default [
     // Design-system guardrails — see DESIGN_SYSTEM.md
     files: ['src/components/ds/**/*.{ts,tsx}'],
     rules: {
-      'no-restricted-imports': [
+      '@typescript-eslint/naming-convention': [
         'error',
-        {
-          patterns: [
-            {
-              group: ['@components/ui', '@components/ui/*', '@components/features/*', '**/ui/*'],
-              message: 'ds must not depend on the legacy kit or on features.',
-            },
-          ],
-        },
+        { format: ['camelCase', 'PascalCase'], selector: 'variable' },
       ],
+      'no-restricted-imports': ['error', { patterns: dsImportPatterns }],
       'no-restricted-syntax': [
         'error',
+        {
+          message: "Use the global React.* namespace for types, not a type import from 'react'.",
+          selector:
+            "ImportDeclaration[source.value='react'][importKind='type'], ImportDeclaration[source.value='react'] > ImportSpecifier[importKind='type']",
+        },
         ...['Literal[value={regex}]', 'TemplateElement[value.raw={regex}]'].flatMap((selector) => [
           {
             message:
@@ -164,7 +175,27 @@ export default [
               'Use a token (text-*, rounded-*, shadow-*, colour) instead of an arbitrary value.',
             selector: selector.replace('{regex}', arbitraryTokenValue),
           },
+          {
+            message: 'Use a colour token instead of rgb() / hsl().',
+            selector: selector.replace('{regex}', colourFunction),
+          },
         ]),
+      ],
+    },
+  },
+  {
+    // ds components take their strings as props; only form bindings and gallery demos may translate
+    files: ['src/components/ds/**/*.{ts,tsx}'],
+    ignores: ['src/components/ds/form/**', 'src/components/ds/**/*.gallery.tsx'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            ...dsImportPatterns,
+            { group: ['next-intl'], message: 'ds components take translated strings as props.' },
+          ],
+        },
       ],
     },
   },

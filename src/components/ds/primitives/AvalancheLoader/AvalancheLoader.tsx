@@ -1,7 +1,7 @@
 import { useId } from 'react'
 
 import styles from './AvalancheLoader.module.css'
-import { BOX, round } from './geometry'
+import { box, round } from './geometry'
 import Mountain from './Mountain'
 import Overlay from './Overlay'
 import SceneDefs from './SceneDefs'
@@ -23,11 +23,11 @@ const AvalancheLoader = ({ className, label, size = 'md' }: AvalancheLoaderProps
   const config = sizeConfigs[size]
   const uid = useId().replace(/[^a-zA-Z0-9]/g, '')
   // Line widths are given in rendered pixels and converted to the 160 × 160 drawing box
-  const scale = BOX / config.px
+  const scale = box / config.px
 
   return (
     <span className={cn('inline-flex', config.box, className)} role="status">
-      <svg aria-hidden className={cn('size-full', styles.root)} viewBox={`0 0 ${BOX} ${BOX}`}>
+      <svg aria-hidden className={cn('size-full', styles.root)} viewBox={`0 0 ${box} ${box}`}>
         <SceneDefs uid={uid} />
         <Mountain hasDetail={config.hasDetail} uid={uid} />
         <Slide dust={config.dust} puff={config.puff} uid={uid} />
