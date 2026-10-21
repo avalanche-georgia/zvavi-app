@@ -731,8 +731,8 @@ export type Database = {
           created_at: string | null
           id: string
           is_public: boolean
-          latitude: number | null
-          longitude: number | null
+          latitude: number
+          longitude: number
           name_en: string
           name_ka: string
           sort_order: number | null
@@ -744,8 +744,8 @@ export type Database = {
           created_at?: string | null
           id?: string
           is_public?: boolean
-          latitude?: number | null
-          longitude?: number | null
+          latitude: number
+          longitude: number
           name_en: string
           name_ka?: string
           sort_order?: number | null
@@ -757,8 +757,8 @@ export type Database = {
           created_at?: string | null
           id?: string
           is_public?: boolean
-          latitude?: number | null
-          longitude?: number | null
+          latitude?: number
+          longitude?: number
           name_en?: string
           name_ka?: string
           sort_order?: number | null

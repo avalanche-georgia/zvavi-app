@@ -17,9 +17,10 @@ const PartnersList = ({ partners }: { partners: Partner[] }) => {
     <>
       <TierSection>
         {mainPartners.length > 0 ? (
-          <ul className="flex flex-col gap-4">
+          // Up to two per row; one left alone in its row takes the full width
+          <ul className="grid gap-4 lg:grid-cols-2">
             {mainPartners.map((partner) => (
-              <li key={partner.id}>
+              <li key={partner.id} className="lg:last:odd:col-span-2">
                 <MainPartnerCard partner={partner} />
               </li>
             ))}

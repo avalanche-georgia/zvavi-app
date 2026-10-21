@@ -18,7 +18,6 @@ partners:
   page:
     lede: 'The forecast is free and run by volunteers. These businesses and organisations help pay for it — some also offer perks to people who use it.'
     mainPartnerTag: 'Main partner'
-    perk: '<b>Perk:</b> {benefit}'
     perkLabel: 'Perk: {benefit}'
     readMore: 'Read more'
     showLess: 'Show less'

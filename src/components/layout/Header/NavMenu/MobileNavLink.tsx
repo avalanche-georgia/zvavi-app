@@ -25,12 +25,12 @@ const MobileNavLink = ({ item, onClose }: MobileNavLinkProps) => {
       aria-current={isActive ? 'page' : undefined}
       className={cn(
         'focus-ring text-copy-lg flex items-center gap-3 px-4 py-3',
-        isActive ? 'text-ink font-semibold' : 'text-body',
+        isActive ? 'bg-accent-soft text-accent font-semibold' : 'text-body',
       )}
       href={item.path}
       onClick={onClose}
     >
-      <Icon className="text-muted size-5" icon={item.icon} />
+      <Icon className={cn('size-5', isActive ? 'text-accent' : 'text-muted')} icon={item.icon} />
       {t(item.titleId)}
     </Link>
   )

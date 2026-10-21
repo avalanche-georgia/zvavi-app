@@ -1,17 +1,17 @@
 'use client'
 
 import { useMemo } from 'react'
+import { FitInCountry } from '@components/shared/map'
 import { useTranslations } from 'next-intl'
 import { MapContainer, TileLayer, ZoomControl } from 'react-leaflet'
 
 import { computeBounds } from './computeMapBounds'
-import FitRegions from './FitRegions'
 import RegionShape from './RegionShape'
 import type { HeroRegion } from '../types'
 
 import 'leaflet/dist/leaflet.css'
 
-// Georgia, while no region has a zone yet
+// Initial view only — FitInCountry fits the zones (the whole country while none has one) right after mount
 const fallbackCenter: [number, number] = [42.1, 43.5]
 const fallbackZoom = 7
 
@@ -41,7 +41,7 @@ const RegionsMapClient = ({ highlightedId, onHover, regions }: RegionsMapProps) 
           url="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"
         />
         <ZoomControl position="bottomright" />
-        {bounds && <FitRegions bounds={bounds} />}
+        <FitInCountry bounds={bounds} />
         {regions.map((region) => (
           <RegionShape
             key={region.id}

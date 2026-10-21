@@ -9,7 +9,7 @@ export type MenuItemTone = 'danger' | 'default'
 type MenuItemProps = {
   children: React.ReactNode
   icon?: React.ReactNode
-  // Highlights the row as the current page / choice
+  // The current page / choice: the accent selected style
   isActive?: boolean
   onClick?: VoidFunction
   // Renders the row as another element, e.g. a router link: render={<Link href="…" />}
@@ -36,7 +36,7 @@ const MenuItem = ({
       'text-copy flex h-9.5 cursor-default items-center gap-2.5 rounded-lg px-2.5 outline-hidden select-none pointer-coarse:h-11',
       '[&_svg]:size-4.5 [&_svg]:shrink-0',
       toneClasses[tone],
-      isActive && 'font-semibold',
+      isActive && 'bg-accent-soft text-accent data-highlighted:bg-accent-soft font-semibold',
     )}
     onClick={onClick}
     render={render}
