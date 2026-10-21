@@ -698,8 +698,9 @@ admin:
       where: Where
 
     sheet:
-      deleteTitle: 'Delete avalanche record'
+      deleteTitle: 'Delete {id}'
       deleteMessage: 'The record is deleted permanently. This can’t be undone.'
+      deleteLinked: 'Linked to <b>{count, plural, one {# forecast} other {# forecasts}}</b>. {count, plural, one {It stays} other {They stay}}, without this avalanche:'
       next: Next record
       position: '{current} of {total}'
       previous: Previous record

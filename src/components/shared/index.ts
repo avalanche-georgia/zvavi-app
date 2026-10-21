@@ -1,5 +1,5 @@
 export { default as ButtonLink } from './ButtonLink'
-export { ConfirmationDialog, type ConfirmationType } from './ConfirmationDialog'
+export { ConfirmationDialog, ConfirmationList, type ConfirmationType } from './ConfirmationDialog'
 export { default as CopyField } from './CopyField'
 export { default as CopyFieldGroup } from './CopyFieldGroup'
 export { default as DetailsSheet } from './DetailsSheet'

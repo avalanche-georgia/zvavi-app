@@ -1,22 +1,45 @@
 'use client'
 
 import { useState } from 'react'
-import { Trash2 } from 'lucide-react'
 
-import ConfirmDialog, { type ConfirmDialogTone } from './ConfirmDialog'
-import { Button } from '../../primitives'
+import ConfirmDialog from './ConfirmDialog'
+import type { ConfirmDialogTone } from './confirmDialogTones'
+import { Button, DialogList } from '../../primitives'
 
 const noop = () => undefined
+const wait = (isFailing: boolean) =>
+  new Promise((resolve, reject) => setTimeout(isFailing ? reject : resolve, 1500))
+
+const moreLabel = (count: number) => `+${count} more`
+
+const forecasts = [60, 58, 57, 55, 51, 49, 44].map((id) => (
+  <>
+    <a className="text-accent font-semibold hover:underline" href="#confirm-dialog">
+      Forecast #{id}
+    </a>
+    <span className="text-copy-sm text-muted"> · 24 Sep 2026</span>
+  </>
+))
 
 type DemoProps = {
-  children: React.ReactNode
+  children?: React.ReactNode
   confirmLabel: string
-  icon?: typeof Trash2
+  label: string
+  onConfirm?: () => Promise<unknown> | void
+  pendingLabel?: string
   title: string
   tone: ConfirmDialogTone
 }
 
-const Demo = ({ children, confirmLabel, icon, title, tone }: DemoProps) => {
+const Demo = ({
+  children,
+  confirmLabel,
+  label,
+  onConfirm = noop,
+  pendingLabel,
+  title,
+  tone,
+}: DemoProps) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const handleOpen = () => setIsOpen(true)
@@ -24,15 +47,16 @@ const Demo = ({ children, confirmLabel, icon, title, tone }: DemoProps) => {
   return (
     <>
       <Button onClick={handleOpen} variant="secondary">
-        {tone}
+        {label}
       </Button>
       <ConfirmDialog
-        cancelLabel="Cancel"
+        cancelLabel={tone === 'warning' ? 'Keep editing' : 'Cancel'}
+        closeLabel="Close"
         confirmLabel={confirmLabel}
-        icon={icon}
         isOpen={isOpen}
-        onConfirm={noop}
+        onConfirm={onConfirm}
         onOpenChange={setIsOpen}
+        pendingLabel={pendingLabel}
         title={title}
         tone={tone}
       >
@@ -42,47 +66,42 @@ const Demo = ({ children, confirmLabel, icon, title, tone }: DemoProps) => {
   )
 }
 
-// An async action: Confirm spins until the promise settles, then the dialog closes
-const AsyncDemo = () => {
-  const [isOpen, setIsOpen] = useState(false)
-
-  const handleOpen = () => setIsOpen(true)
-  const handleDelete = () => new Promise((resolve) => setTimeout(resolve, 1500))
-
-  return (
-    <>
-      <Button onClick={handleOpen} variant="secondary">
-        danger, async
-      </Button>
-      <ConfirmDialog
-        cancelLabel="Cancel"
-        confirmLabel="Delete"
-        icon={Trash2}
-        isOpen={isOpen}
-        onConfirm={handleDelete}
-        onOpenChange={setIsOpen}
-        title="Delete forecast #180"
-        tone="danger"
-      >
-        The forecast is deleted permanently. This can’t be undone.
-      </ConfirmDialog>
-    </>
-  )
-}
-
 const ConfirmDialogGallery = () => (
   <div className="flex flex-wrap gap-2">
-    <Demo confirmLabel="Delete" icon={Trash2} title="Delete forecast #180" tone="danger">
-      The forecast and its avalanche problems are deleted permanently. Linked avalanches stay in the
-      catalog, just unlinked. This can’t be undone.
+    <Demo confirmLabel="Delete" label="danger + list" title="Delete A-0224" tone="danger">
+      <p>The record is deleted permanently. This can’t be undone.</p>
+      <p>
+        Linked to <b className="font-semibold">7 forecasts</b>. They stay, without this avalanche:
+      </p>
+      <DialogList items={forecasts} moreLabel={moreLabel} />
     </Demo>
-    <Demo confirmLabel="Discard" title="Discard changes" tone="warning">
-      Your unsaved changes will be lost.
+    <Demo confirmLabel="Discard" label="warning" title="Discard unsaved changes?" tone="warning">
+      <p>Your unsaved changes will be lost.</p>
     </Demo>
-    <Demo confirmLabel="Publish" title="Publish forecast #180" tone="info">
-      It goes live on the website and in partner apps right away.
+    <Demo confirmLabel="Publish" label="info" title="Publish forecast #61" tone="info">
+      <p>It goes live on the website and in partner apps right away.</p>
     </Demo>
-    <AsyncDemo />
+    <Demo
+      confirmLabel="Delete"
+      label="pending, succeeds"
+      onConfirm={() => wait(false)}
+      pendingLabel="Deleting…"
+      title="Delete forecast #180"
+      tone="danger"
+    >
+      <p>The forecast is deleted permanently. This can’t be undone.</p>
+    </Demo>
+    <Demo
+      confirmLabel="Delete"
+      label="pending, fails"
+      onConfirm={() => wait(true)}
+      pendingLabel="Deleting…"
+      title="Delete forecast #180"
+      tone="danger"
+    >
+      <p>The forecast is deleted permanently. This can’t be undone.</p>
+    </Demo>
+    <Demo confirmLabel="Confirm" label="no body" title="Are you sure?" tone="info" />
   </div>
 )
 

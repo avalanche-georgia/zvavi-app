@@ -21,5 +21,10 @@ export type ListFilterParams = {
 export type AvalancheListItem = Avalanche & {
   id: number
   createdAt: string
-  forecastAvalanche: { forecastId: number }[]
+  forecastAvalanche: {
+    forecastId: number
+    // The linked forecast's validity — loaded for the catalog and a single record,
+    // not for the forecast form's picker
+    forecasts?: { validUntil: string | null } | null
+  }[]
 }

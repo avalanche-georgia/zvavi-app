@@ -698,8 +698,9 @@ admin:
       where: სად
 
     sheet:
-      deleteTitle: 'ზვავის ჩანაწერის წაშლა'
+      deleteTitle: 'წაშლა: {id}'
       deleteMessage: 'ჩანაწერი სამუდამოდ წაიშლება. ამის დაბრუნება შეუძლებელია.'
+      deleteLinked: 'დაკავშირებულია <b>{count} პროგნოზთან</b>. პროგნოზები დარჩება, ამ ზვავის გარეშე:'
       next: შემდეგი ჩანაწერი
       position: '{current} / {total}'
       previous: წინა ჩანაწერი

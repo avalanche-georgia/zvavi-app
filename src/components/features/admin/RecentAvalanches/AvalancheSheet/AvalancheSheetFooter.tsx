@@ -1,3 +1,4 @@
+import { formatAvalancheId } from '@components/features/observations'
 import { ConfirmationDialog } from '@components/shared'
 import type { AvalancheListItem } from '@data/hooks/recentAvalanches'
 import { FooterActions } from '@ds/patterns'
@@ -6,6 +7,7 @@ import { useTranslations } from 'next-intl'
 
 import type { AvalancheSheetConfirm, AvalancheSheetMode } from './types'
 import { ViewActions } from '../AvalancheView'
+import { AvalancheDeleteMessage } from '../shared'
 
 type AvalancheSheetFooterProps = {
   avalanche: AvalancheListItem
@@ -42,12 +44,15 @@ const AvalancheSheetFooter = ({
     <>
       <ConfirmationDialog
         isOpen={confirm === 'delete'}
-        message={t('admin.recentAvalanches.sheet.deleteMessage')}
         onCancel={onConfirmCancel}
         onConfirm={onConfirm}
-        title={t('admin.recentAvalanches.sheet.deleteTitle')}
+        title={t('admin.recentAvalanches.sheet.deleteTitle', {
+          id: formatAvalancheId(avalanche.id),
+        })}
         type="delete"
-      />
+      >
+        <AvalancheDeleteMessage avalanche={avalanche} />
+      </ConfirmationDialog>
       <ConfirmationDialog
         isOpen={confirm === 'close' || confirm === 'view'}
         onCancel={onConfirmCancel}

@@ -17,10 +17,13 @@ const usePartnerDelete = () => {
   return useMutation<void, Error, Partner['id']>({
     meta: { scope: 'usePartnerDelete' },
     mutationFn: deletePartner,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: partnersKeys.list() })
-      queryClient.invalidateQueries({ queryKey: partnersKeys.active() })
-    },
+    onSuccess: () =>
+      // Returned, so the delete resolves only once the list is fresh: its confirmation
+      // spins until then, and the toast lands as the row goes
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: partnersKeys.list() }),
+        queryClient.invalidateQueries({ queryKey: partnersKeys.active() }),
+      ]),
   })
 }
 

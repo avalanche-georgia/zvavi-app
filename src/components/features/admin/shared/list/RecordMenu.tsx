@@ -12,7 +12,8 @@ import useDeleteAfterMenuClose from './useDeleteAfterMenuClose'
 type RecordMenuProps = {
   // The row's own items; Delete is added below them
   children: React.ReactNode
-  deleteMessage: string
+  // The delete confirmation's body: a sentence, or richer content
+  deleteMessage: React.ReactNode
   // "Delete forecast #180"
   deleteTitle: string
   // An action of the menu is still running (e.g. navigating to the editor)
@@ -75,12 +76,13 @@ const RecordMenu = ({
 
       <ConfirmationDialog
         isOpen={deleteConfirm.isConfirmOpen}
-        message={deleteMessage}
         onCancel={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
         title={deleteTitle}
         type="delete"
-      />
+      >
+        {deleteMessage}
+      </ConfirmationDialog>
     </>
   )
 }

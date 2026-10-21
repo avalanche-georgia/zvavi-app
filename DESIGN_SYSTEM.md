@@ -30,8 +30,8 @@ src/components/
 │   ├── primitives/      # Button, Badge, Checkbox, Field, FieldGroup, TextField, NumberField,
 │   │                    # Textarea, ChipGroup, ToggleGrid, SegmentedControl, Select, Stepper, InfoTip,
 │   │                    # IconButton, RatingScale, Menu, Pagination, SearchField,
-│   │                    # StatusPill, CountBadge, Skeleton, Spinner, AvalancheLoader, Dialog, RadioGroup,
-│   │                    # Popover, Calendar, DatePicker, DateRangePicker, TimeField, MultiChipGroup
+│   │                    # StatusPill, CountBadge, Skeleton, Spinner, AvalancheLoader, Dialog (+ DialogList),
+│   │                    # RadioGroup, Popover, Calendar, DatePicker, DateRangePicker, TimeField, MultiChipGroup
 │   ├── patterns/        # ClampedText, ContentCard, FormCard, StickyActionBar, SuccessState, DataTable, LoadingState,
 │   │                    # ConfirmDialog, FooterActions, Sheet, Drawer, QuickDateField
 │   └── form/            # react-hook-form bindings: FormTextField, FormTextarea, FormNumberField,
@@ -233,23 +233,33 @@ Rules:
       type="delete"
     />
     ```
-    | `type` | Icon / tone | For |
+    | `type` | Tone | For |
     |---|---|---|
-    | `delete` | trash, danger | deleting a saved record |
-    | `discard` | warning triangle, warning | dropping unsaved input (sheet close, form Cancel) |
-    | `leave` | exit, warning | leaving a page with a filled-in form |
-    | `publish` | send, info | making something public |
-    | `confirm` | info, info | anything else weighty (the default) |
+    | `delete` | danger | deleting a saved record |
+    | `discard` | warning | dropping unsaved input (sheet close, form Cancel) |
+    | `leave` | warning | leaving a page with a filled-in form |
+    | `publish` | info | making something public |
+    | `confirm` | info | anything else weighty (the default) |
 
-    Texts: the **title is the action** ("Delete forecast #180", no question mark), the **message its
-    consequence** (end irreversible ones with "This can't be undone."), the confirm button the
-    **verb** ("Delete"). `children` replace the message for rich content (e.g. a publish summary).
+    Look (`patterns/ConfirmDialog` on `primitives/Dialog`): a white header with the tone tile, the
+    title and ×; the body on `bg-canvas` between rules; a white footer with [Cancel] [Confirm]. The
+    tile names the dialog's **type, never the action** — danger octagon, warning triangle, info
+    circle. Danger is any destructive or irreversible step (delete, unpublish, revoke), with a
+    danger button; warning and info use the primary button. Focus starts on Cancel for danger and
+    warning, on Confirm for info. Below `sm` it's a bottom sheet with full-width stacked buttons,
+    primary on top.
+
+    Texts: the **title is the action** ("Delete forecast #180"; a "?" only for warning questions —
+    "Discard unsaved changes?"), the **body its consequence** (end irreversible ones with "This
+    can't be undone."; names and counts in `<b>`), the confirm button the **verb** ("Delete").
+    `children` replace the message for rich content: several paragraphs, a `ConfirmationList` of the
+    records the action touches (links + muted meta, five shown, then "+N more"), or a summary.
     Inside a Sheet render it within the sheet (e.g. in its footer) so it nests: Esc closes only the
-    dialog. For an async action, return its promise from `onConfirm`: Confirm spins and the dialog
-    can't be dismissed until it settles, then closes (stays open if it rejects — so delete handlers
-    toast the error, then rethrow). A new kind of confirmation is a new `type` in
-    `confirmationTypes.ts`, not a one-off. It's built on `patterns/ConfirmDialog` (tone, icon, all
-    labels as props), which stays translation-free.
+    dialog. For an async action, return its promise from `onConfirm`: Confirm spins with its "…ing"
+    label and nothing dismisses the dialog until it settles; resolved → closes, rejected → stays
+    open (delete handlers toast the reason, then rethrow). A new kind of confirmation is a new
+    `type` in `confirmationTypes.ts`, not a one-off. `patterns/ConfirmDialog` takes every label as a
+    prop and stays translation-free.
 - **Icon-only buttons** (`primitives/IconButton`) always show their label as a `Tooltip` on hover and
   keyboard focus (pass `tooltip` for a shorter label than the accessible name). Tooltips don't show
   on touch, so the icon must be clear without it.

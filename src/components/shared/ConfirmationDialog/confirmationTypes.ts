@@ -1,5 +1,4 @@
 import type { ConfirmDialogTone } from '@ds/patterns'
-import { Info, LogOut, type LucideIcon, Send, Trash2, TriangleAlert } from 'lucide-react'
 
 export type ConfirmationType = 'confirm' | 'delete' | 'discard' | 'leave' | 'publish'
 
@@ -8,16 +7,17 @@ type ConfirmationTypeConfig = {
   hasCancelLabel: boolean
   // A default description; without one the title has to say it all
   hasMessage: boolean
-  icon: LucideIcon
+  // An async action with its own "…ing" label while it runs
+  hasPendingLabel: boolean
   tone: ConfirmDialogTone
 }
 
 // What each kind of confirmation looks like; its default texts live under
 // common.confirmation.<type>
 export const confirmationTypes: Record<ConfirmationType, ConfirmationTypeConfig> = {
-  confirm: { hasCancelLabel: false, hasMessage: false, icon: Info, tone: 'info' },
-  delete: { hasCancelLabel: false, hasMessage: true, icon: Trash2, tone: 'danger' },
-  discard: { hasCancelLabel: true, hasMessage: true, icon: TriangleAlert, tone: 'warning' },
-  leave: { hasCancelLabel: true, hasMessage: true, icon: LogOut, tone: 'warning' },
-  publish: { hasCancelLabel: false, hasMessage: true, icon: Send, tone: 'info' },
+  confirm: { hasCancelLabel: false, hasMessage: false, hasPendingLabel: false, tone: 'info' },
+  delete: { hasCancelLabel: false, hasMessage: true, hasPendingLabel: true, tone: 'danger' },
+  discard: { hasCancelLabel: true, hasMessage: true, hasPendingLabel: false, tone: 'warning' },
+  leave: { hasCancelLabel: true, hasMessage: true, hasPendingLabel: false, tone: 'warning' },
+  publish: { hasCancelLabel: false, hasMessage: true, hasPendingLabel: false, tone: 'info' },
 }

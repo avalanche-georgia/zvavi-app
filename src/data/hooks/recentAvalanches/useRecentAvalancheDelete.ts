@@ -13,17 +13,34 @@ const deleteRecentAvalanche = async ({ id }: DeleteAvalanchePayload): Promise<vo
   if (!response.ok || !body.ok) throw new Error(body.error ?? 'failed to delete avalanche')
 }
 
+// recentAvalanchesKeys.item(…, id) or .photos(id)
+const isRecordQuery = (queryKey: readonly unknown[], id: number) =>
+  (queryKey[2] === 'item' && queryKey[3] === id) || (queryKey[1] === 'photos' && queryKey[2] === id)
+
 const useRecentAvalancheDelete = () => {
   const queryClient = useQueryClient()
 
   return useMutation<void, Error, DeleteAvalanchePayload>({
     meta: { scope: 'useRecentAvalancheDelete' },
     mutationFn: deleteRecentAvalanche,
-    onSuccess: () => {
-      // `all`, not `byRegion`: single-record queries opened without a region
-      // (direct links) and the pending-review counters must refresh too
-      queryClient.invalidateQueries({ queryKey: recentAvalanchesKeys.all })
-    },
+    onSuccess: (_data, { id }) =>
+      // Returned, so the delete resolves only once the list is fresh: its confirmation
+      // spins until then, and the toast lands as the row goes
+      // `all`, not `byRegion`: the pending-review counters must refresh too. Not the
+      // deleted record's own queries: refetching them fails, and the sheet behind
+      // the confirmation would flash an error.
+      Promise.all([
+        queryClient.invalidateQueries({
+          predicate: ({ queryKey }) => !isRecordQuery(queryKey, id),
+          queryKey: recentAvalanchesKeys.all,
+        }),
+        // …only marked stale: the next screen showing it refetches and finds it gone
+        queryClient.invalidateQueries({
+          predicate: ({ queryKey }) => isRecordQuery(queryKey, id),
+          queryKey: recentAvalanchesKeys.all,
+          refetchType: 'none',
+        }),
+      ]),
   })
 }
 

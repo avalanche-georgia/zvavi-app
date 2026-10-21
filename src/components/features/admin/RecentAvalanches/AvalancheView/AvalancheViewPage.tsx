@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { BackLink } from '@components/features/admin/shared'
+import { formatAvalancheId } from '@components/features/observations'
 import { ConfirmationDialog } from '@components/shared'
 import type { AvalancheListItem } from '@data/hooks/recentAvalanches'
 import { useTranslations } from 'next-intl'
@@ -10,6 +11,7 @@ import { useRouter } from 'src/i18n/navigation'
 import AvalancheView from './AvalancheView'
 import ViewActions from './ViewActions'
 import { useAvalancheDelete } from '../hooks'
+import { AvalancheDeleteMessage } from '../shared'
 
 import { routes } from '@/routes'
 
@@ -57,12 +59,15 @@ const AvalancheViewPage = ({ avalanche }: { avalanche: AvalancheListItem }) => {
       </div>
       <ConfirmationDialog
         isOpen={isConfirmingDelete}
-        message={t('admin.recentAvalanches.sheet.deleteMessage')}
         onCancel={handleDeleteCancel}
         onConfirm={handleDelete}
-        title={t('admin.recentAvalanches.sheet.deleteTitle')}
+        title={t('admin.recentAvalanches.sheet.deleteTitle', {
+          id: formatAvalancheId(avalanche.id),
+        })}
         type="delete"
-      />
+      >
+        <AvalancheDeleteMessage avalanche={avalanche} />
+      </ConfirmationDialog>
     </>
   )
 }

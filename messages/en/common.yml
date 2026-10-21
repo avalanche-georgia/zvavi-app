@@ -188,6 +188,7 @@ common:
       pending: 'You have not made a choice yet.'
 
   confirmation:
+    more: '+{count} more'
     confirm:
       title: 'Are you sure?'
       confirm: 'Confirm'
@@ -195,13 +196,14 @@ common:
       title: 'Delete this item'
       message: 'It is deleted permanently. This can’t be undone.'
       confirm: 'Delete'
+      pending: 'Deleting…'
     discard:
-      title: 'Discard changes'
+      title: 'Discard unsaved changes?'
       message: 'Your unsaved changes will be lost.'
       confirm: 'Discard'
       cancel: 'Keep editing'
     leave:
-      title: 'Leave this page'
+      title: 'Leave this page?'
       message: 'What you have entered will be lost.'
       confirm: 'Leave'
       cancel: 'Keep editing'

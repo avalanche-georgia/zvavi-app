@@ -1,38 +1,49 @@
 'use client'
 
 import { Dialog as BaseDialog } from '@base-ui/react/dialog'
+import { X } from 'lucide-react'
+
+import { IconButton } from '../IconButton'
 
 import { cn } from '@/lib/utils'
 
 type DialogProps = {
-  // What the decision means: a sentence, or a summary of what goes out
+  // Body: what the decision means — sentences, a list, a summary. Left out when
+  // the title says it all.
   children?: React.ReactNode
   className?: string
-  // Buttons, right-aligned: [Cancel] [Primary]. Full width on phones.
+  // Accessible name of the × in the header (also its tooltip)
+  closeLabel: string
+  // Buttons, dismiss first: [Cancel] [Primary]. Stacked, primary on top, on phones.
   footer: React.ReactNode
-  // Leading mark beside the title, e.g. ConfirmDialog's tone icon
+  // Leading mark in the header, e.g. ConfirmDialog's tone tile
   icon?: React.ReactNode
   // Element focused on open, e.g. Cancel so a stray Enter never confirms
   initialFocus?: React.RefObject<HTMLElement | null>
-  // false while closing would lose data: a click on the backdrop no longer closes it
+  // false while an action runs: the backdrop and the × no longer close it (Esc
+  // still calls onOpenChange — the caller ignores it, as ConfirmDialog does)
   isDismissible?: boolean
   isOpen: boolean
   onOpenChange: (isOpen: boolean) => void
-  // The action being decided, e.g. "Delete forecast #180"
+  // alertdialog for a destructive or data-losing question
+  role?: 'alertdialog' | 'dialog'
+  // The decision, e.g. "Delete forecast #180"
   title: string
 }
 
-// Centred modal for a decision: title (with an optional icon) and description on
-// top, the buttons in a footer strip. Esc and Cancel close it.
+// Modal for a decision: header (icon, title, ×), body on the canvas tone, footer
+// with the buttons. Centred from `sm`; a bottom sheet on phones.
 const Dialog = ({
   children,
   className,
+  closeLabel,
   footer,
   icon,
   initialFocus,
   isDismissible = true,
   isOpen,
   onOpenChange,
+  role = 'dialog',
   title,
 }: DialogProps) => (
   <BaseDialog.Root
@@ -48,22 +59,46 @@ const Dialog = ({
       />
       <BaseDialog.Popup
         className={cn(
-          'rounded-card bg-surface shadow-menu text-ink fixed top-1/2 left-1/2 z-50 flex max-h-[calc(100dvh-2rem)] w-[calc(100vw-2rem)] max-w-md -translate-1/2 flex-col overflow-hidden outline-hidden',
-          'transition-[opacity,scale] duration-150 data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0',
+          'bg-surface shadow-menu text-ink fixed z-50 flex flex-col overflow-hidden outline-hidden',
+          // Phones: a bottom sheet sliding up
+          'rounded-t-sheet inset-x-0 bottom-0 max-h-[calc(100dvh-2rem)] pb-[env(safe-area-inset-bottom)] transition-[opacity,translate] duration-200 data-ending-style:translate-y-full data-starting-style:translate-y-full',
+          // From `sm`: centred, scaling in
+          'sm:rounded-card sm:inset-x-auto sm:top-1/2 sm:bottom-auto sm:left-1/2 sm:w-[calc(100vw-2rem)] sm:max-w-120 sm:-translate-1/2 sm:pb-0 sm:transition-[opacity,scale] sm:duration-150 sm:data-ending-style:-translate-1/2 sm:data-ending-style:scale-95 sm:data-ending-style:opacity-0 sm:data-starting-style:-translate-1/2 sm:data-starting-style:scale-95 sm:data-starting-style:opacity-0',
           className,
         )}
         initialFocus={initialFocus}
+        role={role}
       >
-        <div className="flex min-h-0 gap-4 overflow-y-auto p-5">
+        <span
+          aria-hidden
+          className="bg-rule-strong mx-auto mt-2 h-1 w-9 shrink-0 rounded-full sm:hidden"
+        />
+        <div className="flex shrink-0 items-center gap-3 py-4.5 pr-4 pl-4 sm:pl-6">
           {icon}
-          <div className="flex min-w-0 flex-1 flex-col gap-1.5">
-            <BaseDialog.Title className="text-heading font-bold text-pretty">
-              {title}
-            </BaseDialog.Title>
-            {children && <div className="text-copy text-body text-pretty">{children}</div>}
-          </div>
+          <BaseDialog.Title className="text-heading min-w-0 flex-1 font-semibold text-pretty">
+            {title}
+          </BaseDialog.Title>
+          <BaseDialog.Close
+            disabled={!isDismissible}
+            render={<IconButton aria-label={closeLabel} />}
+          >
+            <X aria-hidden className="size-4.5" />
+          </BaseDialog.Close>
         </div>
-        <div className="border-rule bg-canvas flex shrink-0 justify-end gap-2 border-t px-5 py-3 *:flex-1 sm:*:flex-none">
+        {children && (
+          <BaseDialog.Description
+            className="bg-canvas border-rule text-copy text-ink flex min-h-0 flex-col gap-3 overflow-y-auto border-y p-4 text-pretty sm:px-6 sm:py-4.5"
+            render={<div />}
+          >
+            {children}
+          </BaseDialog.Description>
+        )}
+        <div
+          className={cn(
+            'flex shrink-0 flex-col-reverse gap-2 px-4 pt-3 pb-4 *:w-full sm:flex-row sm:justify-end sm:gap-2.5 sm:px-6 sm:py-4 sm:*:w-auto',
+            !children && 'border-rule border-t',
+          )}
+        >
           {footer}
         </div>
       </BaseDialog.Popup>
