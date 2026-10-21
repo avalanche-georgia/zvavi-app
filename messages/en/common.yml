@@ -186,3 +186,28 @@ common:
       granted: 'Current choice: allowed.'
       denied: 'Current choice: not allowed.'
       pending: 'You have not made a choice yet.'
+
+  confirmation:
+    more: '+{count} more'
+    confirm:
+      title: 'Are you sure?'
+      confirm: 'Confirm'
+    delete:
+      title: 'Delete this item'
+      message: 'It is deleted permanently. This can’t be undone.'
+      confirm: 'Delete'
+      pending: 'Deleting…'
+    discard:
+      title: 'Discard unsaved changes?'
+      message: 'Your unsaved changes will be lost.'
+      confirm: 'Discard'
+      cancel: 'Keep editing'
+    leave:
+      title: 'Leave this page?'
+      message: 'What you have entered will be lost.'
+      confirm: 'Leave'
+      cancel: 'Keep editing'
+    publish:
+      title: 'Publish'
+      message: 'It becomes visible to everyone right away.'
+      confirm: 'Publish'

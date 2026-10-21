@@ -55,10 +55,6 @@ admin:
       more: 'More actions'
     list:
       clearFilters: 'Clear filters'
-    sheet:
-      discard: Discard
-      discardConfirm: Discard unsaved changes?
-      keepEditing: Keep editing
 
   members:
     title:
@@ -95,7 +91,8 @@ admin:
     approve:
       title: 'Approve membership'
       description: '{name} becomes an active member with these membership dates. If they left an email, they get a confirmation with their verification link.'
-    deleteConfirm: 'Delete {name} permanently? Their QR code stops verifying.'
+    deleteTitle: 'Delete {name}'
+    deleteMessage: 'The member is deleted permanently and their QR code stops verifying. This can’t be undone.'
     form:
       sections:
         membership: 'Membership'
@@ -189,7 +186,8 @@ admin:
       activeFor: 'Active: {name}'
       moreForPartner: 'More actions for {name}'
       openWebsite: 'Open website'
-    deleteConfirm: 'Delete {name} permanently? It disappears from the public partners list.'
+    deleteTitle: 'Delete {name}'
+    deleteMessage: 'The partner is deleted permanently and disappears from the public partners list. This can’t be undone.'
     form:
       optional: 'Optional'
       sections:
@@ -289,7 +287,8 @@ admin:
       publish: 'Publish'
       publishForecast: 'Publish forecast #{id}'
       unpublish: 'Unpublish'
-    deleteConfirm: 'Delete forecast #{id}? Its avalanche problems and avalanche links are deleted too.'
+    deleteTitle: 'Delete forecast #{id}'
+    deleteMessage: 'The forecast and its avalanche problems are deleted permanently. Linked avalanches stay in the catalog, just unlinked. This can’t be undone.'
     messages:
       deleted: 'Forecast deleted.'
       linkCopied: 'Link copied'
@@ -299,7 +298,7 @@ admin:
       publishRejected: 'Not published — set a valid-until date in the future first.'
       saveRejected: 'Not saved — a published forecast must stay valid until after its publication time.'
     publishConfirm:
-      title: 'Publish forecast #{id}?'
+      title: 'Publish forecast #{id}'
       region: 'Region'
       overall: 'Overall'
       validUntil: 'Valid until'
@@ -492,9 +491,6 @@ admin:
         savedAt: 'Saved · {time}'
         save: 'Save'
         saveAndClose: 'Save & close'
-        discardConfirm: 'Discard unsaved changes?'
-        keepEditing: 'Keep editing'
-        discard: 'Discard'
       save:
         created: 'Forecast created'
         updated: 'Forecast updated'
@@ -702,7 +698,9 @@ admin:
       where: Where
 
     sheet:
-      deleteConfirm: Delete this record permanently?
+      deleteTitle: 'Delete {id}'
+      deleteMessage: 'The record is deleted permanently. This can’t be undone.'
+      deleteLinked: 'Linked to <b>{count, plural, one {# forecast} other {# forecasts}}</b>. {count, plural, one {It stays} other {They stay}}, without this avalanche:'
       next: Next record
       position: '{current} of {total}'
       previous: Previous record
@@ -733,7 +731,8 @@ admin:
     dragStation: 'Reorder {name}'
     moreForStation: 'More actions for {name}'
     openStation: 'Open station page'
-    deleteConfirm: 'Delete {name} permanently? It disappears from the public weather stations page.'
+    deleteTitle: 'Delete {name}'
+    deleteMessage: 'The station is deleted permanently and disappears from the public weather stations page. This can’t be undone.'
     public: 'Public'
     noLocation: 'No location'
     empty:

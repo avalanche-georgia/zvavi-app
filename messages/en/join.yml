@@ -38,10 +38,6 @@ joinUs:
       aboutYou: 'About you'
       agreements: 'Agreements'
     agreementRequired: 'Tick to agree before submitting.'
-    leave:
-      message: 'Leave the form? What you have entered will be lost.'
-      confirm: 'Leave'
-      stay: 'Keep editing'
     labels:
       firstName: 'First name'
       lastName: 'Last name'

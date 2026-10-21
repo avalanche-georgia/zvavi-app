@@ -17,6 +17,8 @@ const usePartnerActions = ({ id, websiteUrl }: Pick<Partner, 'id' | 'websiteUrl'
       toastSuccess(t('admin.partners.messages.deleted'))
     } catch (error) {
       toastError('usePartnerActions | handleDelete', { error })
+      // Keeps the confirmation open, so it can be tried again
+      throw error
     }
   }
 

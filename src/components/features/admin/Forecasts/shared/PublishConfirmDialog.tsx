@@ -1,9 +1,9 @@
 'use client'
 
 import { useListDates } from '@components/features/admin/shared'
+import { ConfirmationDialog } from '@components/shared'
 import { hazardLevelNamesByScale, sortedElevationZones } from '@domain/constants'
 import type { ForecastListItem, HazardLevelScale, RegionId } from '@domain/types'
-import { ConfirmDialog } from '@ds/patterns'
 import { useTranslations } from 'next-intl'
 
 type PublishConfirmDialogProps = {
@@ -24,16 +24,17 @@ const PublishConfirmDialog = ({
 }: PublishConfirmDialogProps) => {
   const t = useTranslations()
   const { formatDate, formatTime } = useListDates()
+  const handleCancel = () => onOpenChange(false)
   const levelOf = (level: HazardLevelScale) => `${t(hazardLevelNamesByScale[level])} (${level})`
 
   return (
-    <ConfirmDialog
-      cancelLabel={t('common.actions.cancel')}
+    <ConfirmationDialog
       confirmLabel={t('admin.forecasts.publishConfirm.confirm')}
       isOpen={isOpen}
+      onCancel={handleCancel}
       onConfirm={onConfirm}
-      onOpenChange={onOpenChange}
       title={t('admin.forecasts.publishConfirm.title', { id })}
+      type="publish"
     >
       <div className="flex flex-col gap-3">
         <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1">
@@ -54,7 +55,7 @@ const PublishConfirmDialog = ({
         </dl>
         <p>{t('admin.forecasts.publishConfirm.visibility')}</p>
       </div>
-    </ConfirmDialog>
+    </ConfirmationDialog>
   )
 }
 

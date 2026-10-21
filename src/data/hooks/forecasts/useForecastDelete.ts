@@ -1,13 +1,10 @@
 import { supabase } from '@data'
 import { forecastsKeys, recentAvalanchesKeys } from '@data/query-keys'
-import type { ForecastListItem } from '@domain/types'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { ForecastWriteDeniedError } from './errors'
 import type { ForecastDeleteVariables } from './types'
 import { handleSupabaseError } from '../../helpers'
-
-type DeleteContext = { previousForecasts?: ForecastListItem[] }
 
 const deleteForecast = async ({ forecastId }: ForecastDeleteVariables) => {
   const { data, error } = await supabase
@@ -21,36 +18,35 @@ const deleteForecast = async ({ forecastId }: ForecastDeleteVariables) => {
   if (!data?.length) throw new ForecastWriteDeniedError()
 }
 
+// forecastsKeys.item(…, { forecastId })
+const isForecastQuery = (queryKey: readonly unknown[], forecastId: number) =>
+  queryKey[2] === 'item' && (queryKey[3] as { forecastId?: number })?.forecastId === forecastId
+
 const useForecastDelete = () => {
   const queryClient = useQueryClient()
 
-  return useMutation<void, Error, ForecastDeleteVariables, DeleteContext>({
+  return useMutation<void, Error, ForecastDeleteVariables>({
     meta: { scope: 'useForecastDelete' },
     mutationFn: deleteForecast,
-
-    onError: (_error, { regionId }, context) => {
-      if (!context?.previousForecasts) return
-      queryClient.setQueryData(forecastsKeys.adminList(regionId), context.previousForecasts)
-    },
-    // The row leaves the list at once, so it can't be deleted twice
-    onMutate: async ({ forecastId, regionId }) => {
-      const queryKey = forecastsKeys.adminList(regionId)
-
-      await queryClient.cancelQueries({ queryKey })
-
-      const previousForecasts = queryClient.getQueryData<ForecastListItem[]>(queryKey)
-
-      queryClient.setQueryData<ForecastListItem[]>(queryKey, (forecasts) =>
-        forecasts?.filter(({ id }) => id !== forecastId),
-      )
-
-      return { previousForecasts }
-    },
-    onSettled: () => {
-      void queryClient.invalidateQueries({ queryKey: forecastsKeys.all })
-      // Its avalanche links go with it (cascade) — catalog link markers and filter
-      void queryClient.invalidateQueries({ queryKey: recentAvalanchesKeys.all })
-    },
+    onSuccess: (_data, { forecastId }) =>
+      // Returned, so the delete resolves only once the list is fresh: its confirmation
+      // spins until then, and the toast lands as the row goes
+      Promise.all([
+        // Not the deleted forecast's own query: refetching it fails, and the page
+        // behind the confirmation would flash an error
+        queryClient.invalidateQueries({
+          predicate: ({ queryKey }) => !isForecastQuery(queryKey, forecastId),
+          queryKey: forecastsKeys.all,
+        }),
+        // …only marked stale: the next screen showing it refetches and finds it gone
+        queryClient.invalidateQueries({
+          predicate: ({ queryKey }) => isForecastQuery(queryKey, forecastId),
+          queryKey: forecastsKeys.all,
+          refetchType: 'none',
+        }),
+        // Its avalanche links go with it (cascade) — catalog link markers and filter
+        queryClient.invalidateQueries({ queryKey: recentAvalanchesKeys.all }),
+      ]),
   })
 }
 

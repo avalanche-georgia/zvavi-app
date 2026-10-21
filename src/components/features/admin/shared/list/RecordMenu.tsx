@@ -1,7 +1,8 @@
 'use client'
 
 import { useRef } from 'react'
-import { ConfirmPopover, IconButton, Menu, MenuItem, MenuSeparator } from '@ds/primitives'
+import { ConfirmationDialog } from '@components/shared'
+import { IconButton, Menu, MenuItem, MenuSeparator } from '@ds/primitives'
 import { Ellipsis, LoaderIcon, Trash2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
@@ -11,7 +12,10 @@ import useDeleteAfterMenuClose from './useDeleteAfterMenuClose'
 type RecordMenuProps = {
   // The row's own items; Delete is added below them
   children: React.ReactNode
-  deleteMessage: string
+  // The delete confirmation's body: a sentence, or richer content
+  deleteMessage: React.ReactNode
+  // "Delete forecast #180"
+  deleteTitle: string
   // An action of the menu is still running (e.g. navigating to the editor)
   isBusy?: boolean
   // Accessible name of ⋯, naming the record: "More actions for forecast #180"
@@ -23,10 +27,11 @@ type RecordMenuProps = {
 }
 
 // The ⋯ menu of a record, in its table row or on its page. Delete asks first,
-// in a popover anchored to ⋯.
+// in a dialog.
 const RecordMenu = ({
   children,
   deleteMessage,
+  deleteTitle,
   isBusy = false,
   label,
   onDelete,
@@ -44,10 +49,13 @@ const RecordMenu = ({
     onOpenChangeComplete?.(isOpen)
   }
 
+  const handleDeleteCancel = () => deleteConfirm.onConfirmOpenChange(false)
+
   // In a table the row (and ⋯ with it) leaves the list — keep focus in the table
   const handleDeleteConfirm = () => {
     keepFocusInTable(menuTriggerRef.current)
-    void onDelete()
+
+    return onDelete()
   }
 
   const trigger = (
@@ -66,15 +74,15 @@ const RecordMenu = ({
         </MenuItem>
       </Menu>
 
-      <ConfirmPopover
-        anchor={menuTriggerRef}
-        cancelLabel={t('common.actions.cancel')}
-        confirmLabel={t('common.actions.delete')}
+      <ConfirmationDialog
         isOpen={deleteConfirm.isConfirmOpen}
-        message={deleteMessage}
+        onCancel={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
-        onOpenChange={deleteConfirm.onConfirmOpenChange}
-      />
+        title={deleteTitle}
+        type="delete"
+      >
+        {deleteMessage}
+      </ConfirmationDialog>
     </>
   )
 }

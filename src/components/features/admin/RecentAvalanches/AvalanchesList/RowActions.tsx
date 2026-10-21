@@ -11,6 +11,7 @@ import { useTranslations } from 'next-intl'
 
 import type { OnAvalancheOpen } from './types'
 import { getStatusToggle, useAvalancheDelete, useAvalancheStatusToggle } from '../hooks'
+import { AvalancheDeleteMessage } from '../shared'
 
 type RowActionsProps = {
   avalanche: AvalancheListItem
@@ -42,7 +43,8 @@ const RowActions = ({ avalanche, isCompact = false, onOpen, regionId }: RowActio
         </IconButton>
       )}
       <RecordMenu
-        deleteMessage={t('admin.recentAvalanches.sheet.deleteConfirm')}
+        deleteMessage={<AvalancheDeleteMessage avalanche={avalanche} />}
+        deleteTitle={t('admin.recentAvalanches.sheet.deleteTitle', { id: recordId })}
         label={t('admin.recentAvalanches.actions.moreForRecord', { id: recordId })}
         onDelete={handleDelete}
       >

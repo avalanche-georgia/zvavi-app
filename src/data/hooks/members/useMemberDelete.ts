@@ -17,9 +17,10 @@ const useMemberDelete = () => {
   return useMutation<void, Error, Member['id']>({
     meta: { scope: 'useMemberDelete' },
     mutationFn: deleteMember,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: membersKeys.list() })
-    },
+    onSuccess: () =>
+      // Returned, so the delete resolves only once the list is fresh: its confirmation
+      // spins until then, and the toast lands as the row goes
+      queryClient.invalidateQueries({ queryKey: membersKeys.list() }),
   })
 }
 

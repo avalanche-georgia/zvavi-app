@@ -39,7 +39,8 @@ const RowActions = ({ isCompact = false, member, onOpen }: RowActionsProps) => {
         </IconButton>
       )}
       <RecordMenu
-        deleteMessage={t('admin.members.deleteConfirm', { name })}
+        deleteMessage={t('admin.members.deleteMessage', { name })}
+        deleteTitle={t('admin.members.deleteTitle', { name })}
         label={t('admin.members.actions.moreForMember', { name })}
         onDelete={actions.onDelete}
       >
