@@ -26,9 +26,10 @@ const trackSizeClasses: Record<SegmentedControlSize, string> = {
   sm: 'rounded-control h-8.5',
 }
 
+// On touch screens the ::after grows a segment to a 44px target (md 40px, sm 28px visible)
 const segmentSizeClasses: Record<SegmentedControlSize, string> = {
-  md: 'text-copy rounded-lg px-2',
-  sm: 'text-caption rounded-lg px-2.5',
+  md: 'text-copy rounded-lg px-2 pointer-coarse:after:-inset-y-0.5',
+  sm: 'text-caption rounded-lg px-2.5 pointer-coarse:after:-inset-y-2',
 }
 
 // Always exactly one option active — pressing the active one keeps it
@@ -61,7 +62,8 @@ const SegmentedControl = <T extends string>({
           key={option.value}
           aria-label={option.ariaLabel}
           className={cn(
-            'focus-ring text-body flex h-full flex-1 items-center justify-center gap-1.5 whitespace-nowrap',
+            'focus-ring text-body relative flex h-full flex-1 items-center justify-center gap-1.5 whitespace-nowrap',
+            'after:absolute after:inset-x-0',
             segmentSizeClasses[size],
             'font-semibold transition-colors',
             'data-pressed:bg-surface data-pressed:text-ink data-pressed:shadow-raised',
