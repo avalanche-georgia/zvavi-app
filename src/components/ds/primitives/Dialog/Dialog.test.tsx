@@ -1,11 +1,11 @@
 import { useRef, useState } from 'react'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import Dialog from './Dialog'
 
-const Harness = ({ isDismissible = true }: { isDismissible?: boolean }) => {
+const Harness = () => {
   const [isOpen, setIsOpen] = useState(false)
   // As ConfirmDialog does. Left to default, focus lands on × and opens its tooltip,
   // which takes the first Esc
@@ -24,7 +24,6 @@ const Harness = ({ isDismissible = true }: { isDismissible?: boolean }) => {
           </button>
         }
         initialFocus={confirmRef}
-        isDismissible={isDismissible}
         isOpen={isOpen}
         onOpenChange={setIsOpen}
         title="Publish forecast #180"
@@ -67,11 +66,23 @@ describe('Dialog', () => {
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
   })
 
-  it('keeps × disabled while not dismissible', async () => {
-    render(<Harness isDismissible={false} />)
+  // Esc still reports a close; the caller ignores it while busy (as ConfirmDialog does)
+  it('while not dismissible disables × and leaves Esc to the caller', async () => {
+    const onOpenChange = vi.fn()
 
-    await userEvent.click(screen.getByRole('button', { name: 'Open' }))
+    render(
+      <Dialog
+        closeLabel="Close"
+        footer={null}
+        isDismissible={false}
+        isOpen
+        onOpenChange={onOpenChange}
+        title="Publishing…"
+      />,
+    )
+    await userEvent.keyboard('{Escape}')
 
     expect(screen.getByRole('button', { name: 'Close' })).toBeDisabled()
+    expect(onOpenChange).toHaveBeenCalledWith(false, expect.anything())
   })
 })

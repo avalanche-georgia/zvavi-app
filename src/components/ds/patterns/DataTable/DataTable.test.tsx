@@ -1,6 +1,6 @@
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import DataTable from './DataTable'
 import type { DataTableLabels } from './types'
@@ -51,6 +51,10 @@ beforeEach(() => {
       observe = () => undefined
     },
   )
+})
+
+afterEach(() => {
+  vi.unstubAllGlobals()
 })
 
 describe('DataTable', () => {

@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
@@ -25,10 +25,10 @@ describe('ConfirmPopover', () => {
 
     await userEvent.click(screen.getByRole('button', { name: 'Trash' }))
 
-    expect(await screen.findByRole('button', { name: 'Cancel' })).toHaveFocus()
+    await waitFor(() => expect(screen.getByRole('button', { name: 'Cancel' })).toHaveFocus())
     await userEvent.keyboard('{Enter}')
     expect(onConfirm).not.toHaveBeenCalled()
-    expect(screen.queryByText('Remove it?')).not.toBeInTheDocument()
+    await waitFor(() => expect(screen.queryByText('Remove it?')).not.toBeInTheDocument())
   })
 
   it('confirms, closes and returns focus to the trigger', async () => {
@@ -38,7 +38,8 @@ describe('ConfirmPopover', () => {
     await userEvent.click(await screen.findByRole('button', { name: 'Remove' }))
 
     expect(onConfirm).toHaveBeenCalledOnce()
-    expect(screen.queryByText('Remove it?')).not.toBeInTheDocument()
+    await waitFor(() => expect(screen.queryByText('Remove it?')).not.toBeInTheDocument())
+    expect(screen.getByRole('button', { name: 'Trash' })).toHaveFocus()
   })
 
   it('closes on Escape without confirming', async () => {
@@ -48,7 +49,7 @@ describe('ConfirmPopover', () => {
     await screen.findByText('Remove it?')
     await userEvent.keyboard('{Escape}')
 
-    expect(screen.queryByText('Remove it?')).not.toBeInTheDocument()
+    await waitFor(() => expect(screen.queryByText('Remove it?')).not.toBeInTheDocument())
     expect(screen.getByRole('button', { name: 'Trash' })).toHaveFocus()
     expect(onConfirm).not.toHaveBeenCalled()
   })

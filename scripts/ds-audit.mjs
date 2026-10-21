@@ -2,8 +2,9 @@
 // Usage: node scripts/ds-audit.mjs  — prints violations as `file:line`, exits 1 when there are any.
 import fs from 'node:fs'
 import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..')
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const dsDir = path.join(root, 'src/components/ds')
 const galleryEntriesFile = path.join(
   root,
@@ -17,7 +18,7 @@ const exceptions = [
   {
     check: 'dark-theme',
     file: '',
-    reason: 'Report-only until a dark theme is planned (local/ds-audit/dark-theme-blockers.md)',
+    reason: 'Report-only until a dark theme is planned: they need on-* / *-soft tokens first',
   },
   {
     check: 'inline-style',

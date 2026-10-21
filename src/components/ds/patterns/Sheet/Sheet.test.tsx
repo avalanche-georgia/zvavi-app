@@ -6,9 +6,9 @@ import Sheet from './Sheet'
 import SheetHeader from './SheetHeader'
 import SheetStepButtons from './SheetStepButtons'
 
-const steps = { hasNext: true, hasPrevious: false, onNext: vi.fn(), onPrevious: vi.fn() }
-
 const renderSheet = (onOpenChange = vi.fn()) => {
+  const steps = { hasNext: true, hasPrevious: false, onNext: vi.fn(), onPrevious: vi.fn() }
+
   render(
     <Sheet
       footer={<button type="button">Save</button>}
@@ -25,7 +25,7 @@ const renderSheet = (onOpenChange = vi.fn()) => {
     </Sheet>,
   )
 
-  return onOpenChange
+  return { onOpenChange, steps }
 }
 
 describe('Sheet', () => {
@@ -36,7 +36,7 @@ describe('Sheet', () => {
   })
 
   it('asks to close on × and on Escape', async () => {
-    const onOpenChange = renderSheet()
+    const { onOpenChange } = renderSheet()
 
     await userEvent.click(screen.getByRole('button', { name: 'Close' }))
     await userEvent.keyboard('{Escape}')
@@ -46,7 +46,7 @@ describe('Sheet', () => {
 
   // aria-disabled, not disabled: a disabled button would drop focus out of the sheet
   it('steps with the arrows and ← / →; the edge arrow is aria-disabled', async () => {
-    renderSheet()
+    const { steps } = renderSheet()
 
     expect(screen.getByRole('button', { name: 'Previous' })).toHaveAttribute(
       'aria-disabled',

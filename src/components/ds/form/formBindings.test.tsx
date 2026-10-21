@@ -8,8 +8,6 @@ import { z } from 'zod'
 
 import FormChipGroup from './FormChipGroup'
 import FormTextField from './FormTextField'
-import messages from '../../../../messages/en.json'
-
 // The hooks barrel also exports data hooks that need a Supabase client
 vi.mock('@components/hooks', async () => ({
   useFieldError: (await import('@components/hooks/useFieldError')).default,
@@ -21,6 +19,9 @@ const schema = z.object({
 })
 
 type Values = z.input<typeof schema>
+
+// Inline: the compiled bundles (messages/*.json) are generated and git-ignored
+const messages = { common: { validation: { invalid: 'Invalid value', required: 'Required' } } }
 
 const Harness = ({ onSubmit }: { onSubmit: (values: Values) => void }) => {
   const form = useForm<Values>({ defaultValues: { name: '' }, resolver: zodResolver(schema) })

@@ -1,6 +1,6 @@
 import { useId } from 'react'
 
-import RequiredMark from '../../primitives/Field/RequiredMark'
+import { RequiredMark } from '../../primitives/Field'
 
 import { cn } from '@/lib/utils'
 
