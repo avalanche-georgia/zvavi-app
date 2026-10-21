@@ -18,9 +18,10 @@ const deleteForecast = async ({ forecastId }: ForecastDeleteVariables) => {
   if (!data?.length) throw new ForecastWriteDeniedError()
 }
 
-// forecastsKeys.item(…, { forecastId })
+// forecastsKeys.item / adminItem(…, { forecastId })
 const isForecastQuery = (queryKey: readonly unknown[], forecastId: number) =>
-  queryKey[2] === 'item' && (queryKey[3] as { forecastId?: number })?.forecastId === forecastId
+  (queryKey[2] === 'item' || queryKey[2] === 'adminItem') &&
+  (queryKey[3] as { forecastId?: number })?.forecastId === forecastId
 
 const useForecastDelete = () => {
   const queryClient = useQueryClient()
