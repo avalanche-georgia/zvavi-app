@@ -28,13 +28,16 @@ const MobileNavAccordion = ({ item, onClose }: MobileNavAccordionProps) => {
         aria-expanded={isExpanded}
         className={cn(
           'focus-ring text-copy-lg flex w-full items-center justify-between px-4 py-3',
-          isActive ? 'text-ink font-semibold' : 'text-body',
+          isActive ? 'text-accent font-semibold' : 'text-body',
         )}
         onClick={() => setIsExpanded(!isExpanded)}
         type="button"
       >
         <span className="flex items-center gap-3">
-          <Icon className="text-muted size-5" icon={item.icon} />
+          <Icon
+            className={cn('size-5', isActive ? 'text-accent' : 'text-muted')}
+            icon={item.icon}
+          />
           {t(item.titleId)}
         </span>
         <Icon
@@ -54,12 +57,16 @@ const MobileNavAccordion = ({ item, onClose }: MobileNavAccordionProps) => {
                 aria-current={isChildActive ? 'page' : undefined}
                 className={cn(
                   'focus-ring text-copy flex items-center gap-3 py-2.5 pr-4 pl-12',
-                  isChildActive ? 'text-ink font-semibold' : 'text-body',
+                  isChildActive ? 'bg-accent-soft text-accent font-semibold' : 'text-body',
                 )}
                 href={child.path}
                 onClick={onClose}
               >
-                <Icon className="text-muted" icon={child.icon} size="sm" />
+                <Icon
+                  className={isChildActive ? 'text-accent' : 'text-muted'}
+                  icon={child.icon}
+                  size="sm"
+                />
                 {t(child.titleId)}
               </Link>
             )
