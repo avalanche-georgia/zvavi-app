@@ -15,7 +15,7 @@ const ScaleItem = ({ badge, badgeClassName, currentLabel, description, name }: S
   <li
     className={cn(
       'rounded-media grid grid-cols-[36px_minmax(0,1fr)] items-start gap-3 p-3',
-      currentLabel ? 'bg-surface shadow-[inset_0_0_0_2px_var(--color-accent)]' : 'bg-tile',
+      currentLabel ? 'bg-surface inset-ring-accent inset-ring-2' : 'bg-tile',
     )}
   >
     <span

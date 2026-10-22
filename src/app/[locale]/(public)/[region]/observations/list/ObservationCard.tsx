@@ -39,9 +39,7 @@ const ObservationCard = ({
         'rounded-card bg-surface grid w-full grid-cols-[48px_minmax(0,1fr)_auto] gap-3 border p-3 text-left',
         'transition-[border-color,box-shadow] duration-100',
         'focus-visible:outline-accent focus-visible:outline-2 focus-visible:outline-offset-2',
-        isSelected
-          ? 'border-primary shadow-[0_0_0_1px_var(--color-primary)]'
-          : 'border-rule hover:border-rule-strong',
+        isSelected ? 'border-primary ring-primary ring-1' : 'border-rule hover:border-rule-strong',
         className,
       )}
       onClick={() => onOpen(id)}

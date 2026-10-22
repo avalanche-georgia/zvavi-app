@@ -11,6 +11,7 @@ const MiniCompass = ({ aspects }: { aspects: Aspect[] }) => (
         key={index}
         className={cn(
           // 5px dots: no radius token is small enough (a token radius turns them into circles)
+          // eslint-disable-next-line no-restricted-syntax
           'size-1.25 rounded-[1.5px]',
           aspect === null ? 'bg-transparent' : aspects.includes(aspect) ? 'bg-accent' : 'bg-off',
         )}

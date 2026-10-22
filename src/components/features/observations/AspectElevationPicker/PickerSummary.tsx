@@ -27,7 +27,7 @@ const PickerSummary = ({ onClear, value }: PickerSummaryProps) => {
         )}
       </div>
       <button
-        className="text-accent hover:text-accent-hover focus-visible:outline-accent rounded-badge shrink-0 font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 disabled:text-[#b8b8bd]"
+        className="text-accent hover:text-accent-hover focus-visible:outline-accent rounded-badge disabled:text-disabled shrink-0 font-semibold focus-visible:outline-2 focus-visible:outline-offset-2"
         disabled={lines.length === 0}
         onClick={onClear}
         type="button"

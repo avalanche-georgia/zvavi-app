@@ -42,9 +42,7 @@ const AvalancheCard = ({ avalanche, isSelected, onOpen }: AvalancheCardProps) =>
       className={cn(
         'bg-surface rounded-card relative grid grid-cols-[48px_minmax(0,1fr)] gap-3 border p-3',
         'transition-[border-color,box-shadow] duration-100',
-        isSelected
-          ? 'border-primary shadow-[0_0_0_1px_var(--color-primary)]'
-          : 'border-rule hover:border-rule-strong',
+        isSelected ? 'border-primary ring-primary ring-1' : 'border-rule hover:border-rule-strong',
       )}
     >
       <SizeTile size={size} />

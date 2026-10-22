@@ -78,7 +78,7 @@ const DangerInfo = ({ hazardLevels, scope }: DangerInfoProps) => {
               key={scaleLevel}
               badge={scaleLevel}
               badgeClassName={cn(
-                'shadow-[inset_0_0_0_1px_rgba(0,0,0,.1)]',
+                'inset-ring inset-ring-black/10',
                 backgroundColorByHazardLevel[scaleLevel],
                 hazardTextClass(scaleLevel),
               )}

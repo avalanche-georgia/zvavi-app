@@ -33,14 +33,14 @@ const ObservationsMap = ({
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <ObservationsMapClient {...mapProps} />
 
-      <div className="border-rule text-body rounded-control bg-surface text-caption pointer-events-none absolute top-3 left-3 z-500 border px-2.5 py-1.5 shadow-[0_2px_8px_rgba(0,0,0,.06)]">
+      <div className="border-rule text-body rounded-control bg-surface text-caption shadow-overlay pointer-events-none absolute top-3 left-3 z-500 border px-2.5 py-1.5">
         {t('observations.map.onMap', { count: mapProps.points.length })}
       </div>
 
       {peekObservation && (
         <div className="absolute inset-x-3 bottom-3 z-600 lg:hidden">
           <ObservationCard
-            className="shadow-[0_8px_28px_rgba(0,0,0,.18)]"
+            className="shadow-menu"
             dateBasis={dateBasis}
             isSelected
             observation={peekObservation}

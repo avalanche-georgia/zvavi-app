@@ -33,6 +33,7 @@ export const shadowTokens = [
   'raised',
   'overlay',
   'float',
+  'fab',
   'pin',
   'marker',
   'marker-selected',

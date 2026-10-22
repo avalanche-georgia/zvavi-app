@@ -63,7 +63,7 @@ const PhotoViewer = ({ actions, index, onIndexChange, photos }: PhotoViewerProps
         {/* Background on the popup, not a Backdrop — base-ui skips backdrops of
             nested dialogs, and the viewer is often opened from another dialog */}
         <Dialog.Popup
-          className="fixed inset-0 z-60 flex flex-col bg-[#0c0c0e] pb-[env(safe-area-inset-bottom)] outline-hidden transition-[opacity,scale] duration-200 data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0"
+          className="fixed inset-0 z-60 flex flex-col bg-black pb-[env(safe-area-inset-bottom)] outline-hidden transition-[opacity,scale] duration-200 data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0"
           initialFocus={closeButtonRef}
           onKeyDown={handleKeyDown}
         >

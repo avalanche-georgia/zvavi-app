@@ -7,7 +7,8 @@ import { Tooltip } from '@ds/primitives'
 import { AtSign } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
-// Full-colour brand marks, as the platforms draw them
+// Full-colour brand marks, as the platforms draw them — their own colours, not ours
+/* eslint-disable no-restricted-syntax */
 const socialLinks = [
   {
     href: links.facebook,
@@ -39,6 +40,8 @@ const socialLinks = [
     labelKey: 'contact.links.email',
   },
 ]
+
+/* eslint-enable no-restricted-syntax */
 
 const SocialLinks = () => {
   const t = useTranslations()

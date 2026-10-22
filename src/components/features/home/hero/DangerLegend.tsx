@@ -19,7 +19,7 @@ const DangerLegend = () => {
           <i
             aria-hidden
             className={cn(
-              'rounded-bar size-2.5 shadow-[inset_0_0_0_1px_rgba(0,0,0,.1)]',
+              'rounded-bar size-2.5 inset-ring inset-ring-black/10',
               backgroundColorByHazardLevel[level],
             )}
           />

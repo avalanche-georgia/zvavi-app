@@ -36,9 +36,7 @@ const ProblemRow = ({ isSelected, onOpen, problem }: ProblemRowProps) => {
       className={cn(
         'focus-ring bg-surface rounded-card grid w-full grid-cols-[52px_minmax(0,1fr)_auto] items-center gap-3 border p-3 text-left',
         'transition-[border-color,box-shadow] duration-100',
-        isSelected
-          ? 'border-primary shadow-[0_0_0_1px_var(--color-primary)]'
-          : 'border-rule hover:border-rule-strong',
+        isSelected ? 'border-primary ring-primary ring-1' : 'border-rule hover:border-rule-strong',
       )}
       onClick={onOpen}
       type="button"

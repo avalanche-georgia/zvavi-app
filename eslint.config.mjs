@@ -18,6 +18,9 @@ const rawPaletteClass =
 // sizes (`h-[42px]`). Viewport / safe-area maths (`h-[94dvh]`) has no token and stays allowed
 const arbitraryTokenValue =
   '/(\\[#[0-9a-fA-F]{3,8}\\]|\\b(text|rounded|shadow)-\\[|\\b(w|h|size|min-w|min-h|max-w|max-h)-\\[\\d+(\\.\\d+)?(px|rem)\\])/'
+// Tailwind's default type and radius scales — not ds tokens (rounded-full / rounded-none are fine)
+const defaultScaleClass =
+  '/\\b(text-(xs|sm|base|lg|xl|[2-9]xl)|rounded-(xs|sm|md|lg|xl|2xl|3xl))\\b/'
 // Colour functions in class strings or styles — colours come from tokens
 const colourFunction = '/\\b(rgba?|hsla?|oklch)\\(/'
 // Shared by both ds import blocks below (a later block replaces the rule's options, not merges them)
@@ -145,6 +148,31 @@ export default [
           skipBlankLines: true,
           skipComments: true,
         },
+      ],
+    },
+  },
+  {
+    // Feature code speaks the ds vocabulary too (DESIGN_SYSTEM.md → Tokens). ds has its own,
+    // stricter block below; colour functions stay allowed here (map markers, brand gradients)
+    files: ['src/**/*.{ts,tsx}'],
+    ignores: ['src/components/ds/**', '**/*.test.{ts,tsx}'],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        ...['Literal[value={regex}]', 'TemplateElement[value.raw={regex}]'].flatMap((selector) => [
+          {
+            message: 'Use semantic colour tokens (ink, muted, rule, accent, …) instead of the raw palette.',
+            selector: selector.replace('{regex}', rawPaletteClass),
+          },
+          {
+            message: 'Use a ds token (text-caption, text-copy, rounded-card, …) instead of the Tailwind default scale.',
+            selector: selector.replace('{regex}', defaultScaleClass),
+          },
+          {
+            message: 'Use a token (text-*, rounded-*, shadow-*, colour) instead of an arbitrary value.',
+            selector: selector.replace('{regex}', arbitraryTokenValue),
+          },
+        ]),
       ],
     },
   },

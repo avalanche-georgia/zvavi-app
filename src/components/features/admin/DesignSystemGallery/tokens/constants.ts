@@ -86,6 +86,7 @@ export const radiusClasses: Record<RadiusToken, string> = {
 }
 
 export const shadowClasses: Record<ShadowToken, string> = {
+  fab: 'shadow-fab',
   float: 'shadow-float',
   marker: 'shadow-marker',
   'marker-cluster': 'shadow-marker-cluster',
