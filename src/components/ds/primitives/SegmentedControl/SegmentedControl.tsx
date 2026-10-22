@@ -29,8 +29,8 @@ const trackSizeClasses: Record<SegmentedControlSize, string> = {
 }
 
 // On touch screens the ::after grows a segment to a 44px target at the default track heights
-// (md 40px, sm 34px, xs 28px visible). xs's target sticks out of the track: keep xs out of overflow
-// containers
+// (md 40px, sm 34px, xs 28px visible). sm's target sticks out of the track by 2px, xs's by 5px:
+// keep both out of overflow containers
 const segmentSizeClasses: Record<SegmentedControlSize, string> = {
   md: 'text-copy rounded-item px-2 pointer-coarse:after:-inset-y-0.5',
   sm: 'text-copy-sm rounded-item px-2.5 pointer-coarse:after:-inset-y-1.25',

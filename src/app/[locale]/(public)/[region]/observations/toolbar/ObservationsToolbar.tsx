@@ -2,13 +2,13 @@
 
 import { useRef } from 'react'
 import { useIsStuck } from '@components/hooks'
+import { ListMapSwitch, type ListMapView } from '@components/shared'
 import type { ObservationDateBasis } from '@domain/types'
 import { ChipGroup, SegmentedControl, type ToggleOption } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 
 import CustomRangeFields from './CustomRangeFields'
 import SortSelect from './SortSelect'
-import ViewSwitch, { type ObservationsView } from './ViewSwitch'
 import {
   type ObservationsFilters,
   type ObservationsPeriod,
@@ -17,14 +17,15 @@ import {
 
 import { cn } from '@/lib/utils'
 
-export type { ObservationsView } from './ViewSwitch'
+// The page keeps the view state
+export type { ListMapView } from '@components/shared'
 
 type ObservationsToolbarProps = {
   filters: ObservationsFilters
   onFiltersChange: (changes: Partial<ObservationsFilters>) => void
-  onViewChange: (view: ObservationsView) => void
+  onViewChange: (view: ListMapView) => void
   ref?: React.Ref<HTMLDivElement>
-  view: ObservationsView
+  view: ListMapView
 }
 
 // Sticky under the app header on mobile, atop the list column on desktop; ruled once pinned
@@ -70,7 +71,7 @@ const ObservationsToolbar = ({
         )}
       >
         <div className="flex items-center gap-1.5">
-          <ViewSwitch onViewChange={onViewChange} view={view} />
+          <ListMapSwitch onViewChange={onViewChange} view={view} />
           <SegmentedControl
             ariaLabel={t('observations.filters.dateBasis.label')}
             className="min-w-0 flex-1 [&>button]:flex-auto [&>button]:px-2"

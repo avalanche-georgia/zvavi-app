@@ -23,7 +23,7 @@ type SelectProps<TValue extends string> = {
   disabled?: boolean
   // Accent border while it narrows something down, e.g. an applied filter
   isActive?: boolean
-  // Phones show only `leading` and the arrow (a toolbar short on room); needs `leading`
+  // Phones show only `leading` and the arrow (a toolbar short on room); ignored without `leading`
   isValueHiddenOnPhone?: boolean
   // Decorative icon before the value, e.g. a sort icon
   leading?: React.ReactNode
@@ -72,12 +72,12 @@ const Select = <TValue extends string>({
           className,
         )}
       >
-        {leading && <span className="text-muted flex shrink-0">{leading}</span>}
+        {leading != null && <span className="text-muted flex shrink-0">{leading}</span>}
         <BaseSelect.Value
           className={cn(
             'data-placeholder:text-placeholder truncate',
-            leading && 'flex-1',
-            isValueHiddenOnPhone && 'max-sm:sr-only',
+            leading != null && 'flex-1',
+            leading != null && isValueHiddenOnPhone && 'max-sm:sr-only',
           )}
           placeholder={placeholder}
         />

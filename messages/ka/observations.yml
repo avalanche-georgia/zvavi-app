@@ -6,11 +6,6 @@ observations:
     total: '{regionName} · {total} დაკვირვება'
     filtered: '{regionName} · {count} დაკვირვება {total}-დან'
 
-  view:
-    label: 'ხედი'
-    list: 'სია'
-    map: 'რუკა'
-
   filters:
     clear: 'ფილტრების გასუფთავება'
     anyDate: 'ნებისმიერი'

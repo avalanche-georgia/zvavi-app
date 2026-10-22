@@ -54,7 +54,7 @@ describe('Select', () => {
     expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
   })
 
-  // The value stays readable to screen readers; only phones hide it
+  // Hidden visually on phones only (sr-only), shown from sm
   it('can show just its icon on phones', () => {
     render(
       <Select
@@ -69,5 +69,20 @@ describe('Select', () => {
 
     expect(screen.getByTestId('sort-icon')).toBeInTheDocument()
     expect(screen.getByText('Gudauri')).toHaveClass('max-sm:sr-only')
+  })
+
+  it('keeps the value visible with a leading icon alone', () => {
+    render(
+      <Select
+        ariaLabel="Region"
+        leading={<svg />}
+        onValueChange={() => undefined}
+        options={options}
+        value="gudauri"
+      />,
+    )
+
+    expect(screen.getByText('Gudauri')).toHaveClass('flex-1')
+    expect(screen.getByText('Gudauri')).not.toHaveClass('max-sm:sr-only')
   })
 })
