@@ -2,8 +2,8 @@
 
 import { useState } from 'react'
 import { PhotoViewer } from '@components/shared'
-import { FallbackImage } from '@components/ui'
 import type { PhotoUrls } from '@domain/types'
+import { FallbackImage } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 
 import PhotoPlaceholder from './PhotoPlaceholder'

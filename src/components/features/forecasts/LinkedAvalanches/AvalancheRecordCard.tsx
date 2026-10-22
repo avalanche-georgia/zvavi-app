@@ -30,7 +30,7 @@ const AvalancheRecordCard = (props: AvalancheRecordCardProps) => {
   const meta = [getDate(avalanche), location, quantity > 1 && `×${quantity}`].filter(Boolean)
 
   return (
-    <div className="border-rule bg-surface @container grid grid-cols-[52px_minmax(0,1fr)_auto] gap-3.5 rounded-[14px] border p-3.5 @max-[620px]:grid-cols-[52px_minmax(0,1fr)]">
+    <div className="border-rule bg-surface rounded-card @container grid grid-cols-[52px_minmax(0,1fr)_auto] gap-3.5 border p-3.5 @max-[620px]:grid-cols-[52px_minmax(0,1fr)]">
       <SizeTile className="size-13 rounded-[11px]" size={size} />
       <div className="flex min-w-0 flex-col gap-1.5">
         <div className="flex flex-wrap items-center gap-1.5">

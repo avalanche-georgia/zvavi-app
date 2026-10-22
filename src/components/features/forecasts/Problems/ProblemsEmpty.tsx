@@ -6,7 +6,7 @@ const ProblemsEmpty = ({ onAdd }: { onAdd: VoidFunction }) => {
   const t = useTranslations()
 
   return (
-    <div className="border-rule-strong flex flex-col items-center gap-1.5 rounded-[14px] border-[1.5px] border-dashed p-6.5 text-center">
+    <div className="border-rule-strong rounded-card flex flex-col items-center gap-1.5 border-[1.5px] border-dashed p-6.5 text-center">
       <p className="text-copy text-ink font-semibold">
         {t('admin.forecast.editor.problems.emptyTitle')}
       </p>

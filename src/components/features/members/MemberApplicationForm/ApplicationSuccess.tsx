@@ -1,8 +1,7 @@
 'use client'
 
 import { links } from '@components/constants'
-import { CopyField, CopyFieldGroup } from '@components/shared'
-import { BrandedQRCode } from '@components/ui'
+import { BrandedQRCode, CopyField, CopyFieldGroup } from '@components/shared'
 import { SuccessState } from '@ds/patterns'
 import { Button } from '@ds/primitives'
 import { Download } from 'lucide-react'

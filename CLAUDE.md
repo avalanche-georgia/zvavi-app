@@ -48,7 +48,7 @@ src/
 │   └── routes.ts            # centralized route constants + builder helpers
 ├── components/
 │   ├── features/            # feature-specific components (admin, forecast, members, …)
-│   ├── ui/                  # reusable primitives (Button, Modal, Drawer, inputs, …)
+│   ├── ds/                  # the UI kit: primitives, patterns, form bindings (see DESIGN_SYSTEM.md)
 │   ├── layout/              # Header, Footer, AdminSidebar, PageWrapper, …
 │   ├── shared/              # cross-feature shared components
 │   ├── hooks/               # useAuth, useBoolean, …
@@ -250,7 +250,7 @@ Key v4 syntax differences from v3:
 - Class ordering enforced by `prettier-plugin-tailwindcss` — auto-sorted on format, do not reorder manually
 
 ### UI Components
-**Read [`DESIGN_SYSTEM.md`](DESIGN_SYSTEM.md) before any UI task.** New generic UI goes in `src/components/ds/` (base-ui + tokens); legacy `src/components/ui/` is frozen and migrated screen by screen. The doc holds the architecture, token rules, legacy policy and the migration tracker — update the tracker when a legacy component is removed.
+**Read [`DESIGN_SYSTEM.md`](DESIGN_SYSTEM.md) before any UI task.** New generic UI goes in `src/components/ds/` (base-ui + tokens); the legacy `src/components/ui/` kit is gone. The doc holds the architecture, token rules and component rules.
 
 **A new ds component ships complete:** every state it can be in (idle/empty, filled, hover, focus, open, selected, disabled, error, loading), our look (tokens, shared Field classes), and a `<Name>.test.tsx` next to it covering behaviour, states and basic keyboard use. Details in DESIGN_SYSTEM.md → Component rules.
 

@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
-import { Skeleton } from '@components/ui'
 import type { LinkableAvalanche } from '@data/hooks/recentAvalanches'
+import { Skeleton } from '@ds/primitives'
 
 import LinkedAvalancheCard from './LinkedAvalancheCard'
 import useLinkedRecord from './useLinkedRecord'
@@ -34,7 +34,7 @@ const LinkedAvalancheItem = ({
     if (isMissing) onMissing()
   }, [isMissing, onMissing])
 
-  if (isPending) return <Skeleton className="h-28 rounded-[14px]" />
+  if (isPending) return <Skeleton className="rounded-card h-28" />
 
   if (!avalanche) return null
 

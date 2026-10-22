@@ -197,7 +197,7 @@ const checkFile = (file) => {
   const isBinding = relative(file).startsWith('form/')
 
   if (!isBinding && !isGallery(file)) {
-    forEachLine(file, lines, 'import', /from '(@components\/ui|@components\/features)[^']*'/, 'imports legacy ui / features')
+    forEachLine(file, lines, 'import', /from '@components\/features[^']*'/, 'imports features')
     forEachLine(file, lines, 'import', /useTranslations|from 'next-intl'/, 'translations inside ds (pass strings as props)')
   }
 

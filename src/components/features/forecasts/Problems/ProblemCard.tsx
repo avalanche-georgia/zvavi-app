@@ -33,7 +33,7 @@ const ProblemCard = ({
   const typeLabel = t(`common.avalancheTypes.${type}`)
 
   return (
-    <div className="border-rule hover:border-rule-strong bg-surface group-data-dragging:border-rule-strong group-data-dragging:shadow-float @container flex flex-col gap-2 rounded-[14px] border px-3.5 pt-3 pb-3.5 transition-colors">
+    <div className="border-rule hover:border-rule-strong bg-surface group-data-dragging:border-primary group-data-dragging:shadow-float rounded-card @container flex flex-col gap-2 border px-3.5 pt-3 pb-3.5 transition-colors">
       <div className="flex items-center gap-2.5">
         <Tooltip label={t('admin.forecast.editor.problems.reorder')}>
           <button

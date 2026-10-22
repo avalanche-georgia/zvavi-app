@@ -7,13 +7,15 @@ import Dialog from './Dialog'
 import DialogList from './DialogList'
 import { Button } from '../Button'
 
-type DemoKind = 'busy' | 'list' | 'plain' | 'titleOnly'
+type DemoKind = 'busy' | 'list' | 'plain' | 'required' | 'titleOnly' | 'wide'
 
 const demoKinds: { kind: DemoKind; label: string }[] = [
   { kind: 'plain', label: 'With body' },
   { kind: 'titleOnly', label: 'Title only' },
   { kind: 'list', label: 'With a list' },
   { kind: 'busy', label: 'Not dismissible (busy)' },
+  { kind: 'wide', label: 'Wide' },
+  { kind: 'required', label: 'Close disabled, wide (disclaimer)' },
 ]
 
 const forecastLinks = [
@@ -36,11 +38,12 @@ const icon = (
 const DialogGallery = () => {
   const [openKind, setOpenKind] = useState<DemoKind | null>(null)
   const isBusy = openKind === 'busy'
+  const isRequired = openKind === 'required'
 
   const handleClose = () => setOpenKind(null)
 
   const handleOpenChange = (isOpen: boolean) => {
-    if (!isOpen && !isBusy) handleClose()
+    if (!isOpen) handleClose()
   }
 
   const footer = (
@@ -65,18 +68,30 @@ const DialogGallery = () => {
         closeLabel="Close"
         footer={footer}
         icon={icon}
-        isDismissible={!isBusy}
-        isOpen={openKind !== null}
+        isBusy={isBusy}
+        isOpen={openKind !== null && !isRequired}
+        isWide={openKind === 'wide'}
         onOpenChange={handleOpenChange}
         title={openKind === 'list' ? 'Publish 7 forecasts' : 'Publish forecast #180'}
       >
-        {openKind === 'plain' && <p>It becomes visible on the public site right away.</p>}
+        {(openKind === 'plain' || openKind === 'wide') && (
+          <p>It becomes visible on the public site right away.</p>
+        )}
         {openKind === 'list' && (
           <DialogList items={forecastLinks} moreLabel={(count) => `+${count} more`} />
         )}
         {isBusy && (
           <p>Backdrop, × and Esc do nothing until the action settles. Press Cancel to close.</p>
         )}
+      </Dialog>
+      <Dialog
+        footer={<Button onClick={handleClose}>Continue</Button>}
+        isCloseDisabled
+        isOpen={isRequired}
+        isWide
+        title="Before you continue"
+      >
+        <p>Only Continue closes it: no ×, and the backdrop and Esc do nothing.</p>
       </Dialog>
     </div>
   )

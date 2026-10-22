@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
@@ -66,23 +66,39 @@ describe('Dialog', () => {
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
   })
 
-  // Esc still reports a close; the caller ignores it while busy (as ConfirmDialog does)
-  it('while not dismissible disables × and leaves Esc to the caller', async () => {
+  it('while busy disables × and ignores Esc and the backdrop', async () => {
     const onOpenChange = vi.fn()
 
     render(
       <Dialog
         closeLabel="Close"
         footer={null}
-        isDismissible={false}
+        isBusy
         isOpen
         onOpenChange={onOpenChange}
         title="Publishing…"
       />,
     )
     await userEvent.keyboard('{Escape}')
+    await userEvent.click(document.querySelector('.bg-scrim')!)
 
     expect(screen.getByRole('button', { name: 'Close' })).toBeDisabled()
-    expect(onOpenChange).toHaveBeenCalledWith(false, expect.anything())
+    expect(onOpenChange).not.toHaveBeenCalled()
+  })
+
+  it('with close disabled has no ×: only its footer button', () => {
+    render(
+      <Dialog
+        footer={<button type="button">Continue</button>}
+        isCloseDisabled
+        isOpen
+        title="Before you go"
+      />,
+    )
+
+    const buttons = within(screen.getByRole('dialog')).getAllByRole('button')
+
+    expect(buttons).toHaveLength(1)
+    expect(buttons[0]).toHaveAccessibleName('Continue')
   })
 })

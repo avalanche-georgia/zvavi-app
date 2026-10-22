@@ -1,9 +1,9 @@
 'use client'
 
 import type { ForecastFormSchema } from '@components/features/admin/Forecasts/ForecastForm/schema'
-import { SortableItem } from '@components/ui'
 import { DragDropProvider, type DragEndEvent } from '@dnd-kit/react'
 import { isSortableOperation } from '@dnd-kit/react/sortable'
+import { SortableItem } from '@ds/patterns'
 import { useTranslations } from 'next-intl'
 import { useFormState } from 'react-hook-form'
 
@@ -47,8 +47,8 @@ const ProblemList = ({ onDelete, onEdit, onReorder, problems }: ProblemListProps
         {problems.map(({ fieldKey, ...problem }, index) => (
           <SortableItem
             key={fieldKey}
-            // Card radius, so the drop-target ring follows the card's corners
-            className="group rounded-[14px]"
+            // Card radius, so the lifted ring follows the card's corners
+            className="group rounded-card"
             id={fieldKey}
             index={index}
           >

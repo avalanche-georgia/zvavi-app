@@ -1,4 +1,3 @@
-import { TooltipProvider } from '@components/ui'
 import { QueryClientProvider } from '@data'
 import { SupabaseContextProvider } from '@domain/context'
 import { SpeedInsights } from '@vercel/speed-insights/next'
@@ -70,11 +69,9 @@ const Layout = async ({ children }: LayoutProps) => {
         <NextIntlClientProvider messages={messages}>
           <QueryClientProvider>
             <SupabaseContextProvider>
-              <TooltipProvider delayDuration={100}>
-                <Toaster position="top-center" />
-                {children}
-                <SpeedInsights />
-              </TooltipProvider>
+              <Toaster position="top-center" />
+              {children}
+              <SpeedInsights />
             </SupabaseContextProvider>
           </QueryClientProvider>
         </NextIntlClientProvider>
