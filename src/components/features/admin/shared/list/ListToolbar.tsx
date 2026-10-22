@@ -39,7 +39,7 @@ const ListToolbar = ({
         query={query}
         resetKey={searchResetKey}
       />
-      <Button onClick={onCreate} size="sm">
+      <Button onClick={onCreate}>
         <Plus aria-hidden className="size-4" />
         {createLabel}
       </Button>
