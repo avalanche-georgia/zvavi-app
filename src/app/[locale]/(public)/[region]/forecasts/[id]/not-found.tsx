@@ -1,6 +1,7 @@
 import { PageWrapper } from '@components/layout'
 import { defaultRegionId } from '@domain/constants'
-import { getButtonClasses } from '@ds/primitives'
+// The Button module directly, not the barrel: this is a server component
+import { getButtonClasses } from '@ds/primitives/Button'
 import { getTranslations } from 'next-intl/server'
 import { Link } from 'src/i18n/navigation'
 

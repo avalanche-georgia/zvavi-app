@@ -219,7 +219,11 @@ Rules:
   only its own footer button closes it. `isBusy` while its action runs: nothing closes it (× disabled,
   backdrop and Esc ignored); `ConfirmDialog` sets it for you while `onConfirm`'s promise runs.
 - **Drag to reorder** (`patterns/SortableItem`): the lifted row gets a `primary` ring; give the item
-  its row's radius (a flat list row rounds only while lifted: `data-dragging:rounded-media`).
+  its row's radius (a flat list row rounds only while lifted: `data-dragging:rounded-media`). There is
+  no separate drop-target highlight: the other rows move aside as you drag, which shows the spot.
+- **Sheets vs dialogs when closing**: `Sheet`'s `isDismissible={false}` only stops the backdrop and
+  swipe (unsaved input; ✕ / Cancel / Esc then ask to discard). `Dialog`'s `isBusy` / `isCloseDisabled`
+  block every way out, Esc included.
 - **Confirming a destructive action** (delete, remove, unlink, discard unsaved input) — always asked,
   never replaced by an Undo, never swapped inline into a footer or action bar:
   - An icon button that asks (trash / unlink on a card): wrap it in `primitives/ConfirmPopover`. It

@@ -66,8 +66,7 @@ describe('Dialog', () => {
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
   })
 
-  // Esc still reports a close; the caller ignores it while busy (as ConfirmDialog does)
-  it('while busy disables × and ignores Esc', async () => {
+  it('while busy disables × and ignores Esc and the backdrop', async () => {
     const onOpenChange = vi.fn()
 
     render(
@@ -81,12 +80,13 @@ describe('Dialog', () => {
       />,
     )
     await userEvent.keyboard('{Escape}')
+    await userEvent.click(document.querySelector('.bg-scrim')!)
 
     expect(screen.getByRole('button', { name: 'Close' })).toBeDisabled()
     expect(onOpenChange).not.toHaveBeenCalled()
   })
 
-  it('with close disabled has no × and ignores Esc', async () => {
+  it('with close disabled has no ×: only its footer button', () => {
     render(
       <Dialog
         footer={<button type="button">Continue</button>}
@@ -95,7 +95,6 @@ describe('Dialog', () => {
         title="Before you go"
       />,
     )
-    await userEvent.keyboard('{Escape}')
 
     const buttons = within(screen.getByRole('dialog')).getAllByRole('button')
 
