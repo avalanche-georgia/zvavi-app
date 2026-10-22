@@ -7,8 +7,8 @@ const TermsOfServiceContent = () => {
   const t = useTranslations()
 
   return (
-    <div className="space-y-6 text-sm text-gray-700">
-      <p className="text-xs text-gray-500">{t('legal.terms.lastUpdated')}</p>
+    <div className="text-body text-copy space-y-6">
+      <p className="text-caption text-muted">{t('legal.terms.lastUpdated')}</p>
       <p>{t('legal.terms.intro')}</p>
 
       <LegalSection
@@ -58,7 +58,7 @@ const TermsOfServiceContent = () => {
       />
 
       <section className="space-y-2">
-        <h3 className="text-lg font-semibold">{t('legal.terms.contact.title')}</h3>
+        <h3 className="text-heading text-ink font-semibold">{t('legal.terms.contact.title')}</h3>
         <p>
           {t.rich('legal.terms.contact.description', {
             email: (chunks) => (

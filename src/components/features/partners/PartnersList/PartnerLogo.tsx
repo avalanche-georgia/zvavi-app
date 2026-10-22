@@ -11,7 +11,7 @@ const PartnerLogo = ({ className, logoUrl, name }: PartnerLogoProps) => (
   // eslint-disable-next-line @next/next/no-img-element
   <img
     alt={name ? `${name} logo` : ''}
-    className={cn('size-full rounded-xl object-contain', className)}
+    className={cn('rounded-media size-full object-contain', className)}
     src={logoUrl}
   />
 )

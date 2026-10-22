@@ -8,7 +8,7 @@ import ListSection from './ListSection'
 // The course sign-up link inside the translated sentence
 const courseLink = (chunks: React.ReactNode) => (
   <NewTabLink
-    className="focus-ring text-accent hover:text-accent-hover rounded-sm underline underline-offset-2"
+    className="focus-ring text-accent hover:text-accent-hover rounded-badge underline underline-offset-2"
     href={links.courseForm}
   >
     {chunks}

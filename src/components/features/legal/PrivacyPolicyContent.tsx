@@ -7,8 +7,8 @@ const PrivacyPolicyContent = () => {
   const t = useTranslations()
 
   return (
-    <div className="space-y-6 text-sm text-gray-700">
-      <p className="text-xs text-gray-500">{t('legal.privacy.lastUpdated')}</p>
+    <div className="text-body text-copy space-y-6">
+      <p className="text-caption text-muted">{t('legal.privacy.lastUpdated')}</p>
       <p>{t('legal.privacy.intro')}</p>
 
       <LegalSection
@@ -63,7 +63,7 @@ const PrivacyPolicyContent = () => {
       />
 
       <section className="space-y-2">
-        <h3 className="text-lg font-semibold">{t('legal.privacy.rights.title')}</h3>
+        <h3 className="text-heading text-ink font-semibold">{t('legal.privacy.rights.title')}</h3>
         <p>{t('legal.privacy.rights.description')}</p>
         <ul className="list-inside list-disc space-y-1 pl-2">
           {(t.raw('legal.privacy.rights.items') as string[]).map((item) => (

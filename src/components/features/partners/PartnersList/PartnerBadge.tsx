@@ -21,7 +21,7 @@ const PartnerBadge = ({ className, partner }: PartnerBadgeProps) => {
   const { hasDetails, trackBadgeClick } = usePartnerTracking(partner)
 
   const badgeClassName = cn(
-    'flex size-24 flex-none items-center justify-center rounded-2xl bg-gray-100 p-2',
+    'flex size-24 flex-none items-center rounded-card bg-tile justify-center p-2',
     className,
   )
 

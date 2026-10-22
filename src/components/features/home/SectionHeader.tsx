@@ -15,7 +15,7 @@ const SectionHeader = ({ href, id, linkLabel, title }: SectionHeaderProps) => (
       {title}
     </h2>
     <Link
-      className="focus-ring text-accent hover:text-accent-hover text-copy ml-auto flex items-center gap-0.5 rounded-sm font-semibold"
+      className="focus-ring text-accent hover:text-accent-hover text-copy rounded-badge ml-auto flex items-center gap-0.5 font-semibold"
       href={href}
     >
       {linkLabel}

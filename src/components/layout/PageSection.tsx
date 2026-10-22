@@ -5,7 +5,7 @@ type PageSectionProps = {
 
 const PageSection = ({ children, title }: PageSectionProps) => (
   <section>
-    <h2 className="mb-2 text-2xl font-semibold">{title}</h2>
+    <h2 className="text-title mb-2 font-semibold">{title}</h2>
     {children}
   </section>
 )

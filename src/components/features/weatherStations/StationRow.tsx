@@ -50,7 +50,7 @@ const StationRow = ({ isSelected, locale, onHover, onSelect, station }: StationR
       </button>
 
       <a
-        className="focus-ring text-copy text-accent hover:text-accent-hover flex shrink-0 items-center gap-1.5 rounded-sm hover:underline"
+        className="focus-ring text-copy text-accent hover:text-accent-hover rounded-badge flex shrink-0 items-center gap-1.5 hover:underline"
         href={url}
         rel="noopener noreferrer"
         target="_blank"

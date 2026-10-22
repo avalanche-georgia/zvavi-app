@@ -68,7 +68,7 @@ const PhotoViewer = ({ actions, index, onIndexChange, photos }: PhotoViewerProps
           onKeyDown={handleKeyDown}
         >
           <div className="flex items-center justify-between px-2 pt-[max(0.5rem,env(safe-area-inset-top))] pb-2 text-white">
-            <Dialog.Title className="pl-3 text-sm font-medium tabular-nums">
+            <Dialog.Title className="text-copy pl-3 font-medium tabular-nums">
               {t('common.photoViewer.counter', {
                 current: selectedIndex + 1,
                 total: photos.length,

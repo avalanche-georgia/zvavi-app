@@ -8,7 +8,7 @@ type LegalSectionProps = {
 
 const LegalSection = ({ description, details, items, title }: LegalSectionProps) => (
   <section className="space-y-2">
-    <h3 className="text-lg font-semibold">{title}</h3>
+    <h3 className="text-heading text-ink font-semibold">{title}</h3>
     <p>{description}</p>
     {items && items.length > 0 && (
       <ul className="list-inside list-disc space-y-1 pl-2">

@@ -40,7 +40,7 @@ const CalendarMonthRow = ({
         aria-label={formatMonth(monthId)}
         aria-pressed={isActive}
         className={cn(
-          'focus-ring text-caption rounded-xs text-left leading-5 font-semibold uppercase transition-colors',
+          'focus-ring text-caption rounded-bar text-left leading-5 font-semibold uppercase transition-colors',
           isActive ? 'text-accent' : 'text-muted hover:text-ink',
         )}
         onClick={() => onMonthToggle(monthId)}

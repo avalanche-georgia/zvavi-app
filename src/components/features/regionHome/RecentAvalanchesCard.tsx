@@ -16,7 +16,7 @@ type RecentAvalanchesCardProps = {
 }
 
 const linkClasses =
-  'focus-ring text-accent hover:text-accent-hover text-copy-sm rounded-sm font-semibold'
+  'focus-ring text-accent hover:text-accent-hover text-copy-sm rounded-badge font-semibold'
 
 // The latest avalanche observations of the region, with ways to see all of
 // them or report one
