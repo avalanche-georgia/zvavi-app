@@ -30,7 +30,7 @@ const CurrentForecastHeading = ({
     <div className="min-w-0">
       <p
         className={cn(
-          'text-caption flex items-center gap-1.5 font-semibold tracking-wide uppercase',
+          'text-caption tracking-eyebrow flex items-center gap-1.5 font-semibold uppercase',
           isExpired ? 'text-warning' : 'text-success',
         )}
       >

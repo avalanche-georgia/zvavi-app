@@ -40,7 +40,8 @@ const ObservationsMap = ({
       {peekObservation && (
         <div className="absolute inset-x-3 bottom-3 z-600 lg:hidden">
           <ObservationCard
-            className="shadow-menu"
+            // Floating over the map: the shadow sets it apart, no selection ring
+            className="shadow-menu ring-0"
             dateBasis={dateBasis}
             isSelected
             observation={peekObservation}

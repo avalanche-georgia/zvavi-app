@@ -155,7 +155,7 @@
   --shadow-float: 0 6px 24px -8px rgb(0 0 0 / 0.12);
   --shadow-menu: 0 12px 32px -8px rgb(0 0 0 / 0.18);
   /* Floating action button: a glow in the primary colour */
-  --shadow-fab: 0 6px 18px -4px rgb(255 111 0 / 0.5);
+  --shadow-fab: 0 6px 18px -4px color-mix(in oklab, var(--color-primary) 50%, transparent);
   --shadow-pin: 0 2px 6px rgb(0 0 0 / 0.35);
   --shadow-marker: 0 0 0 2px var(--color-surface), 0 1px 3px rgb(0 0 0 / 0.3);
   --shadow-marker-selected: 0 0 0 3px var(--color-surface), 0 2px 6px rgb(0 0 0 / 0.35);
@@ -295,14 +295,14 @@ button {
   cursor: pointer;
 }
 
-/* ds focus ring — apply to every interactive element */
-/* Dashed outline of an empty slot or drop zone (no problems yet, add a photo). 1.5px: dashes at
-   1px are too faint, at 2px too heavy. Colour comes from a border-* colour class */
+/* Dashed outline of an empty slot or placeholder (no problems yet, add a photo, become a partner).
+   1.5px: dashes at 1px are too faint, at 2px too heavy. Colour comes from a border-* colour class */
 @utility border-slot {
   border-width: 1.5px;
   border-style: dashed;
 }
 
+/* ds focus ring — apply to every interactive element */
 @utility focus-ring {
   &:focus-visible {
     outline: 2px solid var(--color-accent);

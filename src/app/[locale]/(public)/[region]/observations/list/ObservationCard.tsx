@@ -50,7 +50,7 @@ const ObservationCard = ({
       <SizeTile size={size} />
 
       <div className="min-w-0">
-        <div className="text-copy-lg flex items-baseline gap-1.5 font-semibold tracking-[-.01em]">
+        <div className="text-copy-lg flex items-baseline gap-1.5 font-semibold">
           {t(`common.avalancheTypes.${type}`)}
           {quantity > 1 && (
             <span className="bg-tile text-muted rounded-badge text-caption px-1.5 py-0.5 font-semibold">

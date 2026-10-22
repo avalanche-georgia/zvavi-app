@@ -14,7 +14,7 @@ export const statusConfig: Record<MemberStatus, StatusConfig> = {
     icon: 'check',
   },
   expired: {
-    // danger/10 until a danger-soft token exists (dark-theme-blockers D10), as in ConfirmDialog
+    // danger/10 until a danger-soft token exists, as in ConfirmDialog (it sits on a white card)
     badge: { bg: 'bg-danger/10', text: 'text-danger' },
     header: { bg: 'bg-danger' },
     icon: 'xMark',

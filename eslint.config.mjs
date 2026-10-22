@@ -14,13 +14,15 @@ const __dirname = path.dirname(__filename)
 // Raw Tailwind palette classes (`bg-gray-100`, `text-red-500`, …) — banned in the design system
 const rawPaletteClass =
   '/\\b(bg|text|border|ring|outline|fill|stroke|from|via|to|divide|placeholder|decoration|shadow|caret)-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-\\d/'
-// Arbitrary values that should be tokens: hex colours, font sizes, radii, shadows, fixed control
+// Arbitrary values that should be tokens: hex colours, font sizes, radii, shadows, tracking, line
+// heights, fixed control
 // sizes (`h-[42px]`). Viewport / safe-area maths (`h-[94dvh]`) has no token and stays allowed
 const arbitraryTokenValue =
-  '/(\\[#[0-9a-fA-F]{3,8}\\]|\\b(text|rounded|shadow)-\\[|\\b(w|h|size|min-w|min-h|max-w|max-h)-\\[\\d+(\\.\\d+)?(px|rem)\\])/'
-// Tailwind's default type and radius scales — not ds tokens (rounded-full / rounded-none are fine)
+  '/(\\[#[0-9a-fA-F]{3,8}\\]|\\b(text|rounded|shadow|tracking|leading)-\\[|\\b(w|h|size|min-w|min-h|max-w|max-h)-\\[\\d+(\\.\\d+)?(px|rem)\\])/'
+// Tailwind's default type, radius (any side, and bare `rounded`), shadow and tracking scales — not ds
+// tokens. rounded-full / rounded-none, shadow-none and tracking-normal are fine
 const defaultScaleClass =
-  '/\\b(text-(xs|sm|base|lg|xl|[2-9]xl)|rounded-(xs|sm|md|lg|xl|2xl|3xl))\\b/'
+  '/\\b(text-(xs|sm|base|lg|xl|[2-9]xl)|rounded(-(t|b|l|r|s|e|tl|tr|bl|br|ss|se|es|ee))?-(xs|sm|md|lg|xl|2xl|3xl)|shadow-(xs|sm|md|lg|xl|2xl)|tracking-(tighter|tight|wide|wider|widest))\\b|\\brounded(?=[\\s"\'`!]|$)/'
 // Colour functions in class strings or styles — colours come from tokens
 const colourFunction = '/\\b(rgba?|hsla?|oklch)\\(/'
 // Shared by both ds import blocks below (a later block replaces the rule's options, not merges them)
@@ -152,8 +154,8 @@ export default [
     },
   },
   {
-    // Feature code speaks the ds vocabulary too (DESIGN_SYSTEM.md → Tokens). ds has its own,
-    // stricter block below; colour functions stay allowed here (map markers, brand gradients)
+    // Feature code speaks the ds vocabulary too (DESIGN_SYSTEM.md → Tokens): the ds bans minus colour
+    // functions (map markers, brand gradients). ds has its own block below with all of them
     files: ['src/**/*.{ts,tsx}'],
     ignores: ['src/components/ds/**', '**/*.test.{ts,tsx}'],
     rules: {
@@ -165,7 +167,7 @@ export default [
             selector: selector.replace('{regex}', rawPaletteClass),
           },
           {
-            message: 'Use a ds token (text-caption, text-copy, rounded-card, …) instead of the Tailwind default scale.',
+            message: 'Use a ds token (text-caption, rounded-card, shadow-menu, tracking-eyebrow, …) instead of the Tailwind default scale.',
             selector: selector.replace('{regex}', defaultScaleClass),
           },
           {
@@ -197,6 +199,11 @@ export default [
             message:
               'Use semantic colour tokens (ink, muted, rule, accent, …) instead of the raw palette.',
             selector: selector.replace('{regex}', rawPaletteClass),
+          },
+          {
+            message:
+              'Use a ds token (text-caption, rounded-card, shadow-menu, tracking-eyebrow, …) instead of the Tailwind default scale.',
+            selector: selector.replace('{regex}', defaultScaleClass),
           },
           {
             message:

@@ -9,6 +9,11 @@ type ToastData = {
 // Border in the toast's own colour, faded: no -border tokens for accent / success yet
 const infoClassName = 'bg-accent-soft! border border-current/25! text-accent!'
 
+// Opaque: a toast floats over maps and lists. The danger tint mixed into white until a danger-soft
+// token exists
+const errorClassName =
+  'bg-[color-mix(in_oklab,var(--color-danger)_10%,var(--color-surface))]! border border-danger-border! text-danger!'
+
 const useToast = () => {
   const t = useTranslations()
 
@@ -20,7 +25,7 @@ const useToast = () => {
     }
 
     return toast.error(message ?? t('common.messages.error'), {
-      className: 'bg-danger/10! border border-danger-border! text-danger!',
+      className: errorClassName,
     })
   }
 

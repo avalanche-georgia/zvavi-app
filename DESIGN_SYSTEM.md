@@ -104,7 +104,7 @@ them.
 |---|---|---|
 | **Semantic colour** | text `ink`, `body`, `muted`, `placeholder`, `disabled` · lines `rule`, `rule-strong` · surfaces `surface`, `canvas`, `tile`, `tile-hover`, `off`, `map` · brand `primary(-hover/-soft/-ink)`, `brand-blue` · `accent(-hover/-soft)` · status `danger`, `danger-border`, `success`, `success-soft`, `warning`, `warning-soft`, `alert-ink` · domain `hazard-*`, `size-*`, `pin-*` (map pins by size) | `text-ink`, `bg-surface`, `border-rule`, … |
 | **Type scale** | `display` 34, `title-lg` 28, `title` 24, `title-sm` 22, `heading` 17, `copy-lg` 15, `copy` 14, `copy-sm` 13, `caption` 12.5, `micro` 10.5. Line-height (whole pixels, so nothing below lands on a fraction of a pixel) and tracking are part of the token | `text-heading`, … |
-| **Line height** | `prose` 1.6 — reading text (summaries, descriptions, conditions): 24px on `copy-lg`. Everything else takes the type token's own line height | `leading-prose` |
+| **Line height** | `prose` 1.6 — reading text (summaries, descriptions, conditions): 24px on `copy-lg`. Everything else takes the type token's own line height. Write it after the size: a later `text-*` in `cn()` drops it | `leading-prose` |
 | **Letter spacing** | `eyebrow` 0.06em (uppercase eyebrows and small labels) | `tracking-eyebrow` |
 | **Radii** | `card` 16, `media` 12, `field` 11, `control` 10, `item` 8 (options and segments inside a padded popup or track), `badge` 5, `bar` 3 (bar-scale segments), `sheet` 20 (pills use `rounded-full`) | `rounded-card`, … |
 | **Shadows** | `raised` (segmented thumb), `overlay` (map buttons), `float` (sticky bar), `fab` (report button glow), `pin`, `menu`, `sheet` (bottom sheet), `panel` (desktop side panel) | `shadow-float`, … |
@@ -127,8 +127,9 @@ Rules:
   - no hex values
   - no arbitrary sizes like `text-[13px]`
 - If a value is missing, add a token rather than an arbitrary value.
-- **Feature code too:** ESLint applies the same bans (raw palette, Tailwind's default type and radius
-  scales, arbitrary token values) to all of `src`. A value that truly has no token gets an
+- **Feature code too:** ESLint applies the ds bans to all of `src` (raw palette; Tailwind's default type,
+  radius, shadow and tracking scales; arbitrary token values) except colour functions, which map markers
+  and brand marks need; tests are exempt. A value that truly has no token gets an
   `eslint-disable-next-line no-restricted-syntax` with the reason in a comment beside it.
 - **Accent** (`--color-accent`, brand blue `#0c5aa6`) is the one colour for selected states, links,
   text buttons and focus rings.

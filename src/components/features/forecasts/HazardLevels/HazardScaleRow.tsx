@@ -39,7 +39,11 @@ const HazardScaleRow = ({ label, zone }: HazardScaleRowProps) => {
         {option.value}
       </span>
       <span
-        className={cn('text-micro font-medium @max-[800px]:hidden', !isSelected && 'text-muted')}
+        className={cn(
+          // Normal line height: long labels wrap to two lines in Georgian
+          'text-micro leading-normal font-medium @max-[800px]:hidden',
+          !isSelected && 'text-muted',
+        )}
       >
         {option.label}
       </span>

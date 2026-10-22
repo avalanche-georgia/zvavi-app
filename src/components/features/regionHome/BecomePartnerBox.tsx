@@ -11,7 +11,7 @@ const BecomePartnerBox = () => {
   const t = useTranslations()
 
   return (
-    <div className="border-rule-strong bg-canvas rounded-card flex flex-col items-center gap-2.5 border-2 border-dashed px-4 py-4.5 text-center">
+    <div className="border-rule-strong bg-canvas rounded-card border-slot flex flex-col items-center gap-2.5 px-4 py-4.5 text-center">
       <b className="text-heading font-bold">{t('partners.main.placeholder.title')}</b>
       <p className="text-body text-copy-sm max-w-95 text-pretty">
         {t('regionHome.partners.pitch')}

@@ -21,7 +21,7 @@ const SectionRail = () => {
       aria-label={t('admin.forecast.editor.rail.title')}
       className="sticky top-25 hidden self-start @min-[1180px]:block"
     >
-      <p className="text-caption text-muted mb-2 font-semibold tracking-wide uppercase">
+      <p className="text-caption text-muted tracking-eyebrow mb-2 font-semibold uppercase">
         {t('admin.forecast.editor.rail.title')}
       </p>
       <ul className="flex flex-col">

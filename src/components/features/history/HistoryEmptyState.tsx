@@ -29,7 +29,7 @@ const HistoryEmptyState = ({
   return (
     <div
       className={cn(
-        'rounded-card border-rule-strong flex flex-col items-center gap-2 border border-dashed px-5 py-10 text-center',
+        'rounded-card border-rule-strong border-slot flex flex-col items-center gap-2 px-5 py-10 text-center',
         className,
       )}
     >

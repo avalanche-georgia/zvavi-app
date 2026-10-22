@@ -23,7 +23,7 @@ const UserProfileView = ({ profile }: { profile: UserProfile }) => {
 
       {about && (
         <div className="flex flex-col gap-1">
-          <p className="text-caption text-muted font-semibold tracking-wider uppercase">
+          <p className="text-caption text-muted tracking-eyebrow font-semibold uppercase">
             {t('admin.profile.form.labels.about')}
           </p>
           <p className="text-copy text-body whitespace-pre-wrap">{about}</p>

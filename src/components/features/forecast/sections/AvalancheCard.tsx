@@ -47,7 +47,7 @@ const AvalancheCard = ({ avalanche, isSelected, onOpen }: AvalancheCardProps) =>
     >
       <SizeTile size={size} />
       <div className="min-w-0">
-        <div className="text-ink text-copy-lg flex items-baseline gap-1.5 font-semibold tracking-[-.01em]">
+        <div className="text-ink text-copy-lg flex items-baseline gap-1.5 font-semibold">
           <button
             aria-haspopup="dialog"
             className="focus-visible:after:outline-accent after:rounded-card text-left outline-hidden after:absolute after:inset-0 focus-visible:after:outline-2 focus-visible:after:outline-offset-2"
