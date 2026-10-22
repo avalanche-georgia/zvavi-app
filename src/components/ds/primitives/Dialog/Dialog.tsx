@@ -80,7 +80,7 @@ const Dialog = ({
           </BaseDialog.Title>
           <BaseDialog.Close
             disabled={!isDismissible}
-            render={<IconButton aria-label={closeLabel} />}
+            render={<IconButton aria-label={closeLabel} size="md" />}
           >
             <X aria-hidden className="size-4.5" />
           </BaseDialog.Close>

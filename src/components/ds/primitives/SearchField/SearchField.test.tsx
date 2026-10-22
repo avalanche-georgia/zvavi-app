@@ -27,4 +27,18 @@ describe('SearchField', () => {
     expect(input).toHaveFocus()
     expect(screen.queryByRole('button', { name: 'Clear' })).not.toBeInTheDocument()
   })
+
+  it('has a toolbar size, keeping room for the icon', () => {
+    render(
+      <SearchField
+        aria-label="Search"
+        clearLabel="Clear"
+        onValueChange={() => undefined}
+        size="sm"
+        value=""
+      />,
+    )
+
+    expect(screen.getByRole('textbox')).toHaveClass('h-10', 'pl-9.5')
+  })
 })

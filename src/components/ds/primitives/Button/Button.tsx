@@ -1,4 +1,4 @@
-import { LoaderIcon } from 'lucide-react'
+import { LoaderCircle } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 
@@ -94,7 +94,8 @@ const Button = ({
     disabled={disabled || isBusy}
     type={type}
   >
-    {isBusy && <LoaderIcon aria-hidden className="size-4 animate-spin" />}
+    {/* Spinner's icon, without its status role: aria-busy says it */}
+    {isBusy && <LoaderCircle aria-hidden className="size-4 animate-spin" />}
     {children}
   </button>
 )

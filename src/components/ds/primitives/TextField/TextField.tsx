@@ -1,17 +1,19 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { Input } from '@base-ui/react/input'
 
-import { fieldControlClasses, InputUnit } from '../Field'
+import { type ControlSize, controlSizeClasses, fieldControlClasses, InputUnit } from '../Field'
 
 import { cn } from '@/lib/utils'
 
-type TextFieldProps = Omit<Input.Props, 'className' | 'onValueChange' | 'value'> & {
+type TextFieldProps = Omit<Input.Props, 'className' | 'onValueChange' | 'size' | 'value'> & {
   className?: string
   // Decorative icon inside the control, before the text (e.g. a platform logo)
   leading?: React.ReactNode
   onValueChange: (value: string) => void
   // "12/24" inside the control, at the end; needs `maxLength`
   showCount?: boolean
+  // md: forms. sm: toolbars, next to sm Buttons and Selects
+  size?: ControlSize
   unit?: string
   value: string
 }
@@ -22,6 +24,7 @@ const TextField = ({
   leading,
   onValueChange,
   showCount = false,
+  size = 'md',
   unit,
   value,
   ...props
@@ -43,7 +46,8 @@ const TextField = ({
         {...props}
         className={cn(
           fieldControlClasses,
-          'focus-ring h-11.5 px-3',
+          controlSizeClasses[size],
+          'focus-ring',
           leading && 'pl-10.5',
           unit && 'pr-10',
           count && 'pr-16',

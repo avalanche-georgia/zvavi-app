@@ -114,7 +114,7 @@ them.
 | **Semantic colour** | text `ink`, `body`, `muted`, `placeholder`, `disabled` · lines `rule`, `rule-strong` · surfaces `surface`, `canvas`, `tile`, `tile-hover`, `off`, `map` · brand `primary(-hover/-soft/-ink)`, `brand-blue` · `accent(-hover/-soft)` · status `danger`, `danger-border`, `success`, `success-soft`, `warning`, `warning-soft`, `alert-ink` · domain `hazard-*`, `size-*` | `text-ink`, `bg-surface`, `border-rule`, … |
 | **Type scale** | `display` 34, `title-lg` 28, `title` 24, `title-sm` 22, `heading` 17, `copy-lg` 15, `copy` 14, `copy-sm` 13, `caption` 12.5, `micro` 10.5. Line-height and tracking are part of the token | `text-heading`, … |
 | **Letter spacing** | `eyebrow` 0.06em (uppercase eyebrows and small labels) | `tracking-eyebrow` |
-| **Radii** | `card` 16, `media` 12, `field` 11, `control` 10, `badge` 5, `sheet` 20 (pills use `rounded-full`) | `rounded-card`, … |
+| **Radii** | `card` 16, `media` 12, `field` 11, `control` 10, `item` 8 (options and segments inside a padded popup or track), `badge` 5, `sheet` 20 (pills use `rounded-full`) | `rounded-card`, … |
 | **Shadows** | `raised` (segmented thumb), `overlay` (map buttons), `float` (sticky bar), `pin`, `menu`, `sheet` (bottom sheet), `panel` (desktop side panel) | `shadow-float`, … |
 | **Motion** | `sheet` easing (sheet slide in / out) | `ease-sheet` |
 | **Focus** | `focus-ring` utility: 2px accent outline, 2px offset, on `:focus-visible` | `focus-ring` |
@@ -180,7 +180,7 @@ Rules:
     line above the buttons when the footer is narrow.
   - No colour or height overrides through `className` — add a variant instead.
 - **Selects** (`primitives/Select`): size `md` in forms, `sm` in toolbars and filter bars (next to
-  `sm` Buttons). `isActive` gives the accent border while the select narrows a list down. "All …"
+  `sm` Buttons). TextField and SearchField take the same `size`. `isActive` gives the accent border while the select narrows a list down. "All …"
   options use a sentinel value (e.g. `'all'`); `onValueChange` never passes `null`.
 - **Popovers** (`primitives/Popover`): for content that needs more room than a menu — a `Calendar`,
   a short form. Pass `isOpen` / `onOpenChange` when a Done button inside closes it.
@@ -291,7 +291,10 @@ Rules:
     logical lines; `index.ts` exports exactly the public surface.
   - **Look:** tokens only (no palette, hex, `rgb()`, Tailwind default radii / font sizes); sizes sm 40 /
     md 46 / lg 50 for boxed controls; `rounded-field` (md) / `rounded-control` (sm); the shared Field
-    classes for anything field-like; `focus-ring` on every interactive element.
+    classes for anything field-like; `focus-ring` on every interactive element. Floating panels
+    (Select / TimeField lists, Menu, Popover, ConfirmPopover) share one chrome: `rounded-media
+    shadow-menu border border-rule`, options inside `rounded-item`. Disabled edge arrows (Stepper,
+    Calendar, sheet steps) use `opacity-50`, like disabled buttons.
   - **States:** every one it can be in (list below), shown in its gallery entry.
   - **UX:** ≥ 44×44 hit target on touch (`pointer-coarse:`); Tab / Enter / Space / Esc work and overlays
     return focus; no information only on hover; long and Georgian labels wrap or clamp on purpose.

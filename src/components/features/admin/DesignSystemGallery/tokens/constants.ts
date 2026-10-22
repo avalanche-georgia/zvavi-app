@@ -79,6 +79,7 @@ export const radiusClasses: Record<RadiusToken, string> = {
   card: 'rounded-card',
   control: 'rounded-control',
   field: 'rounded-field',
+  item: 'rounded-item',
   media: 'rounded-media',
   sheet: 'rounded-sheet',
 }

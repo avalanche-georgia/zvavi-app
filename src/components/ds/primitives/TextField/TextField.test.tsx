@@ -30,4 +30,14 @@ describe('TextField', () => {
 
     expect(screen.getByRole('textbox')).toHaveValue('')
   })
+
+  // Controls of one height share a toolbar row
+  it.each([
+    ['md', 'h-11.5'],
+    ['sm', 'h-10'],
+  ] as const)('is %s tall', (size, height) => {
+    render(<TextField aria-label="Name" onValueChange={() => undefined} size={size} value="" />)
+
+    expect(screen.getByRole('textbox')).toHaveClass(height)
+  })
 })

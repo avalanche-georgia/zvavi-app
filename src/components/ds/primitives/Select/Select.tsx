@@ -80,12 +80,12 @@ const Select = <TValue extends string>({
           collisionPadding={16}
           sideOffset={6}
         >
-          <BaseSelect.Popup className="rounded-field border-rule bg-surface shadow-overlay max-h-(--available-height) min-w-(--anchor-width) overflow-y-auto border p-1 outline-hidden">
+          <BaseSelect.Popup className="rounded-media border-rule bg-surface shadow-menu max-h-(--available-height) min-w-(--anchor-width) overflow-y-auto border p-1 outline-hidden">
             {options.map((option) => (
               <BaseSelect.Item
                 key={option.value}
                 className={cn(
-                  'rounded-control text-ink data-highlighted:bg-tile flex cursor-pointer items-center justify-between gap-3 px-3 outline-hidden select-none',
+                  'rounded-item text-ink data-highlighted:bg-tile flex cursor-pointer items-center justify-between gap-3 px-3 outline-hidden select-none',
                   itemSizeClasses[size],
                 )}
                 value={option.value}

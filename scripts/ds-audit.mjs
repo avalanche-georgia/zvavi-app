@@ -30,12 +30,6 @@ const exceptions = [
     file: 'primitives/toggle',
     reason: 'Shared toggle-group internals (ToggleOption, useSingleToggle), not a component',
   },
-  {
-    check: 'unknown-token',
-    file: '',
-    match: /rounded-(sm|md|lg)|text-base/,
-    reason: 'Tailwind default scale; swapping to a ds token changes pixels — owner decision (REPORT.md)',
-  },
 ]
 
 // --- helpers ---------------------------------------------------------------

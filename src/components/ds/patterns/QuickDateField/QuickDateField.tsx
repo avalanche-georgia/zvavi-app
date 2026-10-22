@@ -70,9 +70,9 @@ const QuickDateField = ({
         </div>
         <ChipGroup
           ariaLabel={quickDatesLabel}
-          className="*:text-copy-sm"
           onChange={handleQuickDateChange}
           options={quickDates}
+          size="sm"
           value={selectedQuickDate}
         />
         {summary && <p className="text-caption text-muted">{summary}</p>}

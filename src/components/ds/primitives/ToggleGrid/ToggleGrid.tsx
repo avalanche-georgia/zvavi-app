@@ -40,7 +40,7 @@ const ToggleGrid = <T extends string>({
           key={option.value}
           aria-label={option.ariaLabel}
           className={cn(
-            'focus-ring rounded-field bg-tile text-ink flex h-12 items-center justify-center text-base font-semibold',
+            'focus-ring rounded-field bg-tile text-ink text-copy-lg flex h-12 items-center justify-center font-semibold',
             'hover:bg-tile-hover transition-colors',
             'data-pressed:bg-accent data-pressed:text-white',
             'data-disabled:text-disabled data-disabled:cursor-not-allowed',

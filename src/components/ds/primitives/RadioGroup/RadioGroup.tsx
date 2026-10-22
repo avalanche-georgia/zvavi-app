@@ -14,7 +14,7 @@ export type RadioOption<T extends string> = {
 type RadioGroupProps<T extends string> = {
   ariaLabel?: string
   className?: string
-  onValueChange: (value: T) => void
+  onChange: (value: T) => void
   options: RadioOption<T>[]
   value: T | null
 }
@@ -23,11 +23,11 @@ type RadioGroupProps<T extends string> = {
 const RadioGroup = <T extends string>({
   ariaLabel,
   className,
-  onValueChange,
+  onChange,
   options,
   value,
 }: RadioGroupProps<T>) => {
-  const handleValueChange = (nextValue: unknown) => onValueChange(nextValue as T)
+  const handleValueChange = (nextValue: unknown) => onChange(nextValue as T)
 
   return (
     <BaseRadioGroup

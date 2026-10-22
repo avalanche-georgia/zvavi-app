@@ -17,12 +17,7 @@ const Harness = () => {
   const [value, setValue] = useState<string | null>(null)
 
   return (
-    <RadioGroup
-      ariaLabel="How do you know?"
-      onValueChange={setValue}
-      options={options}
-      value={value}
-    />
+    <RadioGroup ariaLabel="How do you know?" onChange={setValue} options={options} value={value} />
   )
 }
 
