@@ -39,8 +39,7 @@ const AddPhotoTile = ({ count, onFilesSelect }: AddPhotoTileProps) => {
     <label
       className={cn(
         'rounded-media flex aspect-square cursor-pointer flex-col items-center justify-center gap-1.5 text-center',
-        // Dashed drop zones / empty slots are 1.5px: dashes at 1px are too faint, 2px too heavy
-        'border-off bg-canvas text-copy-sm text-body border-[1.5px] border-dashed font-semibold transition-colors',
+        'border-off bg-canvas text-copy-sm text-body border-slot font-semibold transition-colors',
         'hover:border-primary hover:text-primary has-focus-visible:outline-accent has-focus-visible:outline-2 has-focus-visible:outline-offset-2',
         isDragOver && 'border-primary bg-primary-soft text-primary',
       )}

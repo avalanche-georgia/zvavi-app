@@ -25,10 +25,10 @@ const ViewWhere = ({ avalanche }: { avalanche: AvalancheListItem }) => {
       <AspectsOverview aspects={aspects} />
 
       {(location || coordinates) && (
-        <dl className="mt-3 flex flex-col gap-2 text-sm">
+        <dl className="text-copy mt-3 flex flex-col gap-2">
           {location && (
             <div>
-              <dt className="text-muted text-xs">
+              <dt className="text-muted text-caption">
                 {t('admin.recentAvalanches.form.labels.location')}
               </dt>
               <dd>{location}</dd>
@@ -36,7 +36,9 @@ const ViewWhere = ({ avalanche }: { avalanche: AvalancheListItem }) => {
           )}
           {coordinates && (
             <div>
-              <dt className="text-muted text-xs">{t('admin.recentAvalanches.view.coordinates')}</dt>
+              <dt className="text-muted text-caption">
+                {t('admin.recentAvalanches.view.coordinates')}
+              </dt>
               <dd className="tabular-nums">
                 {coordinates.latitude.toFixed(5)}, {coordinates.longitude.toFixed(5)}
               </dd>

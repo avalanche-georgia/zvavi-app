@@ -3,8 +3,10 @@ import { extendTailwindMerge } from 'tailwind-merge'
 
 import { fontSizeTokens, radiusTokens, shadowTokens, trackingTokens } from './designTokens'
 
-const twMerge = extendTailwindMerge({
+const twMerge = extendTailwindMerge<'border-slot'>({
   extend: {
+    // Custom utilities from globals.css; own groups, so they never drop a colour class
+    classGroups: { 'border-slot': ['border-slot'] },
     theme: {
       radius: [...radiusTokens],
       shadow: [...shadowTokens],

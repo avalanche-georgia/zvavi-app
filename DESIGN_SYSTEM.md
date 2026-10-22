@@ -109,6 +109,7 @@ them.
 | **Shadows** | `raised` (segmented thumb), `overlay` (map buttons), `float` (sticky bar), `pin`, `menu`, `sheet` (bottom sheet), `panel` (desktop side panel) | `shadow-float`, … |
 | **Motion** | `sheet` easing (sheet slide in / out) | `ease-sheet` |
 | **Focus** | `focus-ring` utility: 2px accent outline, 2px offset, on `:focus-visible` | `focus-ring` |
+| **Empty slot** | `border-slot` utility: 1.5px dashed border (empty lists, drop zones); colour from `border-*` | `border-slot` |
 
 - **There is no raw-palette layer yet.** Semantic tokens hold the hex values directly. A primitive
   layer only pays off with theming (dark mode, a second brand); add it then.

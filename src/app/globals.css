@@ -285,6 +285,13 @@ button {
 }
 
 /* ds focus ring — apply to every interactive element */
+/* Dashed outline of an empty slot or drop zone (no problems yet, add a photo). 1.5px: dashes at
+   1px are too faint, at 2px too heavy. Colour comes from a border-* colour class */
+@utility border-slot {
+  border-width: 1.5px;
+  border-style: dashed;
+}
+
 @utility focus-ring {
   &:focus-visible {
     outline: 2px solid var(--color-accent);

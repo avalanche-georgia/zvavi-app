@@ -28,7 +28,7 @@ const SectionRail = () => {
         {sections.map(({ id, isComplete, label, value }) => (
           <li key={id}>
             <a
-              className="text-copy text-body hover:text-ink hover:bg-tile focus-ring -mx-2 flex h-9 items-center gap-2.5 rounded-md px-2 transition-colors"
+              className="text-copy text-body hover:text-ink hover:bg-tile focus-ring rounded-item -mx-2 flex h-9 items-center gap-2.5 px-2 transition-colors"
               href={`#${id}`}
               onClick={(event) => handleClick(event, id)}
             >

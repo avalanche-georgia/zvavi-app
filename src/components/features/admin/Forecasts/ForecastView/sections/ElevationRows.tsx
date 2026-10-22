@@ -16,7 +16,7 @@ const ElevationRows = ({ hazardLevels }: { hazardLevels: HazardLevels }) => {
         return (
           <li key={zone} className="text-copy grid grid-cols-[96px_26px_1fr] items-center gap-2.5">
             <span className="text-body">{t(`common.elevationZones.${zone}`)}</span>
-            <HazardTile className="size-6.5 rounded-[7px]" level={level} size="md" />
+            <HazardTile className="rounded-item size-6.5" level={level} size="md" />
             <span className="text-ink font-medium">{t(hazardLevelNamesByScale[level])}</span>
           </li>
         )

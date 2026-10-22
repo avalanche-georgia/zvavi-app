@@ -13,9 +13,9 @@ const sizeClasses: Record<HazardTileSize, string> = {
   // current-forecast card
   lg: 'size-14 rounded-media text-title',
   // table row
-  md: 'size-7.5 rounded-lg text-copy',
+  md: 'rounded-item text-copy size-7.5',
   // card elevation zones
-  sm: 'h-7 w-full rounded-md text-copy-sm',
+  sm: 'rounded-badge text-copy-sm h-7 w-full',
 }
 
 type HazardTileProps = {

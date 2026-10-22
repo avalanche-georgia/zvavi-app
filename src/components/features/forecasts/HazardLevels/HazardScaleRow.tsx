@@ -35,11 +35,11 @@ const HazardScaleRow = ({ label, zone }: HazardScaleRowProps) => {
 
   const renderSegment = (option: RatingScaleOption<HazardLevelScale>, isSelected: boolean) => (
     <>
-      <span className={cn('font-semibold', isOverall ? 'text-lg' : 'text-base')}>
+      <span className={cn('font-semibold', isOverall ? 'text-heading' : 'text-copy-lg')}>
         {option.value}
       </span>
       <span
-        className={cn('text-[11px] font-medium @max-[800px]:hidden', !isSelected && 'text-muted')}
+        className={cn('text-micro font-medium @max-[800px]:hidden', !isSelected && 'text-muted')}
       >
         {option.label}
       </span>
