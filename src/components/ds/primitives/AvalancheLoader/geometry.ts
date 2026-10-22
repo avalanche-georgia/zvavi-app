@@ -1,6 +1,8 @@
 // Everything is drawn in a 160 × 160 box that scales with the element
 export const box = 160
 export const round = (value: number) => Math.round(value * 10) / 10
+// A distance in the box as a percentage of a full-box layer, for CSS transforms
+export const percent = (units: number) => `${Math.round((units / box) * 10000) / 100}%`
 
 // The slab as one whole shape, seen while the snow settles and cracks, before it breaks up
 export const slab =
@@ -37,4 +39,11 @@ export const dusts = [
   [26, 140, 0],
   [52, 142, 0.04],
   [78, 140, 0.08],
+]
+
+// The crack opens from where its two halves meet (x 68) outwards. Each half is revealed by a wipe:
+// a full-box window that slides from `from` to `to`, its edge stopping just past the stroke's caps.
+export const crackHalves = [
+  { d: 'M68 80L62 87L56 80L50.3 84', from: percent(68), to: percent(48) },
+  { d: 'M68 80L74 87L80 80L86 87L89 84', from: percent(68 - box), to: percent(92 - box) },
 ]

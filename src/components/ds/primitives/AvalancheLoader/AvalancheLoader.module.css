@@ -2,10 +2,15 @@
   One loop (--avl-cycle): snow settles on the slope, a crack opens along the top of the slab,
   then the slab breaks into rounded clumps that slide down the fall line and settle as rubble.
   Everything below is keyed to percentages of that single cycle.
+
+  Every animated piece is a full-box layer (see Layer.tsx), so distances are given in --u, one
+  unit of the 160 × 160 drawing box.
 */
 
 .root {
   --avl-cycle: 2.6s;
+  /* 160 = box in geometry.ts */
+  --u: calc(100% / 160);
 }
 
 /* Snowfall */
@@ -45,17 +50,17 @@
     opacity: 1;
   }
   25% {
-    transform: translate(3px, 25px);
+    transform: translate(calc(var(--u) * 3), calc(var(--u) * 25));
   }
   50% {
-    transform: translate(-2px, 50px);
+    transform: translate(calc(var(--u) * -2), calc(var(--u) * 50));
   }
   75% {
-    transform: translate(3px, 75px);
+    transform: translate(calc(var(--u) * 3), calc(var(--u) * 75));
     opacity: 1;
   }
   100% {
-    transform: translate(0, 104px);
+    transform: translateY(calc(var(--u) * 104));
     opacity: 0;
   }
 }
@@ -92,35 +97,46 @@
   }
 }
 
-/* Crack along the top of the slab, drawn from the middle outwards */
+/*
+  Crack along the top of the slab, opening from the middle outwards: a window (--from → --to, see
+  crackHalves in geometry.ts) wipes across each half while the line inside moves back by as much
+*/
 .crack {
-  stroke-dasharray: 100 300;
-  stroke-dashoffset: 100;
   opacity: 0;
   animation: crack var(--avl-cycle) linear infinite;
 }
 @keyframes crack {
   0%,
   29.9% {
-    stroke-dashoffset: 100;
+    transform: translateX(var(--from));
     opacity: 0;
   }
   30% {
-    stroke-dashoffset: 100;
+    transform: translateX(var(--from));
     opacity: 1;
   }
-  38% {
-    stroke-dashoffset: 0;
-    opacity: 1;
-  }
+  38%,
   80% {
-    stroke-dashoffset: 0;
+    transform: translateX(var(--to));
     opacity: 1;
   }
   90%,
   100% {
-    stroke-dashoffset: 0;
+    transform: translateX(var(--to));
     opacity: 0;
+  }
+}
+.crackLine {
+  animation: crackLine var(--avl-cycle) linear infinite;
+}
+@keyframes crackLine {
+  0%,
+  30% {
+    transform: translateX(calc(var(--from) * -1));
+  }
+  38%,
+  100% {
+    transform: translateX(calc(var(--to) * -1));
   }
 }
 
@@ -192,8 +208,6 @@
 
 /* Powder thrown up by the slide, and dust settling at the foot */
 .puff {
-  transform-box: fill-box;
-  transform-origin: center;
   opacity: 0;
   animation: puff var(--avl-cycle) ease-out infinite;
 }
@@ -209,12 +223,10 @@
   90%,
   100% {
     opacity: 0;
-    transform: translateY(60px) scale(1.7);
+    transform: translateY(calc(var(--u) * 60)) scale(1.7);
   }
 }
 .dust {
-  transform-box: fill-box;
-  transform-origin: 50% 100%;
   opacity: 0;
   animation: dust var(--avl-cycle) ease-out infinite;
 }
@@ -247,9 +259,10 @@
     animation: none;
     opacity: 1;
   }
-  .crack {
+  .crack,
+  .crackLine {
     animation: none;
-    stroke-dashoffset: 0;
+    transform: none;
     opacity: 1;
   }
 }
