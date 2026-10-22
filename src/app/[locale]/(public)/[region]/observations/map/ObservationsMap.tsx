@@ -33,7 +33,7 @@ const ObservationsMap = ({
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <ObservationsMapClient {...mapProps} />
 
-      <div className="border-rule text-body pointer-events-none absolute top-3 left-3 z-500 rounded-[9px] border bg-white px-2.5 py-1.5 text-[12.5px] shadow-[0_2px_8px_rgba(0,0,0,.06)]">
+      <div className="border-rule text-body rounded-control bg-surface text-caption pointer-events-none absolute top-3 left-3 z-500 border px-2.5 py-1.5 shadow-[0_2px_8px_rgba(0,0,0,.06)]">
         {t('observations.map.onMap', { count: mapProps.points.length })}
       </div>
 

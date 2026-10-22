@@ -1,3 +1,4 @@
+import { Button } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 
 type ObservationsEmptyStateProps = {
@@ -14,15 +15,11 @@ const ObservationsEmptyState = ({ hasFilters, onFiltersClear }: ObservationsEmpt
 
   return (
     <div className="text-muted flex flex-col items-center px-4 py-12 text-center">
-      <b className="text-ink mb-1.5 text-base">{t('observations.empty.title')}</b>
+      <b className="text-ink text-heading mb-1.5">{t('observations.empty.title')}</b>
       {t('observations.empty.description')}
-      <button
-        className="border-rule text-ink hover:bg-tile mt-6 h-10.5 rounded-[11px] border bg-white px-3.5 text-sm font-semibold transition-colors"
-        onClick={onFiltersClear}
-        type="button"
-      >
+      <Button className="mt-6" onClick={onFiltersClear} size="sm" variant="secondary">
         {t('observations.filters.clear')}
-      </button>
+      </Button>
     </div>
   )
 }

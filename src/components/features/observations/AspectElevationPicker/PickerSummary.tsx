@@ -14,7 +14,7 @@ const PickerSummary = ({ onClear, value }: PickerSummaryProps) => {
   const lines = getLines(value)
 
   return (
-    <div className="border-rule flex items-start justify-between gap-3 border-t pt-2.5 text-[13px] leading-normal">
+    <div className="border-rule text-copy-sm flex items-start justify-between gap-3 border-t pt-2.5">
       <div aria-live="polite" className="text-body min-w-0 flex-1">
         {lines.length === 0 ? (
           <span className="text-muted">{t('common.aspectElevationPicker.emptyHint')}</span>
@@ -27,7 +27,7 @@ const PickerSummary = ({ onClear, value }: PickerSummaryProps) => {
         )}
       </div>
       <button
-        className="text-accent hover:text-accent-hover focus-visible:outline-accent shrink-0 rounded-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 disabled:text-[#b8b8bd]"
+        className="text-accent hover:text-accent-hover focus-visible:outline-accent rounded-badge shrink-0 font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 disabled:text-[#b8b8bd]"
         disabled={lines.length === 0}
         onClick={onClear}
         type="button"

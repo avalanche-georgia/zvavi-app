@@ -26,14 +26,14 @@ const AspectMiniGrid = ({ aspects }: { aspects: Aspects }) => {
                 <i
                   key={aspect}
                   className={cn(
-                    'size-2 rounded-[2px]',
+                    'rounded-bar size-2',
                     aspects[zone].includes(aspect) ? 'bg-accent' : 'bg-off',
                   )}
                 />
               ),
             )}
           </div>
-          <span className="text-muted text-[9.5px] font-semibold">
+          <span className="text-muted text-micro font-semibold">
             {t(`common.elevationZonesShort.${zone}`)}
           </span>
         </div>

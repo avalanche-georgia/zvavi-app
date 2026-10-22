@@ -28,7 +28,7 @@ const DetailWhere = ({ observation, onShowOnMap }: DetailWhereProps) => {
       {/* Legacy observations may have no coordinates — new ones always do */}
       {hasCoordinates(observation) && (
         <button
-          className="bg-ink hover:bg-ink/85 mt-3 flex h-12 w-full items-center justify-center gap-2 rounded-xl font-semibold text-white transition-colors"
+          className="bg-ink hover:bg-ink/85 rounded-field mt-3 flex h-12 w-full items-center justify-center gap-2 font-semibold text-white transition-colors"
           onClick={onShowOnMap}
           type="button"
         >

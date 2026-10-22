@@ -23,7 +23,7 @@ const CopyChips = ({ activeZone, onZoneChange, value }: CopyChipsProps) => {
     onZoneChange(zone, isMatched ? [] : sourceAspects)
 
   return (
-    <div className="text-muted flex flex-wrap items-center gap-1.5 text-[13px]">
+    <div className="text-muted text-copy-sm flex flex-wrap items-center gap-1.5">
       <span className="mr-0.5">{t('common.aspectElevationPicker.sameAspectsOn')}</span>
       {targetZones.map((zone) => {
         const isMatched = !isDisabled && hasSameAspects(sourceAspects, value[zone])
@@ -38,7 +38,7 @@ const CopyChips = ({ activeZone, onZoneChange, value }: CopyChipsProps) => {
               'disabled:border-rule disabled:text-body disabled:opacity-45',
               isMatched
                 ? 'border-accent bg-accent-soft text-accent-hover'
-                : 'border-rule text-body hover:border-accent hover:text-accent bg-white',
+                : 'border-rule text-body hover:border-accent hover:text-accent bg-surface',
             )}
             disabled={isDisabled}
             onClick={() => handleChipClick(zone, isMatched)}
