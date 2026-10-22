@@ -360,7 +360,7 @@ from `ui/`; *no consumers* marks a legacy file that nothing imports any more and
 | Textarea | Headless UI | `primitives/Textarea` | ☐ *no consumers* |
 | NumberInput | base-ui | `primitives/Stepper` / `NumberField` | ✅ |
 | ChipGroup | base-ui | `primitives/ChipGroup` | ✅ |
-| SegmentedControl | base-ui | `primitives/SegmentedControl` | ☐ |
+| SegmentedControl | base-ui | `primitives/SegmentedControl` | ✅ |
 | RadioGroup | Headless UI | `primitives/SegmentedControl` | ✅ |
 | RadioOption | base-ui | `primitives/RadioGroup` (long labels, one per row) or `ToggleGrid` | ✅ |
 | Checkbox | Headless UI | `primitives/Checkbox` | ☐ |
@@ -385,7 +385,7 @@ from `ui/`; *no consumers* marks a legacy file that nothing imports any more and
 | BrandedQRCode, FallbackImage, SortableItem | custom | reviewed individually (may stay generic in ds) | ☐ |
 
 No non-kit Headless UI or Radix users are left (`Header/NavMenu/DesktopNav` uses `primitives/Menu`,
-`shared/LanguageToggle` uses `primitives/SegmentedControl` size `sm`, and `shared/Spoiler` was removed
+`shared/LanguageToggle` uses `primitives/SegmentedControl` size `xs`, and `shared/Spoiler` was removed
 with the forecast archive redesign).
 
 ### Deferred

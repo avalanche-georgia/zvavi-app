@@ -2,14 +2,13 @@
 
 import { useRef } from 'react'
 import { useIsStuck } from '@components/hooks'
-import { SegmentedControl, type ToggleOption } from '@components/ui'
 import type { ObservationDateBasis } from '@domain/types'
-import { ChipGroup } from '@ds/primitives'
-import { List, Map as MapIcon } from 'lucide-react'
+import { ChipGroup, SegmentedControl, type ToggleOption } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 
 import CustomRangeFields from './CustomRangeFields'
 import SortSelect from './SortSelect'
+import ViewSwitch, { type ObservationsView } from './ViewSwitch'
 import {
   type ObservationsFilters,
   type ObservationsPeriod,
@@ -18,7 +17,7 @@ import {
 
 import { cn } from '@/lib/utils'
 
-export type ObservationsView = 'list' | 'map'
+export type { ObservationsView } from './ViewSwitch'
 
 type ObservationsToolbarProps = {
   filters: ObservationsFilters
@@ -28,8 +27,7 @@ type ObservationsToolbarProps = {
   view: ObservationsView
 }
 
-// Sticky under the app header on mobile, at the top of the scrolling list
-// column on desktop. Gets a rule and blur once pinned.
+// Sticky under the app header on mobile, atop the list column on desktop; ruled once pinned
 const ObservationsToolbar = ({
   filters,
   onFiltersChange,
@@ -40,15 +38,6 @@ const ObservationsToolbar = ({
   const t = useTranslations()
   const sentinelRef = useRef<HTMLDivElement>(null)
   const isStuck = useIsStuck(sentinelRef)
-
-  const viewOptions: ToggleOption<ObservationsView>[] = [
-    { ariaLabel: t('observations.view.list'), label: <List className="size-4.5" />, value: 'list' },
-    {
-      ariaLabel: t('observations.view.map'),
-      label: <MapIcon className="size-4.5" />,
-      value: 'map',
-    },
-  ]
 
   const dateBasisOptions: ToggleOption<ObservationDateBasis>[] = [
     { label: t('observations.filters.dateBasis.occurred'), value: 'occurred' },
@@ -80,19 +69,14 @@ const ObservationsToolbar = ({
           isStuck ? 'border-rule bg-canvas/95 backdrop-blur-md' : 'bg-canvas border-transparent',
         )}
       >
-        <div className="flex items-center gap-2">
-          <SegmentedControl
-            ariaLabel={t('observations.view.label')}
-            className="shrink-0 lg:hidden [&>button]:px-2.25"
-            onChange={onViewChange}
-            options={viewOptions}
-            value={view}
-          />
+        <div className="flex items-center gap-1.5">
+          <ViewSwitch onViewChange={onViewChange} view={view} />
           <SegmentedControl
             ariaLabel={t('observations.filters.dateBasis.label')}
-            className="min-w-0 flex-1 [&>button]:px-2"
+            className="min-w-0 flex-1 [&>button]:flex-auto [&>button]:px-2"
             onChange={handleDateBasisChange}
             options={dateBasisOptions}
+            size="sm"
             value={filters.dateBasis}
           />
           <SortSelect onChange={(sort) => onFiltersChange({ sort })} value={filters.sort} />

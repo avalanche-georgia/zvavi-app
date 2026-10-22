@@ -53,4 +53,21 @@ describe('Select', () => {
 
     expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
   })
+
+  // The value stays readable to screen readers; only phones hide it
+  it('can show just its icon on phones', () => {
+    render(
+      <Select
+        ariaLabel="Sort"
+        isValueHiddenOnPhone
+        leading={<svg data-testid="sort-icon" />}
+        onValueChange={() => undefined}
+        options={options}
+        value="gudauri"
+      />,
+    )
+
+    expect(screen.getByTestId('sort-icon')).toBeInTheDocument()
+    expect(screen.getByText('Gudauri')).toHaveClass('max-sm:sr-only')
+  })
 })

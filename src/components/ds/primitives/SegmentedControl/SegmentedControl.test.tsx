@@ -45,4 +45,23 @@ describe('SegmentedControl', () => {
 
     expect(onChange).not.toHaveBeenCalled()
   })
+
+  // One scale with the other controls: md 46, sm 40 (next to sm Selects), xs 34 (header)
+  it.each([
+    ['md', 'h-11.5'],
+    ['sm', 'h-10'],
+    ['xs', 'h-8.5'],
+  ] as const)('is %s tall', (size, height) => {
+    render(
+      <SegmentedControl
+        ariaLabel="Language"
+        onChange={vi.fn()}
+        options={options}
+        size={size}
+        value="en"
+      />,
+    )
+
+    expect(screen.getByRole('group', { name: 'Language' })).toHaveClass(height)
+  })
 })

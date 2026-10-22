@@ -1,9 +1,10 @@
 'use client'
 
 import { Select as BaseSelect } from '@base-ui/react/select'
-import { Check, ChevronDown } from 'lucide-react'
+import { ChevronDown } from 'lucide-react'
 
-import { itemSizeClasses, type SelectSize } from './selectClasses'
+import type { SelectSize } from './selectClasses'
+import SelectPopup from './SelectPopup'
 import { controlSizeClasses, fieldControlClasses } from '../Field'
 
 import { cn } from '@/lib/utils'
@@ -22,6 +23,10 @@ type SelectProps<TValue extends string> = {
   disabled?: boolean
   // Accent border while it narrows something down, e.g. an applied filter
   isActive?: boolean
+  // Phones show only `leading` and the arrow (a toolbar short on room); needs `leading`
+  isValueHiddenOnPhone?: boolean
+  // Decorative icon before the value, e.g. a sort icon
+  leading?: React.ReactNode
   onValueChange: (value: TValue) => void
   options: SelectOption<TValue>[]
   placeholder?: string
@@ -37,6 +42,8 @@ const Select = <TValue extends string>({
   className,
   disabled,
   isActive = false,
+  isValueHiddenOnPhone = false,
+  leading,
   onValueChange,
   options,
   placeholder,
@@ -65,40 +72,20 @@ const Select = <TValue extends string>({
           className,
         )}
       >
+        {leading && <span className="text-muted flex shrink-0">{leading}</span>}
         <BaseSelect.Value
-          className="data-placeholder:text-placeholder truncate"
+          className={cn(
+            'data-placeholder:text-placeholder truncate',
+            leading && 'flex-1',
+            isValueHiddenOnPhone && 'max-sm:sr-only',
+          )}
           placeholder={placeholder}
         />
         <BaseSelect.Icon className="text-muted shrink-0">
           <ChevronDown aria-hidden className="size-4.5" />
         </BaseSelect.Icon>
       </BaseSelect.Trigger>
-      <BaseSelect.Portal>
-        <BaseSelect.Positioner
-          alignItemWithTrigger={false}
-          className="z-50"
-          collisionPadding={16}
-          sideOffset={6}
-        >
-          <BaseSelect.Popup className="rounded-media border-rule bg-surface shadow-menu max-h-(--available-height) min-w-(--anchor-width) overflow-y-auto border p-1 outline-hidden">
-            {options.map((option) => (
-              <BaseSelect.Item
-                key={option.value}
-                className={cn(
-                  'rounded-item text-ink data-highlighted:bg-tile flex cursor-pointer items-center justify-between gap-3 px-3 outline-hidden select-none',
-                  itemSizeClasses[size],
-                )}
-                value={option.value}
-              >
-                <BaseSelect.ItemText>{option.label}</BaseSelect.ItemText>
-                <BaseSelect.ItemIndicator className="text-accent">
-                  <Check aria-hidden className="size-4" strokeWidth={2.5} />
-                </BaseSelect.ItemIndicator>
-              </BaseSelect.Item>
-            ))}
-          </BaseSelect.Popup>
-        </BaseSelect.Positioner>
-      </BaseSelect.Portal>
+      <SelectPopup options={options} size={size} />
     </BaseSelect.Root>
   )
 }
