@@ -6,7 +6,8 @@ type ToastData = {
   error?: string | unknown
 }
 
-const infoClassName = 'bg-blue-100! border border-blue-300! text-blue-700!'
+// Border in the toast's own colour, faded: no -border tokens for accent / success yet
+const infoClassName = 'bg-accent-soft! border border-current/25! text-accent!'
 
 const useToast = () => {
   const t = useTranslations()
@@ -19,13 +20,13 @@ const useToast = () => {
     }
 
     return toast.error(message ?? t('common.messages.error'), {
-      className: 'bg-red-100! border border-red-300! text-red-700!',
+      className: 'bg-danger/10! border border-danger-border! text-danger!',
     })
   }
 
   const toastSuccess = (message?: string) =>
     toast.success(message ?? t('common.messages.success'), {
-      className: 'bg-green-100! border border-green-300! text-green-700!',
+      className: 'bg-success-soft! border border-current/25! text-success!',
     })
 
   const toastInfo = (message: string) => toast.info(message, { className: infoClassName })
@@ -35,7 +36,7 @@ const useToast = () => {
     toast.info(message, {
       action,
       className: infoClassName,
-      classNames: { actionButton: 'bg-blue-700! text-white! font-semibold! rounded-md!' },
+      classNames: { actionButton: 'bg-accent! text-white! font-semibold! rounded-item!' },
       duration: 5200,
     })
 

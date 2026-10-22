@@ -26,7 +26,7 @@ const FieldInfo = ({ field, problem, regionId }: FieldInfoProps) => {
           {t(`common.avalancheTypes.${problem.type}`)}
         </p>
       </div>
-      {lead && <p className="text-ink text-copy-lg mx-4 mt-3.5 leading-[1.55]">{lead}</p>}
+      {lead && <p className="text-ink text-copy-lg leading-prose mx-4 mt-3.5">{lead}</p>}
       <InfoSection title={listTitle}>
         <ul className="flex flex-col gap-1.5">
           {items.map(({ badge, description, isCurrent, name }) => (

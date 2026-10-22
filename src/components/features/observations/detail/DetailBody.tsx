@@ -26,7 +26,7 @@ const DetailBody = ({ observation, onShowOnMap }: DetailBodyProps) => {
 
       {description && (
         <DetailSection title={t('observations.detail.description')}>
-          <p className="text-ink text-copy-lg m-0 leading-[1.55] whitespace-pre-wrap">
+          <p className="text-ink text-copy-lg leading-prose m-0 whitespace-pre-wrap">
             {description}
           </p>
         </DetailSection>

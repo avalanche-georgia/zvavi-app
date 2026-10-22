@@ -32,7 +32,7 @@ const AvalancheBody = ({ avalanche, onShowOnMap }: AvalancheBodyProps) => {
       <DetailWhere observation={record} onShowOnMap={onShowOnMap} />
       {description && (
         <DetailSection title={t('observations.detail.description')}>
-          <Prose className="text-copy-lg leading-[1.55]" content={description} />
+          <Prose className="text-copy-lg leading-prose" content={description} />
         </DetailSection>
       )}
     </div>

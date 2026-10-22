@@ -13,7 +13,7 @@ const SummaryCard = ({ className, summary }: SummaryCardProps) => {
 
   return (
     <CollapsibleCard className={className} id="summary" title={t('common.labels.summary')}>
-      <Prose className="text-copy-lg leading-[1.6]" content={summary} />
+      <Prose className="text-copy-lg leading-prose" content={summary} />
     </CollapsibleCard>
   )
 }

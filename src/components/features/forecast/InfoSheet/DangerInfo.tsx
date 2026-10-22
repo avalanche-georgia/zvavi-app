@@ -58,7 +58,7 @@ const DangerInfo = ({ hazardLevels, scope }: DangerInfoProps) => {
           <p className="text-muted text-copy-sm mt-0.5">{scopeLabel}</p>
         </div>
       </div>
-      {!isRated && <p className="text-ink text-copy-lg mx-4 mt-3.5 leading-[1.55]">{parts[0]}</p>}
+      {!isRated && <p className="text-ink text-copy-lg leading-prose mx-4 mt-3.5">{parts[0]}</p>}
       {isRated &&
         descriptionLabelKeys.map(
           (labelKey, index) =>
@@ -67,7 +67,7 @@ const DangerInfo = ({ hazardLevels, scope }: DangerInfoProps) => {
                 key={labelKey}
                 title={t(`forecast.hazardLevels.descriptionLabels.${labelKey}`)}
               >
-                <p className="text-ink text-copy-lg leading-[1.55]">{parts[index]}</p>
+                <p className="text-ink text-copy-lg leading-prose">{parts[index]}</p>
               </InfoSection>
             ),
         )}

@@ -16,6 +16,8 @@ export const fontSizeTokens = [
 
 export const trackingTokens = ['eyebrow'] as const
 
+export const leadingTokens = ['prose'] as const
+
 export const radiusTokens = [
   'card',
   'media',

@@ -38,7 +38,7 @@ const ProblemBody = ({ onInfoOpen, problem }: ProblemBodyProps) => {
         </div>
       </div>
       {description && (
-        <Prose className="text-copy-lg mx-4 mt-3.5 leading-[1.55]" content={description} />
+        <Prose className="text-copy-lg leading-prose mx-4 mt-3.5" content={description} />
       )}
       <ProblemTiles onInfoOpen={onInfoOpen} problem={problem} />
     </div>

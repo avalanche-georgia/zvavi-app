@@ -125,6 +125,9 @@
   --text-micro--line-height: 11px;
   --text-micro--letter-spacing: 0.04em;
 
+  /* Line height for reading text — summaries, descriptions, conditions (24px on copy-lg) */
+  --leading-prose: 1.6;
+
   /* Letter spacing — uppercase eyebrows and labels */
   --tracking-eyebrow: 0.06em;
 
