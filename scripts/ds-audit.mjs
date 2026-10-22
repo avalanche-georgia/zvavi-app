@@ -22,8 +22,9 @@ const exceptions = [
   },
   {
     check: 'inline-style',
-    file: 'primitives/AvalancheLoader/Slide.tsx',
-    reason: 'Per-clump CSS custom properties (--dx, --rot, …) drive the keyframes; not styling',
+    file: 'primitives/AvalancheLoader/',
+    reason:
+      'Per-piece CSS custom properties, origins and delays (--dx, --from, …) drive the keyframes; not styling',
   },
   {
     check: 'structure',

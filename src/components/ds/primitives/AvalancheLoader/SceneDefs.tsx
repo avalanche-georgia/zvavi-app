@@ -24,9 +24,6 @@ const SceneDefs = ({ uid }: { uid: string }) => {
       <clipPath id={id('silhouette')}>
         <path d={silhouette} />
       </clipPath>
-      <clipPath id={id('ground')}>
-        <rect height="158" width="160" x="0" y="0" />
-      </clipPath>
       {ramps.map((ramp) => (
         <linearGradient key={ramp.id} id={id(ramp.id)} x1="0" x2="0" y1="0" y2="1">
           <Stop color={ramp.from} offset={0} />

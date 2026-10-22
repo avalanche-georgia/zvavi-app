@@ -2,9 +2,11 @@ import { useId } from 'react'
 
 import styles from './AvalancheLoader.module.css'
 import { box, round } from './geometry'
+import Layer from './Layer'
 import Mountain from './Mountain'
 import Overlay from './Overlay'
 import SceneDefs from './SceneDefs'
+import Settle from './Settle'
 import { type AvalancheLoaderSize, sizeConfigs } from './sizes'
 import Slide from './Slide'
 
@@ -26,20 +28,21 @@ const AvalancheLoader = ({ className, label, size = 'md' }: AvalancheLoaderProps
   const scale = box / config.px
 
   return (
-    <span className={cn('inline-flex', config.box, className)} role="status">
-      <svg aria-hidden className={cn('size-full', styles.root)} viewBox={`0 0 ${box} ${box}`}>
+    <span className={cn('relative inline-flex', config.box, styles.root, className)} role="status">
+      <Layer>
         <SceneDefs uid={uid} />
         <Mountain hasDetail={config.hasDetail} uid={uid} />
-        <Slide dust={config.dust} puff={config.puff} uid={uid} />
-        <Overlay
-          crackWidth={round(config.crackPx * scale)}
-          flake={config.flake}
-          flakeStroke={round(0.7 * scale)}
-          hasDetail={config.hasDetail}
-          lineWidth={round(scale)}
-          uid={uid}
-        />
-      </svg>
+      </Layer>
+      <Settle uid={uid} />
+      <Slide dust={config.dust} puff={config.puff} uid={uid} />
+      <Overlay
+        crackWidth={round(config.crackPx * scale)}
+        flake={config.flake}
+        flakeStroke={round(0.7 * scale)}
+        hasDetail={config.hasDetail}
+        lineWidth={round(scale)}
+        uid={uid}
+      />
       <span className="sr-only">{label}</span>
     </span>
   )

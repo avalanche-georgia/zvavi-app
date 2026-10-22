@@ -1,4 +1,4 @@
-const round = (value: number) => Math.round(value * 10) / 10
+import { percent, round } from './geometry'
 
 // The snow slab and the clumps it breaks into. They tile the slab exactly, with rounded corners
 // and a slight overlap. `slide` is how far each clump travels along the slope (the fall line runs
@@ -81,10 +81,10 @@ const shapes = [
 export const clumps = shapes.map(({ d, ox, oy, slide }) => ({
   d,
   style: {
-    '--dx': `${round(-0.61 * slide)}px`,
-    '--dy': `${slide}px`,
+    '--dx': percent(-0.61 * slide),
+    '--dy': percent(slide),
     '--rot': `${round((-1.6 * slide) / 44)}deg`,
     '--sc': round((0.06 * slide) / 44),
-    transformOrigin: `${ox}px ${oy}px`,
+    transformOrigin: `${percent(ox)} ${percent(oy)}`,
   } as React.CSSProperties,
 }))
