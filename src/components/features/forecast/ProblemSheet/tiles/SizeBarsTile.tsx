@@ -26,7 +26,7 @@ const SizeBarsTile = ({ onInfoOpen, size }: SizeBarsTileProps) => {
         {sizes.map((barSize) => (
           <i
             key={barSize}
-            className={cn('flex-1 rounded-[3px]', barSize <= size ? 'bg-accent' : 'bg-off')}
+            className={cn('rounded-bar flex-1', barSize <= size ? 'bg-accent' : 'bg-off')}
             style={{ height: `${barSize * 20}%` }}
           />
         ))}

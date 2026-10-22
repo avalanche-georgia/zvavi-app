@@ -134,6 +134,8 @@
   --radius-field: 11px;
   --radius-control: 10px;
   --radius-badge: 5px;
+  /* Segments of bar scales (danger scale, size / sensitivity / steps bars) */
+  --radius-bar: 3px;
   /* An item inside a padded popup or track: menu / select options, segments */
   --radius-item: 8px;
   --radius-sheet: 20px;

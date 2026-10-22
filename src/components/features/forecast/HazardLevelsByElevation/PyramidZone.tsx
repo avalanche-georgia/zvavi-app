@@ -15,7 +15,7 @@ type PyramidZoneProps = {
 const shapes: Record<ElevationZone, { leftClip: string; leftWidth: string; rightClip: string }> = {
   alpine: {
     leftClip: 'polygon(40% 0px, 100% 0 , 100% 100%, 0px 100%)',
-    leftWidth: 'w-[63px]',
+    leftWidth: 'w-15.75',
     rightClip: 'polygon(1px 0%, 100% 0, 100% 100%, 0px 100%)',
   },
   highAlpine: {
@@ -25,7 +25,7 @@ const shapes: Record<ElevationZone, { leftClip: string; leftWidth: string; right
   },
   subAlpine: {
     leftClip: 'polygon(29% 0px, 100% 0px, 100% 100%, 0px 100%)',
-    leftWidth: 'w-[91px]',
+    leftWidth: 'w-22.75',
     rightClip: 'polygon(1px 0%, 100% 0, 100% 100%, 0px 100%)',
   },
 }
@@ -38,8 +38,8 @@ const PyramidZone = ({ className, level, zone }: PyramidZoneProps) => {
   return (
     <span aria-hidden className={cn('flex', className)}>
       <span className={cn(leftWidth, color)} style={{ clipPath: leftClip }} />
-      <span className={cn('-mx-px flex w-[97px] items-end justify-center pb-4', color)}>
-        <span className="text-ink text-copy min-w-7 rounded-sm bg-white px-2 py-0.5 text-center font-bold">
+      <span className={cn('-mx-px flex w-24.25 items-end justify-center pb-4', color)}>
+        <span className="text-ink text-copy rounded-badge bg-surface min-w-7 px-2 py-0.5 text-center font-bold">
           {level === '0' ? '–' : level}
         </span>
       </span>

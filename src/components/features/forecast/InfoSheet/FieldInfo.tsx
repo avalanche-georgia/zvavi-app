@@ -21,9 +21,7 @@ const FieldInfo = ({ field, problem, regionId }: FieldInfoProps) => {
   return (
     <>
       <div className="px-4 pt-4">
-        <h2 className="text-ink m-0 text-[21px] leading-tight font-bold tracking-[-.02em]">
-          {title}
-        </h2>
+        <h2 className="text-ink text-title-sm m-0 font-bold">{title}</h2>
         <p className="text-muted text-copy-sm mt-0.5">
           {t(`common.avalancheTypes.${problem.type}`)}
         </p>

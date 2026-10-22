@@ -21,7 +21,7 @@ const ScaleItem = ({ badge, badgeClassName, currentLabel, description, name }: S
     <span
       aria-hidden
       className={cn(
-        'text-copy-lg grid size-9 place-items-center rounded-[9px] font-bold',
+        'text-copy-lg rounded-control grid size-9 place-items-center font-bold',
         badgeClassName ?? 'bg-surface text-ink',
       )}
     >
@@ -31,7 +31,7 @@ const ScaleItem = ({ badge, badgeClassName, currentLabel, description, name }: S
       <b className="text-ink text-copy-lg block font-semibold">
         {name}
         {currentLabel && (
-          <span className="text-accent ml-1.5 inline-block text-[11px] font-semibold tracking-[.05em] uppercase">
+          <span className="text-accent text-micro tracking-eyebrow ml-1.5 inline-block font-semibold uppercase">
             {currentLabel}
           </span>
         )}

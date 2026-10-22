@@ -45,13 +45,13 @@ const DangerInfo = ({ hazardLevels, scope }: DangerInfoProps) => {
       <div className="flex items-center gap-3.5 px-4 pt-4">
         <Image
           alt=""
-          className={cn('size-16 shrink-0 rounded-xl', backgroundColorByHazardLevel[level])}
+          className={cn('rounded-media size-16 shrink-0', backgroundColorByHazardLevel[level])}
           height={64}
           src={hazardIcons[level]}
           width={64}
         />
         <div className="min-w-0">
-          <h2 className="text-ink m-0 text-[21px] leading-tight font-bold tracking-[-.02em]">
+          <h2 className="text-ink text-title-sm m-0 font-bold">
             {isRated && `${level} · `}
             {t(hazardLevelNamesByScale[level])}
           </h2>

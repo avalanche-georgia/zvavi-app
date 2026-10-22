@@ -33,13 +33,13 @@ const DangerBand = ({ level, onInfoOpen }: DangerBandProps) => {
     >
       <Image
         alt=""
-        className="size-16 shrink-0 rounded-xl"
+        className="rounded-media size-16 shrink-0"
         height={64}
         src={hazardIcons[level]}
         width={64}
       />
       <span className="min-w-0 flex-1">
-        <span className="tracking-eyebrow block text-xs font-semibold uppercase">
+        <span className="tracking-eyebrow text-caption block font-semibold uppercase">
           {t('common.labels.overallDangerLevel')}
         </span>
         <span className="text-title mt-0.5 block font-bold wrap-break-word hyphens-auto">

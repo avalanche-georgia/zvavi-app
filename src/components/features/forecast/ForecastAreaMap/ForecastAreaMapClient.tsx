@@ -32,7 +32,7 @@ const ForecastAreaMapClient = ({ className }: ForecastAreaMapClientProps) => {
     <div className="px-2">
       <MapContainer
         center={center}
-        className={cn('z-30 h-[calc(100svh-112px)] rounded-xl', className)}
+        className={cn('rounded-media z-30 h-[calc(100svh-112px)]', className)}
         maxZoom={baseMapMaxZoom}
         scrollWheelZoom
         zoom={defaultZoom}

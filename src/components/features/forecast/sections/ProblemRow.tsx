@@ -34,7 +34,7 @@ const ProblemRow = ({ isSelected, onOpen, problem }: ProblemRowProps) => {
     <button
       aria-haspopup="dialog"
       className={cn(
-        'focus-ring bg-surface grid w-full grid-cols-[52px_minmax(0,1fr)_auto] items-center gap-3 rounded-[14px] border p-3 text-left',
+        'focus-ring bg-surface rounded-card grid w-full grid-cols-[52px_minmax(0,1fr)_auto] items-center gap-3 border p-3 text-left',
         'transition-[border-color,box-shadow] duration-100',
         isSelected
           ? 'border-primary shadow-[0_0_0_1px_var(--color-primary)]'
@@ -45,13 +45,13 @@ const ProblemRow = ({ isSelected, onOpen, problem }: ProblemRowProps) => {
     >
       <Image
         alt=""
-        className="size-13 rounded-xl"
+        className="rounded-media size-13"
         height={52}
         src={problemIcons[type]}
         width={52}
       />
       <span className="min-w-0">
-        <span className="text-ink block text-base font-semibold tracking-[-.01em]">
+        <span className="text-ink text-heading block font-semibold">
           {t(`common.avalancheTypes.${type}`)}
         </span>
         <span className="text-body text-copy-sm mt-0.5 block">{meta}</span>
