@@ -40,12 +40,13 @@ const RadioGroup = <T extends string>({
         // Hugs circle + text for a mouse; grows to a 44px row on touch screens
         <label
           key={option.value}
-          className="text-ink has-data-disabled:text-disabled flex cursor-pointer items-center gap-3 py-0.5 has-data-disabled:cursor-not-allowed pointer-coarse:min-h-11"
+          className="group/choice text-ink has-data-disabled:text-disabled flex cursor-pointer items-center gap-3 py-0.5 has-data-disabled:cursor-not-allowed pointer-coarse:min-h-11"
         >
           <Radio.Root
             className={cn(
               'focus-ring border-rule-strong bg-surface flex size-5 shrink-0 items-center justify-center rounded-full border transition-colors',
-              'hover:border-muted data-checked:border-accent data-checked:bg-accent',
+              // Hovering the label text highlights the circle too
+              'group-hover/choice:not-data-checked:not-data-disabled:border-muted data-checked:border-accent data-checked:bg-accent',
               'data-disabled:border-rule data-disabled:bg-off',
             )}
             disabled={option.disabled}
