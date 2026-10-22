@@ -127,6 +127,9 @@ Rules:
   - no hex values
   - no arbitrary sizes like `text-[13px]`
 - If a value is missing, add a token rather than an arbitrary value.
+- **Feature code too:** ESLint applies the same bans (raw palette, Tailwind's default type and radius
+  scales, arbitrary token values) to all of `src`. A value that truly has no token gets an
+  `eslint-disable-next-line no-restricted-syntax` with the reason in a comment beside it.
 - **Accent** (`--color-accent`, brand blue `#0c5aa6`) is the one colour for selected states, links,
   text buttons and focus rings.
 - **Primary** (brand orange) is for the main call to action and for brand moments.
