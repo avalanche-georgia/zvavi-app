@@ -36,7 +36,7 @@ const StatusPill = ({
 }: StatusPillProps) => (
   <span
     className={cn(
-      'text-caption inline-flex items-center gap-1.5 rounded-md px-2 py-0.75 font-semibold whitespace-nowrap',
+      'text-caption rounded-badge inline-flex items-center gap-1.5 px-2 py-0.75 font-semibold whitespace-nowrap',
       toneClasses[tone],
       className,
     )}

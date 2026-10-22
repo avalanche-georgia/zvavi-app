@@ -8,9 +8,9 @@ export const fieldControlClasses = [
 
 export type ControlSize = 'md' | 'sm'
 
-// Height of a single-line control that opens a popup (Select, DatePicker).
+// Height of a single-line control (Select, DatePicker, TextField, SearchField).
 // md: form fields. sm: toolbars and filter bars, next to sm Buttons.
 export const controlSizeClasses: Record<ControlSize, string> = {
   md: 'h-11.5 px-3',
-  sm: 'h-10 rounded-control px-3 text-copy',
+  sm: 'h-10 rounded-control px-3 text-copy-sm sm:text-copy',
 }

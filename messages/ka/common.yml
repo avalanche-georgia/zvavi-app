@@ -94,6 +94,11 @@ common:
       w: 'დასავლეთი'
       nw: 'ჩრდილო-დასავლეთი'
 
+  listMapSwitch:
+    label: 'ხედი'
+    list: 'სია'
+    map: 'რუკა'
+
   aspectElevationPicker:
     all: 'ყველა'
     allAria: 'ყველა ექსპოზიცია, {zone}'

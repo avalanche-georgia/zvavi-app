@@ -31,8 +31,8 @@ const ActiveSwitch = ({ partner }: { partner: Partner }) => {
   return (
     <Switch
       checked={isChecked}
+      isBusy={isPending}
       isLabelHidden
-      isReadOnly={isPending}
       label={t('admin.partners.actions.activeFor', { name })}
       onCheckedChange={handleCheckedChange}
     />

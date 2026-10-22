@@ -1,5 +1,3 @@
-import type { CSSProperties } from 'react'
-
 const round = (value: number) => Math.round(value * 10) / 10
 
 // The snow slab and the clumps it breaks into. They tile the slab exactly, with rounded corners
@@ -88,5 +86,5 @@ export const clumps = shapes.map(({ d, ox, oy, slide }) => ({
     '--rot': `${round((-1.6 * slide) / 44)}deg`,
     '--sc': round((0.06 * slide) / 44),
     transformOrigin: `${ox}px ${oy}px`,
-  } as CSSProperties,
+  } as React.CSSProperties,
 }))

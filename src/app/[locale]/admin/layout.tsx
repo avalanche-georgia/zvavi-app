@@ -23,7 +23,7 @@ const AdminLayout = ({ children }: Readonly<LayoutProps>) => {
   if (isSuccess && !isStaffRole(profile?.role)) return <NoAccess />
 
   return (
-    <div className="flex h-svh">
+    <div className="flex h-svh" data-scroll-shell>
       <AdminErrorTracking />
       <AdminSidebar />
 

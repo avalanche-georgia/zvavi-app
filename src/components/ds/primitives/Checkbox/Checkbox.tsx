@@ -41,14 +41,15 @@ const Checkbox = ({
     <div className={cn('flex flex-col', className)}>
       <div className="flex items-center gap-2">
         {/* Hugs box + text for a mouse; grows to a 44px row on touch screens */}
-        <label className="flex cursor-pointer items-center gap-3 py-0.5 pointer-coarse:min-h-11">
+        <label className="group/choice flex cursor-pointer items-center gap-3 py-0.5 pointer-coarse:min-h-11">
           <BaseCheckbox.Root
             aria-describedby={describedBy || undefined}
             aria-invalid={error ? true : undefined}
             checked={checked}
             className={cn(
               'focus-ring rounded-badge border-rule-strong bg-surface flex size-5 shrink-0 items-center justify-center border transition-colors',
-              'hover:border-muted data-checked:border-accent data-checked:bg-accent',
+              // Hovering the label text highlights the box too
+              'group-hover/choice:not-data-checked:border-muted data-checked:border-accent data-checked:bg-accent',
               error && 'border-danger',
             )}
             onCheckedChange={onCheckedChange}

@@ -20,6 +20,7 @@ import ConfirmPopoverGallery from '@ds/primitives/ConfirmPopover/ConfirmPopover.
 import CountBadgeGallery from '@ds/primitives/CountBadge/CountBadge.gallery'
 import DatePickerGallery from '@ds/primitives/DatePicker/DatePicker.gallery'
 import DateRangePickerGallery from '@ds/primitives/DateRangePicker/DateRangePicker.gallery'
+import DialogGallery from '@ds/primitives/Dialog/Dialog.gallery'
 import FieldGallery from '@ds/primitives/Field/Field.gallery'
 import IconButtonGallery from '@ds/primitives/IconButton/IconButton.gallery'
 import InfoTipGallery from '@ds/primitives/InfoTip/InfoTip.gallery'
@@ -78,6 +79,7 @@ export const galleryEntries: GalleryEntry[] = [
     id: 'confirm-popover',
     title: 'ConfirmPopover',
   },
+  { Demo: DialogGallery, group: 'overlays', id: 'dialog', title: 'Dialog' },
   { Demo: ConfirmDialogGallery, group: 'overlays', id: 'confirm-dialog', title: 'ConfirmDialog' },
   { Demo: SheetGallery, group: 'overlays', id: 'sheet', title: 'Sheet' },
   { Demo: DrawerGallery, group: 'overlays', id: 'drawer', title: 'Drawer' },

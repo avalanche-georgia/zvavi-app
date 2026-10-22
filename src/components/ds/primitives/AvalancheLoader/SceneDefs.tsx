@@ -1,4 +1,4 @@
-import { SILHOUETTE } from './geometry'
+import { silhouette } from './geometry'
 import { makeIds } from './ids'
 
 const Stop = ({ color, offset, opacity }: { color: string; offset: number; opacity?: number }) => (
@@ -22,7 +22,7 @@ const SceneDefs = ({ uid }: { uid: string }) => {
   return (
     <defs>
       <clipPath id={id('silhouette')}>
-        <path d={SILHOUETTE} />
+        <path d={silhouette} />
       </clipPath>
       <clipPath id={id('ground')}>
         <rect height="158" width="160" x="0" y="0" />

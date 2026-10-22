@@ -18,7 +18,7 @@ import ObservationsListPane from './list/ObservationsListPane'
 import ObservationsMap from './map/ObservationsMap'
 import ObservationsHeader from './ObservationsHeader'
 import ReportButton from './ReportButton'
-import ObservationsToolbar, { type ObservationsView } from './toolbar/ObservationsToolbar'
+import ObservationsToolbar, { type ListMapView } from './toolbar/ObservationsToolbar'
 
 const ObservationsContent = () => {
   const t = useTranslations()
@@ -26,7 +26,7 @@ const ObservationsContent = () => {
   const page = useObservationsPage(region.id)
   const { list, params, points, selectedObservation, setParams } = page
 
-  const [view, setView] = useState<ObservationsView>('list')
+  const [view, setView] = useState<ListMapView>('list')
   const [peekId, setPeekId] = useState<number | null>(null)
   // Matches the server render (no media queries there) on the first pass
   const isDesktop = useMediaQuery(desktopMediaQuery, { initializeWithValue: false })
@@ -48,7 +48,7 @@ const ObservationsContent = () => {
   // Desktop opens the detail right away; mobile previews the card first
   const handleMarkerClick = (id: number) => (isDesktop ? handleOpen(id) : setPeekId(id))
 
-  const handleViewChange = (nextView: ObservationsView) => {
+  const handleViewChange = (nextView: ListMapView) => {
     setView(nextView)
     setPeekId(null)
   }
@@ -56,8 +56,7 @@ const ObservationsContent = () => {
   return (
     <SplitPageWrapper
       aside={
-        // Mounted only when visible — Leaflet can't fit the region into a hidden,
-        // zero-size container
+        // Mounted only when visible: Leaflet can't fit the region into a hidden container
         (isDesktop || isMapView) && (
           <ObservationsMap
             dateBasis={params.dateBasis}

@@ -39,7 +39,7 @@ const ConfirmPopover = ({
       <Popover.Portal>
         <Popover.Positioner align="end" className="z-60" collisionPadding={16} sideOffset={6}>
           <Popover.Popup
-            className="rounded-control bg-surface shadow-float border-rule flex max-w-80 flex-col gap-3 border p-3.5 outline-hidden transition-[opacity,scale] duration-150 data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0"
+            className="rounded-media bg-surface shadow-menu border-rule flex max-w-80 flex-col gap-3 border p-3.5 outline-hidden transition-[opacity,scale] duration-150 data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0"
             initialFocus={cancelRef}
           >
             <Popover.Description className="text-copy-sm text-ink font-semibold">

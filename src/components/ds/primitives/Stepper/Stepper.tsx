@@ -17,7 +17,7 @@ type StepperProps = {
 
 const stepButtonClasses = [
   'focus-ring text-body flex size-11 items-center justify-center rounded-field transition-colors',
-  'hover:bg-tile data-disabled:cursor-default data-disabled:opacity-30',
+  'hover:bg-tile data-disabled:cursor-default data-disabled:opacity-50',
 ].join(' ')
 
 // − value + with large touch targets. Clearing the input falls back to `min`.

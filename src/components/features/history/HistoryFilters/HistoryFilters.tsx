@@ -49,7 +49,9 @@ const HistoryFilters = ({
 
   return (
     <>
-      <div ref={sentinelRef} aria-hidden className="mt-3" />
+      {/* With the bar's pt-3: 10px under the seasons on phones (the bar's own row gap),
+          20px under the calendar from sm (as above it) */}
+      <div ref={sentinelRef} aria-hidden className="-mt-0.5 sm:mt-2" />
       <div
         ref={ref}
         aria-label={t('forecast.history.filters.label')}

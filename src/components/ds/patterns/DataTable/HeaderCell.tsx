@@ -25,7 +25,7 @@ const HeaderCell = <TData extends RowData>({ header }: { header: Header<TData, u
     >
       {column.getCanSort() ? (
         <button
-          className="focus-ring hover:text-ink inline-flex items-center gap-1 rounded-sm uppercase"
+          className="focus-ring hover:text-ink rounded-badge inline-flex items-center gap-1 uppercase"
           onClick={column.getToggleSortingHandler()}
           type="button"
         >

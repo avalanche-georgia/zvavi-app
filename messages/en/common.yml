@@ -94,6 +94,11 @@ common:
       w: 'West'
       nw: 'North-west'
 
+  listMapSwitch:
+    label: 'View'
+    list: 'List'
+    map: 'Map'
+
   aspectElevationPicker:
     all: 'All'
     allAria: 'All aspects, {zone}'

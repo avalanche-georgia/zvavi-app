@@ -4,12 +4,13 @@ import { useRef, useState } from 'react'
 import { desktopMediaQuery } from '@components/features/observations/map/mapConfig'
 import { useHeaderHeight } from '@components/hooks'
 import { SplitPageWrapper } from '@components/layout'
+import type { ListMapView } from '@components/shared'
 import useListHover from '@components/shared/map/useListHover'
 import type { WeatherStation } from '@domain/types'
 import { useMediaQuery, useResizeObserver, useWindowSize } from 'usehooks-ts'
 
 import StationsMap from './map/StationsMap'
-import StationsHeader, { type StationsViewMode } from './StationsHeader'
+import StationsHeader from './StationsHeader'
 import StationsList from './StationsList'
 import useFooterHeight from './useFooterHeight'
 
@@ -22,7 +23,7 @@ type StationsViewProps = {
 
 // List next to the map on desktop; on mobile one at a time, switched in the header
 const StationsView = ({ locale, stations }: StationsViewProps) => {
-  const [view, setView] = useState<StationsViewMode>('list')
+  const [view, setView] = useState<ListMapView>('list')
   const [selectedId, setSelectedId] = useState<string | null>(null)
   // Matches the server render (no media queries there) on the first pass
   const isDesktop = useMediaQuery(desktopMediaQuery, { initializeWithValue: false })

@@ -1,7 +1,3 @@
 weatherStations:
   description: 'რეალურ დროში მონაცემები ჩვენი და ჩვენი პარტნიორების ამინდის სადგურებიდან'
   selectStation: '{name} — არჩევა'
-  view:
-    label: 'ხედი'
-    list: 'სია'
-    map: 'რუკა'

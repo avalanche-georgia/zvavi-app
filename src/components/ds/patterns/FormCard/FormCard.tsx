@@ -1,5 +1,7 @@
 import { useId } from 'react'
 
+import { RequiredMark } from '../../primitives/Field'
+
 import { cn } from '@/lib/utils'
 
 type FormCardProps = {
@@ -70,14 +72,7 @@ const FormCard = ({
             >
               <span>
                 {title}
-                {required && (
-                  <>
-                    <span aria-hidden className="text-primary">
-                      {' *'}
-                    </span>
-                    {requiredText && <span className="sr-only">{` (${requiredText})`}</span>}
-                  </>
-                )}
+                {required && <RequiredMark srText={requiredText} />}
               </span>
               {titleTag}
             </h2>

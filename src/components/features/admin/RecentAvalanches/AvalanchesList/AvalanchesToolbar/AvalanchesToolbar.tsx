@@ -20,7 +20,7 @@ const AvalanchesToolbar = ({ page, variant }: AvalanchesToolbarProps) => {
       <DateFilter page={page} />
       {variant === 'catalog' && <CatalogFilters page={page} />}
       {page.hasFilters && (
-        <Button onClick={page.onFiltersClear} size="sm" variant="secondary">
+        <Button onClick={page.onFiltersClear} variant="secondary">
           {t('admin.shared.list.clearFilters')}
         </Button>
       )}

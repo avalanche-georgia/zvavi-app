@@ -7,6 +7,7 @@ import Badge from '../Badge/Badge'
 
 const SegmentedControlGallery = () => {
   const [kind, setKind] = useState('avalanche')
+  const [dateBasis, setDateBasis] = useState('occurred')
   const [language, setLanguage] = useState('en')
 
   return (
@@ -31,13 +32,23 @@ const SegmentedControlGallery = () => {
         value={kind}
       />
       <SegmentedControl
+        ariaLabel="Date basis"
+        onChange={setDateBasis}
+        options={[
+          { label: 'Occurred', value: 'occurred' },
+          { label: 'Reported', value: 'reported' },
+        ]}
+        size="sm"
+        value={dateBasis}
+      />
+      <SegmentedControl
         ariaLabel="Language"
         onChange={setLanguage}
         options={[
           { label: 'EN', value: 'en' },
           { label: 'ქარ', value: 'ka' },
         ]}
-        size="sm"
+        size="xs"
         value={language}
       />
     </div>

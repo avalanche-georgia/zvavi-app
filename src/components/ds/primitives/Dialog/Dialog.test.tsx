@@ -1,0 +1,88 @@
+import { useRef, useState } from 'react'
+import { render, screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { describe, expect, it, vi } from 'vitest'
+
+import Dialog from './Dialog'
+
+const Harness = () => {
+  const [isOpen, setIsOpen] = useState(false)
+  // As ConfirmDialog does. Left to default, focus lands on × and opens its tooltip,
+  // which takes the first Esc
+  const confirmRef = useRef<HTMLButtonElement>(null)
+
+  return (
+    <>
+      <button onClick={() => setIsOpen(true)} type="button">
+        Open
+      </button>
+      <Dialog
+        closeLabel="Close"
+        footer={
+          <button ref={confirmRef} type="button">
+            Confirm
+          </button>
+        }
+        initialFocus={confirmRef}
+        isOpen={isOpen}
+        onOpenChange={setIsOpen}
+        title="Publish forecast #180"
+      >
+        <p>It goes public.</p>
+      </Dialog>
+    </>
+  )
+}
+
+describe('Dialog', () => {
+  it('opens named by its title, with the body as description', async () => {
+    render(<Harness />)
+
+    await userEvent.click(screen.getByRole('button', { name: 'Open' }))
+
+    expect(
+      screen.getByRole('dialog', { name: 'Publish forecast #180' }),
+    ).toHaveAccessibleDescription('It goes public.')
+  })
+
+  it('closes on Escape, returning focus to the opener', async () => {
+    render(<Harness />)
+    const opener = screen.getByRole('button', { name: 'Open' })
+
+    await userEvent.click(opener)
+    // Esc only reaches the dialog once focus has moved into it
+    await waitFor(() => expect(screen.getByRole('button', { name: 'Confirm' })).toHaveFocus())
+    await userEvent.keyboard('{Escape}')
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
+    expect(opener).toHaveFocus()
+  })
+
+  it('closes on ×', async () => {
+    render(<Harness />)
+
+    await userEvent.click(screen.getByRole('button', { name: 'Open' }))
+    await userEvent.click(await screen.findByRole('button', { name: 'Close' }))
+
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
+  })
+
+  // Esc still reports a close; the caller ignores it while busy (as ConfirmDialog does)
+  it('while not dismissible disables × and leaves Esc to the caller', async () => {
+    const onOpenChange = vi.fn()
+
+    render(
+      <Dialog
+        closeLabel="Close"
+        footer={null}
+        isDismissible={false}
+        isOpen
+        onOpenChange={onOpenChange}
+        title="Publishing…"
+      />,
+    )
+    await userEvent.keyboard('{Escape}')
+
+    expect(screen.getByRole('button', { name: 'Close' })).toBeDisabled()
+    expect(onOpenChange).toHaveBeenCalledWith(false, expect.anything())
+  })
+})

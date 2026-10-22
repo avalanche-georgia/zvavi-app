@@ -79,12 +79,16 @@ export const radiusClasses: Record<RadiusToken, string> = {
   card: 'rounded-card',
   control: 'rounded-control',
   field: 'rounded-field',
+  item: 'rounded-item',
   media: 'rounded-media',
   sheet: 'rounded-sheet',
 }
 
 export const shadowClasses: Record<ShadowToken, string> = {
   float: 'shadow-float',
+  marker: 'shadow-marker',
+  'marker-cluster': 'shadow-marker-cluster',
+  'marker-selected': 'shadow-marker-selected',
   menu: 'shadow-menu',
   overlay: 'shadow-overlay',
   panel: 'shadow-panel',
