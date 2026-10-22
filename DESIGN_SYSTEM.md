@@ -213,8 +213,13 @@ Rules:
 - **Sheets** (`patterns/Sheet`): bottom sheet on mobile, side panel from `lg`. `isTall` fixes the
   mobile height; `isWide` widens the desktop panel (`w-160` instead of `w-120`) for records with more
   to lay out side by side, e.g. a member's facts and QR code. No width overrides through `className`.
-- **Required acknowledgements** (the first-visit disclaimer): `primitives/Dialog` without `closeLabel`
-  (no ×) and with `isDismissible={false}`, ignoring `onOpenChange`; only its own button closes it.
+- **Dialogs** (`primitives/Dialog`) are closable by default: ×, backdrop and Esc (`closeLabel` and
+  `onOpenChange` required). `isWide` (`w-160` instead of `w-120`) for long reading. `isCloseDisabled`
+  only for a required acknowledgement (the first-visit disclaimer): no ×, backdrop and Esc do nothing,
+  only its own footer button closes it. `isDismissible={false}` is different — a busy dialog that
+  keeps a disabled ×.
+- **Drag to reorder** (`patterns/SortableItem`): the lifted row gets a `primary` ring; give the item
+  its row's radius (a flat list row rounds only while lifted: `data-dragging:rounded-media`).
 - **Confirming a destructive action** (delete, remove, unlink, discard unsaved input) — always asked,
   never replaced by an Undo, never swapped inline into a footer or action bar:
   - An icon button that asks (trash / unlink on a card): wrap it in `primitives/ConfirmPopover`. It

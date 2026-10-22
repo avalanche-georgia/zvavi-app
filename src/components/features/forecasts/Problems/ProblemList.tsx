@@ -47,7 +47,7 @@ const ProblemList = ({ onDelete, onEdit, onReorder, problems }: ProblemListProps
         {problems.map(({ fieldKey, ...problem }, index) => (
           <SortableItem
             key={fieldKey}
-            // Card radius, so the drop-target ring follows the card's corners
+            // Card radius, so the lifted ring follows the card's corners
             className="group rounded-card"
             id={fieldKey}
             index={index}

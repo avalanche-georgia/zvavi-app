@@ -7,14 +7,15 @@ import Dialog from './Dialog'
 import DialogList from './DialogList'
 import { Button } from '../Button'
 
-type DemoKind = 'busy' | 'list' | 'plain' | 'required' | 'titleOnly'
+type DemoKind = 'busy' | 'list' | 'plain' | 'required' | 'titleOnly' | 'wide'
 
 const demoKinds: { kind: DemoKind; label: string }[] = [
   { kind: 'plain', label: 'With body' },
   { kind: 'titleOnly', label: 'Title only' },
   { kind: 'list', label: 'With a list' },
   { kind: 'busy', label: 'Not dismissible (busy)' },
-  { kind: 'required', label: 'Required acknowledgement (no ×)' },
+  { kind: 'wide', label: 'Wide' },
+  { kind: 'required', label: 'Close disabled, wide (disclaimer)' },
 ]
 
 const forecastLinks = [
@@ -42,12 +43,10 @@ const DialogGallery = () => {
   const handleClose = () => setOpenKind(null)
 
   const handleOpenChange = (isOpen: boolean) => {
-    if (!isOpen && !isBusy && !isRequired) handleClose()
+    if (!isOpen && !isBusy) handleClose()
   }
 
-  const footer = isRequired ? (
-    <Button onClick={handleClose}>Continue</Button>
-  ) : (
+  const footer = (
     <>
       <Button onClick={handleClose} variant="secondary">
         Cancel
@@ -66,22 +65,33 @@ const DialogGallery = () => {
         </Button>
       ))}
       <Dialog
-        closeLabel={isRequired ? undefined : 'Close'}
+        closeLabel="Close"
         footer={footer}
         icon={icon}
-        isDismissible={!isBusy && !isRequired}
-        isOpen={openKind !== null}
+        isDismissible={!isBusy}
+        isOpen={openKind !== null && !isRequired}
+        isWide={openKind === 'wide'}
         onOpenChange={handleOpenChange}
         title={openKind === 'list' ? 'Publish 7 forecasts' : 'Publish forecast #180'}
       >
-        {openKind === 'plain' && <p>It becomes visible on the public site right away.</p>}
+        {(openKind === 'plain' || openKind === 'wide') && (
+          <p>It becomes visible on the public site right away.</p>
+        )}
         {openKind === 'list' && (
           <DialogList items={forecastLinks} moreLabel={(count) => `+${count} more`} />
         )}
-        {isRequired && <p>Only Continue closes it: no ×, backdrop or Esc.</p>}
         {isBusy && (
           <p>Backdrop, × and Esc do nothing until the action settles. Press Cancel to close.</p>
         )}
+      </Dialog>
+      <Dialog
+        footer={<Button onClick={handleClose}>Continue</Button>}
+        isCloseDisabled
+        isOpen={isRequired}
+        isWide
+        title="Before you continue"
+      >
+        <p>Only Continue closes it: no ×, and the backdrop and Esc do nothing.</p>
       </Dialog>
     </div>
   )

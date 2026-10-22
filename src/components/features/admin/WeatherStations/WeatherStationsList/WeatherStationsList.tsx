@@ -58,7 +58,7 @@ const WeatherStationsList = ({
         {stations.map((station, index) => (
           <SortableItem
             key={station.id}
-            className="border-rule bg-surface data-dragging:shadow-float border-b last:border-b-0"
+            className="border-rule bg-surface data-dragging:rounded-media data-dragging:shadow-float border-b last:border-b-0"
             id={station.id}
             index={index}
           >

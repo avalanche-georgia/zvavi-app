@@ -5,7 +5,7 @@ import { AnalyticsConsentField } from '@components/shared/AnalyticsConsent'
 import { Button, Checkbox, Dialog } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 
-// A required acknowledgement: no ×, backdrop or Esc — only Continue, once ticked, closes it
+// A required acknowledgement: only Continue, once ticked, closes it
 const DisclaimerModal = ({ onAccept }: { onAccept: VoidFunction }) => {
   const t = useTranslations()
   const { setConsent, status: analyticsStatus } = useAnalyticsConsent()
@@ -32,16 +32,11 @@ const DisclaimerModal = ({ onAccept }: { onAccept: VoidFunction }) => {
   )
 
   return (
-    <Dialog
-      footer={footer}
-      isDismissible={false}
-      isOpen
-      onOpenChange={() => undefined}
-      title={t('common.disclaimer.title')}
-    >
+    <Dialog footer={footer} isCloseDisabled isOpen isWide title={t('common.disclaimer.title')}>
       <p>{t('common.disclaimer.content')}</p>
       <Checkbox
         checked={isAccepted}
+        className="self-end"
         label={t('common.disclaimer.checkbox')}
         onCheckedChange={setIsAccepted}
       />

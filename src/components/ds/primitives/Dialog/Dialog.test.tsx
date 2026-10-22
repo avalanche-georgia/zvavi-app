@@ -83,19 +83,19 @@ describe('Dialog', () => {
     await userEvent.keyboard('{Escape}')
 
     expect(screen.getByRole('button', { name: 'Close' })).toBeDisabled()
-    expect(onOpenChange).toHaveBeenCalledWith(false, expect.anything())
+    expect(onOpenChange).toHaveBeenCalledWith(false)
   })
 
-  it('has no × without a closeLabel', () => {
+  it('with close disabled has no × and ignores Esc', async () => {
     render(
       <Dialog
         footer={<button type="button">Continue</button>}
-        isDismissible={false}
+        isCloseDisabled
         isOpen
-        onOpenChange={vi.fn()}
         title="Before you go"
       />,
     )
+    await userEvent.keyboard('{Escape}')
 
     const buttons = within(screen.getByRole('dialog')).getAllByRole('button')
 

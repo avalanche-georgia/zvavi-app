@@ -36,7 +36,7 @@ const SortableItemGallery = () => {
         {stations.map((station, index) => (
           <SortableItem
             key={station}
-            className="border-rule bg-surface data-dragging:shadow-float border-b last:border-b-0"
+            className="border-rule bg-surface data-dragging:rounded-media data-dragging:shadow-float border-b last:border-b-0"
             disabled={station.startsWith('Disabled')}
             id={station}
             index={index}
