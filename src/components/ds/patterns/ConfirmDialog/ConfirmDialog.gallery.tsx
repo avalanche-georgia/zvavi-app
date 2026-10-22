@@ -27,7 +27,7 @@ const ConfirmDialogGallery = () => {
     try {
       await wait(true)
     } catch (error) {
-      toastError('ConfirmDialogGallery', {})
+      toastError('ConfirmDialogGallery', { error })
       throw error
     }
   }

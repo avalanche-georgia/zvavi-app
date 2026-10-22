@@ -145,6 +145,8 @@ Rules:
 - **Hit targets are at least 44×44px** on touch.
   - This matches Apple HIG and WCAG 2.5.5 (AAA). WCAG 2.5.8 (AA) sets 24px as the floor.
   - Our users often report from the field with gloves or cold hands.
+  - Exception: chips are 40px on every pointer (owner's call — 44px rows of chips looked too heavy;
+    a hit-area `::after` gets clipped in sideways-scrolling chip rows).
   - Visually smaller controls extend their hit area **on touch screens only**, with the
     `pointer-coarse:` variant (e.g. `after:absolute pointer-coarse:after:-inset-3`). With a mouse the
     hit area hugs the visible control; an invisible margin there makes the cursor flip to a pointer

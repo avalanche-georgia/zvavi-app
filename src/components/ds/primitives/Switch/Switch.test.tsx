@@ -26,9 +26,10 @@ describe('Switch', () => {
   })
 
   it.each([
-    ['read-only', { isReadOnly: true }, null],
-    ['busy', { isBusy: true }, 'true'],
-  ])('ignores input while %s', async (_case, props, ariaBusy) => {
+    ['read-only', { isReadOnly: true }, null, 'cursor-not-allowed'],
+    ['busy', { isBusy: true }, 'true', 'cursor-progress'],
+    ['busy and read-only', { isBusy: true, isReadOnly: true }, 'true', 'cursor-progress'],
+  ])('ignores input while %s', async (_case, props, ariaBusy, cursor) => {
     const onCheckedChange = vi.fn()
 
     render(<Switch checked={false} label="Active" onCheckedChange={onCheckedChange} {...props} />)
@@ -39,5 +40,6 @@ describe('Switch', () => {
 
     expect(onCheckedChange).not.toHaveBeenCalled()
     expect(toggle.getAttribute('aria-busy')).toBe(ariaBusy)
+    expect(screen.getByText('Active').closest('label')).toHaveClass(cursor)
   })
 })

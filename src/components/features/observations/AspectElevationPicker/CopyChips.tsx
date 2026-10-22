@@ -33,7 +33,7 @@ const CopyChips = ({ activeZone, onZoneChange, value }: CopyChipsProps) => {
             key={zone}
             aria-pressed={isMatched}
             className={cn(
-              'h-11 rounded-full border px-3.5 font-semibold whitespace-nowrap transition-colors duration-120 sm:h-8',
+              'h-10 rounded-full border px-3.5 font-semibold whitespace-nowrap transition-colors duration-120 sm:h-8',
               'focus-visible:outline-accent focus-visible:outline-2 focus-visible:outline-offset-2',
               'disabled:border-rule disabled:text-body disabled:opacity-45',
               isMatched
