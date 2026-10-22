@@ -5,8 +5,8 @@ import { useToast } from '@components/hooks'
 import useDiceBearAvatar from '@components/hooks/useDiceBearAvatar'
 import { useAvatarUpload } from '@data/hooks/userProfiles'
 import type { UserProfile } from '@domain/types'
-import { Button } from '@ds/primitives'
-import { LoaderIcon, Upload } from 'lucide-react'
+import { Button, Spinner } from '@ds/primitives'
+import { Upload } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 import { cn } from '@/lib/utils'
@@ -65,7 +65,7 @@ const AvatarUpload = ({ profile }: { profile: UserProfile }) => {
         />
         {isLoading && (
           <div className="absolute inset-0 grid place-items-center">
-            <LoaderIcon aria-hidden className="text-muted size-5 animate-spin" />
+            <Spinner className="text-muted" />
           </div>
         )}
       </div>
