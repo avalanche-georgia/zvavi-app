@@ -245,6 +245,18 @@
   ::file-selector-button {
     border-color: var(--color-rule, currentcolor);
   }
+
+  /* Public pages scroll the document: keep the scrollbar's room even on pages too short to
+     scroll, so the centred header and footer don't shift by half a scrollbar between pages.
+     Admin scrolls its own <main> inside a fixed-height shell, where the room would be an
+     empty strip */
+  html {
+    scrollbar-gutter: stable;
+  }
+
+  html:has([data-scroll-shell]) {
+    scrollbar-gutter: auto;
+  }
 }
 
 :root {
