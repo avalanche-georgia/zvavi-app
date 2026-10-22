@@ -16,14 +16,14 @@ const ObservationsHeader = ({ ref, regionName, total, visibleCount }: Observatio
 
   return (
     <div ref={ref} className="px-4 pt-4.5 pb-1">
-      <h1 className="m-0 text-2xl leading-[1.1] font-bold tracking-[-.02em]">
-        {t('observations.pageTitle')}
-      </h1>
-      <p className="text-muted mt-1 min-h-5 text-[13px]">
-        {total !== undefined &&
-          (isFiltered
+      <h1 className="text-title m-0 font-bold">{t('observations.pageTitle')}</h1>
+      {/* A no-break space holds the line while the count loads */}
+      <p className="text-copy-sm text-muted mt-1">
+        {total === undefined
+          ? '\u00A0'
+          : isFiltered
             ? t('observations.summary.filtered', { count: visibleCount, regionName, total })
-            : t('observations.summary.total', { regionName, total }))}
+            : t('observations.summary.total', { regionName, total })}
       </p>
     </div>
   )
