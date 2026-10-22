@@ -17,4 +17,11 @@ window.matchMedia ??= (query: string) =>
     removeListener: () => undefined,
   }) as MediaQueryList
 
+// jsdom has no ResizeObserver; dnd-kit reads it as soon as it loads
+globalThis.ResizeObserver ??= class {
+  disconnect() {}
+  observe() {}
+  unobserve() {}
+}
+
 afterEach(() => cleanup())

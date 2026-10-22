@@ -2,10 +2,10 @@ import { useState } from 'react'
 import { useAnalyticsConsent } from '@components/hooks'
 import { LanguageToggle } from '@components/shared'
 import { AnalyticsConsentField } from '@components/shared/AnalyticsConsent'
-import { Button, Checkbox } from '@components/ui'
-import { Modal, ModalBody, ModalFooter } from '@components/ui/Modal'
+import { Button, Checkbox, Dialog } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 
+// A required acknowledgement: no ×, backdrop or Esc — only Continue, once ticked, closes it
 const DisclaimerModal = ({ onAccept }: { onAccept: VoidFunction }) => {
   const t = useTranslations()
   const { setConsent, status: analyticsStatus } = useAnalyticsConsent()
@@ -13,9 +13,7 @@ const DisclaimerModal = ({ onAccept }: { onAccept: VoidFunction }) => {
   // Optional and independent of the safety acknowledgement; never pre-ticked for a new choice
   const [isAnalyticsAllowed, setIsAnalyticsAllowed] = useState(analyticsStatus === 'granted')
 
-  const handleClose = () => {
-    if (!isAccepted) return
-
+  const handleContinue = () => {
     if (analyticsStatus) {
       setConsent(isAnalyticsAllowed)
     }
@@ -23,41 +21,34 @@ const DisclaimerModal = ({ onAccept }: { onAccept: VoidFunction }) => {
     onAccept()
   }
 
+  const footer = (
+    // One row on every screen: the language stays next to Continue
+    <div className="flex flex-1 items-center justify-between gap-3">
+      <LanguageToggle />
+      <Button disabled={!isAccepted} onClick={handleContinue}>
+        {t('common.actions.continue')}
+      </Button>
+    </div>
+  )
+
   return (
-    <Modal
-      hideCloseButton
+    <Dialog
+      footer={footer}
+      isDismissible={false}
       isOpen
-      onClose={handleClose}
+      onOpenChange={() => undefined}
       title={t('common.disclaimer.title')}
-      titleClassName="text-center"
     >
-      <ModalBody>
-        <div className="mb-4 flex flex-col gap-6">
-          <p>{t('common.disclaimer.content')}</p>
-          <Checkbox
-            isChecked={isAccepted}
-            label={t('common.disclaimer.checkbox')}
-            onChange={setIsAccepted}
-          />
-          {analyticsStatus && (
-            <AnalyticsConsentField
-              isAllowed={isAnalyticsAllowed}
-              onChange={setIsAnalyticsAllowed}
-            />
-          )}
-        </div>
-      </ModalBody>
-
-      <ModalFooter>
-        <div>
-          <LanguageToggle />
-        </div>
-
-        <Button className="ml-auto" disabled={!isAccepted} onClick={handleClose}>
-          {t('common.actions.continue')}
-        </Button>
-      </ModalFooter>
-    </Modal>
+      <p>{t('common.disclaimer.content')}</p>
+      <Checkbox
+        checked={isAccepted}
+        label={t('common.disclaimer.checkbox')}
+        onCheckedChange={setIsAccepted}
+      />
+      {analyticsStatus && (
+        <AnalyticsConsentField isAllowed={isAnalyticsAllowed} onChange={setIsAnalyticsAllowed} />
+      )}
+    </Dialog>
   )
 }
 

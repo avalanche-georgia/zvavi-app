@@ -12,8 +12,9 @@ type DialogProps = {
   // the title says it all.
   children?: React.ReactNode
   className?: string
-  // Accessible name of the × in the header (also its tooltip)
-  closeLabel: string
+  // Accessible name of the × in the header (also its tooltip). Left out, there is
+  // no ×: for a required acknowledgement that only its own button closes
+  closeLabel?: string
   // Buttons, dismiss first: [Cancel] [Primary]. Stacked, primary on top, on phones.
   footer: React.ReactNode
   // Leading mark in the header, e.g. ConfirmDialog's tone tile
@@ -78,12 +79,14 @@ const Dialog = ({
           <BaseDialog.Title className="text-heading min-w-0 flex-1 font-semibold text-pretty">
             {title}
           </BaseDialog.Title>
-          <BaseDialog.Close
-            disabled={!isDismissible}
-            render={<IconButton aria-label={closeLabel} size="md" />}
-          >
-            <X aria-hidden className="size-4.5" />
-          </BaseDialog.Close>
+          {closeLabel && (
+            <BaseDialog.Close
+              disabled={!isDismissible}
+              render={<IconButton aria-label={closeLabel} size="md" />}
+            >
+              <X aria-hidden className="size-4.5" />
+            </BaseDialog.Close>
+          )}
         </div>
         {children && (
           <BaseDialog.Description

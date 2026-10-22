@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { FallbackImage } from '@components/ui'
+import { FallbackImage } from '@ds/primitives'
 import useEmblaCarousel from 'embla-carousel-react'
 import { ChevronLeft, ChevronRight, ImageOff } from 'lucide-react'
 import { useTranslations } from 'next-intl'

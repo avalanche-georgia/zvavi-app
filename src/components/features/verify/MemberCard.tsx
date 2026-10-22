@@ -3,11 +3,12 @@
 import { Icon } from '@components/icons'
 import { dateFormat } from '@domain/constants'
 import type { MemberStatus } from '@domain/types'
-import clsx from 'clsx'
 import { format, parseISO } from 'date-fns'
 import { useTranslations } from 'next-intl'
 
 import { statusConfig } from './statusConfig'
+
+import { cn } from '@/lib/utils'
 
 type MemberCardProps = {
   expiresAt: string | null
@@ -37,9 +38,9 @@ const MemberCard = ({
 
   return (
     <div className="w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-xl">
-      <div className={clsx('p-6 text-center', config.header.bg)}>
+      <div className={cn('p-6 text-center', config.header.bg)}>
         <div className="mb-2 flex justify-center">
-          <div className={clsx('rounded-full p-3', config.header.iconBg)}>
+          <div className={cn('rounded-full p-3', config.header.iconBg)}>
             <Icon className="text-white" icon={config.icon} size="lg" />
           </div>
         </div>
@@ -49,7 +50,7 @@ const MemberCard = ({
       <div className="p-6">
         <div className="mb-4 flex items-center justify-center gap-2">
           <span
-            className={clsx(
+            className={cn(
               'rounded-full px-4 py-1 text-sm font-medium',
               config.badge.bg,
               config.badge.text,
@@ -73,7 +74,7 @@ const MemberCard = ({
           {formattedExpiresAt && (
             <div className="flex items-center justify-between border-b pb-2">
               <span className="text-gray-500">{t('verify.card.expiresAt')}</span>
-              <span className={clsx('font-medium', status === 'expired' && 'text-red-600')}>
+              <span className={cn('font-medium', status === 'expired' && 'text-red-600')}>
                 {formattedExpiresAt}
               </span>
             </div>

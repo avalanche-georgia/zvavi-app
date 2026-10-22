@@ -7,13 +7,14 @@ import Dialog from './Dialog'
 import DialogList from './DialogList'
 import { Button } from '../Button'
 
-type DemoKind = 'busy' | 'list' | 'plain' | 'titleOnly'
+type DemoKind = 'busy' | 'list' | 'plain' | 'required' | 'titleOnly'
 
 const demoKinds: { kind: DemoKind; label: string }[] = [
   { kind: 'plain', label: 'With body' },
   { kind: 'titleOnly', label: 'Title only' },
   { kind: 'list', label: 'With a list' },
   { kind: 'busy', label: 'Not dismissible (busy)' },
+  { kind: 'required', label: 'Required acknowledgement (no ×)' },
 ]
 
 const forecastLinks = [
@@ -36,14 +37,17 @@ const icon = (
 const DialogGallery = () => {
   const [openKind, setOpenKind] = useState<DemoKind | null>(null)
   const isBusy = openKind === 'busy'
+  const isRequired = openKind === 'required'
 
   const handleClose = () => setOpenKind(null)
 
   const handleOpenChange = (isOpen: boolean) => {
-    if (!isOpen && !isBusy) handleClose()
+    if (!isOpen && !isBusy && !isRequired) handleClose()
   }
 
-  const footer = (
+  const footer = isRequired ? (
+    <Button onClick={handleClose}>Continue</Button>
+  ) : (
     <>
       <Button onClick={handleClose} variant="secondary">
         Cancel
@@ -62,10 +66,10 @@ const DialogGallery = () => {
         </Button>
       ))}
       <Dialog
-        closeLabel="Close"
+        closeLabel={isRequired ? undefined : 'Close'}
         footer={footer}
         icon={icon}
-        isDismissible={!isBusy}
+        isDismissible={!isBusy && !isRequired}
         isOpen={openKind !== null}
         onOpenChange={handleOpenChange}
         title={openKind === 'list' ? 'Publish 7 forecasts' : 'Publish forecast #180'}
@@ -74,6 +78,7 @@ const DialogGallery = () => {
         {openKind === 'list' && (
           <DialogList items={forecastLinks} moreLabel={(count) => `+${count} more`} />
         )}
+        {isRequired && <p>Only Continue closes it: no ×, backdrop or Esc.</p>}
         {isBusy && (
           <p>Backdrop, × and Esc do nothing until the action settles. Press Cancel to close.</p>
         )}

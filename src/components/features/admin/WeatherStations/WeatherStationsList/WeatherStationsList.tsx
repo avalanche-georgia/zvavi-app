@@ -2,10 +2,10 @@
 
 import { ListEmptyState } from '@components/features/admin/shared'
 import { Loading } from '@components/shared'
-import { SortableItem } from '@components/ui'
 import { DragDropProvider, type DragEndEvent } from '@dnd-kit/react'
 import { isSortableOperation } from '@dnd-kit/react/sortable'
 import type { WeatherStation } from '@domain/types'
+import { SortableItem } from '@ds/patterns'
 import { useTranslations } from 'next-intl'
 
 import StationRow from './StationRow'

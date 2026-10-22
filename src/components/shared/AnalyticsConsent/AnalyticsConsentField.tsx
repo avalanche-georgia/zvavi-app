@@ -1,4 +1,4 @@
-import { Checkbox } from '@components/ui'
+import { Checkbox } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 
 import { renderPrivacyPolicyLink } from './PrivacyPolicyLink'
@@ -12,16 +12,12 @@ const AnalyticsConsentField = ({ isAllowed, onChange }: AnalyticsConsentFieldPro
   const t = useTranslations()
 
   return (
-    <div className="flex flex-col gap-1">
-      <Checkbox
-        isChecked={isAllowed}
-        label={t('common.disclaimer.analyticsCheckbox')}
-        onChange={onChange}
-      />
-      <p className="pl-7 text-xs text-gray-500">
-        {t.rich('common.disclaimer.analyticsHint', { link: renderPrivacyPolicyLink })}
-      </p>
-    </div>
+    <Checkbox
+      checked={isAllowed}
+      description={t.rich('common.disclaimer.analyticsHint', { link: renderPrivacyPolicyLink })}
+      label={t('common.disclaimer.analyticsCheckbox')}
+      onCheckedChange={onChange}
+    />
   )
 }
 

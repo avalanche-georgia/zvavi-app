@@ -1,11 +1,12 @@
 import avalancheGIF from '@assets/images/avalanche.gif'
 import { PageWrapper } from '@components/layout'
-import { ButtonLink } from '@components/shared'
 import fetchActiveRegions from '@data/queries/fetchActiveRegions'
 import { regionLocalStorageKey } from '@domain/constants'
+import { getButtonClasses } from '@ds/primitives'
 import { cookies } from 'next/headers'
 import Image from 'next/image'
 import { getTranslations } from 'next-intl/server'
+import { Link } from 'src/i18n/navigation'
 
 import { routes } from '@/routes'
 
@@ -36,7 +37,9 @@ const NotFound = async () => {
         <h1 className="text-2xl font-semibold text-gray-900">{t('common.notFound.title')}</h1>
         <p className="max-w-lg whitespace-pre-line text-gray-600">{t('common.notFound.message')}</p>
 
-        <ButtonLink href={href}>{t('common.notFound.linkText')}</ButtonLink>
+        <Link className={getButtonClasses()} href={href}>
+          {t('common.notFound.linkText')}
+        </Link>
       </div>
     </PageWrapper>
   )

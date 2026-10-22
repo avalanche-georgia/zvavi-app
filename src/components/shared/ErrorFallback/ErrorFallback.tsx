@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
-import { Button } from '@components/ui'
+import { Button } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 
 import { reportError } from '@/lib/observability'
@@ -25,7 +25,7 @@ const ErrorFallback = ({ error, reset }: ErrorFallbackProps) => {
 
   return (
     <div className="flex flex-col items-center justify-center gap-4 p-4 py-12 md:p-6">
-      <p className="text-gray-600" role="alert">
+      <p className="text-muted" role="alert">
         {t('common.messages.error')}
       </p>
       <Button onClick={reset} variant="secondary">

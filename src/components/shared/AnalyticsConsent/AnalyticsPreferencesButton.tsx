@@ -1,7 +1,7 @@
 'use client'
 
 import { useAnalyticsConsent, useBoolean } from '@components/hooks'
-import { Modal, ModalBody, ModalFooter } from '@components/ui/Modal'
+import { Dialog } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 
 import AnalyticsConsentActions from './AnalyticsConsentActions'
@@ -15,6 +15,10 @@ const AnalyticsPreferencesButton = ({ className }: { className?: string }) => {
 
   if (!status) return null
 
+  const handleOpenChange = (isNextOpen: boolean) => {
+    if (!isNextOpen) closeModal()
+  }
+
   const handleChoose = (isGranted: boolean) => {
     setConsent(isGranted)
     closeModal()
@@ -26,19 +30,17 @@ const AnalyticsPreferencesButton = ({ className }: { className?: string }) => {
         {t('common.analyticsConsent.preferences')}
       </button>
 
-      <Modal isOpen={isOpen} onClose={closeModal} title={t('common.analyticsConsent.title')}>
-        <ModalBody>
-          <div className="flex max-w-md flex-col gap-3 text-sm">
-            <p>{t('common.analyticsConsent.description')}</p>
-            <p className="font-medium">{t(`common.analyticsConsent.status.${status}`)}</p>
-            <PrivacyPolicyLink>{t('common.analyticsConsent.privacyLink')}</PrivacyPolicyLink>
-          </div>
-        </ModalBody>
-
-        <ModalFooter>
-          <AnalyticsConsentActions className="w-full" onConsentChoose={handleChoose} />
-        </ModalFooter>
-      </Modal>
+      <Dialog
+        closeLabel={t('common.actions.close')}
+        footer={<AnalyticsConsentActions className="flex-1" onConsentChoose={handleChoose} />}
+        isOpen={isOpen}
+        onOpenChange={handleOpenChange}
+        title={t('common.analyticsConsent.title')}
+      >
+        <p>{t('common.analyticsConsent.description')}</p>
+        <p className="font-semibold">{t(`common.analyticsConsent.status.${status}`)}</p>
+        <PrivacyPolicyLink>{t('common.analyticsConsent.privacyLink')}</PrivacyPolicyLink>
+      </Dialog>
     </>
   )
 }

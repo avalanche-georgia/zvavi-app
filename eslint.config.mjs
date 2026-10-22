@@ -23,8 +23,8 @@ const colourFunction = '/\\b(rgba?|hsla?|oklch)\\(/'
 // Shared by both ds import blocks below (a later block replaces the rule's options, not merges them)
 const dsImportPatterns = [
   {
-    group: ['@components/ui', '@components/ui/*', '@components/features/*', '**/ui/*'],
-    message: 'ds must not depend on the legacy kit or on features.',
+    group: ['@components/features/*'],
+    message: 'ds must not depend on features.',
   },
   { group: ['clsx'], message: 'Use cn() from @/lib/utils.' },
 ]

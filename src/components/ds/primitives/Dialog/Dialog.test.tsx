@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
@@ -84,5 +84,22 @@ describe('Dialog', () => {
 
     expect(screen.getByRole('button', { name: 'Close' })).toBeDisabled()
     expect(onOpenChange).toHaveBeenCalledWith(false, expect.anything())
+  })
+
+  it('has no × without a closeLabel', () => {
+    render(
+      <Dialog
+        footer={<button type="button">Continue</button>}
+        isDismissible={false}
+        isOpen
+        onOpenChange={vi.fn()}
+        title="Before you go"
+      />,
+    )
+
+    const buttons = within(screen.getByRole('dialog')).getAllByRole('button')
+
+    expect(buttons).toHaveLength(1)
+    expect(buttons[0]).toHaveAccessibleName('Continue')
   })
 })

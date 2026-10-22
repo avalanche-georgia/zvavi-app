@@ -1,4 +1,4 @@
-import clsx from 'clsx'
+import { cn } from '@/lib/utils'
 
 type PageWrapperProps = {
   children: React.ReactNode
@@ -8,7 +8,7 @@ type PageWrapperProps = {
 
 const PageWrapper = ({ children, isAdmin, title }: PageWrapperProps) => (
   <section
-    className={clsx(
+    className={cn(
       'mx-auto px-4 pt-3 pb-6',
       isAdmin ? 'max-w-(--breakpoint-xl)' : 'max-w-(--breakpoint-md)',
     )}

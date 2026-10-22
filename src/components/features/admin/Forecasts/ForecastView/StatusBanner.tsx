@@ -41,7 +41,7 @@ const StatusBanner = ({
   return (
     <div
       className={cn(
-        'text-copy-sm flex items-center gap-3 rounded-[14px] py-3 pr-3.5 pl-4 leading-[1.45]',
+        'text-copy-sm rounded-card flex items-center gap-3 py-3 pr-3.5 pl-4 leading-[1.45]',
         className,
       )}
       role="status"

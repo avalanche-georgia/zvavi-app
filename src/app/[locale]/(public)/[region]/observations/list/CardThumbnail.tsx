@@ -1,6 +1,6 @@
 import { PhotoPlaceholder } from '@components/features/observations'
-import { FallbackImage } from '@components/ui'
 import type { PhotoUrls } from '@domain/types'
+import { FallbackImage } from '@ds/primitives'
 
 const CardThumbnail = ({ photos }: { photos: PhotoUrls[] }) => {
   const [firstPhoto] = photos

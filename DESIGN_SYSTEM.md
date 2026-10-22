@@ -1,14 +1,14 @@
 # Design System
 
-The architecture of the Zvavi UI kit (`ds`) and the long-running plan to migrate away from the legacy
-kit (`src/components/ui`). **Read this before any UI task.** Every task that touches UI should leave
-the codebase a little closer to the end state described here.
+The architecture of the Zvavi UI kit (`ds`) and the record of the migration away from the legacy
+kit (`src/components/ui`, now removed). **Read this before any UI task.** Every task that touches UI
+should leave the codebase a little closer to the end state described here.
 
 ---
 
 ## Why
 
-The legacy kit grew ad hoc:
+The legacy kit (removed) grew ad hoc:
 - It mixes three headless libraries: Headless UI, Radix and base-ui.
 - It uses raw Tailwind palette classes (`gray-*`, `red-*`, …) and arbitrary values (`text-[13px]`,
   `rounded-[11px]`) instead of tokens.
@@ -27,17 +27,16 @@ next to it and migrate screen by screen.
 ```
 src/components/
 ├── ds/                  # new kit — the only place new generic UI goes
-│   ├── primitives/      # Button, Badge, Checkbox, Field, FieldGroup, TextField, NumberField,
+│   ├── primitives/      # Button, Badge, Checkbox, Field, FieldGroup, TextField, NumberField, FallbackImage,
 │   │                    # Textarea, ChipGroup, ToggleGrid, SegmentedControl, Select, Stepper, InfoTip,
 │   │                    # IconButton, RatingScale, Menu, Pagination, SearchField,
 │   │                    # StatusPill, CountBadge, Skeleton, Spinner, AvalancheLoader, Dialog (+ DialogList),
 │   │                    # RadioGroup, Popover, Calendar, DatePicker, DateRangePicker, TimeField, MultiChipGroup
 │   ├── patterns/        # ClampedText, ContentCard, FormCard, StickyActionBar, SuccessState, DataTable, LoadingState,
-│   │                    # ConfirmDialog, FooterActions, Sheet, Drawer, QuickDateField
+│   │                    # ConfirmDialog, FooterActions, Sheet, Drawer, QuickDateField, SortableItem
 │   └── form/            # react-hook-form bindings: FormTextField, FormTextarea, FormNumberField,
 │                        # FormStepper, FormChipGroup, FormRadioGroup, FormCheckbox, FormSwitch, FormSelect, FormDateField,
 │                        # useFormFieldError
-├── ui/                  # legacy kit — frozen, deleted piece by piece
 └── features/            # domain components, built from ds
     └── admin/shared/    # admin-wide building blocks that need translations or routing, so they
                          # can't live in ds: list toolbar pieces, URL list state, RecordMenu,
@@ -45,16 +44,11 @@ src/components/
 ```
 
 - Import through the `@ds/*` alias.
-- `ui/` is **frozen**:
-  - Don't add components to it.
-  - Don't restyle its components.
-  - Don't add variants to them.
-  - A legacy export gets `@deprecated` (pointing to its replacement) as soon as its ds replacement
-    exists. Deprecating before a replacement exists only adds editor noise.
-- Code in `ds/` must never import from `ui/` or `features/`. ESLint enforces this, and also bans raw
+- Code in `ds/` must never import from `features/`. ESLint enforces this, and also bans raw
   palette classes and arbitrary token values inside `ds/` (see `eslint.config.mjs`).
 - Each component gets its own folder: `ds/primitives/Button/{Button.tsx, Button.gallery.tsx, index.ts}`.
-- When `ui/` is empty, `ds` is simply the kit. There is no final rename.
+- App-specific pieces that need app assets or translations live in `components/shared`, not `ds`
+  (e.g. `BrandedQRCode`, which carries our logo).
 
 ### Tiers
 
@@ -72,15 +66,12 @@ in `features`.
 
 - **base-ui (`@base-ui/react`)** for all interactive behaviour: Field, ToggleGroup, NumberField, Tabs,
   Dialog, Popover, Select, Menu, and so on.
-- No new Headless UI or Radix usage.
+- No Headless UI or Radix: both were removed with the legacy kit.
 - **react-day-picker** for the month grid, only behind ds `primitives/Calendar`. base-ui has no
   calendar yet; when it ships, only that component changes. Pass `locale` from
   `react-day-picker/locale` (it carries translated aria labels, Georgian included).
-- Legacy Radix popups (`ui/Select`, `InfoIcon`) portal to `body`: never
-  put them inside a ds `Sheet` or `Dialog` — the focus trap and outside-press handling break them.
-  Use the ds primitives there.
-- Existing exceptions stay until their migration phase:
-  - @dnd-kit (sortable lists)
+- Other libraries, each behind one ds or shared component:
+  - @dnd-kit (sortable lists, `patterns/SortableItem`)
   - sonner (toasts)
   - react-leaflet (maps)
 
@@ -222,6 +213,8 @@ Rules:
 - **Sheets** (`patterns/Sheet`): bottom sheet on mobile, side panel from `lg`. `isTall` fixes the
   mobile height; `isWide` widens the desktop panel (`w-160` instead of `w-120`) for records with more
   to lay out side by side, e.g. a member's facts and QR code. No width overrides through `className`.
+- **Required acknowledgements** (the first-visit disclaimer): `primitives/Dialog` without `closeLabel`
+  (no ×) and with `isDismissible={false}`, ignoring `onOpenChange`; only its own button closes it.
 - **Confirming a destructive action** (delete, remove, unlink, discard unsaved input) — always asked,
   never replaced by an Undo, never swapped inline into a footer or action bar:
   - An icon button that asks (trash / unlink on a card): wrap it in `primitives/ConfirmPopover`. It
@@ -330,15 +323,12 @@ Rules:
 
 ---
 
-## Legacy policy (day-to-day)
+## Legacy policy
 
-- **New screen or redesign:** use ds only. If something is missing, build it in `ds/` first as its own
-  commit or PR.
-- **Small fix in a legacy screen:** keep using the legacy component. Don't migrate as a side quest
-  unless the swap is trivial and the result is visually identical, or the redesign asks for it.
-- **Migrating a component:** migrate one screen area at a time (see the phases below). Remove the
-  legacy component once `grep` finds no consumers left, and tick it off in the tracker.
-- **When editing any file:** replace `clsx` with `cn` (existing rule).
+The legacy kit `src/components/ui/` was removed (phase 6), together with `@headlessui/react`,
+`@radix-ui/*` and `clsx`. Everything is built from ds now; if something is missing, build it in `ds/`
+first as its own commit or PR. Feature code still has raw palette classes and arbitrary values — move
+them to tokens when you touch a screen (`local/ds-next/feature-tokens.md`).
 
 ---
 
@@ -350,50 +340,45 @@ Rules:
 | **2. Primitives for submit** | Button, Badge, Field / FieldGroup, TextField, NumberField, Textarea, ChipGroup, ToggleGrid, SegmentedControl, Stepper. Patterns FormCard, StickyActionBar, SuccessState. Form bindings. Gallery demos | ✅ |
 | **3. Submit page redesign** | `local/observations/design_handoff_submit_observation/` built on ds | ✅ |
 | **4. Rest of observations** | List toolbar, detail views, aspect/elevation picker moved to `features/` with a bare variant | ☐ |
-| **5. Legacy, by screen area** | Public pages (auth, forecasts, about) → admin forms → admin tables, modals and drawers. Admin lists, forms, the overview, every sheet and the mobile menus are done; what's left in admin: the shared `BrandedQRCode` / `SortableItem` / `FallbackImage` | ☐ |
-| **6. Cleanup** | Delete `ui/`. Remove `@headlessui/react`, `@radix-ui/*` and `clsx` | ☐ |
+| **5. Legacy, by screen area** | Public pages (auth, forecasts, about) → admin forms → admin tables, modals and drawers. Admin lists, forms, the overview, every sheet and the mobile menus are done | ✅ |
+| **6. Cleanup** | Delete `ui/`. Remove `@headlessui/react`, `@radix-ui/*` and `clsx` | ✅ |
 
 ### Component tracker
 
-Update this table when a legacy component's last consumer is migrated. "Removed" means the file is gone
-from `ui/`; *no consumers* marks a legacy file that nothing imports any more and can be deleted.
+Every legacy component is gone; the table stays as a map from old names to their ds replacements.
 
 | Legacy (`ui/`) | Library | ds replacement | Removed |
 |---|---|---|---|
-| Button (+ `shared/ButtonLink`) | Headless UI | `primitives/Button` | ☐ |
-| InputBlock | — | `primitives/Field` | ☐ *no consumers* |
-| TextInput | Headless UI | `primitives/TextField` | ☐ *no consumers* |
+| Button (+ `shared/ButtonLink`) | Headless UI | `primitives/Button`; links use `getButtonClasses` | ✅ |
+| InputBlock | — | `primitives/Field` | ✅ |
+| TextInput | Headless UI | `primitives/TextField` | ✅ |
 | SearchInput | Headless UI | `primitives/SearchField` | ✅ |
-| Textarea | Headless UI | `primitives/Textarea` | ☐ *no consumers* |
+| Textarea | Headless UI | `primitives/Textarea` | ✅ |
 | NumberInput | base-ui | `primitives/Stepper` / `NumberField` | ✅ |
 | ChipGroup | base-ui | `primitives/ChipGroup` | ✅ |
 | SegmentedControl | base-ui | `primitives/SegmentedControl` | ✅ |
 | RadioGroup | Headless UI | `primitives/SegmentedControl` | ✅ |
 | RadioOption | base-ui | `primitives/RadioGroup` (long labels, one per row) or `ToggleGrid` | ✅ |
-| Checkbox | Headless UI | `primitives/Checkbox` | ☐ |
+| Checkbox | Headless UI | `primitives/Checkbox` | ✅ |
 | Switch | base-ui | `primitives/Switch` | ✅ |
-| Select | Radix | `primitives/Select` (base-ui) | ☐ *no consumers* |
+| Select | Radix | `primitives/Select` (base-ui) | ✅ |
 | DatePicker, Calendar, TimeInput, DatePickerTimeInput | Headless UI + react-day-picker | `primitives/DatePicker` (date and date + time fields), `primitives/Calendar` (month grid, e.g. in a `Popover`) | ✅ |
 | DateField (ds, native inputs) | — | `primitives/DatePicker` | ✅ |
 | TimePicker | Headless UI | `primitives/DatePicker` (`withTime`) | ✅ |
-| Modal (+ legacy `shared/ConfirmationDialog`) | Headless UI | `primitives/Dialog` (base-ui), `patterns/ConfirmDialog` + new translated `@components/shared` `ConfirmationDialog` | ☐ |
+| Modal (+ legacy `shared/ConfirmationDialog`) | Headless UI | `primitives/Dialog` (base-ui), `patterns/ConfirmDialog` + new translated `@components/shared` `ConfirmationDialog` | ✅ |
 | Popover | Radix | `primitives/Popover` (base-ui) | ✅ |
-| Tooltip, InfoIcon | Radix | `primitives/Tooltip` (base-ui Tooltip; hover/focus labels), `primitives/InfoTip` (base-ui Popover; explanations) | ☐ InfoIcon *no consumers*; `TooltipProvider` still wraps the app in `app/layout.tsx` |
+| Tooltip, InfoIcon | Radix | `primitives/Tooltip` (base-ui Tooltip; hover/focus labels), `primitives/InfoTip` (base-ui Popover; explanations); no provider needed | ✅ |
 | DropdownMenu | base-ui | `primitives/Menu` | ✅ |
 | Sheet, Drawer (bottom sheet) | base-ui / vaul | `patterns/Sheet` (+ `SheetHeader`, `SheetStepButtons`; `shared/DetailsSheet` for a sheet opened from a button) | ✅ |
 | Mobile nav menus (not in `ui/`: `Header/NavMenu/MobileNav`, `admin/sidebar/MobileDrawer`) | vaul (removed) | `patterns/Drawer` | ✅ |
-| IconButton | custom | `primitives/IconButton` | ☐ *no consumers* |
+| IconButton | custom | `primitives/IconButton` | ✅ |
 | Spinner | custom | `primitives/Spinner` (inline), `primitives/AvalancheLoader` via `patterns/LoadingState` / `shared/Loading` (blocks and pages); legacy `ui/Spinner` removed | ✅ |
-| Skeleton | custom | `primitives/Skeleton` | ☐ |
+| Skeleton | custom | `primitives/Skeleton` | ✅ |
 | Pagination, DataTable | custom | `primitives/Pagination`, `patterns/DataTable` | ✅ |
 | AspectElevationPicker | base-ui | moved to `features/observations/` | ✅ |
 | MiniCompass | custom | moved to `features/observations/` | ✅ |
 | AutoScrollList | embla | none — partners page shows static grids; removed with `embla-carousel-auto-scroll` | ✅ |
-| BrandedQRCode, FallbackImage, SortableItem | custom | reviewed individually (may stay generic in ds) | ☐ |
-
-No non-kit Headless UI or Radix users are left (`Header/NavMenu/DesktopNav` uses `primitives/Menu`,
-`shared/LanguageToggle` uses `primitives/SegmentedControl` size `xs`, and `shared/Spoiler` was removed
-with the forecast archive redesign).
+| BrandedQRCode, FallbackImage, SortableItem | custom | `shared/BrandedQRCode` (app logo), `primitives/FallbackImage`, `patterns/SortableItem` | ✅ |
 
 ### Deferred
 

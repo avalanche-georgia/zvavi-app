@@ -1,8 +1,9 @@
 'use client'
 
 import { useLocalizeField } from '@components/hooks'
-import { ButtonLink } from '@components/shared'
+import { Icon } from '@components/icons'
 import type { Partner } from '@domain/types'
+import { getButtonClasses } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 
 import { usePartnerTracking } from '../tracking'
@@ -33,16 +34,16 @@ const PartnerInfo = ({ partner }: { partner: Partner }) => {
           <p className="text-sm whitespace-pre-line text-blue-900">{benefit}</p>
         </div>
       )}
-      <ButtonLink
-        className="ml-auto"
+      <a
+        className={getButtonClasses({ className: 'ml-auto', size: 'sm' })}
         href={partner.websiteUrl}
-        isExternal
         onClick={trackDrawerWebsiteClick}
         rel="noreferrer"
         target="_blank"
       >
         {t('common.actions.visitWebsite')}
-      </ButtonLink>
+        <Icon icon="externalLink" size="sm" />
+      </a>
     </div>
   )
 }

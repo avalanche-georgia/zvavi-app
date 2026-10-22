@@ -17,7 +17,7 @@ const ProblemViewCard = ({ number, problem }: ProblemViewCardProps) => {
   const { avalancheSize, type } = problem
 
   return (
-    <div className="border-rule bg-surface @container flex flex-col gap-2 rounded-[14px] border px-3.5 pt-3 pb-3.5">
+    <div className="border-rule bg-surface rounded-card @container flex flex-col gap-2 border px-3.5 pt-3 pb-3.5">
       <div className="flex items-center gap-2.5">
         <ProblemNumber number={number} />
         <div className="flex min-w-0 flex-wrap items-center gap-x-2.5 gap-y-1">

@@ -8,6 +8,7 @@ import FormCardGallery from '@ds/patterns/FormCard/FormCard.gallery'
 import LoadingStateGallery from '@ds/patterns/LoadingState/LoadingState.gallery'
 import QuickDateFieldGallery from '@ds/patterns/QuickDateField/QuickDateField.gallery'
 import SheetGallery from '@ds/patterns/Sheet/Sheet.gallery'
+import SortableItemGallery from '@ds/patterns/SortableItem/SortableItem.gallery'
 import StickyActionBarGallery from '@ds/patterns/StickyActionBar/StickyActionBar.gallery'
 import SuccessStateGallery from '@ds/patterns/SuccessState/SuccessState.gallery'
 import AvalancheLoaderGallery from '@ds/primitives/AvalancheLoader/AvalancheLoader.gallery'
@@ -21,6 +22,7 @@ import CountBadgeGallery from '@ds/primitives/CountBadge/CountBadge.gallery'
 import DatePickerGallery from '@ds/primitives/DatePicker/DatePicker.gallery'
 import DateRangePickerGallery from '@ds/primitives/DateRangePicker/DateRangePicker.gallery'
 import DialogGallery from '@ds/primitives/Dialog/Dialog.gallery'
+import FallbackImageGallery from '@ds/primitives/FallbackImage/FallbackImage.gallery'
 import FieldGallery from '@ds/primitives/Field/Field.gallery'
 import IconButtonGallery from '@ds/primitives/IconButton/IconButton.gallery'
 import InfoTipGallery from '@ds/primitives/InfoTip/InfoTip.gallery'
@@ -126,4 +128,6 @@ export const galleryEntries: GalleryEntry[] = [
   },
   { Demo: SuccessStateGallery, group: 'feedback', id: 'success-state', title: 'SuccessState' },
   { Demo: DataTableGallery, group: 'content', id: 'data-table', title: 'DataTable' },
+  { Demo: FallbackImageGallery, group: 'content', id: 'fallback-image', title: 'FallbackImage' },
+  { Demo: SortableItemGallery, group: 'content', id: 'sortable-item', title: 'SortableItem' },
 ]
