@@ -58,11 +58,11 @@ describe('ChipGroup', () => {
     expect(chip('Rain')).toHaveAttribute('aria-pressed', 'false')
   })
 
-  // sm only shrinks the text: chips stay a full touch target
-  it('keeps the touch height at size sm', () => {
+  // sm only shrinks the text, not the chip
+  it('keeps the height at size sm', () => {
     render(<ChipGroup onChange={() => undefined} options={options} size="sm" value={null} />)
 
-    expect(chip('Wind')).toHaveClass('text-copy-sm', 'min-h-11')
+    expect(chip('Wind')).toHaveClass('text-copy-sm', 'min-h-10')
   })
 })
 

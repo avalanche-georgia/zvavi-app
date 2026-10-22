@@ -100,9 +100,8 @@ const ObservationsToolbar = ({
 
         <ChipGroup
           ariaLabel={t('observations.filters.periods.label')}
-          // One row that bleeds to the screen edges and scrolls sideways when chips
-          // overflow; compact chips for the toolbar
-          className="scrollbar-hide -mx-4 flex-nowrap overflow-x-auto px-4 *:h-8.5 *:min-h-0 *:shrink-0 *:whitespace-nowrap"
+          // One row that bleeds to the screen edges and scrolls sideways when chips overflow
+          className="scrollbar-hide -mx-4 flex-nowrap overflow-x-auto px-4 *:shrink-0 *:whitespace-nowrap"
           onChange={handlePeriodChange}
           options={periodOptions}
           size="sm"
