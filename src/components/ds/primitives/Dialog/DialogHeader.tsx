@@ -9,12 +9,12 @@ type DialogHeaderProps = {
   // No × when left out (a dialog with isCloseDisabled)
   closeLabel?: string
   icon?: React.ReactNode
-  isDismissible: boolean
+  isBusy: boolean
   title: string
 }
 
 // Leading icon, title and ×; on phones a grab bar above, like a bottom sheet
-const DialogHeader = ({ closeLabel, icon, isDismissible, title }: DialogHeaderProps) => (
+const DialogHeader = ({ closeLabel, icon, isBusy, title }: DialogHeaderProps) => (
   <>
     <span
       aria-hidden
@@ -27,7 +27,7 @@ const DialogHeader = ({ closeLabel, icon, isDismissible, title }: DialogHeaderPr
       </BaseDialog.Title>
       {closeLabel && (
         <BaseDialog.Close
-          disabled={!isDismissible}
+          disabled={isBusy}
           render={<IconButton aria-label={closeLabel} size="md" />}
         >
           <X aria-hidden className="size-4.5" />

@@ -67,14 +67,14 @@ describe('Dialog', () => {
   })
 
   // Esc still reports a close; the caller ignores it while busy (as ConfirmDialog does)
-  it('while not dismissible disables × and leaves Esc to the caller', async () => {
+  it('while busy disables × and ignores Esc', async () => {
     const onOpenChange = vi.fn()
 
     render(
       <Dialog
         closeLabel="Close"
         footer={null}
-        isDismissible={false}
+        isBusy
         isOpen
         onOpenChange={onOpenChange}
         title="Publishing…"
@@ -83,7 +83,7 @@ describe('Dialog', () => {
     await userEvent.keyboard('{Escape}')
 
     expect(screen.getByRole('button', { name: 'Close' })).toBeDisabled()
-    expect(onOpenChange).toHaveBeenCalledWith(false)
+    expect(onOpenChange).not.toHaveBeenCalled()
   })
 
   it('with close disabled has no × and ignores Esc', async () => {

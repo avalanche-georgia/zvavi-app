@@ -216,8 +216,8 @@ Rules:
 - **Dialogs** (`primitives/Dialog`) are closable by default: ×, backdrop and Esc (`closeLabel` and
   `onOpenChange` required). `isWide` (`w-160` instead of `w-120`) for long reading. `isCloseDisabled`
   only for a required acknowledgement (the first-visit disclaimer): no ×, backdrop and Esc do nothing,
-  only its own footer button closes it. `isDismissible={false}` is different — a busy dialog that
-  keeps a disabled ×.
+  only its own footer button closes it. `isBusy` while its action runs: nothing closes it (× disabled,
+  backdrop and Esc ignored); `ConfirmDialog` sets it for you while `onConfirm`'s promise runs.
 - **Drag to reorder** (`patterns/SortableItem`): the lifted row gets a `primary` ring; give the item
   its row's radius (a flat list row rounds only while lifted: `data-dragging:rounded-media`).
 - **Confirming a destructive action** (delete, remove, unlink, discard unsaved input) — always asked,

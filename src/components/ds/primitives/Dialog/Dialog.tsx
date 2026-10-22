@@ -28,9 +28,8 @@ type DialogProps = DialogCloseProps & {
   icon?: React.ReactNode
   // Element focused on open, e.g. Cancel so a stray Enter never confirms
   initialFocus?: React.RefObject<HTMLElement | null>
-  // false while an action runs: the backdrop and the × no longer close it (Esc
-  // still calls onOpenChange — the caller ignores it, as ConfirmDialog does)
-  isDismissible?: boolean
+  // While its action runs: nothing closes it (× disabled, backdrop and Esc ignored)
+  isBusy?: boolean
   isOpen: boolean
   // Wider from `sm` (w-160 instead of w-120), for long reading such as the disclaimer
   isWide?: boolean
@@ -49,8 +48,8 @@ const Dialog = ({
   footer,
   icon,
   initialFocus,
+  isBusy = false,
   isCloseDisabled = false,
-  isDismissible = true,
   isOpen,
   isWide = false,
   onOpenChange,
@@ -58,12 +57,12 @@ const Dialog = ({
   title,
 }: DialogProps) => {
   const handleOpenChange = (isNextOpen: boolean) => {
-    if (!isCloseDisabled) onOpenChange?.(isNextOpen)
+    if (!isCloseDisabled && !isBusy) onOpenChange?.(isNextOpen)
   }
 
   return (
     <BaseDialog.Root
-      disablePointerDismissal={isCloseDisabled || !isDismissible}
+      disablePointerDismissal={isCloseDisabled || isBusy}
       onOpenChange={handleOpenChange}
       open={isOpen}
     >
@@ -86,12 +85,7 @@ const Dialog = ({
           initialFocus={initialFocus}
           role={role}
         >
-          <DialogHeader
-            closeLabel={closeLabel}
-            icon={icon}
-            isDismissible={isDismissible}
-            title={title}
-          />
+          <DialogHeader closeLabel={closeLabel} icon={icon} isBusy={isBusy} title={title} />
           {children && (
             <BaseDialog.Description
               className="bg-canvas border-rule text-copy text-ink flex min-h-0 flex-col gap-3 overflow-y-auto border-y p-4 text-pretty sm:px-6 sm:py-4.5"

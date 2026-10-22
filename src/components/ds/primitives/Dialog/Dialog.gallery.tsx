@@ -43,7 +43,7 @@ const DialogGallery = () => {
   const handleClose = () => setOpenKind(null)
 
   const handleOpenChange = (isOpen: boolean) => {
-    if (!isOpen && !isBusy) handleClose()
+    if (!isOpen) handleClose()
   }
 
   const footer = (
@@ -68,7 +68,7 @@ const DialogGallery = () => {
         closeLabel="Close"
         footer={footer}
         icon={icon}
-        isDismissible={!isBusy}
+        isBusy={isBusy}
         isOpen={openKind !== null && !isRequired}
         isWide={openKind === 'wide'}
         onOpenChange={handleOpenChange}

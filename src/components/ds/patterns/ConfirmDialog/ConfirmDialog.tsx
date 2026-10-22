@@ -47,12 +47,12 @@ const ConfirmDialog = ({
   const cancelRef = useRef<HTMLButtonElement>(null)
   const confirmRef = useRef<HTMLButtonElement>(null)
   const { button, focusesCancel, icon: Icon, role, tile } = confirmDialogTones[tone]
-  const { handleConfirm, handleOpenChange, isBusy } = useConfirmAction({
+  const { handleConfirm, isBusy } = useConfirmAction({
     onConfirm,
     onOpenChange,
   })
 
-  const handleCancel = () => handleOpenChange(false)
+  const handleCancel = () => onOpenChange(false)
 
   const footer = (
     <>
@@ -78,9 +78,9 @@ const ConfirmDialog = ({
         </span>
       }
       initialFocus={focusesCancel ? cancelRef : confirmRef}
-      isDismissible={!isBusy}
+      isBusy={isBusy}
       isOpen={isOpen}
-      onOpenChange={handleOpenChange}
+      onOpenChange={onOpenChange}
       role={role}
       title={title}
     >
