@@ -33,7 +33,7 @@ const trackSizeClasses: Record<SegmentedControlSize, string> = {
 // keep both out of overflow containers
 const segmentSizeClasses: Record<SegmentedControlSize, string> = {
   md: 'text-copy rounded-item px-2 pointer-coarse:after:-inset-y-0.5',
-  sm: 'text-copy-sm rounded-item px-2.5 pointer-coarse:after:-inset-y-1.25',
+  sm: 'text-copy-sm sm:text-copy rounded-item px-2.5 pointer-coarse:after:-inset-y-1.25',
   xs: 'text-caption rounded-item px-2.5 pointer-coarse:after:-inset-y-2',
 }
 

@@ -3,7 +3,7 @@
 import { Toggle } from '@base-ui/react/toggle'
 import { ToggleGroup } from '@base-ui/react/toggle-group'
 
-import { chipClasses, type ChipSize, chipSizeClasses } from './chipClasses'
+import { chipClasses } from './chipClasses'
 import type { ToggleOption } from '../toggle/types'
 
 import { cn } from '@/lib/utils'
@@ -13,7 +13,6 @@ type MultiChipGroupProps<T extends string> = {
   className?: string
   onChange: (values: T[]) => void
   options: ToggleOption<T>[]
-  size?: ChipSize
   value: T[]
 }
 
@@ -23,7 +22,6 @@ const MultiChipGroup = <T extends string>({
   className,
   onChange,
   options,
-  size = 'md',
   value,
 }: MultiChipGroupProps<T>) => (
   <ToggleGroup
@@ -37,7 +35,7 @@ const MultiChipGroup = <T extends string>({
       <Toggle
         key={option.value}
         aria-label={option.ariaLabel}
-        className={cn(chipClasses, chipSizeClasses[size])}
+        className={chipClasses}
         disabled={option.disabled}
         value={option.value}
       >

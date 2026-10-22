@@ -3,7 +3,7 @@
 import { Toggle } from '@base-ui/react/toggle'
 import { ToggleGroup } from '@base-ui/react/toggle-group'
 
-import { chipClasses, type ChipSize, chipSizeClasses } from './chipClasses'
+import { chipClasses } from './chipClasses'
 import type { ToggleOption } from '../toggle/types'
 import useSingleToggle from '../toggle/useSingleToggle'
 
@@ -15,7 +15,6 @@ type ChipGroupProps<T extends string> = {
   isDeselectable?: boolean
   onChange: (value: T | null) => void
   options: ToggleOption<T>[]
-  size?: ChipSize
   value: T | null
 }
 
@@ -26,7 +25,6 @@ const ChipGroup = <T extends string>({
   isDeselectable = false,
   onChange,
   options,
-  size = 'md',
   value,
 }: ChipGroupProps<T>) => {
   const { groupValue, handleValueChange } = useSingleToggle({ isDeselectable, onChange, value })
@@ -42,7 +40,7 @@ const ChipGroup = <T extends string>({
         <Toggle
           key={option.value}
           aria-label={option.ariaLabel}
-          className={cn(chipClasses, chipSizeClasses[size])}
+          className={chipClasses}
           disabled={option.disabled}
           value={option.value}
         >

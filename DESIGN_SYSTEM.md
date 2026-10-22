@@ -145,6 +145,8 @@ Rules:
 - **One row, one height.** Controls that share a row (a toolbar, a filter bar) use the same size,
   so their edges line up: admin list toolbars `md` (46px), public filter bars `sm` (40px), chips 40px.
   This holds in admin too — admin is lower priority for polish effort, not exempt from the system.
+  `sm` controls (40px: buttons, segments, chips, fields, selects) set text at 13px on phones and
+  14px from `sm` (640px): one size per row on every screen, and long Georgian labels fit at 375px.
 - **Hit targets are at least 44×44px** on touch.
   - This matches Apple HIG and WCAG 2.5.5 (AAA). WCAG 2.5.8 (AA) sets 24px as the floor.
   - Our users often report from the field with gloves or cold hands.

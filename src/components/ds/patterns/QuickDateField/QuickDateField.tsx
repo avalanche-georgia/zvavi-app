@@ -72,7 +72,6 @@ const QuickDateField = ({
           ariaLabel={quickDatesLabel}
           onChange={handleQuickDateChange}
           options={quickDates}
-          size="sm"
           value={selectedQuickDate}
         />
         {summary && <p className="text-caption text-muted">{summary}</p>}

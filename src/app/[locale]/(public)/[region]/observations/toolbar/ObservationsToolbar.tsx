@@ -89,7 +89,6 @@ const ObservationsToolbar = ({
           className="scrollbar-hide -mx-4 flex-nowrap overflow-x-auto px-4 *:shrink-0 *:whitespace-nowrap"
           onChange={handlePeriodChange}
           options={periodOptions}
-          size="sm"
           value={filters.period}
         />
 

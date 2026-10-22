@@ -44,7 +44,7 @@ const inlineVariants: ButtonVariant[] = ['disclosure', 'text']
 const boxSizeClasses: Record<ButtonSize, string> = {
   lg: 'h-12.5 px-6.5 text-copy-lg',
   md: 'h-11.5 px-4.5 text-copy',
-  sm: 'h-10 px-3 text-copy-sm',
+  sm: 'h-10 px-3 text-copy-sm sm:text-copy',
 }
 
 const textSizeClasses: Record<ButtonSize, string> = {
