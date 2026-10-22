@@ -25,17 +25,19 @@ describe('Switch', () => {
     expect(toggle).not.toBeChecked()
   })
 
-  // e.g. while the change is being saved: focus stays, clicks do nothing
-  it('ignores input while read-only', async () => {
+  it.each([
+    ['read-only', { isReadOnly: true }, null],
+    ['busy', { isBusy: true }, 'true'],
+  ])('ignores input while %s', async (_case, props, ariaBusy) => {
     const onCheckedChange = vi.fn()
 
-    render(<Switch checked={false} isReadOnly label="Active" onCheckedChange={onCheckedChange} />)
+    render(<Switch checked={false} label="Active" onCheckedChange={onCheckedChange} {...props} />)
     const toggle = screen.getByRole('switch')
 
     await userEvent.click(toggle)
     await userEvent.click(screen.getByText('Active'))
 
     expect(onCheckedChange).not.toHaveBeenCalled()
-    expect(toggle).toHaveAttribute('aria-busy', 'true')
+    expect(toggle.getAttribute('aria-busy')).toBe(ariaBusy)
   })
 })

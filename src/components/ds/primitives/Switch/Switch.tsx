@@ -10,10 +10,11 @@ type SwitchProps = {
   className?: string
   // Longer explanation under the label, announced as the switch's description
   description?: React.ReactNode
+  // Locked while its change is being saved: like read-only, with a progress cursor
+  isBusy?: boolean
   // Screen readers only — for a column of switches whose header already names them
   isLabelHidden?: boolean
-  // Shown dimmed and ignores clicks but keeps keyboard focus, e.g. while the
-  // change is being saved
+  // Shown dimmed and ignores clicks but keeps keyboard focus
   isReadOnly?: boolean
   // Names the "on" state, e.g. "Unlinked" for a filter that shows unlinked records only
   label: React.ReactNode
@@ -29,6 +30,7 @@ const Switch = ({
   checked,
   className,
   description,
+  isBusy = false,
   isLabelHidden = false,
   isReadOnly = false,
   label,
@@ -36,11 +38,12 @@ const Switch = ({
   onCheckedChange,
 }: SwitchProps) => {
   const descriptionId = `${useId()}-description`
+  const isLocked = isBusy || isReadOnly
 
   // base-ui's readOnly only stops clicks on the track; the wrapping <label> still
   // activates its hidden input and reports a change
   const handleCheckedChange = (nextChecked: boolean) => {
-    if (isReadOnly) return
+    if (isLocked) return
 
     onCheckedChange(nextChecked)
   }
@@ -52,22 +55,23 @@ const Switch = ({
         <label
           className={cn(
             'flex items-center gap-2.5 py-0.5 pointer-coarse:min-h-11',
-            isReadOnly ? 'cursor-progress opacity-50' : 'cursor-pointer',
+            isLocked ? 'opacity-50' : 'cursor-pointer',
+            isBusy ? 'cursor-progress' : isReadOnly && 'cursor-not-allowed',
           )}
         >
           <BaseSwitch.Root
-            aria-busy={isReadOnly || undefined}
+            aria-busy={isBusy || undefined}
             aria-describedby={description ? descriptionId : undefined}
             checked={checked}
             className={cn(
               // Off: outlined track + dark thumb, so the state reads on any surface
               'focus-ring border-muted bg-tile relative flex h-5.5 w-9.5 shrink-0 rounded-full border p-0.5 transition-colors',
               'data-checked:border-accent data-checked:bg-accent',
-              !isReadOnly &&
+              !isLocked &&
                 'hover:bg-tile-hover data-checked:hover:border-accent-hover data-checked:hover:bg-accent-hover',
             )}
             onCheckedChange={handleCheckedChange}
-            readOnly={isReadOnly}
+            readOnly={isLocked}
           >
             <BaseSwitch.Thumb className="bg-muted data-checked:bg-surface size-4 rounded-full transition-[translate,background-color] data-checked:translate-x-4" />
           </BaseSwitch.Root>

@@ -26,7 +26,8 @@ const SwitchGallery = () => {
         onCheckedChange={setIsOn}
       />
       <Switch checked={isOn} isLabelHidden label="Hidden label" onCheckedChange={setIsOn} />
-      <Switch checked isReadOnly label="Read-only (saving)" onCheckedChange={setIsOn} />
+      <Switch checked isReadOnly label="Read-only" onCheckedChange={setIsOn} />
+      <Switch checked isBusy label="Busy (saving)" onCheckedChange={setIsOn} />
     </div>
   )
 }
