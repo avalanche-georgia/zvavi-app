@@ -1,4 +1,4 @@
-import { LoaderCircle } from 'lucide-react'
+import Spinner from '../Spinner/Spinner'
 
 import { cn } from '@/lib/utils'
 
@@ -44,7 +44,7 @@ const inlineVariants: ButtonVariant[] = ['disclosure', 'text']
 const boxSizeClasses: Record<ButtonSize, string> = {
   lg: 'h-12.5 px-6.5 text-copy-lg',
   md: 'h-11.5 px-4.5 text-copy',
-  sm: 'h-10 px-3 text-copy-sm sm:text-copy',
+  sm: 'h-10 px-3 text-copy-sm',
 }
 
 const textSizeClasses: Record<ButtonSize, string> = {
@@ -94,8 +94,7 @@ const Button = ({
     disabled={disabled || isBusy}
     type={type}
   >
-    {/* Spinner's icon, without its status role: aria-busy says it */}
-    {isBusy && <LoaderCircle aria-hidden className="size-4 animate-spin" />}
+    {isBusy && <Spinner className="text-current" size="sm" />}
     {children}
   </button>
 )

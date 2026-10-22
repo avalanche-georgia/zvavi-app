@@ -280,6 +280,11 @@ Rules:
     or `Button`'s `isBusy`. The mountain is unreadable below ~40px.
   - The final layout is known (cards, rows, metrics): `primitives/Skeleton`.
   - Measurable progress (an upload): a progress ring, not either of the above.
+  - Never put `animate-spin` (or any animation) on an `<svg>` itself — spin a wrapping `<span>`, as
+    `Spinner` does. Chrome repaints an animated `<svg>` on every frame, and while the page repaints
+    like that it now and then shows a stale frame of a hover background mid-transition (it runs
+    those on the GPU): hover backgrounds blink. `AvalancheLoader` animates inside its SVG and still
+    does this while it's on screen.
   - No bare `LoaderIcon` + `animate-spin` for a block. Colours are the `snow-*` / `rock-*` tokens.
 - **i18n:** components take their strings as props, and callers translate them with the project rules.
   `ds/` primitives never call `useTranslations()` themselves.
