@@ -224,6 +224,8 @@ export const isStaffRole = (role: string | null | undefined): role is StaffRole 
 // UI/UX fallback for public read queries only. Never use in data mutations.
 export const defaultRegionId = 'gudauri'
 export const regionLocalStorageKey = 'zvavi.region'
+// A cookie, not localStorage, so the server knows whether to add the disclaimer modal
+export const disclaimerAcceptedCookieName = 'zvavi.disclaimer-accepted'
 
 // Partner tiers in display order: main partners, partners, supporters
 export const partnerTiers: PartnerTier[] = [1, 2, 3]

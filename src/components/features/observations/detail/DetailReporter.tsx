@@ -28,6 +28,7 @@ const DetailReporter = ({ avatarUrl, isTeam, name }: DetailReporterProps) => {
             className="size-10 rounded-full"
             initialsClassName="text-copy"
             name={name}
+            width={40}
           />
         ) : (
           <span className="bg-primary-soft text-primary-ink grid size-10 place-items-center rounded-full">

@@ -5,16 +5,17 @@ import { useQueryClient } from '@tanstack/react-query'
 
 import { handleSupabaseError } from '../../helpers'
 
+import compressToJpeg from '@/lib/compressToJpeg'
 import { reportError } from '@/lib/observability'
 
 const bucket = 'avatars'
 const maxSize = 5 * 1024 * 1024 // 5 MB
 const allowedTypes = ['image/jpeg', 'image/png', 'image/webp']
-const mimeToExt: Record<string, string> = {
-  'image/jpeg': 'jpg',
-  'image/png': 'png',
-  'image/webp': 'webp',
-}
+
+// Shown at most 480px wide (the team sheet), so the stored photo is a small JPEG
+// instead of the camera original
+const compressAvatar = (file: File): Promise<Blob> =>
+  compressToJpeg(file, { maxSizeMB: 0.5, maxWidthOrHeight: 1024 })
 
 export type AvatarUploadError = 'invalidType' | 'tooLarge' | 'uploadFailed'
 
@@ -52,10 +53,11 @@ const useAvatarUpload = (): UseAvatarUploadResult => {
       setIsUploading(true)
 
       try {
-        const ext = mimeToExt[file.type]!
-        const path = `${userId}/${Date.now()}.${ext}`
+        const photo = await compressAvatar(file)
+        const path = `${userId}/${Date.now()}.jpg`
 
-        const { error: uploadError } = await supabase.storage.from(bucket).upload(path, file, {
+        const { error: uploadError } = await supabase.storage.from(bucket).upload(path, photo, {
+          contentType: 'image/jpeg',
           upsert: true,
         })
 

@@ -125,5 +125,8 @@
       "@swc/core",
       "sharp"
     ]
-  }
+  },
+  "sideEffects": [
+    "*.css"
+  ]
 }

@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import useDiceBearAvatar from '@components/hooks/useDiceBearAvatar'
+import Image from 'next/image'
 
 import { cn } from '@/lib/utils'
 
@@ -11,20 +13,22 @@ type UserAvatarProps = {
   userId: string
 }
 
+// Served resized to the largest size the avatar is shown at (36px)
+const avatarSize = 36
+
 const UserAvatar = ({ avatarUrl, className, name, userId }: UserAvatarProps) => {
   const fallbackSrc = useDiceBearAvatar(userId)
-
-  const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
-    event.currentTarget.src = fallbackSrc
-  }
+  // The URL that failed, so a newly uploaded photo is tried again
+  const [failedUrl, setFailedUrl] = useState<string | null>(null)
 
   return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
+    <Image
       alt={name}
       className={cn('bg-tile size-8 shrink-0 rounded-full object-cover', className)}
-      onError={handleImageError}
-      src={avatarUrl ?? fallbackSrc}
+      height={avatarSize}
+      onError={() => setFailedUrl(avatarUrl ?? null)}
+      src={avatarUrl && avatarUrl !== failedUrl ? avatarUrl : fallbackSrc}
+      width={avatarSize}
     />
   )
 }

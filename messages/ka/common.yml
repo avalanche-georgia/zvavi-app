@@ -142,6 +142,14 @@ common:
     previousPage: 'წინა გვერდი'
     rowRange: '{from}–{to} / {total}'
 
+  relativeDate:
+    daysAgo: '{count, plural, =2 {გუშინწინ} other {# დღის წინ}}'
+    monthsAgo: '{count, plural, =1 {გასულ თვეს} other {# თვის წინ}}'
+    today: 'დღეს'
+    weeksAgo: '{count, plural, =1 {გასულ კვირაში} other {# კვირის წინ}}'
+    yearsAgo: '{count, plural, =1 {გასულ წელს} other {# წლის წინ}}'
+    yesterday: 'გუშინ'
+
   words:
     from: 'დან'
     optional: 'არასავალდებულო'
