@@ -12,6 +12,7 @@ import {
   toRegionHome,
 } from '@/lib/regionRouting'
 import { updateSession } from '@/lib/supabase/middleware'
+import { routes } from '@/routes'
 
 const intlMiddleware = createMiddleware({
   defaultLocale,
@@ -92,6 +93,15 @@ export default async function proxy(request: NextRequest) {
 
   if (localeFileMatch) {
     return NextResponse.redirect(new URL(`/${localeFileMatch[2]}`, request.url))
+  }
+
+  // "About" has no page of its own: the section opens on About us. Done here, not in a
+  // page, so it's a real redirect (a page's redirect streams behind the loading boundary
+  // with a 200); without it /about would be read as a region slug
+  const aboutMatch = pathname.match(new RegExp(`^/(${localePattern})/about$`))
+
+  if (aboutMatch) {
+    return NextResponse.redirect(new URL(`/${aboutMatch[1]}${routes.about.aboutUs}`, request.url))
   }
 
   // Entry URLs ("/" and "/{locale}" have no page): one hop straight to the final page.
