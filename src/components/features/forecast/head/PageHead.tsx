@@ -30,7 +30,7 @@ const PageHead = ({ forecast, nextForecastId, previousForecastId }: PageHeadProp
         <h1 className="text-title lg:text-title-lg m-0 font-bold">
           <span className="text-muted tracking-eyebrow text-caption block font-semibold uppercase">
             {t('forecast.page.avalancheForecast')}
-          </span>
+          </span>{' '}
           {t(`regions.names.${regionId}`)}
         </h1>
         <p className="text-muted text-copy-sm mt-1">
@@ -39,7 +39,7 @@ const PageHead = ({ forecast, nextForecastId, previousForecastId }: PageHeadProp
       </div>
       <ShareButton forecast={forecast} />
       {/* Latest first, as in every list: left steps to a newer forecast, right to an older one */}
-      <nav className="flex gap-2">
+      <div className="flex gap-2">
         <ForecastNavLink href={getHref(nextForecastId)} label={t('forecast.page.newerForecast')}>
           <ChevronLeft aria-hidden className="size-4.5" />
         </ForecastNavLink>
@@ -49,7 +49,7 @@ const PageHead = ({ forecast, nextForecastId, previousForecastId }: PageHeadProp
         >
           <ChevronRight aria-hidden className="size-4.5" />
         </ForecastNavLink>
-      </nav>
+      </div>
     </div>
   )
 }

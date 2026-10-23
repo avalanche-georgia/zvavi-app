@@ -4,7 +4,7 @@ import { useCopyWithFeedback } from '@components/hooks'
 import type { Forecast } from '@domain/types'
 import { IconButton } from '@ds/primitives'
 import { Check, Share2 } from 'lucide-react'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 
 import { routes } from '@/routes'
 
@@ -14,12 +14,15 @@ const canOpenShareSheet = () =>
   typeof navigator.share === 'function' && window.matchMedia('(pointer: coarse)').matches
 
 // Always the forecast's own link, also on the current-forecast page: messengers cache a
-// preview per link, so a per-forecast link previews this forecast
+// preview per link, so a per-forecast link previews this forecast. In the sharer's language,
+// so the preview is too
 const ShareButton = ({ forecast }: { forecast: Pick<Forecast, 'id' | 'regionId'> }) => {
   const t = useTranslations()
+  const locale = useLocale()
   const { id, regionId } = forecast
   // Read on click, not in render: the server has no window
-  const getUrl = () => `${window.location.origin}${routes.forecastsByRegion(regionId).view(id)}`
+  const getUrl = () =>
+    `${window.location.origin}/${locale}${routes.forecastsByRegion(regionId).view(id)}`
   const { handleCopy, isCopied } = useCopyWithFeedback(getUrl)
   const label = isCopied ? t('forecast.page.linkCopied') : t('forecast.page.share')
 
@@ -29,8 +32,10 @@ const ShareButton = ({ forecast }: { forecast: Pick<Forecast, 'id' | 'regionId'>
     try {
       await navigator.share({ title: document.title, url: getUrl() })
     } catch (error) {
-      // Closed the sheet: nothing to do. Anything else (refused, unsupported): copy instead
-      if (error instanceof DOMException && error.name === 'AbortError') return
+      // Closed the sheet, or tapped again while it is open: nothing to do. Anything else
+      // (refused, unsupported): copy instead
+      if (error instanceof DOMException && ['AbortError', 'InvalidStateError'].includes(error.name))
+        return
 
       await handleCopy()
     }

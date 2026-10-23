@@ -8,17 +8,20 @@ import ShareButton from './ShareButton'
 vi.mock('@components/hooks', async () => ({
   useCopyWithFeedback: (await import('@components/hooks/useCopyWithFeedback')).default,
 }))
-vi.mock('next-intl', () => ({ useTranslations: () => (key: string) => key }))
+vi.mock('next-intl', () => ({ useLocale: () => 'ka', useTranslations: () => (key: string) => key }))
 
 const forecast = { id: 42, regionId: 'gudauri' as const }
-const forecastUrl = `${window.location.origin}/gudauri/forecasts/42`
+const forecastUrl = `${window.location.origin}/ka/gudauri/forecasts/42`
 const originalMatchMedia = window.matchMedia
 
-// A phone: a share sheet and a touch screen
-const mockPhone = (share: ReturnType<typeof vi.fn>) => {
+// A browser with a share sheet: a phone (touch screen) or a desktop (mouse)
+const mockShareSheet = (share: ReturnType<typeof vi.fn>, isTouch = true) => {
   Object.defineProperty(navigator, 'share', { configurable: true, value: share })
   window.matchMedia = (query: string) =>
-    ({ ...originalMatchMedia(query), matches: query === '(pointer: coarse)' }) as MediaQueryList
+    ({
+      ...originalMatchMedia(query),
+      matches: isTouch && query === '(pointer: coarse)',
+    }) as MediaQueryList
 }
 
 const shareButton = () => screen.getByRole('button', { name: 'forecast.page.share' })
@@ -41,11 +44,23 @@ describe('ShareButton', () => {
     ).toBeInTheDocument()
   })
 
+  it('copies on a desktop even when it has a share sheet', async () => {
+    const user = userEvent.setup()
+    const share = vi.fn()
+
+    mockShareSheet(share, false)
+    render(<ShareButton forecast={forecast} />)
+    await user.click(shareButton())
+
+    expect(share).not.toHaveBeenCalled()
+    expect(await navigator.clipboard.readText()).toBe(forecastUrl)
+  })
+
   it('opens the share sheet with the forecast link on a phone', async () => {
     const user = userEvent.setup()
     const share = vi.fn().mockResolvedValue(undefined)
 
-    mockPhone(share)
+    mockShareSheet(share)
     const writeText = vi.spyOn(navigator.clipboard, 'writeText')
 
     render(<ShareButton forecast={forecast} />)
@@ -59,7 +74,7 @@ describe('ShareButton', () => {
     const user = userEvent.setup()
     const share = vi.fn().mockRejectedValue(new DOMException('Cancelled', 'AbortError'))
 
-    mockPhone(share)
+    mockShareSheet(share)
     const writeText = vi.spyOn(navigator.clipboard, 'writeText')
 
     render(<ShareButton forecast={forecast} />)
@@ -74,7 +89,7 @@ describe('ShareButton', () => {
     const user = userEvent.setup()
     const share = vi.fn().mockRejectedValue(new DOMException('Denied', 'NotAllowedError'))
 
-    mockPhone(share)
+    mockShareSheet(share)
     render(<ShareButton forecast={forecast} />)
     await user.click(shareButton())
 

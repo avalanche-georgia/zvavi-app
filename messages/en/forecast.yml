@@ -1,5 +1,4 @@
 forecast:
-  pageTitle: '{regionName} Avalanche Forecast'
   forecastAreaPageTitle: '{regionName} Forecast Area'
   forecasterProfile: 'Profile of {name}'
 

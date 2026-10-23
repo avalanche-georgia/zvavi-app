@@ -1,5 +1,4 @@
 forecast:
-  pageTitle: '{regionName} ზვავის პროგნოზი'
   forecastAreaPageTitle: '{regionName} პროგნოზის ტერიტორია'
   forecasterProfile: '{name} — პროფილი'
 
