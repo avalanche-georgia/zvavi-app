@@ -140,6 +140,7 @@ forecast:
       title: 'ამინდი'
 
   page:
+    avalancheForecast: 'ზვავის პროგნოზი'
     whatThisMeans: 'რას ნიშნავს ეს'
     byElevation: 'სიმაღლის მიხედვით'
     expired: 'ვადა გასულია'

@@ -140,6 +140,7 @@ forecast:
       title: 'Weather'
 
   page:
+    avalancheForecast: 'Avalanche forecast'
     whatThisMeans: 'What this means'
     byElevation: 'By elevation'
     expired: 'expired'

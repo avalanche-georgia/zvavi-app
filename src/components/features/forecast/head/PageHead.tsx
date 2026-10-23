@@ -14,8 +14,8 @@ type PageHeadProps = {
   previousForecastId: number | null
 }
 
-// "Gudauri Avalanche Forecast" · "Wed 15 Apr – Fri 17 Apr" · share · newer / older. The buttons
-// line up with the title on phones, where the title may wrap, and sit centred on desktop
+// "Avalanche forecast" / "Gudauri" / "Wed 15 Apr – Fri 17 Apr" · share · newer / older. The buttons
+// sit at the top on phones and centred on desktop
 const PageHead = ({ forecast, nextForecastId, previousForecastId }: PageHeadProps) => {
   const t = useTranslations()
   const { formatDay } = useForecastDates()
@@ -26,8 +26,12 @@ const PageHead = ({ forecast, nextForecastId, previousForecastId }: PageHeadProp
   return (
     <div className="flex items-start gap-3 pt-4 pb-3 lg:items-center lg:pt-6 lg:pb-4">
       <div className="min-w-0 flex-1">
+        {/* The region is the title, so it fits one line beside the buttons on phones */}
         <h1 className="text-title lg:text-title-lg m-0 font-bold">
-          {t('forecast.pageTitle', { regionName: t(`regions.names.${regionId}`) })}
+          <span className="text-muted tracking-eyebrow text-caption block font-semibold uppercase">
+            {t('forecast.page.avalancheForecast')}
+          </span>
+          {t(`regions.names.${regionId}`)}
         </h1>
         <p className="text-muted text-copy-sm mt-1">
           {formatDay(publishedAt ?? createdAt)} – {formatDay(validUntil)}
