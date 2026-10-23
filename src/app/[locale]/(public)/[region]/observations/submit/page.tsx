@@ -23,6 +23,7 @@ export const generateMetadata = async ({
     description: t('seo.observationSubmit.description', { regionName }),
     locale,
     path: routes.observationsByRegion(regionId).submit,
+    regionId,
     title: t('observations.submit.title', { regionName }),
   })
 }

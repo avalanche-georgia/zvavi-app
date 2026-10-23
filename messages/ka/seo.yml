@@ -9,11 +9,8 @@ seo:
     title: 'მიმდინარე ზვავის პროგნოზი — {regionName}'
     description: 'უახლესი ზვავის პროგნოზი — {regionName}. შეამოწმეთ საფრთხის დონე და თოვლის პირობები.'
   forecast:
-    title: '{regionName} — ზვავის პროგნოზი {validUntil}: {levelName}'
-    description: 'ზვავის პროგნოზი — {regionName}, მოქმედებს {validUntil}-მდე. საერთო საშიშროება: {levelName}.'
-  forecastUndated:
-    title: '{regionName} — ზვავის პროგნოზი: {levelName}'
-    description: 'ზვავის პროგნოზი — {regionName}. საერთო საშიშროება: {levelName}.'
+    description: '{levelName} ზვავსაშიშროება. სრულ პროგნოზში: ზვავის პრობლემები, თოვლის საფარი და ამინდი.'
+    descriptionNoRating: 'სრულ პროგნოზში: ზვავის პრობლემები, თოვლის საფარი და ამინდი.'
   forecastArea:
     title: 'პროგნოზის ზონა — {regionName}'
     description: 'ზვავის პროგნოზის ზონის რუკა — {regionName}.'
@@ -50,3 +47,7 @@ seo:
   regionHome:
     title: 'ზვავის პროგნოზი — {regionName}'
     description: 'დღევანდელი ზვავსაშიშროება, პროგნოზი, ბოლო ზვავები და პირობები — {regionName}.'
+  images:
+    danger: 'ზვავსაშიშროება'
+    regionSubtitle: 'ზვავის პროგნოზი და პირობები'
+    siteSubtitle: 'ზვავის პროგნოზი საქართველოს მთებისთვის'

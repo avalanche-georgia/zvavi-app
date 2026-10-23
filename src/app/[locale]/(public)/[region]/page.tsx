@@ -27,6 +27,7 @@ export const generateMetadata = async ({ params }: RegionHomePageProps): Promise
     description: t('seo.regionHome.description', { regionName }),
     locale,
     path: routes.regionHome(regionId),
+    regionId,
     title: t('seo.regionHome.title', { regionName }),
   })
 }

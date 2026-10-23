@@ -24,10 +24,8 @@ const publicRootFiles = [
   'favicon.ico',
   'icon.png',
   'manifest.json',
-  'opengraph-image',
   'robots.txt',
   'sitemap.xml',
-  'twitter-image',
 ]
 
 const publicRootFilesSet = new Set(publicRootFiles.map((f) => `/${f}`))

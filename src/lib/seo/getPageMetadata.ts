@@ -8,11 +8,13 @@ import { baseUrl } from '@/routes'
 
 export const siteName = 'Avalanche Georgia'
 
-// A page's own `openGraph` hides the root opengraph-image, so it is named again here
-const siteImage = '/opengraph-image'
-// Both the site image and a forecast's /api/og are this size; scrapers lay a preview out sooner
-// when they know it
+// Every preview image (/api/og) is this size; scrapers lay a preview out sooner when they know it
 const imageSize = { height: 630, width: 1200 }
+
+// The site's preview in the page's language, or its region's: a name, never a danger level,
+// so it can't go stale in a messenger's cache
+export const getBrandImage = (locale: string, regionId?: string) =>
+  `/api/og/site?locale=${locale}${regionId ? `&region=${regionId}` : ''}`
 
 // Open Graph wants language_TERRITORY
 const ogLocales: Record<Locale, string> = { en: 'en_US', ka: 'ka_GE' }
@@ -22,11 +24,13 @@ export const toOgLocale = (locale: string) =>
 
 type PageMetadataOptions = {
   description: string
-  // An Open Graph image of the page's own; the site-wide one otherwise
+  // An Open Graph image of the page's own (a forecast's); the site's or region's otherwise
   image?: string
   locale: string
   // The route without the locale ("/gudauri/forecasts/current")
   path: string
+  // A region's page shows the region's image
+  regionId?: string
   title: string
 }
 
@@ -34,32 +38,37 @@ type PageMetadataOptions = {
 // A page's `openGraph` replaces the layout's whole, so it is built here in full.
 const getPageMetadata = ({
   description,
-  image = siteImage,
+  image,
   locale,
   path,
+  regionId,
   title,
-}: PageMetadataOptions): Metadata => ({
-  alternates: getAlternates(locale, path),
-  description,
-  openGraph: {
-    alternateLocale: locales
-      .filter((pageLocale) => pageLocale !== locale)
-      .map((pageLocale) => ogLocales[pageLocale]),
+}: PageMetadataOptions): Metadata => {
+  const images = [{ ...imageSize, alt: title, url: image ?? getBrandImage(locale, regionId) }]
+
+  return {
+    alternates: getAlternates(locale, path),
     description,
-    images: [{ ...imageSize, alt: title, url: image }],
-    locale: toOgLocale(locale),
-    siteName,
+    openGraph: {
+      alternateLocale: locales
+        .filter((pageLocale) => pageLocale !== locale)
+        .map((pageLocale) => ogLocales[pageLocale]),
+      description,
+      images,
+      locale: toOgLocale(locale),
+      siteName,
+      title,
+      type: 'website',
+      url: `${baseUrl}/${locale}${path}`,
+    },
     title,
-    type: 'website',
-    url: `${baseUrl}/${locale}${path}`,
-  },
-  title,
-  twitter: {
-    card: 'summary_large_image',
-    description,
-    images: [{ ...imageSize, alt: title, url: image }],
-    title,
-  },
-})
+    twitter: {
+      card: 'summary_large_image',
+      description,
+      images,
+      title,
+    },
+  }
+}
 
 export default getPageMetadata

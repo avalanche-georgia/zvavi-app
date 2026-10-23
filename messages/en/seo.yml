@@ -9,11 +9,8 @@ seo:
     title: 'Current Avalanche Forecast — {regionName}'
     description: 'Latest avalanche forecast for {regionName}. Check current danger levels and snow conditions.'
   forecast:
-    title: '{regionName} Avalanche Forecast {validUntil}: {levelName}'
-    description: 'Avalanche forecast for {regionName}, valid until {validUntil}. Overall danger: {levelName}.'
-  forecastUndated:
-    title: '{regionName} Avalanche Forecast: {levelName}'
-    description: 'Avalanche forecast for {regionName}. Overall danger: {levelName}.'
+    description: '{levelName} avalanche danger. The full forecast covers avalanche problems, snowpack and weather.'
+    descriptionNoRating: 'The full forecast covers avalanche problems, snowpack and weather.'
   forecastArea:
     title: 'Forecast Area — {regionName}'
     description: 'View the avalanche forecast zone map for {regionName}.'
@@ -50,3 +47,7 @@ seo:
   regionHome:
     title: 'Avalanche Forecast — {regionName}'
     description: 'Today’s avalanche danger, forecast, recent avalanches and conditions for {regionName}.'
+  images:
+    danger: 'Avalanche danger'
+    regionSubtitle: 'Avalanche forecast and conditions'
+    siteSubtitle: 'Avalanche forecasts for Georgian backcountry'

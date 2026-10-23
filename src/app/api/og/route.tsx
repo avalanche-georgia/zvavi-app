@@ -1,24 +1,34 @@
+import { formatForecastPeriod } from '@components/features/forecast/model/useForecastDates'
 import { isNoRowsError } from '@data/helpers'
+import { hazardLevelNamesByScale } from '@domain/constants'
 import type { HazardLevelScale } from '@domain/types'
 import { createClient } from '@supabase/supabase-js'
-import { readFileSync } from 'fs'
 import { ImageResponse } from 'next/og'
 import type { NextRequest } from 'next/server'
-import { join } from 'path'
+import { getTranslations } from 'next-intl/server'
 
-import { hazardColors, hazardIconFiles, hazardLevelLabels, loadFont } from './helpers'
+import {
+  hazardColors,
+  hazardIconFiles,
+  imageHeaders,
+  imageSize,
+  loadFonts,
+  loadLogo,
+  toDataUri,
+  toImageLocale,
+} from './helpers'
 
 import ForecastCard from './ForecastCard'
 
 import { reportServerError } from '@/lib/posthog/server'
-import { formatTbilisi } from '@/lib/tbilisiTime'
 
+// A forecast's link preview: /api/og?id=12&locale=ka (&v=… only busts caches)
 export async function GET(request: NextRequest) {
-  const id = request.nextUrl.searchParams.get('id')
+  const { searchParams } = request.nextUrl
+  const id = Number(searchParams.get('id'))
+  const locale = toImageLocale(searchParams.get('locale'))
 
-  if (!id || isNaN(Number(id))) {
-    return new Response('Missing or invalid id', { status: 400 })
-  }
+  if (!id) return new Response('Missing or invalid id', { status: 400 })
 
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -27,54 +37,41 @@ export async function GET(request: NextRequest) {
 
   const { data: forecast, error } = await supabase
     .from('forecasts')
-    .select('hazard_levels, valid_until')
-    .match({ id: Number(id), status: 'published' })
+    .select('created_at, hazard_levels, published_at, region_id, valid_until')
+    .match({ id, status: 'published' })
     .single()
 
   if (error && !isNoRowsError(error)) {
     reportServerError(new Error(error.message), { scope: 'api/og | forecasts' })
   }
 
-  if (!forecast) {
-    return new Response('Forecast not found', { status: 404 })
-  }
+  if (!forecast) return new Response('Forecast not found', { status: 404 })
 
-  const level = (forecast.hazard_levels?.overall ?? 0) as HazardLevelScale
-  const bgColor = hazardColors[level]
-  const levelName = hazardLevelLabels[level]
-  const isLight = level !== '5'
-  const textColor = isLight ? '#1a1a1a' : '#ffffff'
-  const mutedColor = isLight ? '#555555' : '#aaaaaa'
-  const validUntil = forecast.valid_until
-    ? formatTbilisi(forecast.valid_until, 'dd MMM yyyy')
-    : null
-
-  const logoData = readFileSync(join(process.cwd(), 'public/images/logo.png'))
-  const logoBase64 = `data:image/png;base64,${logoData.toString('base64')}`
-
-  const iconFile = hazardIconFiles[level]
-  const iconData = readFileSync(join(process.cwd(), `public/og/${iconFile}.svg`))
-  const iconBase64 = `data:image/svg+xml;base64,${iconData.toString('base64')}`
-
-  const fontData = loadFont()
+  const t = await getTranslations({ locale })
+  const overall = String(forecast.hazard_levels?.overall)
+  const level = (overall in hazardColors ? overall : '0') as HazardLevelScale
+  const dates = formatForecastPeriod(
+    {
+      createdAt: forecast.created_at,
+      publishedAt: forecast.published_at,
+      validUntil: forecast.valid_until,
+    },
+    locale,
+  )
 
   return new ImageResponse(
     (
       <ForecastCard
-        bgColor={bgColor}
-        iconBase64={iconBase64}
-        levelName={levelName}
-        logoBase64={logoBase64}
-        mutedColor={mutedColor}
-        textColor={textColor}
-        validUntil={validUntil}
+        color={hazardColors[level]}
+        dates={dates}
+        iconUri={toDataUri(`og/${hazardIconFiles[level]}.svg`, 'image/svg+xml')}
+        isDark={level === '5'}
+        kicker={t('seo.images.danger')}
+        levelName={t(hazardLevelNamesByScale[level])}
+        logoUri={loadLogo()}
+        regionName={t(`regions.names.${forecast.region_id}`)}
       />
     ),
-    {
-      fonts: [{ data: fontData, name: 'Inter', style: 'normal', weight: 600 }],
-      headers: { 'Cache-Control': 'public, max-age=86400, immutable' },
-      height: 630,
-      width: 1200,
-    },
+    { ...imageSize, fonts: loadFonts(), headers: imageHeaders },
   )
 }

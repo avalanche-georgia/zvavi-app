@@ -23,6 +23,7 @@ export const generateMetadata = async ({ params }: HistoryPageProps): Promise<Me
     description: t('seo.history.description', { regionName: t(`regions.names.${regionId}`) }),
     locale,
     path: routes.forecastsByRegion(regionId).history,
+    regionId,
     title: t('seo.history.title', { regionName: t(`regions.names.${regionId}`) }),
   })
 }

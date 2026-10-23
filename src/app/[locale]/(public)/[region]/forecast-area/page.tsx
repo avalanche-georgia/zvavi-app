@@ -20,6 +20,7 @@ export const generateMetadata = async ({ params }: PageProps): Promise<Metadata>
     description: t('seo.forecastArea.description', { regionName: t(`regions.names.${regionId}`) }),
     locale,
     path: routes.forecastsByRegion(regionId).forecastArea,
+    regionId,
     title: t('seo.forecastArea.title', { regionName: t(`regions.names.${regionId}`) }),
   })
 }

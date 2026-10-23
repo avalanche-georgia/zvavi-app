@@ -23,6 +23,7 @@ export const generateMetadata = async ({ params }: ObservationsPageProps): Promi
     }),
     locale,
     path: routes.observationsByRegion(regionId).root,
+    regionId,
     title: t('seo.observations.title', { regionName: t(`regions.names.${regionId}`) }),
   })
 }

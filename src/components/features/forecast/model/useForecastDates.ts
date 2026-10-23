@@ -24,12 +24,36 @@ export const toTbilisiParts = (value: Date | string) => {
   }
 }
 
+// "Wed 15 Apr" — outside React too (link previews)
+export const formatForecastDay = (value: Date | string, locale: string) => {
+  const { localize } = getDateFnsLocale(locale)
+  const { day, month, weekday } = toTbilisiParts(value)
+  const weekdayName = localize.day(weekday, { context: 'formatting', width: 'abbreviated' })
+  const monthName = localize.month(month, { context: 'formatting', width: 'abbreviated' })
+
+  return `${weekdayName} ${day} ${monthName}`
+}
+
+type ForecastPeriodDates = {
+  createdAt: string
+  publishedAt: string | null
+  validUntil: string | null
+}
+
+// "Wed 15 Apr – Fri 17 Apr", as in the forecast's page head; null without an end
+export const formatForecastPeriod = (
+  { createdAt, publishedAt, validUntil }: ForecastPeriodDates,
+  locale: string,
+) =>
+  validUntil
+    ? `${formatForecastDay(publishedAt ?? createdAt, locale)} – ${formatForecastDay(validUntil, locale)}`
+    : null
+
 const useForecastDates = () => {
-  const { localize } = getDateFnsLocale(useLocale())
+  const locale = useLocale()
+  const { localize } = getDateFnsLocale(locale)
   const getMonth = (month: Month) =>
     localize.month(month, { context: 'formatting', width: 'abbreviated' })
-  const getWeekday = (weekday: Day) =>
-    localize.day(weekday, { context: 'formatting', width: 'abbreviated' })
 
   return {
     // "15 Apr 2026"
@@ -39,11 +63,7 @@ const useForecastDates = () => {
       return `${day} ${getMonth(month)} ${year}`
     },
     // "Wed 15 Apr"
-    formatDay: (value: Date | string) => {
-      const { day, month, weekday } = toTbilisiParts(value)
-
-      return `${getWeekday(weekday)} ${day} ${getMonth(month)}`
-    },
+    formatDay: (value: Date | string) => formatForecastDay(value, locale),
     // "Tuesday, 14 October"
     formatLongDay: (value: Date | string) => {
       const { day, month, weekday } = toTbilisiParts(value)

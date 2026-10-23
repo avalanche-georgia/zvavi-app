@@ -24,6 +24,7 @@ export const generateMetadata = async ({ params }: CurrentForecastPageProps): Pr
     }),
     locale,
     path: routes.forecastsByRegion(regionId).current,
+    regionId,
     title: t('seo.currentForecast.title', { regionName: t(`regions.names.${regionId}`) }),
   })
 }
