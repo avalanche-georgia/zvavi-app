@@ -147,6 +147,8 @@ forecast:
     daysLeft: '{count}d left'
     olderForecast: 'Older forecast'
     newerForecast: 'Newer forecast'
+    share: 'Share'
+    linkCopied: 'Link copied'
     sizeShort: 'Size {size}'
     allObservations: 'All observations'
     problemPosition: 'Problem {current} of {total}'

@@ -147,6 +147,8 @@ forecast:
     daysLeft: 'დარჩა {count} დღე'
     olderForecast: 'უფრო ძველი პროგნოზი'
     newerForecast: 'უფრო ახალი პროგნოზი'
+    share: 'გაზიარება'
+    linkCopied: 'ბმული დაკოპირდა'
     sizeShort: 'ზომა {size}'
     allObservations: 'ყველა დაკვირვება'
     problemPosition: 'პრობლემა {current} / {total}'
