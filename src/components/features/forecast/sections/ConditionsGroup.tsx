@@ -30,12 +30,12 @@ const ConditionsGroup = ({ className, forecast }: ConditionsGroupProps) => {
     >
       {snowpack && (
         <CollapsibleCard isInitiallyOpen={false} title={t('forecast.sections.snowpack.title')}>
-          <Prose className="text-copy-lg leading-[1.6]" content={snowpack} />
+          <Prose className="text-copy-lg leading-prose" content={snowpack} />
         </CollapsibleCard>
       )}
       {weather && (
         <CollapsibleCard isInitiallyOpen={false} title={t('forecast.sections.weather.title')}>
-          <Prose className="text-copy-lg leading-[1.6]" content={weather} />
+          <Prose className="text-copy-lg leading-prose" content={weather} />
         </CollapsibleCard>
       )}
       {additionalHazards && (

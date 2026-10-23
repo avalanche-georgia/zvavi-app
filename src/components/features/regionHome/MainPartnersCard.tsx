@@ -21,7 +21,7 @@ const MainPartnersCard = ({ partners }: { partners: Partner[] }) => {
     <SectionCard
       action={
         <Link
-          className="focus-ring text-accent hover:text-accent-hover text-copy-sm rounded-sm font-semibold"
+          className="focus-ring text-accent hover:text-accent-hover text-copy-sm rounded-badge font-semibold"
           href={routes.partners}
         >
           {t('partners.main.seeAllButton')}

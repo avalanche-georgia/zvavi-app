@@ -76,6 +76,7 @@ export const fontSizeClasses: Record<FontSizeToken, string> = {
 
 export const radiusClasses: Record<RadiusToken, string> = {
   badge: 'rounded-badge',
+  bar: 'rounded-bar',
   card: 'rounded-card',
   control: 'rounded-control',
   field: 'rounded-field',
@@ -85,6 +86,7 @@ export const radiusClasses: Record<RadiusToken, string> = {
 }
 
 export const shadowClasses: Record<ShadowToken, string> = {
+  fab: 'shadow-fab',
   float: 'shadow-float',
   marker: 'shadow-marker',
   'marker-cluster': 'shadow-marker-cluster',

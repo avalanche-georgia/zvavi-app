@@ -55,7 +55,7 @@ const StationRow = ({ dragHandleRef, onEdit, station }: StationRowProps) => {
 
       <div className="flex min-w-0 flex-1 flex-col items-start gap-0.5">
         <button
-          className="focus-ring text-copy text-ink hover:text-accent max-w-full truncate rounded-sm font-semibold hover:underline"
+          className="focus-ring text-copy text-ink hover:text-accent rounded-badge max-w-full truncate font-semibold hover:underline"
           onClick={() => onEdit(id)}
           type="button"
         >

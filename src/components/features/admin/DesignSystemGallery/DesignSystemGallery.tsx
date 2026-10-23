@@ -1,3 +1,8 @@
+'use client'
+
+// One client boundary for the whole gallery. As a server component it referenced every demo
+// separately, and in dev Next rendered a different set of chunk <script>s on the server and the
+// client, so every useId (base-ui ids) in the admin shell mismatched on hydration
 import { galleryEntries } from './entries'
 import GalleryNav from './GalleryNav'
 import GallerySection from './GallerySection'

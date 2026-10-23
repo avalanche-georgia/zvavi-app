@@ -17,7 +17,7 @@ const MemberCell = ({ member, onOpen }: MemberCellProps) => {
   return (
     <div className="flex min-w-0 flex-col items-start gap-0.5">
       <button
-        className="focus-ring text-ink hover:text-accent max-w-full truncate rounded-sm font-semibold hover:underline"
+        className="focus-ring text-ink hover:text-accent rounded-badge max-w-full truncate font-semibold hover:underline"
         onClick={() => onOpen(id)}
         type="button"
       >

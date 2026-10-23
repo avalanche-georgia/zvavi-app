@@ -14,7 +14,9 @@ const AboutBlock = () => {
         {t('home.about.eyebrow')}
       </p>
       <h2 className="text-title-sm font-bold">{t('home.about.title')}</h2>
-      <p className="text-body max-w-[46ch] leading-[1.55] text-pretty">{t('home.about.message')}</p>
+      <p className="text-body text-copy-lg leading-prose max-w-[46ch] text-pretty">
+        {t('home.about.message')}
+      </p>
       <Link
         className={getButtonClasses({ className: 'mt-auto', variant: 'secondary' })}
         href={routes.about.aboutUs}

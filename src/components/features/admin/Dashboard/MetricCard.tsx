@@ -45,7 +45,7 @@ const MetricCard = ({ href, isError, isPending, label, note, value }: MetricCard
       className="rounded-card border-rule bg-surface hover:border-rule-strong focus-ring flex flex-col gap-1.5 border px-4 py-3.5 transition-colors"
       href={href}
     >
-      <span className="text-caption text-muted font-semibold tracking-wider uppercase">
+      <span className="text-caption text-muted tracking-eyebrow font-semibold uppercase">
         {label}
         <LinkPendingIndicator />
       </span>

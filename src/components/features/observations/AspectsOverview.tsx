@@ -12,7 +12,7 @@ const AspectsOverview = ({ aspects }: { aspects: Aspects }) => {
   const summary = getAspectSummary(aspects)
 
   if (!summary) {
-    return <p className="text-body text-sm">{t('observations.detail.aspectsNotReported')}</p>
+    return <p className="text-body text-copy">{t('observations.detail.aspectsNotReported')}</p>
   }
 
   return (
@@ -26,7 +26,7 @@ const AspectsOverview = ({ aspects }: { aspects: Aspects }) => {
           />
         ))}
       </div>
-      <p className="text-body mt-2.5 text-sm leading-normal">{summary}</p>
+      <p className="text-body text-copy mt-2.5">{summary}</p>
     </>
   )
 }

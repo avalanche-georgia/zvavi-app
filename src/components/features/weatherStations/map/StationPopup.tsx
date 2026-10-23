@@ -18,7 +18,7 @@ const StationPopup = ({ altitude, name, url }: StationPopupProps) => {
         {t('common.units.meters', { value: altitude })}
       </p>
       <a
-        className="focus-ring text-copy text-accent! hover:text-accent-hover! mt-1 inline-flex items-center gap-1.5 rounded-sm hover:underline"
+        className="focus-ring text-copy text-accent! hover:text-accent-hover! rounded-badge mt-1 inline-flex items-center gap-1.5 hover:underline"
         href={url}
         rel="noopener noreferrer"
         target="_blank"

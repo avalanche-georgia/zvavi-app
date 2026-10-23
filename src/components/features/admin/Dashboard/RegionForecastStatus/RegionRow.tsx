@@ -19,7 +19,7 @@ const RegionRow = ({ regionId }: { regionId: RegionId }) => {
   return (
     <li className="border-rule flex min-h-12 flex-wrap items-center justify-between gap-x-3 gap-y-1 border-b py-2 last:border-b-0">
       <Link
-        className="focus-ring text-copy text-ink hover:text-accent flex items-center gap-1.5 rounded-sm font-medium hover:underline"
+        className="focus-ring text-copy text-ink hover:text-accent rounded-badge flex items-center gap-1.5 font-medium hover:underline"
         href={routes.admin.forecasts.listByRegion(regionId)}
       >
         <MapPin aria-hidden className="text-muted size-4" />

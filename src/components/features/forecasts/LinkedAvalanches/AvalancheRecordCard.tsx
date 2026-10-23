@@ -31,11 +31,11 @@ const AvalancheRecordCard = (props: AvalancheRecordCardProps) => {
 
   return (
     <div className="border-rule bg-surface rounded-card @container grid grid-cols-[52px_minmax(0,1fr)_auto] gap-3.5 border p-3.5 @max-[620px]:grid-cols-[52px_minmax(0,1fr)]">
-      <SizeTile className="size-13 rounded-[11px]" size={size} />
+      <SizeTile className="rounded-field size-13" size={size} />
       <div className="flex min-w-0 flex-col gap-1.5">
         <div className="flex flex-wrap items-center gap-1.5">
           <button
-            className="text-ink hover:text-accent focus-ring text-left text-[15px] font-semibold hover:underline"
+            className="text-ink hover:text-accent focus-ring text-copy-lg text-left font-semibold hover:underline"
             onClick={onView}
             type="button"
           >
@@ -45,7 +45,9 @@ const AvalancheRecordCard = (props: AvalancheRecordCardProps) => {
           {extraBadges}
         </div>
         <p className="text-copy-sm text-body flex flex-wrap gap-x-1.5">
-          <span className="text-muted font-mono text-xs leading-5">{formatAvalancheId(id)}</span>
+          <span className="text-muted text-caption font-mono leading-5">
+            {formatAvalancheId(id)}
+          </span>
           {meta.map((part) => (
             <span key={String(part)}>· {part}</span>
           ))}

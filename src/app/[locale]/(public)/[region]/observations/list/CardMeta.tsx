@@ -16,7 +16,7 @@ const CardMeta = ({ dateBasis, observation }: CardMetaProps) => {
   const { aspects, location, source, submitterName } = observation
 
   return (
-    <div className="text-muted mt-2 flex flex-wrap items-center gap-2.5 text-[12.5px]">
+    <div className="text-muted text-caption mt-2 flex flex-wrap items-center gap-2.5">
       {getZonesWithAspects(aspects).length > 0 && <MiniCompass aspects={getAllAspects(aspects)} />}
       {location && <span className="min-w-0 truncate">{location}</span>}
       {submitterName && <span>{submitterName}</span>}

@@ -60,7 +60,7 @@ const AspectCompass = ({ aspects, onChange, zone }: AspectCompassProps) => {
               aria-label={t('common.aspectElevationPicker.allAria', { zone: zoneLabel })}
               aria-pressed={isAllSelected}
               className={cn(
-                'text-accent hover:bg-accent-soft aspect-square rounded-full text-xs font-semibold uppercase transition-colors duration-120',
+                'text-accent hover:bg-accent-soft text-caption aspect-square rounded-full font-semibold uppercase transition-colors duration-120',
                 focusRing,
               )}
               onClick={handleAllClick}
@@ -82,7 +82,7 @@ const AspectCompass = ({ aspects, onChange, zone }: AspectCompassProps) => {
             })}
             aria-pressed={isSelected}
             className={cn(
-              'aspect-square touch-none rounded-xl text-[15px] font-medium transition-colors duration-120',
+              'rounded-media text-copy-lg aspect-square touch-none font-medium transition-colors duration-120',
               isSelected
                 ? 'bg-accent hover:bg-accent-hover text-white'
                 : 'bg-tile text-ink hover:bg-tile-hover',

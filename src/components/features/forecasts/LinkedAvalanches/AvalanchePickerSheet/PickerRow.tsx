@@ -26,7 +26,7 @@ const PickerRow = ({ avalanche, isLinked, isSelected, onToggle }: PickerRowProps
     <button
       aria-checked={isChecked}
       className={cn(
-        'focus-ring grid w-full grid-cols-[20px_40px_minmax(0,1fr)] items-center gap-3 rounded-xl px-2 py-2.5 text-left transition-colors',
+        'focus-ring rounded-media grid w-full grid-cols-[20px_40px_minmax(0,1fr)] items-center gap-3 px-2 py-2.5 text-left transition-colors',
         isSelected ? 'bg-accent-soft' : 'hover:bg-canvas',
         isLinked && 'cursor-not-allowed opacity-60',
       )}
@@ -37,13 +37,13 @@ const PickerRow = ({ avalanche, isLinked, isSelected, onToggle }: PickerRowProps
     >
       <span
         className={cn(
-          'grid size-5 place-items-center rounded-md border',
+          'rounded-badge grid size-5 place-items-center border',
           isChecked ? 'border-accent bg-accent text-white' : 'border-rule-strong bg-surface',
         )}
       >
         {isChecked && <Check aria-hidden className="size-3.5" strokeWidth={3} />}
       </span>
-      <SizeTile className="size-10 rounded-lg" size={size} />
+      <SizeTile className="rounded-item size-10" size={size} />
       <span className="flex min-w-0 flex-col gap-0.5">
         <span className="flex flex-wrap items-center gap-1.5">
           <span className="text-copy text-ink font-semibold">{getTitle(avalanche)}</span>

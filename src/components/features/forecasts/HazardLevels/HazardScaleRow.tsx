@@ -35,11 +35,15 @@ const HazardScaleRow = ({ label, zone }: HazardScaleRowProps) => {
 
   const renderSegment = (option: RatingScaleOption<HazardLevelScale>, isSelected: boolean) => (
     <>
-      <span className={cn('font-semibold', isOverall ? 'text-lg' : 'text-base')}>
+      <span className={cn('font-semibold', isOverall ? 'text-heading' : 'text-copy-lg')}>
         {option.value}
       </span>
       <span
-        className={cn('text-[11px] font-medium @max-[800px]:hidden', !isSelected && 'text-muted')}
+        className={cn(
+          // Normal line height: long labels wrap to two lines in Georgian
+          'text-micro leading-normal font-medium @max-[800px]:hidden',
+          !isSelected && 'text-muted',
+        )}
       >
         {option.label}
       </span>

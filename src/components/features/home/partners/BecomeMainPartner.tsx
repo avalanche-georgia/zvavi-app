@@ -9,11 +9,11 @@ const BecomeMainPartner = () => {
   const t = useTranslations()
 
   return (
-    <div className="rounded-card border-rule-strong bg-canvas grid items-center gap-5 border-2 border-dashed p-5 md:grid-cols-[minmax(0,1fr)_auto] md:gap-7 md:p-7">
+    <div className="rounded-card border-rule-strong bg-canvas border-slot grid items-center gap-5 p-5 md:grid-cols-[minmax(0,1fr)_auto] md:gap-7 md:p-7">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-5">
         <span
           aria-hidden
-          className="rounded-media border-rule-strong text-placeholder text-micro grid h-16 w-30 shrink-0 place-items-center border-2 border-dashed font-mono"
+          className="rounded-media border-rule-strong text-placeholder text-micro border-slot grid h-16 w-30 shrink-0 place-items-center font-mono"
         >
           {t('home.partners.empty.logoSlot')}
         </span>

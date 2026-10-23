@@ -9,9 +9,9 @@ const DangerTile = ({ level }: { level: HazardLevelScale | null }) => (
   <span
     aria-hidden
     className={cn(
-      'rounded-field grid size-11 place-items-center font-bold shadow-[inset_0_0_0_1px_rgba(0,0,0,.08)]',
+      'rounded-field grid size-11 place-items-center font-bold inset-ring inset-ring-black/8',
       level
-        ? [backgroundColorByHazardLevel[level], hazardTextClass(level), 'text-xl']
+        ? [backgroundColorByHazardLevel[level], hazardTextClass(level), 'text-title-sm']
         : 'bg-tile text-muted text-copy-sm',
     )}
   >

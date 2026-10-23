@@ -45,7 +45,8 @@ src/components/
 
 - Import through the `@ds/*` alias.
 - Code in `ds/` must never import from `features/`. ESLint enforces this, and also bans raw
-  palette classes and arbitrary token values inside `ds/` (see `eslint.config.mjs`).
+  palette classes, Tailwind's default type / radius / shadow / tracking scales and arbitrary token
+  values inside `ds/` (see `eslint.config.mjs`).
 - Each component gets its own folder: `ds/primitives/Button/{Button.tsx, Button.gallery.tsx, index.ts}`.
 - App-specific pieces that need app assets or translations live in `components/shared`, not `ds`
   (e.g. `BrandedQRCode`, which carries our logo).
@@ -102,22 +103,26 @@ them.
 
 | Layer | Tokens | Utilities |
 |---|---|---|
-| **Semantic colour** | text `ink`, `body`, `muted`, `placeholder`, `disabled` · lines `rule`, `rule-strong` · surfaces `surface`, `canvas`, `tile`, `tile-hover`, `off`, `map` · brand `primary(-hover/-soft/-ink)`, `brand-blue` · `accent(-hover/-soft)` · status `danger`, `danger-border`, `success`, `success-soft`, `warning`, `warning-soft`, `alert-ink` · domain `hazard-*`, `size-*` | `text-ink`, `bg-surface`, `border-rule`, … |
+| **Semantic colour** | text `ink`, `body`, `muted`, `placeholder`, `disabled` · lines `rule`, `rule-strong` · surfaces `surface`, `canvas`, `tile`, `tile-hover`, `off`, `map` · brand `primary(-hover/-soft/-ink)`, `brand-blue` · `accent(-hover/-soft)` · status `danger`, `danger-border`, `success`, `success-soft`, `warning`, `warning-soft`, `alert-ink` · domain `hazard-*`, `size-*`, `pin-*` (map pins by size) | `text-ink`, `bg-surface`, `border-rule`, … |
 | **Type scale** | `display` 34, `title-lg` 28, `title` 24, `title-sm` 22, `heading` 17, `copy-lg` 15, `copy` 14, `copy-sm` 13, `caption` 12.5, `micro` 10.5. Line-height (whole pixels, so nothing below lands on a fraction of a pixel) and tracking are part of the token | `text-heading`, … |
+| **Line height** | `prose` 1.6 — reading text (summaries, descriptions, conditions): 24px on `copy-lg`. Everything else takes the type token's own line height. Write it after the size: a later `text-*` in `cn()` drops it | `leading-prose` |
 | **Letter spacing** | `eyebrow` 0.06em (uppercase eyebrows and small labels) | `tracking-eyebrow` |
-| **Radii** | `card` 16, `media` 12, `field` 11, `control` 10, `item` 8 (options and segments inside a padded popup or track), `badge` 5, `sheet` 20 (pills use `rounded-full`) | `rounded-card`, … |
-| **Shadows** | `raised` (segmented thumb), `overlay` (map buttons), `float` (sticky bar), `pin`, `menu`, `sheet` (bottom sheet), `panel` (desktop side panel) | `shadow-float`, … |
+| **Radii** | `card` 16, `media` 12, `field` 11, `control` 10, `item` 8 (options and segments inside a padded popup or track), `badge` 5, `bar` 3 (bar-scale segments), `sheet` 20 (pills use `rounded-full`) | `rounded-card`, … |
+| **Shadows** | `raised` (segmented thumb), `overlay` (map buttons), `float` (sticky bar), `fab` (report button glow), `pin`, `menu`, `sheet` (bottom sheet), `panel` (desktop side panel) | `shadow-float`, … |
 | **Motion** | `sheet` easing (sheet slide in / out) | `ease-sheet` |
 | **Focus** | `focus-ring` utility: 2px accent outline, 2px offset, on `:focus-visible` | `focus-ring` |
+| **Empty slot** | `border-slot` utility: 1.5px dashed border (empty lists, drop zones); colour from `border-*` | `border-slot` |
 
 - **There is no raw-palette layer yet.** Semantic tokens hold the hex values directly. A primitive
   layer only pays off with theming (dark mode, a second brand); add it then.
 - **Control heights are not tokens.** Each primitive's `size` map sets them with the spacing scale
   (`h-10`, `h-11.5`, `h-12.5`), so the primitive itself is the source of truth.
 - The type scale merges near-duplicate sizes from handoffs: 13.5 → 13, 14.5 → 14, 15.5 → 15.
-- **Adding a type, radius, shadow or tracking token:** also add its name to `src/lib/designTokens.ts`.
+- **Adding a type, radius, shadow, tracking or line-height token:** also add its name to `src/lib/designTokens.ts`.
   `cn()` (tailwind-merge) needs the name there, or it treats `text-title` as a colour and drops it
   when merged with `text-ink`. The gallery lists tokens from the same file.
+- **Adding a custom `@utility`** (like `border-slot`): give it its own `classGroups` entry in `cn()`
+  (`src/lib/utils.ts`), or tailwind-merge may drop it next to a class it looks like.
 
 Rules:
 - Components in `ds/` use **semantic and scale tokens only**:
@@ -125,6 +130,11 @@ Rules:
   - no hex values
   - no arbitrary sizes like `text-[13px]`
 - If a value is missing, add a token rather than an arbitrary value.
+- **Feature code: tokens where they fit, plain Tailwind otherwise.** The rules above are strict for `ds/`
+  only. Outside it, use a ds token when one fits (a card radius, the brand colours, the type scale) so
+  screens stay consistent, and plain Tailwind (`text-sm`, `rounded-lg`, `gray-*`, `h-[42px]`, …) when none
+  does. ESLint warns on palette, default-scale and arbitrary classes there; a warning is a nudge, not an
+  error, and no new token is needed just to silence it.
 - **Accent** (`--color-accent`, brand blue `#0c5aa6`) is the one colour for selected states, links,
   text buttons and focus rings.
 - **Primary** (brand orange) is for the main call to action and for brand moments.
@@ -336,8 +346,8 @@ Rules:
 
 The legacy kit `src/components/ui/` was removed (phase 6), together with `@headlessui/react`,
 `@radix-ui/*` and `clsx`. Everything is built from ds now; if something is missing, build it in `ds/`
-first as its own commit or PR. Feature code still has raw palette classes and arbitrary values — move
-them to tokens when you touch a screen (`local/ds-next/feature-tokens.md`).
+first as its own commit or PR. Feature code uses ds tokens where they fit and plain
+Tailwind otherwise (see Tokens → Rules).
 
 ---
 

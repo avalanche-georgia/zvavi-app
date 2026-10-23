@@ -21,8 +21,10 @@ const ProblemViewCard = ({ number, problem }: ProblemViewCardProps) => {
       <div className="flex items-center gap-2.5">
         <ProblemNumber number={number} />
         <div className="flex min-w-0 flex-wrap items-center gap-x-2.5 gap-y-1">
-          <h3 className="text-ink text-base font-semibold">{t(`common.avalancheTypes.${type}`)}</h3>
-          <span className="bg-tile text-ink rounded-badge px-1.5 py-0.5 text-xs font-semibold whitespace-nowrap">
+          <h3 className="text-ink text-heading font-semibold">
+            {t(`common.avalancheTypes.${type}`)}
+          </h3>
+          <span className="bg-tile text-ink rounded-badge text-caption px-1.5 py-0.5 font-semibold whitespace-nowrap">
             {t('admin.forecast.editor.problems.size', { size: avalancheSize })}
           </span>
         </div>

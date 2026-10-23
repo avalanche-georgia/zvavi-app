@@ -94,6 +94,12 @@
   --color-size-3: #9ea3ad;
   --color-size-4: #555a64;
   --color-size-5: #1b1a1e;
+  /* Observation map pins by avalanche size, lightest → darkest (darker than size-*: they sit on a map) */
+  --color-pin-1: #8a8f99;
+  --color-pin-2: #6b707a;
+  --color-pin-3: #4a4e57;
+  --color-pin-4: #2c2e33;
+  --color-pin-5: #111111;
 
   /* Type scale — size, line-height and tracking travel together. Line-heights are whole pixels:
      fractional ones (14 × 1.45 = 20.3px) push everything below onto half pixels, and a control
@@ -125,6 +131,9 @@
   --text-micro--line-height: 11px;
   --text-micro--letter-spacing: 0.04em;
 
+  /* Line height for reading text — summaries, descriptions, conditions (24px on copy-lg) */
+  --leading-prose: 1.6;
+
   /* Letter spacing — uppercase eyebrows and labels */
   --tracking-eyebrow: 0.06em;
 
@@ -134,6 +143,8 @@
   --radius-field: 11px;
   --radius-control: 10px;
   --radius-badge: 5px;
+  /* Segments of bar scales (danger scale, size / sensitivity / steps bars) */
+  --radius-bar: 3px;
   /* An item inside a padded popup or track: menu / select options, segments */
   --radius-item: 8px;
   --radius-sheet: 20px;
@@ -143,6 +154,8 @@
   --shadow-overlay: 0 1px 4px rgb(0 0 0 / 0.18);
   --shadow-float: 0 6px 24px -8px rgb(0 0 0 / 0.12);
   --shadow-menu: 0 12px 32px -8px rgb(0 0 0 / 0.18);
+  /* Floating action button: a glow in the primary colour */
+  --shadow-fab: 0 6px 18px -4px color-mix(in oklab, var(--color-primary) 50%, transparent);
   --shadow-pin: 0 2px 6px rgb(0 0 0 / 0.35);
   --shadow-marker: 0 0 0 2px var(--color-surface), 0 1px 3px rgb(0 0 0 / 0.3);
   --shadow-marker-selected: 0 0 0 3px var(--color-surface), 0 2px 6px rgb(0 0 0 / 0.35);
@@ -280,6 +293,13 @@ body {
 
 button {
   cursor: pointer;
+}
+
+/* Dashed outline of an empty slot or placeholder (no problems yet, add a photo, become a partner).
+   1.5px: dashes at 1px are too faint, at 2px too heavy. Colour comes from a border-* colour class */
+@utility border-slot {
+  border-width: 1.5px;
+  border-style: dashed;
 }
 
 /* ds focus ring — apply to every interactive element */

@@ -23,7 +23,9 @@ const ViewPhotos = ({ id, photoKeys }: ViewPhotosProps) => {
 
   if (isError) {
     return (
-      <p className="text-muted px-4 pt-4 text-sm">{t('admin.recentAvalanches.view.photosError')}</p>
+      <p className="text-muted text-copy px-4 pt-4">
+        {t('admin.recentAvalanches.view.photosError')}
+      </p>
     )
   }
 

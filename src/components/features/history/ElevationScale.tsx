@@ -10,7 +10,7 @@ const ElevationScale = ({ hazardLevels }: { hazardLevels: HazardLevels }) => {
   return (
     <ul
       aria-label={t('forecast.history.elevationScale')}
-      className="bg-tile flex flex-col gap-0.75 self-start rounded-lg p-1"
+      className="bg-tile rounded-item flex flex-col gap-0.75 self-start p-1"
     >
       {sortedElevationZones.map((zone) => {
         const level = hazardLevels[zone]
@@ -22,7 +22,7 @@ const ElevationScale = ({ hazardLevels }: { hazardLevels: HazardLevels }) => {
         return (
           <li key={zone}>
             <HazardTile
-              className="text-micro h-4 w-5.5 rounded-sm"
+              className="text-micro rounded-badge h-4 w-5.5"
               label={label}
               level={level}
               palette="public"

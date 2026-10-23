@@ -22,17 +22,17 @@ const Tile = ({ children, isWide = false, label, onInfoOpen, value }: TileProps)
   return (
     <div
       className={cn(
-        'bg-tile flex min-w-0 flex-col gap-2.5 rounded-[14px] p-3',
+        'bg-tile rounded-card flex min-w-0 flex-col gap-2.5 p-3',
         isWide && 'col-span-full',
       )}
     >
       <div className="flex min-h-4 items-center gap-1">
-        <span className="text-muted min-w-0 flex-1 text-xs font-medium">{label}</span>
+        <span className="text-muted text-caption min-w-0 flex-1 font-medium">{label}</span>
         {onInfoOpen && (
           <Tooltip label={infoLabel}>
             <button
               aria-label={infoLabel}
-              className="focus-ring text-muted hover:bg-tile-hover hover:text-ink relative -my-1.5 -mr-1.5 grid size-7 shrink-0 place-items-center rounded-lg transition-colors after:absolute pointer-coarse:after:-inset-2"
+              className="focus-ring text-muted hover:bg-tile-hover hover:text-ink rounded-item relative -my-1.5 -mr-1.5 grid size-7 shrink-0 place-items-center transition-colors after:absolute pointer-coarse:after:-inset-2"
               onClick={onInfoOpen}
               type="button"
             >

@@ -7,7 +7,7 @@ const LoadError = ({ onRetry }: { onRetry: VoidFunction }) => {
 
   return (
     <div className="flex flex-col items-center gap-3 px-4 py-12 text-center">
-      <p className="text-muted text-sm">{t('common.messages.error')}</p>
+      <p className="text-muted text-copy">{t('common.messages.error')}</p>
       <Button onClick={onRetry} size="sm" variant="secondary">
         {t('common.actions.tryAgain')}
       </Button>

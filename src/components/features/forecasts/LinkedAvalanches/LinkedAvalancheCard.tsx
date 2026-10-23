@@ -31,7 +31,7 @@ const LinkedAvalancheCard = (props: LinkedAvalancheCardProps) => {
       extraBadges={!isSaved && <AvalancheBadge kind="notSaved" />}
       footer={
         otherForecasts > 0 && (
-          <p className="text-accent-hover flex items-center gap-1 text-[12.5px] font-medium">
+          <p className="text-accent-hover text-caption flex items-center gap-1 font-medium">
             <Link2 aria-hidden className="size-3.5" />
             {t('admin.forecast.editor.avalanches.alsoOn', { count: otherForecasts })}
           </p>

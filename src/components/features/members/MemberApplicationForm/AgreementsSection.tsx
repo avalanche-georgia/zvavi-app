@@ -10,7 +10,7 @@ import type { MemberApplicationFormSchema as FormSchema } from './schema'
 import { routes } from '@/routes'
 
 const linkClasses =
-  'focus-ring text-accent hover:text-accent-hover rounded-sm underline underline-offset-2'
+  'focus-ring text-accent hover:text-accent-hover rounded-badge underline underline-offset-2'
 
 const CharterSheetButton = ({ chunks }: { chunks: React.ReactNode }) => {
   const t = useTranslations()

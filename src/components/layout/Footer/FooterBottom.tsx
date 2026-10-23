@@ -4,7 +4,7 @@ import { Link } from 'src/i18n/navigation'
 
 import { routes } from '@/routes'
 
-const linkClasses = 'focus-ring text-muted hover:text-ink rounded-sm transition-colors'
+const linkClasses = 'focus-ring text-muted hover:text-ink rounded-badge transition-colors'
 
 // Emergency number and copyright · legal links and the analytics choice
 const FooterBottom = () => {
@@ -15,7 +15,7 @@ const FooterBottom = () => {
       <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
         <span className="text-ink font-medium">
           {t('footer.emergency')}{' '}
-          <a className="focus-ring text-alert-ink rounded-sm font-bold" href="tel:112">
+          <a className="focus-ring text-alert-ink rounded-badge font-bold" href="tel:112">
             112
           </a>
         </span>

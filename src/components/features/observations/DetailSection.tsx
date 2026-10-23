@@ -5,7 +5,7 @@ type DetailSectionProps = {
 
 const DetailSection = ({ children, title }: DetailSectionProps) => (
   <section className="px-4 pt-5">
-    <h3 className="text-muted mb-2.5 text-[13px] font-semibold tracking-[.05em] uppercase">
+    <h3 className="text-muted text-copy-sm tracking-eyebrow mb-2.5 font-semibold uppercase">
       {title}
     </h3>
     {children}

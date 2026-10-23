@@ -5,11 +5,11 @@ import { type DivIcon, divIcon } from 'leaflet'
 
 // Grey shades by avalanche size, lightest → darkest
 const shadeClassNames: Record<AvalancheSize, string> = {
-  1: 'bg-[#8a8f99]',
-  2: 'bg-[#6b707a]',
-  3: 'bg-[#4a4e57]',
-  4: 'bg-[#2c2e33]',
-  5: 'bg-[#111]',
+  1: 'bg-pin-1',
+  2: 'bg-pin-2',
+  3: 'bg-pin-3',
+  4: 'bg-pin-4',
+  5: 'bg-pin-5',
 }
 
 // Radius grows with avalanche size; the selected pin is a bit larger still
@@ -28,8 +28,8 @@ const observationPinIcon = (size: AvalancheSize, isSelected = false): DivIcon =>
 
   const diameter = getDiameter(size, isSelected)
   const circleClassName = isSelected
-    ? 'bg-brand-blue shadow-[0_0_0_3px_#fff,0_2px_6px_rgb(0_0_0/.35)]'
-    : `${shadeClassNames[size]} shadow-[0_0_0_2px_#fff,0_1px_3px_rgb(0_0_0/.3)]`
+    ? 'bg-brand-blue shadow-marker-selected'
+    : `${shadeClassNames[size]} shadow-marker`
 
   const icon = divIcon({
     className: markerClassName,

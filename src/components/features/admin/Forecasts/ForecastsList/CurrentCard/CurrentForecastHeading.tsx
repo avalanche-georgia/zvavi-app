@@ -30,7 +30,7 @@ const CurrentForecastHeading = ({
     <div className="min-w-0">
       <p
         className={cn(
-          'text-caption flex items-center gap-1.5 font-semibold tracking-wide uppercase',
+          'text-caption tracking-eyebrow flex items-center gap-1.5 font-semibold uppercase',
           isExpired ? 'text-warning' : 'text-success',
         )}
       >
@@ -42,14 +42,14 @@ const CurrentForecastHeading = ({
           isExpired ? 'admin.forecasts.current.eyebrowExpired' : 'admin.forecasts.current.eyebrow',
         )}
         {endsInHours !== null && (
-          <span className="bg-primary-soft text-primary-ink ml-1 rounded-md px-1.5 py-0.5 tracking-normal normal-case">
+          <span className="bg-primary-soft text-primary-ink rounded-badge ml-1 px-1.5 py-0.5 tracking-normal normal-case">
             {t('admin.forecasts.current.endsSoon', { count: endsInHours })}
           </span>
         )}
       </p>
       <h2 className="text-heading text-ink truncate font-semibold">
         <Link
-          className="focus-ring hover:text-accent rounded-sm hover:underline"
+          className="focus-ring hover:text-accent rounded-badge hover:underline"
           href={routes.admin.forecasts.view(id)}
         >
           {t(hazardLevelNamesByScale[hazardLevels.overall])} · #{id} {forecaster}

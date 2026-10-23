@@ -42,7 +42,7 @@ const TimeTile = ({ problem }: { problem: Pick<Problem, 'isAllDay' | 'timeOfDay'
       label={t('forecast.sections.avalancheProblems.modal.labels.timeOfDay')}
       value={getValue()}
     >
-      <div aria-hidden className="bg-off relative h-3.5 overflow-hidden rounded-sm">
+      <div aria-hidden className="bg-off rounded-badge relative h-3.5 overflow-hidden">
         {getSegments().map(({ left, width }) => (
           <i
             key={left}

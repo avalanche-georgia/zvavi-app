@@ -17,9 +17,7 @@ const DetailTitle = ({
     <>
       <div className="flex items-center gap-3 px-4 pt-4 pb-1">
         <SizeTile className="size-14" size={size} />
-        <h2 className="m-0 text-[21px] leading-[1.15] font-bold tracking-[-.02em]">
-          {t(`common.avalancheTypes.${type}`)}
-        </h2>
+        <h2 className="text-title-sm m-0 font-bold">{t(`common.avalancheTypes.${type}`)}</h2>
       </div>
       {location && (
         <p className="text-body text-copy-sm flex items-center gap-1.5 px-4 pt-1.5">

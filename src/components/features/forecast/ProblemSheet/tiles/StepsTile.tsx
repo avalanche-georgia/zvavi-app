@@ -27,10 +27,7 @@ const StepsTile = ({
       {Array.from({ length: stepCount }, (_, index) => (
         <i
           key={index}
-          className={cn(
-            'h-2.5 flex-1 rounded-[3px]',
-            index <= activeIndex ? 'bg-accent' : 'bg-off',
-          )}
+          className={cn('rounded-bar h-2.5 flex-1', index <= activeIndex ? 'bg-accent' : 'bg-off')}
         />
       ))}
     </div>

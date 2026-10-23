@@ -45,20 +45,20 @@ const DangerInfo = ({ hazardLevels, scope }: DangerInfoProps) => {
       <div className="flex items-center gap-3.5 px-4 pt-4">
         <Image
           alt=""
-          className={cn('size-16 shrink-0 rounded-xl', backgroundColorByHazardLevel[level])}
+          className={cn('rounded-media size-16 shrink-0', backgroundColorByHazardLevel[level])}
           height={64}
           src={hazardIcons[level]}
           width={64}
         />
         <div className="min-w-0">
-          <h2 className="text-ink m-0 text-[21px] leading-tight font-bold tracking-[-.02em]">
+          <h2 className="text-ink text-title-sm m-0 font-bold">
             {isRated && `${level} · `}
             {t(hazardLevelNamesByScale[level])}
           </h2>
           <p className="text-muted text-copy-sm mt-0.5">{scopeLabel}</p>
         </div>
       </div>
-      {!isRated && <p className="text-ink text-copy-lg mx-4 mt-3.5 leading-[1.55]">{parts[0]}</p>}
+      {!isRated && <p className="text-ink text-copy-lg leading-prose mx-4 mt-3.5">{parts[0]}</p>}
       {isRated &&
         descriptionLabelKeys.map(
           (labelKey, index) =>
@@ -67,7 +67,7 @@ const DangerInfo = ({ hazardLevels, scope }: DangerInfoProps) => {
                 key={labelKey}
                 title={t(`forecast.hazardLevels.descriptionLabels.${labelKey}`)}
               >
-                <p className="text-ink text-copy-lg leading-[1.55]">{parts[index]}</p>
+                <p className="text-ink text-copy-lg leading-prose">{parts[index]}</p>
               </InfoSection>
             ),
         )}
@@ -78,7 +78,7 @@ const DangerInfo = ({ hazardLevels, scope }: DangerInfoProps) => {
               key={scaleLevel}
               badge={scaleLevel}
               badgeClassName={cn(
-                'shadow-[inset_0_0_0_1px_rgba(0,0,0,.1)]',
+                'inset-ring inset-ring-black/10',
                 backgroundColorByHazardLevel[scaleLevel],
                 hazardTextClass(scaleLevel),
               )}

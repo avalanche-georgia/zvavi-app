@@ -20,18 +20,18 @@ const PartnerInfo = ({ partner }: { partner: Partner }) => {
     <div className="flex flex-col gap-5">
       {description && (
         <div>
-          <p className="mb-1 text-xs font-semibold tracking-wide text-gray-400 uppercase">
+          <p className="text-muted text-caption tracking-eyebrow mb-1 font-semibold uppercase">
             {t('partners.drawer.descriptionLabel')}
           </p>
-          <p className="text-sm whitespace-pre-line text-gray-700">{description}</p>
+          <p className="text-body text-copy whitespace-pre-line">{description}</p>
         </div>
       )}
       {benefit && (
-        <div className="rounded-lg bg-blue-50 px-4 py-3">
-          <p className="mb-1 text-xs font-semibold tracking-wide text-blue-600 uppercase">
+        <div className="rounded-media bg-accent-soft px-4 py-3">
+          <p className="text-accent text-caption tracking-eyebrow mb-1 font-semibold uppercase">
             {t('partners.drawer.benefitLabel')}
           </p>
-          <p className="text-sm whitespace-pre-line text-blue-900">{benefit}</p>
+          <p className="text-ink text-copy whitespace-pre-line">{benefit}</p>
         </div>
       )}
       <a

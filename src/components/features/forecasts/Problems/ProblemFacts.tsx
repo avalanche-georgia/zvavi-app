@@ -35,7 +35,7 @@ const ProblemFacts = ({ problem }: { problem: ProblemValues }) => {
     <dl className="grid grid-cols-[repeat(auto-fill,minmax(110px,1fr))] gap-x-4 gap-y-2.5">
       {facts.map(({ label, value }) => (
         <div key={label} className="flex flex-col gap-0.5">
-          <dt className="text-muted text-xs">{label}</dt>
+          <dt className="text-muted text-caption">{label}</dt>
           <dd className="text-copy text-ink font-medium">{value}</dd>
         </div>
       ))}

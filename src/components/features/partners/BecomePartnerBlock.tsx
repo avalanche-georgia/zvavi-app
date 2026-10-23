@@ -15,7 +15,7 @@ const BecomePartnerBlock = () => {
           {t('partners.page.become.eyebrow')}
         </p>
         <h2 className="text-title-sm font-bold">{t('partners.page.become.title')}</h2>
-        <p className="max-w-[56ch] leading-[1.55] text-pretty text-white/80">
+        <p className="text-copy-lg leading-prose max-w-[56ch] text-pretty text-white/80">
           {t('partners.page.become.message')}
         </p>
       </div>

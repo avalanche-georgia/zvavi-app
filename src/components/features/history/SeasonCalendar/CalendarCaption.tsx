@@ -32,7 +32,7 @@ const CalendarCaption = ({ day, forecast }: CalendarCaptionProps) => {
     <p className="text-copy-sm text-muted mt-2.5 flex min-h-5 items-center gap-1.5">
       <span
         aria-hidden
-        className={cn('size-2.5 rounded-xs', backgroundColorByHazardLevel[level])}
+        className={cn('rounded-bar size-2.5', backgroundColorByHazardLevel[level])}
       />
       <span className="text-ink font-semibold">{formatDay(day)}</span>
       <span>· {t(hazardLevelNamesByScale[level])}</span>

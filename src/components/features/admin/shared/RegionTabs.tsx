@@ -39,7 +39,7 @@ const RegionTabs = ({ counts, currentRegionId, initialRegions }: RegionTabsProps
           <Tabs.Tab
             key={region.id}
             className={cn(
-              'text-copy-lg text-muted relative rounded-t-sm px-5 pt-1.5 pb-2 font-semibold transition-colors',
+              'text-copy-lg text-muted rounded-t-badge relative px-5 pt-1.5 pb-2 font-semibold transition-colors',
               'hover:text-ink data-active:bg-primary-soft data-active:text-primary-ink',
               'after:bg-primary after:invisible after:absolute after:inset-x-0 after:bottom-0',
               'after:h-0.5 data-active:after:visible',

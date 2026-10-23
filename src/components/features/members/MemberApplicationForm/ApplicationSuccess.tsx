@@ -13,7 +13,7 @@ import { downloadQRCode, getVerificationUrl } from '@/lib/qrcode'
 
 const emailLink = (chunks: React.ReactNode) => (
   <a
-    className="focus-ring text-accent hover:text-accent-hover rounded-sm underline underline-offset-2"
+    className="focus-ring text-accent hover:text-accent-hover rounded-badge underline underline-offset-2"
     href={`mailto:${links.email}`}
   >
     {chunks}

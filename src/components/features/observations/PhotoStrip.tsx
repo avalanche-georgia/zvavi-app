@@ -29,7 +29,7 @@ const PhotoStrip = ({ photos }: { photos: PhotoUrls[] }) => {
             key={photo.id}
             aria-label={t('common.photoViewer.open', { index: index + 1 })}
             className={cn(
-              'bg-tile aspect-4/3 shrink-0 snap-start overflow-hidden rounded-[14px]',
+              'bg-tile rounded-card aspect-4/3 shrink-0 snap-start overflow-hidden',
               'focus-visible:outline-accent focus-visible:outline-2 focus-visible:-outline-offset-2',
               photos.length === 1 ? 'w-full' : 'w-[82%]',
             )}

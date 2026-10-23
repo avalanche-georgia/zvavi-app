@@ -12,10 +12,10 @@ const MainPartnerInvite = () => {
   const t = useTranslations()
 
   return (
-    <article className="rounded-card border-rule-strong flex flex-col items-start gap-4.5 border border-dashed p-5 md:flex-row md:items-center md:gap-7 md:p-7">
+    <article className="rounded-card border-rule-strong border-slot flex flex-col items-start gap-4.5 p-5 md:flex-row md:items-center md:gap-7 md:p-7">
       <span
         aria-hidden
-        className="rounded-card border-rule-strong text-muted text-micro grid size-28 shrink-0 place-items-center border-2 border-dashed font-mono md:size-42"
+        className="rounded-card border-rule-strong text-muted text-micro border-slot grid size-28 shrink-0 place-items-center font-mono md:size-42"
       >
         {t('partners.page.invite.logoSlot')}
       </span>

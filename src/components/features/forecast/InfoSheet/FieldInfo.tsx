@@ -21,14 +21,12 @@ const FieldInfo = ({ field, problem, regionId }: FieldInfoProps) => {
   return (
     <>
       <div className="px-4 pt-4">
-        <h2 className="text-ink m-0 text-[21px] leading-tight font-bold tracking-[-.02em]">
-          {title}
-        </h2>
+        <h2 className="text-ink text-title-sm m-0 font-bold">{title}</h2>
         <p className="text-muted text-copy-sm mt-0.5">
           {t(`common.avalancheTypes.${problem.type}`)}
         </p>
       </div>
-      {lead && <p className="text-ink text-copy-lg mx-4 mt-3.5 leading-[1.55]">{lead}</p>}
+      {lead && <p className="text-ink text-copy-lg leading-prose mx-4 mt-3.5">{lead}</p>}
       <InfoSection title={listTitle}>
         <ul className="flex flex-col gap-1.5">
           {items.map(({ badge, description, isCurrent, name }) => (

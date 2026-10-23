@@ -30,7 +30,7 @@ const NoCurrentForecastCard = ({ latestDraft, regionId }: NoCurrentForecastCardP
   return (
     <section className={cn(cardShellClasses, 'grid-cols-[1fr_auto]')}>
       <div className="min-w-0">
-        <p className="text-caption text-muted font-semibold tracking-wide uppercase">
+        <p className="text-caption text-muted tracking-eyebrow font-semibold uppercase">
           {t('admin.forecasts.current.noneEyebrow')}
         </p>
         <h2 className="text-heading text-ink font-semibold">

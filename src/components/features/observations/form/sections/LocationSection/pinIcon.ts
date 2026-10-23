@@ -8,6 +8,7 @@ import L from 'leaflet'
 // class adds a white box behind it.
 export const pinIcon = L.divIcon({
   className: '',
+  // The teardrop pin: three round corners and one sharp one, not a radius token
   html: `<div class="relative size-7.5">
     <div class="absolute inset-0 -rotate-45 rounded-[50%_50%_50%_0] border-2 border-white bg-brand-blue shadow-pin"></div>
     <img alt="" class="absolute inset-0.5 size-6.5" src="${logoMark.src}" />

@@ -11,13 +11,13 @@ const PartnerCell = ({ onOpen, partner }: PartnerCellProps) => {
 
   return (
     <div className="flex min-w-0 items-center gap-3">
-      <span className="bg-tile grid size-10 shrink-0 place-items-center overflow-hidden rounded-lg p-1">
+      <span className="bg-tile rounded-item grid size-10 shrink-0 place-items-center overflow-hidden p-1">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img alt="" className="max-h-full max-w-full object-contain" src={logoUrl} />
       </span>
       <div className="flex min-w-0 flex-col items-start gap-0.5">
         <button
-          className="focus-ring text-ink hover:text-accent max-w-full truncate rounded-sm font-semibold hover:underline"
+          className="focus-ring text-ink hover:text-accent rounded-badge max-w-full truncate font-semibold hover:underline"
           onClick={() => onOpen(id)}
           type="button"
         >
