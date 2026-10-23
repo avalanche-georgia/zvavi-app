@@ -45,7 +45,8 @@ src/components/
 
 - Import through the `@ds/*` alias.
 - Code in `ds/` must never import from `features/`. ESLint enforces this, and also bans raw
-  palette classes and arbitrary token values inside `ds/` (see `eslint.config.mjs`).
+  palette classes, Tailwind's default type / radius / shadow / tracking scales and arbitrary token
+  values inside `ds/` (see `eslint.config.mjs`).
 - Each component gets its own folder: `ds/primitives/Button/{Button.tsx, Button.gallery.tsx, index.ts}`.
 - App-specific pieces that need app assets or translations live in `components/shared`, not `ds`
   (e.g. `BrandedQRCode`, which carries our logo).
@@ -117,9 +118,11 @@ them.
 - **Control heights are not tokens.** Each primitive's `size` map sets them with the spacing scale
   (`h-10`, `h-11.5`, `h-12.5`), so the primitive itself is the source of truth.
 - The type scale merges near-duplicate sizes from handoffs: 13.5 → 13, 14.5 → 14, 15.5 → 15.
-- **Adding a type, radius, shadow or tracking token:** also add its name to `src/lib/designTokens.ts`.
+- **Adding a type, radius, shadow, tracking or line-height token:** also add its name to `src/lib/designTokens.ts`.
   `cn()` (tailwind-merge) needs the name there, or it treats `text-title` as a colour and drops it
   when merged with `text-ink`. The gallery lists tokens from the same file.
+- **Adding a custom `@utility`** (like `border-slot`): give it its own `classGroups` entry in `cn()`
+  (`src/lib/utils.ts`), or tailwind-merge may drop it next to a class it looks like.
 
 Rules:
 - Components in `ds/` use **semantic and scale tokens only**:

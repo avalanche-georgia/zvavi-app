@@ -19,9 +19,9 @@ const rawPaletteClass =
 const arbitraryTokenValue =
   '/(\\[#[0-9a-fA-F]{3,8}\\]|\\b(text|rounded|shadow)-\\[|\\b(w|h|size|min-w|min-h|max-w|max-h)-\\[\\d+(\\.\\d+)?(px|rem)\\])/'
 // Tailwind's default type, radius, shadow and tracking scales: allowed in feature code, but a ds token
-// keeps screens consistent when one fits (warning only)
+// keeps screens consistent when one fits (warning only); not in ds (error)
 const defaultScaleClass =
-  '/\\b(text-(xs|sm|base|lg|xl|[2-9]xl)|rounded(-(t|b|l|r|s|e|tl|tr|bl|br|ss|se|es|ee))?-(xs|sm|md|lg|xl|2xl|3xl)|shadow-(xs|sm|md|lg|xl|2xl)|tracking-(tighter|tight|wide|wider|widest))\\b|\\brounded(?=[\\s"\'`!]|$)/'
+  '/\\b(text-(xs|sm|base|lg|xl|[2-9]xl)|rounded(-(t|b|l|r|s|e|tl|tr|bl|br|ss|se|es|ee))?-(xs|sm|md|lg|xl|[2-4]xl)|(?<![\\w-])shadow-(xs|sm|md|lg|xl|2xl)|tracking-(tighter|tight|wide|wider|widest))\\b|\\brounded(?=[\\s"\'`!]|$)/'
 // Colour functions in class strings or styles — colours come from tokens
 const colourFunction = '/\\b(rgba?|hsla?|oklch)\\(/'
 // Shared by both ds import blocks below (a later block replaces the rule's options, not merges them)
@@ -203,6 +203,11 @@ export default [
             message:
               'Use a token (text-*, rounded-*, shadow-*, colour) instead of an arbitrary value.',
             selector: selector.replace('{regex}', arbitraryTokenValue),
+          },
+          {
+            message:
+              'Use a ds token (text-caption, rounded-card, shadow-menu, tracking-eyebrow, …) instead of the Tailwind default scale.',
+            selector: selector.replace('{regex}', defaultScaleClass),
           },
           {
             message: 'Use a colour token instead of rgb() / hsl().',
