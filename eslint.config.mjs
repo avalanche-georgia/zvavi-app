@@ -18,6 +18,10 @@ const rawPaletteClass =
 // sizes (`h-[42px]`). Viewport / safe-area maths (`h-[94dvh]`) has no token and stays allowed
 const arbitraryTokenValue =
   '/(\\[#[0-9a-fA-F]{3,8}\\]|\\b(text|rounded|shadow)-\\[|\\b(w|h|size|min-w|min-h|max-w|max-h)-\\[\\d+(\\.\\d+)?(px|rem)\\])/'
+// Tailwind's default type, radius, shadow and tracking scales: allowed in feature code, but a ds token
+// keeps screens consistent when one fits (warning only)
+const defaultScaleClass =
+  '/\\b(text-(xs|sm|base|lg|xl|[2-9]xl)|rounded(-(t|b|l|r|s|e|tl|tr|bl|br|ss|se|es|ee))?-(xs|sm|md|lg|xl|2xl|3xl)|shadow-(xs|sm|md|lg|xl|2xl)|tracking-(tighter|tight|wide|wider|widest))\\b|\\brounded(?=[\\s"\'`!]|$)/'
 // Colour functions in class strings or styles — colours come from tokens
 const colourFunction = '/\\b(rgba?|hsla?|oklch)\\(/'
 // Shared by both ds import blocks below (a later block replaces the rule's options, not merges them)
@@ -145,6 +149,31 @@ export default [
           skipBlankLines: true,
           skipComments: true,
         },
+      ],
+    },
+  },
+  {
+    // Feature code: plain Tailwind is allowed; these only nudge towards a ds token where one fits
+    files: ['src/**/*.{ts,tsx}'],
+    ignores: ['src/components/ds/**', '**/*.test.{ts,tsx}'],
+    rules: {
+      'no-restricted-syntax': [
+        'warn',
+        ...['Literal[value={regex}]', 'TemplateElement[value.raw={regex}]'].flatMap((selector) => [
+          {
+            message: 'Prefer a semantic colour token (ink, muted, rule, accent, …) if one fits.',
+            selector: selector.replace('{regex}', rawPaletteClass),
+          },
+          {
+            message:
+              'Prefer a ds token (text-caption, rounded-card, shadow-menu, tracking-eyebrow, …) if one fits.',
+            selector: selector.replace('{regex}', defaultScaleClass),
+          },
+          {
+            message: 'Prefer a token (text-*, rounded-*, shadow-*, colour) if one fits.',
+            selector: selector.replace('{regex}', arbitraryTokenValue),
+          },
+        ]),
       ],
     },
   },
