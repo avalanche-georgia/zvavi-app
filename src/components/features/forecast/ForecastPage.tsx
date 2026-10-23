@@ -2,7 +2,7 @@
 
 import { useHeaderHeight } from '@components/hooks'
 import { hazardLevelNamesByScale } from '@domain/constants'
-import type { FullForecast, TeamMember } from '@domain/types'
+import type { FullForecast, Partner, TeamMember } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import { AvalancheSheet } from './AvalancheSheet'
@@ -20,13 +20,21 @@ export type ForecastPageProps = {
   forecasterProfile: TeamMember | null
   isCurrentForecast: boolean
   nextForecastId: number | null
+  // For the sponsors card
+  partners: Partner[]
   previousForecastId: number | null
 }
 
 // The public forecast: one column on mobile, a sticky rail + main column on desktop
 const ForecastPage = (props: ForecastPageProps) => {
-  const { forecast, forecasterProfile, isCurrentForecast, nextForecastId, previousForecastId } =
-    props
+  const {
+    forecast,
+    forecasterProfile,
+    isCurrentForecast,
+    nextForecastId,
+    partners,
+    previousForecastId,
+  } = props
   const t = useTranslations()
   const headerHeight = useHeaderHeight()
 
@@ -54,6 +62,7 @@ const ForecastPage = (props: ForecastPageProps) => {
             forecasterProfile={forecasterProfile}
             isCurrentForecast={isCurrentForecast}
             onDangerInfoOpen={sheets.openDangerInfo}
+            partners={partners}
           />
           <ForecastMain
             forecast={forecast}

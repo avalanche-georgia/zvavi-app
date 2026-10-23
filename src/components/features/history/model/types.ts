@@ -1,4 +1,4 @@
-import type { HistoryListItem } from '@data/hooks/forecasts'
+import type { HistoryListItem } from '@domain/types'
 import type { AvalancheProblemType, HazardLevelScale } from '@domain/types'
 
 // A forecast with its Georgian calendar days worked out once. Days are

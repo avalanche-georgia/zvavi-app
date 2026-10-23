@@ -1,16 +1,14 @@
-import { supabase } from '@data'
 import { convertSnakeToCamel, handleSupabaseError } from '@data/helpers'
-import { forecastsKeys } from '@data/query-keys'
-import type { Forecast, Problem, RegionId } from '@domain/types'
+import type { HistoryListItem, RegionId } from '@domain/types'
 
-import { useQuery } from '@/tanstack-query/hooks'
+import 'server-only'
+import { createClient } from '@/lib/supabase/server'
 
-export type HistoryListItem = Pick<
-  Forecast,
-  'forecaster' | 'hazardLevels' | 'id' | 'publishedAt' | 'summary' | 'validUntil'
-> & { avalancheProblems: Pick<Problem, 'order' | 'type'>[] }
-
+// The region's past published forecasts, newest first, with their problems in order.
+// A failed load throws to the (public) error boundary — an empty list would read as
+// "no forecasts yet".
 const fetchHistoryList = async (regionId: RegionId): Promise<HistoryListItem[]> => {
+  const supabase = await createClient()
   const { data, error } = await supabase
     .from('forecasts')
     .select(
@@ -23,9 +21,8 @@ const fetchHistoryList = async (regionId: RegionId): Promise<HistoryListItem[]> 
 
   handleSupabaseError(error)
 
-  if (!data) return []
-
-  return (convertSnakeToCamel(data) as HistoryListItem[]).map((forecast) => ({
+  // TODO: type-safe DB conversion — https://app.asana.com/1/1208747886147296/project/1208747689500826/task/1214630622531225
+  return (convertSnakeToCamel(data ?? []) as HistoryListItem[]).map((forecast) => ({
     ...forecast,
     avalancheProblems: [...forecast.avalancheProblems].sort(
       (problemA, problemB) => problemA.order - problemB.order,
@@ -33,10 +30,4 @@ const fetchHistoryList = async (regionId: RegionId): Promise<HistoryListItem[]> 
   }))
 }
 
-const useHistoryListQuery = (regionId: RegionId) =>
-  useQuery({
-    queryFn: () => fetchHistoryList(regionId),
-    queryKey: forecastsKeys.list(regionId),
-  })
-
-export default useHistoryListQuery
+export default fetchHistoryList

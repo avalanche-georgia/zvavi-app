@@ -1,10 +1,12 @@
-import { ForecastContainer } from '@components/features/forecast'
+import { ForecastPage } from '@components/features/forecast'
 import { isNoRowsError } from '@data/helpers'
 import { fetchForecastPageData } from '@data/queries/fetchForecastPageData'
 import type { HazardLevelScale } from '@domain/types'
 import type { Metadata } from 'next'
 import { headers } from 'next/headers'
 import { notFound } from 'next/navigation'
+
+import fetchForecastSponsors from './fetchForecastSponsors'
 
 import { reportServerError } from '@/lib/posthog/server'
 import getAlternates from '@/lib/seo/getAlternates'
@@ -74,7 +76,9 @@ export const generateMetadata = async (props: ForecastPageProps): Promise<Metada
   }
 }
 
-const ForecastPage = async (props: ForecastPageProps) => {
+// A forecast by id — a past one, usually. It doesn't change, so it renders straight from
+// the server; only the current forecast page refreshes in the browser.
+const ForecastByIdPage = async (props: ForecastPageProps) => {
   const params = await props.params
   const forecastId = Number(params.id)
 
@@ -82,21 +86,25 @@ const ForecastPage = async (props: ForecastPageProps) => {
     notFound()
   }
 
-  const data = await fetchForecastPageData(forecastId)
+  const [data, partners] = await Promise.all([
+    fetchForecastPageData(forecastId),
+    fetchForecastSponsors(),
+  ])
 
   if (!data) {
     notFound()
   }
 
   return (
-    <ForecastContainer
+    <ForecastPage
+      forecast={data.initialForecast}
       forecasterProfile={data.forecasterProfile}
-      initialForecast={data.initialForecast}
       isCurrentForecast={data.isCurrentForecast}
       nextForecastId={data.nextForecastId}
+      partners={partners}
       previousForecastId={data.previousForecastId}
     />
   )
 }
 
-export default ForecastPage
+export default ForecastByIdPage
