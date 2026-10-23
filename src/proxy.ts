@@ -7,6 +7,7 @@ import { defaultLocale, locales } from './i18n/config'
 import { posthogHosts, posthogProxyPath } from '@/lib/posthog/config'
 import {
   getActiveRegionIds,
+  isAppSection,
   isKnownRegion,
   regionRedirect,
   toRegionHome,
@@ -166,12 +167,15 @@ export default async function proxy(request: NextRequest) {
     }
   }
 
-  // A region that exists but is inactive: a real 404 status for crawlers. The [region]
-  // layout renders the not-found screen, but the public loading boundary would stream
-  // it with a 200.
+  // Anything under /{locale}/ that isn't a section of the app is a region. An unknown one,
+  // or one that exists but is inactive, gets a real 404 status for crawlers (no soft 404):
+  // the [region] layout renders the not-found screen, but the public loading boundary
+  // would stream it with a 200.
   const regionSegment = pathname.split('/')[2]
 
-  if (regionSegment && isKnownRegion(regionSegment)) {
+  if (regionSegment && !isAppSection(regionSegment)) {
+    if (!isKnownRegion(regionSegment)) return NextResponse.rewrite(request.nextUrl, { status: 404 })
+
     const activeIds = await getActiveRegionIds()
 
     if (activeIds && !activeIds.has(regionSegment)) {
