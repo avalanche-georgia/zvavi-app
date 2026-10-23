@@ -44,7 +44,6 @@ const BandCompass = ({ aspects, isDimmed = false, label, surface = 'white' }: Ba
             key={aspect}
             className={cn(
               // 8.5px: aspect names in 20px-tall cells; the smallest type token (micro) doesn't fit "NW"
-              // eslint-disable-next-line no-restricted-syntax
               'rounded-badge grid h-5 place-items-center text-[8.5px] font-semibold not-italic',
               aspects.includes(aspect) ? 'bg-accent text-white' : emptyCellClasses[surface],
             )}

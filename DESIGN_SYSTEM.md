@@ -127,10 +127,10 @@ Rules:
   - no hex values
   - no arbitrary sizes like `text-[13px]`
 - If a value is missing, add a token rather than an arbitrary value.
-- **Feature code too:** ESLint applies the ds bans to all of `src` (raw palette; Tailwind's default type,
-  radius, shadow and tracking scales; arbitrary token values) except colour functions, which map markers
-  and brand marks need; tests are exempt. A value that truly has no token gets an
-  `eslint-disable-next-line no-restricted-syntax` with the reason in a comment beside it.
+- **Feature code uses plain Tailwind first.** The rules above are for `ds/` only. Outside it, Tailwind's
+  own classes (`text-sm`, `rounded-lg`, `shadow-md`, `tracking-wide`, …) are the default and nothing bans
+  them; a ds token is there to use when it fits (a card radius, the brand colours), never something a
+  newcomer has to learn first.
 - **Accent** (`--color-accent`, brand blue `#0c5aa6`) is the one colour for selected states, links,
   text buttons and focus rings.
 - **Primary** (brand orange) is for the main call to action and for brand moments.
@@ -342,8 +342,8 @@ Rules:
 
 The legacy kit `src/components/ui/` was removed (phase 6), together with `@headlessui/react`,
 `@radix-ui/*` and `clsx`. Everything is built from ds now; if something is missing, build it in `ds/`
-first as its own commit or PR. Feature code still has raw palette classes and arbitrary values — move
-them to tokens when you touch a screen (`local/ds-next/feature-tokens.md`).
+first as its own commit or PR. Feature code is plain Tailwind plus ds tokens where
+they fit (see Tokens → Rules).
 
 ---
 

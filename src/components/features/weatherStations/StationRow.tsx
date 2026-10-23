@@ -37,7 +37,6 @@ const StationRow = ({ isSelected, locale, onHover, onSelect, station }: StationR
         aria-label={t('weatherStations.selectStation', { name })}
         aria-pressed={isSelected}
         // The row's own radius, so the focus ring follows it
-        // eslint-disable-next-line no-restricted-syntax
         className="focus-ring flex min-w-0 flex-1 items-center gap-2.5 self-stretch rounded-[inherit] py-2 pl-3 text-left"
         onClick={() => onSelect(id)}
         type="button"

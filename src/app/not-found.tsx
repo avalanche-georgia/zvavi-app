@@ -25,7 +25,6 @@ const NotFound = async () => {
       <div className="flex max-w-full flex-col items-center justify-center gap-6 py-6 text-center lg:py-20">
         {/* The 404 is a decorative watermark over the picture, far above the type scale */}
         <div className="relative">
-          {/* eslint-disable-next-line no-restricted-syntax */}
           <p className="absolute size-full pt-2 text-7xl opacity-15 lg:pt-3 lg:text-8xl">404</p>
 
           <Image
