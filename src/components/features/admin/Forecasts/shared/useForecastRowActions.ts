@@ -86,9 +86,11 @@ const useForecastRowActions = (
     }
   }
 
-  // Current environment's address (staging copies a staging link)
+  // Current environment's address (staging copies a staging link); read on click, not in render
+  const getPublicUrl = () => `${window.location.origin}${publicPath}`
+
   const handleLinkCopy = async () => {
-    const isCopied = await copyToClipboard(`${window.location.origin}${publicPath}`)
+    const isCopied = await copyToClipboard(getPublicUrl())
 
     if (!isCopied) return void toastError('useForecastRowActions | handleLinkCopy', {})
     toastSuccess(t('admin.forecasts.messages.linkCopied'))
@@ -105,6 +107,7 @@ const useForecastRowActions = (
     )
 
   return {
+    getPublicUrl,
     isDeleting,
     isDuplicateNavigating,
     isEditNavigating,

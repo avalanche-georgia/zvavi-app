@@ -26,6 +26,7 @@ const CopyField = ({ label, value }: CopyFieldProps) => {
         <span className="absolute inset-y-0 right-0 flex items-center">
           <IconButton
             aria-label={`${actionLabel}: ${label}`}
+            isTooltipOpen={isCopied}
             onClick={handleCopy}
             tooltip={actionLabel}
           >

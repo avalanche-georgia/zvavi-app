@@ -281,6 +281,7 @@ admin:
       continueDraft: 'Continue draft'
     actions:
       copyLink: 'Copy link'
+      copyLinkForForecast: 'Copy link to forecast #{id}'
       duplicate: 'Duplicate'
       moreForForecast: 'More actions for forecast #{id}'
       openPublicPage: 'Open public page'

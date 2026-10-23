@@ -281,7 +281,8 @@ Rules:
     prop and stays translation-free.
 - **Icon-only buttons** (`primitives/IconButton`) always show their label as a `Tooltip` on hover and
   keyboard focus (pass `tooltip` for a shorter label than the accessible name). Tooltips don't show
-  on touch, so the icon must be clear without it.
+  on touch, so the icon must be clear without it. A copy button keeps "Copied" shown after the click
+  with `isTooltipOpen` (a press closes a tooltip otherwise).
 - **Loading indicators** — pick by what is loading, never invent another:
   - A page, route fallback or any block (map, list, panel, sheet body, table): the mountain loader.
     In features use `Loading` from `@components/shared` (translated, `isPage` for a whole page); in

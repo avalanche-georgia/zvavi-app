@@ -24,6 +24,7 @@ const VerificationLink = ({ url }: { url: string }) => {
       />
       <IconButton
         aria-label={t(isCopied ? 'common.actions.copied' : 'admin.members.actions.copyLink')}
+        isTooltipOpen={isCopied}
         onClick={handleCopy}
         size="md"
       >

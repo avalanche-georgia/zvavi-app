@@ -12,14 +12,14 @@ import type { ForecastRowActions } from '../../shared'
 type RowMenuProps = {
   actions: ForecastRowActions
   forecastId: number
+  // Card layout has no row buttons, so the menu offers Publish and Copy link
+  isCompact: boolean
   isPublished: boolean
   // ⋯ — the row moves focus here once the publish dialog closes
   triggerRef: React.RefObject<HTMLButtonElement | null>
-  // Card layout has no Publish button, so the menu offers it
-  withPublish: boolean
 }
 
-const RowMenu = ({ actions, forecastId, isPublished, triggerRef, withPublish }: RowMenuProps) => {
+const RowMenu = ({ actions, forecastId, isCompact, isPublished, triggerRef }: RowMenuProps) => {
   const t = useTranslations()
   // Like Delete: open the publish dialog only once the menu has fully closed,
   // so the menu's focus return can't fight the dialog's focus trap
@@ -53,12 +53,18 @@ const RowMenu = ({ actions, forecastId, isPublished, triggerRef, withPublish }: 
       <MenuItem icon={<Copy />} onClick={actions.onDuplicate}>
         {t('admin.forecasts.actions.duplicate')}
       </MenuItem>
-      {withPublish && !isPublished && (
+      {isCompact && !isPublished && (
         <MenuItem icon={<ArrowUp />} onClick={() => setIsPublishRequested(true)}>
           {t('admin.forecasts.actions.publish')}
         </MenuItem>
       )}
-      {isPublished && <PublishedMenuItems actions={actions} onUnpublish={handleUnpublish} />}
+      {isPublished && (
+        <PublishedMenuItems
+          actions={actions}
+          onUnpublish={handleUnpublish}
+          withLinkCopy={isCompact}
+        />
+      )}
     </RecordMenu>
   )
 }

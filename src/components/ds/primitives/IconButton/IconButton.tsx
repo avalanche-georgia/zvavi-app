@@ -9,6 +9,8 @@ type IconButtonProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'aria
   // Icon-only: the accessible name is required
   'aria-label': string
   ref?: React.Ref<HTMLButtonElement>
+  // Keeps the tooltip shown, e.g. "Copied" right after the click
+  isTooltipOpen?: boolean
   size?: IconButtonSize
   tone?: IconButtonTone
   // Shorter hover label when the accessible name is long (defaults to aria-label)
@@ -31,13 +33,14 @@ const toneClasses: Record<IconButtonTone, string> = {
 const IconButton = ({
   children,
   className,
+  isTooltipOpen,
   size = 'sm',
   tone = 'default',
   tooltip,
   type = 'button',
   ...props
 }: IconButtonProps) => (
-  <Tooltip label={tooltip ?? props['aria-label']}>
+  <Tooltip isOpen={isTooltipOpen} label={tooltip ?? props['aria-label']}>
     <button
       {...props}
       className={cn(
