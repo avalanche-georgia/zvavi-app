@@ -14,7 +14,8 @@ type PageHeadProps = {
   previousForecastId: number | null
 }
 
-// "Gudauri Avalanche Forecast" · "Wed 15 Apr – Fri 17 Apr" · share · newer / older
+// "Gudauri Avalanche Forecast", then "Wed 15 Apr – Fri 17 Apr" · share · newer / older —
+// the buttons share the dates' line, so the title keeps the full width
 const PageHead = ({ forecast, nextForecastId, previousForecastId }: PageHeadProps) => {
   const t = useTranslations()
   const { formatDay } = useForecastDates()
@@ -23,28 +24,33 @@ const PageHead = ({ forecast, nextForecastId, previousForecastId }: PageHeadProp
   const getHref = (id: number | null) => (id === null ? null : forecastRoutes.view(id))
 
   return (
-    <div className="flex items-center gap-3 pt-4 pb-3 lg:pt-6 lg:pb-4">
-      <div className="min-w-0 flex-1">
-        <h1 className="text-title lg:text-title-lg m-0 font-bold">
-          {t('forecast.pageTitle', { regionName: t(`regions.names.${regionId}`) })}
-        </h1>
-        <p className="text-muted text-copy-sm mt-1">
+    <div className="pt-4 pb-3 lg:pt-6 lg:pb-4">
+      <h1 className="text-title lg:text-title-lg m-0 font-bold">
+        {t('forecast.pageTitle', { regionName: t(`regions.names.${regionId}`) })}
+      </h1>
+      <div className="mt-1 flex items-start justify-between gap-3">
+        <p className="text-muted text-copy-sm">
           {formatDay(publishedAt ?? createdAt)} – {formatDay(validUntil)}
         </p>
+        <div className="flex items-center gap-3">
+          <ShareButton forecast={forecast} />
+          {/* Latest first, as in every list: left steps to a newer forecast, right to an older one */}
+          <nav className="flex gap-2">
+            <ForecastNavLink
+              href={getHref(nextForecastId)}
+              label={t('forecast.page.newerForecast')}
+            >
+              <ChevronLeft aria-hidden className="size-4.5" />
+            </ForecastNavLink>
+            <ForecastNavLink
+              href={getHref(previousForecastId)}
+              label={t('forecast.page.olderForecast')}
+            >
+              <ChevronRight aria-hidden className="size-4.5" />
+            </ForecastNavLink>
+          </nav>
+        </div>
       </div>
-      <ShareButton forecast={forecast} />
-      {/* Latest first, as in every list: left steps to a newer forecast, right to an older one */}
-      <nav className="flex gap-2">
-        <ForecastNavLink href={getHref(nextForecastId)} label={t('forecast.page.newerForecast')}>
-          <ChevronLeft aria-hidden className="size-4.5" />
-        </ForecastNavLink>
-        <ForecastNavLink
-          href={getHref(previousForecastId)}
-          label={t('forecast.page.olderForecast')}
-        >
-          <ChevronRight aria-hidden className="size-4.5" />
-        </ForecastNavLink>
-      </nav>
     </div>
   )
 }
