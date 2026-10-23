@@ -1,5 +1,5 @@
 import { differenceInCalendarDays } from 'date-fns'
-import { useLocale } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 
 import { toTbilisiWallClock } from '@/lib/tbilisiTime'
 
@@ -14,17 +14,24 @@ type RelativeDateOptions = {
 }
 
 // Coarse, day-level relative dates: "today", "yesterday", "3 days ago",
-// "last week", "2 months ago" — localized by Intl, no translation keys needed.
+// "last week", "2 months ago". Translation keys, not Intl.RelativeTimeFormat:
+// Chrome has no Georgian data for it and falls back to English, so the browser
+// would disagree with the server-rendered text.
 const useRelativeDate = () => {
+  const t = useTranslations()
   const locale = useLocale()
-  const formatter = new Intl.RelativeTimeFormat(locale, { numeric: 'auto' })
 
   const formatDays = (daysAgo: number) => {
-    if (daysAgo < 7) return formatter.format(-daysAgo, 'day')
-    if (daysAgo < 30) return formatter.format(-Math.round(daysAgo / 7), 'week')
-    if (daysAgo < 365) return formatter.format(-Math.round(daysAgo / 30), 'month')
+    if (daysAgo === 0) return t('common.relativeDate.today')
+    if (daysAgo === 1) return t('common.relativeDate.yesterday')
+    if (daysAgo < 7) return t('common.relativeDate.daysAgo', { count: daysAgo })
+    if (daysAgo < 30) return t('common.relativeDate.weeksAgo', { count: Math.round(daysAgo / 7) })
 
-    return formatter.format(-Math.round(daysAgo / 365), 'year')
+    if (daysAgo < 365) {
+      return t('common.relativeDate.monthsAgo', { count: Math.round(daysAgo / 30) })
+    }
+
+    return t('common.relativeDate.yearsAgo', { count: Math.round(daysAgo / 365) })
   }
 
   return (
