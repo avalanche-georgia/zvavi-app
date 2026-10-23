@@ -4,7 +4,7 @@ import { getLocale, getTranslations } from 'next-intl/server'
 
 import fetchActivePartners from './fetchActivePartners'
 
-import getAlternates from '@/lib/seo/getAlternates'
+import getPageMetadata from '@/lib/seo/getPageMetadata'
 import { routes } from '@/routes'
 
 // Never cached: the order within each tier is shuffled on every request
@@ -13,11 +13,12 @@ export const dynamic = 'force-dynamic'
 export const generateMetadata = async (): Promise<Metadata> => {
   const [locale, t] = await Promise.all([getLocale(), getTranslations()])
 
-  return {
-    alternates: getAlternates(locale, routes.partners),
+  return getPageMetadata({
     description: t('seo.partners.description'),
+    locale,
+    path: routes.partners,
     title: t('seo.partners.title'),
-  }
+  })
 }
 
 const PartnersPage = async () => {
