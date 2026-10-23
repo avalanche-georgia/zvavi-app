@@ -1,6 +1,5 @@
 export { default as AdminErrorTracking } from './AdminErrorTracking'
 export { default as AdminPageBody } from './AdminPageBody'
-export { default as AdminShell } from './AdminShell'
 export { AdminPageHeader } from './header'
 export { default as NoAccess } from './NoAccess'
 export { AdminSidebar, MobileDrawer } from './sidebar'

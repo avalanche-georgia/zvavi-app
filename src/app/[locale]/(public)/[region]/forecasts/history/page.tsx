@@ -5,6 +5,7 @@ import { getLocale, getTranslations } from 'next-intl/server'
 
 import HistoryContent from './HistoryContent'
 
+import { requireKnownRegion } from '@/lib/regionRouting'
 import getAlternates from '@/lib/seo/getAlternates'
 import { routes } from '@/routes'
 
@@ -12,6 +13,9 @@ type HistoryPageProps = { params: Promise<{ region: string }> }
 
 export const generateMetadata = async ({ params }: HistoryPageProps): Promise<Metadata> => {
   const { region: regionId } = await params
+
+  requireKnownRegion(regionId)
+
   const [locale, t] = await Promise.all([getLocale(), getTranslations()])
 
   return {

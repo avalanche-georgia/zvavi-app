@@ -3,12 +3,17 @@ import { getTranslations } from 'next-intl/server'
 
 import ObservationSubmitFlow from './ObservationSubmitFlow'
 
+import { requireKnownRegion } from '@/lib/regionRouting'
+
 type ObservationSubmitPageProps = { params: Promise<{ region: string }> }
 
 export const generateMetadata = async ({
   params,
 }: ObservationSubmitPageProps): Promise<Metadata> => {
   const { region: regionId } = await params
+
+  requireKnownRegion(regionId)
+
   const t = await getTranslations()
 
   return {
@@ -18,6 +23,9 @@ export const generateMetadata = async ({
 
 const ObservationSubmitPage = async ({ params }: ObservationSubmitPageProps) => {
   const { region: regionId } = await params
+
+  requireKnownRegion(regionId)
+
   const t = await getTranslations()
 
   return (

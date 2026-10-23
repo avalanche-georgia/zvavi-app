@@ -4,7 +4,6 @@ import type { Metadata } from 'next'
 import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessages } from 'next-intl/server'
 import { Toaster } from 'sonner'
-import pickPublicMessages from 'src/i18n/pickPublicMessages'
 
 import './globals.css'
 
@@ -66,7 +65,7 @@ const Layout = async ({ children }: LayoutProps) => {
   return (
     <html className={inter.variable} lang={locale}>
       <body className="flex min-h-dvh flex-col font-sans antialiased">
-        <NextIntlClientProvider messages={pickPublicMessages(messages)}>
+        <NextIntlClientProvider messages={messages}>
           <QueryClientProvider>
             <Toaster position="top-center" />
             {children}
