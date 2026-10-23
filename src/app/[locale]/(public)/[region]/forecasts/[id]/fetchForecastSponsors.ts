@@ -5,7 +5,7 @@ import 'server-only'
 import { reportServerError } from '@/lib/posthog/server'
 import { createClient } from '@/lib/supabase/server'
 
-// Active partners for the forecast's sponsors card (it shows tiers 1–2). Only that card
+// Active tier 1–2 partners for the forecast's sponsors card. Only that card
 // needs them: a failed load is reported and hides it instead of failing the forecast.
 const fetchForecastSponsors = async (): Promise<Partner[]> => {
   const supabase = await createClient()
@@ -13,6 +13,7 @@ const fetchForecastSponsors = async (): Promise<Partner[]> => {
     .from('partners')
     .select('*')
     .eq('is_active', true)
+    .neq('tier', 3)
     .order('name_en', { ascending: true })
 
   if (error) {

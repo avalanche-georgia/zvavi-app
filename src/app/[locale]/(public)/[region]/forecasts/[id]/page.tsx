@@ -1,4 +1,4 @@
-import { ForecastPage } from '@components/features/forecast'
+import { ForecastPage, LiveForecast } from '@components/features/forecast'
 import { isNoRowsError } from '@data/helpers'
 import { fetchForecastPageData } from '@data/queries/fetchForecastPageData'
 import type { HazardLevelScale } from '@domain/types'
@@ -76,8 +76,9 @@ export const generateMetadata = async (props: ForecastPageProps): Promise<Metada
   }
 }
 
-// A forecast by id — a past one, usually. It doesn't change, so it renders straight from
-// the server; only the current forecast page refreshes in the browser.
+// A forecast by id. A past one doesn't change, so it renders straight from the server
+// (no supabase-js in the browser). The current one — reached by "next" from yesterday's,
+// or the admin's public link — stays live like the current forecast page.
 const ForecastByIdPage = async (props: ForecastPageProps) => {
   const params = await props.params
   const forecastId = Number(params.id)
@@ -93,6 +94,19 @@ const ForecastByIdPage = async (props: ForecastPageProps) => {
 
   if (!data) {
     notFound()
+  }
+
+  if (data.isCurrentForecast) {
+    return (
+      <LiveForecast
+        forecasterProfile={data.forecasterProfile}
+        initialForecast={data.initialForecast}
+        initialPartners={partners}
+        isCurrentForecast
+        nextForecastId={data.nextForecastId}
+        previousForecastId={data.previousForecastId}
+      />
+    )
   }
 
   return (
