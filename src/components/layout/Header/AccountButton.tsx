@@ -20,15 +20,11 @@ const UserAvatar = dynamic(() => import('@components/shared/UserAvatar'), {
 })
 
 // The profile photo (uploaded, else the generated one) opens the team's account menu.
-// Visitors have no accounts, so signed out (or still loading) it renders nothing.
-const AccountButton = ({ user }: { user: User | null }) => {
+// Rendered by the header only for a signed-in team member.
+const AccountButton = ({ user }: { user: User }) => {
   const t = useTranslations()
   const { signOut } = useSignOut()
-  const { data: profile, isPending: isProfilePending } = useCurrentUserProfileQuery({
-    isEnabled: Boolean(user),
-  })
-
-  if (!user) return null
+  const { data: profile, isPending: isProfilePending } = useCurrentUserProfileQuery()
 
   // Wait for the profile too: the generated avatar would flash before the uploaded photo
   if (isProfilePending) return <Skeleton className="size-9 rounded-full" />

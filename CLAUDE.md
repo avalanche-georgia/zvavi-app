@@ -61,7 +61,7 @@ src/
 ├── domain/
 │   ├── types.ts             # all TypeScript type definitions
 │   ├── constants.ts         # enums, label maps, date format strings
-│   └── context/             # SupabaseContext provider + useSupabase hook
+│   └── context/             # RegionContext provider + useRegionContext hook
 ├── lib/
 │   ├── supabase/            # client.ts, server.ts, middleware.ts
 │   └── observability/       # error reporter

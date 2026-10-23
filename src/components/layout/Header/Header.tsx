@@ -2,10 +2,17 @@
 
 import { useAuth } from '@components/hooks'
 import { LanguageToggle, RegionSwitcher } from '@components/shared'
+import { Skeleton } from '@ds/primitives'
+import dynamic from 'next/dynamic'
 
-import AccountButton from './AccountButton'
 import HeaderLogo from './HeaderLogo'
 import { DesktopNav, MobileMenuButton } from './NavMenu'
+
+// Only the team signs in: the account menu and its profile query stay out of every
+// visitor's bundle
+const AccountButton = dynamic(() => import('./AccountButton'), {
+  loading: () => <Skeleton className="size-9 rounded-full" />,
+})
 
 // Site header on every public page. Stays the first <header> in the DOM —
 // useHeaderHeight measures it.
@@ -21,7 +28,7 @@ const Header = () => {
         <div className="ml-auto flex shrink-0 items-center gap-2">
           <LanguageToggle className="hidden xl:flex" />
           <RegionSwitcher className="hidden sm:flex" />
-          <AccountButton user={user} />
+          {user && <AccountButton user={user} />}
           <MobileMenuButton isSignedIn={isAuthenticated} />
         </div>
       </div>

@@ -2,10 +2,10 @@ import { ForecastContainer, NoForecast } from '@components/features/forecast'
 import { PageWrapper } from '@components/layout'
 import fetchCurrentForecastId from '@data/queries/fetchCurrentForecastId'
 import { fetchForecastPageData } from '@data/queries/fetchForecastPageData'
-import type { RegionId } from '@domain/types'
 import type { Metadata } from 'next'
 import { getLocale, getTranslations } from 'next-intl/server'
 
+import { requireKnownRegion } from '@/lib/regionRouting'
 import getAlternates from '@/lib/seo/getAlternates'
 import { routes } from '@/routes'
 
@@ -13,6 +13,9 @@ type CurrentForecastPageProps = { params: Promise<{ region: string }> }
 
 export const generateMetadata = async ({ params }: CurrentForecastPageProps): Promise<Metadata> => {
   const { region: regionId } = await params
+
+  requireKnownRegion(regionId)
+
   const [locale, t] = await Promise.all([getLocale(), getTranslations()])
 
   return {
@@ -26,14 +29,17 @@ export const generateMetadata = async ({ params }: CurrentForecastPageProps): Pr
 
 const CurrentForecastPage = async ({ params }: CurrentForecastPageProps) => {
   const { region } = await params
-  const forecastId = await fetchCurrentForecastId(region as RegionId)
+
+  requireKnownRegion(region)
+
+  const forecastId = await fetchCurrentForecastId(region)
   const data =
     forecastId === null ? null : await fetchForecastPageData(forecastId, { isKnownCurrent: true })
 
   if (!data) {
     return (
       <PageWrapper>
-        <NoForecast regionId={region as RegionId} />
+        <NoForecast regionId={region} />
       </PageWrapper>
     )
   }

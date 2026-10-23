@@ -4,6 +4,7 @@ import { getLocale, getTranslations } from 'next-intl/server'
 
 import ObservationsContent from './ObservationsContent'
 
+import { requireKnownRegion } from '@/lib/regionRouting'
 import getAlternates from '@/lib/seo/getAlternates'
 import { routes } from '@/routes'
 
@@ -11,6 +12,9 @@ type ObservationsPageProps = { params: Promise<{ region: string }> }
 
 export const generateMetadata = async ({ params }: ObservationsPageProps): Promise<Metadata> => {
   const { region: regionId } = await params
+
+  requireKnownRegion(regionId)
+
   const [locale, t] = await Promise.all([getLocale(), getTranslations()])
 
   return {

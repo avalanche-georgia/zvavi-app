@@ -1,5 +1,4 @@
 import { QueryClientProvider } from '@data'
-import { SupabaseContextProvider } from '@domain/context'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import type { Metadata } from 'next'
 import { NextIntlClientProvider } from 'next-intl'
@@ -68,11 +67,9 @@ const Layout = async ({ children }: LayoutProps) => {
       <body className="flex min-h-dvh flex-col font-sans antialiased">
         <NextIntlClientProvider messages={messages}>
           <QueryClientProvider>
-            <SupabaseContextProvider>
-              <Toaster position="top-center" />
-              {children}
-              <SpeedInsights />
-            </SupabaseContextProvider>
+            <Toaster position="top-center" />
+            {children}
+            <SpeedInsights />
           </QueryClientProvider>
         </NextIntlClientProvider>
       </body>

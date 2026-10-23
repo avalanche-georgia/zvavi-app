@@ -7,11 +7,13 @@ import { defaultLocale, locales } from './i18n/config'
 import { posthogHosts, posthogProxyPath } from '@/lib/posthog/config'
 import {
   getActiveRegionIds,
+  isAppSection,
   isKnownRegion,
   regionRedirect,
   toRegionHome,
 } from '@/lib/regionRouting'
 import { updateSession } from '@/lib/supabase/middleware'
+import { routes } from '@/routes'
 
 const intlMiddleware = createMiddleware({
   defaultLocale,
@@ -94,6 +96,19 @@ export default async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL(`/${localeFileMatch[2]}`, request.url))
   }
 
+  // "About" has no page of its own: the section opens on About us. Done here, not in a
+  // page, so it's a real redirect (a page's redirect streams behind the loading boundary
+  // with a 200); without it /about would be read as a region slug. Bare /about too, in
+  // one hop. Permanent: it's structural, not per visitor.
+  const aboutMatch = pathname.match(new RegExp(`^(?:/(${localePattern}))?/about$`))
+
+  if (aboutMatch) {
+    const locale = aboutMatch[1] ?? defaultLocale
+    const url = new URL(`/${locale}${routes.about.aboutUs}${request.nextUrl.search}`, request.url)
+
+    return NextResponse.redirect(url, 308)
+  }
+
   // Entry URLs ("/" and "/{locale}" have no page): one hop straight to the final page.
   // Bare "/" takes the locale from next-intl's cookie — never Accept-Language, so
   // crawlers always get one consistent answer.
@@ -156,12 +171,15 @@ export default async function proxy(request: NextRequest) {
     }
   }
 
-  // A region that exists but is inactive: a real 404 status for crawlers. The [region]
-  // layout renders the not-found screen, but the public loading boundary would stream
-  // it with a 200.
+  // Anything under /{locale}/ that isn't a section of the app is a region. An unknown one,
+  // or one that exists but is inactive, gets a real 404 status for crawlers (no soft 404):
+  // the [region] layout renders the not-found screen, but the public loading boundary
+  // would stream it with a 200.
   const regionSegment = pathname.split('/')[2]
 
-  if (regionSegment && isKnownRegion(regionSegment)) {
+  if (regionSegment && !isAppSection(regionSegment)) {
+    if (!isKnownRegion(regionSegment)) return NextResponse.rewrite(request.nextUrl, { status: 404 })
+
     const activeIds = await getActiveRegionIds()
 
     if (activeIds && !activeIds.has(regionSegment)) {

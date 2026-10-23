@@ -6,6 +6,7 @@ import { getLocale, getTranslations } from 'next-intl/server'
 
 import fetchRegionHomeData from './fetchRegionHomeData'
 
+import { requireKnownRegion } from '@/lib/regionRouting'
 import getAlternates from '@/lib/seo/getAlternates'
 import { routes } from '@/routes'
 
@@ -17,6 +18,9 @@ export const generateMetadata = async ({ params }: RegionHomePageProps): Promise
     getLocale(),
     getTranslations(),
   ])
+
+  requireKnownRegion(regionId)
+
   const regionName = t(`regions.names.${regionId}`)
 
   return {
