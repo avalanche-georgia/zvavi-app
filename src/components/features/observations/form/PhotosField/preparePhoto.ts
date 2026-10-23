@@ -2,6 +2,8 @@ import { observationPhotoContentTypes, observationPhotoLimits } from '@domain/co
 
 import { convertHeicToJpeg, isHeicFile } from './heicPhoto'
 
+import compressToJpeg from '@/lib/compressToJpeg'
+
 export type PhotoRejectionReason = 'tooLarge' | 'unsupported'
 
 // Limit on the picked original, not on what's uploaded (compressed to ≤2 MB).
@@ -9,15 +11,6 @@ export type PhotoRejectionReason = 'tooLarge' | 'unsupported'
 // rejecting files big enough to risk crashing a mobile tab while decoding.
 export const maxSourceSizeMb = 20
 const maxSourceSizeBytes = maxSourceSizeMb * 1024 * 1024
-
-const compressionOptions = {
-  fileType: 'image/jpeg',
-  initialQuality: 0.85,
-  maxSizeMB: 2,
-  maxWidthOrHeight: 2048,
-  // Re-encoding drops all EXIF (incl. GPS) — photos never carry metadata
-  useWebWorker: true,
-}
 
 const isAllowedContentType = (type: string) =>
   (observationPhotoContentTypes as readonly string[]).includes(type)
@@ -31,11 +24,8 @@ export const getPhotoRejectionReason = (file: File): PhotoRejectionReason | null
   return null
 }
 
-const compressPhoto = async (source: File): Promise<Blob> => {
-  const { default: imageCompression } = await import('browser-image-compression')
-
-  return imageCompression(source, compressionOptions)
-}
+const compressPhoto = (source: File): Promise<Blob> =>
+  compressToJpeg(source, { maxSizeMB: 2, maxWidthOrHeight: 2048 })
 
 // Always ends up as a JPEG — HEIC is never stored, since most browsers
 // (incl. the admin's) couldn't display it later.

@@ -32,7 +32,7 @@ describe('DisclaimerModal', () => {
   it('keeps Continue disabled until the box is ticked', async () => {
     const onAccept = vi.fn()
 
-    render(<DisclaimerModal onAccept={onAccept} />)
+    render(<DisclaimerModal isOpen onAccept={onAccept} />)
 
     expect(continueButton()).toBeDisabled()
 
@@ -45,7 +45,7 @@ describe('DisclaimerModal', () => {
   it('has no × and ignores Esc and the backdrop', async () => {
     const onAccept = vi.fn()
 
-    render(<DisclaimerModal onAccept={onAccept} />)
+    render(<DisclaimerModal isOpen onAccept={onAccept} />)
     await userEvent.keyboard('{Escape}')
     await userEvent.click(document.querySelector('.bg-scrim')!)
 
@@ -55,7 +55,7 @@ describe('DisclaimerModal', () => {
   })
 
   it('saves the analytics choice only when one is asked for', async () => {
-    const { unmount } = render(<DisclaimerModal onAccept={vi.fn()} />)
+    const { unmount } = render(<DisclaimerModal isOpen onAccept={vi.fn()} />)
 
     await userEvent.click(screen.getByRole('checkbox'))
     await userEvent.click(continueButton())
@@ -64,7 +64,7 @@ describe('DisclaimerModal', () => {
     unmount()
 
     consent.status = 'denied'
-    render(<DisclaimerModal onAccept={vi.fn()} />)
+    render(<DisclaimerModal isOpen onAccept={vi.fn()} />)
     await userEvent.click(screen.getByRole('button', { name: 'Allow analytics' }))
     await userEvent.click(screen.getByRole('checkbox'))
     await userEvent.click(continueButton())

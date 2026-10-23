@@ -24,6 +24,7 @@ const TeamMemberRow = ({ member, onMemberSelect }: TeamMemberRowProps) => {
           className="row-span-2 size-12 rounded-full md:row-span-1 md:size-14"
           initialsClassName="text-heading"
           name={fullName}
+          width={56}
         />
         <span className="flex min-w-0 flex-col items-start gap-1">
           <span className="text-heading text-ink font-semibold wrap-anywhere">{fullName}</span>

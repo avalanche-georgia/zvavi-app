@@ -28,6 +28,7 @@ const ForecasterRow = ({ name, profile }: ForecasterRowProps) => {
         className="size-8 rounded-full"
         initialsClassName="text-caption"
         name={name}
+        width={32}
       />
       <span className="text-copy text-ink min-w-0 font-semibold wrap-anywhere">{name}</span>
     </>
