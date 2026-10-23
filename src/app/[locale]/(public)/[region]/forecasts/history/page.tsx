@@ -1,9 +1,10 @@
 import { Suspense } from 'react'
+import { HistoryList } from '@components/features/history'
 import { Loading } from '@components/shared'
 import type { Metadata } from 'next'
 import { getLocale, getTranslations } from 'next-intl/server'
 
-import HistoryContent from './HistoryContent'
+import fetchHistoryList from './fetchHistoryList'
 
 import { requireKnownRegion } from '@/lib/regionRouting'
 import getAlternates from '@/lib/seo/getAlternates'
@@ -25,8 +26,12 @@ export const generateMetadata = async ({ params }: HistoryPageProps): Promise<Me
   }
 }
 
-const HistoryPage = async () => {
-  const t = await getTranslations()
+const HistoryPage = async ({ params }: HistoryPageProps) => {
+  const { region: regionId } = await params
+
+  requireKnownRegion(regionId)
+
+  const [t, forecasts] = await Promise.all([getTranslations(), fetchHistoryList(regionId)])
 
   return (
     <div className="bg-canvas text-ink">
@@ -34,7 +39,7 @@ const HistoryPage = async () => {
         <h1 className="text-title-lg font-bold">{t('navigation.archive')}</h1>
         {/* The selected season lives in the URL (useSearchParams) */}
         <Suspense fallback={<Loading />}>
-          <HistoryContent />
+          <HistoryList forecasts={forecasts} regionId={regionId} />
         </Suspense>
       </div>
     </div>

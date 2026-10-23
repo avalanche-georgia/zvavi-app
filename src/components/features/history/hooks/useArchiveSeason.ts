@@ -1,7 +1,7 @@
 'use client'
 
 import { useMemo } from 'react'
-import type { HistoryListItem } from '@data/hooks/forecasts'
+import type { HistoryListItem } from '@domain/types'
 import { useSearchParams } from 'next/navigation'
 
 import { type ArchiveForecast, groupBySeason, toArchiveForecast, toTbilisiDay } from '../model'

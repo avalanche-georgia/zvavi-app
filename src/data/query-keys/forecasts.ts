@@ -6,7 +6,7 @@ import type {
 } from '../hooks/forecasts/types'
 
 const forecastsKeys = {
-  // Admin item and list — their own keys: `item` / `list` are the public shapes
+  // Admin item and list — their own keys: `item` is the public shape
   adminItem: (regionId: RegionId | undefined, variables: ForecastQueryVariables) =>
     [...forecastsKeys.all, regionId, 'adminItem', variables] as const,
   adminList: (regionId: RegionId) => [...forecastsKeys.byRegion(regionId), 'adminList'] as const,
@@ -18,7 +18,6 @@ const forecastsKeys = {
     [...forecastsKeys.byRegion(regionId), 'current', variables] as const,
   item: (regionId: RegionId | undefined, variables: ForecastQueryVariables) =>
     [...forecastsKeys.all, regionId, 'item', variables] as const,
-  list: (regionId: RegionId) => [...forecastsKeys.byRegion(regionId), 'list'] as const,
 }
 
 export default forecastsKeys

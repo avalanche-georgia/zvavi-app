@@ -1,5 +1,5 @@
 import { toTbilisiParts } from '@components/features/forecast/model/useForecastDates'
-import type { HistoryListItem } from '@data/hooks/forecasts'
+import type { HistoryListItem } from '@domain/types'
 import { eachDayOfInterval, format, getDaysInMonth, parseISO } from 'date-fns'
 
 import type { ArchiveForecast } from './types'

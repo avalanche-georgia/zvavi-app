@@ -124,6 +124,12 @@ export type Problem = {
   type: AvalancheProblemType
 }
 
+// A past forecast in the region's archive list
+export type HistoryListItem = Pick<
+  Forecast,
+  'forecaster' | 'hazardLevels' | 'id' | 'publishedAt' | 'summary' | 'validUntil'
+> & { avalancheProblems: Pick<Problem, 'order' | 'type'>[] }
+
 export type Avalanche = {
   id?: number
   aspects: Aspects

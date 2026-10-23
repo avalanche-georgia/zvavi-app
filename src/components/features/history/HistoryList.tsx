@@ -1,7 +1,6 @@
 'use client'
 
-import type { HistoryListItem } from '@data/hooks/forecasts'
-import type { RegionId } from '@domain/types'
+import type { HistoryListItem, RegionId } from '@domain/types'
 import { useTranslations } from 'next-intl'
 
 import useArchiveFormat from './hooks/useArchiveFormat'

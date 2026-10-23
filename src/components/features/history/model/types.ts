@@ -1,5 +1,4 @@
-import type { HistoryListItem } from '@data/hooks/forecasts'
-import type { AvalancheProblemType, HazardLevelScale } from '@domain/types'
+import type { AvalancheProblemType, HazardLevelScale, HistoryListItem } from '@domain/types'
 
 // A forecast with its Georgian calendar days worked out once. Days are
 // yyyy-MM-dd and months yyyy-MM, so they compare as plain strings.
