@@ -74,7 +74,7 @@ const getForecastMetadata = async (params: ForecastParams): Promise<Metadata> =>
     // The forecast's own region: a mismatched URL still renders it, but must not compete
     // with the real one
     path: routes.forecastsByRegion(data.region_id).view(forecastId),
-    title: [t('forecast.pageTitle', { regionName }), dates].filter(Boolean).join(' · '),
+    title: [t('seo.forecast.title', { regionName }), dates].filter(Boolean).join(' · '),
   })
 }
 

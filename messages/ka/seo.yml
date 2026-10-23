@@ -9,6 +9,7 @@ seo:
     title: 'მიმდინარე ზვავის პროგნოზი — {regionName}'
     description: 'უახლესი ზვავის პროგნოზი — {regionName}. შეამოწმეთ საფრთხის დონე და თოვლის პირობები.'
   forecast:
+    title: '{regionName} ზვავის პროგნოზი'
     description: '{levelName} ზვავსაშიშროება. სრულ პროგნოზში: ზვავის პრობლემები, თოვლის საფარი და ამინდი.'
     descriptionNoRating: 'სრულ პროგნოზში: ზვავის პრობლემები, თოვლის საფარი და ამინდი.'
   forecastArea:

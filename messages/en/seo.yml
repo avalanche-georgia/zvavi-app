@@ -9,6 +9,7 @@ seo:
     title: 'Current Avalanche Forecast — {regionName}'
     description: 'Latest avalanche forecast for {regionName}. Check current danger levels and snow conditions.'
   forecast:
+    title: '{regionName} Avalanche Forecast'
     description: '{levelName} avalanche danger. The full forecast covers avalanche problems, snowpack and weather.'
     descriptionNoRating: 'The full forecast covers avalanche problems, snowpack and weather.'
   forecastArea:
