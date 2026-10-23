@@ -1,7 +1,6 @@
 import { formatForecastPeriod } from '@components/features/forecast/model/useForecastDates'
 import { isNoRowsError } from '@data/helpers'
-import { hazardLevelNames, hazardLevelNamesByScale } from '@domain/constants'
-import type { HazardLevelScale } from '@domain/types'
+import { hazardLevelNamesByScale, toHazardLevel } from '@domain/constants'
 import type { Metadata } from 'next'
 import { headers } from 'next/headers'
 import { getTranslations } from 'next-intl/server'
@@ -46,8 +45,7 @@ const getForecastMetadata = async (params: ForecastParams): Promise<Metadata> =>
   const { locale } = params
   const t = await getTranslations()
   // TODO: type-safe DB conversion — https://app.asana.com/1/1208747886147296/project/1208747689500826/task/1214630622531225
-  const level = String((data.hazard_levels as Record<string, string> | null)?.overall ?? '0')
-  const levelKey = hazardLevelNamesByScale[level as HazardLevelScale] ?? hazardLevelNames.noRating
+  const level = toHazardLevel((data.hazard_levels as Record<string, string> | null)?.overall)
   const regionName = t(`regions.names.${data.region_id}`)
   const dates = formatForecastPeriod(
     { createdAt: data.created_at, publishedAt: data.published_at, validUntil: data.valid_until },
@@ -60,16 +58,16 @@ const getForecastMetadata = async (params: ForecastParams): Promise<Metadata> =>
     headline ??
     (level === '0'
       ? t('seo.forecast.descriptionNoRating')
-      : t('seo.forecast.description', { levelName: t(levelKey) }))
+      : t('seo.forecast.description', { levelName: t(hazardLevelNamesByScale[level]) }))
   // The image is cached for good, so its URL changes with what it shows: an edited forecast
   // gets a fresh one
-  const imageVersion = [level, data.published_at, data.valid_until]
-    .map((value) => (value && Date.parse(value) ? Date.parse(value).toString(36) : value))
+  const imageVersion = [data.published_at, data.valid_until]
+    .map((date) => (date ? Date.parse(date).toString(36) : ''))
     .join('-')
 
   return getPageMetadata({
     description,
-    image: `${origin}/api/og?id=${forecastId}&locale=${locale}&v=${imageVersion}`,
+    image: `${origin}/api/og?id=${forecastId}&locale=${locale}&v=${level}-${imageVersion}`,
     locale,
     // The forecast's own region: a mismatched URL still renders it, but must not compete
     // with the real one

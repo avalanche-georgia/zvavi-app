@@ -34,6 +34,20 @@ describe('getSummaryHeadline', () => {
     expect(headline!.length).toBeLessThanOrEqual(161)
   })
 
+  it('skips a line that is only markup', () => {
+    expect(getSummaryHeadline('***\n**Storm slabs.** More.')).toBe('Storm slabs.')
+  })
+
+  it('keeps a closing quote', () => {
+    expect(getSummaryHeadline('He said "stay off steep slopes." Then left.')).toBe(
+      'He said "stay off steep slopes."',
+    )
+  })
+
+  it('shortens a sentence without spaces to the limit', () => {
+    expect(getSummaryHeadline('x'.repeat(300))).toHaveLength(160)
+  })
+
   it('returns null without a summary', () => {
     expect(getSummaryHeadline(null)).toBeNull()
     expect(getSummaryHeadline('  \n ')).toBeNull()

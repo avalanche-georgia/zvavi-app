@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server'
 import { getTranslations } from 'next-intl/server'
 
 import BrandCard from '../BrandCard'
-import { imageHeaders, imageSize, loadFonts, loadLogo, toImageLocale } from '../helpers'
+import { brandImageHeaders, imageSize, loadFonts, loadLogo, toImageLocale } from '../helpers'
 
 import { isKnownRegion } from '@/lib/regionRouting'
 import { siteName } from '@/lib/seo/getPageMetadata'
@@ -25,6 +25,6 @@ export async function GET(request: NextRequest) {
         title={isRegion ? t(`regions.names.${region}`) : siteName}
       />
     ),
-    { ...imageSize, fonts: loadFonts(), headers: imageHeaders },
+    { ...imageSize, fonts: loadFonts(), headers: brandImageHeaders },
   )
 }

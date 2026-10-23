@@ -1,3 +1,5 @@
+import { fitFontSize, isGeorgian } from './helpers'
+
 type ForecastCardProps = {
   color: string
   dates: string | null
@@ -8,13 +10,6 @@ type ForecastCardProps = {
   logoUri: string
   regionName: string
 }
-
-const georgianLetters = /[Ⴀ-ჿ]/
-
-// The level name gets the room left of the icon and shrinks to fit it: "Considerable" and
-// "მნიშვნელოვანი" are the longest, and Georgian letters run wider
-const getNameSize = (name: string) =>
-  Math.min(120, 720 / (name.length * (georgianLetters.test(name) ? 0.72 : 0.6)))
 
 // Just the danger, the region and the days — the rest is in the forecast itself
 const ForecastCard = ({
@@ -41,10 +36,21 @@ const ForecastCard = ({
       }}
     >
       <div style={{ display: 'flex', flex: 1, flexDirection: 'column', gap: 14 }}>
-        <span style={{ fontSize: 31, letterSpacing: 2.5, textTransform: 'uppercase' }}>
+        {/* Uppercase Georgian would turn into Mtavruli capitals; the site keeps it as written */}
+        <span
+          style={{
+            fontSize: 31,
+            letterSpacing: 2.5,
+            textTransform: isGeorgian(kicker) ? 'none' : 'uppercase',
+          }}
+        >
           {kicker}
         </span>
-        <span style={{ fontSize: getNameSize(levelName), lineHeight: 1 }}>{levelName}</span>
+        {/* The level name gets the room left of the icon: "Considerable" and "მნიშვნელოვანი" are
+            the longest */}
+        <span style={{ fontSize: fitFontSize(levelName, 720, 120), lineHeight: 1 }}>
+          {levelName}
+        </span>
       </div>
       <img alt="" src={iconUri} style={{ height: 288 }} />
     </div>

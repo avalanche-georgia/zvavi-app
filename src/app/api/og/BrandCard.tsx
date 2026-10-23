@@ -1,3 +1,5 @@
+import { fitFontSize } from './helpers'
+
 type BrandCardProps = {
   // Next to the logo when the title isn't the site's name already
   brandName?: string
@@ -54,7 +56,7 @@ const BrandCard = ({ brandName, logoUri, subtitle, title }: BrandCardProps) => (
       {brandName && <span style={{ color: '#b8c6d8', fontSize: 31 }}>{brandName}</span>}
     </div>
 
-    <span style={{ fontSize: title.length > 12 ? 96 : 132, lineHeight: 1 }}>{title}</span>
+    <span style={{ fontSize: fitFontSize(title, 1040, 132), lineHeight: 1 }}>{title}</span>
     <span style={{ color: '#c9d6e6', fontSize: 43, marginTop: 18 }}>{subtitle}</span>
 
     <span style={{ bottom: 60, color: '#8ea3bd', fontSize: 31, left: 80, position: 'absolute' }}>

@@ -1,16 +1,15 @@
 import { formatForecastPeriod } from '@components/features/forecast/model/useForecastDates'
 import { isNoRowsError } from '@data/helpers'
-import { hazardLevelNamesByScale } from '@domain/constants'
-import type { HazardLevelScale } from '@domain/types'
+import { hazardLevelNamesByScale, toHazardLevel } from '@domain/constants'
 import { createClient } from '@supabase/supabase-js'
 import { ImageResponse } from 'next/og'
 import type { NextRequest } from 'next/server'
 import { getTranslations } from 'next-intl/server'
 
 import {
+  forecastImageHeaders,
   hazardColors,
   hazardIconFiles,
-  imageHeaders,
   imageSize,
   loadFonts,
   loadLogo,
@@ -48,8 +47,7 @@ export async function GET(request: NextRequest) {
   if (!forecast) return new Response('Forecast not found', { status: 404 })
 
   const t = await getTranslations({ locale })
-  const overall = String(forecast.hazard_levels?.overall)
-  const level = (overall in hazardColors ? overall : '0') as HazardLevelScale
+  const level = toHazardLevel(forecast.hazard_levels?.overall)
   const dates = formatForecastPeriod(
     {
       createdAt: forecast.created_at,
@@ -72,6 +70,6 @@ export async function GET(request: NextRequest) {
         regionName={t(`regions.names.${forecast.region_id}`)}
       />
     ),
-    { ...imageSize, fonts: loadFonts(), headers: imageHeaders },
+    { ...imageSize, fonts: loadFonts(), headers: forecastImageHeaders },
   )
 }

@@ -33,6 +33,13 @@ export const hazardLevelNamesByScale: Record<HazardLevelScale, string> = {
   5: hazardLevelNames.extreme,
 }
 
+// A stored overall level as a scale value; anything unknown counts as no rating
+export const toHazardLevel = (value: unknown): HazardLevelScale => {
+  const level = String(value)
+
+  return level in hazardLevelNamesByScale ? (level as HazardLevelScale) : '0'
+}
+
 export const avalancheTypes = {
   cornice: 'cornice',
   deepSlab: 'deepSlab',
