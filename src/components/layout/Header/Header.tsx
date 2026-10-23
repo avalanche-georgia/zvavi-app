@@ -2,6 +2,7 @@
 
 import { useAuth } from '@components/hooks'
 import { LanguageToggle, RegionSwitcher } from '@components/shared'
+import { Skeleton } from '@ds/primitives'
 import dynamic from 'next/dynamic'
 
 import HeaderLogo from './HeaderLogo'
@@ -9,7 +10,9 @@ import { DesktopNav, MobileMenuButton } from './NavMenu'
 
 // Only the team signs in: the account menu and its profile query stay out of every
 // visitor's bundle
-const AccountButton = dynamic(() => import('./AccountButton'))
+const AccountButton = dynamic(() => import('./AccountButton'), {
+  loading: () => <Skeleton className="size-9 rounded-full" />,
+})
 
 // Site header on every public page. Stays the first <header> in the DOM —
 // useHeaderHeight measures it.

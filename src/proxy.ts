@@ -98,11 +98,15 @@ export default async function proxy(request: NextRequest) {
 
   // "About" has no page of its own: the section opens on About us. Done here, not in a
   // page, so it's a real redirect (a page's redirect streams behind the loading boundary
-  // with a 200); without it /about would be read as a region slug
-  const aboutMatch = pathname.match(new RegExp(`^/(${localePattern})/about$`))
+  // with a 200); without it /about would be read as a region slug. Bare /about too, in
+  // one hop. Permanent: it's structural, not per visitor.
+  const aboutMatch = pathname.match(new RegExp(`^(?:/(${localePattern}))?/about$`))
 
   if (aboutMatch) {
-    return NextResponse.redirect(new URL(`/${aboutMatch[1]}${routes.about.aboutUs}`, request.url))
+    const locale = aboutMatch[1] ?? defaultLocale
+    const url = new URL(`/${locale}${routes.about.aboutUs}${request.nextUrl.search}`, request.url)
+
+    return NextResponse.redirect(url, 308)
   }
 
   // Entry URLs ("/" and "/{locale}" have no page): one hop straight to the final page.

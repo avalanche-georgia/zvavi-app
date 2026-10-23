@@ -103,20 +103,30 @@ describe('Dialog', () => {
   })
 
   it('with initialFocus false focuses nothing inside on open', async () => {
-    render(
-      <Dialog
-        footer={<button type="button">Continue</button>}
-        initialFocus={false}
-        isCloseDisabled
-        isOpen
-        title="Before you go"
-      >
-        <input aria-label="Agree" type="checkbox" />
-      </Dialog>,
-    )
+    const renderOpen = (initialFocus?: false) =>
+      render(
+        <Dialog
+          footer={<button type="button">Continue</button>}
+          initialFocus={initialFocus}
+          isCloseDisabled
+          isOpen
+          title="Before you go"
+        >
+          <input aria-label="Agree" type="checkbox" />
+        </Dialog>,
+      )
+    const isFocusInside = () => screen.getByRole('dialog').contains(document.activeElement)
 
+    // Control: by default focus does move in (asynchronously) — the wait below is long enough
+    const { unmount } = renderOpen()
+
+    await waitFor(() => expect(isFocusInside()).toBe(true))
+    unmount()
+
+    renderOpen(false)
     await screen.findByRole('dialog')
+    await new Promise((resolve) => setTimeout(resolve, 100))
 
-    expect(screen.getByRole('dialog')).not.toContainElement(document.activeElement as HTMLElement)
+    expect(isFocusInside()).toBe(false)
   })
 })

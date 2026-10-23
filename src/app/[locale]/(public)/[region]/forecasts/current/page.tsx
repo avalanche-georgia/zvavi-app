@@ -2,7 +2,6 @@ import { ForecastContainer, NoForecast } from '@components/features/forecast'
 import { PageWrapper } from '@components/layout'
 import fetchCurrentForecastId from '@data/queries/fetchCurrentForecastId'
 import { fetchForecastPageData } from '@data/queries/fetchForecastPageData'
-import type { RegionId } from '@domain/types'
 import type { Metadata } from 'next'
 import { getLocale, getTranslations } from 'next-intl/server'
 
@@ -32,14 +31,15 @@ const CurrentForecastPage = async ({ params }: CurrentForecastPageProps) => {
   const { region } = await params
 
   requireKnownRegion(region)
-  const forecastId = await fetchCurrentForecastId(region as RegionId)
+
+  const forecastId = await fetchCurrentForecastId(region)
   const data =
     forecastId === null ? null : await fetchForecastPageData(forecastId, { isKnownCurrent: true })
 
   if (!data) {
     return (
       <PageWrapper>
-        <NoForecast regionId={region as RegionId} />
+        <NoForecast regionId={region} />
       </PageWrapper>
     )
   }
