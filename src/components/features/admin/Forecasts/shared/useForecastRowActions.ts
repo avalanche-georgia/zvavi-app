@@ -5,6 +5,7 @@ import { useToast } from '@components/hooks'
 import { useForecastDelete, useForecastStatusToggle } from '@data/hooks/forecasts'
 import type { Forecast, ForecastListItem, RegionId } from '@domain/types'
 import { useTranslations } from 'next-intl'
+import { defaultLocale } from 'src/i18n/config'
 import { useRouter } from 'src/i18n/navigation'
 import { useCopyToClipboard } from 'usehooks-ts'
 
@@ -86,8 +87,9 @@ const useForecastRowActions = (
     }
   }
 
-  // Current environment's address (staging copies a staging link); read on click, not in render
-  const getPublicUrl = () => `${window.location.origin}${publicPath}`
+  // Current environment's address (staging copies a staging link); read on click, not in render.
+  // Always English: the link forecasters post, previewed in the site's default language
+  const getPublicUrl = () => `${window.location.origin}/${defaultLocale}${publicPath}`
 
   const handleLinkCopy = async () => {
     const isCopied = await copyToClipboard(getPublicUrl())
