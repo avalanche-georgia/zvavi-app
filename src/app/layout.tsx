@@ -1,10 +1,10 @@
 import { QueryClientProvider } from '@data'
-import { SupabaseContextProvider } from '@domain/context'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import type { Metadata } from 'next'
 import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessages } from 'next-intl/server'
 import { Toaster } from 'sonner'
+import pickPublicMessages from 'src/i18n/pickPublicMessages'
 
 import './globals.css'
 
@@ -66,13 +66,11 @@ const Layout = async ({ children }: LayoutProps) => {
   return (
     <html className={inter.variable} lang={locale}>
       <body className="flex min-h-dvh flex-col font-sans antialiased">
-        <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider messages={pickPublicMessages(messages)}>
           <QueryClientProvider>
-            <SupabaseContextProvider>
-              <Toaster position="top-center" />
-              {children}
-              <SpeedInsights />
-            </SupabaseContextProvider>
+            <Toaster position="top-center" />
+            {children}
+            <SpeedInsights />
           </QueryClientProvider>
         </NextIntlClientProvider>
       </body>

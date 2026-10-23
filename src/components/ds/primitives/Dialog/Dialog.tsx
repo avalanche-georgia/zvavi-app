@@ -26,8 +26,9 @@ type DialogProps = DialogCloseProps & {
   footer: React.ReactNode
   // Leading mark in the header, e.g. ConfirmDialog's tone tile
   icon?: React.ReactNode
-  // Element focused on open, e.g. Cancel so a stray Enter never confirms
-  initialFocus?: React.RefObject<HTMLElement | null>
+  // Element focused on open, e.g. Cancel so a stray Enter never confirms; false keeps
+  // focus where it is, for a reading-first dialog whose first control shouldn't light up
+  initialFocus?: React.RefObject<HTMLElement | null> | false
   // While its action runs: nothing closes it (× disabled, backdrop and Esc ignored)
   isBusy?: boolean
   isOpen: boolean

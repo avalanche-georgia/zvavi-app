@@ -40,6 +40,8 @@ const DisclaimerModal = ({ isOpen, onAccept }: DisclaimerModalProps) => {
   return (
     <Dialog
       footer={footer}
+      // Read first: the checkbox shouldn't light up as the dialog opens
+      initialFocus={false}
       isCloseDisabled
       isOpen={isOpen}
       isWide
@@ -48,7 +50,6 @@ const DisclaimerModal = ({ isOpen, onAccept }: DisclaimerModalProps) => {
       <p>{t('common.disclaimer.content')}</p>
       <Checkbox
         checked={isAccepted}
-        className="self-end"
         label={t('common.disclaimer.checkbox')}
         onCheckedChange={setIsAccepted}
       />

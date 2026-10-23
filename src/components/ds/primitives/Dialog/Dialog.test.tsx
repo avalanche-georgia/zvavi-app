@@ -101,4 +101,22 @@ describe('Dialog', () => {
     expect(buttons).toHaveLength(1)
     expect(buttons[0]).toHaveAccessibleName('Continue')
   })
+
+  it('with initialFocus false focuses nothing inside on open', async () => {
+    render(
+      <Dialog
+        footer={<button type="button">Continue</button>}
+        initialFocus={false}
+        isCloseDisabled
+        isOpen
+        title="Before you go"
+      >
+        <input aria-label="Agree" type="checkbox" />
+      </Dialog>,
+    )
+
+    await screen.findByRole('dialog')
+
+    expect(screen.getByRole('dialog')).not.toContainElement(document.activeElement as HTMLElement)
+  })
 })
