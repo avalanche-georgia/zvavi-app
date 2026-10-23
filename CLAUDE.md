@@ -185,6 +185,8 @@ Never write Supabase query logic inline inside a page or component. Extract to a
 
 `src/data/helpers/` is for **pure utility functions only** (converters, error handlers). DB fetch functions belong in `src/data/queries/`.
 
+**Public pages read on the server.** A browser Supabase hook (`src/data/hooks/`) on a public page puts supabase-js (~68 KB gz) back into every visitor's download — keep those hooks for admin. The one deliberate exception is the current forecast, which refetches in the browser to stay live (`ForecastContainer`; on `/forecasts/[id]` through `LiveForecast`, a client-side dynamic import, so past forecasts don't download it). Visitors never have a session: `useAuth` loads supabase-js only when a session cookie exists.
+
 ### Anonymous/Public Mutations and Reads
 
 Two different data-access patterns exist depending on who's on the other end, and both are intentional — don't unify them:
