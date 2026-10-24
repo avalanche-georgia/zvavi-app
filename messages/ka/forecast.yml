@@ -1,5 +1,4 @@
 forecast:
-  pageTitle: '{regionName} ზვავის პროგნოზი'
   forecastAreaPageTitle: '{regionName} პროგნოზის ტერიტორია'
   forecasterProfile: '{name} — პროფილი'
 
@@ -140,6 +139,7 @@ forecast:
       title: 'ამინდი'
 
   page:
+    avalancheForecast: 'ზვავის პროგნოზი'
     whatThisMeans: 'რას ნიშნავს ეს'
     byElevation: 'სიმაღლის მიხედვით'
     expired: 'ვადა გასულია'
@@ -147,6 +147,8 @@ forecast:
     daysLeft: 'დარჩა {count} დღე'
     olderForecast: 'უფრო ძველი პროგნოზი'
     newerForecast: 'უფრო ახალი პროგნოზი'
+    share: 'გაზიარება'
+    linkCopied: 'ბმული დაკოპირდა'
     sizeShort: 'ზომა {size}'
     allObservations: 'ყველა დაკვირვება'
     problemPosition: 'პრობლემა {current} / {total}'
