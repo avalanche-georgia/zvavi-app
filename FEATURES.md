@@ -27,6 +27,8 @@ Daily professional forecasts for each active region in the Georgian backcountry.
 
 The forecast page is built for phones first: the overall danger level sits at the top with an explanation one tap away, followed by danger by elevation, the summary, the avalanche problems, recent avalanches, and snowpack and weather. A row of shortcuts jumps between sections. Each avalanche problem opens a panel showing where it is expected (by aspect and elevation), its size, sensitivity, distribution, trend and time of day — each with a short explanation of its scale. The forecaster's name opens their team profile when they're on the public Team page. Arrows step to the previous or next forecast, and an older forecast is clearly marked with a link back to the current one.
 
+A link to a forecast shared in a messenger or on social media shows a preview card: the danger level in its colour with the region and the forecast's dates, the first sentence of the forecaster's summary, and the title in the reader's language (English or Georgian). Links to a region's pages show a card with the region's name, other pages the site's card — never a danger level, so a preview can't go out of date.
+
 Forecasts are authored in a draft/publish workflow, so forecasters can prepare and review before going live.
 
 ## Forecast Area Map

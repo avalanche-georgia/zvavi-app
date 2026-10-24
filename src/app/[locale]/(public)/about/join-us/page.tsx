@@ -4,17 +4,18 @@ import type { Metadata } from 'next'
 import { useTranslations } from 'next-intl'
 import { getLocale, getTranslations } from 'next-intl/server'
 
-import getAlternates from '@/lib/seo/getAlternates'
+import getPageMetadata from '@/lib/seo/getPageMetadata'
 import { routes } from '@/routes'
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const [locale, t] = await Promise.all([getLocale(), getTranslations()])
 
-  return {
-    alternates: getAlternates(locale, routes.about.joinUs),
+  return getPageMetadata({
     description: t('seo.joinUs.description'),
+    locale,
+    path: routes.about.joinUs,
     title: t('seo.joinUs.title'),
-  }
+  })
 }
 
 const JoinUsPage = () => {

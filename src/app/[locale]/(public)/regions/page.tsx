@@ -5,17 +5,18 @@ import { getLocale, getTranslations } from 'next-intl/server'
 
 import fetchRegionsPageData from './fetchRegionsPageData'
 
-import getAlternates from '@/lib/seo/getAlternates'
+import getPageMetadata from '@/lib/seo/getPageMetadata'
 import { routes } from '@/routes'
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const [locale, t] = await Promise.all([getLocale(), getTranslations()])
 
-  return {
-    alternates: getAlternates(locale, routes.regions),
+  return getPageMetadata({
     description: t('seo.regions.description'),
+    locale,
+    path: routes.regions,
     title: t('seo.regions.title'),
-  }
+  })
 }
 
 // The region chooser. With a single active region the proxy never lets a request

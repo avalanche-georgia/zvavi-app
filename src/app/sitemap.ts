@@ -1,5 +1,8 @@
+import type { RegionId } from '@domain/types'
 import type { MetadataRoute } from 'next'
 import { defaultLocale, locales } from 'src/i18n/config'
+
+import fetchSitemapForecasts from './fetchSitemapForecasts'
 
 import { reportServerError } from '@/lib/posthog/server'
 import { createClient } from '@/lib/supabase/server'
@@ -22,7 +25,7 @@ const staticEntries: StaticEntry[] = [
 
 type RegionForecastEntry = {
   changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency']
-  getPath: (regionId: string) => string
+  getPath: (regionId: RegionId) => string
   priority: number
 }
 
@@ -54,6 +57,26 @@ const regionForecastEntries: RegionForecastEntry[] = [
   },
 ]
 
+type EntryOptions = Pick<
+  MetadataRoute.Sitemap[number],
+  'changeFrequency' | 'lastModified' | 'priority'
+>
+
+// One entry per locale, each with hreflang alternates
+const toLocalizedEntries = (path: string, options: EntryOptions): MetadataRoute.Sitemap =>
+  locales.map((locale) => ({
+    ...options,
+    alternates: {
+      languages: {
+        ...Object.fromEntries(
+          locales.map((pageLocale) => [pageLocale, `${baseUrl}/${pageLocale}${path}`]),
+        ),
+        'x-default': `${baseUrl}/${defaultLocale}${path}`,
+      },
+    },
+    url: `${baseUrl}/${locale}${path}`,
+  }))
+
 const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
   const supabase = await createClient()
   const { data, error } = await supabase
@@ -66,26 +89,13 @@ const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
     reportServerError(new Error(error.message), { scope: 'sitemap | regions' })
   }
 
-  const activeRegionIds = (data ?? []).map((r) => r.id as string)
+  const activeRegionIds = (data ?? []).map((region) => region.id)
+  const forecasts = await fetchSitemapForecasts(supabase, activeRegionIds)
+  const now = new Date()
 
-  const regionEntries: MetadataRoute.Sitemap = locales.flatMap((locale) =>
-    activeRegionIds.flatMap((regionId) =>
-      regionForecastEntries.map(({ changeFrequency, getPath, priority }) => {
-        const path = getPath(regionId)
-
-        return {
-          alternates: {
-            languages: {
-              ...Object.fromEntries(locales.map((l) => [l, `${baseUrl}/${l}${path}`])),
-              'x-default': `${baseUrl}/${defaultLocale}${path}`,
-            },
-          },
-          changeFrequency,
-          lastModified: new Date(),
-          priority,
-          url: `${baseUrl}/${locale}${path}`,
-        }
-      }),
+  const regionEntries = activeRegionIds.flatMap((regionId) =>
+    regionForecastEntries.flatMap(({ changeFrequency, getPath, priority }) =>
+      toLocalizedEntries(getPath(regionId), { changeFrequency, lastModified: now, priority }),
     ),
   )
 
@@ -96,23 +106,21 @@ const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
       ? [{ changeFrequency: 'daily', path: routes.regions, priority: 1 }]
       : []
 
-  const staticSitemapEntries: MetadataRoute.Sitemap = [...chooserEntries, ...staticEntries].flatMap(
+  const staticSitemapEntries = [...chooserEntries, ...staticEntries].flatMap(
     ({ changeFrequency, path, priority }) =>
-      locales.map((locale) => ({
-        alternates: {
-          languages: {
-            ...Object.fromEntries(locales.map((l) => [l, `${baseUrl}/${l}${path}`])),
-            'x-default': `${baseUrl}/${defaultLocale}${path}`,
-          },
-        },
-        changeFrequency,
-        lastModified: new Date(),
-        priority,
-        url: `${baseUrl}/${locale}${path}`,
-      })),
+      toLocalizedEntries(path, { changeFrequency, lastModified: now, priority }),
   )
 
-  return [...regionEntries, ...staticSitemapEntries]
+  // Forecasts keep no edit time, so publication stands in for the last change
+  const forecastEntries = forecasts.flatMap(({ id, publishedAt, regionId }) =>
+    toLocalizedEntries(routes.forecastsByRegion(regionId).view(id), {
+      changeFrequency: 'yearly',
+      lastModified: publishedAt ?? undefined,
+      priority: 0.5,
+    }),
+  )
+
+  return [...regionEntries, ...staticSitemapEntries, ...forecastEntries]
 }
 
 export default sitemap

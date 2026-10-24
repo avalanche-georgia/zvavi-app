@@ -8,6 +8,7 @@ import { Toaster } from 'sonner'
 import './globals.css'
 
 import { inter } from '@/fonts'
+import { getBrandImage, siteName, toOgLocale } from '@/lib/seo/getPageMetadata'
 import { baseUrl } from '@/routes'
 
 const siteDescription =
@@ -34,22 +35,23 @@ export const generateMetadata = async (): Promise<Metadata> => {
     metadataBase: new URL(baseUrl),
     openGraph: {
       description: siteDescription,
-      locale,
-      siteName: 'Avalanche Georgia',
-      title: 'Avalanche Georgia',
+      images: getBrandImage(locale),
+      locale: toOgLocale(locale),
+      siteName,
+      title: siteName,
       type: 'website',
-      url: baseUrl,
     },
     other: {
       'apple-mobile-web-app-capable': 'yes',
       'apple-mobile-web-app-status-bar-style': 'black-translucent',
       'apple-mobile-web-app-title': 'Avalanche.ge',
     },
-    title: 'Avalanche Georgia',
+    title: { default: siteName, template: `%s · ${siteName}` },
     twitter: {
       card: 'summary_large_image',
       description: siteDescription,
-      title: 'Avalanche Georgia',
+      images: getBrandImage(locale),
+      title: siteName,
     },
   }
 }

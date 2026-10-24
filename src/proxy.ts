@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server'
 import createMiddleware from 'next-intl/middleware'
 
 import { defaultLocale, locales } from './i18n/config'
+import { routing } from './i18n/routing'
 
 import { posthogHosts, posthogProxyPath } from '@/lib/posthog/config'
 import {
@@ -15,10 +16,7 @@ import {
 import { updateSession } from '@/lib/supabase/middleware'
 import { routes } from '@/routes'
 
-const intlMiddleware = createMiddleware({
-  defaultLocale,
-  locales,
-})
+const intlMiddleware = createMiddleware(routing)
 
 // Files that must stay at the root and should not be locale-prefixed
 const publicRootFiles = [
@@ -26,10 +24,8 @@ const publicRootFiles = [
   'favicon.ico',
   'icon.png',
   'manifest.json',
-  'opengraph-image',
   'robots.txt',
   'sitemap.xml',
-  'twitter-image',
 ]
 
 const publicRootFilesSet = new Set(publicRootFiles.map((f) => `/${f}`))

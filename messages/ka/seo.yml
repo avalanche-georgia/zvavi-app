@@ -7,10 +7,14 @@ seo:
     description: 'დაუკავშირდით Avalanche Georgia-ს გუნდს. მოგვაწოდეთ დაკვირვებები, დასვით კითხვები ან გამოხმაურება.'
   currentForecast:
     title: 'მიმდინარე ზვავის პროგნოზი — {regionName}'
-    description: 'უახლესი ზვავის პროგნოზი {regionName}-სთვის. შეამოწმეთ საფრთხის დონე და თოვლის პირობები.'
+    description: 'უახლესი ზვავის პროგნოზი — {regionName}. შეამოწმეთ საფრთხის დონე და თოვლის პირობები.'
+  forecast:
+    title: '{regionName} ზვავის პროგნოზი'
+    description: '{levelName} ზვავსაშიშროება. სრულ პროგნოზში: ზვავის პრობლემები, თოვლის საფარი და ამინდი.'
+    descriptionNoRating: 'სრულ პროგნოზში: ზვავის პრობლემები, თოვლის საფარი და ამინდი.'
   forecastArea:
     title: 'პროგნოზის ზონა — {regionName}'
-    description: 'ნახეთ ზვავის პროგნოზის ზონის რუკა {regionName}-სთვის.'
+    description: 'ზვავის პროგნოზის ზონის რუკა — {regionName}.'
 
   history:
     title: 'პროგნოზების არქივი — {regionName}'
@@ -20,7 +24,9 @@ seo:
     description: 'შემოუერთდით Avalanche Georgia-ს გუნდს. დაგვეხმარეთ ზვავის უსაფრთხოების გაუმჯობესებაში.'
   observations:
     title: 'დაკვირვებები — {regionName}'
-    description: 'საზოგადოების მიერ მოწოდებული ზვავის დაკვირვებები {regionName}-სთვის.'
+    description: 'საზოგადოების მიერ მოწოდებული ზვავის დაკვირვებები — {regionName}.'
+  observationSubmit:
+    description: 'შეატყობინეთ ჩვენს პროგნოზისტებს ზვავის ან არასტაბილურობის ნიშნების შესახებ — {regionName}.'
   partners:
     title: 'პარტნიორები'
     description: 'ჩვენი პარტნიორები, რომლებიც საქართველოში ზვავის პროგნოზირებას შესაძლებელს ხდიან.'
@@ -42,3 +48,7 @@ seo:
   regionHome:
     title: 'ზვავის პროგნოზი — {regionName}'
     description: 'დღევანდელი ზვავსაშიშროება, პროგნოზი, ბოლო ზვავები და პირობები — {regionName}.'
+  images:
+    danger: 'ზვავსაშიშროება'
+    regionSubtitle: 'ზვავის პროგნოზი და პირობები'
+    siteSubtitle: 'ზვავის პროგნოზი საქართველოს მთებისთვის'

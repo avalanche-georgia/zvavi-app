@@ -13,7 +13,7 @@ const PageWrapper = ({ children, isAdmin, title }: PageWrapperProps) => (
       isAdmin ? 'max-w-(--breakpoint-xl)' : 'max-w-(--breakpoint-md)',
     )}
   >
-    {title && <h2 className="text-title-sm mb-4 text-center font-semibold">{title}</h2>}
+    {title && <h1 className="text-title-sm mb-4 text-center font-semibold">{title}</h1>}
     {children}
   </section>
 )
