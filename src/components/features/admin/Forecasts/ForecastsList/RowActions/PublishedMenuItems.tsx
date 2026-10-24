@@ -8,9 +8,11 @@ type PublishedMenuItemsProps = {
   actions: ForecastRowActions
   // Wrapped by the menu to keep focus when the row leaves the list
   onUnpublish: VoidFunction
+  // The table row has its own Copy link button
+  withLinkCopy: boolean
 }
 
-const PublishedMenuItems = ({ actions, onUnpublish }: PublishedMenuItemsProps) => {
+const PublishedMenuItems = ({ actions, onUnpublish, withLinkCopy }: PublishedMenuItemsProps) => {
   const t = useTranslations()
 
   return (
@@ -18,9 +20,11 @@ const PublishedMenuItems = ({ actions, onUnpublish }: PublishedMenuItemsProps) =
       <MenuItem icon={<ExternalLink />} onClick={actions.onPublicPageOpen}>
         {t('admin.forecasts.actions.openPublicPage')}
       </MenuItem>
-      <MenuItem icon={<Link2 />} onClick={actions.onLinkCopy}>
-        {t('admin.forecasts.actions.copyLink')}
-      </MenuItem>
+      {withLinkCopy && (
+        <MenuItem icon={<Link2 />} onClick={actions.onLinkCopy}>
+          {t('admin.forecasts.actions.copyLink')}
+        </MenuItem>
+      )}
       <MenuItem icon={<EyeOff />} onClick={onUnpublish}>
         {t('admin.forecasts.actions.unpublish')}
       </MenuItem>

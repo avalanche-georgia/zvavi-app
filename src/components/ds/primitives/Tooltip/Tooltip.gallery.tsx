@@ -11,6 +11,11 @@ const TooltipGallery = () => (
         Hover or focus me
       </Button>
     </Tooltip>
+    <Tooltip isOpen label="Copied">
+      <Button size="sm" variant="secondary">
+        Forced open (isOpen)
+      </Button>
+    </Tooltip>
   </div>
 )
 
