@@ -26,8 +26,9 @@ const ForecasterRow = ({ name, profile }: ForecasterRowProps) => {
       <TeamMemberPhoto
         avatarUrl={profile?.avatarUrl ?? null}
         className="size-8 rounded-full"
-        initialsClassName="text-xs"
+        initialsClassName="text-caption"
         name={name}
+        width={32}
       />
       <span className="text-copy text-ink min-w-0 font-semibold wrap-anywhere">{name}</span>
     </>
@@ -41,7 +42,7 @@ const ForecasterRow = ({ name, profile }: ForecasterRowProps) => {
         profile && 'hover:bg-tile group relative transition-colors',
       )}
     >
-      <dt className="text-muted text-xs">{t('common.labels.forecaster')}</dt>
+      <dt className="text-muted text-caption">{t('common.labels.forecaster')}</dt>
       <dd>
         {profile ? (
           <button

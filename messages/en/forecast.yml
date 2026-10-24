@@ -1,5 +1,4 @@
 forecast:
-  pageTitle: '{regionName} Avalanche Forecast'
   forecastAreaPageTitle: '{regionName} Forecast Area'
   forecasterProfile: 'Profile of {name}'
 
@@ -140,6 +139,7 @@ forecast:
       title: 'Weather'
 
   page:
+    avalancheForecast: 'Avalanche forecast'
     whatThisMeans: 'What this means'
     byElevation: 'By elevation'
     expired: 'expired'
@@ -147,6 +147,8 @@ forecast:
     daysLeft: '{count}d left'
     olderForecast: 'Older forecast'
     newerForecast: 'Newer forecast'
+    share: 'Share'
+    linkCopied: 'Link copied'
     sizeShort: 'Size {size}'
     allObservations: 'All observations'
     problemPosition: 'Problem {current} of {total}'

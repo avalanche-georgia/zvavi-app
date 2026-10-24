@@ -35,6 +35,7 @@ const TeamMemberSheet = ({ isOpen, member, onOpenChange }: TeamMemberSheetProps)
         className="aspect-16/10 w-full"
         initialsClassName="text-display"
         name={fullName}
+        width={480}
       />
       <div className="flex flex-col gap-5 px-5 pt-5.5 pb-8 lg:px-7">
         <TeamBadge team={team} title={teamTitle} />

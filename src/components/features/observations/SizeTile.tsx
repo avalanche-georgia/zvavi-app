@@ -27,7 +27,7 @@ const SizeTile = ({ className, isCompact = false, size }: SizeTileProps) => {
     return (
       <span
         className={cn(
-          'text-copy grid size-7.5 shrink-0 place-items-center rounded-lg font-bold tabular-nums',
+          'text-copy rounded-item grid size-7.5 shrink-0 place-items-center font-bold tabular-nums',
           shadeClassNames[size],
           className,
         )}
@@ -41,13 +41,13 @@ const SizeTile = ({ className, isCompact = false, size }: SizeTileProps) => {
   return (
     <span
       className={cn(
-        'flex size-12 shrink-0 flex-col items-center justify-center rounded-[11px] leading-none',
+        'rounded-field flex size-12 shrink-0 flex-col items-center justify-center leading-none',
         shadeClassNames[size],
         className,
       )}
     >
-      <b className="text-[19px] font-bold">{size}</b>
-      <span className="mt-0.75 text-[9.5px] font-semibold tracking-[.06em] uppercase opacity-80">
+      <b className="text-heading leading-none font-bold">{size}</b>
+      <span className="text-micro tracking-eyebrow mt-0.75 leading-none font-semibold uppercase opacity-80">
         {t('observations.labels.size')}
       </span>
     </span>

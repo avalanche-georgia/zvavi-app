@@ -2,10 +2,10 @@
 
 import { ListEmptyState } from '@components/features/admin/shared'
 import { Loading } from '@components/shared'
-import { SortableItem } from '@components/ui'
 import { DragDropProvider, type DragEndEvent } from '@dnd-kit/react'
 import { isSortableOperation } from '@dnd-kit/react/sortable'
 import type { WeatherStation } from '@domain/types'
+import { SortableItem } from '@ds/patterns'
 import { useTranslations } from 'next-intl'
 
 import StationRow from './StationRow'
@@ -58,7 +58,7 @@ const WeatherStationsList = ({
         {stations.map((station, index) => (
           <SortableItem
             key={station.id}
-            className="border-rule bg-surface data-dragging:shadow-float border-b last:border-b-0"
+            className="border-rule bg-surface data-dragging:rounded-media data-dragging:shadow-float border-b last:border-b-0"
             id={station.id}
             index={index}
           >

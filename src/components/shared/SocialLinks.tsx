@@ -7,7 +7,7 @@ import { Tooltip } from '@ds/primitives'
 import { AtSign } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
-// Full-colour brand marks, as the platforms draw them
+// Full-colour brand marks, as the platforms draw them — their own colours, not ours
 const socialLinks = [
   {
     href: links.facebook,
@@ -20,7 +20,7 @@ const socialLinks = [
     icon: (
       <span
         aria-hidden
-        className="grid size-7 place-items-center rounded-lg bg-linear-45 from-[#feda75] via-[#d62976] to-[#4f5bd5]"
+        className="rounded-item grid size-7 place-items-center bg-linear-45 from-[#feda75] via-[#d62976] to-[#4f5bd5]"
       >
         <InstagramIcon className="size-4.5 fill-white" />
       </span>

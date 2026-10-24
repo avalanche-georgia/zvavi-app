@@ -1,7 +1,7 @@
 'use client'
 
 import { DetailSection } from '@components/features/observations'
-import { BrandedQRCode } from '@components/ui'
+import { BrandedQRCode } from '@components/shared'
 import type { Member } from '@domain/types'
 import { Button } from '@ds/primitives'
 import { Download } from 'lucide-react'

@@ -6,11 +6,6 @@ observations:
     total: '{regionName} · {total, plural, one {# report} other {# reports}}'
     filtered: '{regionName} · {count} of {total, plural, one {# report} other {# reports}}'
 
-  view:
-    label: 'View'
-    list: 'List'
-    map: 'Map'
-
   filters:
     clear: 'Clear filters'
     anyDate: 'Any date'

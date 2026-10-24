@@ -23,9 +23,7 @@ const AvalancheBadge = ({ kind }: { kind: AvalancheBadgeKind }) => {
       : t(`common.avalancheStatuses.${kind}`)
 
   return (
-    <span
-      className={cn('rounded-badge px-1.5 py-0.5 text-[11px] font-semibold', kindClasses[kind])}
-    >
+    <span className={cn('rounded-badge text-micro px-1.5 py-0.5 font-semibold', kindClasses[kind])}>
       {label}
     </span>
   )

@@ -12,14 +12,14 @@ const DangerLegend = () => {
   return (
     <ul
       aria-label={t('home.hero.legendLabel')}
-      className="text-muted mt-3.5 flex flex-wrap justify-center gap-x-2.5 gap-y-1 text-xs"
+      className="text-muted text-caption mt-3.5 flex flex-wrap justify-center gap-x-2.5 gap-y-1"
     >
       {hazardScaleLevels.map((level) => (
         <li key={level} className="flex items-center gap-1.25">
           <i
             aria-hidden
             className={cn(
-              'size-2.5 rounded-[3px] shadow-[inset_0_0_0_1px_rgba(0,0,0,.1)]',
+              'rounded-bar size-2.5 inset-ring inset-ring-black/10',
               backgroundColorByHazardLevel[level],
             )}
           />

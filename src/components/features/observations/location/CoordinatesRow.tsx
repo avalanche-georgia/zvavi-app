@@ -1,4 +1,5 @@
 import { useCopyWithFeedback } from '@components/hooks'
+import { Button } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 
 type CoordinatesRowProps = {
@@ -13,14 +14,10 @@ const CoordinatesRow = ({ latitude, longitude }: CoordinatesRowProps) => {
 
   return (
     <div className="flex items-center gap-2.5 px-4 pt-3.5">
-      <code className="flex-1 font-mono text-sm font-medium">{coordinates}</code>
-      <button
-        className="border-rule hover:bg-tile h-9 rounded-[11px] border bg-white px-3.5 text-[13px] font-semibold transition-colors"
-        onClick={handleCopy}
-        type="button"
-      >
+      <code className="text-copy flex-1 font-mono font-medium">{coordinates}</code>
+      <Button onClick={handleCopy} size="sm" variant="secondary">
         {isCopied ? t('common.actions.copied') : t('common.actions.copy')}
-      </button>
+      </Button>
     </div>
   )
 }

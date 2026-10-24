@@ -1,4 +1,4 @@
-import { SILHOUETTE } from './geometry'
+import { silhouette } from './geometry'
 import { makeIds } from './ids'
 
 const Stop = ({ color, offset, opacity }: { color: string; offset: number; opacity?: number }) => (
@@ -22,10 +22,7 @@ const SceneDefs = ({ uid }: { uid: string }) => {
   return (
     <defs>
       <clipPath id={id('silhouette')}>
-        <path d={SILHOUETTE} />
-      </clipPath>
-      <clipPath id={id('ground')}>
-        <rect height="158" width="160" x="0" y="0" />
+        <path d={silhouette} />
       </clipPath>
       {ramps.map((ramp) => (
         <linearGradient key={ramp.id} id={id(ramp.id)} x1="0" x2="0" y1="0" y2="1">

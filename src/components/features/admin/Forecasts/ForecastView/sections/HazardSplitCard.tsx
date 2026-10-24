@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl'
 import ElevationRows from './ElevationRows'
 import { HazardTile } from '../../shared'
 
-const eyebrowClasses = 'text-muted text-xs font-semibold tracking-[.06em] uppercase'
+const eyebrowClasses = 'text-muted text-caption tracking-eyebrow font-semibold uppercase'
 
 // Overall on the left, the three elevation bands on the right; stacks when narrow
 const HazardSplitCard = ({ hazardLevels }: { hazardLevels: HazardLevels }) => {
@@ -21,7 +21,7 @@ const HazardSplitCard = ({ hazardLevels }: { hazardLevels: HazardLevels }) => {
             <HazardTile className="rounded-card text-title-lg size-16" level={overall} size="lg" />
             <div className="flex flex-col gap-0.5">
               <span className={eyebrowClasses}>{t('admin.forecasts.view.overall')}</span>
-              <span className="text-ink text-xl font-semibold">
+              <span className="text-ink text-title-sm font-semibold">
                 {t(hazardLevelNamesByScale[overall])}
               </span>
             </div>

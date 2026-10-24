@@ -14,8 +14,24 @@ const __dirname = path.dirname(__filename)
 // Raw Tailwind palette classes (`bg-gray-100`, `text-red-500`, …) — banned in the design system
 const rawPaletteClass =
   '/\\b(bg|text|border|ring|outline|fill|stroke|from|via|to|divide|placeholder|decoration|shadow|caret)-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-\\d/'
-// Arbitrary values that should be tokens: hex colours, font sizes, radii, shadows
-const arbitraryTokenValue = '/(\\[#[0-9a-fA-F]{3,8}\\]|\\b(text|rounded|shadow)-\\[)/'
+// Arbitrary values that should be tokens: hex colours, font sizes, radii, shadows, fixed control
+// sizes (`h-[42px]`). Viewport / safe-area maths (`h-[94dvh]`) has no token and stays allowed
+const arbitraryTokenValue =
+  '/(\\[#[0-9a-fA-F]{3,8}\\]|\\b(text|rounded|shadow)-\\[|\\b(w|h|size|min-w|min-h|max-w|max-h)-\\[\\d+(\\.\\d+)?(px|rem)\\])/'
+// Tailwind's default type, radius, shadow and tracking scales: allowed in feature code, but a ds token
+// keeps screens consistent when one fits (warning only); not in ds (error)
+const defaultScaleClass =
+  '/\\b(text-(xs|sm|base|lg|xl|[2-9]xl)|rounded(-(t|b|l|r|s|e|tl|tr|bl|br|ss|se|es|ee))?-(xs|sm|md|lg|xl|[2-4]xl)|(?<![\\w-])shadow-(xs|sm|md|lg|xl|2xl)|tracking-(tighter|tight|wide|wider|widest))\\b|\\brounded(?=[\\s"\'`!]|$)/'
+// Colour functions in class strings or styles — colours come from tokens
+const colourFunction = '/\\b(rgba?|hsla?|oklch)\\(/'
+// Shared by both ds import blocks below (a later block replaces the rule's options, not merges them)
+const dsImportPatterns = [
+  {
+    group: ['@components/features/*'],
+    message: 'ds must not depend on features.',
+  },
+  { group: ['clsx'], message: 'Use cn() from @/lib/utils.' },
+]
 
 const compat = new FlatCompat({
   allConfig: js.configs.all,
@@ -137,22 +153,46 @@ export default [
     },
   },
   {
+    // Feature code: plain Tailwind is allowed; these only nudge towards a ds token where one fits
+    files: ['src/**/*.{ts,tsx}'],
+    ignores: ['src/components/ds/**', '**/*.test.{ts,tsx}'],
+    rules: {
+      'no-restricted-syntax': [
+        'warn',
+        ...['Literal[value={regex}]', 'TemplateElement[value.raw={regex}]'].flatMap((selector) => [
+          {
+            message: 'Prefer a semantic colour token (ink, muted, rule, accent, …) if one fits.',
+            selector: selector.replace('{regex}', rawPaletteClass),
+          },
+          {
+            message:
+              'Prefer a ds token (text-caption, rounded-card, shadow-menu, tracking-eyebrow, …) if one fits.',
+            selector: selector.replace('{regex}', defaultScaleClass),
+          },
+          {
+            message: 'Prefer a token (text-*, rounded-*, shadow-*, colour) if one fits.',
+            selector: selector.replace('{regex}', arbitraryTokenValue),
+          },
+        ]),
+      ],
+    },
+  },
+  {
     // Design-system guardrails — see DESIGN_SYSTEM.md
     files: ['src/components/ds/**/*.{ts,tsx}'],
     rules: {
-      'no-restricted-imports': [
+      '@typescript-eslint/naming-convention': [
         'error',
-        {
-          patterns: [
-            {
-              group: ['@components/ui', '@components/ui/*', '@components/features/*', '**/ui/*'],
-              message: 'ds must not depend on the legacy kit or on features.',
-            },
-          ],
-        },
+        { format: ['camelCase', 'PascalCase'], selector: 'variable' },
       ],
+      'no-restricted-imports': ['error', { patterns: dsImportPatterns }],
       'no-restricted-syntax': [
         'error',
+        {
+          message: "Use the global React.* namespace for types, not a type import from 'react'.",
+          selector:
+            "ImportDeclaration[source.value='react'][importKind='type'], ImportDeclaration[source.value='react'] > ImportSpecifier[importKind='type']",
+        },
         ...['Literal[value={regex}]', 'TemplateElement[value.raw={regex}]'].flatMap((selector) => [
           {
             message:
@@ -164,7 +204,32 @@ export default [
               'Use a token (text-*, rounded-*, shadow-*, colour) instead of an arbitrary value.',
             selector: selector.replace('{regex}', arbitraryTokenValue),
           },
+          {
+            message:
+              'Use a ds token (text-caption, rounded-card, shadow-menu, tracking-eyebrow, …) instead of the Tailwind default scale.',
+            selector: selector.replace('{regex}', defaultScaleClass),
+          },
+          {
+            message: 'Use a colour token instead of rgb() / hsl().',
+            selector: selector.replace('{regex}', colourFunction),
+          },
         ]),
+      ],
+    },
+  },
+  {
+    // ds components take their strings as props; only form bindings and gallery demos may translate
+    files: ['src/components/ds/**/*.{ts,tsx}'],
+    ignores: ['src/components/ds/form/**', 'src/components/ds/**/*.gallery.tsx'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            ...dsImportPatterns,
+            { group: ['next-intl'], message: 'ds components take translated strings as props.' },
+          ],
+        },
       ],
     },
   },

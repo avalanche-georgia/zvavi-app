@@ -1,8 +1,7 @@
 'use client'
 
 import { links } from '@components/constants'
-import { CopyField, CopyFieldGroup } from '@components/shared'
-import { BrandedQRCode } from '@components/ui'
+import { BrandedQRCode, CopyField, CopyFieldGroup } from '@components/shared'
 import { SuccessState } from '@ds/patterns'
 import { Button } from '@ds/primitives'
 import { Download } from 'lucide-react'
@@ -14,7 +13,7 @@ import { downloadQRCode, getVerificationUrl } from '@/lib/qrcode'
 
 const emailLink = (chunks: React.ReactNode) => (
   <a
-    className="focus-ring text-accent hover:text-accent-hover rounded-sm underline underline-offset-2"
+    className="focus-ring text-accent hover:text-accent-hover rounded-badge underline underline-offset-2"
     href={`mailto:${links.email}`}
   >
     {chunks}

@@ -1,28 +1,39 @@
 import { Suspense } from 'react'
+import { HistoryList } from '@components/features/history'
 import { Loading } from '@components/shared'
 import type { Metadata } from 'next'
 import { getLocale, getTranslations } from 'next-intl/server'
 
-import HistoryContent from './HistoryContent'
+import fetchHistoryList from './fetchHistoryList'
 
-import getAlternates from '@/lib/seo/getAlternates'
+import { requireKnownRegion } from '@/lib/regionRouting'
+import getPageMetadata from '@/lib/seo/getPageMetadata'
 import { routes } from '@/routes'
 
 type HistoryPageProps = { params: Promise<{ region: string }> }
 
 export const generateMetadata = async ({ params }: HistoryPageProps): Promise<Metadata> => {
   const { region: regionId } = await params
+
+  requireKnownRegion(regionId)
+
   const [locale, t] = await Promise.all([getLocale(), getTranslations()])
 
-  return {
-    alternates: getAlternates(locale, routes.forecastsByRegion(regionId).history),
+  return getPageMetadata({
     description: t('seo.history.description', { regionName: t(`regions.names.${regionId}`) }),
+    locale,
+    path: routes.forecastsByRegion(regionId).history,
+    regionId,
     title: t('seo.history.title', { regionName: t(`regions.names.${regionId}`) }),
-  }
+  })
 }
 
-const HistoryPage = async () => {
-  const t = await getTranslations()
+const HistoryPage = async ({ params }: HistoryPageProps) => {
+  const { region: regionId } = await params
+
+  requireKnownRegion(regionId)
+
+  const [t, forecasts] = await Promise.all([getTranslations(), fetchHistoryList(regionId)])
 
   return (
     <div className="bg-canvas text-ink">
@@ -30,7 +41,7 @@ const HistoryPage = async () => {
         <h1 className="text-title-lg font-bold">{t('navigation.archive')}</h1>
         {/* The selected season lives in the URL (useSearchParams) */}
         <Suspense fallback={<Loading />}>
-          <HistoryContent />
+          <HistoryList forecasts={forecasts} regionId={regionId} />
         </Suspense>
       </div>
     </div>

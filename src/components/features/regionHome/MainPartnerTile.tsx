@@ -18,7 +18,7 @@ const MainPartnerTile = ({ partner }: { partner: Partner }) => {
   const content = (
     <>
       <span className="block aspect-5/2 w-full max-w-55">
-        <PartnerLogo logoUrl={partner.logoUrl} name={name} />
+        <PartnerLogo isPreloaded logoUrl={partner.logoUrl} name={name} />
       </span>
       <b className="text-copy-lg font-semibold wrap-anywhere">{name}</b>
     </>

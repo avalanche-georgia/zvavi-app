@@ -33,7 +33,7 @@ const TrendTile = ({ onInfoOpen, trend }: TrendTileProps) => {
           <span
             key={value}
             className={cn(
-              'grid h-7.5 flex-1 place-items-center rounded-lg',
+              'rounded-item grid h-7.5 flex-1 place-items-center',
               value === trend ? 'bg-accent text-white' : 'bg-surface text-off',
             )}
           >

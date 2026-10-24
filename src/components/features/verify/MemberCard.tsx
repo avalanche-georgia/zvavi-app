@@ -3,11 +3,12 @@
 import { Icon } from '@components/icons'
 import { dateFormat } from '@domain/constants'
 import type { MemberStatus } from '@domain/types'
-import clsx from 'clsx'
 import { format, parseISO } from 'date-fns'
 import { useTranslations } from 'next-intl'
 
 import { statusConfig } from './statusConfig'
+
+import { cn } from '@/lib/utils'
 
 type MemberCardProps = {
   expiresAt: string | null
@@ -36,21 +37,21 @@ const MemberCard = ({
   const formattedExpiresAt = expiresAt ? format(parseISO(expiresAt), dateFormat) : null
 
   return (
-    <div className="w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-xl">
-      <div className={clsx('p-6 text-center', config.header.bg)}>
+    <div className="rounded-card bg-surface shadow-menu w-full max-w-md overflow-hidden">
+      <div className={cn('p-6 text-center', config.header.bg)}>
         <div className="mb-2 flex justify-center">
-          <div className={clsx('rounded-full p-3', config.header.iconBg)}>
+          <div className="rounded-full bg-white/20 p-3">
             <Icon className="text-white" icon={config.icon} size="lg" />
           </div>
         </div>
-        <h1 className="text-2xl font-bold text-white">{fullName}</h1>
+        <h1 className="text-title font-bold text-white">{fullName}</h1>
       </div>
 
       <div className="p-6">
         <div className="mb-4 flex items-center justify-center gap-2">
           <span
-            className={clsx(
-              'rounded-full px-4 py-1 text-sm font-medium',
+            className={cn(
+              'text-copy rounded-full px-4 py-1 font-medium',
               config.badge.bg,
               config.badge.text,
             )}
@@ -61,19 +62,19 @@ const MemberCard = ({
 
         <div className="space-y-3">
           <div className="flex items-center justify-between border-b pb-2">
-            <span className="text-gray-500">{t('verify.card.memberId')}</span>
+            <span className="text-muted">{t('verify.card.memberId')}</span>
             <span className="font-mono font-medium">{memberId}</span>
           </div>
 
           <div className="flex items-center justify-between border-b pb-2">
-            <span className="text-gray-500">{t('verify.card.memberSince')}</span>
+            <span className="text-muted">{t('verify.card.memberSince')}</span>
             <span className="font-medium">{formattedJoinedAt}</span>
           </div>
 
           {formattedExpiresAt && (
             <div className="flex items-center justify-between border-b pb-2">
-              <span className="text-gray-500">{t('verify.card.expiresAt')}</span>
-              <span className={clsx('font-medium', status === 'expired' && 'text-red-600')}>
+              <span className="text-muted">{t('verify.card.expiresAt')}</span>
+              <span className={cn('font-medium', status === 'expired' && 'text-danger')}>
                 {formattedExpiresAt}
               </span>
             </div>
@@ -81,9 +82,9 @@ const MemberCard = ({
         </div>
       </div>
 
-      <div className="bg-gray-50 px-6 py-4 text-center">
-        <p className="text-xs text-gray-500">{t('verify.card.verifiedBy.label')}</p>
-        <p className="font-medium text-gray-700">{t('verify.card.verifiedBy.value')}</p>
+      <div className="bg-canvas px-6 py-4 text-center">
+        <p className="text-caption text-muted">{t('verify.card.verifiedBy.label')}</p>
+        <p className="text-body font-medium">{t('verify.card.verifiedBy.value')}</p>
       </div>
     </div>
   )

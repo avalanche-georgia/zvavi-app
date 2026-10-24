@@ -13,7 +13,7 @@ const CalendarNavButton = ({ className, ...props }: CalendarNavButtonProps) => (
     {...props}
     aria-label={props['aria-label'] ?? ''}
     className={cn(
-      'aria-disabled:cursor-not-allowed aria-disabled:opacity-40 aria-disabled:hover:bg-transparent',
+      'aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:hover:bg-transparent',
       className,
     )}
   />

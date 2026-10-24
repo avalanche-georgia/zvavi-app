@@ -33,7 +33,7 @@ const MenuItem = ({
 }: MenuItemProps) => (
   <BaseMenu.Item
     className={cn(
-      'text-copy flex h-9.5 cursor-default items-center gap-2.5 rounded-lg px-2.5 outline-hidden select-none pointer-coarse:h-11',
+      'text-copy rounded-item flex h-9.5 cursor-default items-center gap-2.5 px-2.5 outline-hidden select-none pointer-coarse:h-11',
       '[&_svg]:size-4.5 [&_svg]:shrink-0',
       toneClasses[tone],
       isActive && 'bg-accent-soft text-accent data-highlighted:bg-accent-soft font-semibold',

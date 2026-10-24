@@ -40,26 +40,24 @@ const AvalancheCard = ({ avalanche, isSelected, onOpen }: AvalancheCardProps) =>
   return (
     <div
       className={cn(
-        'bg-surface relative grid grid-cols-[48px_minmax(0,1fr)] gap-3 rounded-[14px] border p-3',
+        'bg-surface rounded-card relative grid grid-cols-[48px_minmax(0,1fr)] gap-3 border p-3',
         'transition-[border-color,box-shadow] duration-100',
-        isSelected
-          ? 'border-primary shadow-[0_0_0_1px_var(--color-primary)]'
-          : 'border-rule hover:border-rule-strong',
+        isSelected ? 'border-primary ring-primary ring-1' : 'border-rule hover:border-rule-strong',
       )}
     >
       <SizeTile size={size} />
       <div className="min-w-0">
-        <div className="text-ink text-copy-lg flex items-baseline gap-1.5 font-semibold tracking-[-.01em]">
+        <div className="text-ink text-copy-lg flex items-baseline gap-1.5 font-semibold">
           <button
             aria-haspopup="dialog"
-            className="focus-visible:after:outline-accent text-left outline-hidden after:absolute after:inset-0 after:rounded-[14px] focus-visible:after:outline-2 focus-visible:after:outline-offset-2"
+            className="focus-visible:after:outline-accent after:rounded-card text-left outline-hidden after:absolute after:inset-0 focus-visible:after:outline-2 focus-visible:after:outline-offset-2"
             onClick={onOpen}
             type="button"
           >
             {t(`common.avalancheTypes.${type}`)}
           </button>
           {quantity > 1 && (
-            <span className="bg-tile text-muted rounded-md px-1.5 py-0.5 text-xs font-semibold">
+            <span className="bg-tile text-muted rounded-badge text-caption px-1.5 py-0.5 font-semibold">
               {t('observations.card.quantity', { count: quantity })}
             </span>
           )}

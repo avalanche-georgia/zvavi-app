@@ -20,7 +20,7 @@ const ForecastCell = ({ forecast }: { forecast: ForecastListItem }) => {
           #{id}
         </span>
         <Link
-          className="focus-ring text-ink hover:text-accent truncate rounded-sm font-semibold hover:underline"
+          className="focus-ring text-ink hover:text-accent rounded-badge truncate font-semibold hover:underline"
           href={routes.admin.forecasts.view(id)}
         >
           {forecaster || '—'}

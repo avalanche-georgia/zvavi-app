@@ -14,7 +14,7 @@ type SectionCardProps = {
 }
 
 export const sectionLabelClasses =
-  'text-muted text-copy-sm font-semibold tracking-[.05em] uppercase'
+  'text-muted text-copy-sm font-semibold tracking-eyebrow uppercase'
 
 // Sections land below the sticky site header (and the sticky jump bar on mobile)
 export const sectionAnchorClasses =
@@ -36,7 +36,7 @@ const SectionCard = ({ action, children, className, count, id, title }: SectionC
       <h2 className={cn(sectionLabelClasses, 'flex min-w-0 flex-1 items-baseline gap-2')}>
         {title}
         {count !== undefined && (
-          <span className="bg-tile text-ink rounded-md px-1.5 py-px text-xs tracking-normal">
+          <span className="bg-tile text-ink rounded-badge text-caption px-1.5 py-px tracking-normal">
             {count}
           </span>
         )}

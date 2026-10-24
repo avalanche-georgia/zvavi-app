@@ -18,14 +18,14 @@ const HeaderCell = <TData extends RowData>({ header }: { header: Header<TData, u
       aria-sort={sortDirection ? ariaSortValues[sortDirection] : undefined}
       className={cn(
         // border-separate table: the bottom rule sticks with the header
-        'bg-surface border-rule text-caption text-muted sticky top-0 z-10 h-11 border-b font-semibold tracking-wider uppercase',
+        'bg-surface border-rule text-caption text-muted tracking-eyebrow sticky top-0 z-10 h-11 border-b font-semibold uppercase',
         getCellClasses(column.columnDef.meta),
       )}
       scope="col"
     >
       {column.getCanSort() ? (
         <button
-          className="focus-ring hover:text-ink inline-flex items-center gap-1 rounded-sm uppercase"
+          className="focus-ring hover:text-ink rounded-badge inline-flex items-center gap-1 uppercase"
           onClick={column.getToggleSortingHandler()}
           type="button"
         >

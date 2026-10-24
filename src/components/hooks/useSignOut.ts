@@ -1,4 +1,3 @@
-import { supabase } from '@data'
 import { handleSupabaseError } from '@data/helpers'
 import { userProfilesKeys } from '@data/query-keys'
 import { useQueryClient } from '@tanstack/react-query'
@@ -7,6 +6,7 @@ import { useRouter } from 'src/i18n/navigation'
 import useToast from './useToast'
 
 import { reportError } from '@/lib/observability'
+import { loadSupabase } from '@/lib/supabase/lazyClient'
 import { routes } from '@/routes'
 
 const useSignOut = () => {
@@ -16,6 +16,7 @@ const useSignOut = () => {
 
   const signOut = async () => {
     try {
+      const supabase = await loadSupabase()
       const { error } = await supabase.auth.signOut()
 
       handleSupabaseError(error)

@@ -2,8 +2,8 @@
 
 import { useRef } from 'react'
 import { ConfirmationDialog } from '@components/shared'
-import { IconButton, Menu, MenuItem, MenuSeparator } from '@ds/primitives'
-import { Ellipsis, LoaderIcon, Trash2 } from 'lucide-react'
+import { IconButton, Menu, MenuItem, MenuSeparator, Spinner } from '@ds/primitives'
+import { Ellipsis, Trash2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 import keepFocusInTable from './keepFocusInTable'
@@ -42,7 +42,6 @@ const RecordMenu = ({
   const ownTriggerRef = useRef<HTMLButtonElement>(null)
   const menuTriggerRef = triggerRef ?? ownTriggerRef
   const deleteConfirm = useDeleteAfterMenuClose()
-  const TriggerIcon = isBusy ? LoaderIcon : Ellipsis
 
   const handleOpenChangeComplete = (isOpen: boolean) => {
     deleteConfirm.onMenuOpenChangeComplete(isOpen)
@@ -60,7 +59,7 @@ const RecordMenu = ({
 
   const trigger = (
     <IconButton ref={menuTriggerRef} aria-label={label} tooltip={t('admin.shared.actions.more')}>
-      <TriggerIcon className={isBusy ? 'size-4.5 animate-spin' : 'size-4.5'} />
+      {isBusy ? <Spinner className="text-current" size="sm" /> : <Ellipsis className="size-4.5" />}
     </IconButton>
   )
 

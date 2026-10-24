@@ -17,6 +17,7 @@ type CalendarDayCellProps = {
   onDaySelect: (forecast: ArchiveForecast) => void
 }
 
+// 1.5px: today must stand out on 20px cells, where a 2px ring swallows the colour
 const todayClasses = 'inset-ring-[1.5px] inset-ring-ink'
 
 const CalendarDayCell = ({
@@ -30,7 +31,7 @@ const CalendarDayCell = ({
   const t = useTranslations()
   const { formatDay } = useArchiveFormat()
 
-  if (!forecast) return <span className={cn('bg-tile h-5 rounded-xs', isToday && todayClasses)} />
+  if (!forecast) return <span className={cn('bg-tile rounded-bar h-5', isToday && todayClasses)} />
 
   const level = forecast.hazardLevels.overall
 
@@ -41,7 +42,7 @@ const CalendarDayCell = ({
         level: t(hazardLevelNamesByScale[level]),
       })}
       className={cn(
-        'focus-ring inset-ring-ink/8 hover:inset-ring-ink h-5 rounded-xs inset-ring transition-opacity hover:inset-ring-2',
+        'focus-ring inset-ring-ink/8 hover:inset-ring-ink rounded-bar h-5 inset-ring transition-opacity hover:inset-ring-2',
         backgroundColorByHazardLevel[level],
         isToday && todayClasses,
         isDimmed && 'opacity-20',

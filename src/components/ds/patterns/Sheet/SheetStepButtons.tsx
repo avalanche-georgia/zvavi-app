@@ -12,7 +12,7 @@ type SheetStepButtonsProps = {
 // At the ends the arrows are aria-disabled, not disabled: a disabled button
 // drops keyboard focus out of the sheet
 const edgeClasses =
-  'aria-disabled:cursor-default aria-disabled:opacity-30 aria-disabled:hover:bg-transparent'
+  'aria-disabled:cursor-default aria-disabled:opacity-50 aria-disabled:hover:bg-transparent'
 
 // Previous / next arrows for a sheet that steps through a list. Pass the same
 // `steps` to the Sheet so ←/→ work too.

@@ -10,15 +10,9 @@ const isPromiseLike = (value: unknown): value is PromiseLike<unknown> =>
 
 // Runs a dialog's confirmed action. A promise keeps the dialog busy until it
 // settles: resolved → closes, rejected → stays open (the caller says why, e.g. a
-// toast) to try again. While busy, nothing closes it.
+// toast) to try again. While busy, Dialog's isBusy keeps it open.
 const useConfirmAction = ({ onConfirm, onOpenChange }: UseConfirmActionParams) => {
   const [isBusy, setIsBusy] = useState(false)
-
-  const handleOpenChange = (nextIsOpen: boolean) => {
-    if (isBusy) return
-
-    onOpenChange(nextIsOpen)
-  }
 
   // The action runs first: closing reports through onOpenChange, which callers
   // often treat as "cancelled"
@@ -41,7 +35,7 @@ const useConfirmAction = ({ onConfirm, onOpenChange }: UseConfirmActionParams) =
     }
   }
 
-  return { handleConfirm, handleOpenChange, isBusy }
+  return { handleConfirm, isBusy }
 }
 
 export default useConfirmAction

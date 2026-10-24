@@ -36,6 +36,7 @@ const StationRow = ({ isSelected, locale, onHover, onSelect, station }: StationR
       <button
         aria-label={t('weatherStations.selectStation', { name })}
         aria-pressed={isSelected}
+        // The row's own radius, so the focus ring follows it
         className="focus-ring flex min-w-0 flex-1 items-center gap-2.5 self-stretch rounded-[inherit] py-2 pl-3 text-left"
         onClick={() => onSelect(id)}
         type="button"
@@ -50,7 +51,7 @@ const StationRow = ({ isSelected, locale, onHover, onSelect, station }: StationR
       </button>
 
       <a
-        className="focus-ring text-copy text-accent hover:text-accent-hover flex shrink-0 items-center gap-1.5 rounded-sm hover:underline"
+        className="focus-ring text-copy text-accent hover:text-accent-hover rounded-badge flex shrink-0 items-center gap-1.5 hover:underline"
         href={url}
         rel="noopener noreferrer"
         target="_blank"

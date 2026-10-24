@@ -9,7 +9,7 @@ type ProblemNumberProps = {
 const ProblemNumber = ({ className, number }: ProblemNumberProps) => (
   <span
     className={cn(
-      'bg-ink grid size-6 shrink-0 place-items-center rounded-full text-xs font-bold text-white',
+      'bg-ink text-caption grid size-6 shrink-0 place-items-center rounded-full font-bold text-white',
       className,
     )}
   >

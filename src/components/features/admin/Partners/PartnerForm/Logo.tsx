@@ -1,4 +1,5 @@
-import { ImageIcon, LoaderIcon } from 'lucide-react'
+import { Spinner } from '@ds/primitives'
+import { ImageIcon } from 'lucide-react'
 
 type LogoProps = {
   isUploading: boolean
@@ -8,7 +9,7 @@ type LogoProps = {
 // Preview tile: the logo, a spinner while it uploads, or a placeholder
 const Logo = ({ isUploading, logoUrl }: LogoProps) => {
   const getContent = () => {
-    if (isUploading) return <LoaderIcon aria-hidden className="text-muted size-6 animate-spin" />
+    if (isUploading) return <Spinner className="text-muted" />
     if (!logoUrl) return <ImageIcon aria-hidden className="text-placeholder size-7" />
 
     // eslint-disable-next-line @next/next/no-img-element

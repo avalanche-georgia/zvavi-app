@@ -12,7 +12,7 @@ type DangerFactsProps = {
 }
 
 const cellClasses = 'bg-surface min-w-0 px-4 py-2.5'
-const termClasses = 'text-muted text-xs'
+const termClasses = 'text-muted text-caption'
 const valueClasses = 'text-copy text-ink mt-0.5 font-semibold'
 const noteClasses = 'text-muted text-caption block font-normal'
 

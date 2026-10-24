@@ -281,6 +281,7 @@ admin:
       continueDraft: 'მონახაზის გაგრძელება'
     actions:
       copyLink: 'ბმულის კოპირება'
+      copyLinkForForecast: 'პროგნოზის #{id} ბმულის კოპირება'
       duplicate: 'დუბლირება'
       moreForForecast: 'სხვა მოქმედებები — პროგნოზი #{id}'
       openPublicPage: 'საჯარო გვერდის გახსნა'

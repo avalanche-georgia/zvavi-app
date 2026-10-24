@@ -21,14 +21,14 @@ const SectionRail = () => {
       aria-label={t('admin.forecast.editor.rail.title')}
       className="sticky top-25 hidden self-start @min-[1180px]:block"
     >
-      <p className="text-caption text-muted mb-2 font-semibold tracking-wide uppercase">
+      <p className="text-caption text-muted tracking-eyebrow mb-2 font-semibold uppercase">
         {t('admin.forecast.editor.rail.title')}
       </p>
       <ul className="flex flex-col">
         {sections.map(({ id, isComplete, label, value }) => (
           <li key={id}>
             <a
-              className="text-copy text-body hover:text-ink hover:bg-tile focus-ring -mx-2 flex h-9 items-center gap-2.5 rounded-md px-2 transition-colors"
+              className="text-copy text-body hover:text-ink hover:bg-tile focus-ring rounded-item -mx-2 flex h-9 items-center gap-2.5 px-2 transition-colors"
               href={`#${id}`}
               onClick={(event) => handleClick(event, id)}
             >

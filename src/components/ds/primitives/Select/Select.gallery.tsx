@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { ArrowUpDown } from 'lucide-react'
 
 import Select from './Select'
 import Field from '../Field/Field'
@@ -42,6 +43,18 @@ const SelectGallery = () => {
         <Select
           className="max-w-64"
           isActive={filter !== 'all'}
+          onValueChange={setFilter}
+          options={filterOptions}
+          size="sm"
+          value={filter}
+        />
+      </Field>
+      <Field label="Leading icon, value hidden on phones (tight toolbar)">
+        <Select
+          ariaLabel="Sort"
+          className="w-auto"
+          isValueHiddenOnPhone
+          leading={<ArrowUpDown aria-hidden className="size-4" />}
           onValueChange={setFilter}
           options={filterOptions}
           size="sm"

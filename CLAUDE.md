@@ -48,7 +48,7 @@ src/
 │   └── routes.ts            # centralized route constants + builder helpers
 ├── components/
 │   ├── features/            # feature-specific components (admin, forecast, members, …)
-│   ├── ui/                  # reusable primitives (Button, Modal, Drawer, inputs, …)
+│   ├── ds/                  # the UI kit: primitives, patterns, form bindings (see DESIGN_SYSTEM.md)
 │   ├── layout/              # Header, Footer, AdminSidebar, PageWrapper, …
 │   ├── shared/              # cross-feature shared components
 │   ├── hooks/               # useAuth, useBoolean, …
@@ -61,7 +61,7 @@ src/
 ├── domain/
 │   ├── types.ts             # all TypeScript type definitions
 │   ├── constants.ts         # enums, label maps, date format strings
-│   └── context/             # SupabaseContext provider + useSupabase hook
+│   └── context/             # RegionContext provider + useRegionContext hook
 ├── lib/
 │   ├── supabase/            # client.ts, server.ts, middleware.ts
 │   └── observability/       # error reporter
@@ -185,6 +185,8 @@ Never write Supabase query logic inline inside a page or component. Extract to a
 
 `src/data/helpers/` is for **pure utility functions only** (converters, error handlers). DB fetch functions belong in `src/data/queries/`.
 
+**Public pages read on the server.** A browser Supabase hook (`src/data/hooks/`) on a public page puts supabase-js (~68 KB gz) back into every visitor's download — keep those hooks for admin. The one deliberate exception is the current forecast, which refetches in the browser to stay live (`ForecastContainer`; on `/forecasts/[id]` through `LiveForecast`, a client-side dynamic import, so past forecasts don't download it). Visitors never have a session: `useAuth` loads supabase-js only when a session cookie exists.
+
 ### Anonymous/Public Mutations and Reads
 
 Two different data-access patterns exist depending on who's on the other end, and both are intentional — don't unify them:
@@ -250,7 +252,7 @@ Key v4 syntax differences from v3:
 - Class ordering enforced by `prettier-plugin-tailwindcss` — auto-sorted on format, do not reorder manually
 
 ### UI Components
-**Read [`DESIGN_SYSTEM.md`](DESIGN_SYSTEM.md) before any UI task.** New generic UI goes in `src/components/ds/` (base-ui + tokens); legacy `src/components/ui/` is frozen and migrated screen by screen. The doc holds the architecture, token rules, legacy policy and the migration tracker — update the tracker when a legacy component is removed.
+**Read [`DESIGN_SYSTEM.md`](DESIGN_SYSTEM.md) before any UI task.** New generic UI goes in `src/components/ds/` (base-ui + tokens); the legacy `src/components/ui/` kit is gone. The doc holds the architecture, token rules and component rules.
 
 **A new ds component ships complete:** every state it can be in (idle/empty, filled, hover, focus, open, selected, disabled, error, loading), our look (tokens, shared Field classes), and a `<Name>.test.tsx` next to it covering behaviour, states and basic keyboard use. Details in DESIGN_SYSTEM.md → Component rules.
 

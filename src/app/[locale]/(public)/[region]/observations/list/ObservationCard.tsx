@@ -36,12 +36,10 @@ const ObservationCard = ({
   return (
     <button
       className={cn(
-        'grid w-full grid-cols-[48px_minmax(0,1fr)_auto] gap-3 rounded-[14px] border bg-white p-3 text-left',
+        'rounded-card bg-surface grid w-full grid-cols-[48px_minmax(0,1fr)_auto] gap-3 border p-3 text-left',
         'transition-[border-color,box-shadow] duration-100',
         'focus-visible:outline-accent focus-visible:outline-2 focus-visible:outline-offset-2',
-        isSelected
-          ? 'border-primary shadow-[0_0_0_1px_var(--color-primary)]'
-          : 'border-rule hover:border-rule-strong',
+        isSelected ? 'border-primary ring-primary ring-1' : 'border-rule hover:border-rule-strong',
         className,
       )}
       onClick={() => onOpen(id)}
@@ -52,23 +50,19 @@ const ObservationCard = ({
       <SizeTile size={size} />
 
       <div className="min-w-0">
-        <div className="flex items-baseline gap-1.5 text-[15.5px] font-semibold tracking-[-.01em]">
+        <div className="text-copy-lg flex items-baseline gap-1.5 font-semibold">
           {t(`common.avalancheTypes.${type}`)}
           {quantity > 1 && (
-            <span className="bg-tile text-muted rounded-md px-1.5 py-0.5 text-xs font-semibold">
+            <span className="bg-tile text-muted rounded-badge text-caption px-1.5 py-0.5 font-semibold">
               {t('observations.card.quantity', { count: quantity })}
             </span>
           )}
         </div>
-        <div className="text-body mt-0.5 text-[13px]">
+        <div className="text-body text-copy-sm mt-0.5">
           {t(`common.avalancheTriggers.${trigger}`)}
           {zoneLabels && ` · ${zoneLabels}`}
         </div>
-        {description && (
-          <p className="text-body mt-1.5 line-clamp-2 text-[13.5px] leading-[1.45]">
-            {description}
-          </p>
-        )}
+        {description && <p className="text-body text-copy-sm mt-1.5 line-clamp-2">{description}</p>}
         <CardMeta dateBasis={dateBasis} observation={observation} />
       </div>
 

@@ -3,10 +3,14 @@
 import { useEffect, useRef, useState } from 'react'
 import { useCopyToClipboard, useEventCallback } from 'usehooks-ts'
 
-const useCopyWithFeedback = (value: string) => {
+import useToast from './useToast'
+
+// `value` may be a function, for text that can only be built in the browser (window.location)
+const useCopyWithFeedback = (value: string | (() => string)) => {
   const [isCopied, setIsCopied] = useState(false)
   const resetTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   const [, copyToClipboard] = useCopyToClipboard()
+  const { toastError } = useToast()
 
   useEffect(() => {
     return () => {
@@ -17,7 +21,10 @@ const useCopyWithFeedback = (value: string) => {
   }, [])
 
   const handleCopy = useEventCallback(async () => {
-    await copyToClipboard(value)
+    // Refused (no permission, unfocused page): say so rather than show a false "Copied"
+    const isWritten = await copyToClipboard(typeof value === 'function' ? value() : value)
+
+    if (!isWritten) return void toastError('useCopyWithFeedback', {})
 
     if (resetTimerRef.current) {
       clearTimeout(resetTimerRef.current)

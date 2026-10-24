@@ -36,7 +36,7 @@ const Popover = ({
       <BasePopover.Positioner align={align} className="z-50" collisionPadding={16} sideOffset={6}>
         <BasePopover.Popup
           aria-label={ariaLabel}
-          className="rounded-card border-rule bg-surface shadow-menu max-w-(--available-width) origin-(--transform-origin) border p-3 outline-hidden transition-[opacity,scale] duration-150 data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0"
+          className="rounded-media border-rule bg-surface shadow-menu max-w-(--available-width) origin-(--transform-origin) border p-3 outline-hidden transition-[opacity,scale] duration-150 data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0"
           initialFocus={initialFocus}
         >
           {children}

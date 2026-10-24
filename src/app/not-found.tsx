@@ -1,11 +1,13 @@
 import avalancheGIF from '@assets/images/avalanche.gif'
 import { PageWrapper } from '@components/layout'
-import { ButtonLink } from '@components/shared'
 import fetchActiveRegions from '@data/queries/fetchActiveRegions'
 import { regionLocalStorageKey } from '@domain/constants'
+// The Button module directly, not the barrel: this is a server component
+import { getButtonClasses } from '@ds/primitives/Button'
 import { cookies } from 'next/headers'
 import Image from 'next/image'
 import { getTranslations } from 'next-intl/server'
+import { Link } from 'src/i18n/navigation'
 
 import { routes } from '@/routes'
 
@@ -21,22 +23,25 @@ const NotFound = async () => {
   return (
     <PageWrapper>
       <div className="flex max-w-full flex-col items-center justify-center gap-6 py-6 text-center lg:py-20">
+        {/* The 404 is a decorative watermark over the picture, far above the type scale */}
         <div className="relative">
           <p className="absolute size-full pt-2 text-7xl opacity-15 lg:pt-3 lg:text-8xl">404</p>
 
           <Image
             alt="404 Not Found"
-            className="rounded-lg"
+            className="rounded-media"
             height={270}
             src={avalancheGIF}
             width={480}
           />
         </div>
 
-        <h1 className="text-2xl font-semibold text-gray-900">{t('common.notFound.title')}</h1>
-        <p className="max-w-lg whitespace-pre-line text-gray-600">{t('common.notFound.message')}</p>
+        <h1 className="text-title text-ink font-semibold">{t('common.notFound.title')}</h1>
+        <p className="text-body max-w-lg whitespace-pre-line">{t('common.notFound.message')}</p>
 
-        <ButtonLink href={href}>{t('common.notFound.linkText')}</ButtonLink>
+        <Link className={getButtonClasses()} href={href}>
+          {t('common.notFound.linkText')}
+        </Link>
       </div>
     </PageWrapper>
   )

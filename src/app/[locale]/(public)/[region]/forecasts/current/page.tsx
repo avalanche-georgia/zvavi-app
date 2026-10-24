@@ -2,38 +2,46 @@ import { ForecastContainer, NoForecast } from '@components/features/forecast'
 import { PageWrapper } from '@components/layout'
 import fetchCurrentForecastId from '@data/queries/fetchCurrentForecastId'
 import { fetchForecastPageData } from '@data/queries/fetchForecastPageData'
-import type { RegionId } from '@domain/types'
 import type { Metadata } from 'next'
 import { getLocale, getTranslations } from 'next-intl/server'
 
-import getAlternates from '@/lib/seo/getAlternates'
+import { requireKnownRegion } from '@/lib/regionRouting'
+import getPageMetadata from '@/lib/seo/getPageMetadata'
 import { routes } from '@/routes'
 
 type CurrentForecastPageProps = { params: Promise<{ region: string }> }
 
 export const generateMetadata = async ({ params }: CurrentForecastPageProps): Promise<Metadata> => {
   const { region: regionId } = await params
+
+  requireKnownRegion(regionId)
+
   const [locale, t] = await Promise.all([getLocale(), getTranslations()])
 
-  return {
-    alternates: getAlternates(locale, routes.forecastsByRegion(regionId).current),
+  return getPageMetadata({
     description: t('seo.currentForecast.description', {
       regionName: t(`regions.names.${regionId}`),
     }),
+    locale,
+    path: routes.forecastsByRegion(regionId).current,
+    regionId,
     title: t('seo.currentForecast.title', { regionName: t(`regions.names.${regionId}`) }),
-  }
+  })
 }
 
 const CurrentForecastPage = async ({ params }: CurrentForecastPageProps) => {
   const { region } = await params
-  const forecastId = await fetchCurrentForecastId(region as RegionId)
+
+  requireKnownRegion(region)
+
+  const forecastId = await fetchCurrentForecastId(region)
   const data =
     forecastId === null ? null : await fetchForecastPageData(forecastId, { isKnownCurrent: true })
 
   if (!data) {
     return (
       <PageWrapper>
-        <NoForecast regionId={region as RegionId} />
+        <NoForecast regionId={region} />
       </PageWrapper>
     )
   }

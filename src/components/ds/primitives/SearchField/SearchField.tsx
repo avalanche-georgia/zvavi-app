@@ -4,7 +4,7 @@ import { useRef } from 'react'
 import { Input } from '@base-ui/react/input'
 import { Search, X } from 'lucide-react'
 
-import { fieldControlClasses } from '../Field'
+import { type ControlSize, controlSizeClasses, fieldControlClasses } from '../Field'
 
 import { cn } from '@/lib/utils'
 
@@ -14,6 +14,8 @@ type SearchFieldProps = {
   clearLabel: string
   onValueChange: (value: string) => void
   placeholder?: string
+  // md: forms. sm: toolbars, next to sm Buttons and Selects
+  size?: ControlSize
   value: string
 }
 
@@ -24,6 +26,7 @@ const SearchField = ({
   clearLabel,
   onValueChange,
   placeholder,
+  size = 'md',
   value,
 }: SearchFieldProps) => {
   const inputRef = useRef<HTMLInputElement>(null)
@@ -43,7 +46,11 @@ const SearchField = ({
       <Input
         ref={inputRef}
         aria-label={ariaLabel}
-        className={cn(fieldControlClasses, 'focus-ring h-11.5 w-full pr-10 pl-9.5')}
+        className={cn(
+          fieldControlClasses,
+          controlSizeClasses[size],
+          'focus-ring w-full pr-10 pl-9.5',
+        )}
         enterKeyHint="search"
         onValueChange={onValueChange}
         placeholder={placeholder}

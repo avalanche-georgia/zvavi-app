@@ -1,10 +1,9 @@
-import styles from './AvalancheLoader.module.css'
-import { BED, CUT_FACE, SLAB } from './geometry'
+import { bed, cutFace } from './geometry'
 import { makeIds } from './ids'
 
 type MountainProps = { hasDetail: boolean; uid: string }
 
-// The still part of the scene: distant ridges, bare ground, snowy faces and the slab on top
+// The still part of the scene: distant ridges, bare ground and snowy faces
 const Mountain = ({ hasDetail, uid }: MountainProps) => {
   const { ref } = makeIds(uid)
 
@@ -19,7 +18,7 @@ const Mountain = ({ hasDetail, uid }: MountainProps) => {
       )}
       <ellipse className="fill-snow-2" cx="80" cy="149" rx="78" ry="5" />
       <g clipPath={ref('silhouette')}>
-        <polygon fill={ref('bed')} points={BED} />
+        <polygon fill={ref('bed')} points={bed} />
         {hasDetail && (
           <g
             className="stroke-rock-3"
@@ -47,10 +46,7 @@ const Mountain = ({ hasDetail, uid }: MountainProps) => {
             <polygon className="fill-rock-3" points="101,82 112,78 117,90 106,95" />
           </g>
         )}
-        <polygon className="fill-snow-5" points={CUT_FACE} />
-        <g className={styles.under}>
-          <polygon className={styles.fill} fill={ref('slab')} points={SLAB} />
-        </g>
+        <polygon className="fill-snow-5" points={cutFace} />
       </g>
     </>
   )

@@ -16,11 +16,11 @@ type OptionTileProps = {
 
 const OptionTile = ({ icon, onClick, text, title }: OptionTileProps) => (
   <button
-    className="border-rule-strong hover:border-accent focus-ring flex gap-3.5 rounded-[14px] border-[1.5px] border-dashed p-4.5 text-left transition-colors"
+    className="border-rule-strong hover:border-accent focus-ring rounded-card border-slot flex gap-3.5 p-4.5 text-left transition-colors"
     onClick={onClick}
     type="button"
   >
-    <span className="bg-accent-soft text-accent grid size-10 shrink-0 place-items-center rounded-xl">
+    <span className="bg-accent-soft text-accent rounded-media grid size-10 shrink-0 place-items-center">
       {icon}
     </span>
     <span className="flex flex-col gap-0.5">

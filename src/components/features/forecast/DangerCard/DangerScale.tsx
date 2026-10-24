@@ -20,16 +20,16 @@ const DangerScale = ({ level }: { level: HazardLevelScale }) => {
           <i
             key={scaleLevel}
             className={cn(
-              'rounded-[3px]',
+              'rounded-bar',
               backgroundColorByHazardLevel[scaleLevel],
               scaleLevel === level
-                ? '-mt-0.5 h-2.5 shadow-[inset_0_0_0_1px_rgba(0,0,0,.15)]'
+                ? '-mt-0.5 h-2.5 inset-ring inset-ring-black/15'
                 : 'h-1.5 opacity-30',
             )}
           />
         ))}
       </div>
-      <div aria-hidden className="text-muted flex justify-between px-4 pt-1.5 text-xs">
+      <div aria-hidden className="text-muted text-caption flex justify-between px-4 pt-1.5">
         <span>
           {lowest} {t(hazardLevelNamesByScale[lowest])}
         </span>

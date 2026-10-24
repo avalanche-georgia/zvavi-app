@@ -5,7 +5,7 @@ import { usePendingObservationsSummary } from '@data/hooks/recentAvalanches'
 import { useTranslations } from 'next-intl'
 import { Link, usePathname } from 'src/i18n/navigation'
 
-import { homeItem, navItems, teamItem } from './constants'
+import { designSystemItem, homeItem, navItems, teamItem } from './constants'
 
 import NavLink from './NavLink'
 import type { NavItem } from './types'
@@ -47,6 +47,13 @@ const SidebarContent = ({ onItemClick }: { onItemClick?: VoidFunction }) => {
         ))}
       </nav>
       <div className="border-rule flex flex-col gap-1 border-t p-3">
+        {designSystemItem && (
+          <NavLink
+            isActive={isItemActive(designSystemItem.href)}
+            item={designSystemItem}
+            onClick={onItemClick}
+          />
+        )}
         <NavLink isActive={isItemActive(teamItem.href)} item={teamItem} onClick={onItemClick} />
         <NavLink item={homeItem} onClick={onItemClick} />
       </div>

@@ -26,15 +26,16 @@ const DetailReporter = ({ avatarUrl, isTeam, name }: DetailReporterProps) => {
           <TeamMemberPhoto
             avatarUrl={avatarUrl}
             className="size-10 rounded-full"
-            initialsClassName="text-sm"
+            initialsClassName="text-copy"
             name={name}
+            width={40}
           />
         ) : (
           <span className="bg-primary-soft text-primary-ink grid size-10 place-items-center rounded-full">
             <Users aria-hidden className="size-5" />
           </span>
         )}
-        {name && <b className="text-[15px]">{name}</b>}
+        {name && <b className="text-copy-lg">{name}</b>}
         {isTeam && <Badge>{t('common.avalancheSources.team')}</Badge>}
       </div>
     </DetailSection>

@@ -15,7 +15,7 @@ const HazardBars = ({ hazardLevels }: { hazardLevels: HazardLevels }) => (
     {bars.map(({ width, zone }) => (
       <span
         key={zone}
-        className={cn('h-1.5 rounded-xs', width, backgroundColorByHazardLevel[hazardLevels[zone]])}
+        className={cn('rounded-bar h-1.5', width, backgroundColorByHazardLevel[hazardLevels[zone]])}
       />
     ))}
   </span>

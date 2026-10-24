@@ -16,7 +16,7 @@ const RecordNotFound = ({ backHref, message }: RecordNotFoundProps) => {
   return (
     <div className="rounded-card border-rule bg-surface flex flex-col items-center gap-3 border p-6 text-center">
       <p className="text-body">{message}</p>
-      <Link className="text-accent focus-ring rounded-sm hover:underline" href={backHref}>
+      <Link className="text-accent focus-ring rounded-badge hover:underline" href={backHref}>
         {t('common.actions.backToList')}
         <LinkPendingIndicator />
       </Link>

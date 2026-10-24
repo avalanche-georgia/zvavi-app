@@ -20,7 +20,7 @@ type LanguageToggleProps = {
 }
 
 // EN / ქარ switch: the same page in the other language, query kept
-const LanguageToggle = ({ className, size = 'sm' }: LanguageToggleProps) => {
+const LanguageToggle = ({ className, size = 'xs' }: LanguageToggleProps) => {
   const t = useTranslations()
   const router = useRouter()
   const pathname = usePathname()

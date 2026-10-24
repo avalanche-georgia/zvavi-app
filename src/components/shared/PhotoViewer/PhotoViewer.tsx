@@ -63,12 +63,12 @@ const PhotoViewer = ({ actions, index, onIndexChange, photos }: PhotoViewerProps
         {/* Background on the popup, not a Backdrop — base-ui skips backdrops of
             nested dialogs, and the viewer is often opened from another dialog */}
         <Dialog.Popup
-          className="fixed inset-0 z-60 flex flex-col bg-[#0c0c0e] pb-[env(safe-area-inset-bottom)] outline-hidden transition-[opacity,scale] duration-200 data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0"
+          className="fixed inset-0 z-60 flex flex-col bg-black pb-[env(safe-area-inset-bottom)] outline-hidden transition-[opacity,scale] duration-200 data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0"
           initialFocus={closeButtonRef}
           onKeyDown={handleKeyDown}
         >
           <div className="flex items-center justify-between px-2 pt-[max(0.5rem,env(safe-area-inset-top))] pb-2 text-white">
-            <Dialog.Title className="pl-3 text-sm font-medium tabular-nums">
+            <Dialog.Title className="text-copy pl-3 font-medium tabular-nums">
               {t('common.photoViewer.counter', {
                 current: selectedIndex + 1,
                 total: photos.length,

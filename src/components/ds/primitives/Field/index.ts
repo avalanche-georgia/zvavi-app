@@ -2,4 +2,5 @@ export { type ControlSize, controlSizeClasses, fieldControlClasses } from './con
 export { default as Field } from './Field'
 export { default as FieldGroup } from './FieldGroup'
 export { default as InputUnit } from './InputUnit'
+export { default as RequiredMark } from './RequiredMark'
 export type { FieldChromeProps } from './types'

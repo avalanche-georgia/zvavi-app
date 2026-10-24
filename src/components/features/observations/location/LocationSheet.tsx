@@ -4,6 +4,7 @@ import { useAspectSummary } from '@components/hooks'
 import { Loading } from '@components/shared'
 import type { ObservationPoint, PublicObservation } from '@domain/types'
 import { Sheet, SheetHeader } from '@ds/patterns'
+import { getButtonClasses } from '@ds/primitives'
 import dynamic from 'next/dynamic'
 import { useTranslations } from 'next-intl'
 
@@ -53,7 +54,7 @@ const LocationSheet = ({ contextPoints, isOpen, observation, onClose }: Location
     <Sheet
       footer={
         <a
-          className="focus-ring bg-primary hover:bg-primary-hover rounded-field text-copy-lg flex h-12 flex-1 items-center justify-center font-semibold text-white transition-colors"
+          className={getButtonClasses({ className: 'flex-1' })}
           href={mapsLink.href}
           rel={mapsLink.isExternalPage ? 'noopener noreferrer' : undefined}
           target={mapsLink.isExternalPage ? '_blank' : undefined}

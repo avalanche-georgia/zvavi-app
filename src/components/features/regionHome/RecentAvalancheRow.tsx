@@ -25,7 +25,7 @@ const RecentAvalancheRow = ({ avalanche, onOpen }: RecentAvalancheRowProps) => {
   return (
     <button
       aria-haspopup="dialog"
-      className="group focus-ring text-ink grid w-full grid-cols-[48px_minmax(0,1fr)] items-center gap-3 rounded-sm py-2.5 text-left"
+      className="group focus-ring text-ink rounded-badge grid w-full grid-cols-[48px_minmax(0,1fr)] items-center gap-3 py-2.5 text-left"
       onClick={onOpen}
       type="button"
     >

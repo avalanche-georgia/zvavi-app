@@ -27,7 +27,7 @@ const HazardPreview = () => {
       <div className="flex items-center gap-2">
         <span
           className={cn(
-            'grid size-6 place-items-center rounded-full text-xs font-bold',
+            'text-caption grid size-6 place-items-center rounded-full font-bold',
             backgroundColorByHazardLevel[overall],
             isDarkHazard(overall) ? 'text-white' : 'text-ink',
           )}

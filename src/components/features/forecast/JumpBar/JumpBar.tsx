@@ -64,7 +64,7 @@ const JumpBar = ({ chips, className }: JumpBarProps) => {
           onClick={(event) => handleChipClick(event, id)}
         >
           {label}
-          {count !== undefined && <span className="text-xs opacity-60">{count}</span>}
+          {count !== undefined && <span className="text-caption opacity-60">{count}</span>}
         </a>
       ))}
     </nav>

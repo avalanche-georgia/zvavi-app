@@ -16,25 +16,25 @@ type BandCompassProps = {
 }
 
 const boxClasses: Record<BandCompassSurface, string> = {
-  tile: 'bg-white',
+  tile: 'bg-surface',
   white: 'bg-tile',
 }
 
 const emptyCellClasses: Record<BandCompassSurface, string> = {
   tile: 'bg-tile text-placeholder',
-  white: 'bg-white text-placeholder',
+  white: 'bg-surface text-placeholder',
 }
 
 // One elevation band: label + labeled 3×3 compass with the selected aspects
 const BandCompass = ({ aspects, isDimmed = false, label, surface = 'white' }: BandCompassProps) => (
   <div
     className={cn(
-      'flex min-w-0 flex-col items-center gap-2 rounded-xl px-1.5 pt-2.5 pb-2',
+      'rounded-media flex min-w-0 flex-col items-center gap-2 px-1.5 pt-2.5 pb-2',
       boxClasses[surface],
       isDimmed && 'opacity-50',
     )}
   >
-    <span className="text-body text-center text-xs leading-tight font-semibold">{label}</span>
+    <span className="text-body text-caption text-center font-semibold">{label}</span>
     <div className="mt-auto grid grid-cols-[repeat(3,20px)] gap-0.75">
       {compassGrid.map((aspect, index) =>
         aspect === null ? (
@@ -43,7 +43,8 @@ const BandCompass = ({ aspects, isDimmed = false, label, surface = 'white' }: Ba
           <i
             key={aspect}
             className={cn(
-              'grid h-5 place-items-center rounded-[5px] text-[8.5px] font-semibold not-italic',
+              // 8.5px: aspect names in 20px-tall cells; the smallest type token (micro) doesn't fit "NW"
+              'rounded-badge grid h-5 place-items-center text-[8.5px] font-semibold not-italic',
               aspects.includes(aspect) ? 'bg-accent text-white' : emptyCellClasses[surface],
             )}
           >

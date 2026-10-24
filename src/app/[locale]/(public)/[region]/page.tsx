@@ -6,7 +6,8 @@ import { getLocale, getTranslations } from 'next-intl/server'
 
 import fetchRegionHomeData from './fetchRegionHomeData'
 
-import getAlternates from '@/lib/seo/getAlternates'
+import { requireKnownRegion } from '@/lib/regionRouting'
+import getPageMetadata from '@/lib/seo/getPageMetadata'
 import { routes } from '@/routes'
 
 type RegionHomePageProps = { params: Promise<{ region: string }> }
@@ -17,13 +18,18 @@ export const generateMetadata = async ({ params }: RegionHomePageProps): Promise
     getLocale(),
     getTranslations(),
   ])
+
+  requireKnownRegion(regionId)
+
   const regionName = t(`regions.names.${regionId}`)
 
-  return {
-    alternates: getAlternates(locale, routes.regionHome(regionId)),
+  return getPageMetadata({
     description: t('seo.regionHome.description', { regionName }),
+    locale,
+    path: routes.regionHome(regionId),
+    regionId,
     title: t('seo.regionHome.title', { regionName }),
-  }
+  })
 }
 
 const RegionHomePage = async ({ params }: RegionHomePageProps) => {

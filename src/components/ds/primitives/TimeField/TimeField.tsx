@@ -88,14 +88,14 @@ const TimeField = ({
         <Autocomplete.Positioner className="z-50" collisionPadding={16} sideOffset={6}>
           <Autocomplete.Popup
             ref={popupRef}
-            className="rounded-field border-rule bg-surface shadow-overlay max-h-64 min-w-(--anchor-width) overflow-y-auto border p-1 outline-hidden data-empty:hidden"
+            className="rounded-media border-rule bg-surface shadow-menu max-h-64 min-w-(--anchor-width) overflow-y-auto border p-1 outline-hidden data-empty:hidden"
           >
             <Autocomplete.List>
               {(time: string) => (
                 <Autocomplete.Item
                   key={time}
                   className={cn(
-                    'rounded-control text-copy data-highlighted:bg-tile cursor-pointer px-3 py-2 tabular-nums outline-hidden select-none',
+                    'rounded-item text-copy data-highlighted:bg-tile cursor-pointer px-3 py-2 tabular-nums outline-hidden select-none',
                     time === value && 'text-accent font-semibold',
                   )}
                   data-time={time}

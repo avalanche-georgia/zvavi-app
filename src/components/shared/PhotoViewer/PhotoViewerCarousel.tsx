@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { FallbackImage } from '@components/ui'
+import { FallbackImage } from '@ds/primitives'
 import useEmblaCarousel from 'embla-carousel-react'
 import { ChevronLeft, ChevronRight, ImageOff } from 'lucide-react'
 import { useTranslations } from 'next-intl'
@@ -63,7 +63,7 @@ const PhotoViewerCarousel = ({
               className="flex h-full min-w-0 flex-[0_0_100%] items-center justify-center px-2 sm:px-20"
             >
               <FallbackImage
-                className="max-h-full max-w-full rounded-lg object-contain select-none"
+                className="rounded-item max-h-full max-w-full object-contain select-none"
                 draggable={false}
                 fallback={<ImageOff aria-hidden="true" className="size-10 text-white/40" />}
                 sources={photo.sources}

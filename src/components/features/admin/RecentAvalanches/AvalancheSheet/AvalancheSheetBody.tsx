@@ -45,7 +45,7 @@ const AvalancheSheetBody = ({
 
   if (!avalanche) {
     return (
-      <p className="text-muted px-4 py-12 text-center text-sm">
+      <p className="text-muted text-copy px-4 py-12 text-center">
         {t('admin.recentAvalanches.notFound')}
       </p>
     )

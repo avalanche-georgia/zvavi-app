@@ -7,6 +7,7 @@ import { IconButton } from '@ds/primitives'
 import { ArrowUp } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
+import CopyLinkButton from './CopyLinkButton'
 import RowMenu from './RowMenu'
 import { PublishConfirmDialog, useForecastRowActions } from '../../shared'
 
@@ -47,12 +48,15 @@ const RowActions = ({ forecast, isCompact = false, regionId }: RowActionsProps) 
           <ArrowUp className="size-4.5" />
         </IconButton>
       )}
+      {isPublished && !isCompact && (
+        <CopyLinkButton forecastId={id} getUrl={actions.getPublicUrl} />
+      )}
       <RowMenu
         actions={actions}
         forecastId={id}
+        isCompact={isCompact}
         isPublished={isPublished}
         triggerRef={menuTriggerRef}
-        withPublish={isCompact}
       />
       <PublishConfirmDialog
         forecast={forecast}

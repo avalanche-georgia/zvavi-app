@@ -25,20 +25,20 @@ const ProblemBody = ({ onInfoOpen, problem }: ProblemBodyProps) => {
       <div className="flex items-center gap-3 px-4 pt-4">
         <Image
           alt=""
-          className="size-14 shrink-0 rounded-xl"
+          className="rounded-media size-14 shrink-0"
           height={56}
           src={problemIcons[type]}
           width={56}
         />
         <div className="min-w-0">
-          <h2 className="text-ink m-0 text-[21px] leading-tight font-bold tracking-[-.02em]">
+          <h2 className="text-ink text-title-sm m-0 font-bold">
             {t(`common.avalancheTypes.${type}`)}
           </h2>
           {aspectSummary && <p className="text-muted text-copy-sm mt-0.5">{aspectSummary}</p>}
         </div>
       </div>
       {description && (
-        <Prose className="text-copy-lg mx-4 mt-3.5 leading-[1.55]" content={description} />
+        <Prose className="text-copy-lg leading-prose mx-4 mt-3.5" content={description} />
       )}
       <ProblemTiles onInfoOpen={onInfoOpen} problem={problem} />
     </div>

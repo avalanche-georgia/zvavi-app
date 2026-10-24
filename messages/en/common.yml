@@ -94,6 +94,11 @@ common:
       w: 'West'
       nw: 'North-west'
 
+  listMapSwitch:
+    label: 'View'
+    list: 'List'
+    map: 'Map'
+
   aspectElevationPicker:
     all: 'All'
     allAria: 'All aspects, {zone}'
@@ -136,6 +141,14 @@ common:
     nextPage: 'Next page'
     previousPage: 'Previous page'
     rowRange: '{from}–{to} of {total}'
+
+  relativeDate:
+    daysAgo: '{count} days ago'
+    monthsAgo: '{count, plural, =1 {last month} other {# months ago}}'
+    today: 'today'
+    weeksAgo: '{count, plural, =1 {last week} other {# weeks ago}}'
+    yearsAgo: '{count, plural, =1 {last year} other {# years ago}}'
+    yesterday: 'yesterday'
 
   words:
     from: 'From'

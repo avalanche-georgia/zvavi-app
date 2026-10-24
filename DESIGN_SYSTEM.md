@@ -1,14 +1,14 @@
 # Design System
 
-The architecture of the Zvavi UI kit (`ds`) and the long-running plan to migrate away from the legacy
-kit (`src/components/ui`). **Read this before any UI task.** Every task that touches UI should leave
-the codebase a little closer to the end state described here.
+The architecture of the Zvavi UI kit (`ds`) and the record of the migration away from the legacy
+kit (`src/components/ui`, now removed). **Read this before any UI task.** Every task that touches UI
+should leave the codebase a little closer to the end state described here.
 
 ---
 
 ## Why
 
-The legacy kit grew ad hoc:
+The legacy kit (removed) grew ad hoc:
 - It mixes three headless libraries: Headless UI, Radix and base-ui.
 - It uses raw Tailwind palette classes (`gray-*`, `red-*`, …) and arbitrary values (`text-[13px]`,
   `rounded-[11px]`) instead of tokens.
@@ -27,17 +27,16 @@ next to it and migrate screen by screen.
 ```
 src/components/
 ├── ds/                  # new kit — the only place new generic UI goes
-│   ├── primitives/      # Button, Badge, Checkbox, Field, FieldGroup, TextField, NumberField,
+│   ├── primitives/      # Button, Badge, Checkbox, Field, FieldGroup, TextField, NumberField, FallbackImage,
 │   │                    # Textarea, ChipGroup, ToggleGrid, SegmentedControl, Select, Stepper, InfoTip,
 │   │                    # IconButton, RatingScale, Menu, Pagination, SearchField,
 │   │                    # StatusPill, CountBadge, Skeleton, Spinner, AvalancheLoader, Dialog (+ DialogList),
 │   │                    # RadioGroup, Popover, Calendar, DatePicker, DateRangePicker, TimeField, MultiChipGroup
 │   ├── patterns/        # ClampedText, ContentCard, FormCard, StickyActionBar, SuccessState, DataTable, LoadingState,
-│   │                    # ConfirmDialog, FooterActions, Sheet, Drawer, QuickDateField
+│   │                    # ConfirmDialog, FooterActions, Sheet, Drawer, QuickDateField, SortableItem
 │   └── form/            # react-hook-form bindings: FormTextField, FormTextarea, FormNumberField,
 │                        # FormStepper, FormChipGroup, FormRadioGroup, FormCheckbox, FormSwitch, FormSelect, FormDateField,
 │                        # useFormFieldError
-├── ui/                  # legacy kit — frozen, deleted piece by piece
 └── features/            # domain components, built from ds
     └── admin/shared/    # admin-wide building blocks that need translations or routing, so they
                          # can't live in ds: list toolbar pieces, URL list state, RecordMenu,
@@ -45,16 +44,12 @@ src/components/
 ```
 
 - Import through the `@ds/*` alias.
-- `ui/` is **frozen**:
-  - Don't add components to it.
-  - Don't restyle its components.
-  - Don't add variants to them.
-  - A legacy export gets `@deprecated` (pointing to its replacement) as soon as its ds replacement
-    exists. Deprecating before a replacement exists only adds editor noise.
-- Code in `ds/` must never import from `ui/` or `features/`. ESLint enforces this, and also bans raw
-  palette classes and arbitrary token values inside `ds/` (see `eslint.config.mjs`).
+- Code in `ds/` must never import from `features/`. ESLint enforces this, and also bans raw
+  palette classes, Tailwind's default type / radius / shadow / tracking scales and arbitrary token
+  values inside `ds/` (see `eslint.config.mjs`).
 - Each component gets its own folder: `ds/primitives/Button/{Button.tsx, Button.gallery.tsx, index.ts}`.
-- When `ui/` is empty, `ds` is simply the kit. There is no final rename.
+- App-specific pieces that need app assets or translations live in `components/shared`, not `ds`
+  (e.g. `BrandedQRCode`, which carries our logo).
 
 ### Tiers
 
@@ -62,7 +57,7 @@ src/components/
 |---|---|---|
 | **Primitive** (`ds/primitives`) | A single generic control, always controlled: `value` + `onValueChange` for inputs (`onChange` for choice groups, `onCheckedChange` for Checkbox). base-ui provides the behaviour. | Tokens only |
 | **Pattern** (`ds/patterns`) | A generic arrangement of primitives (a card with header, a sticky action bar) | Primitives |
-| **Form binding** (`ds/form`) | A thin `useController` wrapper around a primitive + its `Field`: wires `value`/`onChange` and the translated error (via `useFieldError`) | react-hook-form, app hooks |
+| **Form binding** (`ds/form`) | A thin `useController` wrapper around a primitive + its `Field`: wires `value`/`onChange` and the translated error (via `useFormFieldError`, which wraps `@components/hooks` `useFieldError`) | react-hook-form, app hooks |
 | **Domain component** (`features/*`) | Anything that knows about avalanches, regions or observations (SizePicker, aspect/elevation picker, LocationMap, PhotoGrid) | Everything above |
 
 Rule of thumb: if a component would make sense in an unrelated app, it goes in `ds`. Otherwise it goes
@@ -72,15 +67,12 @@ in `features`.
 
 - **base-ui (`@base-ui/react`)** for all interactive behaviour: Field, ToggleGroup, NumberField, Tabs,
   Dialog, Popover, Select, Menu, and so on.
-- No new Headless UI or Radix usage.
+- No Headless UI or Radix: both were removed with the legacy kit.
 - **react-day-picker** for the month grid, only behind ds `primitives/Calendar`. base-ui has no
   calendar yet; when it ships, only that component changes. Pass `locale` from
   `react-day-picker/locale` (it carries translated aria labels, Georgian included).
-- Legacy Radix popups (`ui/Select`, `InfoIcon`) portal to `body`: never
-  put them inside a ds `Sheet` or `Dialog` — the focus trap and outside-press handling break them.
-  Use the ds primitives there.
-- Existing exceptions stay until their migration phase:
-  - @dnd-kit (sortable lists)
+- Other libraries, each behind one ds or shared component:
+  - @dnd-kit (sortable lists, `patterns/SortableItem`)
   - sonner (toasts)
   - react-leaflet (maps)
 
@@ -111,22 +103,26 @@ them.
 
 | Layer | Tokens | Utilities |
 |---|---|---|
-| **Semantic colour** | text `ink`, `body`, `muted`, `placeholder`, `disabled` · lines `rule`, `rule-strong` · surfaces `surface`, `canvas`, `tile`, `tile-hover`, `off`, `map` · brand `primary(-hover/-soft/-ink)`, `brand-blue` · `accent(-hover/-soft)` · status `danger`, `danger-border`, `success`, `success-soft`, `warning`, `warning-soft`, `alert-ink` · domain `hazard-*`, `size-*` | `text-ink`, `bg-surface`, `border-rule`, … |
-| **Type scale** | `display` 34, `title-lg` 28, `title` 24, `title-sm` 22, `heading` 17, `copy-lg` 15, `copy` 14, `copy-sm` 13, `caption` 12.5, `micro` 10.5. Line-height and tracking are part of the token | `text-heading`, … |
+| **Semantic colour** | text `ink`, `body`, `muted`, `placeholder`, `disabled` · lines `rule`, `rule-strong` · surfaces `surface`, `canvas`, `tile`, `tile-hover`, `off`, `map` · brand `primary(-hover/-soft/-ink)`, `brand-blue` · `accent(-hover/-soft)` · status `danger`, `danger-border`, `success`, `success-soft`, `warning`, `warning-soft`, `alert-ink` · domain `hazard-*`, `size-*`, `pin-*` (map pins by size) | `text-ink`, `bg-surface`, `border-rule`, … |
+| **Type scale** | `display` 34, `title-lg` 28, `title` 24, `title-sm` 22, `heading` 17, `copy-lg` 15, `copy` 14, `copy-sm` 13, `caption` 12.5, `micro` 10.5. Line-height (whole pixels, so nothing below lands on a fraction of a pixel) and tracking are part of the token | `text-heading`, … |
+| **Line height** | `prose` 1.6 — reading text (summaries, descriptions, conditions): 24px on `copy-lg`. Everything else takes the type token's own line height. Write it after the size: a later `text-*` in `cn()` drops it | `leading-prose` |
 | **Letter spacing** | `eyebrow` 0.06em (uppercase eyebrows and small labels) | `tracking-eyebrow` |
-| **Radii** | `card` 16, `media` 12, `field` 11, `control` 10, `badge` 5, `sheet` 20 (pills use `rounded-full`) | `rounded-card`, … |
-| **Shadows** | `raised` (segmented thumb), `overlay` (map buttons), `float` (sticky bar), `pin`, `menu`, `sheet` (bottom sheet), `panel` (desktop side panel) | `shadow-float`, … |
+| **Radii** | `card` 16, `media` 12, `field` 11, `control` 10, `item` 8 (options and segments inside a padded popup or track), `badge` 5, `bar` 3 (bar-scale segments), `sheet` 20 (pills use `rounded-full`) | `rounded-card`, … |
+| **Shadows** | `raised` (segmented thumb), `overlay` (map buttons), `float` (sticky bar), `fab` (report button glow), `pin`, `menu`, `sheet` (bottom sheet), `panel` (desktop side panel) | `shadow-float`, … |
 | **Motion** | `sheet` easing (sheet slide in / out) | `ease-sheet` |
 | **Focus** | `focus-ring` utility: 2px accent outline, 2px offset, on `:focus-visible` | `focus-ring` |
+| **Empty slot** | `border-slot` utility: 1.5px dashed border (empty lists, drop zones); colour from `border-*` | `border-slot` |
 
 - **There is no raw-palette layer yet.** Semantic tokens hold the hex values directly. A primitive
   layer only pays off with theming (dark mode, a second brand); add it then.
 - **Control heights are not tokens.** Each primitive's `size` map sets them with the spacing scale
   (`h-10`, `h-11.5`, `h-12.5`), so the primitive itself is the source of truth.
 - The type scale merges near-duplicate sizes from handoffs: 13.5 → 13, 14.5 → 14, 15.5 → 15.
-- **Adding a type, radius, shadow or tracking token:** also add its name to `src/lib/designTokens.ts`.
+- **Adding a type, radius, shadow, tracking or line-height token:** also add its name to `src/lib/designTokens.ts`.
   `cn()` (tailwind-merge) needs the name there, or it treats `text-title` as a colour and drops it
   when merged with `text-ink`. The gallery lists tokens from the same file.
+- **Adding a custom `@utility`** (like `border-slot`): give it its own `classGroups` entry in `cn()`
+  (`src/lib/utils.ts`), or tailwind-merge may drop it next to a class it looks like.
 
 Rules:
 - Components in `ds/` use **semantic and scale tokens only**:
@@ -134,6 +130,11 @@ Rules:
   - no hex values
   - no arbitrary sizes like `text-[13px]`
 - If a value is missing, add a token rather than an arbitrary value.
+- **Feature code: tokens where they fit, plain Tailwind otherwise.** The rules above are strict for `ds/`
+  only. Outside it, use a ds token when one fits (a card radius, the brand colours, the type scale) so
+  screens stay consistent, and plain Tailwind (`text-sm`, `rounded-lg`, `gray-*`, `h-[42px]`, …) when none
+  does. ESLint warns on palette, default-scale and arbitrary classes there; a warning is a nudge, not an
+  error, and no new token is needed just to silence it.
 - **Accent** (`--color-accent`, brand blue `#0c5aa6`) is the one colour for selected states, links,
   text buttons and focus rings.
 - **Primary** (brand orange) is for the main call to action and for brand moments.
@@ -142,9 +143,16 @@ Rules:
 
 ## Component rules
 
+- **One row, one height.** Controls that share a row (a toolbar, a filter bar) use the same size,
+  so their edges line up: admin list toolbars `md` (46px), public filter bars `sm` (40px), chips 40px.
+  This holds in admin too — admin is lower priority for polish effort, not exempt from the system.
+  `sm` controls (40px: buttons, segments, chips, fields, selects) set text at 13px on phones and
+  14px from `sm` (640px): one size per row on every screen, and long Georgian labels fit at 375px.
 - **Hit targets are at least 44×44px** on touch.
   - This matches Apple HIG and WCAG 2.5.5 (AAA). WCAG 2.5.8 (AA) sets 24px as the floor.
   - Our users often report from the field with gloves or cold hands.
+  - Exception: chips are 40px on every pointer (owner's call — 44px rows of chips looked too heavy;
+    a hit-area `::after` gets clipped in sideways-scrolling chip rows).
   - Visually smaller controls extend their hit area **on touch screens only**, with the
     `pointer-coarse:` variant (e.g. `after:absolute pointer-coarse:after:-inset-3`). With a mouse the
     hit area hugs the visible control; an invisible margin there makes the cursor flip to a pointer
@@ -179,8 +187,8 @@ Rules:
     `patterns/FooterActions`: buttons always on the right, an optional hint on the left — on its own
     line above the buttons when the footer is narrow.
   - No colour or height overrides through `className` — add a variant instead.
-- **Selects** (`primitives/Select`): size `md` in forms, `sm` in toolbars and filter bars (next to
-  `sm` Buttons). `isActive` gives the accent border while the select narrows a list down. "All …"
+- **Selects** (`primitives/Select`): size `md` in forms; in a toolbar, the row's size (see "One row,
+  one height"). TextField and SearchField take the same `size`. `isActive` gives the accent border while the select narrows a list down. "All …"
   options use a sentinel value (e.g. `'all'`); `onValueChange` never passes `null`.
 - **Popovers** (`primitives/Popover`): for content that needs more room than a menu — a `Calendar`,
   a short form. Pass `isOpen` / `onOpenChange` when a Done button inside closes it.
@@ -215,6 +223,17 @@ Rules:
 - **Sheets** (`patterns/Sheet`): bottom sheet on mobile, side panel from `lg`. `isTall` fixes the
   mobile height; `isWide` widens the desktop panel (`w-160` instead of `w-120`) for records with more
   to lay out side by side, e.g. a member's facts and QR code. No width overrides through `className`.
+- **Dialogs** (`primitives/Dialog`) are closable by default: ×, backdrop and Esc (`closeLabel` and
+  `onOpenChange` required). `isWide` (`w-160` instead of `w-120`) for long reading. `isCloseDisabled`
+  only for a required acknowledgement (the first-visit disclaimer): no ×, backdrop and Esc do nothing,
+  only its own footer button closes it. `isBusy` while its action runs: nothing closes it (× disabled,
+  backdrop and Esc ignored); `ConfirmDialog` sets it for you while `onConfirm`'s promise runs.
+- **Drag to reorder** (`patterns/SortableItem`): the lifted row gets a `primary` ring; give the item
+  its row's radius (a flat list row rounds only while lifted: `data-dragging:rounded-media`). There is
+  no separate drop-target highlight: the other rows move aside as you drag, which shows the spot.
+- **Sheets vs dialogs when closing**: `Sheet`'s `isDismissible={false}` only stops the backdrop and
+  swipe (unsaved input; ✕ / Cancel / Esc then ask to discard). `Dialog`'s `isBusy` / `isCloseDisabled`
+  block every way out, Esc included.
 - **Confirming a destructive action** (delete, remove, unlink, discard unsaved input) — always asked,
   never replaced by an Undo, never swapped inline into a footer or action bar:
   - An icon button that asks (trash / unlink on a card): wrap it in `primitives/ConfirmPopover`. It
@@ -262,7 +281,8 @@ Rules:
     prop and stays translation-free.
 - **Icon-only buttons** (`primitives/IconButton`) always show their label as a `Tooltip` on hover and
   keyboard focus (pass `tooltip` for a shorter label than the accessible name). Tooltips don't show
-  on touch, so the icon must be clear without it.
+  on touch, so the icon must be clear without it. A copy button keeps "Copied" shown after the click
+  with `isTooltipOpen` (a press closes a tooltip otherwise).
 - **Loading indicators** — pick by what is loading, never invent another:
   - A page, route fallback or any block (map, list, panel, sheet body, table): the mountain loader.
     In features use `Loading` from `@components/shared` (translated, `isPage` for a whole page); in
@@ -273,6 +293,11 @@ Rules:
     or `Button`'s `isBusy`. The mountain is unreadable below ~40px.
   - The final layout is known (cards, rows, metrics): `primitives/Skeleton`.
   - Measurable progress (an upload): a progress ring, not either of the above.
+  - Never put `animate-spin` (or any animation) on an `<svg>` itself — spin a wrapping `<span>`, as
+    `Spinner` does. Chrome repaints an animated `<svg>` on every frame, and while the page repaints
+    like that it now and then shows a stale frame of a hover background mid-transition (it runs
+    those on the GPU): hover backgrounds blink. `AvalancheLoader` animates inside its SVG and still
+    does this while it's on screen.
   - No bare `LoaderIcon` + `animate-spin` for a block. Colours are the `snow-*` / `rock-*` tokens.
 - **i18n:** components take their strings as props, and callers translate them with the project rules.
   `ds/` primitives never call `useTranslations()` themselves.
@@ -280,8 +305,25 @@ Rules:
 - **Gallery:** every ds component is covered by a `<Name>.gallery.tsx` demo next to it (the text-like
   inputs share `Field.gallery.tsx`), covering all variants
   and states (default, hover, focus, selected, disabled, error). Register it in
-  `src/components/features/admin/DesignSystemGallery/entries.ts`. The gallery is at `/admin/ds`, linked
+  `src/components/features/admin/DesignSystemGallery/entries.ts` with its `group` (`groups.ts`); the
+  page groups the entries and sorts them by title. The gallery is at `/admin/ds`, linked
   from the admin sidebar in local dev. Demo copy is English-only fixture text; it's developer tooling.
+- **Definition of done** for a ds component (the audit checklist; `node scripts/ds-audit.mjs` checks the
+  mechanical parts):
+  - **Code:** tier API (`value` + `onValueChange` for inputs, `onChange` for choice groups,
+    `onCheckedChange` for Checkbox / Switch); strings as props; variants and sizes as `Record` maps
+    merged with `cn()`; no colour / height overrides through `className` inside ds; files ≤ ~100
+    logical lines; `index.ts` exports exactly the public surface.
+  - **Look:** tokens only (no palette, hex, `rgb()`, Tailwind default radii / font sizes); sizes sm 40 /
+    md 46 / lg 50 for boxed controls; `rounded-field` (md) / `rounded-control` (sm); the shared Field
+    classes for anything field-like; `focus-ring` on every interactive element. Floating panels
+    (Select / TimeField lists, Menu, Popover, ConfirmPopover) share one chrome: `rounded-media
+    shadow-menu border border-rule`, options inside `rounded-item`. Disabled edge arrows (Stepper,
+    Calendar, sheet steps) use `opacity-50`, like disabled buttons.
+  - **States:** every one it can be in (list below), shown in its gallery entry.
+  - **UX:** ≥ 44×44 hit target on touch (`pointer-coarse:`); Tab / Enter / Space / Esc work and overlays
+    return focus; no information only on hover; long and Georgian labels wrap or clamp on purpose.
+  - **Proof:** a `<Name>.gallery.tsx` registered in `entries.ts` with its group, and a `<Name>.test.tsx`.
 - **A new ds component ships complete**, before any screen uses it:
   - **Every state it can be in**: idle / empty (placeholder), filled, hover, focus-visible, open or
     active, selected, disabled, error (invalid inside a `Field`), and loading or busy when it waits
@@ -301,15 +343,12 @@ Rules:
 
 ---
 
-## Legacy policy (day-to-day)
+## Legacy policy
 
-- **New screen or redesign:** use ds only. If something is missing, build it in `ds/` first as its own
-  commit or PR.
-- **Small fix in a legacy screen:** keep using the legacy component. Don't migrate as a side quest
-  unless the swap is trivial and the result is visually identical, or the redesign asks for it.
-- **Migrating a component:** migrate one screen area at a time (see the phases below). Remove the
-  legacy component once `grep` finds no consumers left, and tick it off in the tracker.
-- **When editing any file:** replace `clsx` with `cn` (existing rule).
+The legacy kit `src/components/ui/` was removed (phase 6), together with `@headlessui/react`,
+`@radix-ui/*` and `clsx`. Everything is built from ds now; if something is missing, build it in `ds/`
+first as its own commit or PR. Feature code uses ds tokens where they fit and plain
+Tailwind otherwise (see Tokens → Rules).
 
 ---
 
@@ -321,49 +360,45 @@ Rules:
 | **2. Primitives for submit** | Button, Badge, Field / FieldGroup, TextField, NumberField, Textarea, ChipGroup, ToggleGrid, SegmentedControl, Stepper. Patterns FormCard, StickyActionBar, SuccessState. Form bindings. Gallery demos | ✅ |
 | **3. Submit page redesign** | `local/observations/design_handoff_submit_observation/` built on ds | ✅ |
 | **4. Rest of observations** | List toolbar, detail views, aspect/elevation picker moved to `features/` with a bare variant | ☐ |
-| **5. Legacy, by screen area** | Public pages (auth, forecasts, about) → admin forms → admin tables, modals and drawers. Admin lists, forms, the overview, every sheet and the mobile menus are done; what's left in admin: the shared `BrandedQRCode` / `SortableItem` / `FallbackImage` | ☐ |
-| **6. Cleanup** | Delete `ui/`. Remove `@headlessui/react`, `@radix-ui/*` and `clsx` | ☐ |
+| **5. Legacy, by screen area** | Public pages (auth, forecasts, about) → admin forms → admin tables, modals and drawers. Admin lists, forms, the overview, every sheet and the mobile menus are done | ✅ |
+| **6. Cleanup** | Delete `ui/`. Remove `@headlessui/react`, `@radix-ui/*` and `clsx` | ✅ |
 
 ### Component tracker
 
-Update this table when a legacy component's last consumer is migrated.
+Every legacy component is gone; the table stays as a map from old names to their ds replacements.
 
 | Legacy (`ui/`) | Library | ds replacement | Removed |
 |---|---|---|---|
-| Button (+ `shared/ButtonLink`) | Headless UI | `primitives/Button` | ☐ |
-| InputBlock | — | `primitives/Field` | ☐ |
-| TextInput | Headless UI | `primitives/TextField` | ☐ |
+| Button (+ `shared/ButtonLink`) | Headless UI | `primitives/Button`; links use `getButtonClasses` | ✅ |
+| InputBlock | — | `primitives/Field` | ✅ |
+| TextInput | Headless UI | `primitives/TextField` | ✅ |
 | SearchInput | Headless UI | `primitives/SearchField` | ✅ |
-| Textarea | Headless UI | `primitives/Textarea` | ☐ |
+| Textarea | Headless UI | `primitives/Textarea` | ✅ |
 | NumberInput | base-ui | `primitives/Stepper` / `NumberField` | ✅ |
 | ChipGroup | base-ui | `primitives/ChipGroup` | ✅ |
-| SegmentedControl | base-ui | `primitives/SegmentedControl` | ☐ |
+| SegmentedControl | base-ui | `primitives/SegmentedControl` | ✅ |
 | RadioGroup | Headless UI | `primitives/SegmentedControl` | ✅ |
 | RadioOption | base-ui | `primitives/RadioGroup` (long labels, one per row) or `ToggleGrid` | ✅ |
-| Checkbox | Headless UI | `primitives/Checkbox` | ☐ |
+| Checkbox | Headless UI | `primitives/Checkbox` | ✅ |
 | Switch | base-ui | `primitives/Switch` | ✅ |
-| Select | Radix | `primitives/Select` (base-ui) | ☐ |
+| Select | Radix | `primitives/Select` (base-ui) | ✅ |
 | DatePicker, Calendar, TimeInput, DatePickerTimeInput | Headless UI + react-day-picker | `primitives/DatePicker` (date and date + time fields), `primitives/Calendar` (month grid, e.g. in a `Popover`) | ✅ |
 | DateField (ds, native inputs) | — | `primitives/DatePicker` | ✅ |
 | TimePicker | Headless UI | `primitives/DatePicker` (`withTime`) | ✅ |
-| Modal (+ legacy `shared/ConfirmationDialog`) | Headless UI | `primitives/Dialog` (base-ui), `patterns/ConfirmDialog` + new translated `@components/shared` `ConfirmationDialog` | ☐ |
+| Modal (+ legacy `shared/ConfirmationDialog`) | Headless UI | `primitives/Dialog` (base-ui), `patterns/ConfirmDialog` + new translated `@components/shared` `ConfirmationDialog` | ✅ |
 | Popover | Radix | `primitives/Popover` (base-ui) | ✅ |
-| Tooltip, InfoIcon | Radix | `primitives/Tooltip` (base-ui Tooltip; hover/focus labels), `primitives/InfoTip` (base-ui Popover; explanations) | ☐ |
+| Tooltip, InfoIcon | Radix | `primitives/Tooltip` (base-ui Tooltip; hover/focus labels), `primitives/InfoTip` (base-ui Popover; explanations); no provider needed | ✅ |
 | DropdownMenu | base-ui | `primitives/Menu` | ✅ |
 | Sheet, Drawer (bottom sheet) | base-ui / vaul | `patterns/Sheet` (+ `SheetHeader`, `SheetStepButtons`; `shared/DetailsSheet` for a sheet opened from a button) | ✅ |
 | Mobile nav menus (not in `ui/`: `Header/NavMenu/MobileNav`, `admin/sidebar/MobileDrawer`) | vaul (removed) | `patterns/Drawer` | ✅ |
-| IconButton | custom | `primitives/IconButton` | ☐ |
+| IconButton | custom | `primitives/IconButton` | ✅ |
 | Spinner | custom | `primitives/Spinner` (inline), `primitives/AvalancheLoader` via `patterns/LoadingState` / `shared/Loading` (blocks and pages); legacy `ui/Spinner` removed | ✅ |
-| Skeleton | custom | `primitives/Skeleton` | ☐ |
+| Skeleton | custom | `primitives/Skeleton` | ✅ |
 | Pagination, DataTable | custom | `primitives/Pagination`, `patterns/DataTable` | ✅ |
 | AspectElevationPicker | base-ui | moved to `features/observations/` | ✅ |
 | MiniCompass | custom | moved to `features/observations/` | ✅ |
 | AutoScrollList | embla | none — partners page shows static grids; removed with `embla-carousel-auto-scroll` | ✅ |
-| BrandedQRCode, FallbackImage, SortableItem | custom | reviewed individually (may stay generic in ds) | ☐ |
-
-No non-kit Headless UI or Radix users are left (`Header/NavMenu/DesktopNav` uses `primitives/Menu`,
-`shared/LanguageToggle` uses `primitives/SegmentedControl` size `sm`, and `shared/Spoiler` was removed
-with the forecast archive redesign).
+| BrandedQRCode, FallbackImage, SortableItem | custom | `shared/BrandedQRCode` (app logo), `primitives/FallbackImage`, `patterns/SortableItem` | ✅ |
 
 ### Deferred
 

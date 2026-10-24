@@ -10,7 +10,7 @@ type QuickLinkTileProps = {
 // Icon box, a label and a muted line under it
 const QuickLinkTile = ({ href, icon, label, note }: QuickLinkTileProps) => (
   <Link
-    className="focus-ring border-rule bg-surface text-ink hover:border-rule-strong flex h-full flex-col gap-2 rounded-[14px] border p-3 transition-colors"
+    className="focus-ring border-rule bg-surface text-ink hover:border-rule-strong rounded-card flex h-full flex-col gap-2 border p-3 transition-colors"
     href={href}
   >
     <span
@@ -23,7 +23,7 @@ const QuickLinkTile = ({ href, icon, label, note }: QuickLinkTileProps) => (
       <b className="text-copy-sm block leading-tight font-semibold wrap-break-word hyphens-auto">
         {label}
       </b>
-      {note && <span className="text-muted mt-0.5 block text-xs">{note}</span>}
+      {note && <span className="text-muted text-caption mt-0.5 block">{note}</span>}
     </span>
   </Link>
 )

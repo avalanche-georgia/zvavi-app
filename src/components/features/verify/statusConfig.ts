@@ -3,34 +3,35 @@ import type { MemberStatus } from '@domain/types'
 
 type StatusConfig = {
   badge: { bg: string; text: string }
-  header: { bg: string; iconBg: string }
+  header: { bg: string }
   icon: IconName
 }
 
 export const statusConfig: Record<MemberStatus, StatusConfig> = {
   active: {
-    badge: { bg: 'bg-green-100', text: 'text-green-800' },
-    header: { bg: 'bg-green-500', iconBg: 'bg-green-400' },
+    badge: { bg: 'bg-success-soft', text: 'text-success' },
+    header: { bg: 'bg-success' },
     icon: 'check',
   },
   expired: {
-    badge: { bg: 'bg-red-100', text: 'text-red-800' },
-    header: { bg: 'bg-red-500', iconBg: 'bg-red-400' },
+    // danger/10 until a danger-soft token exists, as in ConfirmDialog (it sits on a white card)
+    badge: { bg: 'bg-danger/10', text: 'text-danger' },
+    header: { bg: 'bg-danger' },
     icon: 'xMark',
   },
   inactive: {
-    badge: { bg: 'bg-gray-100', text: 'text-gray-800' },
-    header: { bg: 'bg-gray-500', iconBg: 'bg-gray-400' },
+    badge: { bg: 'bg-tile', text: 'text-ink' },
+    header: { bg: 'bg-muted' },
     icon: 'xMark',
   },
   pending: {
-    badge: { bg: 'bg-blue-100', text: 'text-blue-800' },
-    header: { bg: 'bg-blue-500', iconBg: 'bg-blue-400' },
+    badge: { bg: 'bg-accent-soft', text: 'text-accent' },
+    header: { bg: 'bg-accent' },
     icon: 'info',
   },
   suspended: {
-    badge: { bg: 'bg-amber-100', text: 'text-amber-800' },
-    header: { bg: 'bg-amber-500', iconBg: 'bg-amber-400' },
+    badge: { bg: 'bg-warning-soft', text: 'text-warning' },
+    header: { bg: 'bg-warning' },
     icon: 'info',
   },
 }

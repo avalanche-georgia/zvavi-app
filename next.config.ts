@@ -4,10 +4,25 @@ import createNextIntlPlugin from 'next-intl/plugin'
 
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
 
+// Without a trailing slash, so the pattern below never gets a double one
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/+$/, '')
+
 const nextConfig: NextConfig = {
   // Build's git commit, attached to analytics and error events (Vercel sets VERCEL_GIT_COMMIT_SHA)
   env: {
     NEXT_PUBLIC_APP_RELEASE: process.env.VERCEL_GIT_COMMIT_SHA ?? '',
+  },
+
+  images: {
+    // Avatars and partner logos are stored under a new name on every upload, so an
+    // optimized copy never goes stale
+    minimumCacheTTL: 31_536_000,
+    // Uploaded photos and logos in Supabase Storage, served resized instead of as uploaded
+    remotePatterns: supabaseUrl ? [new URL(`${supabaseUrl}/storage/v1/object/public/**`)] : [],
+  },
+  // The preview images (src/app/api/og) read their fonts, logo and icons from disk at runtime
+  outputFileTracingIncludes: {
+    '/api/og/**': ['./public/og/**', './public/images/logo.png'],
   },
   // PostHog API calls use trailing slashes; src/proxy.ts handles the redirect for other paths
   skipTrailingSlashRedirect: true,

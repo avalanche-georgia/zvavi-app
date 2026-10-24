@@ -1,52 +1,22 @@
-import { createServerClient } from '@supabase/ssr'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import createMiddleware from 'next-intl/middleware'
 
 import { defaultLocale, locales } from './i18n/config'
+import { routing } from './i18n/routing'
 
 import { posthogHosts, posthogProxyPath } from '@/lib/posthog/config'
-import { reportServerError } from '@/lib/posthog/server'
 import {
   getActiveRegionIds,
+  isAppSection,
   isKnownRegion,
   regionRedirect,
   toRegionHome,
 } from '@/lib/regionRouting'
 import { updateSession } from '@/lib/supabase/middleware'
+import { routes } from '@/routes'
 
-// Log suspicious requests to old forecast URL formats (non-integer IDs)
-const logSuspiciousRequest = async (request: NextRequest) => {
-  try {
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      { cookies: { getAll: () => [], setAll: () => {} } },
-    )
-
-    const { error } = await supabase.from('suspicious_requests').insert({
-      city: request.headers.get('x-vercel-ip-city') || null,
-      country: request.headers.get('x-vercel-ip-country') || null,
-      ip_address: request.headers.get('x-forwarded-for')?.split(',')[0] || null,
-      path: request.nextUrl.pathname,
-      referer: request.headers.get('referer') || null,
-      user_agent: request.headers.get('user-agent') || null,
-    })
-
-    if (error) {
-      reportServerError(new Error(error.message), {
-        scope: 'proxy | logSuspiciousRequest',
-      })
-    }
-  } catch (error) {
-    reportServerError(error, { scope: 'proxy | logSuspiciousRequest' })
-  }
-}
-
-const intlMiddleware = createMiddleware({
-  defaultLocale,
-  locales,
-})
+const intlMiddleware = createMiddleware(routing)
 
 // Files that must stay at the root and should not be locale-prefixed
 const publicRootFiles = [
@@ -54,18 +24,15 @@ const publicRootFiles = [
   'favicon.ico',
   'icon.png',
   'manifest.json',
-  'opengraph-image',
   'robots.txt',
   'sitemap.xml',
-  'twitter-image',
 ]
 
 const publicRootFilesSet = new Set(publicRootFiles.map((f) => `/${f}`))
 
-// Regex to detect the old forecast URL format: /forecasts/Gudauri_*
-// Matches: /en/forecasts/Gudauri_2024-03-27T08%3A00_MG%09
+// Forecast links from the old site, e.g. /en/forecasts/Gudauri_2024-03-27T08%3A00_MG%09
 // Does NOT match: /en/forecasts/123, /en/forecasts/current, /en/forecasts/history
-const oldForecastPattern = /^\/(en|ka)\/forecasts\/Gudauri_.*$/
+const legacyForecastPattern = /^\/(en|ka)\/forecasts\/Gudauri_/
 
 const isPosthogProxyPath = (pathname: string) =>
   pathname === posthogProxyPath || pathname.startsWith(`${posthogProxyPath}/`)
@@ -105,9 +72,14 @@ export default async function proxy(request: NextRequest) {
     return NextResponse.redirect(url, 308)
   }
 
-  // Log suspicious requests to old forecast URL formats
-  if (oldForecastPattern.test(pathname)) {
-    await logSuspiciousRequest(request)
+  // Old links are still requested, almost only by crawlers. A permanent redirect replaces them
+  // in search indexes and still takes a person with an old link to the current forecast.
+  const legacyForecastMatch = pathname.match(legacyForecastPattern)
+
+  if (legacyForecastMatch) {
+    const url = new URL(`/${legacyForecastMatch[1]}${toRegionHome('gudauri')}`, request.url)
+
+    return NextResponse.redirect(url, 308)
   }
 
   // If someone requests a locale-prefixed metadata file, redirect to the root one
@@ -118,6 +90,19 @@ export default async function proxy(request: NextRequest) {
 
   if (localeFileMatch) {
     return NextResponse.redirect(new URL(`/${localeFileMatch[2]}`, request.url))
+  }
+
+  // "About" has no page of its own: the section opens on About us. Done here, not in a
+  // page, so it's a real redirect (a page's redirect streams behind the loading boundary
+  // with a 200); without it /about would be read as a region slug. Bare /about too, in
+  // one hop. Permanent: it's structural, not per visitor.
+  const aboutMatch = pathname.match(new RegExp(`^(?:/(${localePattern}))?/about$`))
+
+  if (aboutMatch) {
+    const locale = aboutMatch[1] ?? defaultLocale
+    const url = new URL(`/${locale}${routes.about.aboutUs}${request.nextUrl.search}`, request.url)
+
+    return NextResponse.redirect(url, 308)
   }
 
   // Entry URLs ("/" and "/{locale}" have no page): one hop straight to the final page.
@@ -182,12 +167,15 @@ export default async function proxy(request: NextRequest) {
     }
   }
 
-  // A region that exists but is inactive: a real 404 status for crawlers. The [region]
-  // layout renders the not-found screen, but the public loading boundary would stream
-  // it with a 200.
+  // Anything under /{locale}/ that isn't a section of the app is a region. An unknown one,
+  // or one that exists but is inactive, gets a real 404 status for crawlers (no soft 404):
+  // the [region] layout renders the not-found screen, but the public loading boundary
+  // would stream it with a 200.
   const regionSegment = pathname.split('/')[2]
 
-  if (regionSegment && isKnownRegion(regionSegment)) {
+  if (regionSegment && !isAppSection(regionSegment)) {
+    if (!isKnownRegion(regionSegment)) return NextResponse.rewrite(request.nextUrl, { status: 404 })
+
     const activeIds = await getActiveRegionIds()
 
     if (activeIds && !activeIds.has(regionSegment)) {

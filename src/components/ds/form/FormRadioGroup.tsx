@@ -39,7 +39,7 @@ const FormRadioGroup = <TFieldValues extends FieldValues, T extends string>({
       required={required}
       requiredText={requiredText}
     >
-      <RadioGroup<T> onValueChange={field.onChange} options={options} value={field.value ?? null} />
+      <RadioGroup<T> onChange={field.onChange} options={options} value={field.value ?? null} />
     </FieldGroup>
   )
 }

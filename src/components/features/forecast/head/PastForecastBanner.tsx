@@ -14,7 +14,7 @@ const PastForecastBanner = ({ regionId }: { regionId: RegionId }) => {
       <Clock aria-hidden className="size-4.5 shrink-0" />
       <span className="min-w-0 flex-1">{t('forecast.staleBanner.message')}</span>
       <Link
-        className="focus-ring hover:text-accent rounded-sm font-semibold underline-offset-3 hover:underline"
+        className="focus-ring hover:text-accent rounded-badge font-semibold underline-offset-3 hover:underline"
         href={routes.forecastsByRegion(regionId).current}
       >
         {t('forecast.staleBanner.link')} →

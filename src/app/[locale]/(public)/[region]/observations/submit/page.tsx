@@ -1,7 +1,11 @@
 import type { Metadata } from 'next'
-import { getTranslations } from 'next-intl/server'
+import { getLocale, getTranslations } from 'next-intl/server'
 
 import ObservationSubmitFlow from './ObservationSubmitFlow'
+
+import { requireKnownRegion } from '@/lib/regionRouting'
+import getPageMetadata from '@/lib/seo/getPageMetadata'
+import { routes } from '@/routes'
 
 type ObservationSubmitPageProps = { params: Promise<{ region: string }> }
 
@@ -9,15 +13,26 @@ export const generateMetadata = async ({
   params,
 }: ObservationSubmitPageProps): Promise<Metadata> => {
   const { region: regionId } = await params
-  const t = await getTranslations()
 
-  return {
-    title: t('observations.submit.title', { regionName: t(`regions.names.${regionId}`) }),
-  }
+  requireKnownRegion(regionId)
+
+  const [locale, t] = await Promise.all([getLocale(), getTranslations()])
+  const regionName = t(`regions.names.${regionId}`)
+
+  return getPageMetadata({
+    description: t('seo.observationSubmit.description', { regionName }),
+    locale,
+    path: routes.observationsByRegion(regionId).submit,
+    regionId,
+    title: t('observations.submit.title', { regionName }),
+  })
 }
 
 const ObservationSubmitPage = async ({ params }: ObservationSubmitPageProps) => {
   const { region: regionId } = await params
+
+  requireKnownRegion(regionId)
+
   const t = await getTranslations()
 
   return (

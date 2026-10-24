@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { Spinner } from '@ds/primitives'
+import { Button, Spinner } from '@ds/primitives'
 import { useTranslations } from 'next-intl'
 import { useEventCallback } from 'usehooks-ts'
 
@@ -51,16 +51,15 @@ const LoadMoreTrigger = ({ isError, isLoading, onLoadMore }: LoadMoreTriggerProp
   }, [handleLoadMore, isError, isLoading])
 
   return (
-    <div ref={sentinelRef} className="text-muted flex min-h-16 items-center justify-center text-sm">
+    <div
+      ref={sentinelRef}
+      className="text-muted text-copy flex min-h-16 items-center justify-center"
+    >
       {isLoading && <Spinner label={t('common.messages.loading')} size="sm" />}
       {isError && (
-        <button
-          className="border-rule text-ink hover:bg-tile h-10 rounded-[11px] border bg-white px-3.5 font-semibold transition-colors"
-          onClick={onLoadMore}
-          type="button"
-        >
+        <Button onClick={onLoadMore} size="sm" variant="secondary">
           {t('observations.list.loadMoreFailed')}
-        </button>
+        </Button>
       )}
     </div>
   )

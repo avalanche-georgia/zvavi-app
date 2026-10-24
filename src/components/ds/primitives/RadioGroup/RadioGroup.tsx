@@ -14,7 +14,7 @@ export type RadioOption<T extends string> = {
 type RadioGroupProps<T extends string> = {
   ariaLabel?: string
   className?: string
-  onValueChange: (value: T) => void
+  onChange: (value: T) => void
   options: RadioOption<T>[]
   value: T | null
 }
@@ -23,11 +23,11 @@ type RadioGroupProps<T extends string> = {
 const RadioGroup = <T extends string>({
   ariaLabel,
   className,
-  onValueChange,
+  onChange,
   options,
   value,
 }: RadioGroupProps<T>) => {
-  const handleValueChange = (nextValue: unknown) => onValueChange(nextValue as T)
+  const handleValueChange = (nextValue: unknown) => onChange(nextValue as T)
 
   return (
     <BaseRadioGroup
@@ -40,12 +40,13 @@ const RadioGroup = <T extends string>({
         // Hugs circle + text for a mouse; grows to a 44px row on touch screens
         <label
           key={option.value}
-          className="has-data-disabled:text-disabled flex cursor-pointer items-center gap-3 py-0.5 has-data-disabled:cursor-not-allowed pointer-coarse:min-h-11"
+          className="group/choice text-ink has-data-disabled:text-disabled flex cursor-pointer items-center gap-3 py-0.5 has-data-disabled:cursor-not-allowed pointer-coarse:min-h-11"
         >
           <Radio.Root
             className={cn(
               'focus-ring border-rule-strong bg-surface flex size-5 shrink-0 items-center justify-center rounded-full border transition-colors',
-              'hover:border-muted data-checked:border-accent data-checked:bg-accent',
+              // Hovering the label text highlights the circle too
+              'group-hover/choice:not-data-checked:not-data-disabled:border-muted data-checked:border-accent data-checked:bg-accent',
               'data-disabled:border-rule data-disabled:bg-off',
             )}
             disabled={option.disabled}
@@ -53,7 +54,8 @@ const RadioGroup = <T extends string>({
           >
             <Radio.Indicator className="size-2 rounded-full bg-white" />
           </Radio.Root>
-          <span className="text-copy text-ink font-medium">{option.label}</span>
+          {/* Colour from the label, so a disabled option greys out */}
+          <span className="text-copy font-medium">{option.label}</span>
         </label>
       ))}
     </BaseRadioGroup>
